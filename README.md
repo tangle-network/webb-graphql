@@ -1,7 +1,24 @@
-# SubQuery - Starter Package
+<h1 align="center">Webb SubQuery 🕸️ </h1>
+<div align="center">
+<a href="https://www.webb.tools/">
+    <img alt="Webb Logo" src="./assets/webb-icon.svg" width="15%" height="30%" />
+  </a>
+  </div>
+<p align="center">
+    <strong>🚀 Webb SubQuery API</strong>
+    <br />
+    <sub> ⚠️ Beta Software ⚠️ </sub>
+</p>
 
+<div align="center" >
 
-The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
+[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)
+[![Twitter](https://img.shields.io/twitter/follow/webbprotocol.svg?style=flat-square&label=Twitter&color=1DA1F2)](https://twitter.com/webbprotocol)
+[![Telegram](https://img.shields.io/badge/Telegram-gray?logo=telegram)](https://t.me/webbprotocol)
+[![Discord](https://img.shields.io/discord/833784453251596298.svg?style=flat-square&label=Discord&logo=discord)](https://discord.gg/cv8EfJu3Tn)
+
+</div>
+
 A SubQuery package defines which data The SubQuery will index from the Substrate blockchain, and how it will store it. 
 
 ## Preparation
