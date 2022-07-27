@@ -1,6 +1,9 @@
 specVersion: 1.0.0
-name: webb-subql
-version: 1.0.0
+name: subquery-testing
+version: 2.0.0
+description: Project for testing the subquery implementation
+repository: 'https://github.com/AtelyPham/subquery.git'
+
 runner:
   node:
     name: '@subql/node'
@@ -8,16 +11,21 @@ runner:
   query:
     name: '@subql/query'
     version: '*'
-description: >-
-  This project can be used as a starting point for developing your SubQuery
-  project
-repository: 'https://github.com/subquery/subql-starter'
+
 schema:
   file: ./schema.graphql
+
 network:
+  # chainId: '0x5659763a5533c2d332f1dfb4653a47cb009423d4b8e86fa28c49f8d0184fe679'
+  # endpoint: 'ws://127.0.0.1:9944'
+  # chaintypes:
+  #   file: ./dist/chaintypes.js
+
   chainId: '0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3'
   endpoint: 'wss://polkadot.api.onfinality.io/public-ws'
-  dictionary: 'https://api.subquery.network/sq/subquery/polkadot-dictionary'
+  # Optionally provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: 'https://api.subquery.network/sq/subquery/dictionary-polkadot'
+
 dataSources:
   - kind: substrate/Runtime
     startBlock: 1
@@ -26,10 +34,9 @@ dataSources:
       handlers:
         - handler: handleBlock
           kind: substrate/BlockHandler
+
         - handler: handleEvent
           kind: substrate/EventHandler
-          filter:
-            module: balances
-            method: Deposit
+
         - handler: handleCall
           kind: substrate/CallHandler

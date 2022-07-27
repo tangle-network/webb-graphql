@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   postgres:
@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -18,10 +18,11 @@ services:
   subquery-node:
     image: onfinality/subql-node:latest
     depends_on:
-      "postgres":
+      'postgres':
         condition: service_healthy
     restart: always
     environment:
+      NETWORK_ENDPOINT: ws://${DOCKER_GATEWAY_HOST:-host.docker.internal}:9944 # for local node only
       DB_USER: postgres
       DB_PASS: postgres
       DB_DATABASE: postgres
@@ -29,11 +30,13 @@ services:
       DB_PORT: 5432
     volumes:
       - ./:/app
+    ports:
+      - '9944:9944'
     command:
       - -f=/app
       - --db-schema=app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
+      test: ['CMD', 'curl', '-f', 'http://subquery-node:3000/ready']
       interval: 3s
       timeout: 5s
       retries: 10
@@ -43,12 +46,13 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      "postgres":
+      'postgres':
         condition: service_healthy
-      "subquery-node":
+      'subquery-node':
         condition: service_healthy
-    restart: always
+    restart: on-failure
     environment:
+      NETWORK_ENDPOINT: ws://${DOCKER_GATEWAY_HOST:-host.docker.internal}:9944 # for local node only
       DB_USER: postgres
       DB_PASS: postgres
       DB_DATABASE: postgres
