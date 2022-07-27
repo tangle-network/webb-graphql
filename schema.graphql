@@ -1,17 +1,82 @@
-type StarterEntity @entity {
+type Block @entity {
+  id: ID!
 
-  id: ID! #id is a required field
+  number: BigInt! @index(unique: true)
+  hash: String
+  timestamp: Date
+  parentHash: String
+  specVersion: String
+  stateRoot: String
+  extrinsicsRoot: String
 
-  field1: Int!
+  extrinsics: [Extrinsic] @derivedFrom(field: "block")
+  events: [Event] @derivedFrom(field: "block")
+}
 
-  field2: String #filed2 is an optional field
+type Extrinsic @entity {
+  id: ID!
 
-  field3: BigInt
+  hash: String!
+  block: Block
+  blockNumber: BigInt! @index(unique: false)
+  isSigned: Boolean
+  signer: Account
+  arguments: String
 
-  field4: Date
+  section: String # Module name
+  method: String # Method name of module
+  index: Int!
+  isSuccess: Boolean
+}
 
-  field5: Boolean
+type Event @entity {
+  id: ID!
 
+  index: Int!
+  block: Block
+  blockNumber: BigInt! @index(unique: false)
+  timestamp: Date
 
+  section: String # Module name
+  method: String # Method name of module
+  docs: String
+  arguments: String
+  data: String
+  extrinsic: Extrinsic
+}
 
+type Account @entity {
+  id: ID!
+
+  creator: Account
+  createdAt: String
+  createAtBlock: Block
+
+  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
+}
+
+type Timeline @jsonField {
+  status: String
+  extrinsic: String
+  timestamp: Date
+}
+
+type Proposal @entity {
+  id: ID!
+
+  propIndex: Int! @index(unique: true)
+  deposit: BigInt
+  author: String
+
+  preimage: String
+  timeline: [Timeline]
+}
+
+type Referendum @entity {
+  id: ID!
+
+  refIndex: Int! @index(unique: true)
+  threshold: String
+  timeline: [Timeline]
+  executed: Boolean
 }
