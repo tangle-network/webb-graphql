@@ -17,7 +17,8 @@ schema:
 
 network:
   # chainId: '0x5659763a5533c2d332f1dfb4653a47cb009423d4b8e86fa28c49f8d0184fe679'
-  # endpoint: 'ws://127.0.0.1:9944'
+  # endpoint: 'ws://127.0.0.1:9944' # use this line if you use subql-node
+  # endpoint: ${NETWORK_ENDPOINT} # use this line if you use docker
   # chaintypes:
   #   file: ./dist/chaintypes.js
 
