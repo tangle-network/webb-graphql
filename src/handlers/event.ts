@@ -25,8 +25,8 @@ export async function createEvent(event: SubstrateEvent) {
   data.section = event.event.section
   data.method = event.event.method
   // lazy method
-  data.docs = event.event.meta.docs.toString()
-  data.arguments = event.event.meta.args.toString()
+  data.docs = event.event.data.meta.docs.toString()
+  data.arguments = event.event.data.meta.args.toString()
   data.data = event.event.data.toString()
 
   const extrinsic = await (event.extrinsic
