@@ -1,9 +1,10 @@
 specVersion: 1.0.0
-name: subquery-testing
-version: 2.0.0
-description: Project for testing the subquery implementation
-repository: 'https://github.com/AtelyPham/subquery.git'
-
+name: webb-subql
+version: 1.0.0
+description: >-
+  This project can be used as a starting point for developing your SubQuery
+  project
+repository: 'https://github.com/subquery/subql-starter'
 runner:
   node:
     name: '@subql/node'
