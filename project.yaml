@@ -18,12 +18,12 @@ schema:
 
 network:
   # Use Egg-net local endpoint
-  chainId: "0x5659763a5533c2d332f1dfb4653a47cb009423d4b8e86fa28c49f8d0184fe679"
-  endpoint: "ws://host.docker.internal:9944"
+  # chainId: "0x5659763a5533c2d332f1dfb4653a47cb009423d4b8e86fa28c49f8d0184fe679"
+  # endpoint: "ws://host.docker.internal:9944"
 
   # Use Kusama's endpoint
-  # chainId: '0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe'
-  # endpoint: 'wss://kusama.api.onfinality.io/public-ws'
+  chainId: "0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe"
+  endpoint: "wss://kusama.api.onfinality.io/public-ws"
 
 dataSources:
   - kind: substrate/Runtime

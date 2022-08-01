@@ -1,7 +1,7 @@
-import { SubstrateExtrinsic } from '@subql/types'
-import { Extrinsic } from '../types'
-import { ensureAccount } from './account'
-import { ensureBlock } from './block'
+import { SubstrateExtrinsic } from "@subql/types"
+import { Extrinsic } from "../types"
+import { ensureAccount } from "./account"
+import { ensureBlock } from "./block"
 
 export async function ensureExtrinsic(
   extrinsic: SubstrateExtrinsic

@@ -1,4 +1,4 @@
-import { Account } from '../types'
+import { Account } from "../types"
 
 export async function ensureAccount(account: string) {
   let data = await Account.get(account.toLowerCase())

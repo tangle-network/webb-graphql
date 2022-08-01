@@ -2,8 +2,8 @@ import {
   SubstrateExtrinsic,
   SubstrateEvent,
   SubstrateBlock,
-} from '@subql/types'
-import { createEvent, createExtrinsic, createBlock } from '../handlers'
+} from "@subql/types"
+import { createEvent, createExtrinsic, createBlock } from "../handlers"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
   logger.debug(JSON.stringify(block))

@@ -10,7 +10,3 @@ export {Event} from "./Event"
 
 export {Account} from "./Account"
 
-export {Proposal} from "./Proposal"
-
-export {Referendum} from "./Referendum"
-

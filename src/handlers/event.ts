@@ -1,8 +1,7 @@
-import { SubstrateEvent } from '@subql/types'
-import { Event } from '../types'
-import { ensureBlock } from './block'
-import { ensureExtrinsic } from './extrinsic'
-import { createDemocracy } from './democracy'
+import { SubstrateEvent } from "@subql/types"
+import { Event } from "../types"
+import { ensureBlock } from "./block"
+import { ensureExtrinsic } from "./extrinsic"
 
 export async function ensureEvent(event: SubstrateEvent) {
   const block = await ensureBlock(event.block.block.header.number.toString())
@@ -37,15 +36,6 @@ export async function createEvent(event: SubstrateEvent) {
   }
 
   await data.save()
-
-  switch (data.section) {
-    case 'democracy': {
-      await createDemocracy(event)
-    }
-
-    default:
-      break
-  }
 
   return data
 }

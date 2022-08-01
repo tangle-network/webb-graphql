@@ -1,5 +1,5 @@
-import { SubstrateBlock } from '@subql/types'
-import { Block } from '../types'
+import { SubstrateBlock } from "@subql/types"
+import { Block } from "../types"
 
 export async function ensureBlock(recordId: string) {
   let data = await Block.get(recordId)

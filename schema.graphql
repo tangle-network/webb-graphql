@@ -60,23 +60,3 @@ type Timeline @jsonField {
   extrinsic: String
   timestamp: Date
 }
-
-type Proposal @entity {
-  id: ID!
-
-  propIndex: Int! @index(unique: true)
-  deposit: BigInt
-  author: String
-
-  preimage: String
-  timeline: [Timeline]
-}
-
-type Referendum @entity {
-  id: ID!
-
-  refIndex: Int! @index(unique: true)
-  threshold: String
-  timeline: [Timeline]
-  executed: Boolean
-}
