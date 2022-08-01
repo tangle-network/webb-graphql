@@ -4,27 +4,26 @@ version: 1.0.0
 description: >-
   This project can be used as a starting point for developing your SubQuery
   project
-repository: 'https://github.com/subquery/subql-starter'
+repository: "https://github.com/subquery/subql-starter"
 runner:
   node:
-    name: '@subql/node'
-    version: '>=1.0.0'
+    name: "@subql/node"
+    version: ">=1.0.0"
   query:
-    name: '@subql/query'
-    version: '*'
+    name: "@subql/query"
+    version: "*"
 
 schema:
   file: ./schema.graphql
 
 network:
-  # chainId: '0x5659763a5533c2d332f1dfb4653a47cb009423d4b8e86fa28c49f8d0184fe679'
-  # endpoint: 'ws://127.0.0.1:9944' # use this line if you use subql-node
-  # endpoint: ${NETWORK_ENDPOINT} # use this line if you use docker
-  # chaintypes:
-  #   file: ./dist/chaintypes.js
+  # Use Egg-net local endpoint
+  chainId: "0x5659763a5533c2d332f1dfb4653a47cb009423d4b8e86fa28c49f8d0184fe679"
+  endpoint: "ws://host.docker.internal:9944"
 
-  chainId: '0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe'
-  endpoint: 'wss://kusama.api.onfinality.io/public-ws'
+  # Use Kusama's endpoint
+  # chainId: '0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe'
+  # endpoint: 'wss://kusama.api.onfinality.io/public-ws'
 
 dataSources:
   - kind: substrate/Runtime

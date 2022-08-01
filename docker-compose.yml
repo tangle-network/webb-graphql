@@ -22,7 +22,6 @@ services:
         condition: service_healthy
     restart: always
     environment:
-      NETWORK_ENDPOINT: ws://${DOCKER_GATEWAY_HOST:-host.docker.internal}:9944 # for local node only
       DB_USER: postgres
       DB_PASS: postgres
       DB_DATABASE: postgres
@@ -31,12 +30,12 @@ services:
     volumes:
       - ./:/app
     ports:
-      - "9944:9944"
+      - 9944:9944
     command:
       - -f=/app
       - --db-schema=app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
+      test: ["CMD", "curl", "-f", "http://subquery-node:3000/health"]
       interval: 3s
       timeout: 5s
       retries: 10
@@ -52,7 +51,6 @@ services:
         condition: service_healthy
     restart: on-failure
     environment:
-      NETWORK_ENDPOINT: ws://${DOCKER_GATEWAY_HOST:-host.docker.internal}:9944 # for local node only
       DB_USER: postgres
       DB_PASS: postgres
       DB_DATABASE: postgres
