@@ -28,7 +28,7 @@ export class Extrinsic implements Entity {
 
     public arguments?: string;
 
-    public section?: string;
+    public module?: string;
 
     public method?: string;
 

@@ -23,8 +23,9 @@ type Extrinsic @entity {
   signer: Account
   arguments: String
 
-  section: String # Module name
-  method: String # Method name of module
+  module: String
+  method: String
+
   index: Int!
   isSuccess: Boolean
 }
@@ -37,8 +38,9 @@ type Event @entity {
   blockNumber: BigInt! @index(unique: false)
   timestamp: Date
 
-  section: String # Module name
-  method: String # Method name of module
+  module: String
+  method: String
+
   docs: String
   arguments: String
   data: String
@@ -55,8 +57,22 @@ type Account @entity {
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
-type Timeline @jsonField {
-  status: String
-  extrinsic: String
-  timestamp: Date
+type SignatureThreshold @entity {
+  id: ID!
+
+  pendingSignatureThreshold: Int
+  currentSignatureThreshold: Int
+  nextSignatureThreshold: Int
+
+  block: Block
+}
+
+type KeygenThreshold @entity {
+  id: ID!
+
+  pendingKeygenThreshold: Int
+  currentKeygenThreshold: Int
+  nextKeygenThreshold: Int
+
+  block: Block
 }

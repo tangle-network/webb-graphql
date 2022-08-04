@@ -24,7 +24,7 @@ export class Event implements Entity {
 
     public timestamp?: Date;
 
-    public section?: string;
+    public module?: string;
 
     public method?: string;
 

@@ -10,3 +10,7 @@ export {Event} from "./Event"
 
 export {Account} from "./Account"
 
+export {SignatureThreshold} from "./SignatureThreshold"
+
+export {KeygenThreshold} from "./KeygenThreshold"
+
