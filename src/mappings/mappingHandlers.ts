@@ -1,12 +1,16 @@
 import {
-  SubstrateExtrinsic,
-  SubstrateEvent,
   SubstrateBlock,
+  SubstrateEvent,
+  SubstrateExtrinsic,
 } from "@subql/types"
-import { createEvent, createExtrinsic, createBlock } from "../handlers"
+import {
+  createBlock,
+  createEvent,
+  createExtrinsic,
+  createSudoCall,
+} from "../handlers"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
-  logger.debug(JSON.stringify(block))
   await createBlock(block)
 }
 
@@ -16,4 +20,10 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
 
 export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
   await createExtrinsic(extrinsic)
+}
+
+export async function handleSudoCall(
+  extrinsic: SubstrateExtrinsic
+): Promise<void> {
+  await createSudoCall(extrinsic)
 }

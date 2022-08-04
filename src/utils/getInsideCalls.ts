@@ -1,11 +1,12 @@
-import type { SubstrateExtrinsic } from "@subql/types"
-import type { Extrinsic } from "@polkadot/types/interfaces"
 import type { Codec } from "@polkadot/types-codec/types"
+import type { Extrinsic } from "@polkadot/types/interfaces"
+import type { SubstrateExtrinsic } from "@subql/types"
+import { Args, Method, Module } from ".."
 
 export interface CallInfo {
-  module: string
-  method: string
-  args: Record<string, Codec>
+  module: Module
+  method: Method
+  args: Args
 }
 
 /**
@@ -25,11 +26,11 @@ export function getInsideCalls(extrinsic: SubstrateExtrinsic): CallInfo[] {
     const args = params.reduce((prev, current, idx) => {
       prev[current] = values[idx]
       return prev
-    }, {} as Record<string, Codec>)
+    }, {} as Args)
 
     return {
-      method,
-      module: section,
+      method: method as Method,
+      module: section as Module,
       args,
     }
   })

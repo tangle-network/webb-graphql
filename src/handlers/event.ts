@@ -21,7 +21,7 @@ export async function ensureEvent(event: SubstrateEvent) {
 
 export async function createEvent(event: SubstrateEvent) {
   const data = await ensureEvent(event)
-  data.section = event.event.section
+  data.module = event.event.section
   data.method = event.event.method
   // lazy method
   data.docs = event.event.data.meta.docs.toString()

@@ -1,5 +1,6 @@
 import { SubstrateExtrinsic } from "@subql/types"
 import { Extrinsic } from "../types"
+import { getInsideCalls } from "../utils"
 import { ensureAccount } from "./account"
 import { ensureBlock } from "./block"
 
@@ -37,7 +38,8 @@ export async function createExtrinsic(extrinsic: SubstrateExtrinsic) {
 
   data.isSigned = isSigned
   data.method = extrinsic.extrinsic.method.method
-  data.section = extrinsic.extrinsic.method.section
+  data.module = extrinsic.extrinsic.method.section
+
   data.isSuccess = extrinsic.success
   // lazy method
   data.arguments = extrinsic.extrinsic.args.toString()
