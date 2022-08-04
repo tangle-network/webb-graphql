@@ -19,11 +19,8 @@ schema:
 network:
   # Use Egg-net local endpoint
   chainId: "0x5659763a5533c2d332f1dfb4653a47cb009423d4b8e86fa28c49f8d0184fe679"
-  endpoint: "ws://host.docker.internal:9944"
-
-  # Use Kusama's endpoint
-  # chainId: "0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe"
-  # endpoint: "wss://kusama.api.onfinality.io/public-ws"
+  endpoint: "ws://host.docker.internal:9944" # using docker
+  # endpoint: "ws://127.0.0.1:9944" # not using docker
 
 dataSources:
   - kind: substrate/Runtime
@@ -39,3 +36,10 @@ dataSources:
 
         - handler: handleCall
           kind: substrate/CallHandler
+
+        - handler: handleSudoCall
+          kind: substrate/CallHandler
+          filter:
+            module: sudo
+            method: sudo
+            success: true
