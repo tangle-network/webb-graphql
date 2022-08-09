@@ -7,6 +7,8 @@ export * from "./block"
 export * from "./event"
 export * from "./extrinsic"
 export * from "./sudo"
+export * from "./dkg/publicKey"
+export * from "./dkgProposals/proposerThreshold"
 
 export type ModuleHandlerArgs = {
   call: CallInfo

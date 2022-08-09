@@ -8,6 +8,8 @@ import {
   createBlock,
   createEvent,
   createExtrinsic,
+  createProposerThreshold,
+  createPublicKey,
   createSudoCall,
 } from "../handlers"
 import { checkAndAddAuthorities } from "../utils/authorities"
@@ -37,4 +39,12 @@ export async function handleSudoCall(
   extrinsic: SubstrateExtrinsic
 ): Promise<void> {
   await createSudoCall(extrinsic)
+}
+
+export async function handlePublicKeyChanged(event: SubstrateEvent) {
+  await createPublicKey(event)
+}
+
+export async function handleProposerThresholdChanged(event: SubstrateEvent) {
+  await createProposerThreshold(event)
 }

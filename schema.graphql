@@ -85,3 +85,20 @@ type Authorities @entity {
 
   block: Block
 }
+
+type PublicKey @entity {
+  id: ID!
+
+  compressed: String
+  uncompressed: String
+
+  block: Block
+}
+
+type ProposerThreshold @entity {
+  id: ID!
+
+  value: Int
+
+  block: Block
+}

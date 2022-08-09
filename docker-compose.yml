@@ -34,7 +34,7 @@ services:
     command:
       - -f=/app
       - --db-schema=app
-      # - --force-clean # clean the existing database (use for developement)
+      - --force-clean # clean the existing database (use for developement)
     healthcheck:
       test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
       interval: 3s
