@@ -14,3 +14,5 @@ export {SignatureThreshold} from "./SignatureThreshold"
 
 export {KeygenThreshold} from "./KeygenThreshold"
 
+export {Authories} from "./Authories"
+

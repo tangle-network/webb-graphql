@@ -16,9 +16,9 @@ export class SignatureThreshold implements Entity {
 
     public id: string;
 
-    public pendingSignatureThreshold?: number;
-
     public currentSignatureThreshold?: number;
+
+    public pendingSignatureThreshold?: number;
 
     public nextSignatureThreshold?: number;
 

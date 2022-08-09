@@ -16,9 +16,9 @@ export class KeygenThreshold implements Entity {
 
     public id: string;
 
-    public pendingKeygenThreshold?: number;
-
     public currentKeygenThreshold?: number;
+
+    public pendingKeygenThreshold?: number;
 
     public nextKeygenThreshold?: number;
 
