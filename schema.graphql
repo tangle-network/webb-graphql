@@ -60,9 +60,9 @@ type Account @entity {
 type SignatureThreshold @entity {
   id: ID!
 
-  currentSignatureThreshold: Int
-  pendingSignatureThreshold: Int
-  nextSignatureThreshold: Int
+  current: Int
+  pending: Int
+  next: Int
 
   block: Block
 }
@@ -70,19 +70,18 @@ type SignatureThreshold @entity {
 type KeygenThreshold @entity {
   id: ID!
 
-  currentKeygenThreshold: Int
-  pendingKeygenThreshold: Int
-  nextKeygenThreshold: Int
+  current: Int
+  pending: Int
+  next: Int
 
   block: Block
 }
 
-type Authories @entity {
+type Authorities @entity {
   id: ID!
 
-  currentAuthorities: [String]
-  pendingAuthorities: [String]
-  nextAuthorities: [String]
+  current: [String]
+  next: [String]
 
   block: Block
 }

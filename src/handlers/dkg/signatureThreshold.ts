@@ -26,9 +26,9 @@ export async function createSignatureThreshold(
   const currentThreshold = await api.query.dkg.signatureThreshold()
   const nextThreshold = await api.query.dkg.nextSignatureThreshold()
 
-  data.pendingSignatureThreshold = parseInt(pendingThreshold.toString())
-  data.currentSignatureThreshold = parseInt(currentThreshold.toString())
-  data.nextSignatureThreshold = parseInt(nextThreshold.toString())
+  data.pending = parseInt(pendingThreshold.toString())
+  data.current = parseInt(currentThreshold.toString())
+  data.next = parseInt(nextThreshold.toString())
 
   await data.save()
 

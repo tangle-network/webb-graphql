@@ -26,9 +26,9 @@ export async function createKeygenThreshold(
   const currentThreshold = await api.query.dkg.keygenThreshold()
   const nextThreshold = await api.query.dkg.nextKeygenThreshold()
 
-  data.pendingKeygenThreshold = parseInt(pendingThreshold.toString())
-  data.currentKeygenThreshold = parseInt(currentThreshold.toString())
-  data.nextKeygenThreshold = parseInt(nextThreshold.toString())
+  data.pending = parseInt(pendingThreshold.toString())
+  data.current = parseInt(currentThreshold.toString())
+  data.next = parseInt(nextThreshold.toString())
 
   await data.save()
 

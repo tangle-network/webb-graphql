@@ -3,15 +3,26 @@ import {
   SubstrateEvent,
   SubstrateExtrinsic,
 } from "@subql/types"
+import { BLOCK_INTERVAL } from "../constants"
 import {
   createBlock,
   createEvent,
   createExtrinsic,
   createSudoCall,
 } from "../handlers"
+import { checkAndAddAuthorities } from "../utils/authorities"
+import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
+import { checkAndAddSignatureThreshold } from "../utils/signatureThreshold"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
-  await createBlock(block)
+  const blockRecord = await createBlock(block)
+
+  // Perform the checking for update each `BLOCK_INTERVAL`
+  if ((blockRecord.number - BigInt(1)) % BigInt(BLOCK_INTERVAL) === BigInt(0)) {
+    checkAndAddSignatureThreshold(blockRecord)
+    checkAndAddKeygenThreshold(blockRecord)
+    checkAndAddAuthorities(blockRecord)
+  }
 }
 
 export async function handleEvent(event: SubstrateEvent): Promise<void> {

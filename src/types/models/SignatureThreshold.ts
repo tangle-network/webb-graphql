@@ -16,11 +16,11 @@ export class SignatureThreshold implements Entity {
 
     public id: string;
 
-    public currentSignatureThreshold?: number;
+    public current?: number;
 
-    public pendingSignatureThreshold?: number;
+    public pending?: number;
 
-    public nextSignatureThreshold?: number;
+    public next?: number;
 
     public blockId?: string;
 

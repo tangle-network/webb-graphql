@@ -16,11 +16,11 @@ export class KeygenThreshold implements Entity {
 
     public id: string;
 
-    public currentKeygenThreshold?: number;
+    public current?: number;
 
-    public pendingKeygenThreshold?: number;
+    public pending?: number;
 
-    public nextKeygenThreshold?: number;
+    public next?: number;
 
     public blockId?: string;
 
