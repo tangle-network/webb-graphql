@@ -1,33 +1,50 @@
-import {SubstrateExtrinsic,SubstrateEvent,SubstrateBlock} from "@subql/types";
-import {StarterEntity} from "../types";
-import {Balance} from "@polkadot/types/interfaces";
-
+import {
+  SubstrateBlock,
+  SubstrateEvent,
+  SubstrateExtrinsic,
+} from "@subql/types"
+import { BLOCK_INTERVAL } from "../constants"
+import {
+  createBlock,
+  createEvent,
+  createExtrinsic,
+  createProposerThreshold,
+  createPublicKey,
+  createSudoCall,
+} from "../handlers"
+import { checkAndAddAuthorities } from "../utils/authorities"
+import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
+import { checkAndAddSignatureThreshold } from "../utils/signatureThreshold"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
-    //Create a new starterEntity with ID using block hash
-    let record = new StarterEntity(block.block.header.hash.toString());
-    //Record block number
-    record.field1 = block.block.header.number.toNumber();
-    await record.save();
+  const blockRecord = await createBlock(block)
+
+  // Perform the checking for update each `BLOCK_INTERVAL`
+  if ((blockRecord.number - BigInt(1)) % BigInt(BLOCK_INTERVAL) === BigInt(0)) {
+   await checkAndAddSignatureThreshold(blockRecord)
+   await checkAndAddKeygenThreshold(blockRecord)
+   await checkAndAddAuthorities(blockRecord)
+  }
 }
 
 export async function handleEvent(event: SubstrateEvent): Promise<void> {
-    const {event: {data: [account, balance]}} = event;
-    //Retrieve the record by its ID
-    const record = await StarterEntity.get(event.block.block.header.hash.toString());
-    record.field2 = account.toString();
-    //Big integer type Balance of a transfer event
-    record.field3 = (balance as Balance).toBigInt();
-    await record.save();
+  await createEvent(event)
 }
 
 export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
-    const record = await StarterEntity.get(extrinsic.block.block.header.hash.toString());
-    //Date type timestamp
-    record.field4 = extrinsic.block.timestamp;
-    //Boolean tyep
-    record.field5 = true;
-    await record.save();
+  await createExtrinsic(extrinsic)
 }
 
+export async function handleSudoCall(
+  extrinsic: SubstrateExtrinsic
+): Promise<void> {
+  await createSudoCall(extrinsic)
+}
 
+export async function handlePublicKeyChanged(event: SubstrateEvent) {
+  await createPublicKey(event)
+}
+
+export async function handleProposerThresholdChanged(event: SubstrateEvent) {
+  await createProposerThreshold(event)
+}

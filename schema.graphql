@@ -1,17 +1,152 @@
-type StarterEntity @entity {
+type Block @entity {
+  id: ID!
 
-  id: ID! #id is a required field
+  number: BigInt! @index(unique: true)
+  hash: String
+  timestamp: Date
+  parentHash: String
+  specVersion: String
+  stateRoot: String
+  extrinsicsRoot: String
 
-  field1: Int!
+  extrinsics: [Extrinsic] @derivedFrom(field: "block")
+  events: [Event] @derivedFrom(field: "block")
+}
 
-  field2: String #filed2 is an optional field
+type Extrinsic @entity {
+  id: ID!
 
-  field3: BigInt
+  hash: String!
+  block: Block
+  blockNumber: BigInt! @index(unique: false)
+  isSigned: Boolean
+  signer: Account
+  arguments: String
 
-  field4: Date
+  module: String
+  method: String
 
-  field5: Boolean
+  index: Int!
+  isSuccess: Boolean
+}
 
+type Event @entity {
+  id: ID!
 
+  index: Int!
+  block: Block
+  blockNumber: BigInt! @index(unique: false)
+  timestamp: Date
 
+  module: String
+  method: String
+
+  docs: String
+  arguments: String
+  data: String
+  extrinsic: Extrinsic
+}
+
+type Account @entity {
+  id: ID!
+
+  creator: Account
+  createdAt: String
+  createAtBlock: Block
+
+  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
+}
+
+type SignatureThreshold @entity {
+  id: ID!
+
+  current: Int
+  pending: Int
+  next: Int
+
+  block: Block
+}
+
+type KeygenThreshold @entity {
+  id: ID!
+
+  current: Int
+  pending: Int
+  next: Int
+
+  block: Block
+}
+
+type Authorities @entity {
+  id: ID!
+
+  # AccountId 32 bytes
+  current: [String]
+  # AccountId 32 bytes
+  next: [String]
+
+  block: Block
+}
+
+type PublicKey @entity {
+  id: ID!
+
+  # Public key bytes 33 bytes
+  compressed: String
+
+  # Public key bytes 65 bytes
+  uncompressed: String
+
+  block: Block
+}
+
+type ProposerThreshold @entity {
+  id: ID!
+
+  # Number of proposers for
+  value: Int
+
+  block: Block
+}
+
+type Session @entity {
+  id: ID!
+  index: Int!
+  # `t` in the `n` of `t` , n signature threshold , t keygen threshold
+  keygenThreshold: KeygenThreshold!
+  # currently has 1 values ,
+  proposerThreshold: ProposerThreshold!
+  # `n` in the `n` of `t` , n signature threshold , t keygen threshold
+  signatureThreshold: SignatureThreshold!
+  # The whole authorities
+  authorities: [Authorities!]!
+  # The best authorities
+  bestAuthorizes: [Authorities!]!
+  publicKey: PublicKey
+  nextPublicKey: PublicKey
+}
+
+enum PropsalType {
+  Refresh
+  ProposerSetUpdate
+  EVM
+  AnchorCreate
+  AnchorUpdate
+  TokenAdd
+  TokenRemove
+  WrappingFeeUpdate
+  ResourceIdUpdate
+  RescueTokens
+  MaxDepositLimitUpdate
+  MinWithdrawalLimitUpdate
+  SetVerifier
+  SetTreasuryHandler
+  FeeRecipientUpdate
+}
+
+type Proposal @entity {
+  id: ID!
+  type: PropsalType!
+  data: String!
+  signature: String
 }

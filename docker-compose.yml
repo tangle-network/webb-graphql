@@ -18,8 +18,7 @@ services:
   subquery-node:
     image: onfinality/subql-node:latest
     depends_on:
-      "postgres":
-        condition: service_healthy
+      - "postgres"
     restart: always
     environment:
       DB_USER: postgres
@@ -29,9 +28,12 @@ services:
       DB_PORT: 5432
     volumes:
       - ./:/app
+    ports:
+      - 9944:9944
     command:
       - -f=/app
       - --db-schema=app
+      - --force-clean # clean the existing database (use for developement)
     healthcheck:
       test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
       interval: 3s
@@ -43,11 +45,9 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      "postgres":
-        condition: service_healthy
-      "subquery-node":
-        condition: service_healthy
-    restart: always
+      - "postgres"
+      - "subquery-node"
+    restart: on-failure
     environment:
       DB_USER: postgres
       DB_PASS: postgres

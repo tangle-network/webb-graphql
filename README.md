@@ -19,101 +19,76 @@
 
 </div>
 
-A SubQuery package defines which data The SubQuery will index from the Substrate blockchain, and how it will store it. 
+A SubQuery package defines which data The SubQuery will index from the Substrate blockchain, and how it will store it.
 
-## Preparation
+## Prerequisites
 
-#### Environment
+- [Node](https://nodejs.org/en/): A modern (e.g. the LTS version) installation of Node.
+- [Docker](https://www.docker.com/)
+- SubQuery Node (not required if you use `Docker`): `npm install -g @subql/node`
 
-- [Typescript](https://www.typescriptlang.org/) are required to compile project and define types.  
+## Steps to start the project
 
-- Both SubQuery CLI and generated Project have dependencies and require [Node](https://nodejs.org/en/).
-     
+**Note**: You have to run [Egg-net](https://github.com/webb-tools/egg-net) locally:
 
-#### Install the SubQuery CLI
+### Prepare [Egg-net](https://github.com/webb-tools/egg-net) locally
 
-Install SubQuery CLI globally on your terminal by using NPM:
+- Prepare the [prerequisites](https://github.com/webb-tools/egg-net#prerequisites) environment for Egg-net.
+- Install and build the Egg-net (follow the instructions [here](https://github.com/webb-tools/egg-net#installation-)).
+- Setup running 3 nodes with `--pruning=archive`
 
-```
-npm install -g @subql/cli
-```
-
-Run help to see available commands and usage provide by CLI
-```
-subql help
-```
-
-## Initialize the starter package
-
-Inside the directory in which you want to create the SubQuery project, simply replace `project-name` with your project name and run the command:
-```
-subql init --starter project-name
-```
-Then you should see a folder with your project name has been created inside the directory, you can use this as the start point of your project. And the files should be identical as in the [Directory Structure](https://doc.subquery.network/directory_structure.html).
-
-Last, under the project directory, run following command to install all the dependency.
-```
-yarn install
+```shell
+RUST_LOG=dkg=trace ./target/release/egg-standalone-node  --base-path /tmp/standalone/alice --alice   --pruning=archive --rpc-cors=all &
+RUST_LOG=dkg=trace ./target/release/egg-standalone-node  --base-path /tmp/standalone/bob --bob --pruning=archive --rpc-cors=all &
+RUST_LOG=dkg=trace ./target/release/egg-standalone-node --base-path /tmp/standalone/charlie --charlie --pruning=archive --rpc-cors=all
 ```
 
+- If you get the error when starting those nodes, please make sure to remove the existing blockchain data using:
 
-## Configure your project
-
-In the starter package, we have provided a simple example of project configuration. You will be mainly working on the following files:
-
-- The Manifest in `project.yaml`
-- The GraphQL Schema in `schema.graphql`
-- The Mapping functions in `src/mappings/` directory
-
-For more information on how to write the SubQuery, 
-check out our doc section on [Define the SubQuery](https://doc.subquery.network/define_a_subquery.html) 
-
-#### Code generation
-
-In order to index your SubQuery project, it is mandatory to build your project first.
-Run this command under the project directory.
-
-````
-yarn codegen
-````
-
-## Build the project
-
-In order to deploy your SubQuery project to our hosted service, it is mandatory to pack your configuration before upload.
-Run pack command from root directory of your project will automatically generate a `your-project-name.tgz` file.
-
-```
-yarn build
+```shell
+rm -rf /tmp/standalone/alice/chains/local_testnet/db/full/ &
+rm -rf /tmp/standalone/bob/chains/local_testnet/db/full/ &
+rm -rf /tmp/standalone/charlie/chains/local_testnet/db/full/ &
 ```
 
-## Indexing and Query
+- Check the connection by using the [Polkadot UI app](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/explorer).
 
-#### Run required systems in docker
+### Setup [SubQuery](https://subquery.network/)
 
+Then, install project dependencies and build the project:
 
-Under the project directory run following command:
+- Run `yarn install` to install dependencies.
+- Run `yarn codegen` to generate the project types.
+- Run `yarn build` to build the project.
 
-```
-docker-compose pull && docker-compose up
-```
-#### Query the project
+Then you can try one of the below approaches to start indexing:
 
-Open your browser and head to `http://localhost:3000`.
+- Using `docker` (recommended): Run `yarn start:docker`
+- Without `docker` (follow these steps [here](https://university.subquery.network/run_publish/run.html#running-an-indexer-subql-node))
 
-Finally, you should see a GraphQL playground is showing in the explorer and the schemas that ready to query.
+Finally, you can get the index data by using:
 
-For the `subql-starter` project, you can try to query with the following code to get a taste of how it works.
+- If you use `Docker`, open `localhost:3000` and use the below `graphql` query to test.
+- If you do not use `Docker`, you have to run the [Query Service](https://academy.subquery.network/run_publish/run.html#running-a-query-service-subql-query) via `subql-query` to have the playground running. Then you can open the playground at `localhost:3000` and use the below `graphql` query to test.
 
-````graphql
-{
-  query{
-    starterEntities(first:10){
-      nodes{
-        field1,
-        field2,
-        field3
-      }
+```graphql
+query {
+  blocks(first: 10, orderBy: NUMBER_ASC) {
+    nodes {
+      id
+      number
+      hash
+      timestamp
+      parentHash
+      specVersion
+      stateRoot
+      extrinsicsRoot
     }
   }
 }
-````
+```
+
+## Tips for development:
+
+- Sometimes, when you make changes to the code, make sure to run `yarn build` to re-build the project, then your change will be applied in `docker`. Otherwise, you won't get the latest changes.
+- If you got errors about the `Postgres` service in `docker–compose`, try to remove the `.data` folder or you can try to add the `--force-clean` in the `command` section of the `subquery-node` service in [`docker-compose` file](https://github.com/webb-tools/webb-subql/blob/trung-tin/init-connection-with-eggnet/docker-compose.yml#L37).
