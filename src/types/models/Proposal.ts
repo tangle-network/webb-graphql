@@ -22,9 +22,9 @@ export class Proposal implements Entity {
 
     public type: PropsalType;
 
-    public isSigned?: boolean;
+    public data: string;
 
-    public isUnsigned?: boolean;
+    public signature?: string;
 
 
     async save(): Promise<void>{

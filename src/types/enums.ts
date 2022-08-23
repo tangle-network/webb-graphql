@@ -10,7 +10,7 @@ export enum PropsalType {
 
     EVM = "EVM",
 
-    Anchorcreate = "Anchorcreate",
+    AnchorCreate = "AnchorCreate",
 
     AnchorUpdate = "AnchorUpdate",
 
