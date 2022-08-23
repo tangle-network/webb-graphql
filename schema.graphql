@@ -1,135 +1,134 @@
 type Block @entity {
-  id: ID!
+	id: ID!
 
-  number: BigInt! @index(unique: true)
-  hash: String
-  timestamp: Date
-  parentHash: String
-  specVersion: String
-  stateRoot: String
-  extrinsicsRoot: String
+	number: BigInt! @index(unique: true)
+	hash: String
+	timestamp: Date
+	parentHash: String
+	specVersion: String
+	stateRoot: String
+	extrinsicsRoot: String
 
-  extrinsics: [Extrinsic] @derivedFrom(field: "block")
-  events: [Event] @derivedFrom(field: "block")
+	extrinsics: [Extrinsic] @derivedFrom(field: "block")
+	events: [Event] @derivedFrom(field: "block")
 }
 
 type Extrinsic @entity {
-  id: ID!
+	id: ID!
 
-  hash: String!
-  block: Block
-  blockNumber: BigInt! @index(unique: false)
-  isSigned: Boolean
-  signer: Account
-  arguments: String
+	hash: String!
+	block: Block
+	blockNumber: BigInt! @index(unique: false)
+	isSigned: Boolean
+	signer: Account
+	arguments: String
 
-  module: String
-  method: String
+	module: String
+	method: String
 
-  index: Int!
-  isSuccess: Boolean
+	index: Int!
+	isSuccess: Boolean
 }
 
 type Event @entity {
-  id: ID!
+	id: ID!
 
-  index: Int!
-  block: Block
-  blockNumber: BigInt! @index(unique: false)
-  timestamp: Date
+	index: Int!
+	block: Block
+	blockNumber: BigInt! @index(unique: false)
+	timestamp: Date
 
-  module: String
-  method: String
+	module: String
+	method: String
 
-  docs: String
-  arguments: String
-  data: String
-  extrinsic: Extrinsic
+	docs: String
+	arguments: String
+	data: String
+	extrinsic: Extrinsic
 }
 
 type Account @entity {
-  id: ID!
+	id: ID!
 
-  creator: Account
-  createdAt: String
-  createAtBlock: Block
+	creator: Account
+	createdAt: String
+	createAtBlock: Block
 
-  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
+	extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
 type SignatureThreshold @entity {
-  id: ID!
+	id: ID!
 
-  current: Int
-  pending: Int
-  next: Int
+	current: Int
+	pending: Int
+	next: Int
 
-  block: Block
+	block: Block
 }
 
 type KeygenThreshold @entity {
-  id: ID!
+	id: ID!
 
-  current: Int
-  pending: Int
-  next: Int
+	current: Int
+	pending: Int
+	next: Int
 
-  block: Block
+	block: Block
 }
 
 type Authorities @entity {
-  id: ID!
+	id: ID!
 
-  current: [String]
-  next: [String]
+	current: [String]
+	next: [String]
 
-  block: Block
+	block: Block
 }
 
 type PublicKey @entity {
-  id: ID!
+	id: ID!
 
-  compressed: String
-  uncompressed: String
+	compressed: String
+	uncompressed: String
 
-  block: Block
+	block: Block
 }
 
 type ProposerThreshold @entity {
-  id: ID!
+	id: ID!
 
-  value: Int
+	value: Int
 
-  block: Block
+	block: Block
 }
 
 type Session @entity {
-	  id: ID!
-
-  index: Int!
-  keygenThreshold: KeygenThreshold
-  proposerThreshold: ProposerThreshold
-  signatureThreshold: SignatureThreshold
-  authorities: [Authorities]
-  publicKeys: [PublicKey]
+	id: ID!
+	index: Int!
+	keygenThreshold: KeygenThreshold
+	proposerThreshold: ProposerThreshold
+	signatureThreshold: SignatureThreshold
+	authorities: [Authorities]
+	publicKeys: [PublicKey]
 }
 
 enum PropsalType {
-Refresh,
-ProposerSetUpdate,
-EVM,
-Anchorcreate,
-AnchorUpdate,
-TokenAdd,
-TokenRemove,
-WrappingFeeUpdate,
-ResourceIdUpdate,
-RescueTokens,
-MaxDepositLimitUpdate,
-MinWithdrawalLimitUpdate,
-SetVerifier,
-SetTreasuryHandler,
-FeeRecipientUpdate
+	Refresh,
+	ProposerSetUpdate,
+	EVM,
+	AnchorCreate,
+	AnchorUpdate,
+	TokenAdd,
+	TokenRemove,
+	WrappingFeeUpdate,
+	ResourceIdUpdate,
+	RescueTokens,
+	MaxDepositLimitUpdate,
+	MinWithdrawalLimitUpdate,
+	SetVerifier,
+	SetTreasuryHandler,
+	FeeRecipientUpdate
 }
 
 
