@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 import {
-    PropsalType,
+    ProposalType,
 } from '../enums'
 
 
@@ -20,7 +20,7 @@ export class Proposal implements Entity {
 
     public id: string;
 
-    public type: PropsalType;
+    public type: ProposalType;
 
     public data: string;
 

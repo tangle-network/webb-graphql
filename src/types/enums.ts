@@ -2,7 +2,7 @@
 
 // Auto-generated , DO NOT EDIT
 
-export enum PropsalType {
+export enum ProposalType {
 
     Refresh = "Refresh",
 

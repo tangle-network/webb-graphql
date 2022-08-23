@@ -126,7 +126,7 @@ type Session @entity {
   nextPublicKey: PublicKey
 }
 
-enum PropsalType {
+enum ProposalType {
   Refresh
   ProposerSetUpdate
   EVM
@@ -146,7 +146,7 @@ enum PropsalType {
 
 type Proposal @entity {
   id: ID!
-  type: PropsalType!
+  type: ProposalType!
   data: String!
   signature: String
 }
