@@ -21,9 +21,9 @@ export async function handleBlock(block: SubstrateBlock): Promise<void> {
 
   // Perform the checking for update each `BLOCK_INTERVAL`
   if ((blockRecord.number - BigInt(1)) % BigInt(BLOCK_INTERVAL) === BigInt(0)) {
-    checkAndAddSignatureThreshold(blockRecord)
-    checkAndAddKeygenThreshold(blockRecord)
-    checkAndAddAuthorities(blockRecord)
+   await checkAndAddSignatureThreshold(blockRecord)
+   await checkAndAddKeygenThreshold(blockRecord)
+   await checkAndAddAuthorities(blockRecord)
   }
 }
 

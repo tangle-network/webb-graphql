@@ -102,3 +102,40 @@ type ProposerThreshold @entity {
 
   block: Block
 }
+
+type Session @entity {
+	  id: ID!
+
+  index: Int!
+  keygenThreshold: KeygenThreshold
+  proposerThreshold: ProposerThreshold
+  signatureThreshold: SignatureThreshold
+  authorities: [Authorities]
+  publicKeys: [PublicKey]
+}
+
+enum PropsalType {
+Refresh,
+ProposerSetUpdate,
+EVM,
+Anchorcreate,
+AnchorUpdate,
+TokenAdd,
+TokenRemove,
+WrappingFeeUpdate,
+ResourceIdUpdate,
+RescueTokens,
+MaxDepositLimitUpdate,
+MinWithdrawalLimitUpdate,
+SetVerifier,
+SetTreasuryHandler,
+FeeRecipientUpdate
+}
+
+
+type Proposal @entity {
+	id: ID!
+	type :PropsalType!
+	isSigned: Boolean
+	isUnsigned: Boolean
+}
