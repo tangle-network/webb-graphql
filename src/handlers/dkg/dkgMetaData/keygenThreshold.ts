@@ -1,7 +1,7 @@
 import { SubstrateExtrinsic } from "@subql/types"
-import { KeygenThresholdArgs } from "."
-import { KeygenThreshold } from "../../types"
-import { createBlock } from "../block"
+import { createBlock } from "../../block"
+import { KeygenThreshold } from "../../../types"
+import { KeygenThresholdArgs } from "./types"
 
 export async function ensureKeygenThreshold(extrinsic: SubstrateExtrinsic) {
   const block = await createBlock(extrinsic.block)

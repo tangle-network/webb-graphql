@@ -1,7 +1,7 @@
-import { DKGMethod, KeygenThresholdArgs, SignatureThresholdArgs } from "."
-import { ModuleHandlerArgs } from ".."
 import { createKeygenThreshold } from "./keygenThreshold"
 import { createSignatureThreshold } from "./signatureThreshold"
+import { ModuleHandlerArgs } from "../../index"
+import { DKGMethod, KeygenThresholdArgs, SignatureThresholdArgs } from "./types"
 
 export async function dkgHandler({ call, extrinsic }: ModuleHandlerArgs) {
   switch (call.method as DKGMethod) {

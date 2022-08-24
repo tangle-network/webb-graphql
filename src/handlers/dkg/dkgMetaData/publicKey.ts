@@ -1,7 +1,7 @@
 import { SubstrateEvent } from "@subql/types"
-import { PublicKey } from "../../types"
-import { createBlock } from "../block"
-import { createExtrinsic } from "../extrinsic"
+import { createExtrinsic } from "../../extrinsic"
+import { createBlock } from "../../block"
+import { PublicKey } from "../../../types"
 
 export async function ensurePublicKey(event: SubstrateEvent) {
   const blockData = await createBlock(event.block)

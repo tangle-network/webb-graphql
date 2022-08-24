@@ -8,13 +8,13 @@ import {
   createBlock,
   createEvent,
   createExtrinsic,
-  createProposerThreshold,
-  createPublicKey,
   createSudoCall,
 } from "../handlers"
 import { checkAndAddAuthorities } from "../utils/authorities"
 import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
 import { checkAndAddSignatureThreshold } from "../utils/signatureThreshold"
+import { createPublicKey } from "../handlers/dkg/dkgMetaData/publicKey"
+import { createProposerThreshold } from "../handlers/dkg/dkgProposals/proposerThreshold"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
   const blockRecord = await createBlock(block)
@@ -85,9 +85,8 @@ export async function handlePublicKeyChanged(event: SubstrateEvent) {
   logger.info(
     `PublicKeyChangedHandler:
      	path: ${event.event.section}:${event.event.method}
-     	data: ${JSON.stringify(event.event.data)}
+     	data: ${JSON.stringify(event.event.data.toJSON())}
 		block:${block}
-		full: ${JSON.stringify(event, null, 2)}
      	`
   )
   await createPublicKey(event)

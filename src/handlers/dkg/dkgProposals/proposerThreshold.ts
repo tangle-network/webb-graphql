@@ -1,7 +1,7 @@
 import { SubstrateEvent } from "@subql/types"
-import { ProposerThreshold } from "../../types"
-import { createBlock } from "../block"
-import { createExtrinsic } from "../extrinsic"
+import { createBlock } from "../../block"
+import { ProposerThreshold } from "../../../types"
+import { createExtrinsic } from "../../extrinsic"
 
 export async function ensureProposalThreshold(event: SubstrateEvent) {
   const blockData = await createBlock(event.block)
@@ -18,8 +18,6 @@ export async function ensureProposalThreshold(event: SubstrateEvent) {
 
 export async function createProposerThreshold(event: SubstrateEvent) {
   const data = await ensureProposalThreshold(event)
-  logger.debug("createProposerThreshold" + JSON.stringify({ data }, null, 2))
-  logger.info("createProposerThreshold" + JSON.stringify({ data }, null, 2))
   data.value = parseInt(event.event.data[0].toString())
 
   await data.save()
