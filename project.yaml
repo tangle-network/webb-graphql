@@ -55,3 +55,18 @@ dataSources:
           filter:
             module: dkgProposals
             method: ProposerThresholdChanged
+
+        - handler: handleAllDKG
+          kind: substrate/EventHandler
+          filter:
+            module: dkgProposals
+
+        - handler: handleAllDKG
+          kind: substrate/EventHandler
+          filter:
+            module: dkg
+
+        - handler: handleAllDKG
+          kind: substrate/EventHandler
+          filter:
+            module: dkgProposalHandler

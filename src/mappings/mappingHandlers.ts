@@ -69,7 +69,17 @@ export async function handleSudoCall(
   )
   await createSudoCall(extrinsic)
 }
-
+export async function handleAllDKG(event: SubstrateEvent) {
+  const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`
+  logger.info(
+    `AllDKGChangedHandler:
+     	path: ${event.event.section}:${event.event.method}
+     	data: ${JSON.stringify(event.event.data)}
+		block:${block}
+		full: ${JSON.stringify(event, null, 2)}
+     	`
+  )
+}
 export async function handlePublicKeyChanged(event: SubstrateEvent) {
   const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`
   logger.info(

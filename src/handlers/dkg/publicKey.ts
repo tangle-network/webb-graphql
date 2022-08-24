@@ -21,7 +21,6 @@ export async function ensurePublicKey(event: SubstrateEvent) {
 
 export async function createPublicKey(event: SubstrateEvent) {
   const data = await ensurePublicKey(event)
-
   data.compressed = event.event.data[0].toString()
   data.uncompressed = event.event.data[1].toString()
 

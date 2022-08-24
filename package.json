@@ -8,8 +8,10 @@
     "prepack": "rm -rf dist && npm run build",
     "test": "jest",
     "codegen": "./node_modules/.bin/subql codegen",
-    "start:docker": "docker-compose pull && docker-compose up"
-  },
+    "start:docker": "docker-compose pull && docker-compose up",
+	"deploy:dev":"yarn codegen && yarn build && docker-compose up",
+	"ts-check": "tsc --noEmit -p ./tsconfig.json"
+},
   "homepage": "https://github.com/subquery/subql-starter",
   "repository": "github:subquery/subql-starter",
   "files": [
