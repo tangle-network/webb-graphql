@@ -20,6 +20,8 @@ export async function ensureEvent(event: SubstrateEvent) {
 }
 
 export async function createEvent(event: SubstrateEvent) {
+  logger.debug("createEvent", JSON.stringify({ event }, null, 2))
+  logger.info("createEvent", JSON.stringify({ event }, null, 2))
   const data = await ensureEvent(event)
   data.module = event.event.section
   data.method = event.event.method

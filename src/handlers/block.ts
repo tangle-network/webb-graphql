@@ -12,6 +12,8 @@ export async function ensureBlock(recordId: string) {
 }
 
 export async function createBlock(block: SubstrateBlock) {
+  logger.debug("createBlock", JSON.stringify({ block }, null, 2))
+  logger.info("createBlock", JSON.stringify({ block }, null, 2))
   const data = await ensureBlock(block.block.header.number.toString())
 
   data.hash = block.block.hash?.toString()
