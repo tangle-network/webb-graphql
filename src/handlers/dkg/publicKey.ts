@@ -17,6 +17,7 @@ export async function ensurePublicKey(event: SubstrateEvent) {
 }
 
 export async function createPublicKey(event: SubstrateEvent) {
+  logger.debug("createPublicKey ", JSON.stringify({ event }, null, 2))
   const data = await ensurePublicKey(event)
 
   data.compressed = event.event.data[0].toString()

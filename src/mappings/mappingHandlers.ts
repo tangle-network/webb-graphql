@@ -21,23 +21,44 @@ export async function handleBlock(block: SubstrateBlock): Promise<void> {
 
   // Perform the checking for update each `BLOCK_INTERVAL`
   if ((blockRecord.number - BigInt(1)) % BigInt(BLOCK_INTERVAL) === BigInt(0)) {
-   await checkAndAddSignatureThreshold(blockRecord)
-   await checkAndAddKeygenThreshold(blockRecord)
-   await checkAndAddAuthorities(blockRecord)
+    await checkAndAddSignatureThreshold(blockRecord)
+    await checkAndAddKeygenThreshold(blockRecord)
+    await checkAndAddAuthorities(blockRecord)
   }
 }
 
 export async function handleEvent(event: SubstrateEvent): Promise<void> {
+  logger.info(
+    `EventHandler:
+     	path: ${event.event.section}:${event.event.method}
+     	data: ${JSON.stringify(event.event.data)}
+     	`
+  )
   await createEvent(event)
 }
 
 export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
+  const path = `${extrinsic.extrinsic.method.section}:${extrinsic.extrinsic.method.method}`
+
+  logger.info(
+    `ExtrinsicHandler:
+     	     	path: ${path}
+     	     	data: ${JSON.stringify(extrinsic.extrinsic.args)}}
+     	     	`
+  )
   await createExtrinsic(extrinsic)
 }
 
 export async function handleSudoCall(
   extrinsic: SubstrateExtrinsic
 ): Promise<void> {
+  const path = `${extrinsic.extrinsic.method.section}:${extrinsic.extrinsic.method.method}`
+  logger.info(
+    `SudoCallHandler:
+     	     	path: ${path}
+     	     	data: ${JSON.stringify(extrinsic.extrinsic.args)}
+     	`
+  )
   await createSudoCall(extrinsic)
 }
 

@@ -1,7 +1,4 @@
-import { Authorities, Session } from "../types"
-import { getCurrentAuthorities } from "../utils/authorities/getCurrent"
-import { getBestAuthorities } from "../utils/authorities/getBest"
-
+/*
 export async function ensureSession(sessionIndex: number): Promise<Session> {
   let data = await Session.get(sessionIndex.toString())
   if (!data) {
@@ -32,3 +29,5 @@ export async function createSession(
 
   return data
 }
+*/
+export {}

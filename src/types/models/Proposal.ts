@@ -20,11 +20,15 @@ export class Proposal implements Entity {
 
     public id: string;
 
+    public proposalId: string;
+
     public type: ProposalType;
 
     public data: string;
 
     public signature?: string;
+
+    public blockId?: string;
 
 
     async save(): Promise<void>{
@@ -47,6 +51,20 @@ export class Proposal implements Entity {
         }
     }
 
+
+    static async getByProposalId(proposalId: string): Promise<Proposal[] | undefined>{
+      
+      const records = await store.getByField('Proposal', 'proposalId', proposalId);
+      return records.map(record => Proposal.create(record as ProposalProps));
+      
+    }
+
+    static async getByBlockId(blockId: string): Promise<Proposal[] | undefined>{
+      
+      const records = await store.getByField('Proposal', 'blockId', blockId);
+      return records.map(record => Proposal.create(record as ProposalProps));
+      
+    }
 
 
     static create(record: ProposalProps): Proposal {

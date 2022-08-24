@@ -20,7 +20,7 @@ export {PublicKey} from "./PublicKey"
 
 export {ProposerThreshold} from "./ProposerThreshold"
 
-export {Session} from "./Session"
+export {ProposerCount} from "./ProposerCount"
 
 export {Proposal} from "./Proposal"
 

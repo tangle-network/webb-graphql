@@ -58,4 +58,4 @@ services:
       - --name=app
       - --playground
       - --indexer=http://subquery-node:3000
-      - --log-level=info
+      - --log-level=debug

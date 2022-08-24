@@ -18,7 +18,8 @@ export async function ensureProposalThreshold(event: SubstrateEvent) {
 
 export async function createProposerThreshold(event: SubstrateEvent) {
   const data = await ensureProposalThreshold(event)
-
+  logger.debug("createProposerThreshold" + JSON.stringify({ data }, null, 2))
+  logger.info("createProposerThreshold" + JSON.stringify({ data }, null, 2))
   data.value = parseInt(event.event.data[0].toString())
 
   await data.save()
