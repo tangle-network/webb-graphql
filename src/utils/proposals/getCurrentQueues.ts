@@ -38,6 +38,7 @@ export async function getCurrentQueues(): Promise<{
   const signedProposals = signedProposalsData.map(([key, value]) => {
     return {
       key: {
+        id: key.toString(),
         chainId: key.args[0].toString(),
         dkgKey: key.args[1].toHuman(),
       },
@@ -48,6 +49,7 @@ export async function getCurrentQueues(): Promise<{
   const unsignedProposalsQueue = signedProposalsData.map(([key, value]) => {
     return {
       key: {
+        id: key.toString(),
         chainId: key.args[0].toString(),
         dkgKey: key.args[1].toHuman(),
       },
