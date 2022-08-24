@@ -109,22 +109,22 @@ type ProposerThreshold @entity {
   block: Block
 }
 
-#type Session @entity {
-#  id: ID!
-#  index: Int!
-#  # `t` in the `n` of `t` , n signature threshold , t keygen threshold
-#  keygenThreshold: KeygenThreshold!
-#  # currently has 1 values ,
-#  proposerThreshold: ProposerThreshold!
-#  # `n` in the `n` of `t` , n signature threshold , t keygen threshold
-#  signatureThreshold: SignatureThreshold!
-#  # The whole authorities
-#  authorities: [Authorities!]!
-#  # The best authorities
-##  bestAuthorizes: [Authorities!]!
-#  publicKey: PublicKey
-##  nextPublicKey: PublicKey
-#}
+type Session @entity {
+  id: ID!
+  index: Int!
+  # `t` in the `n` of `t` , n signature threshold , t keygen threshold
+  keygenThreshold: KeygenThreshold!
+  # currently has 1 values ,
+  proposerThreshold: ProposerThreshold!
+  # `n` in the `n` of `t` , n signature threshold , t keygen threshold
+  signatureThreshold: SignatureThreshold!
+  # The whole authorities
+  authorities: [Authorities!]!
+  # The best authorities
+  bestAuthorizes: [Authorities!]!
+  publicKey: PublicKey
+  nextPublicKey: PublicKey
+}
 
 enum ProposalType {
   Refresh
