@@ -1,7 +1,7 @@
 import { SubstrateEvent } from "@subql/types"
 import { DKGMetaDataSection, DKGSections } from "../type"
 
-export async function dkgProposalsEventHandler(event: SubstrateEvent) {
+export async function dkgMetaDataEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGMetaData) {
     logger.error(
       `dkgProposalsEventHandler: event.event.section(${event.event.section}) !== DKGSections.DKGMetaData`

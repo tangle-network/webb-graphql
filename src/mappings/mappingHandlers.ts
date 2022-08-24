@@ -15,6 +15,7 @@ import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
 import { checkAndAddSignatureThreshold } from "../utils/signatureThreshold"
 import { createPublicKey } from "../handlers/dkg/dkgMetaData/publicKey"
 import { createProposerThreshold } from "../handlers/dkg/dkgProposals/proposerThreshold"
+import { handleDkgEvents } from "../handlers/dkg"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
   const blockRecord = await createBlock(block)
@@ -79,6 +80,7 @@ export async function handleAllDKG(event: SubstrateEvent) {
 		full: ${JSON.stringify(event, null, 2)}
      	`
   )
+  return handleDkgEvents(event)
 }
 export async function handlePublicKeyChanged(event: SubstrateEvent) {
   const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`
