@@ -28,10 +28,12 @@ export async function handleBlock(block: SubstrateBlock): Promise<void> {
 }
 
 export async function handleEvent(event: SubstrateEvent): Promise<void> {
+  const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`
   logger.info(
     `EventHandler:
      	path: ${event.event.section}:${event.event.method}
      	data: ${JSON.stringify(event.event.data)}
+		block:${block}
      	`
   )
   await createEvent(event)
@@ -39,11 +41,14 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
 
 export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
   const path = `${extrinsic.extrinsic.method.section}:${extrinsic.extrinsic.method.method}`
+  const block = `${extrinsic.block.block.header.number} => ${extrinsic.block.block.hash}`
 
   logger.info(
     `ExtrinsicHandler:
      	     	path: ${path}
      	     	data: ${JSON.stringify(extrinsic.extrinsic.args)}}
+     	     	block:${block}
+
      	     	`
   )
   await createExtrinsic(extrinsic)
@@ -53,16 +58,28 @@ export async function handleSudoCall(
   extrinsic: SubstrateExtrinsic
 ): Promise<void> {
   const path = `${extrinsic.extrinsic.method.section}:${extrinsic.extrinsic.method.method}`
+  const block = `${extrinsic.block.block.header.number} => ${extrinsic.block.block.hash}`
   logger.info(
     `SudoCallHandler:
      	     	path: ${path}
      	     	data: ${JSON.stringify(extrinsic.extrinsic.args)}
+     	     	block:${block}
+
      	`
   )
   await createSudoCall(extrinsic)
 }
 
 export async function handlePublicKeyChanged(event: SubstrateEvent) {
+  const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`
+  logger.info(
+    `PublicKeyChangedHandler:
+     	path: ${event.event.section}:${event.event.method}
+     	data: ${JSON.stringify(event.event.data)}
+		block:${block}
+		full: ${JSON.stringify(event, null, 2)}
+     	`
+  )
   await createPublicKey(event)
 }
 
