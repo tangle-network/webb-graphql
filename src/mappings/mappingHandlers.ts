@@ -14,17 +14,17 @@ import { checkAndAddAuthorities } from "../utils/authorities"
 import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
 import { checkAndAddSignatureThreshold } from "../utils/signatureThreshold"
 import { createPublicKey } from "../handlers/dkg/dkgMetaData/publicKey"
-import { createProposerThreshold } from "../handlers/dkg/dkgProposals/proposerThreshold"
 import { handleDkgEvents } from "../handlers/dkg"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
   const blockRecord = await createBlock(block)
-
   // Perform the checking for update each `BLOCK_INTERVAL`
   if ((blockRecord.number - BigInt(1)) % BigInt(BLOCK_INTERVAL) === BigInt(0)) {
-    await checkAndAddSignatureThreshold(blockRecord)
-    await checkAndAddKeygenThreshold(blockRecord)
-    await checkAndAddAuthorities(blockRecord)
+    await Promise.all([
+      checkAndAddSignatureThreshold(blockRecord),
+      checkAndAddKeygenThreshold(blockRecord),
+      checkAndAddAuthorities(blockRecord),
+    ])
   }
 }
 
@@ -92,8 +92,4 @@ export async function handlePublicKeyChanged(event: SubstrateEvent) {
      	`
   )
   await createPublicKey(event)
-}
-
-export async function handleProposerThresholdChanged(event: SubstrateEvent) {
-  await createProposerThreshold(event)
 }

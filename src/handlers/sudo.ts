@@ -1,7 +1,7 @@
 import { SubstrateExtrinsic } from "@subql/types"
 import { getInsideCalls } from "../utils"
-import { dkgHandler } from "./dkg/handler"
 import { createExtrinsic } from "./extrinsic"
+import { dkgHandler } from "./dkg/dkgMetaData/handler"
 
 export async function createSudoCall(extrinsic: SubstrateExtrinsic) {
   await createExtrinsic(extrinsic)

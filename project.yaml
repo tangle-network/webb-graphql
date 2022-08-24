@@ -50,12 +50,6 @@ dataSources:
             module: dkg
             method: PublicKeyChanged
 
-        - handler: handleProposerThresholdChanged
-          kind: substrate/EventHandler
-          filter:
-            module: dkgProposals
-            method: ProposerThresholdChanged
-
         - handler: handleAllDKG
           kind: substrate/EventHandler
           filter:

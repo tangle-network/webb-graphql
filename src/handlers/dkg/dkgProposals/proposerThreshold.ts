@@ -1,10 +1,12 @@
-import { SubstrateEvent } from "@subql/types"
-import { createBlock } from "../../block"
-import { ProposerThreshold } from "../../../types"
-import { createExtrinsic } from "../../extrinsic"
+import {SubstrateEvent} from "@subql/types"
+import {ensureBlock} from "../../block"
+import {ProposerThreshold} from "../../../types"
+import {createExtrinsic} from "../../extrinsic"
 
 export async function ensureProposalThreshold(event: SubstrateEvent) {
-  const blockData = await createBlock(event.block)
+  const blockData = await ensureBlock(
+    event.block.block.header.number.toString()
+  )
   await createExtrinsic(event.extrinsic)
 
   const recordId = `${blockData.id}-${event.idx}`

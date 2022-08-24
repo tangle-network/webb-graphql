@@ -163,3 +163,8 @@ type Proposal @entity {
   signature: String
   block: Block
 }
+
+
+
+
+

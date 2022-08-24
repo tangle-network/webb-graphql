@@ -1,10 +1,6 @@
 import { SubstrateEvent } from "@subql/types"
-import {
-  DKGMetaDataSection,
-  DKGProposalHandlerSection,
-  DKGProposalsSection,
-  DKGSections,
-} from "../type"
+import { DKGProposalsSection, DKGSections } from "../type"
+import { createProposerThreshold } from "./proposerThreshold"
 
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
@@ -16,7 +12,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
   const method = event.event.method as DKGProposalsSection
   switch (method) {
     case DKGProposalsSection.ProposerThresholdChanged:
-      break
+      return createProposerThreshold(event)
     case DKGProposalsSection.ChainWhitelisted:
       break
     case DKGProposalsSection.ProposerAdded:
