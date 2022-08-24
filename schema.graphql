@@ -103,27 +103,36 @@ type PublicKey @entity {
 type ProposerThreshold @entity {
   id: ID!
 
-  # Number of proposers for
+  # Number of voters for a proposal to execute
   value: Int
 
   block: Block
 }
 
+type ProposerCount @entity {
+	id: ID!
+
+	# Number of proposers in set
+	value: Int
+
+	block: Block
+}
+
 type Session @entity {
-  id: ID!
-  index: Int!
-  # `t` in the `n` of `t` , n signature threshold , t keygen threshold
-  keygenThreshold: KeygenThreshold!
-  # currently has 1 values ,
-  proposerThreshold: ProposerThreshold!
-  # `n` in the `n` of `t` , n signature threshold , t keygen threshold
-  signatureThreshold: SignatureThreshold!
-  # The whole authorities
-  authorities: [Authorities!]!
-  # The best authorities
-  bestAuthorizes: [Authorities!]!
-  publicKey: PublicKey
-  nextPublicKey: PublicKey
+	id: ID!
+	index: Int!
+	# `t` in the `n` of `t` , n signature threshold , t keygen threshold
+	keygenThreshold: KeygenThreshold!
+	# currently has 1 values ,
+	proposerThreshold: ProposerThreshold!
+	# `n` in the `n` of `t` , n signature threshold , t keygen threshold
+	signatureThreshold: SignatureThreshold!
+	# The whole authorities
+	authorities: [Authorities!]!
+	# The best authorities
+	bestAuthorizes: [Authorities!]!
+	publicKey: PublicKey
+	nextPublicKey: PublicKey
 }
 
 enum ProposalType {
