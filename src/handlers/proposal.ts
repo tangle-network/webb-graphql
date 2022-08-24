@@ -1,10 +1,14 @@
-import { Proposal } from "../types"
+import { ProposalItem } from "../types"
 
 export async function ensureProposal(proposalId: number) {
-  // const proposal = await Proposal.get(proposalId)
-  // if (proposal) {
-  //   return proposal
-  // }
+  const proposal = await ProposalItem.get(String(proposalId))
+  if (proposal) {
+    return proposal
+  }
+
+  // const props = ProposalItem.create({
+  //   id,
+  // })
 }
 
 export async function createProposal() {

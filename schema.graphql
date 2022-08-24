@@ -155,16 +155,13 @@ enum ProposalType {
   FeeRecipientUpdate
 }
 
-type Proposal @entity {
+type ProposalItem @entity {
   id: ID!
-  proposalId: String! @index(unique: false)
+  proposalId: String!
   type: ProposalType!
   data: String!
   signature: String
+  removed: Boolean
+
   block: Block
 }
-
-
-
-
-

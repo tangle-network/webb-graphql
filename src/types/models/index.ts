@@ -22,5 +22,5 @@ export {ProposerThreshold} from "./ProposerThreshold"
 
 export {ProposerCount} from "./ProposerCount"
 
-export {Proposal} from "./Proposal"
+export {ProposalItem} from "./ProposalItem"
 
