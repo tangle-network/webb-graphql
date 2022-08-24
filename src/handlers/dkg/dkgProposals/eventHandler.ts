@@ -2,6 +2,7 @@ import { SubstrateEvent } from "@subql/types"
 import {
   DKGMetaDataSection,
   DKGProposalHandlerSection,
+  DKGProposalsSection,
   DKGSections,
 } from "../type"
 
@@ -12,21 +13,29 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     )
     return
   }
-  const method = event.event.method as DKGMetaDataSection
+  const method = event.event.method as DKGProposalsSection
   switch (method) {
-    case DKGMetaDataSection.PublicKeySubmitted:
+    case DKGProposalsSection.ProposerThresholdChanged:
       break
-    case DKGMetaDataSection.NextPublicKeySubmitted:
+    case DKGProposalsSection.ChainWhitelisted:
       break
-    case DKGMetaDataSection.NextPublicKeySignatureSubmitted:
+    case DKGProposalsSection.ProposerAdded:
       break
-    case DKGMetaDataSection.PublicKeyChanged:
+    case DKGProposalsSection.ProposerRemoved:
       break
-    case DKGMetaDataSection.PublicKeySignatureChanged:
+    case DKGProposalsSection.VoteFor:
       break
-    case DKGMetaDataSection.MisbehaviourReportsSubmitted:
+    case DKGProposalsSection.VoteAgainst:
       break
-    case DKGMetaDataSection.RefreshKeysFinished:
+    case DKGProposalsSection.ProposalApproved:
+      break
+    case DKGProposalsSection.ProposalRejected:
+      break
+    case DKGProposalsSection.ProposalSucceeded:
+      break
+    case DKGProposalsSection.ProposalFailed:
+      break
+    case DKGProposalsSection.AuthorityProposersReset:
       break
   }
 }
