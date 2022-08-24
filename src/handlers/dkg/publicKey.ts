@@ -4,12 +4,11 @@ import { createBlock } from "../block"
 import { createExtrinsic } from "../extrinsic"
 
 export async function ensurePublicKey(event: SubstrateEvent) {
-  logger.info("ensurePublicKey :Before block")
   const blockData = await createBlock(event.block)
-  logger.info("ensurePublicKey :After block")
-  logger.info("ensurePublicKey :before createExtrinsic")
-  await createExtrinsic(event.extrinsic)
-  logger.info("ensurePublicKey :After createExtrinsic")
+
+  if (event.extrinsic) {
+    await createExtrinsic(undefined)
+  }
 
   const recordId = `${blockData.id}-${event.idx}`
   const data = new PublicKey(recordId)
