@@ -5,9 +5,9 @@ import assert from 'assert';
 
 
 
-type UnsigedProposalQueueProps = Omit<UnsigedProposalQueue, NonNullable<FunctionPropertyNames<UnsigedProposalQueue>>>;
+type UnSigedProposalQueueProps = Omit<UnSigedProposalQueue, NonNullable<FunctionPropertyNames<UnSigedProposalQueue>>>;
 
-export class UnsigedProposalQueue implements Entity {
+export class UnSigedProposalQueue implements Entity {
 
     constructor(id: string) {
         this.id = id;
@@ -16,50 +16,41 @@ export class UnsigedProposalQueue implements Entity {
 
     public id: string;
 
-    public proposalsId: string[];
-
     public blockId?: string;
 
 
     async save(): Promise<void>{
         let id = this.id;
-        assert(id !== null, "Cannot save UnsigedProposalQueue entity without an ID");
-        await store.set('UnsigedProposalQueue', id.toString(), this);
+        assert(id !== null, "Cannot save UnSigedProposalQueue entity without an ID");
+        await store.set('UnSigedProposalQueue', id.toString(), this);
     }
     static async remove(id:string): Promise<void>{
-        assert(id !== null, "Cannot remove UnsigedProposalQueue entity without an ID");
-        await store.remove('UnsigedProposalQueue', id.toString());
+        assert(id !== null, "Cannot remove UnSigedProposalQueue entity without an ID");
+        await store.remove('UnSigedProposalQueue', id.toString());
     }
 
-    static async get(id:string): Promise<UnsigedProposalQueue | undefined>{
-        assert((id !== null && id !== undefined), "Cannot get UnsigedProposalQueue entity without an ID");
-        const record = await store.get('UnsigedProposalQueue', id.toString());
+    static async get(id:string): Promise<UnSigedProposalQueue | undefined>{
+        assert((id !== null && id !== undefined), "Cannot get UnSigedProposalQueue entity without an ID");
+        const record = await store.get('UnSigedProposalQueue', id.toString());
         if (record){
-            return UnsigedProposalQueue.create(record as UnsigedProposalQueueProps);
+            return UnSigedProposalQueue.create(record as UnSigedProposalQueueProps);
         }else{
             return;
         }
     }
 
 
-    static async getByProposalsId(proposalsId: string): Promise<UnsigedProposalQueue[] | undefined>{
+    static async getByBlockId(blockId: string): Promise<UnSigedProposalQueue[] | undefined>{
       
-      const records = await store.getByField('UnsigedProposalQueue', 'proposalsId', proposalsId);
-      return records.map(record => UnsigedProposalQueue.create(record as UnsigedProposalQueueProps));
-      
-    }
-
-    static async getByBlockId(blockId: string): Promise<UnsigedProposalQueue[] | undefined>{
-      
-      const records = await store.getByField('UnsigedProposalQueue', 'blockId', blockId);
-      return records.map(record => UnsigedProposalQueue.create(record as UnsigedProposalQueueProps));
+      const records = await store.getByField('UnSigedProposalQueue', 'blockId', blockId);
+      return records.map(record => UnSigedProposalQueue.create(record as UnSigedProposalQueueProps));
       
     }
 
 
-    static create(record: UnsigedProposalQueueProps): UnsigedProposalQueue {
+    static create(record: UnSigedProposalQueueProps): UnSigedProposalQueue {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new UnsigedProposalQueue(record.id);
+        let entity = new UnSigedProposalQueue(record.id);
         Object.assign(entity,record);
         return entity;
     }

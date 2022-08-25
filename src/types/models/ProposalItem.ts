@@ -32,6 +32,8 @@ export class ProposalItem implements Entity {
 
     public blockId?: string;
 
+    public unsignedQueueId?: string;
+
 
     async save(): Promise<void>{
         let id = this.id;
@@ -64,6 +66,13 @@ export class ProposalItem implements Entity {
     static async getByBlockId(blockId: string): Promise<ProposalItem[] | undefined>{
       
       const records = await store.getByField('ProposalItem', 'blockId', blockId);
+      return records.map(record => ProposalItem.create(record as ProposalItemProps));
+      
+    }
+
+    static async getByUnsignedQueueId(unsignedQueueId: string): Promise<ProposalItem[] | undefined>{
+      
+      const records = await store.getByField('ProposalItem', 'unsignedQueueId', unsignedQueueId);
       return records.map(record => ProposalItem.create(record as ProposalItemProps));
       
     }

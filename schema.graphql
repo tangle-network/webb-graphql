@@ -167,9 +167,17 @@ type ProposalItem @entity {
 	removed: Boolean
 
 	block: Block
+
+	unsignedQueue: UnSigedProposalQueue
+
+
 }
-type UnsigedProposalQueue @entity {
+
+
+
+
+type UnSigedProposalQueue @entity {
 	id: ID!
-	proposals:[ProposalItem]!
+	proposals:[ProposalItem]! @derivedFrom(field: "unsignedQueue")
 	block: Block
 }

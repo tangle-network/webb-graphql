@@ -24,5 +24,5 @@ export {ProposerCount} from "./ProposerCount"
 
 export {ProposalItem} from "./ProposalItem"
 
-export {UnsigedProposalQueue} from "./UnsigedProposalQueue"
+export {UnSigedProposalQueue} from "./UnSigedProposalQueue"
 
