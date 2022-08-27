@@ -4,6 +4,8 @@ import { createProposerThreshold } from "./proposerThreshold"
 import "@webb-tools/types"
 
 import { PalletDkgProposalsEvent } from "@polkadot/types/lookup"
+import { DKGProposalsEvent } from "./types"
+import { EventDecoder } from "../../../utils"
 
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
@@ -13,22 +15,15 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     return
   }
   const method = event.event.method as DKGProposalsSection
-
-  logger.info(
-    `dkgProposalEventHandler: ${method}  ,data :${JSON.stringify(
-      event.event.data.toJSON()
-    )}`
-  )
-
-  const dkgEvent = (event as unknown) as PalletDkgProposalsEvent
-
+  const eventDecoded = new EventDecoder<DKGProposalsEvent>(event)
   switch (method) {
-    case DKGProposalsSection.ProposerThresholdChanged:
-      const data = dkgEvent.asProposerThresholdChanged
-      logger.info(
-        `ProposalThresholdChanged: Next Threshold ${data.newThreshold.toString}`
+    case DKGProposalsSection.ProposerThresholdChanged: {
+      const eventData = eventDecoded.as(
+        DKGProposalsSection.ProposerThresholdChanged
       )
-      return createProposerThreshold(event)
+      const thresholdValue = eventData.newThreshold.toString()
+      return createProposerThreshold(thresholdValue, eventDecoded.metaData)
+    }
     case DKGProposalsSection.ChainWhitelisted:
       break
     case DKGProposalsSection.ProposerAdded:
