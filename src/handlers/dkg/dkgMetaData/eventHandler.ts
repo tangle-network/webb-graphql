@@ -1,8 +1,12 @@
 import { SubstrateEvent } from "@subql/types"
-import { DKGMetaDataSection, DKGSections } from "../type"
+import {
+  DKGMetaDataEvent,
+  DKGMetaDataSection,
+  DKGSections,
+  EventDecoder,
+} from "../type"
 
-import { PalletDkgMetadataEvent } from "@polkadot/types/lookup"
-export async function dkgMetaDataEventHandler(event: SubstrateEvent) {
+export const dkgMetaDataEventHandler = (event: SubstrateEvent) => {
   if (event.event.section !== DKGSections.DKGMetaData) {
     logger.error(
       `dkgProposalsEventHandler: event.event.section(${event.event.section}) !== DKGSections.DKGMetaData`
@@ -11,42 +15,78 @@ export async function dkgMetaDataEventHandler(event: SubstrateEvent) {
   }
 
   const method = event.event.method as DKGMetaDataSection
-  const dkgEvent = (event as unknown) as PalletDkgMetadataEvent
-  const eventRoot = api.registry.createType("PalletDkgMetadataEvent", event)
-  const eventRoot1 = api.registry.createType("PalletDkgMetadataEvent", event)
-  logger.info(`DKGEventType eventRoot :${eventRoot1.type}`)
-  logger.info(`DKGEventType eventRoot1 :${eventRoot1.type}`)
+  const eventDecoded = new EventDecoder<DKGMetaDataEvent>(event)
+
   switch (method) {
     case DKGMetaDataSection.PublicKeySubmitted:
+      {
+        const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
+        logger.info(
+          `PublicKeySubmitted compressedPubKey: ${eventData.uncompressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+        )
+      }
       break
     case DKGMetaDataSection.NextPublicKeySubmitted:
       {
-        const nextPublicKey = dkgEvent.asNextPublicKeySubmitted
-        logger.info(`DKGEventType :${dkgEvent.type}`)
-        const compressedKey = nextPublicKey.compressedPubKey.toHex()
-        const unCompressedKey = nextPublicKey.uncompressedPubKey.toHex()
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.NextPublicKeySubmitted
+        )
         logger.info(
-          `NextPublicKeySubmitted: Next Public Key compressedKey => ${compressedKey} & uncompressedPubKey => ${unCompressedKey}`
+          `NextPublicKeySubmitted compressedPubKey: ${eventData.compressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
         )
       }
       break
     case DKGMetaDataSection.NextPublicKeySignatureSubmitted:
-      break
-    case DKGMetaDataSection.PublicKeyChanged:
       {
-        const nextPublicKey = dkgEvent.asPublicKeyChanged
-        const compressedKey = nextPublicKey.compressedPubKey.toHex()
-        const unCompressedKey = nextPublicKey.uncompressedPubKey.toHex()
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.NextPublicKeySignatureSubmitted
+        )
         logger.info(
-          `PublicKeyChanged: Next Public Key compressedKey => ${compressedKey} & uncompressedPubKey => ${unCompressedKey}`
+          `NextPublicKeySignatureSubmitted pubKeySig: ${eventData.pubKeySig.toString()} `
         )
       }
       break
-    case DKGMetaDataSection.PublicKeySignatureChanged:
+    case DKGMetaDataSection.PublicKeyChanged:
+      {
+        const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeyChanged)
+        logger.info(
+          `PublicKeyChanged compressedPubKey: ${eventData.uncompressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+        )
+      }
       break
+    case DKGMetaDataSection.PublicKeySignatureChanged: {
+      const eventData = eventDecoded.as(
+        DKGMetaDataSection.PublicKeySignatureChanged
+      )
+      logger.info(
+        `PublicKeySignatureChanged pubKeySig: ${eventData.pubKeySig.toString()} `
+      )
+    }
     case DKGMetaDataSection.MisbehaviourReportsSubmitted:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.MisbehaviourReportsSubmitted
+        )
+        logger.info(
+          `PublicKeySignatureChanged
+          report: ${JSON.stringify(
+            eventData.misbehaviourType.toHuman(),
+            null,
+            2
+          )}
+          reporters: ${eventData.reporters.map((r) => r.toString())} `
+        )
+      }
       break
     case DKGMetaDataSection.RefreshKeysFinished:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.RefreshKeysFinished
+        )
+        logger.info(
+          `PublicKeySignatureChanged nextAuthoritySetId: ${eventData.nextAuthoritySetId} `
+        )
+      }
       break
   }
 }

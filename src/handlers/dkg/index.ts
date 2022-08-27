@@ -3,7 +3,6 @@ import { DKGSections } from "./type"
 import { dkgMetaDataEventHandler } from "./dkgMetaData/eventHandler"
 import { dkgProposalEventHandler } from "./dkgProposals/eventHandler"
 import { dkgProposalHandlerEventHandler } from "./dkgProposalHandler/eventHandler"
-
 export async function handleDkgEvents(event: SubstrateEvent) {
   const section = event.event.section as DKGSections
   switch (section) {
