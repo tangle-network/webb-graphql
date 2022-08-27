@@ -75,7 +75,7 @@ export async function handleAllDKG(event: SubstrateEvent) {
   logger.info(
     `AllDKGChangedHandler:
      	path: ${event.event.section}:${event.event.method}
-     	data: ${JSON.stringify(event.event.data)}
+     	data: ${JSON.stringify(event.event.data.toJSON())}
 		block:${block}
 		full: ${JSON.stringify(event, null, 2)}
      	`

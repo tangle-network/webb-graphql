@@ -22,6 +22,7 @@
   "author": "@webb-developers",
   "license": "MIT",
   "devDependencies": {
+	"@webb-tools/types": "0.1.4-98",
     "@polkadot/api": "^9.0.1",
     "@subql/cli": "latest",
     "@subql/types": "latest",
