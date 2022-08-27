@@ -1,10 +1,7 @@
 import { SubstrateEvent } from "@subql/types"
-import {
-  DKGMetaDataEvent,
-  DKGMetaDataSection,
-  DKGSections,
-  EventDecoder,
-} from "../type"
+import { DKGMetaDataSection, DKGSections } from "../type"
+import { EventDecoder } from "../../../utils"
+import { DKGMetaDataEvent } from "./types"
 
 export const dkgMetaDataEventHandler = (event: SubstrateEvent) => {
   if (event.event.section !== DKGSections.DKGMetaData) {
@@ -54,21 +51,23 @@ export const dkgMetaDataEventHandler = (event: SubstrateEvent) => {
         )
       }
       break
-    case DKGMetaDataSection.PublicKeySignatureChanged: {
-      const eventData = eventDecoded.as(
-        DKGMetaDataSection.PublicKeySignatureChanged
-      )
-      logger.info(
-        `PublicKeySignatureChanged pubKeySig: ${eventData.pubKeySig.toString()} `
-      )
-    }
+    case DKGMetaDataSection.PublicKeySignatureChanged:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.PublicKeySignatureChanged
+        )
+        logger.info(
+          `PublicKeySignatureChanged pubKeySig: ${eventData.pubKeySig.toString()} `
+        )
+      }
+      break
     case DKGMetaDataSection.MisbehaviourReportsSubmitted:
       {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.MisbehaviourReportsSubmitted
         )
         logger.info(
-          `PublicKeySignatureChanged
+          `MisbehaviourReportsSubmitted
           report: ${JSON.stringify(
             eventData.misbehaviourType.toHuman(),
             null,
@@ -84,7 +83,7 @@ export const dkgMetaDataEventHandler = (event: SubstrateEvent) => {
           DKGMetaDataSection.RefreshKeysFinished
         )
         logger.info(
-          `PublicKeySignatureChanged nextAuthoritySetId: ${eventData.nextAuthoritySetId} `
+          `RefreshKeysFinished nextAuthoritySetId: ${eventData.nextAuthoritySetId} `
         )
       }
       break
