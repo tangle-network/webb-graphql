@@ -14,6 +14,7 @@
     "target": "es2017"
   },
   "include": [
+	"@webb-tools/types",
     "src/**/*",
     "node_modules/@subql/types/dist/global.d.ts"
   ],

@@ -1,24 +1,24 @@
 export enum DKGSections {
-  DKGMetaData = "DKG",
-  DKGProposals = "DKGProposals",
-  DKGProposalHandler = "DKGProposalHandler",
+  DKGMetaData = "dkg",
+  DKGProposals = "dkgProposals",
+  DKGProposalHandler = "dkgProposalHandler",
 }
 
 export enum DKGMetaDataSection {
   // Current public key submitted
-  PublicKeySubmitted = "publicKeySubmitted",
+  PublicKeySubmitted = "PublicKeySubmitted",
   // Next public key submitted
-  NextPublicKeySubmitted = "nextPublicKeySubmitted",
+  NextPublicKeySubmitted = "NextPublicKeySubmitted",
   // Next public key signature submitted
-  NextPublicKeySignatureSubmitted = "nextPublicKeySignatureSubmitted",
+  NextPublicKeySignatureSubmitted = "NextPublicKeySignatureSubmitted",
   // Current Public Key Changed.
-  PublicKeyChanged = "publicKeyChanged",
+  PublicKeyChanged = "PublicKeyChanged",
   // Current Public Key Signature Changed.
-  PublicKeySignatureChanged = "publicKeySignatureChanged",
+  PublicKeySignatureChanged = "PublicKeySignatureChanged",
   // Misbehaviour reports submitted
-  MisbehaviourReportsSubmitted = "misbehaviourReportsSubmitted",
+  MisbehaviourReportsSubmitted = "MisbehaviourReportsSubmitted",
   // Refresh DKG Keys Finished (forcefully).
-  RefreshKeysFinished = "refreshKeysFinished",
+  RefreshKeysFinished = "RefreshKeysFinished",
 }
 
 export enum DKGProposalsSection {
