@@ -3,7 +3,6 @@ import { DKGProposalsSection, DKGSections } from "../type"
 import { createProposerThreshold } from "./proposerThreshold"
 import "@webb-tools/types"
 
-import { PalletDkgProposalsEvent } from "@polkadot/types/lookup"
 import { DKGProposalsEvent } from "./types"
 import { EventDecoder } from "../../../utils"
 
@@ -30,8 +29,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       break
     case DKGProposalsSection.ProposerRemoved:
       break
-    case DKGProposalsSection.VoteFor:
-      break
+
     case DKGProposalsSection.VoteAgainst:
       break
     case DKGProposalsSection.ProposalApproved:
@@ -41,8 +39,27 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalSucceeded:
       break
     case DKGProposalsSection.ProposalFailed:
+      {
+        const eventData = eventDecoded.as(DKGProposalsSection.ProposalFailed)
+        logger.info(
+          `AuthorityProposersReset
+           chainId: ${JSON.stringify(eventData.chainId.toJSON(), null, 2)}
+           nonce:${eventData.proposalNonce.toString()}
+          `
+        )
+      }
       break
     case DKGProposalsSection.AuthorityProposersReset:
+      {
+        const eventData = eventDecoded.as(
+          DKGProposalsSection.AuthorityProposersReset
+        )
+        logger.info(
+          `AuthorityProposersReset Proposers: ${eventData.proposers.map((i) =>
+            i.toString()
+          )}`
+        )
+      }
       break
   }
 }
