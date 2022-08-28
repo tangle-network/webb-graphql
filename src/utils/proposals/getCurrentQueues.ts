@@ -46,6 +46,8 @@ export interface Proposal {
 export async function SyncSingedProposals() {
   const signedProposalsData = await api.query.dkgProposalHandler.signedProposals.entries()
   const signedProposals = signedProposalsData.map(([key, value]) => {
+	  const payloadKey = key.args[1];
+	  const id = payloadKey.toHuman();
     return {
       key: {
         id: key.toString(),

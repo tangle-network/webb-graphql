@@ -3,6 +3,11 @@ import { DKGProposalHandlerSection, DKGSections } from "../type"
 import "@webb-tools/types"
 import { EventDecoder } from "../../../utils"
 import { DKGProposalHandlerEvent } from "./types"
+import { StorageKey } from "@polkadot/types"
+import {
+  DkgRuntimePrimitivesProposalDkgPayloadKey,
+  WebbProposalsHeaderTypedChainId,
+} from "@polkadot/types/lookup"
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposalHandler) {
@@ -26,12 +31,33 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const signature = eventData.signature
         const targetChainId = eventData.targetChain
         const id = proposalKey.toHex()
-        // TODO add a new signed Proposal to the store
+
+        const storeKey = (api.registry.createType(
+          "StorageKey<[WebbProposalsHeaderTypedChainId,DkgRuntimePrimitivesProposalDkgPayloadKey>",
+          [targetChainId, proposalKey]
+        ) as unknown) as StorageKey<
+          [
+            WebbProposalsHeaderTypedChainId,
+            DkgRuntimePrimitivesProposalDkgPayloadKey
+          ]
+        >
 
         logger.info(
-          `DKGProposalHandlerSection.ProposalSigned: ${eventData.toString()}`
+          `DKGProposalHandlerSection.ProposalSigned: ${eventData.toString()} storageId: ${storeKey.toString()}`
         )
       }
       break
   }
 }
+
+/*
+*
+*
+			const storeKey = api.registry
+				.createType<StorageKey<[WebbProposalsHeaderTypedChainId, DkgRuntimePrimitivesProposalDkgPayloadKey]>>
+				("StorageKey<[WebbProposalsHeaderTypedChainId,DkgRuntimePrimitivesProposalDkgPayloadKey>", [targetChainId, proposalKey])
+
+			console.log({
+				stringId: storeKey?.toString()
+			});
+* */
