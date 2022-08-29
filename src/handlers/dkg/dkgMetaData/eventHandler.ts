@@ -2,8 +2,9 @@ import { SubstrateEvent } from "@subql/types"
 import { DKGMetaDataSection, DKGSections } from "../type"
 import { EventDecoder } from "../../../utils"
 import { DKGMetaDataEvent } from "./types"
+import { createPublicKey } from "./publicKey"
 
-export const dkgMetaDataEventHandler = (event: SubstrateEvent) => {
+export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
   if (event.event.section !== DKGSections.DKGMetaData) {
     logger.error(
       `dkgProposalsEventHandler: event.event.section(${event.event.section}) !== DKGSections.DKGMetaData`
@@ -46,9 +47,11 @@ export const dkgMetaDataEventHandler = (event: SubstrateEvent) => {
     case DKGMetaDataSection.PublicKeyChanged:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeyChanged)
-        logger.info(
-          `PublicKeyChanged compressedPubKey: ${eventData.uncompressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
-        )
+        await createPublicKey({
+          compressed: eventData.compressedPubKey.toString(),
+          uncompressed: eventData.uncompressedPubKey.toString(),
+          blockNumber: eventDecoded.blockNumber,
+        })
       }
       break
     case DKGMetaDataSection.PublicKeySignatureChanged:

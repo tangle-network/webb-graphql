@@ -91,5 +91,4 @@ export async function handlePublicKeyChanged(event: SubstrateEvent) {
 		block:${block}
      	`
   )
-  await createPublicKey(event)
 }
