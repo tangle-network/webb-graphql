@@ -8,7 +8,6 @@ import {
   createSignedProposal,
   createUnsignedProposal,
   dkgPayloadKeyToProposalType,
-  ensureUnsignedQueueProposal,
 } from "../../../utils/proposals/getCurrentQueues"
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
@@ -32,17 +31,15 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           eventData.targetChain,
           eventData.key
         )
-
+        const nonce = Number(eventData.key.value.toString())
         const blockNumber = eventDecoder.blockNumber
-        // Create a new UnsignedProposal Queue
-        const queue = await ensureUnsignedQueueProposal(blockNumber)
         // Create a new unsigned proposal
-        const proposal = await createUnsignedProposal({
+        await createUnsignedProposal({
           proposalId,
           removed: false,
           blockId: blockNumber,
           data: eventData.data.toString(),
-          unsignedQueueId: queue.id,
+          nonce,
           type: dkgPayloadKeyToProposalType(eventData.key),
         })
 
@@ -61,16 +58,16 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           eventData.key
         )
         const blockNumber = eventDecoder.blockNumber
-        logger.info(`Unsigned Proposal Added: ${proposalId}`)
-        // Create a new UnsignedProposal Queue
-        const queue = await ensureUnsignedQueueProposal(blockNumber)
+        const nonce = Number(eventData.key.value.toString())
+
+        logger.info(`Unsigned Proposal Removed: ${proposalId}`)
         // Create a new removed proposal
-        const proposal = await createUnsignedProposal({
+        await createUnsignedProposal({
           proposalId,
           removed: true,
           blockId: blockNumber,
           data: "REMOVED",
-          unsignedQueueId: queue.id,
+          nonce,
           type: dkgPayloadKeyToProposalType(eventData.key),
         })
       }
@@ -87,20 +84,23 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const proposalId = createProposalId(targetChainId, proposalKey)
         const proposalType = dkgPayloadKeyToProposalType(proposalKey)
         const blockNumber = eventDecoder.metaData.blockNumber
+        const nonce = Number(proposalKey.value.toString())
+        logger.info(`Signed Proposal Added: ${proposalId}`)
         await createSignedProposal({
           proposalId,
           signature,
           data,
           type: proposalType,
+          nonce,
           blockId: blockNumber,
         })
-        const queue = await ensureUnsignedQueueProposal(blockNumber)
+
         await createUnsignedProposal({
           proposalId,
           removed: true,
           blockId: blockNumber,
+          nonce,
           data: "REMOVED",
-          unsignedQueueId: queue.id,
           type: dkgPayloadKeyToProposalType(eventData.key),
         })
         // Create a new UnsignedProposal Queue

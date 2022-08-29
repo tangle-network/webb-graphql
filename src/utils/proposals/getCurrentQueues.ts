@@ -2,16 +2,10 @@
  * Get current signed and unsigned queues
  */
 import { ProposalItemProps } from "./index"
-import {
-  Block,
-  ProposalItem,
-  ProposalType,
-  UnSigedProposalQueue,
-} from "../../types"
+import { Block, ProposalItem, ProposalType } from "../../types"
 import { ensureBlock } from "../../handlers"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
-  DkgRuntimePrimitivesProposalStoredUnsignedProposal,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
 
@@ -112,112 +106,53 @@ export type ProposalCreateInput = {
   type: ProposalType
   data: string
   signature: string
+  nonce: number
 }
 
-export async function syncUnsignedProposals(blockId: string) {
-  logger.info("Sync syncUnsignedProposals for block id " + blockId)
-  const queue = await api.query.dkgProposalHandler.unsignedProposalQueue.entries()
-  const parsedQueue = queue.map(([key, value]) => {
-    const proposalData = (value as unknown) as DkgRuntimePrimitivesProposalStoredUnsignedProposal
-    const [chainId, dkgPayloadKey] = key.args
-    // @ts-ignore
-    const proposalId = createProposalId(chainId, dkgPayloadKey)
-    const proposalUnsigned = proposalData.proposal.asUnsigned
-    const data = proposalUnsigned.data.toString()
-    const proposalType = dkgPayloadKeyToProposalType(dkgPayloadKey as any)
-    return {
-      data,
-      proposalId,
-      proposalType,
-    }
-  })
-  let unsigQueue: null | string = null
-  for (const proposal of parsedQueue) {
-    const inserted = await ProposalItem.getByProposalId(proposal.proposalId)
-    const unsigned = inserted.find(
-      (item) => typeof item.signature === "undefined"
-    )
-    if (unsigned) {
-      if (!unsigQueue) {
-        unsigQueue = unsigned.unsignedQueueId || null
-      }
-      continue
-    }
-    if (unsigQueue) {
-      const queue = UnSigedProposalQueue.create({
-        blockId,
-        id: blockId,
-      })
-      await queue.save()
-      unsigQueue = queue.id
-    }
-    await createUnsignedProposal({
-      blockId,
-      data: proposal.data,
-      proposalId: proposal.proposalId,
-      type: proposal.proposalType,
-      unsignedQueueId: unsigQueue,
-      removed: false,
-    })
+function constructProposalItemId(
+  input: Omit<ProposalCreateInput, "signature"> & {
+    signature?: string
+    removed?: boolean
   }
+): string {
+  return `${input.blockId}-${input.proposalId}-${input.nonce}-${
+    input.removed ? "0" : "1"
+  }${input.signature ? "1" : "0"}`
 }
 
-export async function createUnsignedProposal({
-  proposalId,
-  blockId,
-  type,
-  data,
-  unsignedQueueId,
-  removed,
-}: Omit<ProposalCreateInput, "signature"> & {
-  unsignedQueueId: string
-  removed: boolean
-}) {
-  const block = await ensureBlock(blockId)
+export async function createUnsignedProposal(
+  input: Omit<ProposalCreateInput, "signature"> & {
+    removed: boolean
+  }
+) {
+  const { proposalId, blockId, type, data, removed, nonce } = input
+  await ensureBlock(blockId)
+  const id = constructProposalItemId(input)
   const unSingedProposal = ProposalItem.create({
     blockId,
     proposalId,
     data,
     removed,
-    id: `${block.id}-${proposalId}-${removed ? "0" : "1"}`,
+    nonce,
+    id,
     type,
-    unsignedQueueId,
   })
   await unSingedProposal.save()
   return unSingedProposal
 }
 
-export async function ensureUnsignedQueueProposal(blockId: string) {
-  const block = await ensureBlock(blockId)
-  const queuesOfBlock = await UnSigedProposalQueue.getByBlockId(blockId)
-  const queue = queuesOfBlock[0]
-  if (queue) {
-    return queue
-  }
-  const newQueue = UnSigedProposalQueue.create({
-    id: `${block.id}-0`,
-    blockId,
-  })
-  await newQueue.save()
-  return newQueue
-}
-
-export async function createSignedProposal({
-  proposalId,
-  blockId,
-  type,
-  data,
-  signature,
-}: ProposalCreateInput) {
-  const block = await ensureBlock(blockId)
+export async function createSignedProposal(input: ProposalCreateInput) {
+  const { proposalId, blockId, type, data, nonce, signature } = input
+  await ensureBlock(blockId)
+  const id = constructProposalItemId(input)
   const singedProposal = ProposalItem.create({
     blockId,
     proposalId,
     data,
     signature,
     removed: false,
-    id: `${block.id}-${proposalId}-0`,
-
+    nonce,
+    id,
     type,
   })
   await singedProposal.save()
@@ -267,6 +202,7 @@ export async function SyncSingedProposals() {
       data: sigData.data,
       proposalId: signedProposal.key.id,
       type: undefined,
+      nonce: 0,
       id: `${block.id}-${signedProposal.key.id}`,
       blockId: block.id,
       removed: false,
@@ -331,6 +267,7 @@ export async function getCurrentQueues(): Promise<{
       id: `${block.id}-${signedProposal.key.id}`,
       blockId: block.id,
       removed: false,
+      nonce: 0,
     })
     await newSignedProposal.save()
   }

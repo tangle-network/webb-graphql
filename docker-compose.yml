@@ -59,3 +59,4 @@ services:
       - --playground
       - --indexer=http://subquery-node:3000
       - --log-level=debug
+      - --force-clean

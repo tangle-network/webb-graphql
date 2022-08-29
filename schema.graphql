@@ -163,20 +163,9 @@ type ProposalItem @entity {
 	type: ProposalType!
 	data: String!
 	signature: String
-
 	removed: Boolean
-
+	nonce: Int!
 	block: Block
-
-	unsignedQueue: UnSigedProposalQueue
-
 
 }
 
-
-
-
-type UnSigedProposalQueue @entity {
-	id: ID!
-	block: Block
-}
