@@ -169,3 +169,17 @@ type ProposalItem @entity {
 
 }
 
+type ProposalTypeCount @jsonField {
+	type:String!
+	count:String!
+	proposalId:[String!]!
+}
+
+type ProposalCounter @entity {
+	id: ID!
+	signedProposalsCount: Int!
+	unSignedProposalsCount: Int!
+	signedProposalsMap:[ProposalTypeCount]
+	unSignedProposalsMap:[ProposalTypeCount]
+	block: Block
+}

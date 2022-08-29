@@ -2,7 +2,13 @@
  * Get current signed and unsigned queues
  */
 import { ProposalItemProps } from "./index"
-import { Block, ProposalItem, ProposalType } from "../../types"
+import {
+  Block,
+  ProposalCounter,
+  ProposalItem,
+  ProposalType,
+  ProposalTypeCount,
+} from "../../types"
 import { ensureBlock } from "../../handlers"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
@@ -156,6 +162,79 @@ export async function createSignedProposal(input: ProposalCreateInput) {
     type,
   })
   await singedProposal.save()
+}
+
+export async function createProposalCounter(
+  blockId: string
+): Promise<ProposalCounter> {
+  const signedProposalsData = await api.query.dkgProposalHandler.signedProposals.entries()
+  const unSignedProposalsData = await api.query.dkgProposalHandler.unsignedProposalQueue.entries()
+  const parsedSigProposals = signedProposalsData.map(([key]) => {
+    const [chainId, dkgKey] = key.args
+    const proposalType = dkgPayloadKeyToProposalType(dkgKey as any)
+    const proposalId = createProposalId(chainId as any, dkgKey as any)
+    return {
+      proposalId,
+      proposalType,
+    }
+  })
+  const parsedUnSigProposals = unSignedProposalsData.map(([key]) => {
+    const [chainId, dkgKey] = key.args
+    const proposalType = dkgPayloadKeyToProposalType(dkgKey as any)
+    const proposalId = createProposalId(chainId as any, dkgKey as any)
+    return {
+      proposalId,
+      proposalType,
+    }
+  })
+  const signedCounter: Partial<Record<ProposalType, ProposalTypeCount>> = {}
+  const unSignedCounter: Partial<Record<ProposalType, ProposalTypeCount>> = {}
+
+  parsedSigProposals.forEach((proposal) => {
+    if (signedCounter[proposal.proposalType]) {
+      signedCounter[proposal.proposalType].count = String(
+        Number(signedCounter[proposal.proposalType].count) + 1
+      )
+      signedCounter[proposal.proposalType].proposalId.push(proposal.proposalId)
+    } else {
+      signedCounter[proposal.proposalType] = {
+        count: "1",
+        type: proposal.proposalType.toString(),
+        proposalId: [proposal.proposalId],
+      }
+    }
+  })
+
+  parsedUnSigProposals.forEach((proposal) => {
+    if (unSignedCounter[proposal.proposalType]) {
+      unSignedCounter[proposal.proposalType].count = String(
+        Number(unSignedCounter[proposal.proposalType].count) + 1
+      )
+      unSignedCounter[proposal.proposalType].proposalId.push(
+        proposal.proposalId
+      )
+    } else {
+      unSignedCounter[proposal.proposalType] = {
+        count: "1",
+        type: proposal.proposalType.toString(),
+        proposalId: [proposal.proposalId],
+      }
+    }
+  })
+
+  const signedProposalsCount = signedProposalsData.length
+  const unSignedProposalsCount = unSignedProposalsData.length
+
+  const counter = ProposalCounter.create({
+    id: blockId,
+    blockId,
+    signedProposalsCount,
+    unSignedProposalsCount,
+    signedProposalsMap: Object.values(signedCounter),
+    unSignedProposalsMap: Object.values(unSignedCounter),
+  })
+  await counter.save()
+  return counter
 }
 
 /**

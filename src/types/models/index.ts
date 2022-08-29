@@ -24,3 +24,5 @@ export {ProposerCount} from "./ProposerCount"
 
 export {ProposalItem} from "./ProposalItem"
 
+export {ProposalCounter} from "./ProposalCounter"
+
