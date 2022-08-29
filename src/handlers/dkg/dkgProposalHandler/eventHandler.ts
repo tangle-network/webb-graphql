@@ -3,11 +3,11 @@ import { DKGProposalHandlerSection, DKGSections } from "../type"
 import "@webb-tools/types"
 import { EventDecoder } from "../../../utils"
 import { DKGProposalHandlerEvent } from "./types"
-import { StorageKey } from "@polkadot/types"
 import {
-  DkgRuntimePrimitivesProposalDkgPayloadKey,
-  WebbProposalsHeaderTypedChainId,
-} from "@polkadot/types/lookup"
+  createProposalId,
+  createSignedProposal,
+} from "../../../utils/proposals/getCurrentQueues"
+import { ProposalType } from "../../../types"
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposalHandler) {
@@ -27,37 +27,19 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           DKGProposalHandlerSection.ProposalSigned
         )
         const proposalKey = eventData.key
-        const proposalData = eventData.data
-        const signature = eventData.signature
+        const signature = eventData.signature.toString()
+        const data = eventData.data.toString()
         const targetChainId = eventData.targetChain
-        const id = proposalKey.toHex()
+        const proposalId = createProposalId(targetChainId, proposalKey)
 
-        const storeKey = (api.registry.createType(
-          "StorageKey<[WebbProposalsHeaderTypedChainId,DkgRuntimePrimitivesProposalDkgPayloadKey>",
-          [targetChainId, proposalKey]
-        ) as unknown) as StorageKey<
-          [
-            WebbProposalsHeaderTypedChainId,
-            DkgRuntimePrimitivesProposalDkgPayloadKey
-          ]
-        >
-
-        logger.info(
-          `DKGProposalHandlerSection.ProposalSigned: ${eventData.toString()} storageId: ${storeKey.toString()}`
-        )
+        await createSignedProposal({
+          proposalId,
+          signature,
+          data,
+          type: proposalKey.type as ProposalType,
+          blockId: eventDecoder.metaData.blockNumber,
+        })
       }
       break
   }
 }
-
-/*
-*
-*
-			const storeKey = api.registry
-				.createType<StorageKey<[WebbProposalsHeaderTypedChainId, DkgRuntimePrimitivesProposalDkgPayloadKey]>>
-				("StorageKey<[WebbProposalsHeaderTypedChainId,DkgRuntimePrimitivesProposalDkgPayloadKey>", [targetChainId, proposalKey])
-
-			console.log({
-				stringId: storeKey?.toString()
-			});
-* */

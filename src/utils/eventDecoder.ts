@@ -11,7 +11,7 @@ export class EventDecoder<T extends Record<string, any>> {
   readonly blockNumber: string
   readonly id: number
   constructor(public readonly event: SubstrateEvent) {
-    this._data = event.event.data.toHuman() as unknown
+    this._data = event.event.data as unknown
     this._key = event.event.method.toString() as unknown
     this.blockNumber = event.block.block.header.number.toString()
     this.id = event.idx

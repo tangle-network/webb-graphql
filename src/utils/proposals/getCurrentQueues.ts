@@ -4,7 +4,10 @@
 import { ProposalItemProps } from "./index"
 import { Block, ProposalItem, ProposalType } from "../../types"
 import { ensureBlock } from "../../handlers"
-
+import {
+  DkgRuntimePrimitivesProposalDkgPayloadKey,
+  WebbProposalsHeaderTypedChainId,
+} from "@polkadot/types/lookup"
 export interface UnsignedProposalQueueItem {
   key: Key
   value: Value
@@ -39,6 +42,65 @@ export interface Proposal {
   signed: Signed
 }
 
+export function createProposalId(
+  chainId: WebbProposalsHeaderTypedChainId,
+  dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey
+): string {
+  const nonceValue = dkgKey.value.toString()
+  const dkgKeyHash = dkgKey.hash.toString()
+  const chainIdValue = chainId.value.toString()
+  const chainIdHash = chainId.hash.toString()
+  logger.info(
+    `ProposalKey crated ${JSON.stringify(
+      { nonceValue, dkgKeyHash, chainIdValue, chainIdHash },
+      null,
+      2
+    )}`
+  )
+  return `${dkgKeyHash.replace("0x", "")}-${chainIdValue}`
+}
+
+export async function ensureSingedProposal(
+  proposalId: string
+): Promise<ProposalItem | null> {
+  const items = await ProposalItem.getByProposalId(proposalId)
+  const signed = items.find((item) => typeof item.signature !== "undefined")
+  if (signed) {
+    return signed
+  }
+  return null
+}
+
+export type ProposalCreateInput = {
+  blockId: string
+  proposalId: string
+  type: ProposalType
+  data: string
+  signature: string
+}
+export async function createSignedProposal({
+  proposalId,
+  blockId,
+  type,
+  data,
+  signature,
+}: ProposalCreateInput) {
+  const block = await ensureBlock(blockId)
+  const singedProposal = await ensureSingedProposal(proposalId)
+  if (!singedProposal) {
+    const singedProposal = ProposalItem.create({
+      blockId,
+      proposalId,
+      data,
+      signature,
+      removed: false,
+      id: `${block.id}-${proposalId}`,
+      type,
+    })
+    await singedProposal.save()
+  }
+}
+
 /**
  *
  * Fetch all the proposals from chain
@@ -46,8 +108,8 @@ export interface Proposal {
 export async function SyncSingedProposals() {
   const signedProposalsData = await api.query.dkgProposalHandler.signedProposals.entries()
   const signedProposals = signedProposalsData.map(([key, value]) => {
-	  const payloadKey = key.args[1];
-	  const id = payloadKey.toHuman();
+    const payloadKey = key.args[1]
+    const id = payloadKey.toHuman()
     return {
       key: {
         id: key.toString(),
