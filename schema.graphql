@@ -178,6 +178,5 @@ type ProposalItem @entity {
 
 type UnSigedProposalQueue @entity {
 	id: ID!
-	proposals:[ProposalItem]! @derivedFrom(field: "unsignedQueue")
 	block: Block
 }

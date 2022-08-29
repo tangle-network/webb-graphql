@@ -157,6 +157,7 @@ export async function syncUnsignedProposals(blockId: string) {
       proposalId: proposal.proposalId,
       type: proposal.proposalType,
       unsignedQueueId: unsigQueue,
+      removed: false,
     })
   }
 }
@@ -167,21 +168,38 @@ export async function createUnsignedProposal({
   type,
   data,
   unsignedQueueId,
-}: Omit<ProposalCreateInput, "signature"> & { unsignedQueueId: string }) {
+  removed,
+}: Omit<ProposalCreateInput, "signature"> & {
+  unsignedQueueId: string
+  removed: boolean
+}) {
   const block = await ensureBlock(blockId)
-  const singedProposal = await ensureSingedProposal(proposalId)
-  if (!singedProposal) {
-    const singedProposal = ProposalItem.create({
-      blockId,
-      proposalId,
-      data,
-      removed: false,
-      id: `${block.id}-${proposalId}`,
-      type,
-      unsignedQueueId,
-    })
-    await singedProposal.save()
+  const unSingedProposal = ProposalItem.create({
+    blockId,
+    proposalId,
+    data,
+    removed,
+    id: `${block.id}-${proposalId}-${removed ? "0" : "1"}`,
+    type,
+    unsignedQueueId,
+  })
+  await unSingedProposal.save()
+  return unSingedProposal
+}
+
+export async function ensureUnsignedQueueProposal(blockId: string) {
+  const block = await ensureBlock(blockId)
+  const queuesOfBlock = await UnSigedProposalQueue.getByBlockId(blockId)
+  const queue = queuesOfBlock[0]
+  if (queue) {
+    return queue
   }
+  const newQueue = UnSigedProposalQueue.create({
+    id: `${block.id}-0`,
+    blockId,
+  })
+  await newQueue.save()
+  return newQueue
 }
 
 export async function createSignedProposal({
@@ -198,7 +216,8 @@ export async function createSignedProposal({
     data,
     signature,
     removed: false,
-    id: `${block.id}-${proposalId}`,
+    id: `${block.id}-${proposalId}-0`,
+
     type,
   })
   await singedProposal.save()
