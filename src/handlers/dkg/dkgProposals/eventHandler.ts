@@ -5,6 +5,7 @@ import "@webb-tools/types"
 
 import { DKGProposalsEvent } from "./types"
 import { EventDecoder } from "../../../utils"
+import { createProposers } from "./index"
 
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
@@ -43,11 +44,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
         const eventData = eventDecoded.as(
           DKGProposalsSection.AuthorityProposersReset
         )
-        logger.info(
-          `AuthorityProposersReset Proposers: ${eventData.proposers.map((i) =>
-            i.toString()
-          )}`
-        )
+        const proposers = eventData.proposers.map((i) => i.toString())
+        await createProposers(eventDecoded.blockNumber, proposers)
       }
       break
   }
