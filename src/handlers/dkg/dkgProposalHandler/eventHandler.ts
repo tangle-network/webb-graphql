@@ -8,7 +8,6 @@ import {
   createSignedProposal,
   dkgPayloadKeyToProposalType,
 } from "../../../utils/proposals/getCurrentQueues"
-import { ProposalType } from "../../../types"
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposalHandler) {

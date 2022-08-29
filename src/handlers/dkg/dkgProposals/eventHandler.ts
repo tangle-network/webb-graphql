@@ -5,6 +5,7 @@ import "@webb-tools/types"
 
 import { DKGProposalsEvent } from "./types"
 import { EventDecoder } from "../../../utils"
+import { syncUnsignedProposals } from "../../../utils/proposals/getCurrentQueues"
 
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
@@ -29,24 +30,14 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       break
     case DKGProposalsSection.ProposerRemoved:
       break
-
+    case DKGProposalsSection.VoteFor:
     case DKGProposalsSection.VoteAgainst:
-      break
     case DKGProposalsSection.ProposalApproved:
-      break
-    case DKGProposalsSection.ProposalRejected:
-      break
     case DKGProposalsSection.ProposalSucceeded:
-      break
     case DKGProposalsSection.ProposalFailed:
       {
-        const eventData = eventDecoded.as(DKGProposalsSection.ProposalFailed)
-        logger.info(
-          `AuthorityProposersReset
-           chainId: ${JSON.stringify(eventData.chainId.toJSON(), null, 2)}
-           nonce:${eventData.proposalNonce.toString()}
-          `
-        )
+        const blockNumber = eventDecoded.blockNumber
+        await syncUnsignedProposals(blockNumber)
       }
       break
     case DKGProposalsSection.AuthorityProposersReset:

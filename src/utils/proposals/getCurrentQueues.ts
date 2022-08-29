@@ -2,10 +2,16 @@
  * Get current signed and unsigned queues
  */
 import { ProposalItemProps } from "./index"
-import { Block, ProposalItem, ProposalType } from "../../types"
+import {
+  Block,
+  ProposalItem,
+  ProposalType,
+  UnSigedProposalQueue,
+} from "../../types"
 import { ensureBlock } from "../../handlers"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
+  DkgRuntimePrimitivesProposalStoredUnsignedProposal,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
 
@@ -84,18 +90,9 @@ export function createProposalId(
   chainId: WebbProposalsHeaderTypedChainId,
   dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey
 ): string {
-  const nonceValue = dkgKey.value.toString()
   const dkgKeyHash = dkgKey.hash.toString()
   const chainIdValue = chainId.value.toString()
-  const chainIdHash = chainId.hash.toString()
-  logger.info(
-    `ProposalKey crated ${JSON.stringify(
-      { nonceValue, dkgKeyHash, chainIdValue, chainIdHash },
-      null,
-      2
-    )}`
-  )
-  return `${dkgKeyHash.replace("0x", "")}-${chainIdValue}`
+  return `${dkgKeyHash.replace("0x", "")}-${chainIdValue.trim() || "0"}`
 }
 
 export async function ensureSingedProposal(
@@ -116,6 +113,76 @@ export type ProposalCreateInput = {
   data: string
   signature: string
 }
+
+export async function syncUnsignedProposals(blockId: string) {
+  const queue = await api.query.dkgProposalHandler.unsignedProposalQueue.entries()
+  const parsedQueue = queue.map(([key, value]) => {
+    const proposalData = (value as unknown) as DkgRuntimePrimitivesProposalStoredUnsignedProposal
+    const [chainId, dkgPayloadKey] = key.args
+    // @ts-ignore
+    const proposalId = createProposalId(chainId, dkgPayloadKey)
+    const proposalUnsigned = proposalData.proposal.asUnsigned
+    const data = proposalUnsigned.data.toString()
+    const proposalType = dkgPayloadKeyToProposalType(dkgPayloadKey as any)
+    return {
+      data,
+      proposalId,
+      proposalType,
+    }
+  })
+  let unsigQueue: null | string = null
+  for (const proposal of parsedQueue) {
+    const inserted = await ProposalItem.getByProposalId(proposal.proposalId)
+    const unsigned = inserted.find(
+      (item) => typeof item.signature === "undefined"
+    )
+    if (unsigned) {
+      if (!unsigQueue) {
+        unsigQueue = unsigned.unsignedQueueId || null
+      }
+      continue
+    }
+    if (unsigQueue) {
+      const queue = UnSigedProposalQueue.create({
+        blockId,
+        id: blockId,
+      })
+      await queue.save()
+      unsigQueue = queue.id
+    }
+    await createUnsignedProposal({
+      blockId,
+      data: proposal.data,
+      proposalId: proposal.proposalId,
+      type: proposal.proposalType,
+      unsignedQueueId: unsigQueue,
+    })
+  }
+}
+
+export async function createUnsignedProposal({
+  proposalId,
+  blockId,
+  type,
+  data,
+  unsignedQueueId,
+}: Omit<ProposalCreateInput, "signature"> & { unsignedQueueId: string }) {
+  const block = await ensureBlock(blockId)
+  const singedProposal = await ensureSingedProposal(proposalId)
+  if (!singedProposal) {
+    const singedProposal = ProposalItem.create({
+      blockId,
+      proposalId,
+      data,
+      removed: false,
+      id: `${block.id}-${proposalId}`,
+      type,
+      unsignedQueueId,
+    })
+    await singedProposal.save()
+  }
+}
+
 export async function createSignedProposal({
   proposalId,
   blockId,
@@ -124,19 +191,16 @@ export async function createSignedProposal({
   signature,
 }: ProposalCreateInput) {
   const block = await ensureBlock(blockId)
-  const singedProposal = await ensureSingedProposal(proposalId)
-  if (!singedProposal) {
-    const singedProposal = ProposalItem.create({
-      blockId,
-      proposalId,
-      data,
-      signature,
-      removed: false,
-      id: `${block.id}-${proposalId}`,
-      type,
-    })
-    await singedProposal.save()
-  }
+  const singedProposal = ProposalItem.create({
+    blockId,
+    proposalId,
+    data,
+    signature,
+    removed: false,
+    id: `${block.id}-${proposalId}`,
+    type,
+  })
+  await singedProposal.save()
 }
 
 /**
