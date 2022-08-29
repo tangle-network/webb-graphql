@@ -8,6 +8,7 @@ import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
+
 export interface UnsignedProposalQueueItem {
   key: Key
   value: Value
@@ -40,6 +41,43 @@ export interface Signed {
 export interface Proposal {
   unsigned: Unsigned
   signed: Signed
+}
+
+export function dkgPayloadKeyToProposalType(
+  dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey
+): ProposalType {
+  switch (dkgKey.type) {
+    case "EvmProposal":
+      return ProposalType.EvmProposal
+    case "RefreshVote":
+      return ProposalType.RefreshVote
+    case "ProposerSetUpdateProposal":
+      return ProposalType.ProposerSetUpdateProposal
+    case "AnchorCreateProposal":
+      return ProposalType.AnchorCreateProposal
+    case "AnchorUpdateProposal":
+      return ProposalType.AnchorUpdateProposal
+    case "TokenAddProposal":
+      return ProposalType.TokenAddProposal
+    case "TokenRemoveProposal":
+      return ProposalType.TokenRemoveProposal
+    case "WrappingFeeUpdateProposal":
+      return ProposalType.WrappingFeeUpdateProposal
+    case "ResourceIdUpdateProposal":
+      return ProposalType.ResourceIdUpdateProposal
+    case "RescueTokensProposal":
+      return ProposalType.RescueTokensProposal
+    case "MaxDepositLimitUpdateProposal":
+      return ProposalType.MaxDepositLimitUpdateProposal
+    case "MinWithdrawalLimitUpdateProposal":
+      return ProposalType.MinWithdrawalLimitUpdateProposal
+    case "SetVerifierProposal":
+      return ProposalType.SetVerifierProposal
+    case "SetTreasuryHandlerProposal":
+      return ProposalType.SetTreasuryHandlerProposal
+    case "FeeRecipientUpdateProposal":
+      return ProposalType.FeeRecipientUpdateProposal
+  }
 }
 
 export function createProposalId(

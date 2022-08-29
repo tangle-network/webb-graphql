@@ -140,21 +140,21 @@ type ProposerCount @entity {
 #}
 
 enum ProposalType {
-	Refresh
-	ProposerSetUpdate
-	EVM
-	AnchorCreate
-	AnchorUpdate
-	TokenAdd
-	TokenRemove
-	WrappingFeeUpdate
-	ResourceIdUpdate
-	RescueTokens
-	MaxDepositLimitUpdate
-	MinWithdrawalLimitUpdate
-	SetVerifier
-	SetTreasuryHandler
-	FeeRecipientUpdate
+	EvmProposal
+	RefreshVote
+	ProposerSetUpdateProposal
+	AnchorCreateProposal
+	AnchorUpdateProposal
+	TokenAddProposal
+	TokenRemoveProposal
+	WrappingFeeUpdateProposal
+	ResourceIdUpdateProposal
+	RescueTokensProposal
+	MaxDepositLimitUpdateProposal
+	MinWithdrawalLimitUpdateProposal
+	SetVerifierProposal
+	SetTreasuryHandlerProposal
+	FeeRecipientUpdateProposal
 }
 
 type ProposalItem @entity {

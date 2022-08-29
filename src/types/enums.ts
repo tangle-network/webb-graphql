@@ -4,35 +4,35 @@
 
 export enum ProposalType {
 
-    Refresh = "Refresh",
+    EvmProposal = "EvmProposal",
 
-    ProposerSetUpdate = "ProposerSetUpdate",
+    RefreshVote = "RefreshVote",
 
-    EVM = "EVM",
+    ProposerSetUpdateProposal = "ProposerSetUpdateProposal",
 
-    AnchorCreate = "AnchorCreate",
+    AnchorCreateProposal = "AnchorCreateProposal",
 
-    AnchorUpdate = "AnchorUpdate",
+    AnchorUpdateProposal = "AnchorUpdateProposal",
 
-    TokenAdd = "TokenAdd",
+    TokenAddProposal = "TokenAddProposal",
 
-    TokenRemove = "TokenRemove",
+    TokenRemoveProposal = "TokenRemoveProposal",
 
-    WrappingFeeUpdate = "WrappingFeeUpdate",
+    WrappingFeeUpdateProposal = "WrappingFeeUpdateProposal",
 
-    ResourceIdUpdate = "ResourceIdUpdate",
+    ResourceIdUpdateProposal = "ResourceIdUpdateProposal",
 
-    RescueTokens = "RescueTokens",
+    RescueTokensProposal = "RescueTokensProposal",
 
-    MaxDepositLimitUpdate = "MaxDepositLimitUpdate",
+    MaxDepositLimitUpdateProposal = "MaxDepositLimitUpdateProposal",
 
-    MinWithdrawalLimitUpdate = "MinWithdrawalLimitUpdate",
+    MinWithdrawalLimitUpdateProposal = "MinWithdrawalLimitUpdateProposal",
 
-    SetVerifier = "SetVerifier",
+    SetVerifierProposal = "SetVerifierProposal",
 
-    SetTreasuryHandler = "SetTreasuryHandler",
+    SetTreasuryHandlerProposal = "SetTreasuryHandlerProposal",
 
-    FeeRecipientUpdate = "FeeRecipientUpdate",
+    FeeRecipientUpdateProposal = "FeeRecipientUpdateProposal",
 
 }
 

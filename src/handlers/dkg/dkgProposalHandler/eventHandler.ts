@@ -6,6 +6,7 @@ import { DKGProposalHandlerEvent } from "./types"
 import {
   createProposalId,
   createSignedProposal,
+  dkgPayloadKeyToProposalType,
 } from "../../../utils/proposals/getCurrentQueues"
 import { ProposalType } from "../../../types"
 
@@ -31,12 +32,12 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const data = eventData.data.toString()
         const targetChainId = eventData.targetChain
         const proposalId = createProposalId(targetChainId, proposalKey)
-
+        const proposalType = dkgPayloadKeyToProposalType(proposalKey)
         await createSignedProposal({
           proposalId,
           signature,
           data,
-          type: proposalKey.type as ProposalType,
+          type: proposalType,
           blockId: eventDecoder.metaData.blockNumber,
         })
       }
