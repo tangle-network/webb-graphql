@@ -4,6 +4,7 @@ import "@webb-tools/types"
 import { EventDecoder } from "../../../utils"
 import { DKGProposalHandlerEvent } from "./types"
 import {
+  createProposalCounter,
   createProposalId,
   createSignedProposal,
   createUnsignedProposal,
@@ -42,6 +43,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           nonce,
           type: dkgPayloadKeyToProposalType(eventData.key),
         })
+        await createProposalCounter(blockNumber)
 
         logger.info(
           `Unsigned Proposal Added: ${proposalId} data:${eventData.data.toString()}`
@@ -70,6 +72,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           nonce,
           type: dkgPayloadKeyToProposalType(eventData.key),
         })
+        await createProposalCounter(blockNumber)
       }
       break
     case DKGProposalHandlerSection.ProposalSigned:
@@ -103,8 +106,10 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           data: "REMOVED",
           type: dkgPayloadKeyToProposalType(eventData.key),
         })
+
         // Create a new UnsignedProposal Queue
         // Remove the proposal form the queue
+        await createProposalCounter(blockNumber)
       }
       break
   }
