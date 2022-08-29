@@ -33,6 +33,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.VoteFor:
     case DKGProposalsSection.VoteAgainst:
     case DKGProposalsSection.ProposalApproved:
+    case DKGProposalsSection.ProposalRejected:
     case DKGProposalsSection.ProposalSucceeded:
     case DKGProposalsSection.ProposalFailed:
       {

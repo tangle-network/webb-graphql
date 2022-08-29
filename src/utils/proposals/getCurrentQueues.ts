@@ -115,6 +115,7 @@ export type ProposalCreateInput = {
 }
 
 export async function syncUnsignedProposals(blockId: string) {
+  logger.info("Sync syncUnsignedProposals for block id " + blockId)
   const queue = await api.query.dkgProposalHandler.unsignedProposalQueue.entries()
   const parsedQueue = queue.map(([key, value]) => {
     const proposalData = (value as unknown) as DkgRuntimePrimitivesProposalStoredUnsignedProposal

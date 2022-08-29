@@ -1,6 +1,3 @@
-import { SubstrateEvent } from "@subql/types"
-import { PalletDkgMetadataEvent } from "@polkadot/types/lookup"
-
 export enum DKGSections {
   DKGMetaData = "dkg",
   DKGProposals = "dkgProposals",
@@ -54,4 +51,8 @@ export enum DKGProposalHandlerSection {
   InvalidProposalSignature = "InvalidProposalSignature",
   // Event When a Proposal Gets Signed by DKG.
   ProposalSigned = "ProposalSigned",
+  /// Event When a Proposal is added to UnsignedProposalQueue.
+  ProposalAdded = "ProposalAdded",
+  /// Event When a Proposal is removed to UnsignedProposalQueue.
+  ProposalRemoved = "ProposalRemoved",
 }

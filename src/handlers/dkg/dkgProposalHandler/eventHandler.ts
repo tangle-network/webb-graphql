@@ -21,6 +21,32 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   switch (method) {
     case DKGProposalHandlerSection.InvalidProposalSignature:
       break
+    case DKGProposalHandlerSection.ProposalAdded:
+      {
+        const eventData = eventDecoder.as(
+          DKGProposalHandlerSection.ProposalAdded
+        )
+        const proposalId = createProposalId(
+          eventData.targetChain,
+          eventData.key
+        )
+        logger.info(
+          `Unsigned Proposal Added: ${proposalId} data:${eventData.data.toString()}`
+        )
+      }
+      break
+    case DKGProposalHandlerSection.ProposalRemoved:
+      {
+        const eventData = eventDecoder.as(
+          DKGProposalHandlerSection.ProposalRemoved
+        )
+        const proposalId = createProposalId(
+          eventData.targetChain,
+          eventData.key
+        )
+        logger.info(`Unsigned Proposal Added: ${proposalId}`)
+      }
+      break
     case DKGProposalHandlerSection.ProposalSigned:
       {
         const eventData = eventDecoder.as(
