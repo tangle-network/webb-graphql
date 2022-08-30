@@ -16,6 +16,8 @@ export {KeygenThreshold} from "./KeygenThreshold"
 
 export {Authorities} from "./Authorities"
 
+export {Session} from "./Session"
+
 export {PublicKey} from "./PublicKey"
 
 export {ProposerThreshold} from "./ProposerThreshold"

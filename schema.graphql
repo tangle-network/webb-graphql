@@ -98,22 +98,28 @@ type Threshold @jsonField {
     pending:Int!
 }
 type DKGAuthority @jsonField {
-    id: ID!
     # Authority id
-    authorityId:string!
+    authorityId:String!
     # Authority account 32
-    accountId:string!
-    reputation:string
-
-    block:Block
+    accountId:String!
+    reputation:String
 }
+
 type Session @entity {
 	id: ID!
-	bestAuthorities:[DKGAuthority]!
+
+    bestAuthorities:[DKGAuthority]!
 	nextBestAuthorities:[DKGAuthority]!
+    authorities:[DKGAuthority]!
+    nextAuthorities:[DKGAuthority]!
+
+    proposers:[String]!
+    proposersCount:Int!
+
 	signatureThreshold:Threshold!
-	signatureThreshold:Threshold!
+	proposerThreshold:Threshold!
     keyGenThreshold:Threshold!
+
 	block:Block
 
 }

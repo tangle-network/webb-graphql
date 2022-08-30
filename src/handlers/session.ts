@@ -1,33 +1,53 @@
-/*
-export async function ensureSession(sessionIndex: number): Promise<Session> {
-  let data = await Session.get(sessionIndex.toString())
-  if (!data) {
-    data = new Session(sessionIndex.toString())
-    await data.save()
+import { ensureBlock } from "./block"
+import { DKGAuthority, Session, Threshold } from "../types"
+
+export const ensureSession = async (blockId: string) => {
+  const block = ensureBlock(blockId)
+  const session = await Session.get(blockId)
+  if (session) {
+    return session
   }
-  data.index = sessionIndex
-  return data
-}
-
-export async function createSession(
-  sessionIndex: number,
-  blockNumber: number
-): Promise<Session> {
-  const data = await ensureSession(sessionIndex)
-  const auth = await getCurrentAuthorities()
-  const bestAuth = await getBestAuthorities()
-  const all = Authorities.create({
-    id: data.id.toString() + Math.random().toString(),
-    next: auth.next,
-    current: auth.current,
-  })
-  const best = Authorities.create({
-    id: data.id.toString() + Math.random().toString(),
-    next: auth.next,
-    current: auth.current,
+  const session = Session.create({
+    authorities: [], nextAuthorities: [], proposers: [], proposersCount: [],
+    bestAuthorities: [],
+    id: blockId,
+    keyGenThreshold: undefined,
+    nextBestAuthorities: [],
+    proposerThreshold: undefined,
+    signatureThreshold: undefined
   })
 
-  return data
+  await session.save()
+  return session
 }
-*/
-export {}
+
+type SessionInput = partial<{
+  keyGenThreshold: Threshold;
+  signatureThreshold: Threshold;
+  ProposerThreshold: Threshold;
+
+  proposers: string[]
+  proposersCount: number
+
+  nextBestAuthorities: DKGAuthority[];
+  bestAuthorities: DKGAuthority[];
+  authorities: DKGAuthority[];
+  nextAuthorities: DKGAuthority[];
+}> & { blockId: string };
+
+function isSet<T>(val: T | undefined): val is T {
+  return typeof val !== "undefined"
+}
+
+export const createOrUpdateSession = async ({ blockId, ...input }: SessionInput) => {
+  const session = await ensureSession(blockId)
+
+  for (const key in Object.keys(input)) {
+    const val = input[key]
+    if (isSet(val)) {
+      session[key] = val
+    }
+  }
+  await session.save()
+  return session
+}
