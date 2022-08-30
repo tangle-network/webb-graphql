@@ -72,33 +72,33 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
 
       const blockNumber = eventDecoded.blockNumber
 
-      const authorities: Vec<DkgRuntimePrimitivesCryptoPublic> = await api.query.dkg.authorities()
-      const nextAuthorities: Vec<DkgRuntimePrimitivesCryptoPublic> = await api.query.dkg.nextAuthorities()
+      const authorities: Vec<DkgRuntimePrimitivesCryptoPublic> = await api.query.dkg.authorities() as any;
+      const nextAuthorities: Vec<DkgRuntimePrimitivesCryptoPublic> = await api.query.dkg.nextAuthorities() as any;
 
-      const bestAuthorities: Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>> = await api.query.dkg.bestAuthorities()
-      const nextBestAuthorities: Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>> = await api.query.dkg.nextBestAuthorities()
+      const bestAuthorities: Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>> = await api.query.dkg.bestAuthorities() as any;
+      const nextBestAuthorities: Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>> = await api.query.dkg.nextBestAuthorities() as any;
 
       const authorityReputations = await api.query.dkg.authorityReputations.entries()
       const currentAuthoritiesAccounts = await api.query.dkg.accountToAuthority.entries()
       // Acount32 => auth Id
-      const authorityId: Record<string, string> = {}
+      const authorityIdMap: Record<string, string> = {}
       // auth Id => auth reputation
-      const authorityReputation: Record<string, string> = {}
+      const authorityReputationMap: Record<string, string> = {}
 
       currentAuthoritiesAccounts.forEach(([key, val]) => {
-        authorityId[key.args[0].toString().replace("0x", "")] = val.toString().replace("0x", "")
+        authorityIdMap[key.args[0].toString().replace("0x", "")] = val.toString().replace("0x", "")
       })
       authorityReputations.forEach(([key, val]) => {
-        authorityReputation[key.args[0].toString().replace("0x", "")] = val.toString()
+        authorityReputationMap[key.args[0].toString().replace("0x", "")] = val.toString()
       })
 
 
-      const dkgAuthorityMapper = (id: DkgRuntimePrimitivesCryptoPublic) => {
+      const dkgAuthorityMapper = (id: DkgRuntimePrimitivesCryptoPublic):DKGAuthority => {
         const accountId = id.toString().replace("0x", "")
-        const authorityId = authorityId[accountId]
+        const authorityId = authorityIdMap[accountId]
         return {
           accountId,
-          reputation: authorityReputations[authorityId]
+          reputation: authorityReputationMap[authorityId],
           authorityId
         }
       }

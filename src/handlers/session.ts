@@ -2,23 +2,24 @@ import { ensureBlock } from "./block"
 import { DKGAuthority, Session, Threshold } from "../types"
 
 export const ensureSession = async (blockId: string) => {
-  const block = ensureBlock(blockId)
+  const block = await ensureBlock(blockId)
   const session = await Session.get(blockId)
   if (session) {
     return session
   }
-  const session = Session.create({
-    authorities: [], nextAuthorities: [], proposers: [], proposersCount: [],
+  const newSession = Session.create({
+    authorities: [], nextAuthorities: [], proposers: [], proposersCount: undefined,
     bestAuthorities: [],
-    id: blockId,
     keyGenThreshold: undefined,
     nextBestAuthorities: [],
     proposerThreshold: undefined,
-    signatureThreshold: undefined
+    signatureThreshold: undefined,
+    blockId: blockId,
+    id: blockId
   })
 
-  await session.save()
-  return session
+  await newSession.save()
+  return newSession
 }
 
 type SessionInput = Partial<{
