@@ -32,7 +32,7 @@ export class Session implements Entity {
 
     public proposers: string[];
 
-    public proposersCount: string[];
+    public proposersCount: number;
 
     public signatureThreshold: Threshold;
 

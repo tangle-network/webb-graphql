@@ -105,6 +105,7 @@ type DKGAuthority @jsonField {
     reputation:String
 }
 
+
 type Session @entity {
 	id: ID!
 

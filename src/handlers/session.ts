@@ -21,7 +21,7 @@ export const ensureSession = async (blockId: string) => {
   return session
 }
 
-type SessionInput = partial<{
+type SessionInput = Partial<{
   keyGenThreshold: Threshold;
   signatureThreshold: Threshold;
   ProposerThreshold: Threshold;
