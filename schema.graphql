@@ -121,7 +121,7 @@ type Session @entity {
 	proposerThreshold:Threshold
     keyGenThreshold:Threshold
 
-	block:Block!
+	block:Block
 
 }
 

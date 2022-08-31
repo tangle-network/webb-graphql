@@ -40,7 +40,7 @@ export class Session implements Entity {
 
     public keyGenThreshold?: Threshold;
 
-    public blockId: string;
+    public blockId?: string;
 
 
     async save(): Promise<void>{
