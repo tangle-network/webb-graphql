@@ -115,13 +115,13 @@ type Session @entity {
     nextAuthorities:[DKGAuthority]!
 
     proposers:[String]!
-    proposersCount:Int!
+    proposersCount:Int
 
-	signatureThreshold:Threshold!
-	proposerThreshold:Threshold!
-    keyGenThreshold:Threshold!
+	signatureThreshold:Threshold
+	proposerThreshold:Threshold
+    keyGenThreshold:Threshold
 
-	block:Block
+	block:Block!
 
 }
 

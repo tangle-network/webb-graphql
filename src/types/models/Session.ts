@@ -32,15 +32,15 @@ export class Session implements Entity {
 
     public proposers: string[];
 
-    public proposersCount: number;
+    public proposersCount?: number;
 
-    public signatureThreshold: Threshold;
+    public signatureThreshold?: Threshold;
 
-    public proposerThreshold: Threshold;
+    public proposerThreshold?: Threshold;
 
-    public keyGenThreshold: Threshold;
+    public keyGenThreshold?: Threshold;
 
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{

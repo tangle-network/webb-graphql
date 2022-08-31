@@ -48,6 +48,7 @@ function isSet<T>(val: T | undefined): val is T {
 }
 
 export const fetchSessionAuthorizes = async (blockNumber: string) => {
+  logger.info(`Fetching authorities for ${blockNumber}`)
   const authorities: Vec<DkgRuntimePrimitivesCryptoPublic> = (await api.query.dkg.authorities()) as any
   const nextAuthorities: Vec<DkgRuntimePrimitivesCryptoPublic> = (await api.query.dkg.nextAuthorities()) as any
 
@@ -80,12 +81,22 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     id: DkgRuntimePrimitivesCryptoPublic
   ): DKGAuthority => {
     const accountId = id.toString().replace("0x", "")
+
     const authorityId = authorityIdMap[accountId]
-    return {
+    const data = {
       accountId,
       reputation: authorityReputationMap[authorityId],
       authorityId,
     }
+    logger.info(`
+	DKGAuthority
+	account:${accountId}
+	data:${JSON.stringify(data, null, 2)}
+	accountId:${accountId},
+	reputation: ${authorityReputationMap[authorityId]},
+	authorityId:${authorityId},
+	 `)
+    return data
   }
   const dkgAuthorities: DKGAuthority[] = authorities.map(dkgAuthorityMapper)
   const nextDkgAuthorities: DKGAuthority[] = nextAuthorities.map(
@@ -110,6 +121,24 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     .map(([_order, key]) => {
       return dkgAuthorityMapper(key)
     })
+
+  logger.info(`Fetching authorities for ${blockNumber}
+
+  data:${JSON.stringify(
+    {
+      blockId: blockNumber,
+      reputations: authorityReputationMap,
+      accounts: authorityIdMap,
+      authorities: dkgAuthorities,
+      nextAuthorities: nextDkgAuthorities,
+      bestAuthorities: bestDkgAuthorities,
+      nextBestAuthorities: nextBestDkgAuthorities,
+    },
+    null,
+    2
+  )})
+  `)
+
   return {
     blockId: blockNumber,
     authorities: dkgAuthorities,

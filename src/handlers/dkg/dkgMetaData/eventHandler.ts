@@ -68,6 +68,12 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         logger.info(
           `PublicKeySignatureChanged pubKeySig: ${eventData.pubKeySig.toString()} `
         )
+        const blockNumber = eventDecoded.blockNumber
+        const sessionAuthorities = await fetchSessionAuthorizes(blockNumber)
+
+        await createOrUpdateSession({
+          ...sessionAuthorities,
+        })
       }
       break
     case DKGMetaDataSection.MisbehaviourReportsSubmitted:
