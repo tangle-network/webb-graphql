@@ -1,10 +1,12 @@
 import { SubstrateExtrinsic } from "@subql/types"
-import { SignatureThresholdArgs } from "."
-import { SignatureThreshold } from "../../types"
-import { createBlock } from "../block"
+import { SignatureThresholdArgs } from "./types"
+import { createBlock, ensureBlock } from "../../block"
+import { SignatureThreshold } from "../../../types"
 
 export async function ensureSignatureThreshold(extrinsic: SubstrateExtrinsic) {
-  const block = await createBlock(extrinsic.block)
+  const block = await ensureBlock(
+    extrinsic.block.block.header.number.toString()
+  )
 
   const recordId = `${block.id}-${extrinsic.idx}`
   const data = new SignatureThreshold(recordId)

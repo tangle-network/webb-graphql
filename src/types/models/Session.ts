@@ -2,6 +2,12 @@
 import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
+import {
+    DKGAuthority,
+
+    Threshold,
+} from '../interfaces'
+
 
 
 
@@ -16,21 +22,25 @@ export class Session implements Entity {
 
     public id: string;
 
-    public index: number;
+    public bestAuthorities: DKGAuthority[];
 
-    public keygenThresholdId: string;
+    public nextBestAuthorities: DKGAuthority[];
 
-    public proposerThresholdId: string;
+    public authorities: DKGAuthority[];
 
-    public signatureThresholdId: string;
+    public nextAuthorities: DKGAuthority[];
 
-    public authoritiesId: string[];
+    public proposers: string[];
 
-    public bestAuthorizesId: string[];
+    public proposersCount?: number;
 
-    public publicKeyId?: string;
+    public signatureThreshold?: Threshold;
 
-    public nextPublicKeyId?: string;
+    public proposerThreshold?: Threshold;
+
+    public keyGenThreshold?: Threshold;
+
+    public blockId?: string;
 
 
     async save(): Promise<void>{
@@ -54,51 +64,9 @@ export class Session implements Entity {
     }
 
 
-    static async getByKeygenThresholdId(keygenThresholdId: string): Promise<Session[] | undefined>{
+    static async getByBlockId(blockId: string): Promise<Session[] | undefined>{
       
-      const records = await store.getByField('Session', 'keygenThresholdId', keygenThresholdId);
-      return records.map(record => Session.create(record as SessionProps));
-      
-    }
-
-    static async getByProposerThresholdId(proposerThresholdId: string): Promise<Session[] | undefined>{
-      
-      const records = await store.getByField('Session', 'proposerThresholdId', proposerThresholdId);
-      return records.map(record => Session.create(record as SessionProps));
-      
-    }
-
-    static async getBySignatureThresholdId(signatureThresholdId: string): Promise<Session[] | undefined>{
-      
-      const records = await store.getByField('Session', 'signatureThresholdId', signatureThresholdId);
-      return records.map(record => Session.create(record as SessionProps));
-      
-    }
-
-    static async getByAuthoritiesId(authoritiesId: string): Promise<Session[] | undefined>{
-      
-      const records = await store.getByField('Session', 'authoritiesId', authoritiesId);
-      return records.map(record => Session.create(record as SessionProps));
-      
-    }
-
-    static async getByBestAuthorizesId(bestAuthorizesId: string): Promise<Session[] | undefined>{
-      
-      const records = await store.getByField('Session', 'bestAuthorizesId', bestAuthorizesId);
-      return records.map(record => Session.create(record as SessionProps));
-      
-    }
-
-    static async getByPublicKeyId(publicKeyId: string): Promise<Session[] | undefined>{
-      
-      const records = await store.getByField('Session', 'publicKeyId', publicKeyId);
-      return records.map(record => Session.create(record as SessionProps));
-      
-    }
-
-    static async getByNextPublicKeyId(nextPublicKeyId: string): Promise<Session[] | undefined>{
-      
-      const records = await store.getByField('Session', 'nextPublicKeyId', nextPublicKeyId);
+      const records = await store.getByField('Session', 'blockId', blockId);
       return records.map(record => Session.create(record as SessionProps));
       
     }

@@ -1,9 +1,9 @@
 import "@polkadot/api-augment"
 import {
   DKGMethod,
-  SignatureThresholdArgs,
   KeygenThresholdArgs,
-} from "./handlers/dkg"
+  SignatureThresholdArgs,
+} from "./handlers/dkg/dkgMetaData/types"
 
 //Exports all handler functions
 export * from "./mappings/mappingHandlers"

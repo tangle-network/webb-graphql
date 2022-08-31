@@ -16,11 +16,15 @@ export {KeygenThreshold} from "./KeygenThreshold"
 
 export {Authorities} from "./Authorities"
 
+export {Session} from "./Session"
+
 export {PublicKey} from "./PublicKey"
 
 export {ProposerThreshold} from "./ProposerThreshold"
 
-export {Session} from "./Session"
+export {Proposers} from "./Proposers"
 
-export {Proposal} from "./Proposal"
+export {ProposalItem} from "./ProposalItem"
+
+export {ProposalCounter} from "./ProposalCounter"
 

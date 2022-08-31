@@ -1,4 +1,3 @@
-import type { Codec } from "@polkadot/types-codec/types"
 import type { Extrinsic } from "@polkadot/types/interfaces"
 import type { SubstrateExtrinsic } from "@subql/types"
 import { Args, Method, Module } from ".."

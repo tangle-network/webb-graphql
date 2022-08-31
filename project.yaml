@@ -18,7 +18,7 @@ schema:
 
 network:
   # Use Egg-net local endpoint
-  chainId: "0x054d7e2b6169f7f9f03c4e91d2d3bb187eb03a345d56094bc8c543276ba8dbf6"
+  chainId: "0x114c2dffa5581ef62c6564a3136cb9de781938587d9c1e1f5e1280d40db4139b"
   endpoint: "ws://host.docker.internal:9944" # using docker
   # endpoint: "ws://127.0.0.1:9944" # not using docker
 
@@ -50,8 +50,17 @@ dataSources:
             module: dkg
             method: PublicKeyChanged
 
-        - handler: handleProposerThresholdChanged
+        - handler: handleAllDKG
           kind: substrate/EventHandler
           filter:
             module: dkgProposals
-            method: ProposerThresholdChanged
+
+        - handler: handleAllDKG
+          kind: substrate/EventHandler
+          filter:
+            module: dkg
+
+        - handler: handleAllDKG
+          kind: substrate/EventHandler
+          filter:
+            module: dkgProposalHandler

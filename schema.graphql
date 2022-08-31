@@ -1,152 +1,204 @@
 type Block @entity {
-  id: ID!
+    id: ID!
 
-  number: BigInt! @index(unique: true)
-  hash: String
-  timestamp: Date
-  parentHash: String
-  specVersion: String
-  stateRoot: String
-  extrinsicsRoot: String
+    number: BigInt! @index(unique: true)
+    hash: String
+    timestamp: Date
+    parentHash: String
+    specVersion: String
+    stateRoot: String
+    extrinsicsRoot: String
 
-  extrinsics: [Extrinsic] @derivedFrom(field: "block")
-  events: [Event] @derivedFrom(field: "block")
+    extrinsics: [Extrinsic] @derivedFrom(field: "block")
+    events: [Event] @derivedFrom(field: "block")
 }
 
 type Extrinsic @entity {
-  id: ID!
+    id: ID!
 
-  hash: String!
-  block: Block
-  blockNumber: BigInt! @index(unique: false)
-  isSigned: Boolean
-  signer: Account
-  arguments: String
+    hash: String!
+    block: Block
 
-  module: String
-  method: String
+    blockNumber: BigInt! @index(unique: false)
+    isSigned: Boolean
+    signer: Account
+    arguments: String
 
-  index: Int!
-  isSuccess: Boolean
+    module: String
+    method: String
+
+    index: Int!
+    isSuccess: Boolean
 }
 
 type Event @entity {
-  id: ID!
+    id: ID!
 
-  index: Int!
-  block: Block
-  blockNumber: BigInt! @index(unique: false)
-  timestamp: Date
+    index: Int!
+    block: Block
 
-  module: String
-  method: String
+    blockNumber: BigInt! @index(unique: false)
+    timestamp: Date
 
-  docs: String
-  arguments: String
-  data: String
-  extrinsic: Extrinsic
+    module: String
+    method: String
+
+    docs: String
+    arguments: String
+    data: String
+    extrinsic: Extrinsic
 }
 
 type Account @entity {
-  id: ID!
+    id: ID!
 
-  creator: Account
-  createdAt: String
-  createAtBlock: Block
+    creator: Account
+    createdAt: String
+    createAtBlock: Block
 
-  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
+    extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
 type SignatureThreshold @entity {
-  id: ID!
+    id: ID!
 
-  current: Int
-  pending: Int
-  next: Int
+    current: Int
+    pending: Int
+    next: Int
 
-  block: Block
+    block: Block
 }
 
 type KeygenThreshold @entity {
-  id: ID!
+    id: ID!
 
-  current: Int
-  pending: Int
-  next: Int
+    current: Int
+    pending: Int
+    next: Int
 
-  block: Block
+    block: Block
 }
 
 type Authorities @entity {
-  id: ID!
+    id: ID!
 
-  # AccountId 32 bytes
-  current: [String]
-  # AccountId 32 bytes
-  next: [String]
+    # AccountId 32 bytes
+    current: [String]
+    # AccountId 32 bytes
+    next: [String]
 
-  block: Block
+    block: Block
+}
+
+
+
+type Threshold @jsonField {
+    next:Int!
+    current:Int!
+    pending:Int!
+}
+type DKGAuthority @jsonField {
+    # Authority id
+    authorityId:String!
+    # Authority account 32
+    accountId:String!
+    reputation:String
+}
+
+
+type Session @entity {
+	id: ID!
+
+    bestAuthorities:[DKGAuthority]!
+	nextBestAuthorities:[DKGAuthority]!
+    authorities:[DKGAuthority]!
+    nextAuthorities:[DKGAuthority]!
+
+    proposers:[String]!
+    proposersCount:Int
+
+	signatureThreshold:Threshold
+	proposerThreshold:Threshold
+    keyGenThreshold:Threshold
+
+	block:Block
+
 }
 
 type PublicKey @entity {
-  id: ID!
+    id: ID!
 
-  # Public key bytes 33 bytes
-  compressed: String
+    # Public key bytes 33 bytes
+    compressed: String
 
-  # Public key bytes 65 bytes
-  uncompressed: String
+    # Public key bytes 65 bytes
+    uncompressed: String
 
-  block: Block
+    block: Block
 }
 
 type ProposerThreshold @entity {
-  id: ID!
+    id: ID!
 
-  # Number of proposers for
-  value: Int
+    # Number of voters for a proposal to execute
+    value: Int
 
-  block: Block
+    block: Block
 }
 
-type Session @entity {
-  id: ID!
-  index: Int!
-  # `t` in the `n` of `t` , n signature threshold , t keygen threshold
-  keygenThreshold: KeygenThreshold!
-  # currently has 1 values ,
-  proposerThreshold: ProposerThreshold!
-  # `n` in the `n` of `t` , n signature threshold , t keygen threshold
-  signatureThreshold: SignatureThreshold!
-  # The whole authorities
-  authorities: [Authorities!]!
-  # The best authorities
-  bestAuthorizes: [Authorities!]!
-  publicKey: PublicKey
-  nextPublicKey: PublicKey
+type Proposers @entity {
+    id: ID!
+
+    # Number of proposers in set
+    count: Int!
+    proposers:[String!]!
+
+    block: Block
 }
 
-enum PropsalType {
-  Refresh
-  ProposerSetUpdate
-  EVM
-  AnchorCreate
-  AnchorUpdate
-  TokenAdd
-  TokenRemove
-  WrappingFeeUpdate
-  ResourceIdUpdate
-  RescueTokens
-  MaxDepositLimitUpdate
-  MinWithdrawalLimitUpdate
-  SetVerifier
-  SetTreasuryHandler
-  FeeRecipientUpdate
+
+
+enum ProposalType {
+    EvmProposal
+    RefreshVote
+    ProposerSetUpdateProposal
+    AnchorCreateProposal
+    AnchorUpdateProposal
+    TokenAddProposal
+    TokenRemoveProposal
+    WrappingFeeUpdateProposal
+    ResourceIdUpdateProposal
+    RescueTokensProposal
+    MaxDepositLimitUpdateProposal
+    MinWithdrawalLimitUpdateProposal
+    SetVerifierProposal
+    SetTreasuryHandlerProposal
+    FeeRecipientUpdateProposal
 }
 
-type Proposal @entity {
-  id: ID!
-  type: PropsalType!
-  data: String!
-  signature: String
+type ProposalItem @entity {
+    id: ID!
+    proposalId: String! @index(unique: false)
+    type: ProposalType!
+    data: String!
+    signature: String
+    removed: Boolean
+    nonce: Int!
+    block: Block
+
+}
+
+type ProposalTypeCount @jsonField {
+    type:String!
+    count:String!
+    proposalId:[String!]!
+}
+
+type ProposalCounter @entity {
+    id: ID!
+    signedProposalsCount: Int!
+    unSignedProposalsCount: Int!
+    signedProposalsMap:[ProposalTypeCount]
+    unSignedProposalsMap:[ProposalTypeCount]
+    block: Block
 }

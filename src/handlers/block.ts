@@ -12,6 +12,9 @@ export async function ensureBlock(recordId: string) {
 }
 
 export async function createBlock(block: SubstrateBlock) {
+  logger.info(
+    `Creating block blockHash = ${block.hash} , blockNumber = ${block.block.header.number}`
+  )
   const data = await ensureBlock(block.block.header.number.toString())
 
   data.hash = block.block.hash?.toString()
