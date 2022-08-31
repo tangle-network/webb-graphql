@@ -22,122 +22,145 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
   const eventDecoded = new EventDecoder<DKGMetaDataEvent>(event)
 
   switch (method) {
-    case DKGMetaDataSection.PublicKeySubmitted: {
-      const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
-      logger.info(
-        `PublicKeySubmitted compressedPubKey: ${eventData.uncompressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
-      )
-    }
-      break
-    case DKGMetaDataSection.NextPublicKeySubmitted: {
-      const eventData = eventDecoded.as(
-        DKGMetaDataSection.NextPublicKeySubmitted
-      )
-      logger.info(
-        `NextPublicKeySubmitted compressedPubKey: ${eventData.compressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
-      )
-    }
-      break
-    case DKGMetaDataSection.NextPublicKeySignatureSubmitted: {
-      const eventData = eventDecoded.as(
-        DKGMetaDataSection.NextPublicKeySignatureSubmitted
-      )
-      logger.info(
-        `NextPublicKeySignatureSubmitted pubKeySig: ${eventData.pubKeySig.toString()} `
-      )
-    }
-      break
-    case DKGMetaDataSection.PublicKeyChanged: {
-      const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeyChanged)
-      await createPublicKey({
-        compressed: eventData.compressedPubKey.toString(),
-        uncompressed: eventData.uncompressedPubKey.toString(),
-        blockNumber: eventDecoded.blockNumber
-      })
-    }
-      break
-    case DKGMetaDataSection.PublicKeySignatureChanged: {
-      const eventData = eventDecoded.as(
-        DKGMetaDataSection.PublicKeySignatureChanged
-      )
-      logger.info(
-        `PublicKeySignatureChanged pubKeySig: ${eventData.pubKeySig.toString()} `
-      )
-    }
-      break
-    case DKGMetaDataSection.MisbehaviourReportsSubmitted: {
-      const eventData = eventDecoded.as(
-        DKGMetaDataSection.MisbehaviourReportsSubmitted
-      )
-
-      const blockNumber = eventDecoded.blockNumber
-
-      const authorities: Vec<DkgRuntimePrimitivesCryptoPublic> = await api.query.dkg.authorities() as any;
-      const nextAuthorities: Vec<DkgRuntimePrimitivesCryptoPublic> = await api.query.dkg.nextAuthorities() as any;
-
-      const bestAuthorities: Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>> = await api.query.dkg.bestAuthorities() as any;
-      const nextBestAuthorities: Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>> = await api.query.dkg.nextBestAuthorities() as any;
-
-      const authorityReputations = await api.query.dkg.authorityReputations.entries()
-      const currentAuthoritiesAccounts = await api.query.dkg.accountToAuthority.entries()
-      // Acount32 => auth Id
-      const authorityIdMap: Record<string, string> = {}
-      // auth Id => auth reputation
-      const authorityReputationMap: Record<string, string> = {}
-
-      currentAuthoritiesAccounts.forEach(([key, val]) => {
-        authorityIdMap[key.args[0].toString().replace("0x", "")] = val.toString().replace("0x", "")
-      })
-      authorityReputations.forEach(([key, val]) => {
-        authorityReputationMap[key.args[0].toString().replace("0x", "")] = val.toString()
-      })
-
-
-      const dkgAuthorityMapper = (id: DkgRuntimePrimitivesCryptoPublic):DKGAuthority => {
-        const accountId = id.toString().replace("0x", "")
-        const authorityId = authorityIdMap[accountId]
-        return {
-          accountId,
-          reputation: authorityReputationMap[authorityId],
-          authorityId
-        }
+    case DKGMetaDataSection.PublicKeySubmitted:
+      {
+        const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
+        logger.info(
+          `PublicKeySubmitted compressedPubKey: ${eventData.uncompressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+        )
       }
-      const dkgAuthorities: DKGAuthority[] = authorities.map(dkgAuthorityMapper)
-      const nextDkgAuthorities: DKGAuthority[] = nextAuthorities.map(dkgAuthorityMapper)
-      const bestDkgAuthorities: DKGAuthority[] = bestAuthorities.sort((a, b) => {
-        const aOrder = (a[0] as AbstractInt).toNumber()
-        const bOrder = (b[0] as AbstractInt).toNumber()
-        return aOrder > bOrder ? 1 : aOrder < bOrder ? -1 : 0
-      }).map(([order, key]) => {
-        return dkgAuthorityMapper(key)
-      })
-
-      const nextBestDkgAuthorities: DKGAuthority[] = nextBestAuthorities.sort((a, b) => {
-        const aOrder = (a[0] as AbstractInt).toNumber()
-        const bOrder = (b[0] as AbstractInt).toNumber()
-        return aOrder > bOrder ? 1 : aOrder < bOrder ? -1 : 0
-      }).map(([order, key]) => {
-        return dkgAuthorityMapper(key)
-      })
-
-      await createOrUpdateSession({
-        blockId: blockNumber,
-        authorities: dkgAuthorities,
-        nextAuthorities: nextDkgAuthorities,
-        bestAuthorities: bestDkgAuthorities,
-        nextBestAuthorities: nextBestDkgAuthorities
-      })
-
-    }
       break
-    case DKGMetaDataSection.RefreshKeysFinished: {
-      const eventData = eventDecoded.as(
-        DKGMetaDataSection.RefreshKeysFinished
-      )
-      logger.info(
-        `RefreshKeysFinished nextAuthoritySetId: ${eventData.nextAuthoritySetId} `
-      )
-    }
+    case DKGMetaDataSection.NextPublicKeySubmitted:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.NextPublicKeySubmitted
+        )
+        logger.info(
+          `NextPublicKeySubmitted compressedPubKey: ${eventData.compressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+        )
+      }
+      break
+    case DKGMetaDataSection.NextPublicKeySignatureSubmitted:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.NextPublicKeySignatureSubmitted
+        )
+        logger.info(
+          `NextPublicKeySignatureSubmitted pubKeySig: ${eventData.pubKeySig.toString()} `
+        )
+      }
+      break
+    case DKGMetaDataSection.PublicKeyChanged:
+      {
+        const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeyChanged)
+        await createPublicKey({
+          compressed: eventData.compressedPubKey.toString(),
+          uncompressed: eventData.uncompressedPubKey.toString(),
+          blockNumber: eventDecoded.blockNumber,
+        })
+      }
+      break
+    case DKGMetaDataSection.PublicKeySignatureChanged:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.PublicKeySignatureChanged
+        )
+        logger.info(
+          `PublicKeySignatureChanged pubKeySig: ${eventData.pubKeySig.toString()} `
+        )
+      }
+      break
+    case DKGMetaDataSection.MisbehaviourReportsSubmitted:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.MisbehaviourReportsSubmitted
+        )
+
+        const blockNumber = eventDecoded.blockNumber
+
+        const authorities: Vec<DkgRuntimePrimitivesCryptoPublic> = (await api.query.dkg.authorities()) as any
+        const nextAuthorities: Vec<DkgRuntimePrimitivesCryptoPublic> = (await api.query.dkg.nextAuthorities()) as any
+
+        const bestAuthorities: Vec<ITuple<
+          [u16, DkgRuntimePrimitivesCryptoPublic]
+        >> = (await api.query.dkg.bestAuthorities()) as any
+        const nextBestAuthorities: Vec<ITuple<
+          [u16, DkgRuntimePrimitivesCryptoPublic]
+        >> = (await api.query.dkg.nextBestAuthorities()) as any
+
+        const authorityReputations = await api.query.dkg.authorityReputations.entries()
+        const currentAuthoritiesAccounts = await api.query.dkg.accountToAuthority.entries()
+        // Acount32 => auth Id
+        const authorityIdMap: Record<string, string> = {}
+        // auth Id => auth reputation
+        const authorityReputationMap: Record<string, string> = {}
+
+        currentAuthoritiesAccounts.forEach(([key, val]) => {
+          authorityIdMap[
+            key.args[0].toString().replace("0x", "")
+          ] = val.toString().replace("0x", "")
+        })
+        authorityReputations.forEach(([key, val]) => {
+          authorityReputationMap[
+            key.args[0].toString().replace("0x", "")
+          ] = val.toString()
+        })
+
+        const dkgAuthorityMapper = (
+          id: DkgRuntimePrimitivesCryptoPublic
+        ): DKGAuthority => {
+          const accountId = id.toString().replace("0x", "")
+          const authorityId = authorityIdMap[accountId]
+          return {
+            accountId,
+            reputation: authorityReputationMap[authorityId],
+            authorityId,
+          }
+        }
+        const dkgAuthorities: DKGAuthority[] = authorities.map(
+          dkgAuthorityMapper
+        )
+        const nextDkgAuthorities: DKGAuthority[] = nextAuthorities.map(
+          dkgAuthorityMapper
+        )
+        const bestDkgAuthorities: DKGAuthority[] = bestAuthorities
+          .sort((a, b) => {
+            const aOrder = (a[0] as AbstractInt).toNumber()
+            const bOrder = (b[0] as AbstractInt).toNumber()
+            return aOrder > bOrder ? 1 : aOrder < bOrder ? -1 : 0
+          })
+          .map(([_order, key]) => {
+            return dkgAuthorityMapper(key)
+          })
+
+        const nextBestDkgAuthorities: DKGAuthority[] = nextBestAuthorities
+          .sort((a, b) => {
+            const aOrder = (a[0] as AbstractInt).toNumber()
+            const bOrder = (b[0] as AbstractInt).toNumber()
+            return aOrder > bOrder ? 1 : aOrder < bOrder ? -1 : 0
+          })
+          .map(([_order, key]) => {
+            return dkgAuthorityMapper(key)
+          })
+
+        await createOrUpdateSession({
+          blockId: blockNumber,
+          authorities: dkgAuthorities,
+          nextAuthorities: nextDkgAuthorities,
+          bestAuthorities: bestDkgAuthorities,
+          nextBestAuthorities: nextBestDkgAuthorities,
+        })
+      }
+      break
+    case DKGMetaDataSection.RefreshKeysFinished:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.RefreshKeysFinished
+        )
+        logger.info(
+          `RefreshKeysFinished nextAuthoritySetId: ${eventData.nextAuthoritySetId} `
+        )
+      }
       break
   }
 }
