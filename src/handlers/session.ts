@@ -61,42 +61,32 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
 
   const authorityReputations = await api.query.dkg.authorityReputations.entries()
   const currentAuthoritiesAccounts = await api.query.dkg.accountToAuthority.entries()
-  // Acount32 => auth Id
+  // auth Id (DkgRuntimePrimitivesCryptoPublic::toString()) => Account32
   const authorityIdMap: Record<string, string> = {}
   // auth Id => auth reputation
   const authorityReputationMap: Record<string, string> = {}
 
   currentAuthoritiesAccounts.forEach(([key, val]) => {
-    authorityIdMap[
-      key.args[0].toString().replace("0x", "")
-    ] = val.toString().replace("0x", "")
+    const account32 = key.args[0].toString().replace("0x", "")
+    const authId = val.toString().replace("0x", "")
+    authorityIdMap[authId] = account32
   })
   authorityReputations.forEach(([key, val]) => {
-    authorityReputationMap[
-      key.args[0].toString().replace("0x", "")
-    ] = val.toString()
+    const authId = key.args[0].toString().replace("0x", "")
+    authorityReputationMap[authId] = val.toString()
   })
 
   const dkgAuthorityMapper = (
-    id: DkgRuntimePrimitivesCryptoPublic
+    authIdRaw: DkgRuntimePrimitivesCryptoPublic
   ): DKGAuthority => {
-    const accountId = id.toString().replace("0x", "")
+    const authorityId = authIdRaw.toString().replace("0x", "")
 
-    const authorityId = authorityIdMap[accountId]
-    const data = {
+    const accountId = authorityIdMap[authorityId]
+    return {
       accountId,
-      reputation: authorityReputationMap[authorityId],
+      reputation: authorityReputationMap[authorityId] || "0",
       authorityId,
     }
-    logger.info(`
-	DKGAuthority
-	account:${accountId}
-	data:${JSON.stringify(data, null, 2)}
-	accountId:${accountId},
-	reputation: ${authorityReputationMap[authorityId]},
-	authorityId:${authorityId},
-	 `)
-    return data
   }
   const dkgAuthorities: DKGAuthority[] = authorities.map(dkgAuthorityMapper)
   const nextDkgAuthorities: DKGAuthority[] = nextAuthorities.map(
@@ -154,7 +144,9 @@ export const createOrUpdateSession = async ({
 }: SessionInput) => {
   const session = await ensureSession(blockId)
 
-  for (const key in Object.keys(input)) {
+  logger.info(`Update session ${blockId} values for ${Object.keys(input)}`)
+
+  for (const key of Object.keys(input)) {
     const val = input[key]
     if (isSet(val)) {
       session[key] = val
