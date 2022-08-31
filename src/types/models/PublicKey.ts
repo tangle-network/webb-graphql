@@ -20,7 +20,7 @@ export class PublicKey implements Entity {
 
     public uncompressed?: string;
 
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{

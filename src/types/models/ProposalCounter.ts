@@ -28,7 +28,9 @@ export class ProposalCounter implements Entity {
 
     public unSignedProposalsMap?: ProposalTypeCount[];
 
-    public blockId?: string;
+    public blockNumber: number;
+
+    public blockId: string;
 
 
     async save(): Promise<void>{

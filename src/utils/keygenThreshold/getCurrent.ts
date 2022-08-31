@@ -14,5 +14,6 @@ export async function getCurrentKeygenThreshold(): Promise<
     current: parseInt(current.toHex()),
     pending: parseInt(pending.toHex()),
     next: parseInt(next.toHex()),
+    blockId: "0",
   }
 }

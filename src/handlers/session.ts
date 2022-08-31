@@ -7,7 +7,7 @@ import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
 
 export const ensureSession = async (blockId: string) => {
-  const block = await ensureBlock(blockId)
+  await ensureBlock(blockId)
   const session = await Session.get(blockId)
   if (session) {
     return session
@@ -23,6 +23,7 @@ export const ensureSession = async (blockId: string) => {
     proposerThreshold: undefined,
     signatureThreshold: undefined,
     blockId: blockId,
+    blockNumber: Number(blockId),
     id: blockId,
   })
 

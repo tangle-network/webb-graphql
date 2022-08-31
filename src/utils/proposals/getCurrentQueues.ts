@@ -227,6 +227,7 @@ export async function createProposalCounter(
 
   const counter = ProposalCounter.create({
     id: blockId,
+    blockNumber: Number(blockId),
     blockId,
     signedProposalsCount,
     unSignedProposalsCount,

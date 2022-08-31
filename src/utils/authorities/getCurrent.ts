@@ -12,5 +12,6 @@ export async function getCurrentAuthorities(): Promise<
   return {
     current: current.toJSON() as string[],
     next: next.toJSON() as string[],
+    blockId: "0",
   }
 }

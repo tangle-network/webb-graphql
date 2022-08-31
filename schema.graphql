@@ -17,7 +17,7 @@ type Extrinsic @entity {
     id: ID!
 
     hash: String!
-    block: Block
+    block: Block!
 
     blockNumber: BigInt! @index(unique: false)
     isSigned: Boolean
@@ -35,7 +35,7 @@ type Event @entity {
     id: ID!
 
     index: Int!
-    block: Block
+    block: Block!
 
     blockNumber: BigInt! @index(unique: false)
     timestamp: Date
@@ -66,7 +66,7 @@ type SignatureThreshold @entity {
     pending: Int
     next: Int
 
-    block: Block
+    block: Block!
 }
 
 type KeygenThreshold @entity {
@@ -76,7 +76,7 @@ type KeygenThreshold @entity {
     pending: Int
     next: Int
 
-    block: Block
+    block: Block!
 }
 
 type Authorities @entity {
@@ -87,7 +87,7 @@ type Authorities @entity {
     # AccountId 32 bytes
     next: [String]
 
-    block: Block
+    block: Block!
 }
 
 
@@ -121,7 +121,8 @@ type Session @entity {
 	proposerThreshold:Threshold
     keyGenThreshold:Threshold
 
-	block:Block
+	blockNumber:Int!
+	block:Block!
 
 }
 
@@ -134,7 +135,7 @@ type PublicKey @entity {
     # Public key bytes 65 bytes
     uncompressed: String
 
-    block: Block
+    block: Block!
 }
 
 type ProposerThreshold @entity {
@@ -143,7 +144,7 @@ type ProposerThreshold @entity {
     # Number of voters for a proposal to execute
     value: Int
 
-    block: Block
+    block: Block!
 }
 
 type Proposers @entity {
@@ -153,7 +154,7 @@ type Proposers @entity {
     count: Int!
     proposers:[String!]!
 
-    block: Block
+    block: Block!
 }
 
 
@@ -178,13 +179,16 @@ enum ProposalType {
 
 type ProposalItem @entity {
     id: ID!
+
+
     proposalId: String! @index(unique: false)
     type: ProposalType!
     data: String!
     signature: String
     removed: Boolean
     nonce: Int!
-    block: Block
+
+    block: Block!
 
 }
 
@@ -196,9 +200,14 @@ type ProposalTypeCount @jsonField {
 
 type ProposalCounter @entity {
     id: ID!
+
+
+
     signedProposalsCount: Int!
     unSignedProposalsCount: Int!
     signedProposalsMap:[ProposalTypeCount]
     unSignedProposalsMap:[ProposalTypeCount]
-    block: Block
+
+	blockNumber:Int!
+	block: Block!
 }

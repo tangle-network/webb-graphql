@@ -32,7 +32,7 @@ export class ProposalItem implements Entity {
 
     public nonce: number;
 
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{
