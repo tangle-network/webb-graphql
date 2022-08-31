@@ -2,18 +2,39 @@ import { createKeygenThreshold } from "./keygenThreshold"
 import { createSignatureThreshold } from "./signatureThreshold"
 import { ModuleHandlerArgs } from "../../index"
 import { DKGMethod, KeygenThresholdArgs, SignatureThresholdArgs } from "./types"
+import { createOrUpdateSession } from "../../session"
 
 export async function dkgHandler({ call, extrinsic }: ModuleHandlerArgs) {
   switch (call.method as DKGMethod) {
     case DKGMethod.SIGNATURE_THRESHOLD: {
       const args: SignatureThresholdArgs = call.args
-      await createSignatureThreshold(extrinsic, args)
+      const data = await createSignatureThreshold(extrinsic, args)
+      // TODO move this to event handler after implementing events on the node side
+      await createOrUpdateSession({
+        blockId: extrinsic.block.block.header.number.toString(),
+        signatureThreshold: {
+          next: data.next ? Number(data.next) : 0,
+          current: data.current ? Number(data.current) : 0,
+          pending: data.pending ? Number(data.pending) : 0,
+        },
+      })
       break
     }
 
     case DKGMethod.KEYGEN_THRESHOLD: {
       const args: KeygenThresholdArgs = call.args
-      await createKeygenThreshold(extrinsic, args)
+      // TODO move this to event handler after implementing events on the node side
+
+      const data = await createKeygenThreshold(extrinsic, args)
+      // TODO move this to event handler after implementing events on the node side
+      await createOrUpdateSession({
+        blockId: extrinsic.block.block.header.number.toString(),
+        keyGenThreshold: {
+          next: data.next ? Number(data.next) : 0,
+          current: data.current ? Number(data.current) : 0,
+          pending: data.pending ? Number(data.pending) : 0,
+        },
+      })
       break
     }
 

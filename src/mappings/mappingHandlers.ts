@@ -13,7 +13,6 @@ import {
 import { checkAndAddAuthorities } from "../utils/authorities"
 import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
 import { checkAndAddSignatureThreshold } from "../utils/signatureThreshold"
-import { createPublicKey } from "../handlers/dkg/dkgMetaData/publicKey"
 import { handleDkgEvents } from "../handlers/dkg"
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
