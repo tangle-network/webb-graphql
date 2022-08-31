@@ -19,6 +19,9 @@ export enum DKGMetaDataSection {
   MisbehaviourReportsSubmitted = "MisbehaviourReportsSubmitted",
   // Refresh DKG Keys Finished (forcefully).
   RefreshKeysFinished = "RefreshKeysFinished",
+
+  NextKeygenThresholdUpdated = "NextKeygenThresholdUpdated",
+  NextSignatureThresholdUpdated = "NextSignatureThresholdUpdated",
 }
 
 export enum DKGProposalsSection {

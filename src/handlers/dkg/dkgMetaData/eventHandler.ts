@@ -97,5 +97,25 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         )
       }
       break
+    case DKGMetaDataSection.NextSignatureThresholdUpdated:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.NextSignatureThresholdUpdated
+        )
+        logger.info(
+          `NextSignatureThresholdUpdated nextSignatureThreshold: ${eventData.nextSignatureThreshold} `
+        )
+      }
+      break
+    case DKGMetaDataSection.NextKeygenThresholdUpdated:
+      {
+        const eventData = eventDecoded.as(
+          DKGMetaDataSection.NextKeygenThresholdUpdated
+        )
+        logger.info(
+          `NextKeygenThresholdUpdated nextKeygenThreshold: ${eventData.nextKeygenThreshold} `
+        )
+      }
+      break
   }
 }

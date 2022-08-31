@@ -1,5 +1,6 @@
 import type { Codec } from "@polkadot/types-codec/types"
 import { PalletDkgMetadataEvent } from "@polkadot/types/lookup"
+import { Struct, u16 } from "@polkadot/types-codec"
 
 export enum DKGMethod {
   SIGNATURE_THRESHOLD = "setSignatureThreshold",
@@ -22,4 +23,10 @@ export type DKGMetaDataEvent = {
   PublicKeySignatureChanged: PalletDkgMetadataEvent["asPublicKeySignatureChanged"]
   MisbehaviourReportsSubmitted: PalletDkgMetadataEvent["asMisbehaviourReportsSubmitted"]
   RefreshKeysFinished: PalletDkgMetadataEvent["asRefreshKeysFinished"]
+  NextKeygenThresholdUpdated: Struct & {
+    nextKeygenThreshold: u16
+  }
+  NextSignatureThresholdUpdated: Struct & {
+    nextSignatureThreshold: u16
+  }
 }

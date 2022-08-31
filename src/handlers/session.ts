@@ -1,4 +1,5 @@
 import { ensureBlock } from "./block"
+import "@webb-tools/types"
 import { DKGAuthority, Session, Threshold } from "../types"
 import { u16, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
@@ -112,29 +113,43 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
       return dkgAuthorityMapper(key)
     })
 
-  logger.info(`Fetching authorities for ${blockNumber}
+  const [
+    pendingKeyGenThreshold,
+    currentKeyGenThreshold,
+    nextKeyGenThreshold,
+  ] = await Promise.all([
+    api.query.dkg.pendingKeygenThreshold(),
+    api.query.dkg.keygenThreshold(),
+    api.query.dkg.nextKeygenThreshold(),
+  ]).then((val) => val.map((i) => parseInt(i.toHex())))
+  const [
+    pendingSignatureThreshold,
+    currentSignatureThreshold,
+    nextSignatureThreshold,
+  ] = await Promise.all([
+    api.query.dkg.pendingSignatureThreshold(),
+    api.query.dkg.signatureThreshold(),
+    api.query.dkg.nextSignatureThreshold(),
+  ]).then((val) => val.map((i) => parseInt(i.toHex())))
 
-  data:${JSON.stringify(
-    {
-      blockId: blockNumber,
-      reputations: authorityReputationMap,
-      accounts: authorityIdMap,
-      authorities: dkgAuthorities,
-      nextAuthorities: nextDkgAuthorities,
-      bestAuthorities: bestDkgAuthorities,
-      nextBestAuthorities: nextBestDkgAuthorities,
-    },
-    null,
-    2
-  )})
-  `)
-
+  const keyGenThreshold: Threshold = {
+    current: currentKeyGenThreshold,
+    next: nextKeyGenThreshold,
+    pending: pendingKeyGenThreshold,
+  }
+  const signatureThreshold: Threshold = {
+    current: currentSignatureThreshold,
+    next: nextSignatureThreshold,
+    pending: pendingSignatureThreshold,
+  }
   return {
     blockId: blockNumber,
     authorities: dkgAuthorities,
     nextAuthorities: nextDkgAuthorities,
     bestAuthorities: bestDkgAuthorities,
     nextBestAuthorities: nextBestDkgAuthorities,
+    keyGenThreshold,
+    signatureThreshold,
   }
 }
 
