@@ -143,6 +143,13 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     next: nextSignatureThreshold,
     pending: pendingSignatureThreshold,
   }
+  const pendingThresholdVal: u16 = (await api.query.dkg.proposerThreshold()) as any
+  const currentProposerThreshold = parseInt(pendingThresholdVal.toHex())
+  const proposerThreshold: Threshold = {
+    current: currentProposerThreshold,
+    next: currentProposerThreshold,
+    pending: currentProposerThreshold,
+  }
   return {
     blockId: blockNumber,
     authorities: dkgAuthorities,
@@ -151,6 +158,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     nextBestAuthorities: nextBestDkgAuthorities,
     keyGenThreshold,
     signatureThreshold,
+    proposerThreshold,
   }
 }
 

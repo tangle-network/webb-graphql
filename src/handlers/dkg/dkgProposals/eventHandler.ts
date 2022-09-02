@@ -1,13 +1,12 @@
-import { SubstrateEvent } from "@subql/types"
-import { DKGProposalsSection, DKGSections } from "../type"
-import { createProposerThreshold } from "./proposerThreshold"
+import {SubstrateEvent} from "@subql/types"
+import {DKGProposalsSection, DKGSections} from "../type"
+import {createProposerThreshold} from "./proposerThreshold"
 import "@webb-tools/types"
 
-import { DKGProposalsEvent } from "./types"
-import { EventDecoder } from "../../../utils"
-import { createProposers } from "./index"
-import { createOrUpdateSession } from "../../session"
-import { u16 } from "@polkadot/types-codec"
+import {DKGProposalsEvent} from "./types"
+import {EventDecoder} from "../../../utils"
+import {createProposers} from "./index"
+import {createOrUpdateSession} from "../../session"
 
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
@@ -26,14 +25,12 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       const thresholdValue = eventData.newThreshold.toString()
       await createProposerThreshold(thresholdValue, eventDecoded.metaData)
       const pendingThreshold = eventData.newThreshold.toString()
-      const currentThreshold: u16 = (await api.query.dkg.signatureThreshold()) as any
-      const nextThreshold: u16 = (await api.query.dkg.nextSignatureThreshold()) as any
       await createOrUpdateSession({
         blockId: eventDecoded.blockNumber,
         ProposerThreshold: {
-          current: Number(currentThreshold.toString()),
+          current: Number(pendingThreshold.toString()),
           pending: Number(pendingThreshold),
-          next: Number(nextThreshold.toString()),
+          next: Number(pendingThreshold.toString()),
         },
       })
     }
