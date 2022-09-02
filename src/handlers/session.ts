@@ -1,7 +1,7 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
 import { DKGAuthority, Session, Threshold } from "../types"
-import { u16, Vec } from "@polkadot/types-codec"
+import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
@@ -143,7 +143,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     next: nextSignatureThreshold,
     pending: pendingSignatureThreshold,
   }
-  const pendingThresholdVal: u16 = (await api.query.dkg.proposerThreshold()) as any
+  const pendingThresholdVal: u32 = (await api.query.dkgProposals.proposerThreshold()) as any
   const currentProposerThreshold = parseInt(pendingThresholdVal.toHex())
   const proposerThreshold: Threshold = {
     current: currentProposerThreshold,
