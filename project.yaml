@@ -18,7 +18,7 @@ schema:
 
 network:
   # Use Egg-net local endpoint
-  chainId: "0x7ae0a3b65473b24f159e640929f350305062b9dccc8790b394f3b226c7176c36"
+  chainId: "0x8b93710b0552b46814737915fb0526e2d8431261224597af2f0cc866e9e1dc1d"
   endpoint: "ws://host.docker.internal:9944" # using docker
   # endpoint: "ws://127.0.0.1:9944" # not using docker
 

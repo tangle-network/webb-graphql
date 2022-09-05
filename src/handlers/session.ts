@@ -1,12 +1,6 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
-import {
-  DKGAuthority,
-  Session,
-  SessionKeyStatus,
-  SessionPublicKey,
-  Threshold,
-} from "../types"
+import { DKGAuthority, Session, Threshold } from "../types"
 import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
@@ -175,7 +169,6 @@ export function nextSession(blockId: string): string {
   return String(sessionNumber + 10)
 }
 
-
 export const createOrUpdateSession = async ({
   blockId,
   ...input
@@ -192,4 +185,10 @@ export const createOrUpdateSession = async ({
   }
   await session.save()
   return session
+}
+
+export async function setSessionKey(blockId: string, keyId: string) {
+  const session = await ensureSession(blockId)
+  session.publicKeyId = keyId
+  await session.save()
 }

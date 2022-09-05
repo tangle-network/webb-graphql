@@ -37,7 +37,6 @@ export async function createPublicKey(data: PublicKeyInput) {
   return data
 }
 type PublicKeyGenerated = {
-  targetSession?: string
   composedPubKey: string
   uncompressedPubKey: string
   blockNumber: string
@@ -47,7 +46,6 @@ export async function ensureKey(data: PublicKeyGenerated) {
   if (key) {
     return key
   }
-  await ensureSession(data.targetSession)
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
     id: data.uncompressedPubKey,
@@ -60,7 +58,6 @@ export async function ensureKey(data: PublicKeyGenerated) {
         txHash: "",
       },
     ],
-    targetSessionId: data.targetSession,
   })
   await newKey.save()
   return newKey
@@ -74,7 +71,10 @@ export type PublicKeyUpdate = {
   composedPubKey: string
   status: SessionKeyStatus
 }
-export async function keySigned({ status, ...data }: PublicKeyUpdate) {
+export async function updatePublicKeyStatus({
+  status,
+  ...data
+}: PublicKeyUpdate) {
   const key = await ensureKey(data)
   key.history.push({
     stage: status.toString(),

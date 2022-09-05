@@ -26,8 +26,6 @@ export class PublicKey implements Entity {
 
     public history: SessionKeyHistory[];
 
-    public targetSessionId?: string;
-
     public blockId: string;
 
 
@@ -60,13 +58,6 @@ export class PublicKey implements Entity {
       }else{
           return;
       }
-      
-    }
-
-    static async getByTargetSessionId(targetSessionId: string): Promise<PublicKey[] | undefined>{
-      
-      const records = await store.getByField('PublicKey', 'targetSessionId', targetSessionId);
-      return records.map(record => PublicKey.create(record as PublicKeyProps));
       
     }
 
