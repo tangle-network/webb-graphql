@@ -5,8 +5,6 @@ import assert from 'assert';
 import {
     DKGAuthority,
 
-    SessionPublicKey,
-
     Threshold,
 } from '../interfaces'
 
@@ -36,7 +34,7 @@ export class Session implements Entity {
 
     public proposersCount?: number;
 
-    public key: SessionPublicKey;
+    public keyId?: string;
 
     public signatureThreshold?: Threshold;
 
@@ -69,6 +67,13 @@ export class Session implements Entity {
         }
     }
 
+
+    static async getByKeyId(keyId: string): Promise<Session[] | undefined>{
+      
+      const records = await store.getByField('Session', 'keyId', keyId);
+      return records.map(record => Session.create(record as SessionProps));
+      
+    }
 
     static async getByBlockId(blockId: string): Promise<Session[] | undefined>{
       

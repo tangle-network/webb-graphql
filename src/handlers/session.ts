@@ -31,11 +31,6 @@ export const ensureSession = async (blockId: string) => {
     blockId: blockId,
     blockNumber: Number(blockId),
     id: blockId,
-    key: {
-      compressedKey: "",
-      uncompressedKey: "",
-      history: [],
-    },
   })
 
   await newSession.save()
@@ -180,28 +175,7 @@ export function nextSession(blockId: string): string {
   return String(sessionNumber + 10)
 }
 
-export async function addPublicKeyHistoryEntry(
-  blockId: string,
-  stage: SessionKeyStatus,
-  data: Omit<SessionPublicKey, "history">
-) {
-  const session = await ensureSession(blockId)
-  // TODO ensure that we track all keys, can a key change multiple times?
-  const nextKeyValue: SessionPublicKey = {
-    uncompressedKey: data.uncompressedKey,
-    compressedKey: data.compressedKey,
-    history: [
-      ...session.key.history,
-      {
-        stage: stage.toString(),
-        blockNumber: blockId,
-        txHash: "<NONE>",
-      },
-    ],
-  }
-  session.key = nextKeyValue
-  await session.save()
-}
+
 export const createOrUpdateSession = async ({
   blockId,
   ...input

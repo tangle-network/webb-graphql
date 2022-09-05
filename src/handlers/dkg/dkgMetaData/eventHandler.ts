@@ -1,15 +1,10 @@
-import { SubstrateEvent } from "@subql/types"
-import { DKGMetaDataSection, DKGSections } from "../type"
-import { EventDecoder } from "../../../utils"
-import { DKGMetaDataEvent } from "./types"
-import { createPublicKey } from "./publicKey"
-import {
-  addPublicKeyHistoryEntry,
-  createOrUpdateSession,
-  fetchSessionAuthorizes,
-  nextSession,
-} from "../../session"
-import { SessionKeyStatus } from "../../../types"
+import {SubstrateEvent} from "@subql/types"
+import {DKGMetaDataSection, DKGSections} from "../type"
+import {EventDecoder} from "../../../utils"
+import {DKGMetaDataEvent} from "./types"
+import {createPublicKey, keyGenerated} from "./publicKey"
+import {createOrUpdateSession, fetchSessionAuthorizes, nextSession,} from "../../session"
+
 /**
  *
  * <b> Public key event sequence <b/>
@@ -44,14 +39,12 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           DKGMetaDataSection.NextPublicKeySubmitted
         )
         const nextSessionId = nextSession(eventDecoded.blockNumber)
-        await addPublicKeyHistoryEntry(
-          nextSessionId,
-          SessionKeyStatus.Generated,
-          {
-            uncompressedKey: eventData.uncompressedPubKey.toString(),
-            compressedKey: eventData.compressedPubKey.toString(),
-          }
-        )
+        await keyGenerated({
+          targetSession: nextSessionId,
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
+        })
         logger.info(
           `NextPublicKeySubmitted
 			compressedPubKey: ${eventData.compressedPubKey}

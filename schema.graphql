@@ -129,7 +129,7 @@ type Session @entity {
   proposers: [String]!
   proposersCount: Int
 
-  key: SessionPublicKey!
+  key: PublicKey
 
   signatureThreshold: Threshold
   proposerThreshold: Threshold
@@ -149,6 +149,9 @@ type PublicKey @entity {
   uncompressed: String @index(unique: true)
 
   history: [SessionKeyHistory]!
+
+  targetSession: Session
+
   block: Block!
 }
 
