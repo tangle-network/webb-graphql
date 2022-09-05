@@ -184,12 +184,13 @@ enum ProposalType {
   FeeRecipientUpdateProposal
 }
 enum ProposalStatus {
-  Proposed
-  Singed
+  Signed
   Open
   Rejected
   Accepted
   Removed
+  Executed
+  FailedToExecute
 }
 
 type ProposalTimelineStatus @jsonField {

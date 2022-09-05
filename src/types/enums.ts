@@ -41,9 +41,7 @@ export enum ProposalType {
 
 export enum ProposalStatus {
 
-    Proposed = "Proposed",
-
-    Singed = "Singed",
+    Signed = "Signed",
 
     Open = "Open",
 
@@ -52,6 +50,10 @@ export enum ProposalStatus {
     Accepted = "Accepted",
 
     Removed = "Removed",
+
+    Executed = "Executed",
+
+    FailedToExecute = "FailedToExecute",
 
 }
 

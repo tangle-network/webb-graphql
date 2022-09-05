@@ -7,7 +7,13 @@ import { DKGProposalsEvent } from "./types"
 import { EventDecoder } from "../../../utils"
 import { createProposers } from "./index"
 import { createOrUpdateSession } from "../../session"
-import { addVote } from "../../../utils/proposals/getCurrentQueues"
+import {
+  addVote,
+  approveProposal,
+  executedProposal,
+  failedProposal,
+  rejectProposal,
+} from "../../../utils/proposals/getCurrentQueues"
 
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
@@ -41,31 +47,65 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       break
     case DKGProposalsSection.ProposerRemoved:
       break
-    case DKGProposalsSection.VoteFor: {
-      const eventData = eventDecoded.as(DKGProposalsSection.VoteFor)
-      await addVote(
-        {
-          blockId: eventDecoded.blockNumber,
-          nonce: String(parseInt(eventData.proposalNonce.toHex())),
-        },
-        eventData.who.toString()
-      )
-    }
-    case DKGProposalsSection.VoteAgainst: {
-      const eventData = eventDecoded.as(DKGProposalsSection.VoteAgainst)
-      await addVote(
-        {
-          blockId: eventDecoded.blockNumber,
-          nonce: String(parseInt(eventData.proposalNonce.toHex())),
-        },
-        eventData.who.toString()
-      )
-    }
+    case DKGProposalsSection.VoteFor:
+      {
+        const eventData = eventDecoded.as(DKGProposalsSection.VoteFor)
+        await addVote(
+          {
+            blockId: eventDecoded.blockNumber,
+            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+          },
+          eventData.who.toString()
+        )
+      }
+      break
+
+    case DKGProposalsSection.VoteAgainst:
+      {
+        const eventData = eventDecoded.as(DKGProposalsSection.VoteAgainst)
+        await addVote(
+          {
+            blockId: eventDecoded.blockNumber,
+            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+          },
+          eventData.who.toString()
+        )
+      }
+      break
     case DKGProposalsSection.ProposalApproved:
+      {
+        const eventData = eventDecoded.as(DKGProposalsSection.ProposalApproved)
+        await approveProposal({
+          blockId: eventDecoded.blockNumber,
+          nonce: String(parseInt(eventData.proposalNonce.toHex())),
+        })
+      }
+      break
     case DKGProposalsSection.ProposalRejected:
+      {
+        const eventData = eventDecoded.as(DKGProposalsSection.ProposalRejected)
+        await rejectProposal({
+          blockId: eventDecoded.blockNumber,
+          nonce: String(parseInt(eventData.proposalNonce.toHex())),
+        })
+      }
+      break
     case DKGProposalsSection.ProposalSucceeded:
+      {
+        const eventData = eventDecoded.as(DKGProposalsSection.ProposalSucceeded)
+        await executedProposal({
+          blockId: eventDecoded.blockNumber,
+          nonce: String(parseInt(eventData.proposalNonce.toHex())),
+        })
+      }
+      break
     case DKGProposalsSection.ProposalFailed:
       {
+        const eventData = eventDecoded.as(DKGProposalsSection.ProposalFailed)
+        await failedProposal({
+          blockId: eventDecoded.blockNumber,
+          nonce: String(parseInt(eventData.proposalNonce.toHex())),
+        })
       }
       break
     case DKGProposalsSection.AuthorityProposersReset:

@@ -1,16 +1,13 @@
 /**
  * Get current signed and unsigned queues
  */
-import { ProposalItemProps } from "./index"
 import {
-  Block,
   ProposalCounter,
   ProposalItem,
   ProposalStatus,
   ProposalType,
   ProposalTypeCount,
 } from "../../types"
-import { ensureBlock } from "../../handlers"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
@@ -96,23 +93,12 @@ export function createProposalId(
   return `${dkgKeyHash.replace("0x", "")}-${chainIdValue.trim() || "0"}`
 }
 
-export async function ensureSingedProposal(
-  proposalId: string
-): Promise<ProposalItem | null> {
-  const items = await ProposalItem.getByProposalId(proposalId)
-  const signed = items.find((item) => typeof item.signature !== "undefined")
-  if (signed) {
-    return signed
-  }
-  return null
-}
-
 export type ProposalCreateInput = {
   blockId: string
   proposalId: string
   type: ProposalType
   data: string
-  signature: string
+  signature?: string
   nonce: number
 }
 
@@ -140,16 +126,16 @@ export async function ensureProposalItemStorage(
   if (proposalItem) {
     return proposalItem
   }
-  const { blockId, type, data, removed, nonce } = input
+  const { blockId, type, data, nonce } = input
   const status = {
     blockNumber: blockId,
-    status: ProposalStatus.Proposed.toString(),
+    status: ProposalStatus.Open.toString(),
     txHash: "",
   }
   const newProposalItem = ProposalItem.create({
     blockId,
     data,
-    removed,
+    removed: false,
     nonce,
     id,
     type,
@@ -183,7 +169,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
   }
   const status = {
     blockNumber: blockId,
-    status: ProposalStatus.Proposed.toString(),
+    status: ProposalStatus.Open.toString(),
     txHash: "",
   }
   const newProposal = ProposalItem.create({
@@ -231,42 +217,63 @@ export async function addVote(
   await proposal.save()
 }
 
-export async function createUnsignedProposal(
-  input: Omit<ProposalCreateInput, "signature"> & {
-    removed: boolean
-  }
+async function updateProposalStatus(
+  findInput: ProposalItemFindInput,
+  status: ProposalStatus
 ) {
-  const { proposalId, blockId, type, data, removed, nonce } = input
-  await ensureBlock(blockId)
-  const id = constructProposalItemId(input)
-  const unSingedProposal = ProposalItem.create({
-    blockId,
-    proposalId,
-    data,
-    removed,
-    nonce,
-    id,
-    type,
+  const proposal = await ensureProposalItem(findInput)
+
+  proposal.timelineStatus.push({
+    status: status.toString(),
+    blockNumber: findInput.blockId,
   })
-  await unSingedProposal.save()
-  return unSingedProposal
+  // TODO add logic to sort the steps
+  proposal.currentStatus = {
+    status: status.toString(),
+    blockNumber: findInput.blockId,
+  }
+  await proposal.save()
+  return proposal
 }
 
-export async function createSignedProposal(input: ProposalCreateInput) {
-  const { proposalId, blockId, type, data, nonce, signature } = input
-  await ensureBlock(blockId)
-  const id = constructProposalItemId(input)
-  const singedProposal = ProposalItem.create({
-    blockId,
-    proposalId,
-    data,
-    signature,
-    removed: false,
-    nonce,
-    id,
-    type,
-  })
-  await singedProposal.save()
+export async function approveProposal(findInput: ProposalItemFindInput) {
+  await updateProposalStatus(findInput, ProposalStatus.Accepted)
+}
+
+export async function rejectProposal(findInput: ProposalItemFindInput) {
+  await updateProposalStatus(findInput, ProposalStatus.Rejected)
+}
+export async function signProposal(
+  findInput: ProposalItemFindInput,
+  sig: string
+) {
+  const proposal = await updateProposalStatus(findInput, ProposalStatus.Signed)
+  proposal.signature = sig
+  await proposal.save()
+}
+
+export async function removeProposal(findInput: ProposalItemFindInput) {
+  const proposal = await updateProposalStatus(findInput, ProposalStatus.Removed)
+  proposal.removed = true
+  await proposal.save()
+}
+
+export async function executedProposal(findInput: ProposalItemFindInput) {
+  const proposal = await updateProposalStatus(
+    findInput,
+    ProposalStatus.Executed
+  )
+  proposal.removed = true
+  await proposal.save()
+}
+
+export async function failedProposal(findInput: ProposalItemFindInput) {
+  const proposal = await updateProposalStatus(
+    findInput,
+    ProposalStatus.FailedToExecute
+  )
+  proposal.removed = true
+  await proposal.save()
 }
 
 export async function createProposalCounter(
@@ -304,6 +311,7 @@ export async function createProposalCounter(
     } else {
       signedCounter[proposal.proposalType] = {
         count: "1",
+        status: ProposalStatus.Signed.toString(),
         type: proposal.proposalType.toString(),
         proposalId: [proposal.proposalId],
       }
@@ -321,6 +329,7 @@ export async function createProposalCounter(
     } else {
       unSignedCounter[proposal.proposalType] = {
         count: "1",
+        status: ProposalStatus.Open.toString(),
         type: proposal.proposalType.toString(),
         proposalId: [proposal.proposalId],
       }
@@ -341,125 +350,4 @@ export async function createProposalCounter(
   })
   await counter.save()
   return counter
-}
-
-/**
- *
- * Fetch all the proposals from chain
- * */
-export async function SyncSingedProposals() {
-  const signedProposalsData = await api.query.dkgProposalHandler.signedProposals.entries()
-  const signedProposals = signedProposalsData.map(([key, value]) => {
-    const payloadKey = key.args[1]
-    const id = payloadKey.toHuman()
-    return {
-      key: {
-        id: key.toString(),
-        chainId: key.args[0].toString(),
-        dkgKey: key.args[1].toHuman(),
-      },
-      value: {
-        proposal: value,
-      },
-    } as any
-  }) as Array<UnsignedProposalQueueItem>
-
-  const chainBlock = await api.rpc.chain.getBlock()
-  const blockNumber = chainBlock.block.header.number.toNumber()
-  const block = await ensureBlock(blockNumber.toString())
-
-  for (const signedProposal of signedProposals) {
-    // check if this proposal exists in singed proposals
-    const possibleProposals = await ProposalItem.getByProposalId(
-      signedProposal.key.id
-    )
-    const isSigned = possibleProposals.some(
-      (proposal) => typeof proposal.signature !== undefined
-    )
-    // if it's inserted  skip it
-    if (isSigned) {
-      continue
-    }
-    // Add the proposal  it to be a signed proposal
-    const sigData = signedProposal.value.proposal.signed
-    const newSignedProposal = ProposalItem.create({
-      signature: sigData.signature,
-      data: sigData.data,
-      proposalId: signedProposal.key.id,
-      type: undefined,
-      nonce: 0,
-      id: `${block.id}-${signedProposal.key.id}`,
-      blockId: block.id,
-      removed: false,
-    })
-    await newSignedProposal.save()
-  }
-}
-
-export async function getCurrentQueues(): Promise<{
-  signed: Omit<ProposalItemProps, "id">[]
-  unsigned: Omit<ProposalItemProps, "id">[]
-  block: Block
-}> {
-  const signedProposalsData = await api.query.dkgProposalHandler.signedProposals.entries()
-  const signedProposals = signedProposalsData.map(([key, value]) => {
-    return {
-      key: {
-        id: key.toString(),
-        chainId: key.args[0].toString(),
-        dkgKey: key.args[1].toHuman(),
-      },
-      value: {
-        proposal: value,
-      },
-    } as any
-  }) as Array<UnsignedProposalQueueItem>
-  const unsignedProposalsData = await api.query.dkgProposalHandler.unsignedProposalQueue.entries()
-  const unsignedProposalsQueue = unsignedProposalsData.map(([key, value]) => {
-    return {
-      key: {
-        id: key.toString(),
-        chainId: key.args[0].toString(),
-        dkgKey: key.args[1].toHuman(),
-      },
-      value: value,
-    } as any
-  }) as Array<UnsignedProposalQueueItem>
-  const chainBlock = await api.rpc.chain.getBlock()
-  const blockNumber = chainBlock.block.header.number.toNumber()
-  const block = await ensureBlock(blockNumber.toString())
-
-  for (const signedProposal of signedProposals) {
-    // check if this proposal exists in singed proposals
-    const possibleProposals = await ProposalItem.getByProposalId(
-      signedProposal.key.id
-    )
-    const isSigned = possibleProposals.some(
-      (proposal) => typeof proposal.signature !== undefined
-    )
-    // if it's inserted  skip it
-
-    if (isSigned) {
-      continue
-    }
-    // Add the proposal  it to be a signed proposal
-    const sigData = signedProposal.value.proposal.signed
-    const newSignedProposal = ProposalItem.create({
-      signature: sigData.signature,
-      data: sigData.data,
-      proposalId: signedProposal.key.id,
-      type: undefined,
-      id: `${block.id}-${signedProposal.key.id}`,
-      blockId: block.id,
-      removed: false,
-      nonce: 0,
-    })
-    await newSignedProposal.save()
-  }
-
-  return {
-    signed: [],
-    unsigned: [],
-    block,
-  }
 }

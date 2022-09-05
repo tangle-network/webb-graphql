@@ -6,9 +6,10 @@ import { DKGProposalHandlerEvent } from "./types"
 import {
   createProposalCounter,
   createProposalId,
-  createSignedProposal,
-  createUnsignedProposal,
   dkgPayloadKeyToProposalType,
+  ensureProposalItemStorage,
+  removeProposal,
+  signProposal,
 } from "../../../utils/proposals/getCurrentQueues"
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
@@ -35,9 +36,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const nonce = Number(eventData.key.value.toString())
         const blockNumber = eventDecoder.blockNumber
         // Create a new unsigned proposal
-        await createUnsignedProposal({
+        await ensureProposalItemStorage({
           proposalId,
-          removed: false,
           blockId: blockNumber,
           data: eventData.data.toString(),
           nonce,
@@ -60,17 +60,13 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           eventData.key
         )
         const blockNumber = eventDecoder.blockNumber
-        const nonce = Number(eventData.key.value.toString())
+        const nonce = String(parseInt(eventData.key.value.toHex()))
 
         logger.info(`Unsigned Proposal Removed: ${proposalId}`)
         // Create a new removed proposal
-        await createUnsignedProposal({
-          proposalId,
-          removed: true,
+        await removeProposal({
           blockId: blockNumber,
-          data: "REMOVED",
           nonce,
-          type: dkgPayloadKeyToProposalType(eventData.key),
         })
         await createProposalCounter(blockNumber)
       }
@@ -89,7 +85,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const blockNumber = eventDecoder.metaData.blockNumber
         const nonce = Number(proposalKey.value.toString())
         logger.info(`Signed Proposal Added: ${proposalId}`)
-        await createSignedProposal({
+        await ensureProposalItemStorage({
           proposalId,
           signature,
           data,
@@ -97,18 +93,13 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           nonce,
           blockId: blockNumber,
         })
-
-        await createUnsignedProposal({
-          proposalId,
-          removed: true,
-          blockId: blockNumber,
-          nonce,
-          data: "REMOVED",
-          type: dkgPayloadKeyToProposalType(eventData.key),
-        })
-
-        // Create a new UnsignedProposal Queue
-        // Remove the proposal form the queue
+        await signProposal(
+          {
+            blockId: blockNumber,
+            nonce: String(parseInt(eventData.key.value.toHex())),
+          },
+          signature
+        )
         await createProposalCounter(blockNumber)
       }
       break
