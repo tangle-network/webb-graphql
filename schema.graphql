@@ -102,8 +102,13 @@ type DKGAuthority @jsonField {
   accountId: String!
   reputation: String
 }
-
+enum SessionKeyStatus {
+  Generated
+  Signed
+  Rotated
+}
 type SessionKeyHistory @jsonField {
+  # SessionKeyStatus
   stage: String!
   txHash: String!
   blockNumber: String!

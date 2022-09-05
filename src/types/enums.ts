@@ -2,6 +2,17 @@
 
 // Auto-generated , DO NOT EDIT
 
+export enum SessionKeyStatus {
+
+    Generated = "Generated",
+
+    Signed = "Signed",
+
+    Rotated = "Rotated",
+
+}
+
+
 export enum ProposalType {
 
     Unknown = "Unknown",

@@ -1,6 +1,12 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
-import { DKGAuthority, Session, Threshold } from "../types"
+import {
+  DKGAuthority,
+  Session,
+  SessionKeyStatus,
+  SessionPublicKey,
+  Threshold,
+} from "../types"
 import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
@@ -25,6 +31,11 @@ export const ensureSession = async (blockId: string) => {
     blockId: blockId,
     blockNumber: Number(blockId),
     id: blockId,
+    key: {
+      compressedKey: "",
+      uncompressedKey: "",
+      history: [],
+    },
   })
 
   await newSession.save()
@@ -162,6 +173,33 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   }
 }
 
+export function nextSession(blockId: string): string {
+  const blockNumber = Number(blockId)
+  const sessionNumber = Math.floor(blockNumber / 10) * 10
+  return String(sessionNumber + 10)
+}
+export async function addPublicKeyHistoryEntry(
+  blockId: string,
+  stage: SessionKeyStatus,
+  data: Omit<SessionPublicKey, "history">
+) {
+  const session = await ensureSession(blockId)
+  // TODO ensure that we track all keys, can a key change multiple times?
+  const nextKeyValue: SessionPublicKey = {
+    uncompressedKey: data.uncompressedKey,
+    compressedKey: data.compressedKey,
+    history: [
+      ...session.key.history,
+      {
+        stage: stage.toString(),
+        blockNumber: blockId,
+        txHash: "<NONE>",
+      },
+    ],
+  }
+  session.key = nextKeyValue
+  await session.save()
+}
 export const createOrUpdateSession = async ({
   blockId,
   ...input

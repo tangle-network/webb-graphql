@@ -26,7 +26,10 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
         logger.info(
-          `PublicKeySubmitted compressedPubKey: ${eventData.uncompressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+          `PublicKeySubmitted
+			compressedPubKey: ${eventData.compressedPubKey}
+			blockNumber: ${eventDecoded.blockNumber}
+			uncompressedPubKey: ${eventData.uncompressedPubKey}`
         )
       }
       break
@@ -36,7 +39,11 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           DKGMetaDataSection.NextPublicKeySubmitted
         )
         logger.info(
-          `NextPublicKeySubmitted compressedPubKey: ${eventData.compressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+          `NextPublicKeySubmitted
+			compressedPubKey: ${eventData.compressedPubKey}
+			blockNumber: ${eventDecoded.blockNumber}
+			uncompressedPubKey: ${eventData.uncompressedPubKey}
+			`
         )
       }
       break
@@ -53,6 +60,14 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
     case DKGMetaDataSection.PublicKeyChanged:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeyChanged)
+        logger.info(
+          `PublicKeyChanged
+			compressedPubKey: ${eventData.compressedPubKey}
+			blockNumber: ${eventDecoded.blockNumber}
+			uncompressedPubKey: ${eventData.uncompressedPubKey}
+			`
+        )
+
         await createPublicKey({
           compressed: eventData.compressedPubKey.toString(),
           uncompressed: eventData.uncompressedPubKey.toString(),
