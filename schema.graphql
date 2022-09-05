@@ -146,8 +146,9 @@ type PublicKey @entity {
   compressed: String
 
   # Public key bytes 65 bytes
-  uncompressed: String
+  uncompressed: String @index(unique: true)
 
+  history: [SessionKeyHistory]!
   block: Block!
 }
 

@@ -122,7 +122,7 @@ export async function ensureProposalItemStorage(
   input: ProposalCreateInput
 ): Promise<ProposalItem> {
   const id = String(input.nonce)
-  const proposalItem = ProposalItem.get(id)
+  const proposalItem = await ProposalItem.get(id)
   if (proposalItem) {
     return proposalItem
   }

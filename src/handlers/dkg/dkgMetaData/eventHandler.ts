@@ -3,13 +3,18 @@ import { DKGMetaDataSection, DKGSections } from "../type"
 import { EventDecoder } from "../../../utils"
 import { DKGMetaDataEvent } from "./types"
 import { createPublicKey } from "./publicKey"
-import { u16, Vec } from "@polkadot/types-codec"
-import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
-import { ITuple } from "@polkadot/types-codec/types"
-import { createOrUpdateSession, fetchSessionAuthorizes } from "../../session"
-import { DKGAuthority } from "../../../types"
-import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
-
+import {
+  addPublicKeyHistoryEntry,
+  createOrUpdateSession,
+  fetchSessionAuthorizes,
+  nextSession,
+} from "../../session"
+import { SessionKeyStatus } from "../../../types"
+/**
+ *
+ * <b> Public key event sequence <b/>
+ *  NextPublicKeySubmitted (For next session)-> NextPublicKeySig  -> PublicKeyChanged (For current session)
+ * */
 export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
   if (event.event.section !== DKGSections.DKGMetaData) {
     logger.error(
@@ -37,6 +42,15 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
       {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySubmitted
+        )
+        const nextSessionId = nextSession(eventDecoded.blockNumber)
+        await addPublicKeyHistoryEntry(
+          nextSessionId,
+          SessionKeyStatus.Generated,
+          {
+            uncompressedKey: eventData.uncompressedPubKey.toString(),
+            compressedKey: eventData.compressedPubKey.toString(),
+          }
         )
         logger.info(
           `NextPublicKeySubmitted

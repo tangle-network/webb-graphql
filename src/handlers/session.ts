@@ -176,8 +176,10 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
 export function nextSession(blockId: string): string {
   const blockNumber = Number(blockId)
   const sessionNumber = Math.floor(blockNumber / 10) * 10
+
   return String(sessionNumber + 10)
 }
+
 export async function addPublicKeyHistoryEntry(
   blockId: string,
   stage: SessionKeyStatus,
