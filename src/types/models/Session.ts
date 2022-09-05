@@ -5,6 +5,8 @@ import assert from 'assert';
 import {
     DKGAuthority,
 
+    SessionPublicKey,
+
     Threshold,
 } from '../interfaces'
 
@@ -33,6 +35,8 @@ export class Session implements Entity {
     public proposers: string[];
 
     public proposersCount?: number;
+
+    public key: SessionPublicKey;
 
     public signatureThreshold?: Threshold;
 

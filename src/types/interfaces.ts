@@ -24,9 +24,57 @@ export interface DKGAuthority {
 }
 
 
+export interface SessionKeyHistory {
+
+    stage: string;
+
+    txHash: string;
+
+    blockNumber: string;
+
+}
+
+
+export interface SessionPublicKey {
+
+    compressedKey: string;
+
+    uncompressedKey: string;
+
+    history: SessionKeyHistory[];
+
+}
+
+
+export interface ProposalTimelineStatus {
+
+    status: string;
+
+    txHash: string;
+
+    blockNumber: string;
+
+}
+
+
+export interface ProposalVotes {
+
+    for: number;
+
+    against: number;
+
+    forVoters: string[];
+
+    againstVoters: string[];
+
+}
+
+
 export interface ProposalTypeCount {
 
     type: string;
+
+    status: string;
 
     count: string;
 

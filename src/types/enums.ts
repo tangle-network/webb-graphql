@@ -37,3 +37,16 @@ export enum ProposalType {
 }
 
 
+export enum ProposalStatus {
+
+    Singed = "Singed",
+
+    Open = "Open",
+
+    Rejected = "Rejected",
+
+    Accepted = "Accepted",
+
+}
+
+

@@ -2,6 +2,12 @@
 import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
+import {
+    ProposalTimelineStatus,
+
+    ProposalVotes,
+} from '../interfaces'
+
 
 
 import {
@@ -23,6 +29,10 @@ export class ProposalItem implements Entity {
     public proposalId: string;
 
     public type: ProposalType;
+
+    public timeline: ProposalTimelineStatus[];
+
+    public votes: ProposalVotes;
 
     public data: string;
 
