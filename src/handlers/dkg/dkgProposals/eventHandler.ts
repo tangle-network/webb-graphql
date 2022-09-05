@@ -1,12 +1,13 @@
-import {SubstrateEvent} from "@subql/types"
-import {DKGProposalsSection, DKGSections} from "../type"
-import {createProposerThreshold} from "./proposerThreshold"
+import { SubstrateEvent } from "@subql/types"
+import { DKGProposalsSection, DKGSections } from "../type"
+import { createProposerThreshold } from "./proposerThreshold"
 import "@webb-tools/types"
 
-import {DKGProposalsEvent} from "./types"
-import {EventDecoder} from "../../../utils"
-import {createProposers} from "./index"
-import {createOrUpdateSession} from "../../session"
+import { DKGProposalsEvent } from "./types"
+import { EventDecoder } from "../../../utils"
+import { createProposers } from "./index"
+import { createOrUpdateSession } from "../../session"
+import { addVote } from "../../../utils/proposals/getCurrentQueues"
 
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
@@ -40,8 +41,26 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       break
     case DKGProposalsSection.ProposerRemoved:
       break
-    case DKGProposalsSection.VoteFor:
-    case DKGProposalsSection.VoteAgainst:
+    case DKGProposalsSection.VoteFor: {
+      const eventData = eventDecoded.as(DKGProposalsSection.VoteFor)
+      await addVote(
+        {
+          blockId: eventDecoded.blockNumber,
+          nonce: String(parseInt(eventData.proposalNonce.toHex())),
+        },
+        eventData.who.toString()
+      )
+    }
+    case DKGProposalsSection.VoteAgainst: {
+      const eventData = eventDecoded.as(DKGProposalsSection.VoteAgainst)
+      await addVote(
+        {
+          blockId: eventDecoded.blockNumber,
+          nonce: String(parseInt(eventData.proposalNonce.toHex())),
+        },
+        eventData.who.toString()
+      )
+    }
     case DKGProposalsSection.ProposalApproved:
     case DKGProposalsSection.ProposalRejected:
     case DKGProposalsSection.ProposalSucceeded:

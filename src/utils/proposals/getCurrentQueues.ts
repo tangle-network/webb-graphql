@@ -6,6 +6,7 @@ import {
   Block,
   ProposalCounter,
   ProposalItem,
+  ProposalStatus,
   ProposalType,
   ProposalTypeCount,
 } from "../../types"
@@ -124,6 +125,110 @@ function constructProposalItemId(
   return `${input.blockId}-${input.proposalId}-${input.nonce}-${
     input.removed ? "0" : "1"
   }${input.signature ? "1" : "0"}`
+}
+
+/**
+ *
+ * Ensure a proposal item is added
+ * return the proposal item if exists or creates a new unsigned empty votes proposal item
+ * */
+export async function ensureProposalItemStorage(
+  input: ProposalCreateInput
+): Promise<ProposalItem> {
+  const id = String(input.nonce)
+  const proposalItem = ProposalItem.get(id)
+  if (proposalItem) {
+    return proposalItem
+  }
+  const { blockId, type, data, removed, nonce } = input
+  const status = {
+    blockNumber: blockId,
+    status: ProposalStatus.Proposed.toString(),
+    txHash: "",
+  }
+  const newProposalItem = ProposalItem.create({
+    blockId,
+    data,
+    removed,
+    nonce,
+    id,
+    type,
+    votes: [
+      {
+        for: 0,
+        against: 0,
+        againstVoters: [],
+        forVoters: [],
+        blockNumber: blockId,
+      },
+    ],
+    timelineStatus: [status],
+    currentStatus: status,
+  })
+  await newProposalItem.save()
+  return newProposalItem
+}
+
+type ProposalItemFindInput = {
+  blockId: string
+  nonce: string
+}
+
+export async function ensureProposalItem(input: ProposalItemFindInput) {
+  const { blockId, nonce } = input
+  const id = String(nonce)
+  const proposal = await ProposalItem.get(id)
+  if (proposal) {
+    return proposal
+  }
+  const status = {
+    blockNumber: blockId,
+    status: ProposalStatus.Proposed.toString(),
+    txHash: "",
+  }
+  const newProposal = ProposalItem.create({
+    id,
+    blockId: input.blockId,
+    data: "0x00",
+    removed: false,
+    nonce: Number(id),
+    timelineStatus: [status],
+    votes: [
+      {
+        for: 0,
+        against: 0,
+        againstVoters: [],
+        forVoters: [],
+        blockNumber: blockId,
+      },
+    ],
+    type: ProposalType.Unknown,
+    currentStatus: status,
+    signature: undefined,
+  })
+  await newProposal.save()
+  return newProposal
+}
+
+export async function addVote(
+  input: ProposalItemFindInput,
+  voter: string,
+  isFor = true
+) {
+  const proposal = await ensureProposalItem(input)
+  const lastVotes = proposal.votes[proposal.votes.length - 1]
+  proposal.votes.push({
+    for: lastVotes.for + (isFor ? 1 : 0),
+    against: lastVotes.against + (isFor ? 0 : 1),
+    forVoters: isFor
+      ? [...lastVotes.forVoters, voter]
+      : [...lastVotes.forVoters],
+    againstVoters: isFor
+      ? [...lastVotes.againstVoters]
+      : [...lastVotes.againstVoters, voter],
+    blockNumber: input.blockId,
+  })
+  await proposal.save()
 }
 
 export async function createUnsignedProposal(

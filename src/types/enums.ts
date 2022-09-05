@@ -4,6 +4,8 @@
 
 export enum ProposalType {
 
+    Unknown = "Unknown",
+
     EvmProposal = "EvmProposal",
 
     RefreshVote = "RefreshVote",
@@ -39,6 +41,8 @@ export enum ProposalType {
 
 export enum ProposalStatus {
 
+    Proposed = "Proposed",
+
     Singed = "Singed",
 
     Open = "Open",
@@ -46,6 +50,8 @@ export enum ProposalStatus {
     Rejected = "Rejected",
 
     Accepted = "Accepted",
+
+    Removed = "Removed",
 
 }
 

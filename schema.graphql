@@ -166,6 +166,7 @@ type Proposers @entity {
 }
 
 enum ProposalType {
+  Unknown
   EvmProposal
   RefreshVote
   ProposerSetUpdateProposal
@@ -183,16 +184,18 @@ enum ProposalType {
   FeeRecipientUpdateProposal
 }
 enum ProposalStatus {
+  Proposed
   Singed
   Open
   Rejected
   Accepted
+  Removed
 }
 
 type ProposalTimelineStatus @jsonField {
   # ProposalStatus
   status: String!
-  txHash: String!
+  txHash: String
   blockNumber: String!
 }
 
@@ -201,21 +204,25 @@ type ProposalVotes @jsonField {
   against: Int!
   forVoters: [String]!
   againstVoters: [String]!
+  blockNumber: String!
 }
 
 type ProposalItem @entity {
+  # Nonce
   id: ID!
 
-  proposalId: String! @index(unique: false)
+  nonce: Int!
 
   type: ProposalType!
-  timeline: [ProposalTimelineStatus]!
-  votes: ProposalVotes!
+
+  timelineStatus: [ProposalTimelineStatus]!
+  currentStatus: ProposalTimelineStatus!
+
+  votes: [ProposalVotes]!
 
   data: String!
   signature: String
   removed: Boolean
-  nonce: Int!
 
   block: Block!
 }

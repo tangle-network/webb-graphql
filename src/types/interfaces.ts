@@ -50,7 +50,7 @@ export interface ProposalTimelineStatus {
 
     status: string;
 
-    txHash: string;
+    txHash?: string;
 
     blockNumber: string;
 
@@ -66,6 +66,8 @@ export interface ProposalVotes {
     forVoters: string[];
 
     againstVoters: string[];
+
+    blockNumber: string;
 
 }
 

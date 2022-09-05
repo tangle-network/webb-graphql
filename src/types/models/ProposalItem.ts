@@ -26,21 +26,21 @@ export class ProposalItem implements Entity {
 
     public id: string;
 
-    public proposalId: string;
+    public nonce: number;
 
     public type: ProposalType;
 
-    public timeline: ProposalTimelineStatus[];
+    public timelineStatus: ProposalTimelineStatus[];
 
-    public votes: ProposalVotes;
+    public currentStatus: ProposalTimelineStatus;
+
+    public votes: ProposalVotes[];
 
     public data: string;
 
     public signature?: string;
 
     public removed?: boolean;
-
-    public nonce: number;
 
     public blockId: string;
 
@@ -65,13 +65,6 @@ export class ProposalItem implements Entity {
         }
     }
 
-
-    static async getByProposalId(proposalId: string): Promise<ProposalItem[] | undefined>{
-      
-      const records = await store.getByField('ProposalItem', 'proposalId', proposalId);
-      return records.map(record => ProposalItem.create(record as ProposalItemProps));
-      
-    }
 
     static async getByBlockId(blockId: string): Promise<ProposalItem[] | undefined>{
       
