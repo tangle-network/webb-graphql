@@ -7,6 +7,8 @@ import {
   ProposalStatus,
   ProposalType,
   ProposalTypeCount,
+  UnsignedProposalsQueue,
+  UnsignedProposalsQueueItem,
 } from "../../types"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
@@ -83,7 +85,35 @@ export function dkgPayloadKeyToProposalType(
       return ProposalType.FeeRecipientUpdateProposal
   }
 }
-
+export async function ensureProposalQueue(blockId: string) {
+  const queue = await UnsignedProposalsQueue.get(blockId)
+  if (queue) {
+    return queue
+  }
+  const newQueue = UnsignedProposalsQueue.create({
+    id: blockId,
+    blockId,
+  })
+  await newQueue.save()
+  return newQueue
+}
+export async function ensureProposalQueueItem(
+  blockId: string,
+  proposalId: string
+) {
+  const id = `${blockId}-${proposalId}`
+  const item = await UnsignedProposalsQueueItem.get(id)
+  if (item) {
+    return item
+  }
+  const newItem = UnsignedProposalsQueueItem.create({
+    id,
+    queueId: blockId,
+    proposalId,
+  })
+  await newItem.save()
+  return newItem
+}
 export function createProposalId(
   chainId: WebbProposalsHeaderTypedChainId,
   dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey
@@ -354,6 +384,12 @@ export async function createProposalCounter(
     signedProposalsMap: Object.values(signedCounter),
     unSignedProposalsMap: Object.values(unSignedCounter),
   })
+  await ensureProposalQueue(blockId)
+  await Promise.all(
+    parsedSigProposals.map((p) => {
+      return ensureProposalQueueItem(blockId, p.proposalId)
+    })
+  )
   await counter.save()
   return counter
 }
