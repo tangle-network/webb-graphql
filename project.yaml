@@ -18,13 +18,12 @@ schema:
 
 network:
   # Use Egg-net local endpoint
-  chainId: "0x8b93710b0552b46814737915fb0526e2d8431261224597af2f0cc866e9e1dc1d"
+  chainId: "0x8dd1d98ce651d687a543de7da27206b625eece37e1972c6139716cd9867c8961"
   endpoint: "ws://host.docker.internal:9944" # using docker
   # endpoint: "ws://127.0.0.1:9944" # not using docker
 
 dataSources:
   - kind: substrate/Runtime
-    startBlock: 1
     mapping:
       file: ./dist/index.js
       handlers:

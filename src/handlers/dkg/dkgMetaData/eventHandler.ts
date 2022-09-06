@@ -2,13 +2,14 @@ import { SubstrateEvent } from "@subql/types"
 import { DKGMetaDataSection, DKGSections } from "../type"
 import { EventDecoder } from "../../../utils"
 import { DKGMetaDataEvent } from "./types"
-import { keyGenerated } from "./publicKey"
+import { keyGenerated, updatePublicKeyStatus } from "./publicKey"
 import {
   createOrUpdateSession,
   fetchSessionAuthorizes,
   nextSession,
   setSessionKey,
 } from "../../session"
+import { SessionKeyStatus } from "../../../types"
 
 /**
  *
@@ -64,6 +65,12 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySignatureSubmitted
         )
+        await updatePublicKeyStatus({
+          status: SessionKeyStatus.Signed,
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
+        })
         logger.info(
           `NextPublicKeySignatureSubmitted
 					pubKeySig: ${eventData.pubKeySig.toString()}
@@ -98,6 +105,13 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
 
         await createOrUpdateSession({
           ...sessionAuthorities,
+        })
+
+        await updatePublicKeyStatus({
+          status: SessionKeyStatus.Rotated,
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
         })
       }
       break
