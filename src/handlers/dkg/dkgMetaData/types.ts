@@ -18,13 +18,11 @@ export interface KeygenThresholdArgs {
 export type DKGMetaDataEvent = {
   PublicKeySubmitted: PalletDkgMetadataEvent["asPublicKeySubmitted"]
   NextPublicKeySubmitted: PalletDkgMetadataEvent["asNextPublicKeySubmitted"]
-  NextPublicKeySignatureSubmitted: PalletDkgMetadataEvent["asNextPublicKeySignatureSubmitted"] & {
-    pubKey: Bytes
-  }
+  NextPublicKeySignatureSubmitted: PalletDkgMetadataEvent["asNextPublicKeySignatureSubmitted"] &
+    PalletDkgMetadataEvent["asPublicKeySubmitted"]
   PublicKeyChanged: PalletDkgMetadataEvent["asPublicKeyChanged"]
-  PublicKeySignatureChanged: PalletDkgMetadataEvent["asPublicKeySignatureChanged"] & {
-    pubKey: Bytes
-  }
+  PublicKeySignatureChanged: PalletDkgMetadataEvent["asPublicKeySignatureChanged"] &
+    PalletDkgMetadataEvent["asPublicKeySubmitted"]
   MisbehaviourReportsSubmitted: PalletDkgMetadataEvent["asMisbehaviourReportsSubmitted"]
   RefreshKeysFinished: PalletDkgMetadataEvent["asRefreshKeysFinished"]
   NextKeygenThresholdUpdated: Struct & {

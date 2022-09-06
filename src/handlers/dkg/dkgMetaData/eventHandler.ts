@@ -2,7 +2,7 @@ import { SubstrateEvent } from "@subql/types"
 import { DKGMetaDataSection, DKGSections } from "../type"
 import { EventDecoder } from "../../../utils"
 import { DKGMetaDataEvent } from "./types"
-import { createPublicKey, keyGenerated } from "./publicKey"
+import { keyGenerated } from "./publicKey"
 import {
   createOrUpdateSession,
   fetchSessionAuthorizes,
@@ -65,7 +65,11 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           DKGMetaDataSection.NextPublicKeySignatureSubmitted
         )
         logger.info(
-          `NextPublicKeySignatureSubmitted pubKeySig: ${eventData.pubKeySig.toString()} `
+          `NextPublicKeySignatureSubmitted
+					pubKeySig: ${eventData.pubKeySig.toString()}
+					compressedPubKey: ${eventData.compressedPubKey.toString()}
+					uncompressedPubKey: ${eventData.uncompressedPubKey.toString()}
+           `
         )
       }
       break
@@ -79,12 +83,6 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
 			uncompressedPubKey: ${eventData.uncompressedPubKey}
 			`
         )
-
-        await createPublicKey({
-          compressed: eventData.compressedPubKey.toString(),
-          uncompressed: eventData.uncompressedPubKey.toString(),
-          blockNumber: eventDecoded.blockNumber,
-        })
       }
       break
     case DKGMetaDataSection.PublicKeySignatureChanged:
