@@ -22,7 +22,7 @@ export class SignatureThreshold implements Entity {
 
     public next?: number;
 
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{

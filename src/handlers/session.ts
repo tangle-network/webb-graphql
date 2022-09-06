@@ -1,13 +1,13 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
 import { DKGAuthority, Session, Threshold } from "../types"
-import { u16, Vec } from "@polkadot/types-codec"
+import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
 
 export const ensureSession = async (blockId: string) => {
-  const block = await ensureBlock(blockId)
+  await ensureBlock(blockId)
   const session = await Session.get(blockId)
   if (session) {
     return session
@@ -23,6 +23,7 @@ export const ensureSession = async (blockId: string) => {
     proposerThreshold: undefined,
     signatureThreshold: undefined,
     blockId: blockId,
+    blockNumber: Number(blockId),
     id: blockId,
   })
 
@@ -142,6 +143,13 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     next: nextSignatureThreshold,
     pending: pendingSignatureThreshold,
   }
+  const pendingThresholdVal: u32 = (await api.query.dkgProposals.proposerThreshold()) as any
+  const currentProposerThreshold = parseInt(pendingThresholdVal.toHex())
+  const proposerThreshold: Threshold = {
+    current: currentProposerThreshold,
+    next: currentProposerThreshold,
+    pending: currentProposerThreshold,
+  }
   return {
     blockId: blockNumber,
     authorities: dkgAuthorities,
@@ -150,7 +158,15 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     nextBestAuthorities: nextBestDkgAuthorities,
     keyGenThreshold,
     signatureThreshold,
+    proposerThreshold,
   }
+}
+
+export function nextSession(blockId: string): string {
+  const blockNumber = Number(blockId)
+  const sessionNumber = Math.floor(blockNumber / 10) * 10
+
+  return String(sessionNumber + 10)
 }
 
 export const createOrUpdateSession = async ({
@@ -169,4 +185,10 @@ export const createOrUpdateSession = async ({
   }
   await session.save()
   return session
+}
+
+export async function setSessionKey(blockId: string, keyId: string) {
+  const session = await ensureSession(blockId)
+  session.publicKeyId = keyId
+  await session.save()
 }

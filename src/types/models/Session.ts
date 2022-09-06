@@ -34,13 +34,17 @@ export class Session implements Entity {
 
     public proposersCount?: number;
 
+    public publicKeyId?: string;
+
     public signatureThreshold?: Threshold;
 
     public proposerThreshold?: Threshold;
 
     public keyGenThreshold?: Threshold;
 
-    public blockId?: string;
+    public blockNumber: number;
+
+    public blockId: string;
 
 
     async save(): Promise<void>{
@@ -63,6 +67,13 @@ export class Session implements Entity {
         }
     }
 
+
+    static async getByPublicKeyId(publicKeyId: string): Promise<Session[] | undefined>{
+      
+      const records = await store.getByField('Session', 'publicKeyId', publicKeyId);
+      return records.map(record => Session.create(record as SessionProps));
+      
+    }
 
     static async getByBlockId(blockId: string): Promise<Session[] | undefined>{
       

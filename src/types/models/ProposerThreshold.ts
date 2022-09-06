@@ -18,7 +18,7 @@ export class ProposerThreshold implements Entity {
 
     public value?: number;
 
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{

@@ -2,14 +2,20 @@ import { SubstrateEvent } from "@subql/types"
 import { DKGMetaDataSection, DKGSections } from "../type"
 import { EventDecoder } from "../../../utils"
 import { DKGMetaDataEvent } from "./types"
-import { createPublicKey } from "./publicKey"
-import { u16, Vec } from "@polkadot/types-codec"
-import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
-import { ITuple } from "@polkadot/types-codec/types"
-import { createOrUpdateSession, fetchSessionAuthorizes } from "../../session"
-import { DKGAuthority } from "../../../types"
-import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
+import { keyGenerated, updatePublicKeyStatus } from "./publicKey"
+import {
+  createOrUpdateSession,
+  fetchSessionAuthorizes,
+  nextSession,
+  setSessionKey,
+} from "../../session"
+import { SessionKeyStatus } from "../../../types"
 
+/**
+ *
+ * <b> Public key event sequence <b/>
+ *  NextPublicKeySubmitted (For next session)-> NextPublicKeySig  -> PublicKeyChanged (For current session)
+ * */
 export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
   if (event.event.section !== DKGSections.DKGMetaData) {
     logger.error(
@@ -26,7 +32,10 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
         logger.info(
-          `PublicKeySubmitted compressedPubKey: ${eventData.uncompressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+          `PublicKeySubmitted
+			compressedPubKey: ${eventData.compressedPubKey}
+			blockNumber: ${eventDecoded.blockNumber}
+			uncompressedPubKey: ${eventData.uncompressedPubKey}`
         )
       }
       break
@@ -35,8 +44,19 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySubmitted
         )
+        const nextSessionId = nextSession(eventDecoded.blockNumber)
+        const key = await keyGenerated({
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
+        })
+        await setSessionKey(nextSessionId, key.id)
         logger.info(
-          `NextPublicKeySubmitted compressedPubKey: ${eventData.compressedPubKey} , uncompressedPubKey: ${eventData.uncompressedPubKey}`
+          `NextPublicKeySubmitted
+			compressedPubKey: ${eventData.compressedPubKey}
+			blockNumber: ${eventDecoded.blockNumber}
+			uncompressedPubKey: ${eventData.uncompressedPubKey}
+			`
         )
       }
       break
@@ -45,19 +65,31 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySignatureSubmitted
         )
+        await updatePublicKeyStatus({
+          status: SessionKeyStatus.Signed,
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
+        })
         logger.info(
-          `NextPublicKeySignatureSubmitted pubKeySig: ${eventData.pubKeySig.toString()} `
+          `NextPublicKeySignatureSubmitted
+					pubKeySig: ${eventData.pubKeySig.toString()}
+					compressedPubKey: ${eventData.compressedPubKey.toString()}
+					uncompressedPubKey: ${eventData.uncompressedPubKey.toString()}
+           `
         )
       }
       break
     case DKGMetaDataSection.PublicKeyChanged:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeyChanged)
-        await createPublicKey({
-          compressed: eventData.compressedPubKey.toString(),
-          uncompressed: eventData.uncompressedPubKey.toString(),
-          blockNumber: eventDecoded.blockNumber,
-        })
+        logger.info(
+          `PublicKeyChanged
+			compressedPubKey: ${eventData.compressedPubKey}
+			blockNumber: ${eventDecoded.blockNumber}
+			uncompressedPubKey: ${eventData.uncompressedPubKey}
+			`
+        )
       }
       break
     case DKGMetaDataSection.PublicKeySignatureChanged:
@@ -73,6 +105,13 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
 
         await createOrUpdateSession({
           ...sessionAuthorities,
+        })
+
+        await updatePublicKeyStatus({
+          status: SessionKeyStatus.Rotated,
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
         })
       }
       break

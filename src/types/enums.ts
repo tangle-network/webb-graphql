@@ -2,7 +2,20 @@
 
 // Auto-generated , DO NOT EDIT
 
+export enum SessionKeyStatus {
+
+    Generated = "Generated",
+
+    Signed = "Signed",
+
+    Rotated = "Rotated",
+
+}
+
+
 export enum ProposalType {
+
+    Unknown = "Unknown",
 
     EvmProposal = "EvmProposal",
 
@@ -33,6 +46,25 @@ export enum ProposalType {
     SetTreasuryHandlerProposal = "SetTreasuryHandlerProposal",
 
     FeeRecipientUpdateProposal = "FeeRecipientUpdateProposal",
+
+}
+
+
+export enum ProposalStatus {
+
+    Signed = "Signed",
+
+    Open = "Open",
+
+    Rejected = "Rejected",
+
+    Accepted = "Accepted",
+
+    Removed = "Removed",
+
+    Executed = "Executed",
+
+    FailedToExecute = "FailedToExecute",
 
 }
 

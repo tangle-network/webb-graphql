@@ -18,7 +18,7 @@ export class Event implements Entity {
 
     public index: number;
 
-    public blockId?: string;
+    public blockId: string;
 
     public blockNumber: bigint;
 

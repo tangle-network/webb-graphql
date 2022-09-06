@@ -2,6 +2,10 @@
 import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
+import {
+    SessionKeyHistory,
+} from '../interfaces'
+
 
 
 
@@ -20,7 +24,9 @@ export class PublicKey implements Entity {
 
     public uncompressed?: string;
 
-    public blockId?: string;
+    public history: SessionKeyHistory[];
+
+    public blockId: string;
 
 
     async save(): Promise<void>{
@@ -43,6 +49,17 @@ export class PublicKey implements Entity {
         }
     }
 
+
+    static async getByUncompressed(uncompressed: string): Promise<PublicKey | undefined>{
+      
+      const record = await store.getOneByField('PublicKey', 'uncompressed', uncompressed);
+      if (record){
+          return PublicKey.create(record as PublicKeyProps);
+      }else{
+          return;
+      }
+      
+    }
 
     static async getByBlockId(blockId: string): Promise<PublicKey[] | undefined>{
       

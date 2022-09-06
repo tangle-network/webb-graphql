@@ -20,7 +20,7 @@ export class Proposers implements Entity {
 
     public proposers: string[];
 
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{

@@ -2,6 +2,12 @@
 import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
+import {
+    ProposalTimelineStatus,
+
+    ProposalVotes,
+} from '../interfaces'
+
 
 
 import {
@@ -20,9 +26,15 @@ export class ProposalItem implements Entity {
 
     public id: string;
 
-    public proposalId: string;
+    public nonce: number;
 
     public type: ProposalType;
+
+    public timelineStatus: ProposalTimelineStatus[];
+
+    public currentStatus: ProposalTimelineStatus;
+
+    public votes: ProposalVotes[];
 
     public data: string;
 
@@ -30,9 +42,7 @@ export class ProposalItem implements Entity {
 
     public removed?: boolean;
 
-    public nonce: number;
-
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{
@@ -55,13 +65,6 @@ export class ProposalItem implements Entity {
         }
     }
 
-
-    static async getByProposalId(proposalId: string): Promise<ProposalItem[] | undefined>{
-      
-      const records = await store.getByField('ProposalItem', 'proposalId', proposalId);
-      return records.map(record => ProposalItem.create(record as ProposalItemProps));
-      
-    }
 
     static async getByBlockId(blockId: string): Promise<ProposalItem[] | undefined>{
       

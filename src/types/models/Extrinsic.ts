@@ -18,7 +18,7 @@ export class Extrinsic implements Entity {
 
     public hash: string;
 
-    public blockId?: string;
+    public blockId: string;
 
     public blockNumber: bigint;
 

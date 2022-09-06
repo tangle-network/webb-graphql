@@ -20,7 +20,7 @@ export class Authorities implements Entity {
 
     public next?: string[];
 
-    public blockId?: string;
+    public blockId: string;
 
 
     async save(): Promise<void>{
