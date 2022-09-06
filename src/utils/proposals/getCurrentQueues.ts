@@ -386,7 +386,7 @@ export async function createProposalCounter(
   })
   await ensureProposalQueue(blockId)
   await Promise.all(
-    parsedSigProposals.map((p) => {
+    parsedUnSigProposals.map((p) => {
       return ensureProposalQueueItem(blockId, p.proposalId)
     })
   )
