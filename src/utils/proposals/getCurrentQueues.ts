@@ -291,9 +291,11 @@ export async function createProposalCounter(
     }
   })
   const parsedUnSigProposals = unSignedProposalsData.map(([key]) => {
-    const [chainId, dkgKey] = key.args
+    const [_chainId, dkgKey] = (key.args as unknown) as [
+      WebbProposalsHeaderTypedChainId,
+      DkgRuntimePrimitivesProposalDkgPayloadKey
+    ]
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any)
-    const proposalId = createProposalId(chainId as any, dkgKey as any)
     const nonce = dkgKey.value.toString()
     return {
       proposalId: nonce,
