@@ -245,6 +245,18 @@ type ProposalTypeCount @jsonField {
   proposalId: [String!]!
 }
 
+
+type UnsignedProposalsQueueItem @entity {
+	id: ID!
+	proposal:ProposalItem!
+	queue:UnsignedProposalsQueue!
+}
+
+type UnsignedProposalsQueue @entity {
+  id: ID!
+  block: Block!
+}
+
 type ProposalCounter @entity {
   id: ID!
 

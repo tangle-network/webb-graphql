@@ -26,5 +26,9 @@ export {Proposers} from "./Proposers"
 
 export {ProposalItem} from "./ProposalItem"
 
+export {UnsignedProposalsQueueItem} from "./UnsignedProposalsQueueItem"
+
+export {UnsignedProposalsQueue} from "./UnsignedProposalsQueue"
+
 export {ProposalCounter} from "./ProposalCounter"
 
