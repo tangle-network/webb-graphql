@@ -14,6 +14,7 @@ import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
+import { getSessionIdFromBlock } from "../sessionId"
 
 export interface UnsignedProposalQueueItem {
   key: Key
@@ -103,6 +104,7 @@ export async function ensureProposalQueueItem(
 ) {
   const id = `${blockId}-${proposalId}`
   const item = await UnsignedProposalsQueueItem.get(id)
+  // TODO : Debug this more as the proposal isn't created while it should be
   await ensureProposalItem({ blockId, nonce: proposalId })
   if (item) {
     return item
@@ -179,6 +181,7 @@ export async function ensureProposalItemStorage(
         blockNumber: blockId,
       },
     ],
+    status: status.status.toString(),
     timelineStatus: [status],
     currentStatus: status,
   })
@@ -221,6 +224,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     ],
     type: ProposalType.Unknown,
     currentStatus: status,
+    status: status.status.toString(),
     signature: undefined,
   })
   await newProposal.save()
@@ -375,9 +379,9 @@ export async function createProposalCounter(
 
   const signedProposalsCount = signedProposalsData.length
   const unSignedProposalsCount = unSignedProposalsData.length
-
+  const counterId = getSessionIdFromBlock(blockId)
   const counter = ProposalCounter.create({
-    id: blockId,
+    id: counterId,
     blockNumber: Number(blockId),
     blockId,
     signedProposalsCount,

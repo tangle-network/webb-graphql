@@ -34,6 +34,8 @@ export class ProposalItem implements Entity {
 
     public currentStatus: ProposalTimelineStatus;
 
+    public status: string;
+
     public votes: ProposalVotes[];
 
     public data: string;
@@ -65,6 +67,13 @@ export class ProposalItem implements Entity {
         }
     }
 
+
+    static async getByStatus(status: string): Promise<ProposalItem[] | undefined>{
+      
+      const records = await store.getByField('ProposalItem', 'status', status);
+      return records.map(record => ProposalItem.create(record as ProposalItemProps));
+      
+    }
 
     static async getByBlockId(blockId: string): Promise<ProposalItem[] | undefined>{
       
