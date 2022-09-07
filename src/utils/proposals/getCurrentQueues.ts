@@ -5,6 +5,7 @@ import {
   ProposalCounter,
   ProposalItem,
   ProposalStatus,
+  ProposalStatusCount,
   ProposalType,
   ProposalTypeCount,
   UnsignedProposalsQueue,
@@ -86,6 +87,7 @@ export function dkgPayloadKeyToProposalType(
       return ProposalType.FeeRecipientUpdateProposal
   }
 }
+
 export async function ensureProposalQueue(blockId: string) {
   const queue = await UnsignedProposalsQueue.get(blockId)
   if (queue) {
@@ -98,6 +100,7 @@ export async function ensureProposalQueue(blockId: string) {
   await newQueue.save()
   return newQueue
 }
+
 export async function ensureProposalQueueItem(
   blockId: string,
   proposalId: string
@@ -117,6 +120,7 @@ export async function ensureProposalQueueItem(
   await newItem.save()
   return newItem
 }
+
 export function createProposalId(
   chainId: WebbProposalsHeaderTypedChainId,
   dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey
@@ -278,6 +282,7 @@ export async function approveProposal(findInput: ProposalItemFindInput) {
 export async function rejectProposal(findInput: ProposalItemFindInput) {
   await updateProposalStatus(findInput, ProposalStatus.Rejected)
 }
+
 export async function signProposal(
   findInput: ProposalItemFindInput,
   sig: string
@@ -352,7 +357,6 @@ export async function createProposalCounter(
     } else {
       signedCounter[proposal.proposalType] = {
         count: "1",
-        status: ProposalStatus.Signed.toString(),
         type: proposal.proposalType.toString(),
         proposalId: [proposal.proposalId],
       }
@@ -370,13 +374,41 @@ export async function createProposalCounter(
     } else {
       unSignedCounter[proposal.proposalType] = {
         count: "1",
-        status: ProposalStatus.Open.toString(),
         type: proposal.proposalType.toString(),
         proposalId: [proposal.proposalId],
       }
     }
   })
-
+  const proposalStatusMap: Partial<Record<
+    ProposalStatus,
+    ProposalStatusCount
+  >> = {}
+  const proposalsStatuses = [
+    ProposalStatus.Open,
+    ProposalStatus.Signed,
+    ProposalStatus.Accepted,
+    ProposalStatus.Rejected,
+    ProposalStatus.Removed,
+    ProposalStatus.Executed,
+    ProposalStatus.FailedToExecute,
+  ].map(async (status) => {
+    const proposals = await ProposalItem.getByStatus(String(status))
+    proposals.forEach((proposal) => {
+      if (proposalStatusMap[status]) {
+        proposalStatusMap[status].count = String(
+          Number(proposalStatusMap[status].count) + 1
+        )
+        proposalStatusMap[status].proposalId.push(proposal.id)
+      } else {
+        proposalStatusMap[status] = {
+          count: "1",
+          status: status.toString(),
+          proposalId: [proposal.id],
+        }
+      }
+    })
+  })
+  await Promise.all(proposalsStatuses)
   const signedProposalsCount = signedProposalsData.length
   const unSignedProposalsCount = unSignedProposalsData.length
   const counterId = getSessionIdFromBlock(blockId)
@@ -388,6 +420,7 @@ export async function createProposalCounter(
     unSignedProposalsCount,
     signedProposalsMap: Object.values(signedCounter),
     unSignedProposalsMap: Object.values(unSignedCounter),
+    statusMap: Object.values(proposalStatusMap),
   })
   await ensureProposalQueue(blockId)
   await Promise.all(
