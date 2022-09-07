@@ -303,6 +303,7 @@ async function updateProposalStatus(
       break
   }
   proposal.status = activeTimelineStatus.status
+  proposal.currentStatus = activeTimelineStatus
   await proposal.save()
   return proposal
 }
