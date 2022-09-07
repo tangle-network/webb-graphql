@@ -242,7 +242,7 @@ type ProposalTypeCount @jsonField {
   count: String!
   proposalId: [String!]!
 }
-type ProposalTypeCount @jsonField {
+type ProposalStatusCount @jsonField {
   # Proposal status : Accepted, Rejected, Open
   status: String!
   count: String!
@@ -267,7 +267,7 @@ type ProposalCounter @entity {
   unSignedProposalsCount: Int!
   signedProposalsMap: [ProposalTypeCount]
   unSignedProposalsMap: [ProposalTypeCount]
-  statusMap: [ProposalTypeCount]
+  statusMap: [ProposalStatusCount]
   blockNumber: Int!
   block: Block!
 }
