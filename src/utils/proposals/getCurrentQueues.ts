@@ -266,11 +266,45 @@ async function updateProposalStatus(
     status: status.toString(),
     blockNumber: findInput.blockId,
   })
-  // TODO add logic to sort the steps
-  proposal.currentStatus = {
-    status: status.toString(),
-    blockNumber: findInput.blockId,
+
+  const currentStatus = proposal.status as ProposalStatus
+  let activeTimelineStatus = { ...proposal.currentStatus }
+  switch (currentStatus) {
+    case ProposalStatus.Signed:
+      {
+        switch (status) {
+          case ProposalStatus.Rejected:
+          case ProposalStatus.Accepted:
+          case ProposalStatus.Removed:
+          case ProposalStatus.Executed:
+          case ProposalStatus.FailedToExecute:
+            activeTimelineStatus = {
+              status: status.toString(),
+              txHash: "",
+              blockNumber: findInput.blockId,
+            }
+        }
+      }
+      break
+    case ProposalStatus.Open:
+      {
+        switch (status) {
+          case ProposalStatus.Signed:
+          case ProposalStatus.Rejected:
+          case ProposalStatus.Accepted:
+          case ProposalStatus.Removed:
+          case ProposalStatus.Executed:
+          case ProposalStatus.FailedToExecute:
+            activeTimelineStatus = {
+              status: status.toString(),
+              txHash: "",
+              blockNumber: findInput.blockId,
+            }
+        }
+      }
+      break
   }
+  proposal.status = activeTimelineStatus.status
   await proposal.save()
   return proposal
 }
