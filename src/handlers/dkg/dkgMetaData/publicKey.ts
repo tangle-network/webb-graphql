@@ -1,5 +1,6 @@
 import { ensureBlock } from "../../block"
-import { PublicKey, SessionKeyStatus } from "../../../types"
+import { Extrinsic, PublicKey, SessionKeyStatus } from "../../../types"
+import { DKGSections } from "../type"
 
 /**
  * Public key for a given session
@@ -22,11 +23,13 @@ export async function ensurePublicKey(input: PublicKeyInput) {
 
   return data
 }
+
 export type PublicKeyInput = {
   blockNumber: string
   compressed: string
   uncompressed: string
 }
+
 export async function createPublicKey(data: PublicKeyInput) {
   const key = await ensurePublicKey(data)
   key.compressed = data.compressed
@@ -36,15 +39,29 @@ export async function createPublicKey(data: PublicKeyInput) {
 
   return data
 }
+
 type PublicKeyGenerated = {
   composedPubKey: string
   uncompressedPubKey: string
   blockNumber: string
 }
+
 export async function ensureKey(data: PublicKeyGenerated) {
   const key = await PublicKey.getByUncompressed(data.uncompressedPubKey)
   if (key) {
     return key
+  }
+  const extrinsics = await Extrinsic.getByBlockId(data.blockNumber)
+  const matcheExtrinsic = extrinsics.find((ex) => {
+    return (
+      ex.module === DKGSections.DKGMetaData &&
+      ex.method === "submitNextPublicKey" &&
+      ex.arguments.indexOf(data.uncompressedPubKey) > -1
+    )
+  })
+  let txHash = ""
+  if (matcheExtrinsic) {
+    txHash = matcheExtrinsic.hash
   }
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
@@ -55,27 +72,39 @@ export async function ensureKey(data: PublicKeyGenerated) {
       {
         stage: SessionKeyStatus.Generated,
         blockNumber: data.blockNumber,
-        txHash: "",
+        txHash,
       },
     ],
   })
   await newKey.save()
   return newKey
 }
+
 export async function keyGenerated(data: PublicKeyGenerated) {
   return ensureKey(data)
 }
+
 export type PublicKeyUpdate = {
   blockNumber: string
   uncompressedPubKey: string
   composedPubKey: string
   status: SessionKeyStatus
 }
+
 export async function updatePublicKeyStatus({
   status,
   ...data
 }: PublicKeyUpdate) {
   const key = await ensureKey(data)
+  let methodName = ""
+  switch (status) {
+    case SessionKeyStatus.Generated:
+      break
+    case SessionKeyStatus.Signed:
+      break
+    case SessionKeyStatus.Rotated:
+      break
+  }
   key.history.push({
     stage: status.toString(),
     blockNumber: data.blockNumber,
