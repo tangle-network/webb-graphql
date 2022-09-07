@@ -96,7 +96,17 @@ export async function updatePublicKeyStatus({
   ...data
 }: PublicKeyUpdate) {
   const key = await ensureKey(data)
-  let methodName = ""
+  const extrinsics = await Extrinsic.getByBlockId(data.blockNumber)
+  const matcheExtrinsic = extrinsics.find((ex) => {
+    return (
+      ex.module === DKGSections.DKGMetaData &&
+      ex.arguments.indexOf(data.uncompressedPubKey) > -1
+    )
+  })
+  let txHash = ""
+  if (matcheExtrinsic) {
+    txHash = matcheExtrinsic.hash
+  }
   switch (status) {
     case SessionKeyStatus.Generated:
       break
@@ -108,7 +118,7 @@ export async function updatePublicKeyStatus({
   key.history.push({
     stage: status.toString(),
     blockNumber: data.blockNumber,
-    txHash: "",
+    txHash,
   })
   await key.save()
   return key
