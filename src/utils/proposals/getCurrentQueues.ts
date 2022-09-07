@@ -292,7 +292,6 @@ async function updateProposalStatus(
           case ProposalStatus.Signed:
           case ProposalStatus.Rejected:
           case ProposalStatus.Accepted:
-          case ProposalStatus.Removed:
           case ProposalStatus.Executed:
           case ProposalStatus.FailedToExecute:
             activeTimelineStatus = {
