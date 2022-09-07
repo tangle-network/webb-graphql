@@ -422,7 +422,7 @@ export async function createProposalCounter(
     ProposalStatus.Signed,
     ProposalStatus.Accepted,
     ProposalStatus.Rejected,
-    ProposalStatus.Removed,
+    // ProposalStatus.Removed,
     ProposalStatus.Executed,
     ProposalStatus.FailedToExecute,
   ].map(async (status) => {
