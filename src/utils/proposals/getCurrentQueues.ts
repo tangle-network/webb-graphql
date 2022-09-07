@@ -103,6 +103,7 @@ export async function ensureProposalQueueItem(
 ) {
   const id = `${blockId}-${proposalId}`
   const item = await UnsignedProposalsQueueItem.get(id)
+  await ensureProposalItem({ blockId, nonce: proposalId })
   if (item) {
     return item
   }
