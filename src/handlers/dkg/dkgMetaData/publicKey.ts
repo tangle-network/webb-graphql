@@ -100,7 +100,7 @@ export async function updatePublicKeyStatus({
   const matcheExtrinsic = extrinsics.find((ex) => {
     return (
       ex.module === DKGSections.DKGMetaData &&
-      ex.arguments.indexOf(data.uncompressedPubKey) > -1
+      ex.arguments.indexOf(data.composedPubKey) > -1
     )
   })
   let txHash = ""
