@@ -96,6 +96,7 @@ export async function ensureProposalQueue(blockId: string) {
   const newQueue = UnsignedProposalsQueue.create({
     id: blockId,
     blockId,
+    blockNumber: Number(blockId),
   })
   await newQueue.save()
   return newQueue

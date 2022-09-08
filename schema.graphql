@@ -258,6 +258,7 @@ type UnsignedProposalsQueueItem @entity {
 type UnsignedProposalsQueue @entity {
   id: ID!
   block: Block!
+  blockNumber: Int!
 }
 
 type ProposalCounter @entity {
