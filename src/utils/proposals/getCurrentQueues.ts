@@ -444,7 +444,7 @@ export async function createProposalCounter(
   await Promise.all(proposalsStatuses)
   const signedProposalsCount = signedProposalsData.length
   const unSignedProposalsCount = unSignedProposalsData.length
-  const counterId = getSessionIdFromBlock(blockId)
+  const counterId = blockId
   const counter = ProposalCounter.create({
     id: counterId,
     blockNumber: Number(blockId),
