@@ -150,7 +150,6 @@ type PublicKey @entity {
 
   history: [SessionKeyHistory]!
 
-
   block: Block!
 }
 
@@ -226,7 +225,7 @@ type ProposalItem @entity {
 
   timelineStatus: [ProposalTimelineStatus]!
   currentStatus: ProposalTimelineStatus!
-
+  status: String! @index(unique: false)
   votes: [ProposalVotes]!
 
   data: String!
@@ -239,10 +238,27 @@ type ProposalItem @entity {
 type ProposalTypeCount @jsonField {
   # ProposalType
   type: String!
+
+  count: String!
+  proposalId: [String!]!
+}
+type ProposalStatusCount @jsonField {
   # Proposal status : Accepted, Rejected, Open
   status: String!
   count: String!
   proposalId: [String!]!
+}
+
+type UnsignedProposalsQueueItem @entity {
+  id: ID!
+  proposal: ProposalItem!
+  queue: UnsignedProposalsQueue!
+}
+
+type UnsignedProposalsQueue @entity {
+  id: ID!
+  block: Block!
+  blockNumber: Int!
 }
 
 type ProposalCounter @entity {
@@ -252,7 +268,7 @@ type ProposalCounter @entity {
   unSignedProposalsCount: Int!
   signedProposalsMap: [ProposalTypeCount]
   unSignedProposalsMap: [ProposalTypeCount]
-
+  statusMap: [ProposalStatusCount]
   blockNumber: Int!
   block: Block!
 }

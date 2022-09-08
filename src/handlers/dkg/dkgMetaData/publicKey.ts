@@ -1,5 +1,5 @@
-import { ensureBlock } from "../../block"
-import { PublicKey, SessionKeyStatus } from "../../../types"
+import { Extrinsic, PublicKey, SessionKeyStatus } from "../../../types"
+import { DKGSections } from "../type"
 
 /**
  * Public key for a given session
@@ -10,41 +10,35 @@ import { PublicKey, SessionKeyStatus } from "../../../types"
  * -> The key is signed by the DKG, and `PublicKeySignatureChanged` event is emitted => Rotated
  *
  * */
-export async function ensurePublicKey(input: PublicKeyInput) {
-  const blockData = await ensureBlock(input.blockNumber)
 
-  const recordId = `${input.blockNumber}-${input.compressed.replace("0x", "")}`
-
-  const data = new PublicKey(recordId)
-  data.blockId = blockData.id
-
-  await data.save()
-
-  return data
-}
 export type PublicKeyInput = {
   blockNumber: string
   compressed: string
   uncompressed: string
 }
-export async function createPublicKey(data: PublicKeyInput) {
-  const key = await ensurePublicKey(data)
-  key.compressed = data.compressed
-  key.uncompressed = data.uncompressed
 
-  await key.save()
-
-  return data
-}
 type PublicKeyGenerated = {
   composedPubKey: string
   uncompressedPubKey: string
   blockNumber: string
 }
+
 export async function ensureKey(data: PublicKeyGenerated) {
   const key = await PublicKey.getByUncompressed(data.uncompressedPubKey)
   if (key) {
     return key
+  }
+  const extrinsics = await Extrinsic.getByBlockId(data.blockNumber)
+  const matcheExtrinsic = extrinsics.find((ex) => {
+    return (
+      ex.module === DKGSections.DKGMetaData &&
+      ex.method === "submitNextPublicKey" &&
+      ex.arguments.indexOf(data.uncompressedPubKey) > -1
+    )
+  })
+  let txHash = ""
+  if (matcheExtrinsic) {
+    txHash = matcheExtrinsic.hash
   }
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
@@ -55,22 +49,25 @@ export async function ensureKey(data: PublicKeyGenerated) {
       {
         stage: SessionKeyStatus.Generated,
         blockNumber: data.blockNumber,
-        txHash: "",
+        txHash,
       },
     ],
   })
   await newKey.save()
   return newKey
 }
+
 export async function keyGenerated(data: PublicKeyGenerated) {
   return ensureKey(data)
 }
+
 export type PublicKeyUpdate = {
   blockNumber: string
   uncompressedPubKey: string
   composedPubKey: string
   status: SessionKeyStatus
 }
+
 export async function updatePublicKeyStatus({
   status,
   ...data

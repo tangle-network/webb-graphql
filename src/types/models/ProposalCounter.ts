@@ -4,6 +4,8 @@ import assert from 'assert';
 
 import {
     ProposalTypeCount,
+
+    ProposalStatusCount,
 } from '../interfaces'
 
 
@@ -27,6 +29,8 @@ export class ProposalCounter implements Entity {
     public signedProposalsMap?: ProposalTypeCount[];
 
     public unSignedProposalsMap?: ProposalTypeCount[];
+
+    public statusMap?: ProposalStatusCount[];
 
     public blockNumber: number;
 

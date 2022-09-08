@@ -28,8 +28,6 @@ services:
       DB_PORT: 5432
     volumes:
       - ./:/app
-    ports:
-      - 9944:9944
     command:
       - -f=/app
       - --db-schema=app

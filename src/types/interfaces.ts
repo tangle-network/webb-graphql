@@ -76,6 +76,15 @@ export interface ProposalTypeCount {
 
     type: string;
 
+    count: string;
+
+    proposalId: string[];
+
+}
+
+
+export interface ProposalStatusCount {
+
     status: string;
 
     count: string;

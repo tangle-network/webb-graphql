@@ -5,13 +5,17 @@ import {
   ProposalCounter,
   ProposalItem,
   ProposalStatus,
+  ProposalStatusCount,
   ProposalType,
   ProposalTypeCount,
+  UnsignedProposalsQueue,
+  UnsignedProposalsQueueItem,
 } from "../../types"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
+import { getSessionIdFromBlock } from "../sessionId"
 
 export interface UnsignedProposalQueueItem {
   key: Key
@@ -84,6 +88,40 @@ export function dkgPayloadKeyToProposalType(
   }
 }
 
+export async function ensureProposalQueue(blockId: string) {
+  const queue = await UnsignedProposalsQueue.get(blockId)
+  if (queue) {
+    return queue
+  }
+  const newQueue = UnsignedProposalsQueue.create({
+    id: blockId,
+    blockId,
+    blockNumber: Number(blockId),
+  })
+  await newQueue.save()
+  return newQueue
+}
+
+export async function ensureProposalQueueItem(
+  blockId: string,
+  proposalId: string
+) {
+  const id = `${blockId}-${proposalId}`
+  const item = await UnsignedProposalsQueueItem.get(id)
+  // TODO : Debug this more as the proposal isn't created while it should be
+  await ensureProposalItem({ blockId, nonce: proposalId })
+  if (item) {
+    return item
+  }
+  const newItem = UnsignedProposalsQueueItem.create({
+    id,
+    queueId: blockId,
+    proposalId,
+  })
+  await newItem.save()
+  return newItem
+}
+
 export function createProposalId(
   chainId: WebbProposalsHeaderTypedChainId,
   dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey
@@ -148,6 +186,7 @@ export async function ensureProposalItemStorage(
         blockNumber: blockId,
       },
     ],
+    status: status.status.toString(),
     timelineStatus: [status],
     currentStatus: status,
   })
@@ -190,6 +229,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     ],
     type: ProposalType.Unknown,
     currentStatus: status,
+    status: status.status.toString(),
     signature: undefined,
   })
   await newProposal.save()
@@ -227,11 +267,44 @@ async function updateProposalStatus(
     status: status.toString(),
     blockNumber: findInput.blockId,
   })
-  // TODO add logic to sort the steps
-  proposal.currentStatus = {
-    status: status.toString(),
-    blockNumber: findInput.blockId,
+
+  const currentStatus = proposal.status as ProposalStatus
+  let activeTimelineStatus = { ...proposal.currentStatus }
+  switch (currentStatus) {
+    case ProposalStatus.Signed:
+      {
+        switch (status) {
+          case ProposalStatus.Rejected:
+          case ProposalStatus.Accepted:
+          case ProposalStatus.Executed:
+          case ProposalStatus.FailedToExecute:
+            activeTimelineStatus = {
+              status: status.toString(),
+              txHash: "",
+              blockNumber: findInput.blockId,
+            }
+        }
+      }
+      break
+    case ProposalStatus.Open:
+      {
+        switch (status) {
+          case ProposalStatus.Signed:
+          case ProposalStatus.Rejected:
+          case ProposalStatus.Accepted:
+          case ProposalStatus.Executed:
+          case ProposalStatus.FailedToExecute:
+            activeTimelineStatus = {
+              status: status.toString(),
+              txHash: "",
+              blockNumber: findInput.blockId,
+            }
+        }
+      }
+      break
   }
+  proposal.status = activeTimelineStatus.status
+  proposal.currentStatus = activeTimelineStatus
   await proposal.save()
   return proposal
 }
@@ -243,6 +316,7 @@ export async function approveProposal(findInput: ProposalItemFindInput) {
 export async function rejectProposal(findInput: ProposalItemFindInput) {
   await updateProposalStatus(findInput, ProposalStatus.Rejected)
 }
+
 export async function signProposal(
   findInput: ProposalItemFindInput,
   sig: string
@@ -282,20 +356,26 @@ export async function createProposalCounter(
   const signedProposalsData = await api.query.dkgProposalHandler.signedProposals.entries()
   const unSignedProposalsData = await api.query.dkgProposalHandler.unsignedProposalQueue.entries()
   const parsedSigProposals = signedProposalsData.map(([key]) => {
-    const [chainId, dkgKey] = key.args
+    const [_chainId, dkgKey] = (key.args as unknown) as [
+      WebbProposalsHeaderTypedChainId,
+      DkgRuntimePrimitivesProposalDkgPayloadKey
+    ]
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any)
-    const proposalId = createProposalId(chainId as any, dkgKey as any)
+    const nonce = dkgKey.value.toString()
     return {
-      proposalId,
+      proposalId: nonce,
       proposalType,
     }
   })
   const parsedUnSigProposals = unSignedProposalsData.map(([key]) => {
-    const [chainId, dkgKey] = key.args
+    const [_chainId, dkgKey] = (key.args as unknown) as [
+      WebbProposalsHeaderTypedChainId,
+      DkgRuntimePrimitivesProposalDkgPayloadKey
+    ]
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any)
-    const proposalId = createProposalId(chainId as any, dkgKey as any)
+    const nonce = dkgKey.value.toString()
     return {
-      proposalId,
+      proposalId: nonce,
       proposalType,
     }
   })
@@ -311,7 +391,6 @@ export async function createProposalCounter(
     } else {
       signedCounter[proposal.proposalType] = {
         count: "1",
-        status: ProposalStatus.Signed.toString(),
         type: proposal.proposalType.toString(),
         proposalId: [proposal.proposalId],
       }
@@ -329,25 +408,60 @@ export async function createProposalCounter(
     } else {
       unSignedCounter[proposal.proposalType] = {
         count: "1",
-        status: ProposalStatus.Open.toString(),
         type: proposal.proposalType.toString(),
         proposalId: [proposal.proposalId],
       }
     }
   })
-
+  const proposalStatusMap: Partial<Record<
+    ProposalStatus,
+    ProposalStatusCount
+  >> = {}
+  const proposalsStatuses = [
+    ProposalStatus.Open,
+    ProposalStatus.Signed,
+    ProposalStatus.Accepted,
+    ProposalStatus.Rejected,
+    // ProposalStatus.Removed,
+    ProposalStatus.Executed,
+    ProposalStatus.FailedToExecute,
+  ].map(async (status) => {
+    const proposals = await ProposalItem.getByStatus(String(status))
+    proposals.forEach((proposal) => {
+      if (proposalStatusMap[status]) {
+        proposalStatusMap[status].count = String(
+          Number(proposalStatusMap[status].count) + 1
+        )
+        proposalStatusMap[status].proposalId.push(proposal.id)
+      } else {
+        proposalStatusMap[status] = {
+          count: "1",
+          status: status.toString(),
+          proposalId: [proposal.id],
+        }
+      }
+    })
+  })
+  await Promise.all(proposalsStatuses)
   const signedProposalsCount = signedProposalsData.length
   const unSignedProposalsCount = unSignedProposalsData.length
-
+  const counterId = blockId
   const counter = ProposalCounter.create({
-    id: blockId,
+    id: counterId,
     blockNumber: Number(blockId),
     blockId,
     signedProposalsCount,
     unSignedProposalsCount,
     signedProposalsMap: Object.values(signedCounter),
     unSignedProposalsMap: Object.values(unSignedCounter),
+    statusMap: Object.values(proposalStatusMap),
   })
+  await ensureProposalQueue(blockId)
+  await Promise.all(
+    parsedUnSigProposals.map((p) => {
+      return ensureProposalQueueItem(blockId, p.proposalId)
+    })
+  )
   await counter.save()
   return counter
 }

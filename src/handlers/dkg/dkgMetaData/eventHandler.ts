@@ -5,6 +5,7 @@ import { DKGMetaDataEvent } from "./types"
 import { keyGenerated, updatePublicKeyStatus } from "./publicKey"
 import {
   createOrUpdateSession,
+  ensureSession,
   fetchSessionAuthorizes,
   nextSession,
   setSessionKey,
@@ -45,10 +46,12 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           DKGMetaDataSection.NextPublicKeySubmitted
         )
         const nextSessionId = nextSession(eventDecoded.blockNumber)
+        const uncompressedPubKey = eventData.uncompressedPubKey.toString()
+        await ensureSession(nextSessionId)
         const key = await keyGenerated({
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
-          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
+          uncompressedPubKey: uncompressedPubKey,
         })
         await setSessionKey(nextSessionId, key.id)
         logger.info(
