@@ -6,6 +6,9 @@ import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
 
+/**
+ * Check if the session is in the DB, if not create it
+ * */
 export const ensureSession = async (blockId: string) => {
   await ensureBlock(blockId)
   const session = await Session.get(blockId)
@@ -49,18 +52,27 @@ function isSet<T>(val: T | undefined): val is T {
   return typeof val !== "undefined"
 }
 
+/**
+ *
+ * Fetch authorities for a block number
+ * The block number is used as an identifier for the session
+ * SubQuery provides an APIAt that will fetch the data at the current(SubQuery indexer) block number
+ * */
 export const fetchSessionAuthorizes = async (blockNumber: string) => {
   logger.info(`Fetching authorities for ${blockNumber}`)
-  const authorities: Vec<DkgRuntimePrimitivesCryptoPublic> = (await api.query.dkg.authorities()) as any
-  const nextAuthorities: Vec<DkgRuntimePrimitivesCryptoPublic> = (await api.query.dkg.nextAuthorities()) as any
-
-  const bestAuthorities: Vec<ITuple<
-    [u16, DkgRuntimePrimitivesCryptoPublic]
-  >> = (await api.query.dkg.bestAuthorities()) as any
-  const nextBestAuthorities: Vec<ITuple<
-    [u16, DkgRuntimePrimitivesCryptoPublic]
-  >> = (await api.query.dkg.nextBestAuthorities()) as any
-
+  // Fetch authorities for a block number
+  const [authorities, nextAuthorities, bestAuthorities, nextBestAuthorities]: [
+    Vec<DkgRuntimePrimitivesCryptoPublic>,
+    Vec<DkgRuntimePrimitivesCryptoPublic>,
+    Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>>,
+    Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>>
+  ] = (await Promise.all([
+    api.query.dkg.authorities(),
+    api.query.dkg.nextAuthorities(),
+    api.query.dkg.bestAuthorities(),
+    api.query.dkg.nextBestAuthorities(),
+  ])) as any
+  // Fetch reputations and authorities accounts for mapping
   const authorityReputations = await api.query.dkg.authorityReputations.entries()
   const currentAuthoritiesAccounts = await api.query.dkg.accountToAuthority.entries()
   // auth Id (DkgRuntimePrimitivesCryptoPublic::toString()) => Account32
@@ -68,6 +80,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   // auth Id => auth reputation
   const authorityReputationMap: Record<string, string> = {}
 
+  // Populate the authIdMap and authorityReputationMap
   currentAuthoritiesAccounts.forEach(([key, val]) => {
     const account32 = key.args[0].toString().replace("0x", "")
     const authId = val.toString().replace("0x", "")
@@ -82,7 +95,6 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     authIdRaw: DkgRuntimePrimitivesCryptoPublic
   ): DKGAuthority => {
     const authorityId = authIdRaw.toString().replace("0x", "")
-
     const accountId = authorityIdMap[authorityId]
     return {
       accountId,
@@ -169,25 +181,38 @@ export function nextSession(blockId: string): string {
   return String(sessionNumber + 10)
 }
 
+/**
+ * Crate or update a session
+ * A BlockId is used as a session id
+ * The input is a partial entry of a session
+ *
+ * */
 export const createOrUpdateSession = async ({
   blockId,
   ...input
 }: SessionInput) => {
+  // Ensure the session is not already created
   const session = await ensureSession(blockId)
 
   logger.info(`Update session ${blockId} values for ${Object.keys(input)}`)
-
+  // Loop over the input and update the session
   for (const key of Object.keys(input)) {
     const val = input[key]
+    // Filter only for values exists
     if (isSet(val)) {
       session[key] = val
     }
   }
+  // Save the session
   await session.save()
   return session
 }
 
+/**
+ * Set the public key id in the session
+ * */
 export async function setSessionKey(blockId: string, keyId: string) {
+  //Ensure the session is not already created
   const session = await ensureSession(blockId)
   session.publicKeyId = keyId
   await session.save()
