@@ -20,6 +20,8 @@ export class UnsignedProposalsQueueItem implements Entity {
 
     public queueId: string;
 
+    public blockNumber: number;
+
 
     async save(): Promise<void>{
         let id = this.id;
