@@ -112,6 +112,7 @@ type SessionKeyHistory @jsonField {
   stage: String!
   txHash: String!
   blockNumber: String!
+  timestamp: Date!
 }
 type SessionPublicKey @jsonField {
   compressedKey: String!
@@ -205,6 +206,7 @@ type ProposalTimelineStatus @jsonField {
   status: String!
   txHash: String
   blockNumber: String!
+  timestamp: Date!
 }
 
 type ProposalVotes @jsonField {
@@ -232,6 +234,8 @@ type ProposalItem @entity {
   signature: String
   removed: Boolean
 
+  blockNumber: Int!
+
   block: Block!
 }
 
@@ -253,6 +257,8 @@ type UnsignedProposalsQueueItem @entity {
   id: ID!
   proposal: ProposalItem!
   queue: UnsignedProposalsQueue!
+
+  blockNumber: Int!
 }
 
 type UnsignedProposalsQueue @entity {

@@ -11,6 +11,7 @@ import {
   setSessionKey,
 } from "../../session"
 import { SessionKeyStatus } from "../../../types"
+import { ensureBlock } from "../../block"
 
 /**
  *
@@ -48,10 +49,12 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const nextSessionId = nextSession(eventDecoded.blockNumber)
         const uncompressedPubKey = eventData.uncompressedPubKey.toString()
         await ensureSession(nextSessionId)
+        const block = await ensureBlock(eventDecoded.blockNumber)
         const key = await keyGenerated({
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
           uncompressedPubKey: uncompressedPubKey,
+          timestamp: block.timestamp ?? new Date(),
         })
         await setSessionKey(nextSessionId, key.id)
         logger.info(
@@ -68,11 +71,14 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySignatureSubmitted
         )
+        const blockId = eventDecoded.blockNumber
+        const block = await ensureBlock(blockId)
         await updatePublicKeyStatus({
           status: SessionKeyStatus.Signed,
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
           uncompressedPubKey: eventData.uncompressedPubKey.toString(),
+          timestamp: block.timestamp ?? new Date(),
         })
         logger.info(
           `NextPublicKeySignatureSubmitted
@@ -109,12 +115,13 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         await createOrUpdateSession({
           ...sessionAuthorities,
         })
-
+        const block = await ensureBlock(eventDecoded.blockNumber)
         await updatePublicKeyStatus({
           status: SessionKeyStatus.Rotated,
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
           uncompressedPubKey: eventData.uncompressedPubKey.toString(),
+          timestamp: block.timestamp ?? new Date(),
         })
       }
       break

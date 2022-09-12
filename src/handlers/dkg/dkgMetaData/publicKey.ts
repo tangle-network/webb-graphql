@@ -21,6 +21,7 @@ type PublicKeyGenerated = {
   composedPubKey: string
   uncompressedPubKey: string
   blockNumber: string
+  timestamp: Date
 }
 
 export async function ensureKey(data: PublicKeyGenerated) {
@@ -50,6 +51,7 @@ export async function ensureKey(data: PublicKeyGenerated) {
         stage: SessionKeyStatus.Generated,
         blockNumber: data.blockNumber,
         txHash,
+        timestamp: data.timestamp,
       },
     ],
   })
@@ -66,6 +68,7 @@ export type PublicKeyUpdate = {
   uncompressedPubKey: string
   composedPubKey: string
   status: SessionKeyStatus
+  timestamp: Date
 }
 
 export async function updatePublicKeyStatus({
@@ -77,6 +80,7 @@ export async function updatePublicKeyStatus({
     stage: status.toString(),
     blockNumber: data.blockNumber,
     txHash: "",
+    timestamp: data.timestamp,
   })
   await key.save()
   return key

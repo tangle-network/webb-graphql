@@ -44,6 +44,8 @@ export class ProposalItem implements Entity {
 
     public removed?: boolean;
 
+    public blockNumber: number;
+
     public blockId: string;
 
 
