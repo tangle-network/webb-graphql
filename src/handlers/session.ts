@@ -1,13 +1,6 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
-import {
-  Account,
-  DKGAuthority,
-  Session,
-  SessionValidator,
-  Threshold,
-  Validator,
-} from "../types"
+import { Session, SessionValidator, Threshold, Validator } from "../types"
 import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
@@ -36,10 +29,21 @@ export const ensureSession = async (blockId: string) => {
   await newSession.save()
   return newSession
 }
+type DKGAuthority = {
+  authorityId: string
+  accountId: string
+  reputation?: string
+}
+
 type SessionDKGAuthority = DKGAuthority & {
   isBest: boolean
   isNextBest: boolean
   isNext: boolean
+  authorityId: string
+
+  accountId: string
+
+  reputation?: string
 }
 type SessionInput = Partial<{
   keyGenThreshold: Threshold

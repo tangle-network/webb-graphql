@@ -95,13 +95,7 @@ type Threshold @jsonField {
   current: Int!
   pending: Int!
 }
-type DKGAuthority @jsonField {
-  # Authority id
-  authorityId: String!
-  # Authority account 32
-  accountId: String!
-  reputation: String
-}
+
 
 type Validator @entity {
   id: ID!
@@ -139,6 +133,7 @@ type SessionValidator @entity {
   nextBestOrder: Int!
   reputation: String!
 }
+
 type Session @entity {
   id: ID!
 
