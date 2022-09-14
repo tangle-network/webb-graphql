@@ -15,7 +15,7 @@ import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
-import { getSessionIdFromBlock } from "../sessionId"
+import { ensureBlock } from "../../handlers"
 
 export interface UnsignedProposalQueueItem {
   key: Key
@@ -117,6 +117,7 @@ export async function ensureProposalQueueItem(
     id,
     queueId: blockId,
     proposalId,
+    blockNumber: Number(blockId),
   })
   await newItem.save()
   return newItem
@@ -165,10 +166,13 @@ export async function ensureProposalItemStorage(
     return proposalItem
   }
   const { blockId, type, data, nonce } = input
+
+  const block = await ensureBlock(blockId)
   const status = {
     blockNumber: blockId,
     status: ProposalStatus.Open.toString(),
     txHash: "",
+    timestamp: block.timestamp ?? new Date(),
   }
   const newProposalItem = ProposalItem.create({
     blockId,
@@ -189,6 +193,7 @@ export async function ensureProposalItemStorage(
     status: status.status.toString(),
     timelineStatus: [status],
     currentStatus: status,
+    blockNumber: Number(blockId),
   })
   await newProposalItem.save()
   return newProposalItem
@@ -206,10 +211,12 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
   if (proposal) {
     return proposal
   }
+  const block = await ensureBlock(blockId)
   const status = {
     blockNumber: blockId,
     status: ProposalStatus.Open.toString(),
     txHash: "",
+    timestamp: block.timestamp ?? new Date(),
   }
   const newProposal = ProposalItem.create({
     id,
@@ -231,6 +238,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     currentStatus: status,
     status: status.status.toString(),
     signature: undefined,
+    blockNumber: Number(blockId),
   })
   await newProposal.save()
   return newProposal
@@ -262,10 +270,11 @@ async function updateProposalStatus(
   status: ProposalStatus
 ) {
   const proposal = await ensureProposalItem(findInput)
-
+  const block = await ensureBlock(findInput.blockId)
   proposal.timelineStatus.push({
     status: status.toString(),
     blockNumber: findInput.blockId,
+    timestamp: block.timestamp ?? new Date(),
   })
 
   const currentStatus = proposal.status as ProposalStatus
@@ -282,6 +291,7 @@ async function updateProposalStatus(
               status: status.toString(),
               txHash: "",
               blockNumber: findInput.blockId,
+              timestamp: block.timestamp ?? new Date(),
             }
         }
       }
@@ -298,6 +308,7 @@ async function updateProposalStatus(
               status: status.toString(),
               txHash: "",
               blockNumber: findInput.blockId,
+              timestamp: block.timestamp ?? new Date(),
             }
         }
       }

@@ -16,13 +16,9 @@ export const ensureSession = async (blockId: string) => {
     return session
   }
   const newSession = Session.create({
-    authorities: [],
-    nextAuthorities: [],
     proposers: [],
     proposersCount: undefined,
-    bestAuthorities: [],
     keyGenThreshold: undefined,
-    nextBestAuthorities: [],
     proposerThreshold: undefined,
     signatureThreshold: undefined,
     blockId: blockId,

@@ -32,6 +32,8 @@ export interface SessionKeyHistory {
 
     blockNumber: string;
 
+    timestamp: Date;
+
 }
 
 
@@ -53,6 +55,8 @@ export interface ProposalTimelineStatus {
     txHash?: string;
 
     blockNumber: string;
+
+    timestamp: Date;
 
 }
 

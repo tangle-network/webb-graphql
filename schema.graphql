@@ -102,6 +102,19 @@ type DKGAuthority @jsonField {
   accountId: String!
   reputation: String
 }
+
+type Validator @entity {
+  id: ID!
+
+  accountId: String!
+  authorityId: String!
+}
+type Reputation @entity {
+  id: ID!
+  authority: Validator!
+  session: Session!
+}
+
 enum SessionKeyStatus {
   Generated
   Signed
@@ -112,19 +125,27 @@ type SessionKeyHistory @jsonField {
   stage: String!
   txHash: String!
   blockNumber: String!
+  timestamp: Date!
 }
 type SessionPublicKey @jsonField {
   compressedKey: String!
   uncompressedKey: String!
   history: [SessionKeyHistory]!
 }
+
+type SessionValidator @entity {
+  id: ID!
+  session: Session!
+  validator: Validator!
+  isBest: Boolean!
+  isNext: Boolean!
+  isNextBest: Boolean!
+  bestOrder: Int!
+  nextBestOrder: Int!
+}
 type Session @entity {
   id: ID!
 
-  bestAuthorities: [DKGAuthority]!
-  nextBestAuthorities: [DKGAuthority]!
-  authorities: [DKGAuthority]!
-  nextAuthorities: [DKGAuthority]!
 
   proposers: [String]!
   proposersCount: Int
@@ -205,6 +226,7 @@ type ProposalTimelineStatus @jsonField {
   status: String!
   txHash: String
   blockNumber: String!
+  timestamp: Date!
 }
 
 type ProposalVotes @jsonField {
@@ -232,6 +254,8 @@ type ProposalItem @entity {
   signature: String
   removed: Boolean
 
+  blockNumber: Int!
+
   block: Block!
 }
 
@@ -253,6 +277,8 @@ type UnsignedProposalsQueueItem @entity {
   id: ID!
   proposal: ProposalItem!
   queue: UnsignedProposalsQueue!
+
+  blockNumber: Int!
 }
 
 type UnsignedProposalsQueue @entity {
