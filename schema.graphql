@@ -106,13 +106,8 @@ type DKGAuthority @jsonField {
 type Validator @entity {
   id: ID!
 
-  accountId: String!
-  authorityId: String!
-}
-type Reputation @entity {
-  id: ID!
-  authority: Validator!
-  session: Session!
+  accountId: String! @index(unique: true)
+  authorityId: String! @index(unique: true)
 }
 
 enum SessionKeyStatus {
@@ -142,10 +137,10 @@ type SessionValidator @entity {
   isNextBest: Boolean!
   bestOrder: Int!
   nextBestOrder: Int!
+  reputation: String!
 }
 type Session @entity {
   id: ID!
-
 
   proposers: [String]!
   proposersCount: Int
