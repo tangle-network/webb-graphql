@@ -20,10 +20,6 @@ export class Session implements Entity {
 
     public id: string;
 
-    public proposers: string[];
-
-    public proposersCount?: number;
-
     public publicKeyId?: string;
 
     public signatureThreshold?: Threshold;

@@ -1,10 +1,18 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
-import { Session, SessionValidator, Threshold, Validator } from "../types"
+import {
+  Proposer,
+  Session,
+  SessionProposer,
+  SessionValidator,
+  Threshold,
+  Validator,
+} from "../types"
 import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
+import { ensureAccount } from "./account"
 
 /**
  * Check if the session is in the DB, if not create it
@@ -16,8 +24,6 @@ export const ensureSession = async (blockId: string) => {
     return session
   }
   const newSession = Session.create({
-    proposers: [],
-    proposersCount: undefined,
     keyGenThreshold: undefined,
     proposerThreshold: undefined,
     signatureThreshold: undefined,
@@ -204,6 +210,7 @@ async function ensureValidator(id: string, authorityId: string) {
   if (validator) {
     return validator
   }
+  await ensureAccount(id)
   const newValidator = Validator.create({
     id,
     authorityId,
@@ -217,6 +224,7 @@ async function createOrUpdateSessionValidator(
   input: SessionDKGAuthority
 ) {
   const id = `${sessionId}-${input.authorityId}`
+  logger.info(`Creating or updating session validator ${id}`)
   const sessionValidator = new SessionValidator(id)
   await ensureValidator(input.accountId, input.authorityId)
   sessionValidator.sessionId = sessionId
@@ -230,7 +238,30 @@ async function createOrUpdateSessionValidator(
   await sessionValidator.save()
   return sessionValidator
 }
-
+async function ensureProposer(accountId) {
+  const proposer = await Proposer.get(accountId)
+  if (proposer) {
+    return proposer
+  }
+  await ensureAccount(accountId)
+  const newProposer = Proposer.create({
+    id: accountId,
+    accountId,
+  })
+  await newProposer.save()
+  return newProposer
+}
+async function createOrUpdateSessionProposer(
+  sessionId: string,
+  proposerAccount: string
+) {
+  const id = `${sessionId}-${proposerAccount}`
+  const sessionProposer = new SessionProposer(id)
+  await ensureProposer(proposerAccount)
+  sessionProposer.sessionId = sessionId
+  sessionProposer.proposerId = proposerAccount
+  await sessionProposer.save()
+}
 /**
  * Crate or update a session
  * A BlockId is used as a session id
@@ -246,14 +277,24 @@ export const createOrUpdateSession = async ({
 
   logger.info(`Update session ${blockId} values for ${Object.keys(input)}`)
   // Loop over the input and update the session
-  for (const key of Object.keys(input)) {
+  for (const key of Object.keys(input) as Array<keyof SessionInput>) {
     const val = input[key]
     // Filter only for values exists
     if (isSet(val)) {
       if (key === "sessionAuthorities") {
         const sessionAuthorizes = val as SessionDKGAuthority[]
+        console.log(
+          `Create sessions validators for ${sessionAuthorizes.length} validators`
+        )
         for (const sessionAuth of sessionAuthorizes) {
           await createOrUpdateSessionValidator(session.id, sessionAuth)
+        }
+        continue
+      }
+      if (key === "proposers") {
+        const proposers = val as string[]
+        for (const proposerAccount of proposers) {
+          await createOrUpdateSessionProposer(session.id, proposerAccount)
         }
         continue
       }

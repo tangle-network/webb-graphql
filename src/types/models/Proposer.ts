@@ -18,8 +18,6 @@ export class Proposer implements Entity {
 
     public accountId: string;
 
-    public accountId: string;
-
 
     async save(): Promise<void>{
         let id = this.id;
@@ -42,25 +40,10 @@ export class Proposer implements Entity {
     }
 
 
-    static async getByAccountId(accountId: string): Promise<Proposer | undefined>{
+    static async getByAccountId(accountId: string): Promise<Proposer[] | undefined>{
       
-      const record = await store.getOneByField('Proposer', 'accountId', accountId);
-      if (record){
-          return Proposer.create(record as ProposerProps);
-      }else{
-          return;
-      }
-      
-    }
-
-    static async getByAccountId(accountId: string): Promise<Proposer | undefined>{
-      
-      const record = await store.getOneByField('Proposer', 'accountId', accountId);
-      if (record){
-          return Proposer.create(record as ProposerProps);
-      }else{
-          return;
-      }
+      const records = await store.getByField('Proposer', 'accountId', accountId);
+      return records.map(record => Proposer.create(record as ProposerProps));
       
     }
 

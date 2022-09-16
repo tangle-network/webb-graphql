@@ -64,10 +64,13 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
 
         logger.info(`Unsigned Proposal Removed: ${proposalId}`)
         // Create a new removed proposal
-        await removeProposal({
-          blockId: blockNumber,
-          nonce,
-        })
+        await removeProposal(
+          {
+            blockId: blockNumber,
+            nonce,
+          },
+          blockNumber
+        )
         await createProposalCounter(blockNumber)
       }
       break
@@ -98,7 +101,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
             blockId: blockNumber,
             nonce: String(parseInt(eventData.key.value.toHex())),
           },
-          signature
+          signature,
+          blockNumber
         )
         await createProposalCounter(blockNumber)
       }

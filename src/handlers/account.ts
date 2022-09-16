@@ -1,9 +1,9 @@
 import { Account } from "../types"
 
 export async function ensureAccount(account: string) {
-  let data = await Account.get(account.toLowerCase())
+  let data = await Account.get(account)
   if (!data) {
-    data = new Account(account.toLowerCase())
+    data = new Account(account)
     await data.save()
   }
   return data
