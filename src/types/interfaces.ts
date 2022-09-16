@@ -13,17 +13,6 @@ export interface Threshold {
 }
 
 
-export interface DKGAuthority {
-
-    authorityId: string;
-
-    accountId: string;
-
-    reputation?: string;
-
-}
-
-
 export interface SessionKeyHistory {
 
     stage: string;

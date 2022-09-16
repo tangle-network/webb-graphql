@@ -95,13 +95,15 @@ type Threshold @jsonField {
   current: Int!
   pending: Int!
 }
-type DKGAuthority @jsonField {
-  # Authority id
-  authorityId: String!
-  # Authority account 32
-  accountId: String!
-  reputation: String
+
+
+type Validator @entity {
+  id: ID!
+
+  accountId: String! @index(unique: true)
+  authorityId: String! @index(unique: true)
 }
+
 enum SessionKeyStatus {
   Generated
   Signed
@@ -119,13 +121,21 @@ type SessionPublicKey @jsonField {
   uncompressedKey: String!
   history: [SessionKeyHistory]!
 }
+
+type SessionValidator @entity {
+  id: ID!
+  session: Session!
+  validator: Validator!
+  isBest: Boolean!
+  isNext: Boolean!
+  isNextBest: Boolean!
+  bestOrder: Int!
+  nextBestOrder: Int!
+  reputation: String!
+}
+
 type Session @entity {
   id: ID!
-
-  bestAuthorities: [DKGAuthority]!
-  nextBestAuthorities: [DKGAuthority]!
-  authorities: [DKGAuthority]!
-  nextAuthorities: [DKGAuthority]!
 
   proposers: [String]!
   proposersCount: Int

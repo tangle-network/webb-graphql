@@ -1,6 +1,6 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
-import { DKGAuthority, Session, Threshold } from "../types"
+import { Session, SessionValidator, Threshold, Validator } from "../types"
 import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
@@ -16,13 +16,9 @@ export const ensureSession = async (blockId: string) => {
     return session
   }
   const newSession = Session.create({
-    authorities: [],
-    nextAuthorities: [],
     proposers: [],
     proposersCount: undefined,
-    bestAuthorities: [],
     keyGenThreshold: undefined,
-    nextBestAuthorities: [],
     proposerThreshold: undefined,
     signatureThreshold: undefined,
     blockId: blockId,
@@ -33,7 +29,22 @@ export const ensureSession = async (blockId: string) => {
   await newSession.save()
   return newSession
 }
+type DKGAuthority = {
+  authorityId: string
+  accountId: string
+  reputation?: string
+}
 
+type SessionDKGAuthority = DKGAuthority & {
+  isBest: boolean
+  isNextBest: boolean
+  isNext: boolean
+  authorityId: string
+
+  accountId: string
+
+  reputation?: string
+}
 type SessionInput = Partial<{
   keyGenThreshold: Threshold
   signatureThreshold: Threshold
@@ -42,10 +53,7 @@ type SessionInput = Partial<{
   proposers: string[]
   proposersCount: number
 
-  nextBestAuthorities: DKGAuthority[]
-  bestAuthorities: DKGAuthority[]
-  authorities: DKGAuthority[]
-  nextAuthorities: DKGAuthority[]
+  sessionAuthorities: SessionDKGAuthority[]
 }> & { blockId: string }
 
 function isSet<T>(val: T | undefined): val is T {
@@ -162,12 +170,23 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     next: currentProposerThreshold,
     pending: currentProposerThreshold,
   }
+  const inSet = (dkgAuth: DKGAuthority, set: DKGAuthority[]) =>
+    set.findIndex((auth) => auth.authorityId === dkgAuth.authorityId) !== -1
+  const sessionAuthorities = dkgAuthorities.map(
+    (dkgAuth): SessionDKGAuthority => {
+      return {
+        authorityId: dkgAuth.authorityId,
+        reputation: dkgAuth.reputation,
+        accountId: dkgAuth.accountId,
+        isBest: inSet(dkgAuth, bestDkgAuthorities),
+        isNext: inSet(dkgAuth, nextDkgAuthorities),
+        isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+      }
+    }
+  )
   return {
     blockId: blockNumber,
-    authorities: dkgAuthorities,
-    nextAuthorities: nextDkgAuthorities,
-    bestAuthorities: bestDkgAuthorities,
-    nextBestAuthorities: nextBestDkgAuthorities,
+    sessionAuthorities,
     keyGenThreshold,
     signatureThreshold,
     proposerThreshold,
@@ -179,6 +198,37 @@ export function nextSession(blockId: string): string {
   const sessionNumber = Math.floor(blockNumber / 10) * 10
 
   return String(sessionNumber + 10)
+}
+async function ensureValidator(id: string, authorityId: string) {
+  const validator = await Validator.get(id)
+  if (validator) {
+    return validator
+  }
+  const newValidator = Validator.create({
+    id,
+    authorityId,
+    accountId: id,
+  })
+  await newValidator.save()
+  return newValidator
+}
+async function createOrUpdateSessionValidator(
+  sessionId: string,
+  input: SessionDKGAuthority
+) {
+  const id = `${sessionId}-${input.authorityId}`
+  const sessionValidator = new SessionValidator(id)
+  await ensureValidator(input.accountId, input.authorityId)
+  sessionValidator.sessionId = sessionId
+  sessionValidator.validatorId = input.accountId
+  sessionValidator.bestOrder = 0
+  sessionValidator.isBest = input.isBest
+  sessionValidator.isNext = input.isNext
+  sessionValidator.isNextBest = input.isNextBest
+  sessionValidator.nextBestOrder = 0
+  sessionValidator.reputation = input.reputation
+  await sessionValidator.save()
+  return sessionValidator
 }
 
 /**
@@ -200,6 +250,13 @@ export const createOrUpdateSession = async ({
     const val = input[key]
     // Filter only for values exists
     if (isSet(val)) {
+      if (key === "sessionAuthorities") {
+        const sessionAuthorizes = val as SessionDKGAuthority[]
+        for (const sessionAuth of sessionAuthorizes) {
+          await createOrUpdateSessionValidator(session.id, sessionAuth)
+        }
+        continue
+      }
       session[key] = val
     }
   }

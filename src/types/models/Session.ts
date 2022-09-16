@@ -3,8 +3,6 @@ import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
 import {
-    DKGAuthority,
-
     Threshold,
 } from '../interfaces'
 
@@ -21,14 +19,6 @@ export class Session implements Entity {
 
 
     public id: string;
-
-    public bestAuthorities: DKGAuthority[];
-
-    public nextBestAuthorities: DKGAuthority[];
-
-    public authorities: DKGAuthority[];
-
-    public nextAuthorities: DKGAuthority[];
 
     public proposers: string[];
 
