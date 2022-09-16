@@ -221,7 +221,16 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     signature: undefined,
     blockNumber: Number(blockId),
   })
-  await newProposal.save()
+  const statusId = `${proposal.id}-${status.status}`
+  const newStatus = ProposalTimelineStatus.create({
+    id: statusId,
+    status: ProposalStatus.Open,
+    proposalItemId: proposal.id,
+    blockNumber: block.number,
+    timestamp: block.timestamp,
+  })
+
+  await Promise.all([newProposal.save(), newStatus.save()])
   return newProposal
 }
 
@@ -298,7 +307,7 @@ async function updateProposalStatus(
   proposal.status = nextStatus
   const newStatus = ProposalTimelineStatus.create({
     id: statusId,
-    status,
+    status: nextStatus,
     proposalItemId: proposal.id,
     blockNumber: block.number,
     timestamp: block.timestamp,
