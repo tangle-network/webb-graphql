@@ -18,6 +18,8 @@ export class Validator implements Entity {
 
     public accountId: string;
 
+    public accountId: string;
+
     public authorityId: string;
 
 
@@ -41,6 +43,17 @@ export class Validator implements Entity {
         }
     }
 
+
+    static async getByAccountId(accountId: string): Promise<Validator | undefined>{
+      
+      const record = await store.getOneByField('Validator', 'accountId', accountId);
+      if (record){
+          return Validator.create(record as ValidatorProps);
+      }else{
+          return;
+      }
+      
+    }
 
     static async getByAccountId(accountId: string): Promise<Validator | undefined>{
       

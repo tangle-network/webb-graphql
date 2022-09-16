@@ -18,6 +18,8 @@ export {Authorities} from "./Authorities"
 
 export {Validator} from "./Validator"
 
+export {Proposer} from "./Proposer"
+
 export {SessionValidator} from "./SessionValidator"
 
 export {Session} from "./Session"

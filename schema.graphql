@@ -96,12 +96,16 @@ type Threshold @jsonField {
   pending: Int!
 }
 
-
 type Validator @entity {
   id: ID!
-
+  account: Account!
   accountId: String! @index(unique: true)
   authorityId: String! @index(unique: true)
+}
+type Proposer @entity {
+  id: ID!
+  account: Account!
+  accountId: String! @index(unique: true)
 }
 
 enum SessionKeyStatus {
@@ -211,20 +215,22 @@ enum ProposalStatus {
   FailedToExecute
 }
 
-type ProposalTimelineStatus @jsonField {
+type ProposalTimelineStatus {
   # ProposalStatus
-  status: String!
+  status: ProposalStatus!
   txHash: String
   blockNumber: String!
+  proposalItem: ProposalItem!
+
   timestamp: Date!
 }
 
-type ProposalVotes @jsonField {
-  for: Int!
-  against: Int!
-  forVoters: [String]!
-  againstVoters: [String]!
-  blockNumber: String!
+type ProposalVote @entity {
+  for: Boolean!
+  voter: Proposer!
+  proposal: ProposalItem!
+  blockNumber: Int!
+  block: Block!
 }
 
 type ProposalItem @entity {
@@ -235,10 +241,7 @@ type ProposalItem @entity {
 
   type: ProposalType!
 
-  timelineStatus: [ProposalTimelineStatus]!
-  currentStatus: ProposalTimelineStatus!
   status: String! @index(unique: false)
-  votes: [ProposalVotes]!
 
   data: String!
   signature: String

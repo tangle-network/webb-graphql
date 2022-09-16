@@ -37,34 +37,6 @@ export interface SessionPublicKey {
 }
 
 
-export interface ProposalTimelineStatus {
-
-    status: string;
-
-    txHash?: string;
-
-    blockNumber: string;
-
-    timestamp: Date;
-
-}
-
-
-export interface ProposalVotes {
-
-    for: number;
-
-    against: number;
-
-    forVoters: string[];
-
-    againstVoters: string[];
-
-    blockNumber: string;
-
-}
-
-
 export interface ProposalTypeCount {
 
     type: string;
