@@ -5,7 +5,6 @@ import "@webb-tools/types"
 
 import { DKGProposalsEvent } from "./types"
 import { EventDecoder } from "../../../utils"
-import { createProposers } from "./index"
 import { createOrUpdateSession } from "../../session"
 import {
   addVote,
@@ -55,7 +54,9 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
           },
-          eventData.who.toString()
+          eventData.who.toString(),
+          true,
+          eventDecoded.blockNumber
         )
       }
       break
@@ -68,44 +69,58 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
           },
-          eventData.who.toString()
+          eventData.who.toString(),
+          false,
+          eventDecoded.blockNumber
         )
       }
       break
     case DKGProposalsSection.ProposalApproved:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalApproved)
-        await approveProposal({
-          blockId: eventDecoded.blockNumber,
-          nonce: String(parseInt(eventData.proposalNonce.toHex())),
-        })
+        await approveProposal(
+          {
+            blockId: eventDecoded.blockNumber,
+            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+          },
+          eventDecoded.blockNumber
+        )
       }
       break
     case DKGProposalsSection.ProposalRejected:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalRejected)
-        await rejectProposal({
-          blockId: eventDecoded.blockNumber,
-          nonce: String(parseInt(eventData.proposalNonce.toHex())),
-        })
+        await rejectProposal(
+          {
+            blockId: eventDecoded.blockNumber,
+            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+          },
+          eventDecoded.blockNumber
+        )
       }
       break
     case DKGProposalsSection.ProposalSucceeded:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalSucceeded)
-        await executedProposal({
-          blockId: eventDecoded.blockNumber,
-          nonce: String(parseInt(eventData.proposalNonce.toHex())),
-        })
+        await executedProposal(
+          {
+            blockId: eventDecoded.blockNumber,
+            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+          },
+          eventDecoded.blockNumber
+        )
       }
       break
     case DKGProposalsSection.ProposalFailed:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalFailed)
-        await failedProposal({
-          blockId: eventDecoded.blockNumber,
-          nonce: String(parseInt(eventData.proposalNonce.toHex())),
-        })
+        await failedProposal(
+          {
+            blockId: eventDecoded.blockNumber,
+            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+          },
+          eventDecoded.blockNumber
+        )
       }
       break
     case DKGProposalsSection.AuthorityProposersReset:
@@ -114,7 +129,6 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           DKGProposalsSection.AuthorityProposersReset
         )
         const proposers = eventData.proposers.map((i) => i.toString())
-        await createProposers(eventDecoded.blockNumber, proposers)
         await createOrUpdateSession({
           blockId: eventDecoded.blockNumber,
           proposers,

@@ -6,8 +6,11 @@ import {
   ProposalItem,
   ProposalStatus,
   ProposalStatusCount,
+  ProposalTimelineStatus,
   ProposalType,
   ProposalTypeCount,
+  ProposalVote,
+  Proposer,
   UnsignedProposalsQueue,
   UnsignedProposalsQueueItem,
 } from "../../types"
@@ -15,7 +18,7 @@ import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
-import { ensureBlock } from "../../handlers"
+import { ensureAccount, ensureBlock } from "../../handlers"
 
 export interface UnsignedProposalQueueItem {
   key: Key
@@ -181,18 +184,7 @@ export async function ensureProposalItemStorage(
     nonce,
     id,
     type,
-    votes: [
-      {
-        for: 0,
-        against: 0,
-        againstVoters: [],
-        forVoters: [],
-        blockNumber: blockId,
-      },
-    ],
     status: status.status.toString(),
-    timelineStatus: [status],
-    currentStatus: status,
     blockNumber: Number(blockId),
   })
   await newProposalItem.save()
@@ -224,61 +216,69 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     data: "0x00",
     removed: false,
     nonce: Number(id),
-    timelineStatus: [status],
-    votes: [
-      {
-        for: 0,
-        against: 0,
-        againstVoters: [],
-        forVoters: [],
-        blockNumber: blockId,
-      },
-    ],
     type: ProposalType.Unknown,
-    currentStatus: status,
     status: status.status.toString(),
     signature: undefined,
     blockNumber: Number(blockId),
   })
-  await newProposal.save()
+  const statusId = `${proposal.id}-${status.status}`
+  const newStatus = ProposalTimelineStatus.create({
+    id: statusId,
+    status: ProposalStatus.Open,
+    proposalItemId: proposal.id,
+    blockNumber: block.number,
+    timestamp: block.timestamp,
+  })
+
+  await Promise.all([newProposal.save(), newStatus.save()])
   return newProposal
+}
+
+export async function ensureProposer(accountId: string) {
+  const proposer = await Proposer.get(accountId)
+  if (proposer) {
+    return proposer
+  }
+  await ensureAccount(accountId)
+  const newProposer = Proposer.create({
+    id: accountId,
+    accountId,
+  })
+  await newProposer.save()
+  return newProposer
 }
 
 export async function addVote(
   input: ProposalItemFindInput,
   voter: string,
-  isFor = true
+  isFor = true,
+  blockId: string
 ) {
   const proposal = await ensureProposalItem(input)
-  const lastVotes = proposal.votes[proposal.votes.length - 1]
-  proposal.votes.push({
-    for: lastVotes.for + (isFor ? 1 : 0),
-    against: lastVotes.against + (isFor ? 0 : 1),
-    forVoters: isFor
-      ? [...lastVotes.forVoters, voter]
-      : [...lastVotes.forVoters],
-    againstVoters: isFor
-      ? [...lastVotes.againstVoters]
-      : [...lastVotes.againstVoters, voter],
-    blockNumber: input.blockId,
+  const block = await ensureBlock(blockId)
+  await ensureProposer(voter)
+  const newVote = await ProposalVote.create({
+    id: `${proposal.id}-${voter}`,
+    blockId,
+    blockNumber: block.number,
+    for: isFor,
+    proposalId: proposal.id,
+    voterId: voter,
   })
-  await proposal.save()
+  await newVote.save()
 }
 
 async function updateProposalStatus(
   findInput: ProposalItemFindInput,
-  status: ProposalStatus
+  status: ProposalStatus,
+  blockId: string
 ) {
   const proposal = await ensureProposalItem(findInput)
-  const block = await ensureBlock(findInput.blockId)
-  proposal.timelineStatus.push({
-    status: status.toString(),
-    blockNumber: findInput.blockId,
-    timestamp: block.timestamp ?? new Date(),
-  })
+  const block = await ensureBlock(blockId)
 
   const currentStatus = proposal.status as ProposalStatus
-  let activeTimelineStatus = { ...proposal.currentStatus }
+  let nextStatus = currentStatus
+  const statusId = `${proposal.id}-${status}`
   switch (currentStatus) {
     case ProposalStatus.Signed:
       {
@@ -287,12 +287,7 @@ async function updateProposalStatus(
           case ProposalStatus.Accepted:
           case ProposalStatus.Executed:
           case ProposalStatus.FailedToExecute:
-            activeTimelineStatus = {
-              status: status.toString(),
-              txHash: "",
-              blockNumber: findInput.blockId,
-              timestamp: block.timestamp ?? new Date(),
-            }
+            nextStatus = status
         }
       }
       break
@@ -304,58 +299,85 @@ async function updateProposalStatus(
           case ProposalStatus.Accepted:
           case ProposalStatus.Executed:
           case ProposalStatus.FailedToExecute:
-            activeTimelineStatus = {
-              status: status.toString(),
-              txHash: "",
-              blockNumber: findInput.blockId,
-              timestamp: block.timestamp ?? new Date(),
-            }
+            nextStatus = status
         }
       }
       break
   }
-  proposal.status = activeTimelineStatus.status
-  proposal.currentStatus = activeTimelineStatus
-  await proposal.save()
+  proposal.status = nextStatus
+  const newStatus = ProposalTimelineStatus.create({
+    id: statusId,
+    status: nextStatus,
+    proposalItemId: proposal.id,
+    blockNumber: block.number,
+    timestamp: block.timestamp,
+  })
+  await Promise.all([proposal.save(), newStatus.save()])
   return proposal
 }
 
-export async function approveProposal(findInput: ProposalItemFindInput) {
-  await updateProposalStatus(findInput, ProposalStatus.Accepted)
+export async function approveProposal(
+  findInput: ProposalItemFindInput,
+  blockId: string
+) {
+  await updateProposalStatus(findInput, ProposalStatus.Accepted, blockId)
 }
 
-export async function rejectProposal(findInput: ProposalItemFindInput) {
-  await updateProposalStatus(findInput, ProposalStatus.Rejected)
+export async function rejectProposal(
+  findInput: ProposalItemFindInput,
+  blockId: string
+) {
+  await updateProposalStatus(findInput, ProposalStatus.Rejected, blockId)
 }
 
 export async function signProposal(
   findInput: ProposalItemFindInput,
-  sig: string
+  sig: string,
+  blockId
 ) {
-  const proposal = await updateProposalStatus(findInput, ProposalStatus.Signed)
+  const proposal = await updateProposalStatus(
+    findInput,
+    ProposalStatus.Signed,
+    blockId
+  )
   proposal.signature = sig
   await proposal.save()
 }
 
-export async function removeProposal(findInput: ProposalItemFindInput) {
-  const proposal = await updateProposalStatus(findInput, ProposalStatus.Removed)
-  proposal.removed = true
-  await proposal.save()
-}
-
-export async function executedProposal(findInput: ProposalItemFindInput) {
+export async function removeProposal(
+  findInput: ProposalItemFindInput,
+  blockId: string
+) {
   const proposal = await updateProposalStatus(
     findInput,
-    ProposalStatus.Executed
+    ProposalStatus.Removed,
+    blockId
   )
   proposal.removed = true
   await proposal.save()
 }
 
-export async function failedProposal(findInput: ProposalItemFindInput) {
+export async function executedProposal(
+  findInput: ProposalItemFindInput,
+  blockId: string
+) {
   const proposal = await updateProposalStatus(
     findInput,
-    ProposalStatus.FailedToExecute
+    ProposalStatus.Executed,
+    blockId
+  )
+  proposal.removed = true
+  await proposal.save()
+}
+
+export async function failedProposal(
+  findInput: ProposalItemFindInput,
+  blockId: string
+) {
+  const proposal = await updateProposalStatus(
+    findInput,
+    ProposalStatus.FailedToExecute,
+    blockId
   )
   proposal.removed = true
   await proposal.save()

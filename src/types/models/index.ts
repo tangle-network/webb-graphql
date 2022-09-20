@@ -18,7 +18,11 @@ export {Authorities} from "./Authorities"
 
 export {Validator} from "./Validator"
 
+export {Proposer} from "./Proposer"
+
 export {SessionValidator} from "./SessionValidator"
+
+export {SessionProposer} from "./SessionProposer"
 
 export {Session} from "./Session"
 
@@ -26,7 +30,9 @@ export {PublicKey} from "./PublicKey"
 
 export {ProposerThreshold} from "./ProposerThreshold"
 
-export {Proposers} from "./Proposers"
+export {ProposalTimelineStatus} from "./ProposalTimelineStatus"
+
+export {ProposalVote} from "./ProposalVote"
 
 export {ProposalItem} from "./ProposalItem"
 
