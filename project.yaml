@@ -17,9 +17,9 @@ schema:
   file: ./schema.graphql
 
 network:
-  # Use Egg-net local endpoint
-  chainId: "0xa5d2af123845069a900fe9a2bb1740010e088b5221a1b9fcc3916427e2db32c2"
-  endpoint: "ws://host.docker.internal:9944" # using docker
+  # Use Tangle Network local endpoint
+  chainId: "0x5731c6413c354f7c83aa4d756d50ae4c9135b438c77d824e144fb1d52b49cfa3"
+  endpoint: "wss://stats-dev.api.webb.tools/public-ws" # hosted service
   # endpoint: "ws://127.0.0.1:9944" # not using docker
 
 dataSources:
