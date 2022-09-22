@@ -10,6 +10,8 @@ import {
 } from "../types"
 import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
+import type { AccountId32 } from "@polkadot/types/interfaces/runtime"
+
 import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
 import { ensureAccount } from "./account"
@@ -74,6 +76,24 @@ function isSet<T>(val: T | undefined): val is T {
  * */
 export const fetchSessionAuthorizes = async (blockNumber: string) => {
   logger.info(`Fetching authorities for ${blockNumber}`)
+  const accountsTuple: [
+    Vec<AccountId32>,
+    Vec<AccountId32>
+  ] = (await Promise.all([
+    api.query.dkg.nextAuthoritiesAccounts(),
+    api.query.dkg.nextAuthoritiesAccounts(),
+  ])) as any
+  const accounts = accountsTuple.reduce((acc: string[], accounts) => {
+    const next = [...acc]
+    accounts.forEach((a) => {
+      if (next.includes(a.toString())) {
+        return
+      }
+      next.push(a.toString())
+    })
+    return next
+  }, [])
+
   // Fetch authorities for a block number
   const [authorities, nextAuthorities, bestAuthorities, nextBestAuthorities]: [
     Vec<DkgRuntimePrimitivesCryptoPublic>,
@@ -88,17 +108,17 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   ])) as any
   // Fetch reputations and authorities accounts for mapping
   const authorityReputations = await api.query.dkg.authorityReputations.entries()
-  const currentAuthoritiesAccounts = await api.query.dkg.accountToAuthority.entries()
+  const currentAuthoritiesAccounts = await api.query.dkg.accountToAuthority.multi(
+    accounts
+  )
   // auth Id (DkgRuntimePrimitivesCryptoPublic::toString()) => Account32
   const authorityIdMap: Record<string, string> = {}
   // auth Id => auth reputation
   const authorityReputationMap: Record<string, string> = {}
 
   // Populate the authIdMap and authorityReputationMap
-  currentAuthoritiesAccounts.forEach(([key, val]) => {
-    const account32 = key.args[0].toString().replace("0x", "")
-    const authId = val.toString().replace("0x", "")
-    authorityIdMap[authId] = account32
+  currentAuthoritiesAccounts.forEach((authorityId, index) => {
+    authorityIdMap[authorityId.toString().replace("0x", "")] = accounts[index]
   })
   authorityReputations.forEach(([key, val]) => {
     const authId = key.args[0].toString().replace("0x", "")
@@ -190,6 +210,9 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
       }
     }
   )
+  logger.info(
+    `Session Authorises ${JSON.stringify(sessionAuthorities, null, 2)}`
+  )
   return {
     blockId: blockNumber,
     sessionAuthorities,
@@ -224,7 +247,9 @@ async function createOrUpdateSessionValidator(
   input: SessionDKGAuthority
 ) {
   const id = `${sessionId}-${input.authorityId}`
-  logger.info(`Creating or updating session validator ${id}`)
+  logger.info(
+    `Creating or updating session validator ${id} - ${input.accountId}`
+  )
   const sessionValidator = new SessionValidator(id)
   await ensureValidator(input.accountId, input.authorityId)
   sessionValidator.sessionId = sessionId

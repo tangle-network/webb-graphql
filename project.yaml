@@ -64,3 +64,9 @@ dataSources:
           kind: substrate/EventHandler
           filter:
             module: dkgProposalHandler
+
+        - handler: handleIdentity
+          kind: substrate/EventHandler
+          filter:
+            module: identity
+            method: IdentitySet

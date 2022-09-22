@@ -4,42 +4,57 @@ import { PalletIdentityRegistration } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { Vec } from "@polkadot/types-codec"
 
+export async function UpdateOrSetIdentity(account: Account) {
+  const id = account.id
+  const identity: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(
+    id
+  )) as any
+  if (identity.isSome) {
+    const id = identity.unwrap()
+
+    const extraInfo = (id.info.additional as Vec<ITuple<[Data, Data]>>)
+      .filter(([key]) => key.isRaw)
+      .reduce((acc, item) => {
+        const key = String(item[0].value.toHuman())
+        const value = String(item[1].value.toHuman())
+        return { ...acc, [key]: value }
+      }, {})
+    if (extraInfo["countryCode"]) {
+      account.countryCode = extraInfo["location"]
+    }
+    account.display = id.info.display.isNone
+      ? null
+      : String(id.info.display.value.toHuman())
+    account.legal = id.info.legal.isNone
+      ? null
+      : String(id.info.legal.value.toHuman())
+    account.web = id.info.web.toHuman()
+      ? null
+      : String(id.info.web.value.toHuman())
+    account.riot = id.info.riot.isNone
+      ? null
+      : String(id.info.riot.value.toHuman())
+    account.email = id.info.email.isNone
+      ? null
+      : String(id.info.email.value.toHuman())
+    account.pgpFingerprint = id.info.pgpFingerprint.isNone
+      ? null
+      : String(id.info.pgpFingerprint.value.toHuman())
+    account.image = id.info.image.isNone
+      ? null
+      : String(id.info.image.value.toHuman())
+    account.twitter = id.info.twitter.isNone
+      ? null
+      : String(id.info.twitter.value.toHuman())
+  }
+  return account.save()
+}
+
 export async function ensureAccount(account: string) {
   let data = await Account.get(account)
   if (!data) {
     data = new Account(account)
-    const identity: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(
-      account
-    )) as any
-    if (identity.isSome) {
-      const id = identity.unwrap()
-
-      const extraInfo = (id.info.additional as Vec<ITuple<[Data, Data]>>)
-        .filter(([key]) => key.isBasic)
-        .reduce((acc, item) => {
-          const key = String(item[0].asRaw.toHuman())
-          const value = String(item[1].asRaw.toHuman())
-          return { ...acc, [key]: value }
-        }, {})
-      if (extraInfo["countryCode"]) {
-        data.countryCode = extraInfo["location"]
-      }
-      data.display = id.info.display.isNone
-        ? null
-        : String(id.info.display.toHuman())
-      data.legal = id.info.legal.isNone ? null : String(id.info.legal.toHuman())
-      data.web = id.info.web.isNone ? null : String(id.info.web.toHuman())
-      data.riot = id.info.riot.isNone ? null : String(id.info.riot.toHuman())
-      data.email = id.info.email.isNone ? null : String(id.info.email.toHuman())
-      data.pgpFingerprint = id.info.pgpFingerprint.isNone
-        ? null
-        : String(id.info.pgpFingerprint.toHuman())
-      data.image = id.info.image.isNone ? null : String(id.info.image.toHuman())
-      data.twitter = id.info.twitter.isNone
-        ? null
-        : String(id.info.twitter.toHuman())
-    }
-    await data.save()
+    await UpdateOrSetIdentity(data)
   }
   return data
 }
