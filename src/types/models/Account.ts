@@ -22,6 +22,24 @@ export class Account implements Entity {
 
     public createAtBlockId?: string;
 
+    public display?: string;
+
+    public legal?: string;
+
+    public web?: string;
+
+    public riot?: string;
+
+    public email?: string;
+
+    public pgpFingerprint?: string;
+
+    public image?: string;
+
+    public twitter?: string;
+
+    public countryCode?: string;
+
 
     async save(): Promise<void>{
         let id = this.id;
