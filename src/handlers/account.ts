@@ -20,7 +20,7 @@ export async function UpdateOrSetIdentity(account: Account) {
         return { ...acc, [key]: value }
       }, {})
     if (extraInfo["countryCode"]) {
-      account.countryCode = extraInfo["location"]
+      account.countryCode = extraInfo["countryCode"]
     }
     account.display = id.info.display.isNone
       ? null
