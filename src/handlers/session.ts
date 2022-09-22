@@ -224,9 +224,9 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
 
 export function nextSession(blockId: string): string {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / 10) * 10
+  const sessionNumber = Math.floor(blockNumber / 600) * 600
 
-  return String(sessionNumber + 10)
+  return String(sessionNumber + 600)
 }
 async function ensureValidator(id: string, authorityId: string) {
   const validator = await Validator.get(id)
