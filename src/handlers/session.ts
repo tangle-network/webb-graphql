@@ -215,7 +215,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   )
   const sessionId = currentSessionId(blockNumber)
   return {
-    blockId: blockNumber,
+    blockId: sessionId,
     sessionAuthorities,
     keyGenThreshold,
     signatureThreshold,
@@ -230,7 +230,7 @@ const SESSION_HEIGHT = 10
  * */
 export function nextSessionId(blockId: string): string {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.round(blockNumber / SESSION_HEIGHT)
+  const sessionNumber = Math.round(blockNumber / SESSION_HEIGHT) + 1
   return sessionNumber.toString()
 }
 
