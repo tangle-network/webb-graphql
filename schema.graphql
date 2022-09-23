@@ -55,7 +55,15 @@ type Account @entity {
   creator: Account
   createdAt: String
   createAtBlock: Block
-
+  display: String
+  legal: String
+  web: String
+  riot: String
+  email: String
+  pgpFingerprint: String
+  image: String
+  twitter: String
+  countryCode: String
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
@@ -137,14 +145,13 @@ type SessionValidator @entity {
   reputation: String!
 }
 type SessionProposer @entity {
-	id: ID!
-	session: Session!
-	proposer: Proposer!
+  id: ID!
+  session: Session!
+  proposer: Proposer!
 }
 
 type Session @entity {
   id: ID!
-
 
   publicKey: PublicKey
 

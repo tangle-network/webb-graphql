@@ -9,6 +9,8 @@ import {
   createEvent,
   createExtrinsic,
   createSudoCall,
+  ensureAccount,
+  UpdateOrSetIdentity,
 } from "../handlers"
 import { checkAndAddAuthorities } from "../utils/authorities"
 import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
@@ -90,4 +92,11 @@ export async function handlePublicKeyChanged(event: SubstrateEvent) {
 		block:${block}
      	`
   )
+}
+
+export async function handleIdentity(event: SubstrateEvent) {
+  const account = event.event.data[0].toString()
+  logger.info(`IdentityHandler: ${account}`)
+  const acc = await ensureAccount(account)
+  return UpdateOrSetIdentity(acc)
 }

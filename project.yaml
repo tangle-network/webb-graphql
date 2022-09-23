@@ -17,9 +17,9 @@ schema:
   file: ./schema.graphql
 
 network:
-  # Use Tangle Network local endpoint
+  # Use Tangle network endpoint
   chainId: "0x5731c6413c354f7c83aa4d756d50ae4c9135b438c77d824e144fb1d52b49cfa3"
-  endpoint: "wss://stats-dev.api.webb.tools/public-ws" # hosted service
+  endpoint: "wss://stats-dev.api.webb.tools/public-ws" # using docker
   # endpoint: "ws://127.0.0.1:9944" # not using docker
 
 dataSources:
@@ -64,3 +64,9 @@ dataSources:
           kind: substrate/EventHandler
           filter:
             module: dkgProposalHandler
+
+        - handler: handleIdentity
+          kind: substrate/EventHandler
+          filter:
+            module: identity
+            method: IdentitySet
