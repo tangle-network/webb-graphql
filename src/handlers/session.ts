@@ -222,6 +222,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     proposerThreshold,
   }
 }
+const SESSION_HEIGHT = 10
 /**
  * Round the block number to a session id
  * a session is from block 0 to block $SessionHeight - 1
@@ -229,13 +230,13 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
  * */
 export function nextSessionId(blockId: string): string {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.round(blockNumber / 600)
+  const sessionNumber = Math.round(blockNumber / SESSION_HEIGHT)
   return sessionNumber.toString()
 }
 
 export function currentSessionId(blockId: string): string {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / 600)
+  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT)
   return sessionNumber.toString()
 }
 
