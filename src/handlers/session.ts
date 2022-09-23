@@ -213,6 +213,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   logger.info(
     `Session Authorises ${JSON.stringify(sessionAuthorities, null, 2)}`
   )
+  const sessionId = currentSessionId(blockNumber)
   return {
     blockId: blockNumber,
     sessionAuthorities,
@@ -221,13 +222,23 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     proposerThreshold,
   }
 }
-
-export function nextSession(blockId: string): string {
+/**
+ * Round the block number to a session id
+ * a session is from block 0 to block $SessionHeight - 1
+ *
+ * */
+export function nextSessionId(blockId: string): string {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / 600) * 600
-
-  return String(sessionNumber + 600)
+  const sessionNumber = Math.round(blockNumber / 600)
+  return sessionNumber.toString()
 }
+
+export function currentSessionId(blockId: string): string {
+  const blockNumber = Number(blockId)
+  const sessionNumber = Math.floor(blockNumber / 600)
+  return sessionNumber.toString()
+}
+
 async function ensureValidator(id: string, authorityId: string) {
   const validator = await Validator.get(id)
   if (validator) {
