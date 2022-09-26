@@ -38,9 +38,11 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
     case DKGMetaDataSection.PublicKeySubmitted:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
-        const sessionId = currentSessionId(eventDecoded.blockNumber)
+        const { sessionNumber: sessionId, sessionBlock } = currentSessionId(
+          eventDecoded.blockNumber
+        )
         const uncompressedPubKey = eventData.uncompressedPubKey.toString()
-        await ensureSession(sessionId)
+        await ensureSession(sessionId, sessionBlock)
         const block = await ensureBlock(eventDecoded.blockNumber)
 
         const key = await keyGenerated({
@@ -49,7 +51,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           uncompressedPubKey: uncompressedPubKey,
           timestamp: block.timestamp ?? new Date(),
         })
-        await setSessionKey(sessionId, key.id)
+        await setSessionKey(sessionId, sessionBlock, key.id)
         /*        const KeygenThresholds = await getCurrentKeygenThreshold()
         const signatureThresholds = await getCurrentSignatureThreshold()
         await createOrUpdateSession({
@@ -106,9 +108,11 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySubmitted
         )
-        const sessionId = nextSessionId(eventDecoded.blockNumber)
+        const { sessionNumber: sessionId, sessionBlock } = nextSessionId(
+          eventDecoded.blockNumber
+        )
         const uncompressedPubKey = eventData.uncompressedPubKey.toString()
-        await ensureSession(sessionId)
+        await ensureSession(sessionId, sessionBlock)
         const block = await ensureBlock(eventDecoded.blockNumber)
         const key = await keyGenerated({
           blockNumber: eventDecoded.blockNumber,
@@ -116,7 +120,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           uncompressedPubKey: uncompressedPubKey,
           timestamp: block.timestamp ?? new Date(),
         })
-        await setSessionKey(sessionId, key.id)
+        await setSessionKey(sessionId, sessionBlock, key.id)
         logger.info(
           `NextPublicKeySubmitted
 			compressedPubKey: ${eventData.compressedPubKey}
