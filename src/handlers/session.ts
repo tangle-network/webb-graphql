@@ -78,11 +78,14 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   logger.info(`Fetching authorities for ${blockNumber}`)
   const accountsTuple: [
     Vec<AccountId32>,
+    Vec<AccountId32>,
     Vec<AccountId32>
   ] = (await Promise.all([
+    api.query.dkg.currentAuthoritiesAccounts(),
     api.query.dkg.nextAuthoritiesAccounts(),
-    api.query.dkg.nextAuthoritiesAccounts(),
+    api.query.session.validators(),
   ])) as any
+  logger.info(`Accounts Tuple  ${accountsTuple}`)
   const accounts = accountsTuple.reduce((acc: string[], accounts) => {
     const next = [...acc]
     accounts.forEach((a) => {
@@ -120,6 +123,15 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   currentAuthoritiesAccounts.forEach((authorityId, index) => {
     authorityIdMap[authorityId.toString().replace("0x", "")] = accounts[index]
   })
+  logger.info(
+    `Current authroities accounts ${JSON.stringify({
+      authorityIdMap,
+      accounts,
+      currentAuthoritiesAccounts: currentAuthoritiesAccounts.map((a) =>
+        a.toString()
+      ),
+    })}`
+  )
   authorityReputations.forEach(([key, val]) => {
     const authId = key.args[0].toString().replace("0x", "")
     authorityReputationMap[authId] = val.toString()
@@ -198,36 +210,48 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   }
   const inSet = (dkgAuth: DKGAuthority, set: DKGAuthority[]) =>
     set.findIndex((auth) => auth.authorityId === dkgAuth.authorityId) !== -1
-  const sessionAuthorities = dkgAuthorities.map(
-    (dkgAuth): SessionDKGAuthority => {
-      return {
-        authorityId: dkgAuth.authorityId,
-        reputation: dkgAuth.reputation,
-        accountId: dkgAuth.accountId,
-        isBest: inSet(dkgAuth, bestDkgAuthorities),
-        isNext: inSet(dkgAuth, nextDkgAuthorities),
-        isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+  const sessionAuthorities = dkgAuthorities
+    .map(
+      (dkgAuth): SessionDKGAuthority => {
+        return {
+          authorityId: dkgAuth.authorityId,
+          reputation: dkgAuth.reputation,
+          accountId: dkgAuth.accountId,
+          isBest: inSet(dkgAuth, bestDkgAuthorities),
+          isNext: inSet(dkgAuth, nextDkgAuthorities),
+          isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+        }
       }
-    }
-  )
-  logger.info(
-    `Session Authorises ${JSON.stringify(sessionAuthorities, null, 2)}`
-  )
+    )
+    .filter((s) => s.accountId !== undefined)
+
+  const sessionId = currentSessionId(blockNumber)
   return {
-    blockId: blockNumber,
+    blockId: sessionId,
     sessionAuthorities,
     keyGenThreshold,
     signatureThreshold,
     proposerThreshold,
   }
 }
-
-export function nextSession(blockId: string): string {
+const SESSION_HEIGHT = 10
+/**
+ * Round the block number to a session id
+ * a session is from block 0 to block $SessionHeight - 1
+ *
+ * */
+export function nextSessionId(blockId: string): string {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / 600) * 600
-
-  return String(sessionNumber + 600)
+  const sessionNumber = Math.round(blockNumber / SESSION_HEIGHT) + 1
+  return sessionNumber.toString()
 }
+
+export function currentSessionId(blockId: string): string {
+  const blockNumber = Number(blockId)
+  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT)
+  return sessionNumber.toString()
+}
+
 async function ensureValidator(id: string, authorityId: string) {
   const validator = await Validator.get(id)
   if (validator) {

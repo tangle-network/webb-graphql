@@ -5,13 +5,18 @@ import { DKGMetaDataEvent } from "./types"
 import { keyGenerated, updatePublicKeyStatus } from "./publicKey"
 import {
   createOrUpdateSession,
+  currentSessionId,
   ensureSession,
   fetchSessionAuthorizes,
-  nextSession,
+  nextSessionId,
   setSessionKey,
 } from "../../session"
-import { SessionKeyStatus } from "../../../types"
+import { KeygenThreshold, SessionKeyStatus } from "../../../types"
 import { ensureBlock } from "../../block"
+import { getCurrentKeygenThreshold } from "../../../utils/keygenThreshold/getCurrent"
+import { getCurrentSignatureThreshold } from "../../../utils/signatureThreshold/getCurrent"
+import { AccountId32 } from "@polkadot/types/interfaces/runtime"
+import { Vec } from "@polkadot/types-codec"
 
 /**
  *
@@ -33,6 +38,61 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
     case DKGMetaDataSection.PublicKeySubmitted:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
+        const sessionId = currentSessionId(eventDecoded.blockNumber)
+        const uncompressedPubKey = eventData.uncompressedPubKey.toString()
+        await ensureSession(sessionId)
+        const block = await ensureBlock(eventDecoded.blockNumber)
+
+        const key = await keyGenerated({
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          uncompressedPubKey: uncompressedPubKey,
+          timestamp: block.timestamp ?? new Date(),
+        })
+        await setSessionKey(sessionId, key.id)
+        /*        const KeygenThresholds = await getCurrentKeygenThreshold()
+        const signatureThresholds = await getCurrentSignatureThreshold()
+        await createOrUpdateSession({
+          blockId: sessionId,
+          keyGenThreshold: {
+            next: KeygenThresholds.next,
+            current: KeygenThresholds.current,
+            pending: KeygenThresholds.pending,
+          },
+          signatureThreshold: {
+            next: signatureThresholds.next,
+            current: signatureThresholds.current,
+            pending: signatureThresholds.pending,
+          },
+        })*/
+        const authorites = await fetchSessionAuthorizes(
+          eventDecoded.blockNumber
+        )
+        const providersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any
+        const proposers = providersAccounts.map((i) => i.toString())
+        logger.info(
+          `Update proposers for ${sessionId} ${JSON.stringify(
+            proposers,
+            null,
+            2
+          )}`
+        )
+        logger.info(
+          `Update authorites for ${sessionId} ${JSON.stringify(
+            {
+              ...authorites,
+              proposers,
+              proposersCount: proposers.length,
+            },
+            null,
+            2
+          )}`
+        )
+        await createOrUpdateSession({
+          ...authorites,
+          proposers,
+          proposersCount: proposers.length,
+        })
         logger.info(
           `PublicKeySubmitted
 			compressedPubKey: ${eventData.compressedPubKey}
@@ -46,9 +106,9 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySubmitted
         )
-        const nextSessionId = nextSession(eventDecoded.blockNumber)
+        const sessionId = nextSessionId(eventDecoded.blockNumber)
         const uncompressedPubKey = eventData.uncompressedPubKey.toString()
-        await ensureSession(nextSessionId)
+        await ensureSession(sessionId)
         const block = await ensureBlock(eventDecoded.blockNumber)
         const key = await keyGenerated({
           blockNumber: eventDecoded.blockNumber,
@@ -56,7 +116,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           uncompressedPubKey: uncompressedPubKey,
           timestamp: block.timestamp ?? new Date(),
         })
-        await setSessionKey(nextSessionId, key.id)
+        await setSessionKey(sessionId, key.id)
         logger.info(
           `NextPublicKeySubmitted
 			compressedPubKey: ${eventData.compressedPubKey}

@@ -5,7 +5,7 @@ import "@webb-tools/types"
 
 import { DKGProposalsEvent } from "./types"
 import { EventDecoder } from "../../../utils"
-import { createOrUpdateSession } from "../../session"
+import { createOrUpdateSession, currentSessionId } from "../../session"
 import {
   addVote,
   approveProposal,
@@ -31,8 +31,9 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       const thresholdValue = eventData.newThreshold.toString()
       await createProposerThreshold(thresholdValue, eventDecoded.metaData)
       const pendingThreshold = eventData.newThreshold.toString()
+      const sessionId = currentSessionId(eventDecoded.blockNumber)
       await createOrUpdateSession({
-        blockId: eventDecoded.blockNumber,
+        blockId: sessionId,
         ProposerThreshold: {
           current: Number(thresholdValue.toString()),
           pending: Number(pendingThreshold),
@@ -129,8 +130,9 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           DKGProposalsSection.AuthorityProposersReset
         )
         const proposers = eventData.proposers.map((i) => i.toString())
+        const sessionId = currentSessionId(eventDecoded.blockNumber)
         await createOrUpdateSession({
-          blockId: eventDecoded.blockNumber,
+          blockId: sessionId,
           proposers,
           proposersCount: proposers.length,
         })
