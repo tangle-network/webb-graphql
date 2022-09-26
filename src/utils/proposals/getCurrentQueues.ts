@@ -251,12 +251,13 @@ export async function ensureProposer(accountId: string) {
 export async function addVote(
   input: ProposalItemFindInput,
   voter: string,
-  isFor = true,
+  isFor: boolean,
   blockId: string
 ) {
   const proposal = await ensureProposalItem(input)
   const block = await ensureBlock(blockId)
   await ensureProposer(voter)
+
   const newVote = await ProposalVote.create({
     id: `${proposal.id}-${voter}`,
     blockId,

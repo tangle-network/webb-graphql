@@ -4,10 +4,6 @@ import assert from 'assert';
 
 
 
-import {
-    VoteStatus,
-} from '../enums'
-
 
 type ProposalVoteProps = Omit<ProposalVote, NonNullable<FunctionPropertyNames<ProposalVote>>>;
 
@@ -20,7 +16,7 @@ export class ProposalVote implements Entity {
 
     public id: string;
 
-    public voteStatus: VoteStatus;
+    public for: boolean;
 
     public voterId: string;
 

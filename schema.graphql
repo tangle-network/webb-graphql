@@ -113,6 +113,7 @@ type Proposer @entity {
   id: ID!
 
   account: Account!
+  votes: [ProposalVote]! @derivedFrom(field: "voter")
 }
 
 enum SessionKeyStatus {
@@ -232,7 +233,7 @@ enum VoteStatus {
 
 type ProposalVote @entity {
   id: ID!
-  voteStatus: VoteStatus!
+  for: Boolean!
   voter: Proposer!
   proposal: ProposalItem!
   blockNumber: BigInt!
