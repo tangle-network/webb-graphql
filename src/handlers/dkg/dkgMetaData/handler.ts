@@ -10,9 +10,11 @@ export async function dkgHandler({ call, extrinsic }: ModuleHandlerArgs) {
       const args: SignatureThresholdArgs = call.args
       const data = await createSignatureThreshold(extrinsic, args)
       const blockId = extrinsic.block.block.header.number.toString()
+      const { sessionNumber, sessionBlock } = currentSessionId(blockId)
       // TODO move this to event handler after implementing events on the node side
       await createOrUpdateSession({
-        blockId: currentSessionId(blockId),
+        blockId: sessionBlock,
+        sessionId: sessionNumber,
         signatureThreshold: {
           next: data.next ? Number(data.next) : 0,
           current: data.current ? Number(data.current) : 0,
@@ -28,9 +30,12 @@ export async function dkgHandler({ call, extrinsic }: ModuleHandlerArgs) {
 
       const data = await createKeygenThreshold(extrinsic, args)
       const blockId = extrinsic.block.block.header.number.toString()
+      const { sessionNumber, sessionBlock } = currentSessionId(blockId)
+
       // TODO move this to event handler after implementing events on the node side
       await createOrUpdateSession({
-        blockId: currentSessionId(blockId),
+        blockId: sessionBlock,
+        sessionId: sessionNumber,
         keyGenThreshold: {
           next: data.next ? Number(data.next) : 0,
           current: data.current ? Number(data.current) : 0,

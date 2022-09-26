@@ -19,9 +19,9 @@ import { ensureAccount } from "./account"
 /**
  * Check if the session is in the DB, if not create it
  * */
-export const ensureSession = async (blockId: string) => {
-  await ensureBlock(blockId)
-  const session = await Session.get(blockId)
+export const ensureSession = async (sessionNumber: string, block: string) => {
+  await ensureBlock(block)
+  const session = await Session.get(sessionNumber)
   if (session) {
     return session
   }
@@ -29,9 +29,9 @@ export const ensureSession = async (blockId: string) => {
     keyGenThreshold: undefined,
     proposerThreshold: undefined,
     signatureThreshold: undefined,
-    blockId: blockId,
-    blockNumber: Number(blockId),
-    id: blockId,
+    blockId: block,
+    blockNumber: Number(sessionNumber),
+    id: sessionNumber,
   })
 
   await newSession.save()
@@ -62,7 +62,7 @@ type SessionInput = Partial<{
   proposersCount: number
 
   sessionAuthorities: SessionDKGAuthority[]
-}> & { blockId: string }
+}> & { blockId: string; sessionId: string }
 
 function isSet<T>(val: T | undefined): val is T {
   return typeof val !== "undefined"
@@ -225,9 +225,12 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     )
     .filter((s) => s.accountId !== undefined)
 
-  const sessionId = currentSessionId(blockNumber)
+  const { sessionNumber: sessionId, sessionBlock } = currentSessionId(
+    blockNumber
+  )
   return {
-    blockId: sessionId,
+    sessionId,
+    blockId: sessionBlock,
     sessionAuthorities,
     keyGenThreshold,
     signatureThreshold,
@@ -240,16 +243,26 @@ const SESSION_HEIGHT = 600
  * a session is from block 0 to block $SessionHeight - 1
  *
  * */
-export function nextSessionId(blockId: string): string {
+export function nextSessionId(
+  blockId: string
+): { sessionNumber: string; sessionBlock: string } {
   const blockNumber = Number(blockId)
   const sessionNumber = Math.round(blockNumber / SESSION_HEIGHT) + 1
-  return sessionNumber.toString()
+  return {
+    sessionNumber: sessionNumber.toString(),
+    sessionBlock: `${sessionNumber * SESSION_HEIGHT}`,
+  }
 }
 
-export function currentSessionId(blockId: string): string {
+export function currentSessionId(
+  blockId: string
+): { sessionNumber: string; sessionBlock: string } {
   const blockNumber = Number(blockId)
   const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT)
-  return sessionNumber.toString()
+  return {
+    sessionNumber: sessionNumber.toString(),
+    sessionBlock: `${sessionNumber * SESSION_HEIGHT}`,
+  }
 }
 
 async function ensureValidator(id: string, authorityId: string) {
@@ -319,10 +332,11 @@ async function createOrUpdateSessionProposer(
  * */
 export const createOrUpdateSession = async ({
   blockId,
+  sessionId,
   ...input
 }: SessionInput) => {
   // Ensure the session is not already created
-  const session = await ensureSession(blockId)
+  const session = await ensureSession(sessionId, blockId)
 
   logger.info(`Update session ${blockId} values for ${Object.keys(input)}`)
   // Loop over the input and update the session
@@ -358,9 +372,13 @@ export const createOrUpdateSession = async ({
 /**
  * Set the public key id in the session
  * */
-export async function setSessionKey(blockId: string, keyId: string) {
+export async function setSessionKey(
+  blockId: string,
+  sessionId: string,
+  keyId: string
+) {
   //Ensure the session is not already created
-  const session = await ensureSession(blockId)
+  const session = await ensureSession(sessionId, blockId)
   session.publicKeyId = keyId
   await session.save()
 }
