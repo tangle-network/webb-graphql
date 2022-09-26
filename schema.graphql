@@ -224,11 +224,15 @@ type ProposalTimelineStatus @entity {
 
   timestamp: Date!
 }
+enum VoteStatus {
+  FOR
+  AGAINST
+  ABSTAIN
+}
 
 type ProposalVote @entity {
   id: ID!
-
-  for: Boolean!
+  voteStatus: VoteStatus!
   voter: Proposer!
   proposal: ProposalItem!
   blockNumber: BigInt!
