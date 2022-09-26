@@ -373,8 +373,8 @@ export const createOrUpdateSession = async ({
  * Set the public key id in the session
  * */
 export async function setSessionKey(
-  blockId: string,
   sessionId: string,
+  blockId: string,
   keyId: string
 ) {
   //Ensure the session is not already created
