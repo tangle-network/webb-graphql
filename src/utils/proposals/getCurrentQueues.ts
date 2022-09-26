@@ -108,10 +108,7 @@ export async function ensureProposalQueue(blockId: string) {
   return newQueue
 }
 
-export async function ensureProposalQueueItem(
-  blockId: string,
-  proposalId: string
-) {
+const ensureProposalQueueItem = async (blockId: string, proposalId: string) => {
   const id = `${blockId}-${proposalId}`
   const item = await UnsignedProposalsQueueItem.get(id)
   // TODO : Debug this more as the proposal isn't created while it should be
@@ -204,8 +201,9 @@ export async function ensureProposalItemStorage(
     blockNumber: Number(blockId),
   })
 
-  await ensureAbstainVotes(blockId, id)
   await newProposalItem.save()
+  await ensureAbstainVotes(blockId, id)
+
   return newProposalItem
 }
 
@@ -239,18 +237,18 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     signature: undefined,
     blockNumber: Number(blockId),
   })
-  const statusId = `${proposal.id}-${status.status}`
+  const statusId = `${id}-${status.status}`
   const newStatus = ProposalTimelineStatus.create({
     id: statusId,
     status: ProposalStatus.Open,
-    proposalItemId: proposal.id,
+    proposalItemId: id,
     blockNumber: block.number,
     timestamp: block.timestamp,
   })
-  // create abstain proposers
-  await ensureAbstainVotes(blockId, id)
 
   await Promise.all([newProposal.save(), newStatus.save()])
+  // create abstain proposers
+  await ensureAbstainVotes(blockId, id)
   return newProposal
 }
 

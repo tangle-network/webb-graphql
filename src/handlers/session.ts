@@ -30,7 +30,7 @@ export const ensureSession = async (sessionNumber: string, block: string) => {
     proposerThreshold: undefined,
     signatureThreshold: undefined,
     blockId: block,
-    blockNumber: Number(sessionNumber),
+    blockNumber: Number(block),
     id: sessionNumber,
   })
 
@@ -237,7 +237,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     proposerThreshold,
   }
 }
-const SESSION_HEIGHT = 600
+const SESSION_HEIGHT = 10
 /**
  * Round the block number to a session id
  * a session is from block 0 to block $SessionHeight - 1
