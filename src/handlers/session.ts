@@ -210,18 +210,20 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   }
   const inSet = (dkgAuth: DKGAuthority, set: DKGAuthority[]) =>
     set.findIndex((auth) => auth.authorityId === dkgAuth.authorityId) !== -1
-  const sessionAuthorities = dkgAuthorities.map(
-    (dkgAuth): SessionDKGAuthority => {
-      return {
-        authorityId: dkgAuth.authorityId,
-        reputation: dkgAuth.reputation,
-        accountId: dkgAuth.accountId,
-        isBest: inSet(dkgAuth, bestDkgAuthorities),
-        isNext: inSet(dkgAuth, nextDkgAuthorities),
-        isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+  const sessionAuthorities = dkgAuthorities
+    .map(
+      (dkgAuth): SessionDKGAuthority => {
+        return {
+          authorityId: dkgAuth.authorityId,
+          reputation: dkgAuth.reputation,
+          accountId: dkgAuth.accountId,
+          isBest: inSet(dkgAuth, bestDkgAuthorities),
+          isNext: inSet(dkgAuth, nextDkgAuthorities),
+          isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+        }
       }
-    }
-  )
+    )
+    .filter((s) => s.accountId !== undefined)
   logger.info(
     `Session Authorises ${JSON.stringify(sessionAuthorities, null, 2)}`
   )
