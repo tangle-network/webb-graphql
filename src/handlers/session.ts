@@ -224,9 +224,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
       }
     )
     .filter((s) => s.accountId !== undefined)
-  logger.info(
-    `Session Authorises ${JSON.stringify(sessionAuthorities, null, 2)}`
-  )
+
   const sessionId = currentSessionId(blockNumber)
   return {
     blockId: sessionId,
