@@ -233,7 +233,7 @@ enum VoteStatus {
 
 type ProposalVote @entity {
   id: ID!
-  for: Boolean!
+  voteStatus: VoteStatus!
   voter: Proposer!
   proposal: ProposalItem!
   blockNumber: BigInt!

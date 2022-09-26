@@ -13,12 +13,15 @@ import {
   Proposer,
   UnsignedProposalsQueue,
   UnsignedProposalsQueueItem,
+  VoteStatus,
 } from "../../types"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
 } from "@polkadot/types/lookup"
 import { ensureAccount, ensureBlock } from "../../handlers"
+import { AccountId32 } from "@polkadot/types/interfaces/runtime"
+import { Vec } from "@polkadot/types-codec"
 
 export interface UnsignedProposalQueueItem {
   key: Key
@@ -154,7 +157,20 @@ function constructProposalItemId(
     input.removed ? "0" : "1"
   }${input.signature ? "1" : "0"}`
 }
-
+async function ensureAbstainVotes(blockId: string, proposalId: string) {
+  const proposersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any
+  for (const account of proposersAccounts) {
+    await addVote(
+      {
+        blockId,
+        nonce: proposalId,
+      },
+      account.toString(),
+      null,
+      blockId
+    )
+  }
+}
 /**
  *
  * Ensure a proposal item is added
@@ -187,6 +203,8 @@ export async function ensureProposalItemStorage(
     status: status.status.toString(),
     blockNumber: Number(blockId),
   })
+
+  await ensureAbstainVotes(blockId, id)
   await newProposalItem.save()
   return newProposalItem
 }
@@ -229,6 +247,8 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     blockNumber: block.number,
     timestamp: block.timestamp,
   })
+  // create abstain proposers
+  await ensureAbstainVotes(blockId, id)
 
   await Promise.all([newProposal.save(), newStatus.save()])
   return newProposal
@@ -251,18 +271,23 @@ export async function ensureProposer(accountId: string) {
 export async function addVote(
   input: ProposalItemFindInput,
   voter: string,
-  isFor: boolean,
+  isFor: boolean | null = null,
   blockId: string
 ) {
   const proposal = await ensureProposalItem(input)
   const block = await ensureBlock(blockId)
   await ensureProposer(voter)
-
+  const voteStatus =
+    isFor === null
+      ? VoteStatus.ABSTAIN
+      : isFor
+      ? VoteStatus.FOR
+      : VoteStatus.AGAINST
   const newVote = await ProposalVote.create({
     id: `${proposal.id}-${voter}`,
     blockId,
     blockNumber: block.number,
-    for: isFor,
+    voteStatus,
     proposalId: proposal.id,
     voterId: voter,
   })
