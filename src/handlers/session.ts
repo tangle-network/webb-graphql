@@ -85,7 +85,6 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     api.query.dkg.nextAuthoritiesAccounts(),
     api.query.session.validators(),
   ])) as any
-  logger.info(`Accounts Tuple  ${accountsTuple}`)
   const accounts = accountsTuple.reduce((acc: string[], accounts) => {
     const next = [...acc]
     accounts.forEach((a) => {
@@ -123,15 +122,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   currentAuthoritiesAccounts.forEach((authorityId, index) => {
     authorityIdMap[authorityId.toString().replace("0x", "")] = accounts[index]
   })
-  logger.info(
-    `Current authroities accounts ${JSON.stringify({
-      authorityIdMap,
-      accounts,
-      currentAuthoritiesAccounts: currentAuthoritiesAccounts.map((a) =>
-        a.toString()
-      ),
-    })}`
-  )
+
   authorityReputations.forEach(([key, val]) => {
     const authId = key.args[0].toString().replace("0x", "")
     authorityReputationMap[authId] = val.toString()
