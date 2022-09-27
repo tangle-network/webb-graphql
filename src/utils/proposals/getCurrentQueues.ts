@@ -200,7 +200,7 @@ export async function ensureProposalItemStorage(
     txHash: "",
     timestamp: block.timestamp ?? new Date(),
   }
-  const newProposalItem = ProposalItem.create({
+  const newProposal = ProposalItem.create({
     blockId,
     data,
     removed: false,
@@ -211,11 +211,20 @@ export async function ensureProposalItemStorage(
     blockNumber: Number(blockId),
     chainId: input.chainId,
   })
+  const statusId = `${id}-${status.status}`
 
-  await newProposalItem.save()
+  const newStatus = ProposalTimelineStatus.create({
+    id: statusId,
+    status: ProposalStatus.Open,
+    proposalItemId: id,
+    blockNumber: block.number,
+    timestamp: block.timestamp,
+  })
+  await Promise.all([newProposal.save(), newStatus.save()])
+
   await ensureAbstainVotes(blockId, id, input.chainId)
 
-  return newProposalItem
+  return newProposal
 }
 
 type ProposalItemFindInput = {
