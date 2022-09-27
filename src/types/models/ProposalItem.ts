@@ -22,7 +22,7 @@ export class ProposalItem implements Entity {
 
     public nonce: number;
 
-    public chainId: number;
+    public chainId?: number;
 
     public type: ProposalType;
 
