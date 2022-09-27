@@ -69,3 +69,14 @@ export enum ProposalStatus {
 }
 
 
+export enum VoteStatus {
+
+    FOR = "FOR",
+
+    AGAINST = "AGAINST",
+
+    ABSTAIN = "ABSTAIN",
+
+}
+
+

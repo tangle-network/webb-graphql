@@ -92,3 +92,14 @@ query {
 
 - Sometimes, when you make changes to the code, make sure to run `yarn build` to re-build the project, then your change will be applied in `docker`. Otherwise, you won't get the latest changes.
 - If you got errors about the `Postgres` service in `docker–compose`, try to remove the `.data` folder or you can try to add the `--force-clean` in the `command` section of the `subquery-node` service in [`docker-compose` file](https://github.com/webb-tools/webb-subql/blob/trung-tin/init-connection-with-eggnet/docker-compose.yml#L37).
+
+## Deployment
+- Create a new SubQuery project
+- Make sure to build the types and the project
+  - `yarn codegen`
+  - `yarn build`
+- Get the refresh token for the manage project UI
+- Publish the project and git the CID `subql publish`
+- Copy the CID to the manage project UI
+- Provide the endpoint from the `project.yml` and click deploy
+

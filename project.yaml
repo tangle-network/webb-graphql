@@ -18,7 +18,8 @@ schema:
 
 network:
   # Use Tangle network endpoint
-  chainId: "0x5731c6413c354f7c83aa4d756d50ae4c9135b438c77d824e144fb1d52b49cfa3"
+  chainId: "0x5731c6413c354f7c83aa4d756d50ae4c9135b438c77d824e144fb1d52b49cfa3" deployed archive node
+#  chainId: "0xe73defe42503251230e94a3dd29e3bb5d895d1f3370c132a833fcfb0d9b67c08"
   endpoint: "wss://stats-dev.api.webb.tools/public-ws" # using testnet endpoint
 #  endpoint: "ws://host.docker.internal:9944" # using docker
   # endpoint: "ws://127.0.0.1:9944" # not using docker

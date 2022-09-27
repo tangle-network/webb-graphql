@@ -30,7 +30,7 @@ export const ensureSession = async (sessionNumber: string, block: string) => {
     proposerThreshold: undefined,
     signatureThreshold: undefined,
     blockId: block,
-    blockNumber: Number(sessionNumber),
+    blockNumber: Number(block),
     id: sessionNumber,
   })
 
@@ -85,7 +85,6 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     api.query.dkg.nextAuthoritiesAccounts(),
     api.query.session.validators(),
   ])) as any
-  logger.info(`Accounts Tuple  ${accountsTuple}`)
   const accounts = accountsTuple.reduce((acc: string[], accounts) => {
     const next = [...acc]
     accounts.forEach((a) => {
@@ -123,15 +122,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   currentAuthoritiesAccounts.forEach((authorityId, index) => {
     authorityIdMap[authorityId.toString().replace("0x", "")] = accounts[index]
   })
-  logger.info(
-    `Current authroities accounts ${JSON.stringify({
-      authorityIdMap,
-      accounts,
-      currentAuthoritiesAccounts: currentAuthoritiesAccounts.map((a) =>
-        a.toString()
-      ),
-    })}`
-  )
+
   authorityReputations.forEach(([key, val]) => {
     const authId = key.args[0].toString().replace("0x", "")
     authorityReputationMap[authId] = val.toString()
@@ -237,7 +228,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     proposerThreshold,
   }
 }
-const SESSION_HEIGHT = 600
+const SESSION_HEIGHT = 10
 /**
  * Round the block number to a session id
  * a session is from block 0 to block $SessionHeight - 1
@@ -247,7 +238,7 @@ export function nextSessionId(
   blockId: string
 ): { sessionNumber: string; sessionBlock: string } {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.round(blockNumber / SESSION_HEIGHT) + 1
+  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT) + 1
   return {
     sessionNumber: sessionNumber.toString(),
     sessionBlock: `${sessionNumber * SESSION_HEIGHT}`,
@@ -373,8 +364,8 @@ export const createOrUpdateSession = async ({
  * Set the public key id in the session
  * */
 export async function setSessionKey(
-  blockId: string,
   sessionId: string,
+  blockId: string,
   keyId: string
 ) {
   //Ensure the session is not already created

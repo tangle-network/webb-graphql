@@ -113,6 +113,7 @@ type Proposer @entity {
   id: ID!
 
   account: Account!
+  votes: [ProposalVote]! @derivedFrom(field: "voter")
 }
 
 enum SessionKeyStatus {
@@ -224,11 +225,15 @@ type ProposalTimelineStatus @entity {
 
   timestamp: Date!
 }
+enum VoteStatus {
+  FOR
+  AGAINST
+  ABSTAIN
+}
 
 type ProposalVote @entity {
   id: ID!
-
-  for: Boolean!
+  voteStatus: VoteStatus!
   voter: Proposer!
   proposal: ProposalItem!
   blockNumber: BigInt!
@@ -240,7 +245,7 @@ type ProposalItem @entity {
   id: ID!
 
   nonce: Int!
-
+  chainId: Int!
   type: ProposalType!
 
   status: String! @index(unique: false)

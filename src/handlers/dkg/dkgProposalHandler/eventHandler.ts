@@ -34,6 +34,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           eventData.key
         )
         const nonce = Number(eventData.key.value.toString())
+        const chainId = Number(eventData.targetChain.value.toString())
         const blockNumber = eventDecoder.blockNumber
         // Create a new unsigned proposal
         await ensureProposalItemStorage({
@@ -42,6 +43,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           data: eventData.data.toString(),
           nonce,
           type: dkgPayloadKeyToProposalType(eventData.key),
+          chainId,
         })
         await createProposalCounter(blockNumber)
 
@@ -61,6 +63,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         )
         const blockNumber = eventDecoder.blockNumber
         const nonce = String(parseInt(eventData.key.value.toHex()))
+        const chainId = Number(eventData.targetChain.value.toString())
 
         logger.info(`Unsigned Proposal Removed: ${proposalId}`)
         // Create a new removed proposal
@@ -68,6 +71,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           {
             blockId: blockNumber,
             nonce,
+            chainId,
           },
           blockNumber
         )
@@ -87,6 +91,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const proposalType = dkgPayloadKeyToProposalType(proposalKey)
         const blockNumber = eventDecoder.metaData.blockNumber
         const nonce = Number(proposalKey.value.toString())
+        const chainId = Number(targetChainId.value.toString())
         logger.info(`Signed Proposal Added: ${proposalId}`)
         await ensureProposalItemStorage({
           proposalId,
@@ -95,11 +100,13 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           type: proposalType,
           nonce,
           blockId: blockNumber,
+          chainId,
         })
         await signProposal(
           {
             blockId: blockNumber,
             nonce: String(parseInt(eventData.key.value.toHex())),
+            chainId,
           },
           signature,
           blockNumber
