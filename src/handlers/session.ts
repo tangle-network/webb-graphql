@@ -238,7 +238,7 @@ export function nextSessionId(
   blockId: string
 ): { sessionNumber: string; sessionBlock: string } {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.round(blockNumber / SESSION_HEIGHT) + 1
+  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT) + 1
   return {
     sessionNumber: sessionNumber.toString(),
     sessionBlock: `${sessionNumber * SESSION_HEIGHT}`,
