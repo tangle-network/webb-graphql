@@ -245,7 +245,7 @@ type ProposalItem @entity {
   id: ID!
 
   nonce: Int!
-
+  chainId: Int!
   type: ProposalType!
 
   status: String! @index(unique: false)

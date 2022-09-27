@@ -108,11 +108,15 @@ export async function ensureProposalQueue(blockId: string) {
   return newQueue
 }
 
-const ensureProposalQueueItem = async (blockId: string, proposalId: string) => {
+const ensureProposalQueueItem = async (
+  blockId: string,
+  proposalId: string,
+  chainId: number
+) => {
   const id = `${blockId}-${proposalId}`
   const item = await UnsignedProposalsQueueItem.get(id)
   // TODO : Debug this more as the proposal isn't created while it should be
-  await ensureProposalItem({ blockId, nonce: proposalId })
+  await ensureProposalItem({ blockId, nonce: proposalId, chainId })
   if (item) {
     return item
   }
@@ -142,6 +146,7 @@ export type ProposalCreateInput = {
   data: string
   signature?: string
   nonce: number
+  chainId: number
 }
 
 function constructProposalItemId(
@@ -154,13 +159,18 @@ function constructProposalItemId(
     input.removed ? "0" : "1"
   }${input.signature ? "1" : "0"}`
 }
-async function ensureAbstainVotes(blockId: string, proposalId: string) {
+async function ensureAbstainVotes(
+  blockId: string,
+  proposalId: string,
+  proposalChainId: number
+) {
   const proposersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any
   for (const account of proposersAccounts) {
     await addVote(
       {
         blockId,
         nonce: proposalId,
+        chainId: proposalChainId,
       },
       account.toString(),
       null,
@@ -199,10 +209,11 @@ export async function ensureProposalItemStorage(
     type,
     status: status.status.toString(),
     blockNumber: Number(blockId),
+    chainId: input.chainId,
   })
 
   await newProposalItem.save()
-  await ensureAbstainVotes(blockId, id)
+  await ensureAbstainVotes(blockId, id, input.chainId)
 
   return newProposalItem
 }
@@ -210,6 +221,7 @@ export async function ensureProposalItemStorage(
 type ProposalItemFindInput = {
   blockId: string
   nonce: string
+  chainId: number
 }
 
 export async function ensureProposalItem(input: ProposalItemFindInput) {
@@ -228,6 +240,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
   }
   const newProposal = ProposalItem.create({
     id,
+    chainId: input.chainId,
     blockId: input.blockId,
     data: "0x00",
     removed: false,
@@ -248,7 +261,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
 
   await Promise.all([newProposal.save(), newStatus.save()])
   // create abstain proposers
-  await ensureAbstainVotes(blockId, id)
+  await ensureAbstainVotes(blockId, id, input.chainId)
   return newProposal
 }
 
@@ -425,13 +438,15 @@ export async function createProposalCounter(
     }
   })
   const parsedUnSigProposals = unSignedProposalsData.map(([key]) => {
-    const [_chainId, dkgKey] = (key.args as unknown) as [
+    const [chainId, dkgKey] = (key.args as unknown) as [
       WebbProposalsHeaderTypedChainId,
       DkgRuntimePrimitivesProposalDkgPayloadKey
     ]
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any)
     const nonce = dkgKey.value.toString()
+
     return {
+      chainId: Number(chainId.value.toString()),
       proposalId: nonce,
       proposalType,
     }
@@ -516,7 +531,7 @@ export async function createProposalCounter(
   await ensureProposalQueue(blockId)
   await Promise.all(
     parsedUnSigProposals.map((p) => {
-      return ensureProposalQueueItem(blockId, p.proposalId)
+      return ensureProposalQueueItem(blockId, p.proposalId, p.chainId)
     })
   )
   await counter.save()
