@@ -274,7 +274,7 @@ async function createOrUpdateSessionValidator(
   sessionId: string,
   input: SessionDKGAuthority
 ) {
-  const id = `${sessionId}-${input.authorityId}`
+  const id = `${sessionId}-${input.accountId}`
   logger.info(
     `Creating or updating session validator ${id} - ${input.accountId}`
   )
