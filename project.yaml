@@ -22,7 +22,7 @@ network:
 #  chainId: "0xe73defe42503251230e94a3dd29e3bb5d895d1f3370c132a833fcfb0d9b67c08"
   endpoint: "wss://stats-dev.api.webb.tools/public-ws" # using testnet endpoint
 #  endpoint: "ws://host.docker.internal:9944" # using docker
-  # endpoint: "ws://127.0.0.1:9944" # not using docker
+# endpoint: "ws://127.0.0.1:9944" # not using docker
 
 dataSources:
   - kind: substrate/Runtime
