@@ -31,7 +31,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       const thresholdValue = eventData.newThreshold.toString()
       await createProposerThreshold(thresholdValue, eventDecoded.metaData)
       const pendingThreshold = eventData.newThreshold.toString()
-      const { sessionNumber: sessionId, sessionBlock } = currentSessionId(
+      const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(
         eventDecoded.blockNumber
       )
       await createOrUpdateSession({
@@ -139,7 +139,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           DKGProposalsSection.AuthorityProposersReset
         )
         const proposers = eventData.proposers.map((i) => i.toString())
-        const { sessionNumber: sessionId, sessionBlock } = currentSessionId(
+        const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(
           eventDecoded.blockNumber
         )
         await createOrUpdateSession({

@@ -38,7 +38,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
     case DKGMetaDataSection.PublicKeySubmitted:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted)
-        const { sessionNumber: sessionId, sessionBlock } = currentSessionId(
+        const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(
           eventDecoded.blockNumber
         )
         const uncompressedPubKey = eventData.uncompressedPubKey.toString()
@@ -108,7 +108,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(
           DKGMetaDataSection.NextPublicKeySubmitted
         )
-        const { sessionNumber: sessionId, sessionBlock } = nextSessionId(
+        const { sessionNumber: sessionId, sessionBlock } =await nextSessionId(
           eventDecoded.blockNumber
         )
         const uncompressedPubKey = eventData.uncompressedPubKey.toString()

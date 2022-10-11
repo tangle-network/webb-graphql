@@ -206,7 +206,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     )
     .filter((s) => s.accountId !== undefined)
 
-  const { sessionNumber: sessionId, sessionBlock } = currentSessionId(
+  const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(
     blockNumber
   )
   return {
@@ -218,32 +218,44 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     proposerThreshold
   }
 }
-const SESSION_HEIGHT = 600
+const SESSION_HEIGHT = 10
 
 /**
  * Round the block number to a session id
  * a session is from block 0 to block $SessionHeight - 1
  *
  * */
-export function nextSessionId(
+export async function nextSessionId(
   blockId: string
-): { sessionNumber: string; sessionBlock: string } {
+): Promise<{ sessionNumber: string; sessionBlock: string }> {
+  const sessionLength = await getSessionLength();
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT) + 1
+  const sessionNumber = Math.floor(blockNumber / sessionLength) + 1
   return {
     sessionNumber: sessionNumber.toString(),
-    sessionBlock: `${sessionNumber * SESSION_HEIGHT}`
+    sessionBlock: `${sessionNumber * sessionLength}`
   }
 }
+let sessionLength = null;
 
-export function currentSessionId(
+async function getSessionLength():Promise<number>{
+  if(sessionLength){
+    return sessionLength
+  }
+  const period = await api.consts.dkgProposals.period as u32
+  sessionLength = parseInt(period.toHex())
+  logger.info(`Session length is ${sessionLength}`)
+  return  sessionLength
+}
+export async function  currentSessionId(
   blockId: string
-): { sessionNumber: string; sessionBlock: string } {
+): Promise<{ sessionNumber: string; sessionBlock: string }> {
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT)
+  const sessionLength = await getSessionLength()
+  const sessionNumber = Math.floor(blockNumber / sessionLength)
   return {
     sessionNumber: sessionNumber.toString(),
-    sessionBlock: `${sessionNumber * SESSION_HEIGHT}`
+    sessionBlock: `${sessionNumber * sessionLength}`
   }
 }
 
