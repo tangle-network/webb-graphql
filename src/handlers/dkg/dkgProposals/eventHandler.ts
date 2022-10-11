@@ -37,7 +37,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
       await createOrUpdateSession({
         blockId: sessionBlock,
         sessionId,
-        ProposerThreshold: {
+        proposerThreshold: {
           current: Number(thresholdValue.toString()),
           pending: Number(pendingThreshold),
           next: Number(pendingThreshold.toString()),

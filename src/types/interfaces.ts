@@ -2,17 +2,6 @@
 
 // Auto-generated , DO NOT EDIT
 
-export interface Threshold {
-
-    next: number;
-
-    current: number;
-
-    pending: number;
-
-}
-
-
 export interface SessionKeyHistory {
 
     stage: string;
