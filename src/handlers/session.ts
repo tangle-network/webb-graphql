@@ -242,7 +242,7 @@ async function getSessionLength():Promise<number>{
   if(sessionLength){
     return sessionLength
   }
-  const period = await api.consts.dkgProposals.period as u32
+  const period = await api.consts.dkgProposals.period as unknown as u32
   sessionLength = parseInt(period.toHex())
   logger.info(`Session length is ${sessionLength}`)
   return  sessionLength
