@@ -385,7 +385,7 @@ export const createOrUpdateSession = async ({
       }
 
       if (key === "keyGenThreshold") {
-        await ensureThreshold(sessionId, val as any, ThresholdVariant.KYE_GEN)
+        await ensureThreshold(sessionId, val as any, ThresholdVariant.KEY_GEN)
         continue
 
       }

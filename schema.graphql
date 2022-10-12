@@ -100,7 +100,7 @@ type Authorities @entity {
 enum ThresholdVariant {
   SIGNATURE,
   PROPOSER,
-  KYE_GEN
+  KEY_GEN
 }
 type Threshold @entity {
   id: ID!

@@ -8,7 +8,7 @@ export enum ThresholdVariant {
 
     PROPOSER = "PROPOSER",
 
-    KYE_GEN = "KYE_GEN",
+    KEY_GEN = "KEY_GEN",
 
 }
 
