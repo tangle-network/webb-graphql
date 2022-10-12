@@ -16,6 +16,8 @@ export {KeygenThreshold} from "./KeygenThreshold"
 
 export {Authorities} from "./Authorities"
 
+export {Threshold} from "./Threshold"
+
 export {Validator} from "./Validator"
 
 export {Proposer} from "./Proposer"

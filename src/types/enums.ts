@@ -2,6 +2,17 @@
 
 // Auto-generated , DO NOT EDIT
 
+export enum ThresholdVariant {
+
+    SIGNATURE = "SIGNATURE",
+
+    PROPOSER = "PROPOSER",
+
+    KEY_GEN = "KEY_GEN",
+
+}
+
+
 export enum SessionKeyStatus {
 
     Generated = "Generated",
