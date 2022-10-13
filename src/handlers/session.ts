@@ -302,7 +302,8 @@ async function ensureValidator(id: string, authorityId: string) {
 
 async function createOrUpdateSessionValidator(
   sessionId: string,
-  input: SessionDKGAuthority
+  input: SessionDKGAuthority,
+  blockNumber:number
 ) {
   const id = `${sessionId}-${input.accountId}`
   logger.info(
@@ -318,6 +319,7 @@ async function createOrUpdateSessionValidator(
   sessionValidator.isNextBest = input.isNextBest
   sessionValidator.nextBestOrder = 0
   sessionValidator.reputation = input.reputation
+  sessionValidator.blockNumber = BigInt(blockNumber)
   await sessionValidator.save()
   return sessionValidator
 }
@@ -371,7 +373,7 @@ export const createOrUpdateSession = async ({
       if (key === "sessionAuthorities") {
         const sessionAuthorizes = val as SessionDKGAuthority[]
         for (const sessionAuth of sessionAuthorizes) {
-          await createOrUpdateSessionValidator(session.id, sessionAuth)
+          await createOrUpdateSessionValidator(session.id, sessionAuth , Number(blockId))
         }
         continue
       }
