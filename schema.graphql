@@ -152,6 +152,7 @@ type SessionValidator @entity {
   bestOrder: Int!
   nextBestOrder: Int!
   reputation: String!
+  blockNumber:BigInt!
 }
 type SessionProposer @entity {
   id: ID!
