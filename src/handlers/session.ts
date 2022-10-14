@@ -1,13 +1,6 @@
 import { ensureBlock } from "./block"
 import "@webb-tools/types"
-import {
-  Proposer,
-  Session,
-  SessionProposer,
-  SessionValidator,
-  Threshold,
-  Validator,
-} from "../types"
+import { Proposer, Session, SessionProposer, SessionValidator, Threshold, ThresholdVariant, Validator } from "../types"
 import { u16, u32, Vec } from "@polkadot/types-codec"
 import { DkgRuntimePrimitivesCryptoPublic } from "@polkadot/types/lookup"
 import type { AccountId32 } from "@polkadot/types/interfaces/runtime"
@@ -26,12 +19,9 @@ export const ensureSession = async (sessionNumber: string, block: string) => {
     return session
   }
   const newSession = Session.create({
-    keyGenThreshold: undefined,
-    proposerThreshold: undefined,
-    signatureThreshold: undefined,
     blockId: block,
     blockNumber: Number(block),
-    id: sessionNumber,
+    id: sessionNumber
   })
 
   await newSession.save()
@@ -54,9 +44,9 @@ type SessionDKGAuthority = DKGAuthority & {
   reputation?: string
 }
 type SessionInput = Partial<{
-  keyGenThreshold: Threshold
-  signatureThreshold: Threshold
-  ProposerThreshold: Threshold
+  keyGenThreshold: ThresholdValue
+  signatureThreshold: ThresholdValue
+  proposerThreshold: ThresholdValue
 
   proposers: string[]
   proposersCount: number
@@ -83,7 +73,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   ] = (await Promise.all([
     api.query.dkg.currentAuthoritiesAccounts(),
     api.query.dkg.nextAuthoritiesAccounts(),
-    api.query.session.validators(),
+    api.query.session.validators()
   ])) as any
   const accounts = accountsTuple.reduce((acc: string[], accounts) => {
     const next = [...acc]
@@ -106,7 +96,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     api.query.dkg.authorities(),
     api.query.dkg.nextAuthorities(),
     api.query.dkg.bestAuthorities(),
-    api.query.dkg.nextBestAuthorities(),
+    api.query.dkg.nextBestAuthorities()
   ])) as any
   // Fetch reputations and authorities accounts for mapping
   const authorityReputations = await api.query.dkg.authorityReputations.entries()
@@ -136,7 +126,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     return {
       accountId,
       reputation: authorityReputationMap[authorityId] || "0",
-      authorityId,
+      authorityId
     }
   }
   const dkgAuthorities: DKGAuthority[] = authorities.map(dkgAuthorityMapper)
@@ -166,38 +156,38 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   const [
     pendingKeyGenThreshold,
     currentKeyGenThreshold,
-    nextKeyGenThreshold,
+    nextKeyGenThreshold
   ] = await Promise.all([
     api.query.dkg.pendingKeygenThreshold(),
     api.query.dkg.keygenThreshold(),
-    api.query.dkg.nextKeygenThreshold(),
+    api.query.dkg.nextKeygenThreshold()
   ]).then((val) => val.map((i) => parseInt(i.toHex())))
   const [
     pendingSignatureThreshold,
     currentSignatureThreshold,
-    nextSignatureThreshold,
+    nextSignatureThreshold
   ] = await Promise.all([
     api.query.dkg.pendingSignatureThreshold(),
     api.query.dkg.signatureThreshold(),
-    api.query.dkg.nextSignatureThreshold(),
+    api.query.dkg.nextSignatureThreshold()
   ]).then((val) => val.map((i) => parseInt(i.toHex())))
 
-  const keyGenThreshold: Threshold = {
+  const keyGenThreshold: ThresholdValue = {
     current: currentKeyGenThreshold,
     next: nextKeyGenThreshold,
-    pending: pendingKeyGenThreshold,
+    pending: pendingKeyGenThreshold
   }
-  const signatureThreshold: Threshold = {
+  const signatureThreshold: ThresholdValue = {
     current: currentSignatureThreshold,
     next: nextSignatureThreshold,
-    pending: pendingSignatureThreshold,
+    pending: pendingSignatureThreshold
   }
   const pendingThresholdVal: u32 = (await api.query.dkgProposals.proposerThreshold()) as any
   const currentProposerThreshold = parseInt(pendingThresholdVal.toHex())
-  const proposerThreshold: Threshold = {
+  const proposerThreshold: ThresholdValue = {
     current: currentProposerThreshold,
     next: currentProposerThreshold,
-    pending: currentProposerThreshold,
+    pending: currentProposerThreshold
   }
   const inSet = (dkgAuth: DKGAuthority, set: DKGAuthority[]) =>
     set.findIndex((auth) => auth.authorityId === dkgAuth.authorityId) !== -1
@@ -210,13 +200,13 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
           accountId: dkgAuth.accountId,
           isBest: inSet(dkgAuth, bestDkgAuthorities),
           isNext: inSet(dkgAuth, nextDkgAuthorities),
-          isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+          isNextBest: inSet(dkgAuth, nextBestDkgAuthorities)
         }
       }
     )
     .filter((s) => s.accountId !== undefined)
 
-  const { sessionNumber: sessionId, sessionBlock } = currentSessionId(
+  const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(
     blockNumber
   )
   return {
@@ -225,35 +215,74 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     sessionAuthorities,
     keyGenThreshold,
     signatureThreshold,
-    proposerThreshold,
+    proposerThreshold
   }
 }
-const SESSION_HEIGHT = 600
+const SESSION_HEIGHT = 10
+
 /**
  * Round the block number to a session id
  * a session is from block 0 to block $SessionHeight - 1
  *
  * */
-export function nextSessionId(
+export async function nextSessionId(
   blockId: string
-): { sessionNumber: string; sessionBlock: string } {
+): Promise<{ sessionNumber: string; sessionBlock: string }> {
+  const sessionLength = await getSessionLength();
   const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT) + 1
+  const sessionNumber = Math.floor(blockNumber / sessionLength) + 1
   return {
     sessionNumber: sessionNumber.toString(),
-    sessionBlock: `${sessionNumber * SESSION_HEIGHT}`,
+    sessionBlock: `${sessionNumber * sessionLength}`
+  }
+}
+let sessionLength = null;
+
+async function getSessionLength():Promise<number>{
+  if(sessionLength){
+    return sessionLength
+  }
+  const period = await api.consts.dkgProposals.period as unknown as u32
+  sessionLength = parseInt(period.toHex())
+  logger.info(`Session length is ${sessionLength}`)
+  return  sessionLength
+}
+export async function  currentSessionId(
+  blockId: string
+): Promise<{ sessionNumber: string; sessionBlock: string }> {
+  const blockNumber = Number(blockId)
+  const sessionLength = await getSessionLength()
+  const sessionNumber = Math.floor(blockNumber / sessionLength)
+  return {
+    sessionNumber: sessionNumber.toString(),
+    sessionBlock: `${sessionNumber * sessionLength}`
   }
 }
 
-export function currentSessionId(
-  blockId: string
-): { sessionNumber: string; sessionBlock: string } {
-  const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / SESSION_HEIGHT)
-  return {
-    sessionNumber: sessionNumber.toString(),
-    sessionBlock: `${sessionNumber * SESSION_HEIGHT}`,
-  }
+export interface ThresholdValue {
+  next: number;
+
+  current: number;
+
+  pending: number;
+}
+
+async function ensureThreshold(
+  sessionId: string,
+  value: ThresholdValue,
+  variant: ThresholdVariant
+) {
+  const threshold = Threshold.create({
+    id: `${sessionId}-${variant}`,
+    sessionId,
+    next: value.next,
+    current: value.current,
+    pending: value.pending,
+    variant
+  })
+
+  await threshold.save()
+  return threshold
 }
 
 async function ensureValidator(id: string, authorityId: string) {
@@ -265,16 +294,18 @@ async function ensureValidator(id: string, authorityId: string) {
   const newValidator = Validator.create({
     id,
     authorityId,
-    accountId: id,
+    accountId: id
   })
   await newValidator.save()
   return newValidator
 }
+
 async function createOrUpdateSessionValidator(
   sessionId: string,
-  input: SessionDKGAuthority
+  input: SessionDKGAuthority,
+  blockNumber:number
 ) {
-  const id = `${sessionId}-${input.authorityId}`
+  const id = `${sessionId}-${input.accountId}`
   logger.info(
     `Creating or updating session validator ${id} - ${input.accountId}`
   )
@@ -288,9 +319,11 @@ async function createOrUpdateSessionValidator(
   sessionValidator.isNextBest = input.isNextBest
   sessionValidator.nextBestOrder = 0
   sessionValidator.reputation = input.reputation
+  sessionValidator.blockNumber = BigInt(blockNumber)
   await sessionValidator.save()
   return sessionValidator
 }
+
 async function ensureProposer(accountId) {
   const proposer = await Proposer.get(accountId)
   if (proposer) {
@@ -299,11 +332,12 @@ async function ensureProposer(accountId) {
   await ensureAccount(accountId)
   const newProposer = Proposer.create({
     id: accountId,
-    accountId,
+    accountId
   })
   await newProposer.save()
   return newProposer
 }
+
 async function createOrUpdateSessionProposer(
   sessionId: string,
   proposerAccount: string
@@ -315,6 +349,7 @@ async function createOrUpdateSessionProposer(
   sessionProposer.proposerId = proposerAccount
   await sessionProposer.save()
 }
+
 /**
  * Crate or update a session
  * A BlockId is used as a session id
@@ -322,10 +357,10 @@ async function createOrUpdateSessionProposer(
  *
  * */
 export const createOrUpdateSession = async ({
-  blockId,
-  sessionId,
-  ...input
-}: SessionInput) => {
+                                              blockId,
+                                              sessionId,
+                                              ...input
+                                            }: SessionInput) => {
   // Ensure the session is not already created
   const session = await ensureSession(sessionId, blockId)
 
@@ -337,14 +372,12 @@ export const createOrUpdateSession = async ({
     if (isSet(val)) {
       if (key === "sessionAuthorities") {
         const sessionAuthorizes = val as SessionDKGAuthority[]
-        console.log(
-          `Create sessions validators for ${sessionAuthorizes.length} validators`
-        )
         for (const sessionAuth of sessionAuthorizes) {
-          await createOrUpdateSessionValidator(session.id, sessionAuth)
+          await createOrUpdateSessionValidator(session.id, sessionAuth , Number(blockId))
         }
         continue
       }
+
       if (key === "proposers") {
         const proposers = val as string[]
         for (const proposerAccount of proposers) {
@@ -352,7 +385,26 @@ export const createOrUpdateSession = async ({
         }
         continue
       }
-      session[key] = val
+
+      if (key === "keyGenThreshold") {
+        await ensureThreshold(sessionId, val as any, ThresholdVariant.KEY_GEN)
+        continue
+
+      }
+      if (key === "signatureThreshold") {
+        await ensureThreshold(sessionId, val as any, ThresholdVariant.SIGNATURE)
+        continue
+      }
+
+      if (key === "proposerThreshold") {
+        await ensureThreshold(sessionId, val as any, ThresholdVariant.PROPOSER)
+        continue
+
+      }
+
+
+
+      session[key] = val as any
     }
   }
   // Save the session

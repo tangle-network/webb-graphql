@@ -32,6 +32,8 @@ export class SessionValidator implements Entity {
 
     public reputation: string;
 
+    public blockNumber: bigint;
+
 
     async save(): Promise<void>{
         let id = this.id;

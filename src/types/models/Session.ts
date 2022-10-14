@@ -2,10 +2,6 @@
 import {Entity, FunctionPropertyNames} from "@subql/types";
 import assert from 'assert';
 
-import {
-    Threshold,
-} from '../interfaces'
-
 
 
 
@@ -21,12 +17,6 @@ export class Session implements Entity {
     public id: string;
 
     public publicKeyId?: string;
-
-    public signatureThreshold?: Threshold;
-
-    public proposerThreshold?: Threshold;
-
-    public keyGenThreshold?: Threshold;
 
     public blockNumber: number;
 

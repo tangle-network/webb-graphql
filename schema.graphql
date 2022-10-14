@@ -97,11 +97,19 @@ type Authorities @entity {
 
   block: Block!
 }
-
-type Threshold @jsonField {
+enum ThresholdVariant {
+  SIGNATURE,
+  PROPOSER,
+  KEY_GEN
+}
+type Threshold @entity {
+  id: ID!
   next: Int!
   current: Int!
   pending: Int!
+
+  session:Session!
+  variant:ThresholdVariant!
 }
 
 type Validator @entity {
@@ -144,6 +152,7 @@ type SessionValidator @entity {
   bestOrder: Int!
   nextBestOrder: Int!
   reputation: String!
+  blockNumber:BigInt!
 }
 type SessionProposer @entity {
   id: ID!
@@ -156,9 +165,6 @@ type Session @entity {
 
   publicKey: PublicKey
 
-  signatureThreshold: Threshold
-  proposerThreshold: Threshold
-  keyGenThreshold: Threshold
 
   blockNumber: Int!
   block: Block!
