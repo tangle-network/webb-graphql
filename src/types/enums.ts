@@ -69,7 +69,7 @@ export enum ProposalStatus {
 }
 
 
-export enum VoteStatus {
+export enum VoteType {
 
     FOR = "FOR",
 
