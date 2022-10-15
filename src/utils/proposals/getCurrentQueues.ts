@@ -13,7 +13,7 @@ import {
   Proposer,
   UnsignedProposalsQueue,
   UnsignedProposalsQueueItem,
-  VoteStatus,
+  VoteType,
 } from "../../types"
 import {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
@@ -298,11 +298,7 @@ export async function addVote(
   const block = await ensureBlock(blockId)
   await ensureProposer(voter)
   const voteStatus =
-    isFor === null
-      ? VoteStatus.ABSTAIN
-      : isFor
-      ? VoteStatus.FOR
-      : VoteStatus.AGAINST
+    isFor === null ? VoteType.ABSTAIN : isFor ? VoteType.FOR : VoteType.AGAINST
   const newVote = await ProposalVote.create({
     id: `${proposal.id}-${voter}`,
     blockId,
