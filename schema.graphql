@@ -236,7 +236,7 @@ type ProposalTimelineStatus @entity {
 
   timestamp: Date!
 }
-enum VoteStatus {
+enum VoteType {
   FOR
   AGAINST
   ABSTAIN
@@ -244,7 +244,7 @@ enum VoteStatus {
 
 type ProposalVote @entity {
   id: ID!
-  voteStatus: VoteStatus!
+  voteStatus: VoteType!
   voter: Proposer!
   proposal: ProposalItem!
   blockNumber: BigInt!
