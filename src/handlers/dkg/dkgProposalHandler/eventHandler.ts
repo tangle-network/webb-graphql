@@ -34,7 +34,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           eventData.key
         )
         const nonce = Number(eventData.key.value.toString())
-        const chainId = Number(eventData.targetChain.value.toString())
+        const chainId = (eventData.targetChain.value.toString())
         const blockNumber = eventDecoder.blockNumber
         // Create a new unsigned proposal
         await ensureProposalItemStorage({
@@ -71,7 +71,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           {
             blockId: blockNumber,
             nonce,
-            chainId,
+            chainId:String(chainId),
           },
           blockNumber
         )
@@ -91,8 +91,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const proposalType = dkgPayloadKeyToProposalType(proposalKey)
         const blockNumber = eventDecoder.metaData.blockNumber
         const nonce = Number(proposalKey.value.toString())
-        const chainId = Number(targetChainId.value.toString())
-        logger.info(`Signed Proposal Added: ${proposalId}`)
+        const chainId = targetChainId.value.toString()
         await ensureProposalItemStorage({
           proposalId,
           signature,
@@ -100,13 +99,13 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           type: proposalType,
           nonce,
           blockId: blockNumber,
-          chainId,
+          chainId
         })
         await signProposal(
           {
             blockId: blockNumber,
             nonce: String(parseInt(eventData.key.value.toHex())),
-            chainId,
+            chainId:targetChainId.value.toString(),
           },
           signature,
           blockNumber

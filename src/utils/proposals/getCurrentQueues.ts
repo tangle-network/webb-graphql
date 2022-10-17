@@ -111,7 +111,7 @@ export async function ensureProposalQueue(blockId: string) {
 const ensureProposalQueueItem = async (
   blockId: string,
   proposalId: string,
-  chainId: number
+  chainId: string
 ) => {
   const id = `${blockId}-${proposalId}`
   const item = await UnsignedProposalsQueueItem.get(id)
@@ -146,7 +146,7 @@ export type ProposalCreateInput = {
   data: string
   signature?: string
   nonce: number
-  chainId: number
+  chainId: string
 }
 
 function constructProposalItemId(
@@ -162,7 +162,7 @@ function constructProposalItemId(
 async function ensureAbstainVotes(
   blockId: string,
   proposalId: string,
-  proposalChainId: number
+  proposalChainId: string
 ) {
   const proposersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any
   for (const account of proposersAccounts) {
@@ -209,7 +209,7 @@ export async function ensureProposalItemStorage(
     type,
     status: status.status.toString(),
     blockNumber: Number(blockId),
-    chainId: input.chainId,
+    chainId: BigInt(input.chainId),
   })
   const statusId = `${id}-${status.status}`
 
@@ -230,7 +230,7 @@ export async function ensureProposalItemStorage(
 type ProposalItemFindInput = {
   blockId: string
   nonce: string
-  chainId: number
+  chainId: string
 }
 
 export async function ensureProposalItem(input: ProposalItemFindInput) {
@@ -249,7 +249,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
   }
   const newProposal = ProposalItem.create({
     id,
-    chainId: input.chainId,
+    chainId: BigInt(input.chainId),
     blockId: input.blockId,
     data: "0x00",
     removed: false,
@@ -451,7 +451,7 @@ export async function createProposalCounter(
     const nonce = dkgKey.value.toString()
 
     return {
-      chainId: Number(chainId.value.toString()),
+      chainId: chainId.value.toString(),
       proposalId: nonce,
       proposalType,
     }

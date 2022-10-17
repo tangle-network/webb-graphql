@@ -57,7 +57,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
-            chainId: parseInt(eventData.chainId.toHex()),
+            chainId: eventData.chainId.toHex(),
           },
           eventData.who.toString(),
           true,
@@ -73,7 +73,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
-            chainId: parseInt(eventData.chainId.toHex()),
+            chainId: eventData.chainId.toHex(),
           },
           eventData.who.toString(),
           false,
@@ -88,7 +88,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
-            chainId: parseInt(eventData.chainId.toHex()),
+            chainId: eventData.chainId.toHex(),
           },
           eventDecoded.blockNumber
         )
@@ -101,7 +101,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
-            chainId: parseInt(eventData.chainId.toHex()),
+            chainId: eventData.chainId.toHex(),
           },
           eventDecoded.blockNumber
         )
@@ -114,7 +114,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
-            chainId: parseInt(eventData.chainId.toHex()),
+            chainId: eventData.chainId.toString(),
           },
           eventDecoded.blockNumber
         )
@@ -127,7 +127,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
           {
             blockId: eventDecoded.blockNumber,
             nonce: String(parseInt(eventData.proposalNonce.toHex())),
-            chainId: parseInt(eventData.chainId.toHex()),
+            chainId:(eventData.chainId.toString()),
           },
           eventDecoded.blockNumber
         )
