@@ -155,7 +155,8 @@ type SessionValidator @entity {
   isNextBest: Boolean!
   bestOrder: Int!
   nextBestOrder: Int!
-  reputation: String!
+  reputation: Int!
+  uptime:Int!
   blockNumber:BigInt!
 }
 type SessionProposer @entity {
