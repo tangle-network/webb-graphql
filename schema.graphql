@@ -48,7 +48,11 @@ type Event @entity {
   data: String
   extrinsic: Extrinsic
 }
+type CountryCode  @entity{
+  id:ID!
 
+  code:String! @index(unique: false)
+}
 type Account @entity {
   id: ID!
 
@@ -63,7 +67,7 @@ type Account @entity {
   pgpFingerprint: String
   image: String
   twitter: String
-  countryCode: String
+  countryCode: CountryCode
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 

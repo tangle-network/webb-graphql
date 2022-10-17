@@ -38,7 +38,7 @@ export class Account implements Entity {
 
     public twitter?: string;
 
-    public countryCode?: string;
+    public countryCodeId?: string;
 
 
     async save(): Promise<void>{
@@ -72,6 +72,13 @@ export class Account implements Entity {
     static async getByCreateAtBlockId(createAtBlockId: string): Promise<Account[] | undefined>{
       
       const records = await store.getByField('Account', 'createAtBlockId', createAtBlockId);
+      return records.map(record => Account.create(record as AccountProps));
+      
+    }
+
+    static async getByCountryCodeId(countryCodeId: string): Promise<Account[] | undefined>{
+      
+      const records = await store.getByField('Account', 'countryCodeId', countryCodeId);
       return records.map(record => Account.create(record as AccountProps));
       
     }
