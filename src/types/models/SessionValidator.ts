@@ -30,7 +30,9 @@ export class SessionValidator implements Entity {
 
     public nextBestOrder: number;
 
-    public reputation: string;
+    public reputation: number;
+
+    public uptime: number;
 
     public blockNumber: bigint;
 
