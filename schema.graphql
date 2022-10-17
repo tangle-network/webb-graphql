@@ -48,7 +48,11 @@ type Event @entity {
   data: String
   extrinsic: Extrinsic
 }
+type CountryCode  @entity{
+  id:ID!
 
+  code:String! @index(unique: false)
+}
 type Account @entity {
   id: ID!
 
@@ -63,7 +67,7 @@ type Account @entity {
   pgpFingerprint: String
   image: String
   twitter: String
-  countryCode: String
+  countryCode: CountryCode
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
@@ -151,7 +155,8 @@ type SessionValidator @entity {
   isNextBest: Boolean!
   bestOrder: Int!
   nextBestOrder: Int!
-  reputation: String!
+  reputation: Int!
+  uptime:Int!
   blockNumber:BigInt!
 }
 type SessionProposer @entity {
@@ -251,7 +256,7 @@ type ProposalItem @entity {
   id: ID!
 
   nonce: Int!
-  chainId: Int
+  chainId: BigInt
   type: ProposalType!
 
   status: String! @index(unique: false)

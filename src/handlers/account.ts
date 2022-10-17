@@ -1,9 +1,20 @@
-import { Account } from "../types"
+import { Account, CountryCode } from "../types"
 import { Data, Option } from "@polkadot/types"
 import { PalletIdentityRegistration } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { Vec } from "@polkadot/types-codec"
-
+async function ensureCountryCode(code:string){
+  const c = await CountryCode.get(code);
+  if(c){
+    return c
+  }
+  const newCountry = CountryCode.create({
+    code,
+    id:code
+  })
+  await newCountry.save();
+  return newCountry
+}
 export async function UpdateOrSetIdentity(account: Account) {
   const id = account.id
   if ("identity" in api.query) {
@@ -21,7 +32,8 @@ export async function UpdateOrSetIdentity(account: Account) {
           return { ...acc, [key]: value }
         }, {})
       if (extraInfo["countryCode"]) {
-        account.countryCode = extraInfo["countryCode"]
+        const country = await ensureCountryCode(extraInfo["countryCode"]);
+        account.countryCodeId = country.id
       }
       account.display = id.info.display.isNone
         ? null

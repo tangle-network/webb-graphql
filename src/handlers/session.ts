@@ -318,7 +318,9 @@ async function createOrUpdateSessionValidator(
   sessionValidator.isNext = input.isNext
   sessionValidator.isNextBest = input.isNextBest
   sessionValidator.nextBestOrder = 0
-  sessionValidator.reputation = input.reputation
+  sessionValidator.reputation = Number(input.reputation)
+  // TODO : use a real value
+  sessionValidator.uptime = Math.ceil(Math.random() * 100)
   sessionValidator.blockNumber = BigInt(blockNumber)
   await sessionValidator.save()
   return sessionValidator

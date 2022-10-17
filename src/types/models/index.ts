@@ -8,6 +8,8 @@ export {Extrinsic} from "./Extrinsic"
 
 export {Event} from "./Event"
 
+export {CountryCode} from "./CountryCode"
+
 export {Account} from "./Account"
 
 export {SignatureThreshold} from "./SignatureThreshold"
