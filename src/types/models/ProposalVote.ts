@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 import {
-    VoteStatus,
+    VoteType,
 } from '../enums'
 
 
@@ -20,7 +20,7 @@ export class ProposalVote implements Entity {
 
     public id: string;
 
-    public voteStatus: VoteStatus;
+    public voteStatus: VoteType;
 
     public voterId: string;
 

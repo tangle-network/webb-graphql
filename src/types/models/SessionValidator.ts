@@ -36,6 +36,8 @@ export class SessionValidator implements Entity {
 
     public blockNumber: bigint;
 
+    public blockNumber: bigint;
+
 
     async save(): Promise<void>{
         let id = this.id;
