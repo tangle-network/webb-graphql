@@ -228,12 +228,11 @@ const SESSION_HEIGHT = 10
 export async function nextSessionId(
   blockId: string
 ): Promise<{ sessionNumber: string; sessionBlock: string }> {
-  const sessionLength = await getSessionLength();
-  const blockNumber = Number(blockId)
-  const sessionNumber = Math.floor(blockNumber / sessionLength) + 1
+  const currentSessionIndex = await api.query.session.currentIndex() as unknown as u32;
+
   return {
-    sessionNumber: sessionNumber.toString(),
-    sessionBlock: `${sessionNumber * sessionLength}`
+    sessionNumber: (Number(currentSessionIndex.toString()) + 1 ) .toString(),
+    sessionBlock:  blockId
   }
 }
 let sessionLength = null;
@@ -250,12 +249,11 @@ async function getSessionLength():Promise<number>{
 export async function  currentSessionId(
   blockId: string
 ): Promise<{ sessionNumber: string; sessionBlock: string }> {
-  const blockNumber = Number(blockId)
-  const sessionLength = await getSessionLength()
-  const sessionNumber = Math.floor(blockNumber / sessionLength)
+  const currentSessionIndex = await api.query.session.currentIndex() as unknown as u32;
+
   return {
-    sessionNumber: sessionNumber.toString(),
-    sessionBlock: `${sessionNumber * sessionLength}`
+    sessionNumber: currentSessionIndex.toString(),
+    sessionBlock: blockId
   }
 }
 
