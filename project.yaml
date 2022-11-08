@@ -72,3 +72,9 @@ dataSources:
           filter:
             module: identity
             method: IdentitySet
+
+        - handler: handleHeartbeats
+          kind: substrate/EventHandler
+          filter:
+            module: imOnline
+            method: HeartbeatReceived
