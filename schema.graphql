@@ -13,6 +13,8 @@ type Block @entity {
   events: [Event] @derivedFrom(field: "block")
 }
 type HeartBeat @entity {
+  id: ID!
+
   blockNumber: BigInt!
   session:Session!
   account:Account!

@@ -81,20 +81,23 @@ export async function RecordHeartbeat(
   authorityId: string,
   blockNumber: string
 ) {
-  const accountId = encodeAddress(authorityId)
+  const accountId = encodeAddress(authorityId ,42)
   const { sessionNumber, sessionBlock } = await currentSessionId(blockNumber)
   const heartbeatId = `${sessionNumber}-${accountId}`
   const heartbeat = await HeartBeat.get(heartbeatId)
+  logger.info(`Recording heartbeats for ${accountId}`)
   if (heartbeat) {
     logger.info(`Heartbeat already recoded for ${accountId} of session ${sessionNumber}`)
   } else {
     const session = await ensureSession(sessionNumber, sessionBlock)
     const account =await ensureAccount(accountId)
-    HeartBeat.create({
+   const hb =  HeartBeat.create({
+      id:heartbeatId,
       blockNumber: BigInt(blockNumber),
       accountId:account.id,
       sessionId: session.id
     })
+    await  hb.save()
   }
 }
 
