@@ -9,8 +9,8 @@ import {
   createEvent,
   createExtrinsic,
   createSudoCall,
-  ensureAccount,
-  UpdateOrSetIdentity,
+  ensureAccount, RecordHeartbeat,
+  UpdateOrSetIdentity
 } from "../handlers"
 import { checkAndAddAuthorities } from "../utils/authorities"
 import { checkAndAddKeygenThreshold } from "../utils/keygenThreshold"
@@ -99,4 +99,10 @@ export async function handleIdentity(event: SubstrateEvent) {
   logger.info(`IdentityHandler: ${account}`)
   const acc = await ensureAccount(account)
   return UpdateOrSetIdentity(acc)
+}
+export async function handleHeartbeats(event:SubstrateEvent){
+  const authorityId = event.event.data[0].toString()
+  const blockNumber = event.block.block.header.number.toString()
+  logger.info(`HeartBeast authorityId: ${authorityId}`)
+  return RecordHeartbeat(authorityId,blockNumber)
 }

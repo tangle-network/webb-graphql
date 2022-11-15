@@ -12,7 +12,13 @@ type Block @entity {
   extrinsics: [Extrinsic] @derivedFrom(field: "block")
   events: [Event] @derivedFrom(field: "block")
 }
+type HeartBeat @entity {
+  id: ID!
 
+  blockNumber: BigInt!
+  session:Session!
+  account:Account!
+}
 type Extrinsic @entity {
   id: ID!
 
