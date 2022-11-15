@@ -83,7 +83,7 @@ type Keys = {
 }
 let queuedKeys: Record<string, Keys> | null = null
 
-function getCachedKeys(): Promise<Record<string, Keys>> {
+export function getCachedKeys(): Promise<Record<string, Keys>> {
   const fired = queuedKeys !== null
   if (fired) {
     return Promise.resolve(queuedKeys)
