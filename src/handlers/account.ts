@@ -4,7 +4,7 @@ import { PalletIdentityRegistration } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { Vec } from "@polkadot/types-codec"
 import { currentSessionId, ensureSession } from "./session"
-import {encodeAddress} from '@polkadot/util-crypto'
+import { encodeAddress } from "@polkadot/util-crypto"
 async function ensureCountryCode(code: string) {
   const c = await CountryCode.get(code)
   if (c) {
@@ -12,7 +12,7 @@ async function ensureCountryCode(code: string) {
   }
   const newCountry = CountryCode.create({
     code,
-    id: code
+    id: code,
   })
   await newCountry.save()
   return newCountry
@@ -77,30 +77,55 @@ export async function ensureAccount(account: string) {
   return data
 }
 
-export async function RecordHeartbeat(
-  authorityId: string,
-  blockNumber: string
-) {
-  const accountId = encodeAddress(authorityId ,42)
+type Keys = {
+  dkg: string
+  imOnline: string
+}
+let queuedKeys: Record<string, Keys> | null = null
+
+function getCachedKeys(): Promise<Record<string, Keys>> {
+  const fired = queuedKeys !== null
+  if (fired) {
+    return Promise.resolve(queuedKeys)
+  }
+  queuedKeys = {}
+  return new Promise((resolve) => {
+    api.query.session.queuedKeys((data) => {
+      data.forEach(([key, val]) => {
+        queuedKeys[key.toString()] = {
+          dkg: val.dkg.toString(),
+          imOnline: val.imOnline.toString(),
+        }
+      })
+      resolve(queuedKeys)
+    })
+  })
+}
+export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
   const { sessionNumber, sessionBlock } = await currentSessionId(blockNumber)
+  const keys = await getCachedKeys()
+  const accountId = Object.keys(keys).find((key) => {
+    return keys[key].imOnline === imOnlineId
+  })
   const heartbeatId = `${sessionNumber}-${accountId}`
   const heartbeat = await HeartBeat.get(heartbeatId)
   logger.info(`Recording heartbeats for ${accountId}`)
   if (heartbeat) {
-    logger.info(`Heartbeat already recoded for ${accountId} of session ${sessionNumber}`)
+    logger.info(
+      `Heartbeat already recoded for ${accountId} of session ${sessionNumber}`
+    )
   } else {
     const session = await ensureSession(sessionNumber, sessionBlock)
-    const account =await ensureAccount(accountId)
-   const hb =  HeartBeat.create({
-      id:heartbeatId,
+    const account = await ensureAccount(accountId)
+    const hb = HeartBeat.create({
+      id: heartbeatId,
       blockNumber: BigInt(blockNumber),
-      accountId:account.id,
-      sessionId: session.id
+      accountId: account.id,
+      sessionId: session.id,
     })
-    await  hb.save()
+    await hb.save()
   }
 }
-
 
 export async function getAccount(account: string) {
   const data = await Account.get(account)
