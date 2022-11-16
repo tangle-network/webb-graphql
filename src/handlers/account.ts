@@ -3,8 +3,13 @@ import { Data, Option } from "@polkadot/types"
 import { PalletIdentityRegistration } from "@polkadot/types/lookup"
 import { ITuple } from "@polkadot/types-codec/types"
 import { Vec } from "@polkadot/types-codec"
-import { currentSessionId, ensureSession } from "./session"
+import {
+  currentSessionId,
+  ensureSession,
+  setSessionValidatorUptime,
+} from "./session"
 import { encodeAddress } from "@polkadot/util-crypto"
+import { addHb } from "./source"
 async function ensureCountryCode(code: string) {
   const c = await CountryCode.get(code)
   if (c) {
@@ -124,6 +129,11 @@ export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
       sessionId: session.id,
     })
     await hb.save()
+    const [data, numberOfHeartbeats] = await addHb(accountId, "0")
+    const uptime = Math.floor(
+      (numberOfHeartbeats / data.numberOfSessions) * Math.pow(10, 7)
+    )
+    await setSessionValidatorUptime(session.id, accountId, uptime)
   }
 }
 

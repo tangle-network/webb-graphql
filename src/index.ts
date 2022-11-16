@@ -4,7 +4,10 @@ import {
   KeygenThresholdArgs,
   SignatureThresholdArgs,
 } from "./handlers/dkg/dkgMetaData/types"
-
+import { ensureSource } from "./handlers/source"
+ensureSource("0").then(() => {
+  logger.info("Source created")
+})
 //Exports all handler functions
 export * from "./mappings/mappingHandlers"
 
