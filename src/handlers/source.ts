@@ -43,7 +43,7 @@ export async function addHb(
       })
     }
   }
-
+  source.heartBeatCounters = heartBeatCounters
   await source.save()
   return [source, numberOfHeartbeats]
 }
