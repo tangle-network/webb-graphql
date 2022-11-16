@@ -22,26 +22,40 @@ export async function addHb(
   const source = await ensureSource(sourceId)
   let numberOfHeartbeats = 0
   let updated = false
-  for (const [index, heartBeastCounter] of source.heartBeatCounters.entries()) {
-    if (heartBeastCounter.authorityId === accountId) {
-      numberOfHeartbeats = heartBeastCounter.numberOfHeartBeats + 1
-      heartBeastCounter.numberOfHeartBeats =
-        heartBeastCounter.numberOfHeartBeats + 1
-      logger.info(
-        `Updated the heartbeat for ${accountId} to be ${numberOfHeartbeats}`
-      )
-      updated = true
-    }
-    // the entry wasn't there, it's added here
-    if (index + 1 === source.heartBeatCounters.length && !updated) {
-      numberOfHeartbeats = 1
-      logger.info(
-        `Set the heartbeat for ${accountId} to be ${numberOfHeartbeats}`
-      )
-      source.heartBeatCounters.push({
-        authorityId: accountId,
-        numberOfHeartBeats: 1,
-      })
+  if (source.heartBeatCounters.length === 0) {
+    numberOfHeartbeats = 1
+    logger.info(
+      `Set the heartbeat for ${accountId} to be ${numberOfHeartbeats}`
+    )
+    source.heartBeatCounters.push({
+      authorityId: accountId,
+      numberOfHeartBeats: 1,
+    })
+  } else {
+    for (const [
+      index,
+      heartBeastCounter,
+    ] of source.heartBeatCounters.entries()) {
+      if (heartBeastCounter.authorityId === accountId) {
+        numberOfHeartbeats = heartBeastCounter.numberOfHeartBeats + 1
+        heartBeastCounter.numberOfHeartBeats =
+          heartBeastCounter.numberOfHeartBeats + 1
+        logger.info(
+          `Updated the heartbeat for ${accountId} to be ${numberOfHeartbeats}`
+        )
+        updated = true
+      }
+      // the entry wasn't there, it's added here
+      if (index + 1 === source.heartBeatCounters.length && !updated) {
+        numberOfHeartbeats = 1
+        logger.info(
+          `Set the heartbeat for ${accountId} to be ${numberOfHeartbeats}`
+        )
+        source.heartBeatCounters.push({
+          authorityId: accountId,
+          numberOfHeartBeats: 1,
+        })
+      }
     }
   }
   await source.save()
