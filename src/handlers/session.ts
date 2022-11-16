@@ -342,9 +342,23 @@ export async function setSessionValidatorUptime(
   uptimeValue: number
 ) {
   const id = `${sessionId}-${accountId}`
-  const sessionValidator = new SessionValidator(id)
-  sessionValidator.uptime = uptimeValue
-  return sessionValidator.save()
+  const sessionValidator = await SessionValidator.get(id)
+  if (sessionValidator) {
+    sessionValidator.uptime = uptimeValue
+    return sessionValidator.save()
+  }
+  return createOrUpdateSessionValidator(
+    sessionId,
+    {
+      accountId,
+      authorityId: "",
+      uptime: uptimeValue,
+      isBest: true,
+      isNext: true,
+      isNextBest: true,
+    },
+    0
+  )
 }
 async function ensureProposer(accountId) {
   const proposer = await Proposer.get(accountId)
