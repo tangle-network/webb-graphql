@@ -10,6 +10,7 @@ import {
 } from "./session"
 import { encodeAddress } from "@polkadot/util-crypto"
 import { addHb } from "./source"
+import { getIntPercentage } from "../utils/int-percentage"
 async function ensureCountryCode(code: string) {
   const c = await CountryCode.get(code)
   if (c) {
@@ -106,6 +107,7 @@ export function getCachedKeys(): Promise<Record<string, Keys>> {
     })
   })
 }
+
 export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
   const { sessionNumber, sessionBlock } = await currentSessionId(blockNumber)
   const keys = await getCachedKeys()
@@ -130,9 +132,7 @@ export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
     })
     await hb.save()
     const [data, numberOfHeartbeats] = await addHb(accountId, "0")
-    const uptime = Math.floor(
-      (numberOfHeartbeats / data.numberOfSessions) * Math.pow(10, 7)
-    )
+    const uptime = getIntPercentage(numberOfHeartbeats, data.numberOfSessions)
     await setSessionValidatorUptime(session.id, accountId, uptime)
   }
 }

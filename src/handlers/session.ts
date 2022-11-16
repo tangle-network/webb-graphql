@@ -17,7 +17,8 @@ import type { AccountId32 } from "@polkadot/types/interfaces/runtime"
 import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
 import { ensureAccount, getCachedKeys } from "./account"
-import { increaseSourceSession } from "./source"
+import { getUptimeMap, increaseSourceSession } from "./source"
+import { getIntPercentage } from "../utils/int-percentage"
 
 /**
  * Check if the session is in the DB, if not create it
@@ -203,6 +204,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     next: currentProposerThreshold,
     pending: currentProposerThreshold,
   }
+  const [uptimeStore, storeSessionCounter] = await getUptimeMap("0")
   const inSet = (dkgAuth: DKGAuthority, set: DKGAuthority[]) =>
     set.findIndex((auth) => auth.authorityId === dkgAuth.authorityId) !== -1
   const sessionAuthorities = dkgAuthorities
@@ -215,6 +217,10 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
           isBest: inSet(dkgAuth, bestDkgAuthorities),
           isNext: inSet(dkgAuth, nextDkgAuthorities),
           isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+          uptime: getIntPercentage(
+            uptimeStore[dkgAuth.accountId] ?? 0,
+            storeSessionCounter
+          ),
         }
       }
     )

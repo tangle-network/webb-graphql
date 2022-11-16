@@ -45,3 +45,13 @@ export async function increaseSourceSession(sourceId: string) {
   hb.numberOfSessions = hb.numberOfSessions + 1
   return hb.save()
 }
+export async function getUptimeMap(
+  sourceId: string
+): Promise<[Record<string, number>, number]> {
+  const hb = await ensureSource(sourceId)
+  const hbMap = hb.heartBeatCounters.reduce(
+    (acc, hbc) => ({ ...acc, [hbc.authorityId]: hbc.numberOfHeartBeats }),
+    {}
+  )
+  return [hbMap, hb.numberOfSessions]
+}
