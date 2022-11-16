@@ -36,23 +36,14 @@ export async function addHb(
     }
     // the entry wasn't there, it's added here
     if (index + 1 === source.heartBeatCounters.length && !updated) {
+      numberOfHeartbeats = 1
       heartBeatCounters.push({
         authorityId: accountId,
         numberOfHeartBeats: 1,
       })
     }
   }
-  source.heartBeatCounters = source.heartBeatCounters.map((v) => {
-    if (v.authorityId === accountId) {
-      numberOfHeartbeats = v.numberOfHeartBeats + 1
-      return {
-        authorityId: accountId,
-        numberOfHeartBeats: v.numberOfHeartBeats + 1,
-      }
-    } else {
-      return v
-    }
-  })
+
   await source.save()
   return [source, numberOfHeartbeats]
 }
