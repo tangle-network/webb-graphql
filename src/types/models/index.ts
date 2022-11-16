@@ -4,6 +4,8 @@
 
 export {Block} from "./Block"
 
+export {SourceState} from "./SourceState"
+
 export {HeartBeat} from "./HeartBeat"
 
 export {Extrinsic} from "./Extrinsic"

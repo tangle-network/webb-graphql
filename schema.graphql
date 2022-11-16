@@ -12,6 +12,16 @@ type Block @entity {
   extrinsics: [Extrinsic] @derivedFrom(field: "block")
   events: [Event] @derivedFrom(field: "block")
 }
+
+type HeartBeatCounter @jsonField {
+	authorityId:String!
+	numberOfHeartBeats:Int!
+}
+type SourceState @entity {
+	id: ID!
+	heartBeatCounters:[HeartBeatCounter!]!
+	numberOfSessions:Int!
+}
 type HeartBeat @entity {
   id: ID!
 

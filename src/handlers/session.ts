@@ -17,6 +17,8 @@ import type { AccountId32 } from "@polkadot/types/interfaces/runtime"
 import { ITuple } from "@polkadot/types-codec/types"
 import { AbstractInt } from "@polkadot/types-codec/abstract/Int"
 import { ensureAccount, getCachedKeys } from "./account"
+import { getUptimeMap, increaseSourceSession } from "./source"
+import { getIntPercentage } from "../utils/int-percentage"
 
 /**
  * Check if the session is in the DB, if not create it
@@ -32,8 +34,7 @@ export const ensureSession = async (sessionNumber: string, block: string) => {
     blockNumber: Number(block),
     id: sessionNumber,
   })
-
-  await newSession.save()
+  await Promise.all([increaseSourceSession("0"), newSession.save()])
   return newSession
 }
 type DKGAuthority = {
@@ -51,6 +52,7 @@ type SessionDKGAuthority = DKGAuthority & {
   accountId: string
 
   reputation?: string
+  uptime?: number
 }
 type SessionInput = Partial<{
   keyGenThreshold: ThresholdValue
@@ -202,6 +204,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     next: currentProposerThreshold,
     pending: currentProposerThreshold,
   }
+  const [uptimeStore, storeSessionCounter] = await getUptimeMap("0")
   const inSet = (dkgAuth: DKGAuthority, set: DKGAuthority[]) =>
     set.findIndex((auth) => auth.authorityId === dkgAuth.authorityId) !== -1
   const sessionAuthorities = dkgAuthorities
@@ -214,6 +217,10 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
           isBest: inSet(dkgAuth, bestDkgAuthorities),
           isNext: inSet(dkgAuth, nextDkgAuthorities),
           isNextBest: inSet(dkgAuth, nextBestDkgAuthorities),
+          uptime: getIntPercentage(
+            uptimeStore[dkgAuth.accountId] ?? 0,
+            storeSessionCounter
+          ),
         }
       }
     )
@@ -330,13 +337,35 @@ async function createOrUpdateSessionValidator(
   sessionValidator.isNextBest = input.isNextBest
   sessionValidator.nextBestOrder = 0
   sessionValidator.reputation = Number(input.reputation)
-  // TODO : use a real value
-  sessionValidator.uptime = Math.ceil(Math.random() * 100)
+  sessionValidator.uptime = sessionValidator.uptime || input.uptime || 0
   sessionValidator.blockNumber = BigInt(blockNumber)
   await sessionValidator.save()
   return sessionValidator
 }
-
+export async function setSessionValidatorUptime(
+  sessionId: string,
+  accountId: string,
+  uptimeValue: number
+) {
+  const id = `${sessionId}-${accountId}`
+  const sessionValidator = await SessionValidator.get(id)
+  if (sessionValidator) {
+    sessionValidator.uptime = uptimeValue
+    return sessionValidator.save()
+  }
+  return createOrUpdateSessionValidator(
+    sessionId,
+    {
+      accountId,
+      authorityId: "",
+      uptime: uptimeValue,
+      isBest: true,
+      isNext: true,
+      isNextBest: true,
+    },
+    0
+  )
+}
 async function ensureProposer(accountId) {
   const proposer = await Proposer.get(accountId)
   if (proposer) {

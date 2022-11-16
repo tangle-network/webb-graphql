@@ -2,6 +2,15 @@
 
 // Auto-generated , DO NOT EDIT
 
+export interface HeartBeatCounter {
+
+    authorityId: string;
+
+    numberOfHeartBeats: number;
+
+}
+
+
 export interface SessionKeyHistory {
 
     stage: string;
