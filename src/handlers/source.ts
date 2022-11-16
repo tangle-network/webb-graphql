@@ -21,6 +21,27 @@ export async function addHb(
 ): Promise<[SourceState, number]> {
   const source = await ensureSource(sourceId)
   let numberOfHeartbeats = 0
+  const heartBeatCounters = []
+  let updated = false
+  for (const [index, heartBeastCounter] of source.heartBeatCounters.entries()) {
+    if (heartBeastCounter.authorityId === accountId) {
+      numberOfHeartbeats = heartBeastCounter.numberOfHeartBeats + 1
+      heartBeatCounters.push({
+        authorityId: accountId,
+        numberOfHeartBeats: heartBeastCounter.numberOfHeartBeats + 1,
+      })
+      updated = true
+    } else {
+      heartBeatCounters.push(heartBeastCounter)
+    }
+    // the entry wasn't there, it's added here
+    if (index + 1 === source.heartBeatCounters.length && !updated) {
+      heartBeatCounters.push({
+        authorityId: accountId,
+        numberOfHeartBeats: 1,
+      })
+    }
+  }
   source.heartBeatCounters = source.heartBeatCounters.map((v) => {
     if (v.authorityId === accountId) {
       numberOfHeartbeats = v.numberOfHeartBeats + 1
