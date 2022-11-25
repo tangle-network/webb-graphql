@@ -336,7 +336,10 @@ async function createOrUpdateSessionValidator(
   sessionValidator.isNext = input.isNext
   sessionValidator.isNextBest = input.isNextBest
   sessionValidator.nextBestOrder = 0
-  sessionValidator.reputation = Number(input.reputation)
+  sessionValidator.reputation =
+    (input.reputation
+      ? Number(input.reputation)
+      : sessionValidator.reputation) || 0
   sessionValidator.uptime = sessionValidator.uptime || input.uptime || 0
   sessionValidator.blockNumber = BigInt(blockNumber)
   await sessionValidator.save()
@@ -348,6 +351,7 @@ export async function setSessionValidatorUptime(
   uptimeValue: number
 ) {
   const id = `${sessionId}-${accountId}`
+  logger.info(`Updating th uptime`)
   const sessionValidator = await SessionValidator.get(id)
   if (sessionValidator) {
     sessionValidator.uptime = uptimeValue
