@@ -1,5 +1,5 @@
-import { Extrinsic, PublicKey, SessionKeyStatus } from "../../../types"
-import { DKGSections } from "../type"
+import { Extrinsic, PublicKey, SessionKeyStatus } from '../../../types';
+import { DKGSections } from '../type';
 
 /**
  * Public key for a given session
@@ -12,34 +12,34 @@ import { DKGSections } from "../type"
  * */
 
 export type PublicKeyInput = {
-  blockNumber: string
-  compressed: string
-  uncompressed: string
-}
+  blockNumber: string;
+  compressed: string;
+  uncompressed: string;
+};
 
 type PublicKeyGenerated = {
-  composedPubKey: string
-  uncompressedPubKey: string
-  blockNumber: string
-  timestamp: Date
-}
+  composedPubKey: string;
+  uncompressedPubKey: string;
+  blockNumber: string;
+  timestamp: Date;
+};
 
 export async function ensureKey(data: PublicKeyGenerated) {
-  const key = await PublicKey.getByUncompressed(data.uncompressedPubKey)
+  const key = await PublicKey.getByUncompressed(data.uncompressedPubKey);
   if (key) {
-    return key
+    return key;
   }
-  const extrinsics = await Extrinsic.getByBlockId(data.blockNumber)
+  const extrinsics = await Extrinsic.getByBlockId(data.blockNumber);
   const matcheExtrinsic = extrinsics.find((ex) => {
     return (
       ex.module === DKGSections.DKGMetaData &&
-      ex.method === "submitNextPublicKey" &&
+      ex.method === 'submitNextPublicKey' &&
       ex.arguments.indexOf(data.uncompressedPubKey) > -1
-    )
-  })
-  let txHash = ""
+    );
+  });
+  let txHash = '';
   if (matcheExtrinsic) {
-    txHash = matcheExtrinsic.hash
+    txHash = matcheExtrinsic.hash;
   }
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
@@ -54,34 +54,31 @@ export async function ensureKey(data: PublicKeyGenerated) {
         timestamp: data.timestamp,
       },
     ],
-  })
-  await newKey.save()
-  return newKey
+  });
+  await newKey.save();
+  return newKey;
 }
 
 export async function keyGenerated(data: PublicKeyGenerated) {
-  return ensureKey(data)
+  return ensureKey(data);
 }
 
 export type PublicKeyUpdate = {
-  blockNumber: string
-  uncompressedPubKey: string
-  composedPubKey: string
-  status: SessionKeyStatus
-  timestamp: Date
-}
+  blockNumber: string;
+  uncompressedPubKey: string;
+  composedPubKey: string;
+  status: SessionKeyStatus;
+  timestamp: Date;
+};
 
-export async function updatePublicKeyStatus({
-  status,
-  ...data
-}: PublicKeyUpdate) {
-  const key = await ensureKey(data)
+export async function updatePublicKeyStatus({ status, ...data }: PublicKeyUpdate) {
+  const key = await ensureKey(data);
   key.history.push({
     stage: status.toString(),
     blockNumber: data.blockNumber,
-    txHash: "",
+    txHash: '',
     timestamp: data.timestamp,
-  })
-  await key.save()
-  return key
+  });
+  await key.save();
+  return key;
 }

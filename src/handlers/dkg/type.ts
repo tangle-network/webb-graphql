@@ -1,61 +1,61 @@
 export enum DKGSections {
-  DKGMetaData = "dkg",
-  DKGProposals = "dkgProposals",
-  DKGProposalHandler = "dkgProposalHandler",
+  DKGMetaData = 'dkg',
+  DKGProposals = 'dkgProposals',
+  DKGProposalHandler = 'dkgProposalHandler',
 }
 
 export enum DKGMetaDataSection {
   // Current public key submitted
-  PublicKeySubmitted = "PublicKeySubmitted",
+  PublicKeySubmitted = 'PublicKeySubmitted',
   // Next public key submitted
-  NextPublicKeySubmitted = "NextPublicKeySubmitted",
+  NextPublicKeySubmitted = 'NextPublicKeySubmitted',
   // Next public key signature submitted
-  NextPublicKeySignatureSubmitted = "NextPublicKeySignatureSubmitted",
+  NextPublicKeySignatureSubmitted = 'NextPublicKeySignatureSubmitted',
   // Current Public Key Changed.
-  PublicKeyChanged = "PublicKeyChanged",
+  PublicKeyChanged = 'PublicKeyChanged',
   // Current Public Key Signature Changed.
-  PublicKeySignatureChanged = "PublicKeySignatureChanged",
+  PublicKeySignatureChanged = 'PublicKeySignatureChanged',
   // Misbehaviour reports submitted
-  MisbehaviourReportsSubmitted = "MisbehaviourReportsSubmitted",
+  MisbehaviourReportsSubmitted = 'MisbehaviourReportsSubmitted',
   // Refresh DKG Keys Finished (forcefully).
-  RefreshKeysFinished = "RefreshKeysFinished",
+  RefreshKeysFinished = 'RefreshKeysFinished',
 
-  NextKeygenThresholdUpdated = "NextKeygenThresholdUpdated",
-  NextSignatureThresholdUpdated = "NextSignatureThresholdUpdated",
+  NextKeygenThresholdUpdated = 'NextKeygenThresholdUpdated',
+  NextSignatureThresholdUpdated = 'NextSignatureThresholdUpdated',
 }
 
 export enum DKGProposalsSection {
   // Vote threshold has changed (new_threshold)
-  ProposerThresholdChanged = "ProposerThresholdChanged",
+  ProposerThresholdChanged = 'ProposerThresholdChanged',
   // Chain now available for transfers (chain_id)
-  ChainWhitelisted = "ChainWhitelisted",
+  ChainWhitelisted = 'ChainWhitelisted',
   // Proposer added to set
-  ProposerAdded = "ProposerAdded",
+  ProposerAdded = 'ProposerAdded',
   // Proposer removed from set
-  ProposerRemoved = "ProposerRemoved",
+  ProposerRemoved = 'ProposerRemoved',
   // Vote submitted in favour of proposal
-  VoteFor = "VoteFor",
+  VoteFor = 'VoteFor',
   // Vot submitted against proposal
-  VoteAgainst = "VoteAgainst",
+  VoteAgainst = 'VoteAgainst',
   // Voting successful for a proposal
-  ProposalApproved = "ProposalApproved",
+  ProposalApproved = 'ProposalApproved',
   // Voting rejected a proposal
-  ProposalRejected = "ProposalRejected",
+  ProposalRejected = 'ProposalRejected',
   // Execution of call succeeded
-  ProposalSucceeded = "ProposalSucceeded",
+  ProposalSucceeded = 'ProposalSucceeded',
   // Execution of call failed
-  ProposalFailed = "ProposalFailed",
+  ProposalFailed = 'ProposalFailed',
   // Proposers have been reset
-  AuthorityProposersReset = "AuthorityProposersReset",
+  AuthorityProposersReset = 'AuthorityProposersReset',
 }
 
 export enum DKGProposalHandlerSection {
   // Event Emitted when we encounter a Proposal with invalid Signature.
-  InvalidProposalSignature = "InvalidProposalSignature",
+  InvalidProposalSignature = 'InvalidProposalSignature',
   // Event When a Proposal Gets Signed by DKG.
-  ProposalSigned = "ProposalSigned",
+  ProposalSigned = 'ProposalSigned',
   /// Event When a Proposal is added to UnsignedProposalQueue.
-  ProposalAdded = "ProposalAdded",
+  ProposalAdded = 'ProposalAdded',
   /// Event When a Proposal is removed to UnsignedProposalQueue.
-  ProposalRemoved = "ProposalRemoved",
+  ProposalRemoved = 'ProposalRemoved',
 }

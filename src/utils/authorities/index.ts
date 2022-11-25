@@ -1,10 +1,7 @@
-import { FunctionPropertyNames } from "@subql/types"
-import { Authorities } from "../../types"
+import { FunctionPropertyNames } from '@subql/types';
+import { Authorities } from '../../types';
 
-export type AuthoritiesProps = Omit<
-  Authorities,
-  NonNullable<FunctionPropertyNames<Authorities>>
->
+export type AuthoritiesProps = Omit<Authorities, NonNullable<FunctionPropertyNames<Authorities>>>;
 
 /**
  * The last object to compare with current object,
@@ -13,6 +10,6 @@ export type AuthoritiesProps = Omit<
  */
 export const lastAuthorities: { value: null | Authorities } = {
   value: null,
-}
+};
 
-export * from "./checkAndAdd"
+export * from './checkAndAdd';

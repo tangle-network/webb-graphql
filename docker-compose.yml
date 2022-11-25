@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   postgres:
@@ -12,7 +12,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -20,7 +20,7 @@ services:
   subquery-node:
     image: onfinality/subql-node:latest
     depends_on:
-      - "postgres"
+      - 'postgres'
     restart: always
     environment:
       DB_USER: postgres
@@ -36,7 +36,7 @@ services:
       - --force-clean # clean the existing database (use for developement)
       - --disable-historical=true
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://subquery-node:3000/ready"]
+      test: ['CMD', 'curl', '-f', 'http://subquery-node:3000/ready']
       interval: 3s
       timeout: 5s
       retries: 10
@@ -46,8 +46,8 @@ services:
     ports:
       - 4000:3000
     depends_on:
-      - "postgres"
-      - "subquery-node"
+      - 'postgres'
+      - 'subquery-node'
     restart: on-failure
     environment:
       DB_USER: postgres

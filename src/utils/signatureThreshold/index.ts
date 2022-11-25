@@ -1,10 +1,7 @@
-import { FunctionPropertyNames } from "@subql/types"
-import { SignatureThreshold } from "../../types"
+import { FunctionPropertyNames } from '@subql/types';
+import { SignatureThreshold } from '../../types';
 
-export type SignatureThresholdProps = Omit<
-  SignatureThreshold,
-  NonNullable<FunctionPropertyNames<SignatureThreshold>>
->
+export type SignatureThresholdProps = Omit<SignatureThreshold, NonNullable<FunctionPropertyNames<SignatureThreshold>>>;
 
 /**
  * The last object to compare with current object,
@@ -13,6 +10,6 @@ export type SignatureThresholdProps = Omit<
  */
 export const lastSignatureThreshold: { value: null | SignatureThreshold } = {
   value: null,
-}
+};
 
-export * from "./checkAndAdd"
+export * from './checkAndAdd';

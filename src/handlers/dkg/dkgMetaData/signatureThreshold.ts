@@ -1,38 +1,33 @@
-import { SubstrateExtrinsic } from "@subql/types"
-import { SignatureThresholdArgs } from "./types"
-import { createBlock, ensureBlock } from "../../block"
-import { SignatureThreshold } from "../../../types"
+import { SubstrateExtrinsic } from '@subql/types';
+import { SignatureThresholdArgs } from './types';
+import { createBlock, ensureBlock } from '../../block';
+import { SignatureThreshold } from '../../../types';
 
 export async function ensureSignatureThreshold(extrinsic: SubstrateExtrinsic) {
-  const block = await ensureBlock(
-    extrinsic.block.block.header.number.toString()
-  )
+  const block = await ensureBlock(extrinsic.block.block.header.number.toString());
 
-  const recordId = `${block.id}-${extrinsic.idx}`
-  const data = new SignatureThreshold(recordId)
+  const recordId = `${block.id}-${extrinsic.idx}`;
+  const data = new SignatureThreshold(recordId);
 
-  data.blockId = block.id
+  data.blockId = block.id;
 
-  await data.save()
+  await data.save();
 
-  return data
+  return data;
 }
 
-export async function createSignatureThreshold(
-  extrinsic: SubstrateExtrinsic,
-  args: SignatureThresholdArgs
-) {
-  const data = await ensureSignatureThreshold(extrinsic)
+export async function createSignatureThreshold(extrinsic: SubstrateExtrinsic, args: SignatureThresholdArgs) {
+  const data = await ensureSignatureThreshold(extrinsic);
 
-  const pendingThreshold = args.newThreshold
-  const currentThreshold = await api.query.dkg.signatureThreshold()
-  const nextThreshold = await api.query.dkg.nextSignatureThreshold()
+  const pendingThreshold = args.newThreshold;
+  const currentThreshold = await api.query.dkg.signatureThreshold();
+  const nextThreshold = await api.query.dkg.nextSignatureThreshold();
 
-  data.pending = parseInt(pendingThreshold.toString())
-  data.current = parseInt(currentThreshold.toString())
-  data.next = parseInt(nextThreshold.toString())
+  data.pending = parseInt(pendingThreshold.toString());
+  data.current = parseInt(currentThreshold.toString());
+  data.next = parseInt(nextThreshold.toString());
 
-  await data.save()
+  await data.save();
 
-  return data
+  return data;
 }

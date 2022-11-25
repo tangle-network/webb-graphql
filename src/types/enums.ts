@@ -3,91 +3,75 @@
 // Auto-generated , DO NOT EDIT
 
 export enum ThresholdVariant {
+  SIGNATURE = 'SIGNATURE',
 
-    SIGNATURE = "SIGNATURE",
+  PROPOSER = 'PROPOSER',
 
-    PROPOSER = "PROPOSER",
-
-    KEY_GEN = "KEY_GEN",
-
+  KEY_GEN = 'KEY_GEN',
 }
-
 
 export enum SessionKeyStatus {
+  Generated = 'Generated',
 
-    Generated = "Generated",
+  Signed = 'Signed',
 
-    Signed = "Signed",
-
-    Rotated = "Rotated",
-
+  Rotated = 'Rotated',
 }
-
 
 export enum ProposalType {
+  Unknown = 'Unknown',
 
-    Unknown = "Unknown",
+  EvmProposal = 'EvmProposal',
 
-    EvmProposal = "EvmProposal",
+  RefreshVote = 'RefreshVote',
 
-    RefreshVote = "RefreshVote",
+  ProposerSetUpdateProposal = 'ProposerSetUpdateProposal',
 
-    ProposerSetUpdateProposal = "ProposerSetUpdateProposal",
+  AnchorCreateProposal = 'AnchorCreateProposal',
 
-    AnchorCreateProposal = "AnchorCreateProposal",
+  AnchorUpdateProposal = 'AnchorUpdateProposal',
 
-    AnchorUpdateProposal = "AnchorUpdateProposal",
+  TokenAddProposal = 'TokenAddProposal',
 
-    TokenAddProposal = "TokenAddProposal",
+  TokenRemoveProposal = 'TokenRemoveProposal',
 
-    TokenRemoveProposal = "TokenRemoveProposal",
+  WrappingFeeUpdateProposal = 'WrappingFeeUpdateProposal',
 
-    WrappingFeeUpdateProposal = "WrappingFeeUpdateProposal",
+  ResourceIdUpdateProposal = 'ResourceIdUpdateProposal',
 
-    ResourceIdUpdateProposal = "ResourceIdUpdateProposal",
+  RescueTokensProposal = 'RescueTokensProposal',
 
-    RescueTokensProposal = "RescueTokensProposal",
+  MaxDepositLimitUpdateProposal = 'MaxDepositLimitUpdateProposal',
 
-    MaxDepositLimitUpdateProposal = "MaxDepositLimitUpdateProposal",
+  MinWithdrawalLimitUpdateProposal = 'MinWithdrawalLimitUpdateProposal',
 
-    MinWithdrawalLimitUpdateProposal = "MinWithdrawalLimitUpdateProposal",
+  SetVerifierProposal = 'SetVerifierProposal',
 
-    SetVerifierProposal = "SetVerifierProposal",
+  SetTreasuryHandlerProposal = 'SetTreasuryHandlerProposal',
 
-    SetTreasuryHandlerProposal = "SetTreasuryHandlerProposal",
-
-    FeeRecipientUpdateProposal = "FeeRecipientUpdateProposal",
-
+  FeeRecipientUpdateProposal = 'FeeRecipientUpdateProposal',
 }
-
 
 export enum ProposalStatus {
+  Signed = 'Signed',
 
-    Signed = "Signed",
+  Open = 'Open',
 
-    Open = "Open",
+  Rejected = 'Rejected',
 
-    Rejected = "Rejected",
+  Accepted = 'Accepted',
 
-    Accepted = "Accepted",
+  Removed = 'Removed',
 
-    Removed = "Removed",
+  Executed = 'Executed',
 
-    Executed = "Executed",
-
-    FailedToExecute = "FailedToExecute",
-
+  FailedToExecute = 'FailedToExecute',
 }
-
 
 export enum VoteType {
+  FOR = 'FOR',
 
-    FOR = "FOR",
+  AGAINST = 'AGAINST',
 
-    AGAINST = "AGAINST",
-
-    ABSTAIN = "ABSTAIN",
-
+  ABSTAIN = 'ABSTAIN',
 }
-
-

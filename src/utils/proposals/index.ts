@@ -1,7 +1,4 @@
-import { ProposalItem } from "../../types"
-import { FunctionPropertyNames } from "@subql/types"
+import { ProposalItem } from '../../types';
+import { FunctionPropertyNames } from '@subql/types';
 
-export type ProposalItemProps = Omit<
-  ProposalItem,
-  NonNullable<FunctionPropertyNames<ProposalItem>>
->
+export type ProposalItemProps = Omit<ProposalItem, NonNullable<FunctionPropertyNames<ProposalItem>>>;
