@@ -8,7 +8,6 @@ import {
   ensureSession,
   setSessionValidatorUptime,
 } from "./session"
-import { encodeAddress } from "@polkadot/util-crypto"
 import { addHb } from "./source"
 import { getIntPercentage } from "../utils/int-percentage"
 async function ensureCountryCode(code: string) {
