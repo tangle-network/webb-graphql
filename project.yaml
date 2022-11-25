@@ -18,7 +18,7 @@ schema:
 
 network:
   # Use Tangle network endpoint for Arana Alpha testnet see: https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstats-dev.api.webb.tools%2Fpublic-ws#/settings/metadata
-  chainId: "0x71582117d59cf6e9143ec0b1626e48a6bbb84a95469ab1f1dc63e466d6c072d4"
+  chainId: "0xde00413eb27fbc6ccc8e389a7ce049a07f0a397af8a730253d3b00f2da10cbeb"
   # using testnet archive node endpoint
   endpoint: "wss://stats-dev.api.webb.tools/public-ws"
   # if you are using docker, uncomment the below line
