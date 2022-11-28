@@ -3,9 +3,9 @@ on:
   push:
     branches:
       - 'main'
-
-  workflow_dispatch:
-
+  pull_request:
+    branches:
+      - 'main'
 jobs:
   lint:
     name: run
@@ -22,4 +22,4 @@ jobs:
       - name: lint
         run: |
           yarn install --frozen-lockfile
-          yarn nx run-many --all --target=lint
+          yarn run format && yarn run lint
