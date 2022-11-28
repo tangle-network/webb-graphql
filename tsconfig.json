@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -17,6 +17,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "*.json"]
+  "include": ["src/**/*", "@webb-tools/types", "node_modules/@subql/types/dist/global.d.ts"],
+  "exclude": ["node_modules/@subql/@webb-tools/types/**/*", "*.json"]
 }
