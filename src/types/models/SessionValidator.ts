@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type SessionValidatorProps = Omit<SessionValidator, NonNullable<FunctionPropertyNames<SessionValidator>>>;
+export type SessionValidatorProps = Omit<SessionValidator, NonNullable<FunctionPropertyNames<SessionValidator>>>;
 
 export class SessionValidator implements Entity {
 
@@ -51,7 +51,7 @@ export class SessionValidator implements Entity {
         assert((id !== null && id !== undefined), "Cannot get SessionValidator entity without an ID");
         const record = await store.get('SessionValidator', id.toString());
         if (record){
-            return SessionValidator.create(record as SessionValidatorProps);
+            return this.create(record as SessionValidatorProps);
         }else{
             return;
         }
@@ -61,21 +61,21 @@ export class SessionValidator implements Entity {
     static async getBySessionId(sessionId: string): Promise<SessionValidator[] | undefined>{
       
       const records = await store.getByField('SessionValidator', 'sessionId', sessionId);
-      return records.map(record => SessionValidator.create(record as SessionValidatorProps));
+      return records.map(record => this.create(record as SessionValidatorProps));
       
     }
 
     static async getByValidatorId(validatorId: string): Promise<SessionValidator[] | undefined>{
       
       const records = await store.getByField('SessionValidator', 'validatorId', validatorId);
-      return records.map(record => SessionValidator.create(record as SessionValidatorProps));
+      return records.map(record => this.create(record as SessionValidatorProps));
       
     }
 
 
     static create(record: SessionValidatorProps): SessionValidator {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new SessionValidator(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

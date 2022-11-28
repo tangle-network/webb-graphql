@@ -1,13 +1,13 @@
-import { SubstrateExtrinsic } from "@subql/types"
-import { CallInfo } from "../utils"
+import { SubstrateExtrinsic } from '@subql/types';
+import { CallInfo } from '../utils';
 
-export * from "./account"
-export * from "./block"
-export * from "./event"
-export * from "./extrinsic"
-export * from "./sudo"
-export * from './dkg'
+export * from './account';
+export * from './block';
+export * from './event';
+export * from './extrinsic';
+export * from './sudo';
+export * from './dkg';
 export type ModuleHandlerArgs = {
-  call: CallInfo
-  extrinsic: SubstrateExtrinsic
-}
+  call: CallInfo;
+  extrinsic: SubstrateExtrinsic;
+};

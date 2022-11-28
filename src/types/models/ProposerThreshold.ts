@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type ProposerThresholdProps = Omit<ProposerThreshold, NonNullable<FunctionPropertyNames<ProposerThreshold>>>;
+export type ProposerThresholdProps = Omit<ProposerThreshold, NonNullable<FunctionPropertyNames<ProposerThreshold>>>;
 
 export class ProposerThreshold implements Entity {
 
@@ -35,7 +35,7 @@ export class ProposerThreshold implements Entity {
         assert((id !== null && id !== undefined), "Cannot get ProposerThreshold entity without an ID");
         const record = await store.get('ProposerThreshold', id.toString());
         if (record){
-            return ProposerThreshold.create(record as ProposerThresholdProps);
+            return this.create(record as ProposerThresholdProps);
         }else{
             return;
         }
@@ -45,14 +45,14 @@ export class ProposerThreshold implements Entity {
     static async getByBlockId(blockId: string): Promise<ProposerThreshold[] | undefined>{
       
       const records = await store.getByField('ProposerThreshold', 'blockId', blockId);
-      return records.map(record => ProposerThreshold.create(record as ProposerThresholdProps));
+      return records.map(record => this.create(record as ProposerThresholdProps));
       
     }
 
 
     static create(record: ProposerThresholdProps): ProposerThreshold {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new ProposerThreshold(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

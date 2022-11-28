@@ -9,7 +9,7 @@ import {
 } from '../enums'
 
 
-type ThresholdProps = Omit<Threshold, NonNullable<FunctionPropertyNames<Threshold>>>;
+export type ThresholdProps = Omit<Threshold, NonNullable<FunctionPropertyNames<Threshold>>>;
 
 export class Threshold implements Entity {
 
@@ -45,7 +45,7 @@ export class Threshold implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Threshold entity without an ID");
         const record = await store.get('Threshold', id.toString());
         if (record){
-            return Threshold.create(record as ThresholdProps);
+            return this.create(record as ThresholdProps);
         }else{
             return;
         }
@@ -55,14 +55,14 @@ export class Threshold implements Entity {
     static async getBySessionId(sessionId: string): Promise<Threshold[] | undefined>{
       
       const records = await store.getByField('Threshold', 'sessionId', sessionId);
-      return records.map(record => Threshold.create(record as ThresholdProps));
+      return records.map(record => this.create(record as ThresholdProps));
       
     }
 
 
     static create(record: ThresholdProps): Threshold {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new Threshold(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

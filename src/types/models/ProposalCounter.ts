@@ -11,7 +11,7 @@ import {
 
 
 
-type ProposalCounterProps = Omit<ProposalCounter, NonNullable<FunctionPropertyNames<ProposalCounter>>>;
+export type ProposalCounterProps = Omit<ProposalCounter, NonNullable<FunctionPropertyNames<ProposalCounter>>>;
 
 export class ProposalCounter implements Entity {
 
@@ -51,7 +51,7 @@ export class ProposalCounter implements Entity {
         assert((id !== null && id !== undefined), "Cannot get ProposalCounter entity without an ID");
         const record = await store.get('ProposalCounter', id.toString());
         if (record){
-            return ProposalCounter.create(record as ProposalCounterProps);
+            return this.create(record as ProposalCounterProps);
         }else{
             return;
         }
@@ -61,14 +61,14 @@ export class ProposalCounter implements Entity {
     static async getByBlockId(blockId: string): Promise<ProposalCounter[] | undefined>{
       
       const records = await store.getByField('ProposalCounter', 'blockId', blockId);
-      return records.map(record => ProposalCounter.create(record as ProposalCounterProps));
+      return records.map(record => this.create(record as ProposalCounterProps));
       
     }
 
 
     static create(record: ProposalCounterProps): ProposalCounter {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new ProposalCounter(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

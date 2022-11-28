@@ -9,7 +9,7 @@ import {
 } from '../enums'
 
 
-type ProposalVoteProps = Omit<ProposalVote, NonNullable<FunctionPropertyNames<ProposalVote>>>;
+export type ProposalVoteProps = Omit<ProposalVote, NonNullable<FunctionPropertyNames<ProposalVote>>>;
 
 export class ProposalVote implements Entity {
 
@@ -45,7 +45,7 @@ export class ProposalVote implements Entity {
         assert((id !== null && id !== undefined), "Cannot get ProposalVote entity without an ID");
         const record = await store.get('ProposalVote', id.toString());
         if (record){
-            return ProposalVote.create(record as ProposalVoteProps);
+            return this.create(record as ProposalVoteProps);
         }else{
             return;
         }
@@ -55,28 +55,28 @@ export class ProposalVote implements Entity {
     static async getByVoterId(voterId: string): Promise<ProposalVote[] | undefined>{
       
       const records = await store.getByField('ProposalVote', 'voterId', voterId);
-      return records.map(record => ProposalVote.create(record as ProposalVoteProps));
+      return records.map(record => this.create(record as ProposalVoteProps));
       
     }
 
     static async getByProposalId(proposalId: string): Promise<ProposalVote[] | undefined>{
       
       const records = await store.getByField('ProposalVote', 'proposalId', proposalId);
-      return records.map(record => ProposalVote.create(record as ProposalVoteProps));
+      return records.map(record => this.create(record as ProposalVoteProps));
       
     }
 
     static async getByBlockId(blockId: string): Promise<ProposalVote[] | undefined>{
       
       const records = await store.getByField('ProposalVote', 'blockId', blockId);
-      return records.map(record => ProposalVote.create(record as ProposalVoteProps));
+      return records.map(record => this.create(record as ProposalVoteProps));
       
     }
 
 
     static create(record: ProposalVoteProps): ProposalVote {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new ProposalVote(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

@@ -1,10 +1,7 @@
-import { FunctionPropertyNames } from "@subql/types"
-import { KeygenThreshold } from "../../types"
+import { FunctionPropertyNames } from '@subql/types';
+import { KeygenThreshold } from '../../types';
 
-export type KeygenThresholdProps = Omit<
-  KeygenThreshold,
-  NonNullable<FunctionPropertyNames<KeygenThreshold>>
->
+export type KeygenThresholdProps = Omit<KeygenThreshold, NonNullable<FunctionPropertyNames<KeygenThreshold>>>;
 
 /**
  * The last object to compare with current object,
@@ -13,6 +10,6 @@ export type KeygenThresholdProps = Omit<
  */
 export const lastKeygenThreshold: { value: null | KeygenThreshold } = {
   value: null,
-}
+};
 
-export * from "./checkAndAdd"
+export * from './checkAndAdd';

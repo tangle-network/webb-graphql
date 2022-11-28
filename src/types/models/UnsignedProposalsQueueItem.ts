@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type UnsignedProposalsQueueItemProps = Omit<UnsignedProposalsQueueItem, NonNullable<FunctionPropertyNames<UnsignedProposalsQueueItem>>>;
+export type UnsignedProposalsQueueItemProps = Omit<UnsignedProposalsQueueItem, NonNullable<FunctionPropertyNames<UnsignedProposalsQueueItem>>>;
 
 export class UnsignedProposalsQueueItem implements Entity {
 
@@ -37,7 +37,7 @@ export class UnsignedProposalsQueueItem implements Entity {
         assert((id !== null && id !== undefined), "Cannot get UnsignedProposalsQueueItem entity without an ID");
         const record = await store.get('UnsignedProposalsQueueItem', id.toString());
         if (record){
-            return UnsignedProposalsQueueItem.create(record as UnsignedProposalsQueueItemProps);
+            return this.create(record as UnsignedProposalsQueueItemProps);
         }else{
             return;
         }
@@ -47,21 +47,21 @@ export class UnsignedProposalsQueueItem implements Entity {
     static async getByProposalId(proposalId: string): Promise<UnsignedProposalsQueueItem[] | undefined>{
       
       const records = await store.getByField('UnsignedProposalsQueueItem', 'proposalId', proposalId);
-      return records.map(record => UnsignedProposalsQueueItem.create(record as UnsignedProposalsQueueItemProps));
+      return records.map(record => this.create(record as UnsignedProposalsQueueItemProps));
       
     }
 
     static async getByQueueId(queueId: string): Promise<UnsignedProposalsQueueItem[] | undefined>{
       
       const records = await store.getByField('UnsignedProposalsQueueItem', 'queueId', queueId);
-      return records.map(record => UnsignedProposalsQueueItem.create(record as UnsignedProposalsQueueItemProps));
+      return records.map(record => this.create(record as UnsignedProposalsQueueItemProps));
       
     }
 
 
     static create(record: UnsignedProposalsQueueItemProps): UnsignedProposalsQueueItem {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new UnsignedProposalsQueueItem(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

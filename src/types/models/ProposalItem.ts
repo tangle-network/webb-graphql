@@ -9,7 +9,7 @@ import {
 } from '../enums'
 
 
-type ProposalItemProps = Omit<ProposalItem, NonNullable<FunctionPropertyNames<ProposalItem>>>;
+export type ProposalItemProps = Omit<ProposalItem, NonNullable<FunctionPropertyNames<ProposalItem>>>;
 
 export class ProposalItem implements Entity {
 
@@ -53,7 +53,7 @@ export class ProposalItem implements Entity {
         assert((id !== null && id !== undefined), "Cannot get ProposalItem entity without an ID");
         const record = await store.get('ProposalItem', id.toString());
         if (record){
-            return ProposalItem.create(record as ProposalItemProps);
+            return this.create(record as ProposalItemProps);
         }else{
             return;
         }
@@ -63,21 +63,21 @@ export class ProposalItem implements Entity {
     static async getByStatus(status: string): Promise<ProposalItem[] | undefined>{
       
       const records = await store.getByField('ProposalItem', 'status', status);
-      return records.map(record => ProposalItem.create(record as ProposalItemProps));
+      return records.map(record => this.create(record as ProposalItemProps));
       
     }
 
     static async getByBlockId(blockId: string): Promise<ProposalItem[] | undefined>{
       
       const records = await store.getByField('ProposalItem', 'blockId', blockId);
-      return records.map(record => ProposalItem.create(record as ProposalItemProps));
+      return records.map(record => this.create(record as ProposalItemProps));
       
     }
 
 
     static create(record: ProposalItemProps): ProposalItem {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new ProposalItem(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

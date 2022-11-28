@@ -9,7 +9,7 @@ import {
 
 
 
-type SourceStateProps = Omit<SourceState, NonNullable<FunctionPropertyNames<SourceState>>>;
+export type SourceStateProps = Omit<SourceState, NonNullable<FunctionPropertyNames<SourceState>>>;
 
 export class SourceState implements Entity {
 
@@ -39,7 +39,7 @@ export class SourceState implements Entity {
         assert((id !== null && id !== undefined), "Cannot get SourceState entity without an ID");
         const record = await store.get('SourceState', id.toString());
         if (record){
-            return SourceState.create(record as SourceStateProps);
+            return this.create(record as SourceStateProps);
         }else{
             return;
         }
@@ -49,7 +49,7 @@ export class SourceState implements Entity {
 
     static create(record: SourceStateProps): SourceState {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new SourceState(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

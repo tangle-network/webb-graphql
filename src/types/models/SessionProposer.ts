@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type SessionProposerProps = Omit<SessionProposer, NonNullable<FunctionPropertyNames<SessionProposer>>>;
+export type SessionProposerProps = Omit<SessionProposer, NonNullable<FunctionPropertyNames<SessionProposer>>>;
 
 export class SessionProposer implements Entity {
 
@@ -35,7 +35,7 @@ export class SessionProposer implements Entity {
         assert((id !== null && id !== undefined), "Cannot get SessionProposer entity without an ID");
         const record = await store.get('SessionProposer', id.toString());
         if (record){
-            return SessionProposer.create(record as SessionProposerProps);
+            return this.create(record as SessionProposerProps);
         }else{
             return;
         }
@@ -45,21 +45,21 @@ export class SessionProposer implements Entity {
     static async getBySessionId(sessionId: string): Promise<SessionProposer[] | undefined>{
       
       const records = await store.getByField('SessionProposer', 'sessionId', sessionId);
-      return records.map(record => SessionProposer.create(record as SessionProposerProps));
+      return records.map(record => this.create(record as SessionProposerProps));
       
     }
 
     static async getByProposerId(proposerId: string): Promise<SessionProposer[] | undefined>{
       
       const records = await store.getByField('SessionProposer', 'proposerId', proposerId);
-      return records.map(record => SessionProposer.create(record as SessionProposerProps));
+      return records.map(record => this.create(record as SessionProposerProps));
       
     }
 
 
     static create(record: SessionProposerProps): SessionProposer {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new SessionProposer(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type ValidatorProps = Omit<Validator, NonNullable<FunctionPropertyNames<Validator>>>;
+export type ValidatorProps = Omit<Validator, NonNullable<FunctionPropertyNames<Validator>>>;
 
 export class Validator implements Entity {
 
@@ -35,7 +35,7 @@ export class Validator implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Validator entity without an ID");
         const record = await store.get('Validator', id.toString());
         if (record){
-            return Validator.create(record as ValidatorProps);
+            return this.create(record as ValidatorProps);
         }else{
             return;
         }
@@ -45,7 +45,7 @@ export class Validator implements Entity {
     static async getByAccountId(accountId: string): Promise<Validator[] | undefined>{
       
       const records = await store.getByField('Validator', 'accountId', accountId);
-      return records.map(record => Validator.create(record as ValidatorProps));
+      return records.map(record => this.create(record as ValidatorProps));
       
     }
 
@@ -53,7 +53,7 @@ export class Validator implements Entity {
       
       const record = await store.getOneByField('Validator', 'authorityId', authorityId);
       if (record){
-          return Validator.create(record as ValidatorProps);
+          return this.create(record as ValidatorProps);
       }else{
           return;
       }
@@ -63,7 +63,7 @@ export class Validator implements Entity {
 
     static create(record: ValidatorProps): Validator {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new Validator(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

@@ -14,20 +14,20 @@ type Block @entity {
 }
 
 type HeartBeatCounter @jsonField {
-	authorityId:String!
-	numberOfHeartBeats:Int!
+  authorityId: String!
+  numberOfHeartBeats: Int!
 }
 type SourceState @entity {
-	id: ID!
-	heartBeatCounters:[HeartBeatCounter!]!
-	numberOfSessions:Int!
+  id: ID!
+  heartBeatCounters: [HeartBeatCounter!]!
+  numberOfSessions: Int!
 }
 type HeartBeat @entity {
   id: ID!
 
   blockNumber: BigInt!
-  session:Session!
-  account:Account!
+  session: Session!
+  account: Account!
 }
 type Extrinsic @entity {
   id: ID!
@@ -64,10 +64,10 @@ type Event @entity {
   data: String
   extrinsic: Extrinsic
 }
-type CountryCode  @entity{
-  id:ID!
+type CountryCode @entity {
+  id: ID!
 
-  code:String! @index(unique: false)
+  code: String! @index(unique: false)
 }
 type Account @entity {
   id: ID!
@@ -118,8 +118,8 @@ type Authorities @entity {
   block: Block!
 }
 enum ThresholdVariant {
-  SIGNATURE,
-  PROPOSER,
+  SIGNATURE
+  PROPOSER
   KEY_GEN
 }
 type Threshold @entity {
@@ -128,8 +128,8 @@ type Threshold @entity {
   current: Int!
   pending: Int!
 
-  session:Session!
-  variant:ThresholdVariant!
+  session: Session!
+  variant: ThresholdVariant!
 }
 
 type Validator @entity {
@@ -172,8 +172,8 @@ type SessionValidator @entity {
   bestOrder: Int!
   nextBestOrder: Int!
   reputation: Int!
-  uptime:Int!
-  blockNumber:BigInt!
+  uptime: Int!
+  blockNumber: BigInt!
 }
 type SessionProposer @entity {
   id: ID!
@@ -185,7 +185,6 @@ type Session @entity {
   id: ID!
 
   publicKey: PublicKey
-
 
   blockNumber: Int!
   block: Block!

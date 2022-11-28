@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type AuthoritiesProps = Omit<Authorities, NonNullable<FunctionPropertyNames<Authorities>>>;
+export type AuthoritiesProps = Omit<Authorities, NonNullable<FunctionPropertyNames<Authorities>>>;
 
 export class Authorities implements Entity {
 
@@ -37,7 +37,7 @@ export class Authorities implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Authorities entity without an ID");
         const record = await store.get('Authorities', id.toString());
         if (record){
-            return Authorities.create(record as AuthoritiesProps);
+            return this.create(record as AuthoritiesProps);
         }else{
             return;
         }
@@ -47,14 +47,14 @@ export class Authorities implements Entity {
     static async getByBlockId(blockId: string): Promise<Authorities[] | undefined>{
       
       const records = await store.getByField('Authorities', 'blockId', blockId);
-      return records.map(record => Authorities.create(record as AuthoritiesProps));
+      return records.map(record => this.create(record as AuthoritiesProps));
       
     }
 
 
     static create(record: AuthoritiesProps): Authorities {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new Authorities(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

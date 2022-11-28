@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type KeygenThresholdProps = Omit<KeygenThreshold, NonNullable<FunctionPropertyNames<KeygenThreshold>>>;
+export type KeygenThresholdProps = Omit<KeygenThreshold, NonNullable<FunctionPropertyNames<KeygenThreshold>>>;
 
 export class KeygenThreshold implements Entity {
 
@@ -39,7 +39,7 @@ export class KeygenThreshold implements Entity {
         assert((id !== null && id !== undefined), "Cannot get KeygenThreshold entity without an ID");
         const record = await store.get('KeygenThreshold', id.toString());
         if (record){
-            return KeygenThreshold.create(record as KeygenThresholdProps);
+            return this.create(record as KeygenThresholdProps);
         }else{
             return;
         }
@@ -49,14 +49,14 @@ export class KeygenThreshold implements Entity {
     static async getByBlockId(blockId: string): Promise<KeygenThreshold[] | undefined>{
       
       const records = await store.getByField('KeygenThreshold', 'blockId', blockId);
-      return records.map(record => KeygenThreshold.create(record as KeygenThresholdProps));
+      return records.map(record => this.create(record as KeygenThresholdProps));
       
     }
 
 
     static create(record: KeygenThresholdProps): KeygenThreshold {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new KeygenThreshold(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

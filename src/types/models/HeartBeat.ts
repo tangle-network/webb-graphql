@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type HeartBeatProps = Omit<HeartBeat, NonNullable<FunctionPropertyNames<HeartBeat>>>;
+export type HeartBeatProps = Omit<HeartBeat, NonNullable<FunctionPropertyNames<HeartBeat>>>;
 
 export class HeartBeat implements Entity {
 
@@ -37,7 +37,7 @@ export class HeartBeat implements Entity {
         assert((id !== null && id !== undefined), "Cannot get HeartBeat entity without an ID");
         const record = await store.get('HeartBeat', id.toString());
         if (record){
-            return HeartBeat.create(record as HeartBeatProps);
+            return this.create(record as HeartBeatProps);
         }else{
             return;
         }
@@ -47,21 +47,21 @@ export class HeartBeat implements Entity {
     static async getBySessionId(sessionId: string): Promise<HeartBeat[] | undefined>{
       
       const records = await store.getByField('HeartBeat', 'sessionId', sessionId);
-      return records.map(record => HeartBeat.create(record as HeartBeatProps));
+      return records.map(record => this.create(record as HeartBeatProps));
       
     }
 
     static async getByAccountId(accountId: string): Promise<HeartBeat[] | undefined>{
       
       const records = await store.getByField('HeartBeat', 'accountId', accountId);
-      return records.map(record => HeartBeat.create(record as HeartBeatProps));
+      return records.map(record => this.create(record as HeartBeatProps));
       
     }
 
 
     static create(record: HeartBeatProps): HeartBeat {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new HeartBeat(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

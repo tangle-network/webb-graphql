@@ -9,7 +9,7 @@ import {
 } from '../enums'
 
 
-type ProposalTimelineStatusProps = Omit<ProposalTimelineStatus, NonNullable<FunctionPropertyNames<ProposalTimelineStatus>>>;
+export type ProposalTimelineStatusProps = Omit<ProposalTimelineStatus, NonNullable<FunctionPropertyNames<ProposalTimelineStatus>>>;
 
 export class ProposalTimelineStatus implements Entity {
 
@@ -45,7 +45,7 @@ export class ProposalTimelineStatus implements Entity {
         assert((id !== null && id !== undefined), "Cannot get ProposalTimelineStatus entity without an ID");
         const record = await store.get('ProposalTimelineStatus', id.toString());
         if (record){
-            return ProposalTimelineStatus.create(record as ProposalTimelineStatusProps);
+            return this.create(record as ProposalTimelineStatusProps);
         }else{
             return;
         }
@@ -55,14 +55,14 @@ export class ProposalTimelineStatus implements Entity {
     static async getByProposalItemId(proposalItemId: string): Promise<ProposalTimelineStatus[] | undefined>{
       
       const records = await store.getByField('ProposalTimelineStatus', 'proposalItemId', proposalItemId);
-      return records.map(record => ProposalTimelineStatus.create(record as ProposalTimelineStatusProps));
+      return records.map(record => this.create(record as ProposalTimelineStatusProps));
       
     }
 
 
     static create(record: ProposalTimelineStatusProps): ProposalTimelineStatus {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new ProposalTimelineStatus(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

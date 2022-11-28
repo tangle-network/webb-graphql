@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type ProposerProps = Omit<Proposer, NonNullable<FunctionPropertyNames<Proposer>>>;
+export type ProposerProps = Omit<Proposer, NonNullable<FunctionPropertyNames<Proposer>>>;
 
 export class Proposer implements Entity {
 
@@ -33,7 +33,7 @@ export class Proposer implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Proposer entity without an ID");
         const record = await store.get('Proposer', id.toString());
         if (record){
-            return Proposer.create(record as ProposerProps);
+            return this.create(record as ProposerProps);
         }else{
             return;
         }
@@ -43,14 +43,14 @@ export class Proposer implements Entity {
     static async getByAccountId(accountId: string): Promise<Proposer[] | undefined>{
       
       const records = await store.getByField('Proposer', 'accountId', accountId);
-      return records.map(record => Proposer.create(record as ProposerProps));
+      return records.map(record => this.create(record as ProposerProps));
       
     }
 
 
     static create(record: ProposerProps): Proposer {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new Proposer(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

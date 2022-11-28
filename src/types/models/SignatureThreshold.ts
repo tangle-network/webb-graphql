@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type SignatureThresholdProps = Omit<SignatureThreshold, NonNullable<FunctionPropertyNames<SignatureThreshold>>>;
+export type SignatureThresholdProps = Omit<SignatureThreshold, NonNullable<FunctionPropertyNames<SignatureThreshold>>>;
 
 export class SignatureThreshold implements Entity {
 
@@ -39,7 +39,7 @@ export class SignatureThreshold implements Entity {
         assert((id !== null && id !== undefined), "Cannot get SignatureThreshold entity without an ID");
         const record = await store.get('SignatureThreshold', id.toString());
         if (record){
-            return SignatureThreshold.create(record as SignatureThresholdProps);
+            return this.create(record as SignatureThresholdProps);
         }else{
             return;
         }
@@ -49,14 +49,14 @@ export class SignatureThreshold implements Entity {
     static async getByBlockId(blockId: string): Promise<SignatureThreshold[] | undefined>{
       
       const records = await store.getByField('SignatureThreshold', 'blockId', blockId);
-      return records.map(record => SignatureThreshold.create(record as SignatureThresholdProps));
+      return records.map(record => this.create(record as SignatureThresholdProps));
       
     }
 
 
     static create(record: SignatureThresholdProps): SignatureThreshold {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new SignatureThreshold(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

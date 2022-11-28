@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type AccountProps = Omit<Account, NonNullable<FunctionPropertyNames<Account>>>;
+export type AccountProps = Omit<Account, NonNullable<FunctionPropertyNames<Account>>>;
 
 export class Account implements Entity {
 
@@ -55,7 +55,7 @@ export class Account implements Entity {
         assert((id !== null && id !== undefined), "Cannot get Account entity without an ID");
         const record = await store.get('Account', id.toString());
         if (record){
-            return Account.create(record as AccountProps);
+            return this.create(record as AccountProps);
         }else{
             return;
         }
@@ -65,28 +65,28 @@ export class Account implements Entity {
     static async getByCreatorId(creatorId: string): Promise<Account[] | undefined>{
       
       const records = await store.getByField('Account', 'creatorId', creatorId);
-      return records.map(record => Account.create(record as AccountProps));
+      return records.map(record => this.create(record as AccountProps));
       
     }
 
     static async getByCreateAtBlockId(createAtBlockId: string): Promise<Account[] | undefined>{
       
       const records = await store.getByField('Account', 'createAtBlockId', createAtBlockId);
-      return records.map(record => Account.create(record as AccountProps));
+      return records.map(record => this.create(record as AccountProps));
       
     }
 
     static async getByCountryCodeId(countryCodeId: string): Promise<Account[] | undefined>{
       
       const records = await store.getByField('Account', 'countryCodeId', countryCodeId);
-      return records.map(record => Account.create(record as AccountProps));
+      return records.map(record => this.create(record as AccountProps));
       
     }
 
 
     static create(record: AccountProps): Account {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new Account(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

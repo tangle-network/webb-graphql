@@ -9,7 +9,7 @@ import {
 
 
 
-type PublicKeyProps = Omit<PublicKey, NonNullable<FunctionPropertyNames<PublicKey>>>;
+export type PublicKeyProps = Omit<PublicKey, NonNullable<FunctionPropertyNames<PublicKey>>>;
 
 export class PublicKey implements Entity {
 
@@ -43,7 +43,7 @@ export class PublicKey implements Entity {
         assert((id !== null && id !== undefined), "Cannot get PublicKey entity without an ID");
         const record = await store.get('PublicKey', id.toString());
         if (record){
-            return PublicKey.create(record as PublicKeyProps);
+            return this.create(record as PublicKeyProps);
         }else{
             return;
         }
@@ -54,7 +54,7 @@ export class PublicKey implements Entity {
       
       const record = await store.getOneByField('PublicKey', 'uncompressed', uncompressed);
       if (record){
-          return PublicKey.create(record as PublicKeyProps);
+          return this.create(record as PublicKeyProps);
       }else{
           return;
       }
@@ -64,14 +64,14 @@ export class PublicKey implements Entity {
     static async getByBlockId(blockId: string): Promise<PublicKey[] | undefined>{
       
       const records = await store.getByField('PublicKey', 'blockId', blockId);
-      return records.map(record => PublicKey.create(record as PublicKeyProps));
+      return records.map(record => this.create(record as PublicKeyProps));
       
     }
 
 
     static create(record: PublicKeyProps): PublicKey {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new PublicKey(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }

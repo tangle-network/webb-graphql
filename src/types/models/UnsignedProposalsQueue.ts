@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-type UnsignedProposalsQueueProps = Omit<UnsignedProposalsQueue, NonNullable<FunctionPropertyNames<UnsignedProposalsQueue>>>;
+export type UnsignedProposalsQueueProps = Omit<UnsignedProposalsQueue, NonNullable<FunctionPropertyNames<UnsignedProposalsQueue>>>;
 
 export class UnsignedProposalsQueue implements Entity {
 
@@ -35,7 +35,7 @@ export class UnsignedProposalsQueue implements Entity {
         assert((id !== null && id !== undefined), "Cannot get UnsignedProposalsQueue entity without an ID");
         const record = await store.get('UnsignedProposalsQueue', id.toString());
         if (record){
-            return UnsignedProposalsQueue.create(record as UnsignedProposalsQueueProps);
+            return this.create(record as UnsignedProposalsQueueProps);
         }else{
             return;
         }
@@ -45,14 +45,14 @@ export class UnsignedProposalsQueue implements Entity {
     static async getByBlockId(blockId: string): Promise<UnsignedProposalsQueue[] | undefined>{
       
       const records = await store.getByField('UnsignedProposalsQueue', 'blockId', blockId);
-      return records.map(record => UnsignedProposalsQueue.create(record as UnsignedProposalsQueueProps));
+      return records.map(record => this.create(record as UnsignedProposalsQueueProps));
       
     }
 
 
     static create(record: UnsignedProposalsQueueProps): UnsignedProposalsQueue {
         assert(typeof record.id === 'string', "id must be provided");
-        let entity = new UnsignedProposalsQueue(record.id);
+        let entity = new this(record.id);
         Object.assign(entity,record);
         return entity;
     }
