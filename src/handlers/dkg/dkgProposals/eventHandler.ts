@@ -22,22 +22,24 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
   const method = event.event.method as DKGProposalsSection;
   const eventDecoded = new EventDecoder<DKGProposalsEvent>(event);
   switch (method) {
-    case DKGProposalsSection.ProposerThresholdChanged: {
-      const eventData = eventDecoded.as(DKGProposalsSection.ProposerThresholdChanged);
-      const thresholdValue = eventData.newThreshold.toString();
-      await createProposerThreshold(thresholdValue, eventDecoded.metaData);
-      const pendingThreshold = eventData.newThreshold.toString();
-      const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(eventDecoded.blockNumber);
-      await createOrUpdateSession({
-        blockId: sessionBlock,
-        sessionId,
-        proposerThreshold: {
-          current: Number(thresholdValue.toString()),
-          pending: Number(pendingThreshold),
-          next: Number(pendingThreshold.toString()),
-        },
-      });
-    }
+    case DKGProposalsSection.ProposerThresholdChanged:
+      {
+        const eventData = eventDecoded.as(DKGProposalsSection.ProposerThresholdChanged);
+        const thresholdValue = eventData.newThreshold.toString();
+        await createProposerThreshold(thresholdValue, eventDecoded.metaData);
+        const pendingThreshold = eventData.newThreshold.toString();
+        const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(eventDecoded.blockNumber);
+        await createOrUpdateSession({
+          blockId: sessionBlock,
+          sessionId,
+          proposerThreshold: {
+            current: Number(thresholdValue.toString()),
+            pending: Number(pendingThreshold),
+            next: Number(pendingThreshold.toString()),
+          },
+        });
+      }
+      break;
     case DKGProposalsSection.ChainWhitelisted:
       break;
     case DKGProposalsSection.ProposerAdded:

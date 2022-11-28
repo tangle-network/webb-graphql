@@ -28,7 +28,7 @@ export const checkAndAddSignatureThreshold = async (block: Block): Promise<boole
  * @param threshold represent the current `authorities` object to save
  */
 async function addThreshold(threshold: Omit<SignatureThresholdProps, 'id'>) {
-  const recordId = lastThreshold.value ? lastThreshold.value.id + 1 : 1;
+  const recordId = lastThreshold.value ? parseInt(lastThreshold.value.id) + 1 : 1;
   const data = new SignatureThreshold(recordId.toString());
 
   data.current = threshold.current;

@@ -283,7 +283,7 @@ export async function addVote(
   const block = await ensureBlock(blockId);
   await ensureProposer(voter);
   const voteStatus = isFor === null ? VoteType.ABSTAIN : isFor ? VoteType.FOR : VoteType.AGAINST;
-  const newVote = await ProposalVote.create({
+  const newVote = ProposalVote.create({
     id: `${proposal.id}-${voter}`,
     blockId,
     blockNumber: block.number,

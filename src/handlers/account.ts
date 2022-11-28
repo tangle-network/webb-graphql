@@ -1,8 +1,6 @@
 import { Account, CountryCode, HeartBeat } from '../types';
-import { Data, Option } from '@polkadot/types';
+import { Option } from '@polkadot/types';
 import { PalletIdentityRegistration } from '@polkadot/types/lookup';
-import { ITuple } from '@polkadot/types-codec/types';
-import { Vec } from '@polkadot/types-codec';
 import { currentSessionId, ensureSession, setSessionValidatorUptime } from './session';
 import { addHb } from './source';
 import { getIntPercentage } from '../utils/int-percentage';
@@ -26,7 +24,7 @@ export async function UpdateOrSetIdentity(account: Account) {
     if (identity.isSome) {
       const id = identity.unwrap();
 
-      const extraInfo = (id.info.additional as Vec<ITuple<[Data, Data]>>)
+      const extraInfo = id.info.additional
         .filter(([key]) => key.isRaw)
         .reduce((acc, item) => {
           const key = String(item[0].value.toHuman());

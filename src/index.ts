@@ -1,6 +1,7 @@
 import '@polkadot/api-augment';
 import { DKGMethod, KeygenThresholdArgs, SignatureThresholdArgs } from './handlers/dkg/dkgMetaData/types';
 import { ensureSource } from './handlers/source';
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 ensureSource('0').then(() => {
   logger.info('Source created');
 });

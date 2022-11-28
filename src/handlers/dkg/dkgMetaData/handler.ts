@@ -5,7 +5,7 @@ import { DKGMethod, KeygenThresholdArgs, SignatureThresholdArgs } from './types'
 import { createOrUpdateSession, currentSessionId } from '../../session';
 
 export async function dkgHandler({ call, extrinsic }: ModuleHandlerArgs) {
-  switch (call.method as DKGMethod) {
+  switch (call.method) {
     case DKGMethod.SIGNATURE_THRESHOLD: {
       const args: SignatureThresholdArgs = call.args;
       const data = await createSignatureThreshold(extrinsic, args);

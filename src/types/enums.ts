@@ -3,75 +3,91 @@
 // Auto-generated , DO NOT EDIT
 
 export enum ThresholdVariant {
-  SIGNATURE = 'SIGNATURE',
 
-  PROPOSER = 'PROPOSER',
+    SIGNATURE = "SIGNATURE",
 
-  KEY_GEN = 'KEY_GEN',
+    PROPOSER = "PROPOSER",
+
+    KEY_GEN = "KEY_GEN",
+
 }
+
 
 export enum SessionKeyStatus {
-  Generated = 'Generated',
 
-  Signed = 'Signed',
+    Generated = "Generated",
 
-  Rotated = 'Rotated',
+    Signed = "Signed",
+
+    Rotated = "Rotated",
+
 }
+
 
 export enum ProposalType {
-  Unknown = 'Unknown',
 
-  EvmProposal = 'EvmProposal',
+    Unknown = "Unknown",
 
-  RefreshVote = 'RefreshVote',
+    EvmProposal = "EvmProposal",
 
-  ProposerSetUpdateProposal = 'ProposerSetUpdateProposal',
+    RefreshVote = "RefreshVote",
 
-  AnchorCreateProposal = 'AnchorCreateProposal',
+    ProposerSetUpdateProposal = "ProposerSetUpdateProposal",
 
-  AnchorUpdateProposal = 'AnchorUpdateProposal',
+    AnchorCreateProposal = "AnchorCreateProposal",
 
-  TokenAddProposal = 'TokenAddProposal',
+    AnchorUpdateProposal = "AnchorUpdateProposal",
 
-  TokenRemoveProposal = 'TokenRemoveProposal',
+    TokenAddProposal = "TokenAddProposal",
 
-  WrappingFeeUpdateProposal = 'WrappingFeeUpdateProposal',
+    TokenRemoveProposal = "TokenRemoveProposal",
 
-  ResourceIdUpdateProposal = 'ResourceIdUpdateProposal',
+    WrappingFeeUpdateProposal = "WrappingFeeUpdateProposal",
 
-  RescueTokensProposal = 'RescueTokensProposal',
+    ResourceIdUpdateProposal = "ResourceIdUpdateProposal",
 
-  MaxDepositLimitUpdateProposal = 'MaxDepositLimitUpdateProposal',
+    RescueTokensProposal = "RescueTokensProposal",
 
-  MinWithdrawalLimitUpdateProposal = 'MinWithdrawalLimitUpdateProposal',
+    MaxDepositLimitUpdateProposal = "MaxDepositLimitUpdateProposal",
 
-  SetVerifierProposal = 'SetVerifierProposal',
+    MinWithdrawalLimitUpdateProposal = "MinWithdrawalLimitUpdateProposal",
 
-  SetTreasuryHandlerProposal = 'SetTreasuryHandlerProposal',
+    SetVerifierProposal = "SetVerifierProposal",
 
-  FeeRecipientUpdateProposal = 'FeeRecipientUpdateProposal',
+    SetTreasuryHandlerProposal = "SetTreasuryHandlerProposal",
+
+    FeeRecipientUpdateProposal = "FeeRecipientUpdateProposal",
+
 }
+
 
 export enum ProposalStatus {
-  Signed = 'Signed',
 
-  Open = 'Open',
+    Signed = "Signed",
 
-  Rejected = 'Rejected',
+    Open = "Open",
 
-  Accepted = 'Accepted',
+    Rejected = "Rejected",
 
-  Removed = 'Removed',
+    Accepted = "Accepted",
 
-  Executed = 'Executed',
+    Removed = "Removed",
 
-  FailedToExecute = 'FailedToExecute',
+    Executed = "Executed",
+
+    FailedToExecute = "FailedToExecute",
+
 }
+
 
 export enum VoteType {
-  FOR = 'FOR',
 
-  AGAINST = 'AGAINST',
+    FOR = "FOR",
 
-  ABSTAIN = 'ABSTAIN',
+    AGAINST = "AGAINST",
+
+    ABSTAIN = "ABSTAIN",
+
 }
+
+

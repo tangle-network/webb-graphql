@@ -1,6 +1,5 @@
 import { SubstrateExtrinsic } from '@subql/types';
 import { Extrinsic } from '../types';
-import { getInsideCalls } from '../utils';
 import { ensureAccount } from './account';
 import { ensureBlock } from './block';
 

@@ -1,6 +1,6 @@
 import type { Codec } from '@polkadot/types-codec/types';
 import { PalletDkgMetadataEvent } from '@polkadot/types/lookup';
-import { Bytes, Struct, u16 } from '@polkadot/types-codec';
+import { Struct, u16 } from '@polkadot/types-codec';
 
 export enum DKGMethod {
   SIGNATURE_THRESHOLD = 'setSignatureThreshold',

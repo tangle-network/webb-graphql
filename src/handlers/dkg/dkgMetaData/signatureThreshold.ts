@@ -1,6 +1,6 @@
 import { SubstrateExtrinsic } from '@subql/types';
 import { SignatureThresholdArgs } from './types';
-import { createBlock, ensureBlock } from '../../block';
+import { ensureBlock } from '../../block';
 import { SignatureThreshold } from '../../../types';
 
 export async function ensureSignatureThreshold(extrinsic: SubstrateExtrinsic) {

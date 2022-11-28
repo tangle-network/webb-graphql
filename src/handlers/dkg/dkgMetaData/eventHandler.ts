@@ -11,10 +11,8 @@ import {
   nextSessionId,
   setSessionKey,
 } from '../../session';
-import { KeygenThreshold, SessionKeyStatus } from '../../../types';
+import { SessionKeyStatus } from '../../../types';
 import { ensureBlock } from '../../block';
-import { getCurrentKeygenThreshold } from '../../../utils/keygenThreshold/getCurrent';
-import { getCurrentSignatureThreshold } from '../../../utils/signatureThreshold/getCurrent';
 import { AccountId32 } from '@polkadot/types/interfaces/runtime';
 import { Vec } from '@polkadot/types-codec';
 

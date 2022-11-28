@@ -28,7 +28,7 @@ export const checkAndAddKeygenThreshold = async (block: Block): Promise<boolean>
  * @param threshold represent the current `threshold` object to save
  */
 async function addThreshold(threshold: Omit<KeygenThresholdProps, 'id'>) {
-  const recordId = lastThreshold.value ? lastThreshold.value.id + 1 : 1;
+  const recordId = lastThreshold.value ? parseInt(lastThreshold.value.id) + 1 : 1;
   const data = new KeygenThreshold(recordId.toString());
 
   data.current = threshold.current;

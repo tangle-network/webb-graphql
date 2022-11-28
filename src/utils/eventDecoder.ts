@@ -25,6 +25,7 @@ export class EventDecoder<T extends Record<string, any>> {
     if (this._key !== key) {
       throw new Error(`Event key ${this._key} does not match ${key as string}`);
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this._data as T[Key];
   }
   get metaData(): EventMetaData {

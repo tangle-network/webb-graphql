@@ -1,15 +1,6 @@
 import { ensureBlock } from './block';
 import '@webb-tools/types';
-import {
-  Account,
-  Proposer,
-  Session,
-  SessionProposer,
-  SessionValidator,
-  Threshold,
-  ThresholdVariant,
-  Validator,
-} from '../types';
+import { Proposer, Session, SessionProposer, SessionValidator, Threshold, ThresholdVariant, Validator } from '../types';
 import { u16, u32, Vec } from '@polkadot/types-codec';
 import { DkgRuntimePrimitivesCryptoPublic } from '@polkadot/types/lookup';
 import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
@@ -232,7 +223,7 @@ let sessionLength = null;
 
 async function getSessionLength(): Promise<number> {
   if (sessionLength) {
-    return sessionLength;
+    return sessionLength as number;
   }
   const period = (await api.consts.dkgProposals.period) as unknown as u32;
   sessionLength = parseInt(period.toHex());

@@ -78,7 +78,7 @@ export async function handleAllDKG(event: SubstrateEvent) {
   );
   return handleDkgEvents(event);
 }
-export async function handlePublicKeyChanged(event: SubstrateEvent) {
+export function handlePublicKeyChanged(event: SubstrateEvent) {
   const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`;
   logger.info(
     `PublicKeyChangedHandler:

@@ -28,7 +28,7 @@ export const checkAndAddAuthorities = async (block: Block): Promise<boolean> => 
  * @param authorities represent the current `authorities` object to save
  */
 async function addAuthorities(authorities: Omit<AuthoritiesProps, 'id'>) {
-  const recordId = lastAuthorities.value ? lastAuthorities.value.id + 1 : 1;
+  const recordId = lastAuthorities.value ? parseInt(lastAuthorities.value.id) + 1 : 1;
   const data = new Authorities(recordId.toString());
 
   data.current = authorities.current;
