@@ -1,8 +1,8 @@
 <div align="center">
 <a href="https://www.webb.tools/">
 
-![Webb Logo](./assets/webb_banner_light.png#gh-light-mode-only)
-![Webb Logo](./assets/webb_banner_dark.png#gh-dark-mode-only)
+![Webb Logo](../assets/webb_banner_light.png#gh-light-mode-only)
+![Webb Logo](../assets/webb_banner_dark.png#gh-dark-mode-only)
 </a>
 
 </div>
@@ -20,13 +20,15 @@ After the script finishes, you should be able to connect to the Tangle nodes usi
 ### Usage
 
 **Make the script executable:**
+
 ```
 chmod +x start-standalone-local.sh
 ```
 
 **Run the script with the -c or --clean option to clean the ./tmp directory before starting the nodes:**
+
 ```
-./start-standalone-local.sh -c 
+./start-standalone-local.sh -c
 ```
 
 ## insert-standalone-keys.sh
@@ -46,13 +48,15 @@ After the script finishes, you should see a message indicating that the keys hav
 ### Usage
 
 **Make the script executable:**
+
 ```
 chmod +x insert-standalone-keys.sh
 ```
 
 **Run the script::**
+
 ```
-./insert-standalone-keys.sh  
+./insert-standalone-keys.sh
 ```
 
 ## start-subql.sh
@@ -64,11 +68,13 @@ If any command fails during the build process, the script will exit immediately 
 ### Usage
 
 **Make the script executable:**
+
 ```
 chmod +x start-subql.sh
 ```
 
 **Run the script::**
+
 ```
 ./start-subql.sh
 ```
