@@ -104,13 +104,15 @@ query {
 }
 ```
 
-Great! You have officially setup, started, and queried data from the Tangle Arana Alpha testnet using SubQuery!! 🚀🚀
+Great! You have officially setup, started, and queried data from the Tangle Standalone testnet using SubQuery!! 🚀🚀
 
 ## Development
 
 ### Running Tangle Node Locally
 
-During the development process you may want to run your own local Tangle Network to test. To do so you first need to follow the [prerequisites](https://github.com/webb-tools/tangle#prerequisites) and [installation](https://github.com/webb-tools/tangle#installation-) instructions outlined on the Tangle repo.
+During the development process you may want to run your own local Tangle Network to test. To do so you first need to follow the [prerequisites](https://github.com/webb-tools/tangle#prerequisites) and [installation](https://github.com/webb-tools/tangle#installation-) instructions outlined on the Tangle repo. 
+
+You may also make use of the scripts to automate the setup further. Please refer to the `scripts` directory.
 
 Once completed, to start the local test network run:
 
