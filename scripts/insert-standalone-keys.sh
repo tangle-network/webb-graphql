@@ -49,6 +49,6 @@ function insert_keys_for_node {
 echo "** Inserting keys **"
 
 # Insert keys for each node
-insert_keys_for_node 1 ./standalone-tangle/tangle/tmp/standalone1
-insert_keys_for_node 2 ./standalone-tangle/tangle/tmp/standalone2
-insert_keys_for_node 3 ./standalone-tangle/tangletmp/standalone3
+insert_keys_for_node 1 ./standalone-tangle/tangle/tmp/standalone1/
+insert_keys_for_node 2 ./standalone-tangle/tangle/tmp/standalone2/
+insert_keys_for_node 3 ./standalone-tangle/tangle/tmp/standalone3/

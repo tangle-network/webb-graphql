@@ -67,19 +67,19 @@ echo "** Inserting keys **"
 # Start the tangle-standalone nodes
 echo "*** Start Webb DKG Standalone | Standalone Local Config ***"
 # Node 1
-tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone1/chains/tangle-standalone-local -lerror --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
+tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone1 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30304 \
   --ws-port 9944 &
 
 # Node 2
-tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone2/chains/tangle-standalone-local -lerror --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
+tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone2 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30305 \
   --ws-port 9945 &
 
 # Node 3
-tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone3/chains/tangle-standalone-local -lerror --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
+tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone3 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30306 \
   --ws-port 9946 
