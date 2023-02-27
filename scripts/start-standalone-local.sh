@@ -35,8 +35,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Go back to the standalone-tangle directory
-popd
+pushd .
 
 # Clean the tmp directory if specified
 if [ "$CLEAN" = true ]; then
@@ -52,6 +51,15 @@ cd "$PROJECT_ROOT"
 echo "** Generating Standalone local chainspec"
 ./target/release/tangle-standalone build-spec --chain standalone-local > ./chainspecs/standalone-local.json
 
+# Move the tangle-standalone binary to /usr/local/bin and make it executable
+echo "** Moving tangle-standalone binary to /usr/local/bin **"
+sudo mv target/release/tangle-standalone /usr/local/bin
+sudo chmod +x /usr/local/bin/tangle-standalone
+
+# move out of the standalone-tangle/tangle directory
+cd ..
+cd .. 
+
 # Insert keys for all nodes
 echo "** Inserting keys **"
 ./scripts/insert-standalone-keys.sh
@@ -59,19 +67,19 @@ echo "** Inserting keys **"
 # Start the tangle-standalone nodes
 echo "*** Start Webb DKG Standalone | Standalone Local Config ***"
 # Node 1
-./target/release/tangle-standalone --base-path=./tmp/standalone1 -lerror --chain ./chainspecs/standalone-local.json --validator \
+tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone1/chains/tangle-standalone-local -lerror --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30304 \
   --ws-port 9944 &
 
 # Node 2
-./target/release/tangle-standalone --base-path=./tmp/standalone2 -lerror --chain ./chainspecs/standalone-local.json --validator \
+tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone2/chains/tangle-standalone-local -lerror --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30305 \
   --ws-port 9945 &
 
 # Node 3
-./target/release/tangle-standalone --base-path=./tmp/standalone3 -lerror --chain ./chainspecs/standalone-local.json --validator \
+tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone3/chains/tangle-standalone-local -lerror --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30306 \
   --ws-port 9946 
