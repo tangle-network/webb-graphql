@@ -7,37 +7,37 @@ function insert_keys_for_node {
 
     echo "****************** NODE-$node_num KEY INSERTION ******************"
 
-    tangle-standalone key insert --base-path "$base_path" \
+    ./standalone-tangle/tangle/target/release/tangle-standalone key insert --base-path "$base_path" \
     --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json \
     --scheme Sr25519 \
     --suri "gown surprise mirror hotel cash alarm raccoon you frog rose midnight enter//webb//$((node_num - 1))" \
     --key-type acco
 
-    tangle-standalone key insert --base-path "$base_path" \
+    ./standalone-tangle/tangle/target/release/tangle-standalone key insert --base-path "$base_path" \
     --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json \
     --scheme Sr25519 \
     --suri "gown surprise mirror hotel cash alarm raccoon you frog rose midnight enter//webb//$((node_num - 1))//stash" \
     --key-type acco
 
-    tangle-standalone key insert --base-path "$base_path" \
+    ./standalone-tangle/tangle/target/release/tangle-standalone key insert --base-path "$base_path" \
     --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json \
     --scheme Sr25519 \
     --suri "gown surprise mirror hotel cash alarm raccoon you frog rose midnight enter//webb//$((node_num - 1))//aura" \
     --key-type aura
 
-    tangle-standalone key insert --base-path "$base_path" \
+    ./standalone-tangle/tangle/target/release/tangle-standalone key insert --base-path "$base_path" \
     --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json \
     --scheme Sr25519 \
     --suri "gown surprise mirror hotel cash alarm raccoon you frog rose midnight enter//webb//$((node_num - 1))//aura" \
     --key-type imon
 
-    tangle-standalone key insert --base-path "$base_path" \
+    ./standalone-tangle/tangle/target/release/tangle-standalone key insert --base-path "$base_path" \
     --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json \
     --scheme Ed25519 \
     --suri "gown surprise mirror hotel cash alarm raccoon you frog rose midnight enter//webb//$((node_num - 1))//grandpa" \
     --key-type gran
 
-    tangle-standalone key insert --base-path "$base_path" \
+    ./standalone-tangle/tangle/target/release/tangle-standalone key insert --base-path "$base_path" \
     --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json \
     --scheme Ecdsa \
     --suri "gown surprise mirror hotel cash alarm raccoon you frog rose midnight enter//webb//$((node_num - 1))//dkg" \

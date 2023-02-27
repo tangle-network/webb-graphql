@@ -20,7 +20,7 @@ fi
 cd standalone-tangle
 
 # Check if tangle-standalone is installed in /usr/local/bin
-if [ -x "$(command -v tangle-standalone)" ]; then
+if [ -x "./target/release/tangle-standalone" ]; then
     read -p "tangle-standalone is already installed. Do you want to recompile it? (y/n) " answer
     case ${answer:0:1} in
         y|Y )
@@ -33,8 +33,6 @@ if [ -x "$(command -v tangle-standalone)" ]; then
             cargo b -rp tangle-standalone
             cd ..
             cd standalone-tangle
-            sudo mv -f tangle/target/release/tangle-standalone /usr/local/bin
-            sudo chmod +x /usr/local/bin/tangle-standalone
             ;;
         * )
             ;;
@@ -48,8 +46,6 @@ else
     # Compile the tangle-standalone binary
     cargo b -rp tangle-standalone
     cd ..
-    sudo mv -f tangle/target/release/tangle-standalone /usr/local/bin
-    sudo chmod +x /usr/local/bin/tangle-standalone
 fi
 
 CLEAN=${CLEAN:-false}
@@ -83,7 +79,7 @@ cd "$PROJECT_ROOT"
 # Check if chainspec exists in ./chainspecs/standalone-local.json, if not, generate chainspec
 if [ ! -f ./chainspecs/standalone-local.json ]; then
     echo "** Generating Standalone local chainspec ** \n"
-    tangle-standalone build-spec --chain standalone-local > ./chainspecs/standalone-local.json
+    ./target/release/tangle-standalone build-spec --chain standalone-local > ./chainspecs/standalone-local.json
 fi
 echo "** Standalone local chainspec already exists, skipping... ** \n"
 
@@ -101,19 +97,19 @@ fi
 # Start the tangle-standalone nodes
 echo "*** Start Webb DKG Standalone | Standalone Local Config *** \n"
 # Node 1
-tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone1 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
+./standalone-tangle/tangle/target/release/tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone1 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30304 \
   --ws-port 9944 &
 
 # Node 2
-tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone2 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
+./standalone-tangle/tangle/target/release/tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone2 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30305 \
   --ws-port 9945 &
 
 # Node 3
-tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone3 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
+./standalone-tangle/tangle/target/release/tangle-standalone --base-path=./standalone-tangle/tangle/tmp/standalone3 --chain ./standalone-tangle/tangle/chainspecs/standalone-local.json --validator \
   --rpc-cors all --unsafe-rpc-external --unsafe-ws-external \
   --port 30306 \
   --ws-port 9946 
