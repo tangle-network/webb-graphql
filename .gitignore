@@ -107,3 +107,5 @@ dist
 
 .data
 .project-cid 
+
+standalone-tangle/tangle/
