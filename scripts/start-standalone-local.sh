@@ -2,8 +2,6 @@
 
 set -e # Exit on error
 
-set -e # Exit on error
-
 # Define a function to clean up child processes
 function cleanup {
     echo "Cleaning up child processes..."
