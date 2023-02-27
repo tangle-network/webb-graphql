@@ -110,16 +110,16 @@ Great! You have officially setup, started, and queried data from the Tangle Stan
 
 ### Running Tangle Node Locally
 
-During the development process you may want to run your own local Tangle Network to test. To do so you first need to follow the [prerequisites](https://github.com/webb-tools/tangle#prerequisites) and [installation](https://github.com/webb-tools/tangle#installation-) instructions outlined on the Tangle repo. 
+During the development process you may want to run your own local Tangle Network to test. To do so you first need to follow the [prerequisites](https://github.com/webb-tools/tangle#prerequisites) and [installation](https://github.com/webb-tools/tangle#installation-) instructions outlined on the Tangle repo.
 
 You may also make use of the scripts to automate the setup further. Please refer to the `scripts` directory.
 
 Once completed, to start the local test network run:
 
 ```shell
-RUST_LOG=dkg=trace ./target/release/tangle-standalone-node  --base-path /tmp/standalone/alice --alice   --pruning=archive --rpc-cors=all &
-RUST_LOG=dkg=trace ./target/release/tangle-standalone-node  --base-path /tmp/standalone/bob --bob --pruning=archive --rpc-cors=all &
-RUST_LOG=dkg=trace ./target/release/tangle-standalone-node --base-path /tmp/standalone/charlie --charlie --pruning=archive --rpc-cors=all
+RUST_LOG=dkg=trace ./target/release/tangle-standalone --base-path /tmp/standalone/alice --alice   --pruning=archive --rpc-cors=all &
+RUST_LOG=dkg=trace ./target/release/tangle-standalone --base-path /tmp/standalone/bob --bob --pruning=archive --rpc-cors=all &
+RUST_LOG=dkg=trace ./target/release/tangle-standalone --base-path /tmp/standalone/charlie --charlie --pruning=archive --rpc-cors=all
 ```
 
 **Note:** Notice the usage of `--pruning=archive` flag this is required in order for SubQuery node to index all the chains data.
@@ -190,7 +190,7 @@ Great! You have officially setup, and started your local SubQuery environment wi
 
 #### Without Docker
 
-If you do not wish to utilize Docker, you may proceed to follow these steps [here](https://university.subquery.network/run_publish/run.html#running-an-indexer-subql-node).
+If you do not wish to utilize Docker, you may proceed to follow these steps [here](https://academy.subquery.network/run_publish/run.html#running-an-indexer-subql-node).
 
 If you do not use `Docker`, and want to start the graphQL playground you have to run the [Query Service](https://academy.subquery.network/run_publish/run.html#running-a-query-service-subql-query) via `subql-query` to have the playground running. Then you can open the playground at `localhost:3000` and use the below `graphql` query to test.
 
