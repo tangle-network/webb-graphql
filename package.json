@@ -7,7 +7,7 @@
     "build": "subql build",
     "prepack": "rm -rf dist && npm run build",
     "test": "jest",
-    "codegen": "./node_modules/.bin/subql codegen",
+    "codegen": "./scripts/subql-codegen.sh",
     "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
     "deploy:dev": "yarn codegen && yarn build && docker-compose up",
     "ts-check": "tsc --noEmit -p ./tsconfig.json",
@@ -38,5 +38,8 @@
   },
   "resolutions": {
     "ipfs-unixfs": "6.0.6"
+  },
+  "exports": {
+    "index": "./src/subql/index.ts"
   }
 }
