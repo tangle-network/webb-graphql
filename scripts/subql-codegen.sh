@@ -2,6 +2,6 @@
 # Running codegen
 subql codegen
 # Cleanup types dir
-rm -rf ./src/subql/types
+rm -rf ./src/substrate/types
 # Moving types
-mv -i  ./src/types/ ./src/subql/types
+mv -i  ./src/types/ ./src/substrate/types
