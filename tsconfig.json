@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,

@@ -8,9 +8,9 @@
     "build": "subql build",
     "prepack": "rm -rf dist && npm run build",
     "test": "jest",
-    "codegen": "./scripts/subql-codegen.sh",
-    "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
-    "deploy:dev": "yarn codegen && yarn build && docker-compose up",
+    "codegen": "../../scripts/subql-codegen.sh",
+    "start:docker": " docker-compose pull && docker-compose up --remove-orphans",
+    "deploy:dev": "yarn codegen && yarn build && cd ../../ && docker-compose up",
     "ts-check": "tsc --noEmit -p ./tsconfig.json",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
