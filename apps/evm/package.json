@@ -1,5 +1,6 @@
 {
-  "name": "",
+  "version": "0.0.1",
+  "name": "webb-sub-graph",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",

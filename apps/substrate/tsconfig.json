@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*", "@webb-tools/types", "node_modules/@subql/types/dist/global.d.ts"],
+  "exclude": ["node_modules/@subql/@webb-tools/types/**/*", "*.json"]
+}
