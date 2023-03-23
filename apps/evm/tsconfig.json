@@ -4,6 +4,10 @@
     "../../tsconfig.json"
   ],
   "include": [
-    "src"
-  ]
+    "src",
+    "@graphprotocol/graph-ts/types"
+  ],
+  "compilerOptions": {
+    "target": "ES5"
+  }
 }
