@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "This project can be used as a starting point for developing your SubQuery project",
   "scripts": {
-    "subql:deploy:dev": "cd apps/substrate-graph && yarn deploy:dev"
+    "subql:deploy:dev": "cd apps/substrate-graph && yarn deploy:dev",
+    "ts-check": "tsc --noEmit -p ./tsconfig.json",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write ."
   },
   "homepage": "https://github.com/subquery/subql-starter",
   "repository": "github:subquery/subql-starter",
