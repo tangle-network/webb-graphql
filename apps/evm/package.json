@@ -1,6 +1,6 @@
 {
   "version": "0.0.1",
-  "name": "webb-sub-graph",
+  "name": "@webb-tools/webb-graphql",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
