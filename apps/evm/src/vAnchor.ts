@@ -15,6 +15,11 @@ import {
   PublicKey
 } from "../generated/schema"
 
+/**
+ * EdgeAddition event handler
+ *  - An Edge linking event
+ *
+ * */
 export function handleEdgeAddition(event: EdgeAdditionEvent): void {
   let entity = new EdgeAddition(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -29,7 +34,15 @@ export function handleEdgeAddition(event: EdgeAdditionEvent): void {
 
   entity.save()
 }
-
+/**
+ *
+ * EdgeUpdate event handler
+ * - An Edge linking event
+ *
+ *
+ *
+ *
+* */
 export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
   let entity = new EdgeUpdate(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -45,6 +58,12 @@ export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
   entity.save()
 }
 
+/**
+ * Insertion event handler
+ *  - System Merkle tree insertion event
+ *
+ *
+ * */
 export function handleInsertion(event: InsertionEvent): void {
   let entity = new Insertion(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -59,7 +78,12 @@ export function handleInsertion(event: InsertionEvent): void {
 
   entity.save()
 }
-
+/**
+ * NewCommitment event handler
+ *  - Leaf commitment insertion on a subtree
+ *
+ *
+ * */
 export function handleNewCommitment(event: NewCommitmentEvent): void {
   let entity = new NewCommitment(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -76,6 +100,11 @@ export function handleNewCommitment(event: NewCommitmentEvent): void {
   entity.save()
 }
 
+/**
+ * NewNullifier event handler
+ *  - New nullifier is emitted when execution the commitment insertion
+ *
+ * */
 export function handleNewNullifier(event: NewNullifierEvent): void {
   let entity = new NewNullifier(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -89,6 +118,11 @@ export function handleNewNullifier(event: NewNullifierEvent): void {
   entity.save()
 }
 
+
+/**
+ * PublicKey event handler
+ *  -  New public key is register
+ * */
 export function handlePublicKey(event: PublicKeyEvent): void {
   let entity = new PublicKey(
     event.transaction.hash.concatI32(event.logIndex.toI32())
