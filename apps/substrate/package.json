@@ -1,6 +1,6 @@
 
 {
-  "name": "substrate-graph",
+  "name": "@webb-tools/webb-graphql-substrate",
   "version": "1.0.0",
   "description": "This project can be used as a starting point for developing your SubQuery project",
   "main": "dist/index.js",
