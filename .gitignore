@@ -106,6 +106,7 @@ dist
 .DS_Store
 
 .data
-.project-cid 
+.project-cid
 
-standalone-tangle/tangle/
+./apps/**/build/
+./apps/**/dist/
