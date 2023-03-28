@@ -36,4 +36,4 @@ dataSources:
           handler: handleNewNullifier
         - event: PublicKey(indexed address,bytes)
           handler: handlePublicKey
-      file: ./src/v-anchor.ts
+      file: ./src/vAnchor.ts
