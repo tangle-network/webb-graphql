@@ -4,11 +4,10 @@ schema:
 dataSources:
   - kind: ethereum
     name: VAnchor
-    network: goerli
+    network: Hermes
     source:
-      address: "0xa1a2b7e08793b3033122b83cbee56726678588b5"
+      address: "0xc705034ded85e817b9E56C977E61A2098362898B"
       abi: VAnchor
-      startBlock: 8508326
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -37,3 +36,41 @@ dataSources:
         - event: PublicKey(indexed address,bytes)
           handler: handlePublicKey
       file: ./src/vAnchor.ts
+  - kind: ethereum
+    name: FungibleTokenWrapper
+    network: Hermes
+    source:
+      address: "0x4e3df2073bf4b43B9944b8e5A463b1E185D6448C"
+      abi: FungibleTokenWrapper
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Paused
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Transfer
+        - Unpaused
+      abis:
+        - name: FungibleTokenWrapper
+          file: ./abis/FungibleTokenWrapper.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Paused(address)
+          handler: handlePaused
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/fungible-token-wrapper.ts
