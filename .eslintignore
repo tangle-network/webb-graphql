@@ -1,3 +1,5 @@
 node_modules
 dist
-src/types
+apps/substrate-graph/src/types
+apps/substrate-graph/dist
+apps/evm/**

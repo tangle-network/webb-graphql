@@ -1,0 +1,6 @@
+{
+  "outDir": "dist",
+  "rootDir": "src",
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*", "@webb-tools/types", "../../node_modules/@subql/types/dist/global.d.ts"],
+}
