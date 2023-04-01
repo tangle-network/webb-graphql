@@ -111,6 +111,7 @@ type Transfer @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+
 }
 
 type Unpaused @entity(immutable: true) {
