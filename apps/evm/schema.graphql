@@ -104,6 +104,7 @@ type RoleRevoked @entity(immutable: true) {
 }
 
 type Transfer @entity(immutable: true) {
+
   id: Bytes!
   from: Bytes! # address
   to: Bytes! # address
@@ -111,7 +112,7 @@ type Transfer @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-
+  contractAddress:Bytes!
 }
 
 type Unpaused @entity(immutable: true) {

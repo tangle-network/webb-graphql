@@ -36,14 +36,14 @@ dataSources:
         - event: PublicKey(indexed address,bytes)
           handler: handlePublicKey
       file: ./src/vAnchor.ts
-templates:
   - kind: ethereum
     name: FungibleTokenWrapper
     network: Hermes
     source:
+      address: "0x4e3df2073bf4b43B9944b8e5A463b1E185D6448C"
       abi: FungibleTokenWrapper
+      startBlock: 1
     mapping:
-      file: ./src/mappings/fungibleTokenWrapper.ts
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
@@ -73,3 +73,4 @@ templates:
           handler: handleTransfer
         - event: Unpaused(address)
           handler: handleUnpaused
+      file: ./src/fungible-token-wrapper.ts
