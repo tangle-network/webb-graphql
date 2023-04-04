@@ -58,7 +58,38 @@ Install dependencies:
  yarn install
 ```
 
-TODO
+### Using evm local-net
+
+Running local evm net via `protocol-solidity`
+
+Run the local evm graph node using docker
+
+```
+$ git clone https://github.com/AhmedKorim/graph-node
+
+$ git checkout ahmed/local-evm-graph-node
+```
+**Note** if you are running the graph-node on macos make sure to do this change in the docker-compose
+comment out the extra hosts for `graph-node` service.
+```yml
+13 ..
+14 #    extra_hosts:
+15 #      - host.docker.internal:host-gateway
+16 ..
+```
+
+Interact with the vAnchor subgraph via npm/yarn scripts
+
+```bash
+
+# Create the local subgraph on the running local evm graph-node
+$ yarn create-local
+# Deploy the subgraph
+$ yarn deploy-local
+# To re deploy the graph removal is required
+# yarn remove-local
+
+```
 
 ### Existing Deployments
 
