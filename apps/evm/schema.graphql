@@ -79,6 +79,8 @@ type DepositTx @entity(immutable: true) {
   transactionHash: Bytes!
   contractAddress:Bytes!
 
+  blockTimestamp: BigInt!
+
 }
 type FungableToken @entity(immutable: true) {
   id:Bytes!
