@@ -65,6 +65,7 @@ export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
  *
  * */
 export function handleInsertion(event: InsertionEvent): void {
+
   let entity = new Insertion(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
