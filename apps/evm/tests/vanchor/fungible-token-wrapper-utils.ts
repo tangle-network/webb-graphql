@@ -1,14 +1,18 @@
-import { newMockEvent } from "matchstick-as";
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { newMockEvent ,  } from "matchstick-as";
+import {Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { Transfer } from "../../generated/FungibleTokenWrapper/FungibleTokenWrapper";
 
 
+let logIndex = 0;
 export function createTransferEvent(
   from: Address,
   to: Address,
-  value: BigInt
+  value: BigInt,
 ): Transfer {
-  let transferEvent = changetype<Transfer>(newMockEvent())
+  const event = newMockEvent();
+  event.logIndex  = BigInt.fromI32(logIndex);
+  logIndex = logIndex + 1;
+  let transferEvent = changetype<Transfer>(event)
 
   transferEvent.parameters = new Array()
 
@@ -22,6 +26,9 @@ export function createTransferEvent(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
   )
 
+  transferEvent.address = Address.fromString("0x4e3df2073bf4b43b9944b8e5a463b1e185d6448c");
   return transferEvent
 }
+
+
 

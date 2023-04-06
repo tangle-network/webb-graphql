@@ -120,7 +120,7 @@ function handleWithdrawTx(event: TransferEvent): void {
   entity.transactionHash = event.transaction.hash;
   entity.save();
   decreaseVAnchorVolume(
-    event.params.to,
+    event.params.from,
     event.params.value
   )
 }
