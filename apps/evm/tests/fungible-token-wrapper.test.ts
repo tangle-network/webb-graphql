@@ -8,7 +8,7 @@ import { handleTransfer } from "../src/fungible-token-wrapper";
 
 describe("Describe entity assertions", () => {
   beforeAll(() => {
-    let from = Address.fromString("0x0000000000000000000000000000000000000001")
+    let from = Address.fromString("0xc705034ded85e817b9E56C977E61A2098362898B")
     let to = Address.fromString(
       "0x0000000000000000000000000000000000000001"
     )
@@ -24,24 +24,24 @@ describe("Describe entity assertions", () => {
   // For more test scenarios, see:
   // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
 
-  test("Approval created and stored", () => {
-    assert.entityCount("Transfer", 1)
+  test("The withdraw transaction is  created and stored", () => {
+    assert.entityCount("WithdrawTx", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
     assert.fieldEquals(
-      "Approval",
+      "WithdrawTx",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
-      "owner",
+      "from",
+      "0xc705034ded85e817b9E56C977E61A2098362898B"
+    )
+    assert.fieldEquals(
+      "WithdrawTx",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
+      "to",
       "0x0000000000000000000000000000000000000001"
     )
     assert.fieldEquals(
-      "Approval",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
-      "spender",
-      "0x0000000000000000000000000000000000000001"
-    )
-    assert.fieldEquals(
-      "Approval",
+      "WithdrawTx",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "value",
       "234"
