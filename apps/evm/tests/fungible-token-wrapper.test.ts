@@ -1,19 +1,20 @@
 import { afterAll, assert, beforeAll, clearStore, describe, test } from "matchstick-as/assembly/index";
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { createApprovalEvent } from "./fungible-token-wrapper-utils";
+import { createTransferEvent } from "./fungible-token-wrapper-utils";
+import { handleTransfer } from "../src/fungible-token-wrapper";
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
 
 describe("Describe entity assertions", () => {
   beforeAll(() => {
-    let owner = Address.fromString("0x0000000000000000000000000000000000000001")
-    let spender = Address.fromString(
+    let from = Address.fromString("0x0000000000000000000000000000000000000001")
+    let to = Address.fromString(
       "0x0000000000000000000000000000000000000001"
     )
     let value = BigInt.fromI32(234)
-    let newApprovalEvent = createApprovalEvent(owner, spender, value)
-    handleApproval(newApprovalEvent)
+    let newApprovalEvent = createTransferEvent(from, to, value)
+    handleTransfer(newApprovalEvent)
   })
 
   afterAll(() => {
@@ -24,7 +25,7 @@ describe("Describe entity assertions", () => {
   // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
 
   test("Approval created and stored", () => {
-    assert.entityCount("Approval", 1)
+    assert.entityCount("Transfer", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
     assert.fieldEquals(

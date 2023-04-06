@@ -1,16 +1,8 @@
-import {
-  assert,
-  describe,
-  test,
-  clearStore,
-  beforeAll,
-  afterAll
-} from "matchstick-as/assembly/index"
-import { BigInt, Bytes, Address } from "@graphprotocol/graph-ts"
-import { EdgeAddition } from "../generated/schema"
-import { EdgeAddition as EdgeAdditionEvent } from "../generated/VAnchor/VAnchor"
-import { handleEdgeAddition } from "../src/v-anchor"
-import { createEdgeAdditionEvent } from "./v-anchor-utils"
+import { afterAll, assert, beforeAll, clearStore, describe, test } from "matchstick-as/assembly/index";
+import { BigInt } from "@graphprotocol/graph-ts";
+import { EdgeAddition } from "../generated/schema";
+import { handleEdgeAddition } from "../src/v-anchor";
+import { createEdgeAdditionEvent } from "./v-anchor-utils";
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0

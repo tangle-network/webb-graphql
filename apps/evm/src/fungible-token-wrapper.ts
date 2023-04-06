@@ -1,3 +1,4 @@
+import { log } from "@graphprotocol/graph-ts";
 import { Transfer as TransferEvent } from "../generated/FungibleTokenWrapper/FungibleTokenWrapper";
 import { DepositTx, Transfer, WithdrawTx } from "../generated/schema";
 import { isVAnchorAddress } from "./utils/consts";
@@ -41,6 +42,22 @@ function getTransactionType(event:TransferEvent): TransactionType {
   return TransactionType.Transfer
 }
 
+
+function getTransactionTypeMessage(transactionType:TransactionType): string {
+
+    switch (transactionType) {
+      case TransactionType.Deposit:
+        return 'deposit'
+      case TransactionType.Withdraw:
+        return 'withdraw'
+      case TransactionType.Transfer:
+        return 'transfer'
+      default:
+        return 'transfer+def'
+    }
+}
+
+
 function handleDepositTx(event: TransferEvent):void {
   let entity = new DepositTx(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -74,7 +91,7 @@ function handleWithdrawTx(event: TransferEvent):void {
 
 export function handleTransfer(event: TransferEvent): void {
   const eventType = getTransactionType(event);
-
+  log.debug(`Event type for vAnchor {}` , [getTransactionTypeMessage(eventType)])
   switch (eventType){
     case TransactionType.Deposit:
       return handleDepositTx(event);

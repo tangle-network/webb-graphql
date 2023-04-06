@@ -18,7 +18,7 @@ export let BI_18 = BigInt.fromI32(18);
 
 export function isVAnchorAddress(address: Address): boolean {
   const addresses: Array<Address> = vAnchorConfig.values();
-  for (let i = 0; i < address.length; i++) {
+  for (let i = 0; i < address.length; ++i) {
     if (addresses[i] === address) {
       return true;
     }
@@ -28,7 +28,7 @@ export function isVAnchorAddress(address: Address): boolean {
 }
 export function isFungibleTokenWrapperAddress(address: Address): boolean {
   const addresses: Array<Address> = fungibleTokenWrapperConfig.values();
-  for (let i = 0; i < address.length; i++) {
+  for (let i = 0; i < address.length; ++i) {
     if (addresses[i] === address) {
       return true;
     }
