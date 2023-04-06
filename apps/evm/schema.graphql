@@ -102,6 +102,13 @@ type WithdrawTx @entity(immutable: true) {
 
 }
 
+type VAnchor @entity(immutable: false) {
+  id: Bytes!
+  chainId:BigInt!
+  contractAddress:Bytes!
+  valueLocked:BigInt!
+}
+
 type FungableToken @entity(immutable: true) {
   id:Bytes!
   typedChainId:Bytes!

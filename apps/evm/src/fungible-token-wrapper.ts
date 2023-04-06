@@ -1,7 +1,20 @@
-import { log } from '@graphprotocol/graph-ts';
-import { Transfer as TransferEvent } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
-import { DepositTx, Transfer, WithdrawTx } from '../generated/schema';
-import { isVAnchorAddress } from './utils/consts';
+import {Address, BigInt, log} from '@graphprotocol/graph-ts';
+import {Transfer as TransferEvent} from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
+import {DepositTx, Transfer, VAnchor, WithdrawTx} from '../generated/schema';
+import {isVAnchorAddress} from './utils/consts';
+
+function ensureVAnchor(contractAddress:Address):VAnchor{
+ const vAnchor = VAnchor.load(contractAddress);
+ if(vAnchor){
+   return vAnchor
+ }
+ const newVAnchor =  new VAnchor(contractAddress);
+ newVAnchor.contractAddress =contractAddress;
+ newVAnchor.chainId = BigInt.fromI32(0);
+ newVAnchor.valueLocked = BigInt.fromI32(0);
+ newVAnchor.save();
+ return newVAnchor
+}
 
 function newTransfer(event: TransferEvent): void {
   let entity = new Transfer(event.transaction.hash.concatI32(event.logIndex.toI32()));
@@ -51,6 +64,25 @@ function getTransactionTypeMessage(transactionType: TransactionType): string {
   }
 }
 
+function decreaseVAnchorVolume(
+  vAnchorAddress:Address,
+  value:BigInt
+):void {
+  const vAnchor = ensureVAnchor(vAnchorAddress);
+  vAnchor.valueLocked = vAnchor.valueLocked.minus(value);
+  vAnchor.save();
+
+}
+
+function increaseVAnchorVolume(
+  vAnchorAddress:Address,
+  value:BigInt
+):void {
+  const vAnchor = ensureVAnchor(vAnchorAddress);
+  vAnchor.valueLocked = vAnchor.valueLocked.plus(value);
+  vAnchor.save();
+
+}
 function handleDepositTx(event: TransferEvent): void {
   let entity = new DepositTx(event.transaction.hash.concatI32(event.logIndex.toI32()));
   entity.fungibleTokenWrapper = event.address;
@@ -61,6 +93,10 @@ function handleDepositTx(event: TransferEvent): void {
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
   entity.save();
+  increaseVAnchorVolume(
+    event.params.to,
+    event.params.value
+  )
 }
 
 function handleWithdrawTx(event: TransferEvent): void {
@@ -74,6 +110,10 @@ function handleWithdrawTx(event: TransferEvent): void {
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
   entity.save();
+  decreaseVAnchorVolume(
+    event.params.to,
+    event.params.value
+  )
 }
 
 export function handleTransfer(event: TransferEvent): void {
