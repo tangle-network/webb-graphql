@@ -9,7 +9,7 @@
     "create-local": "graph create --node http://localhost:8020/ VAnchor ",
     "remove-local": "graph remove --node http://localhost:8020/ VAnchor",
     "deploy-local": "graph deploy --node http://localhost:8020/ VAnchor --ipfs http://localhost:6001 ",
-    "test": "graph test ./tests"
+    "test": "graph test -l  -v 0.5.4"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.42.4",
