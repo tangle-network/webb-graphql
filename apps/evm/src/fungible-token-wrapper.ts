@@ -1,4 +1,4 @@
-import {Address, BigInt, log} from '@graphprotocol/graph-ts';
+import {Address, BigInt, Bytes, log} from '@graphprotocol/graph-ts';
 import {Transfer as TransferEvent} from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
 import {DepositTx, Transfer, VAnchor, WithdrawTx} from '../generated/schema';
 import {isVAnchorAddress} from './utils/consts';
@@ -64,6 +64,11 @@ function getTransactionTypeMessage(transactionType: TransactionType): string {
   }
 }
 
+
+export function formatVAnchorTransactionId(txHash:Bytes , logIndex:i32):Bytes {
+  return txHash.concatI32(logIndex)
+}
+
 function decreaseVAnchorVolume(
   vAnchorAddress:Address,
   value:BigInt
@@ -84,7 +89,8 @@ function increaseVAnchorVolume(
 
 }
 function handleDepositTx(event: TransferEvent): void {
-  let entity = new DepositTx(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const id = formatVAnchorTransactionId(event.transaction.hash , event.logIndex.toI32());
+  let entity = new DepositTx(id);
   entity.fungibleTokenWrapper = event.address;
   entity.depositor = event.params.from;
   entity.value = event.params.value;
@@ -100,7 +106,10 @@ function handleDepositTx(event: TransferEvent): void {
 }
 
 function handleWithdrawTx(event: TransferEvent): void {
-  let entity = new WithdrawTx(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const id = formatVAnchorTransactionId(event.transaction.hash , event.logIndex.toI32());
+
+
+  let entity = new WithdrawTx(id);
   entity.fungibleTokenWrapper = event.address;
   entity.beneficiary = event.params.to;
   entity.vAnchorAddress = event.params.from;

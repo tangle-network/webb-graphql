@@ -1,6 +1,6 @@
 import { newMockEvent } from "matchstick-as";
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
-import { Transfer } from "../generated/FungibleTokenWrapper/FungibleTokenWrapper";
+import { Transfer } from "../../generated/FungibleTokenWrapper/FungibleTokenWrapper";
 
 
 export function createTransferEvent(
