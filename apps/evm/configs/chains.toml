@@ -1,0 +1,26 @@
+[store]
+[store.primary]
+connection = "postgresql://${postgres_user}:${postgres_pass}@${postgres_host}:5432/${postgres_db}"
+pool_size = 10
+
+
+
+[chains]
+ingestor = "block_ingestor_node"
+
+[chains.Hermes]
+shard = "primary"
+provider = [{ label = "hermes", url = "http://host.docker.internal:5001" ,features= []}]
+
+[chains.Athena]
+shard = "primary"
+provider = [{ label = "athena", url = "http://host.docker.internal:5002" ,features= []}]
+
+[chains.Demter]
+shard = "primary"
+provider = [{ label = "demter", url = "http://host.docker.internal:5003" ,features= []}]
+
+[deployment]
+shard = "primary"
+[[deployment.rule]]
+indexers = [ "default" ]
