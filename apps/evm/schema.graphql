@@ -75,13 +75,29 @@ type DepositTx @entity(immutable: true) {
   depositor:Bytes!
   # deposit amount
   value: BigInt! # uint256
+
   blockTimestamp: BigInt!
   transactionHash: Bytes!
   contractAddress:Bytes!
+  blockNumber: BigInt!
 
-  blockTimestamp: BigInt!
 
 }
+
+type WithdrawTx @entity(immutable: true) {
+  id: Bytes!
+  withdrawer:Bytes!
+  # deposit amount
+  value: BigInt! # uint256
+
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+  contractAddress:Bytes!
+  blockNumber: BigInt!
+
+
+}
+
 type FungableToken @entity(immutable: true) {
   id:Bytes!
   typedChainId:Bytes!

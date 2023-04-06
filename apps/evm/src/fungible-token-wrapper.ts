@@ -1,13 +1,9 @@
 import { Transfer as TransferEvent } from "../generated/FungibleTokenWrapper/FungibleTokenWrapper";
-import { DepositTx, FungableToken, Transfer } from "../generated/schema";
-import { Address } from "@graphprotocol/graph-ts";
+import { DepositTx, Transfer, WithdrawTx } from "../generated/schema";
 import { isVAnchorAddress } from "./utils/consts";
 
 
-
-
-
-function newTransfer(event: TransferEvent){
+function newTransfer(event: TransferEvent) :void{
   let entity = new Transfer(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
@@ -45,7 +41,7 @@ function getTransactionType(event:TransferEvent): TransactionType {
   return TransactionType.Transfer
 }
 
-function handleDepositTx(event: TransferEvent) {
+function handleDepositTx(event: TransferEvent):void {
   let entity = new DepositTx(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
@@ -57,6 +53,22 @@ function handleDepositTx(event: TransferEvent) {
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash
+  entity.save()
+}
+
+function handleWithdrawTx(event: TransferEvent):void {
+  let entity = new WithdrawTx(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  )
+  entity.contractAddress = event.address
+  entity.withdrawer = event.params.from
+  entity.value = event.params.value
+
+
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
+  entity.save()
 
 }
 
@@ -65,9 +77,9 @@ export function handleTransfer(event: TransferEvent): void {
 
   switch (eventType){
     case TransactionType.Deposit:
-      break;
+      return handleDepositTx(event);
     case TransactionType.Withdraw:
-      break;
+      return handleWithdrawTx(event);
     case TransactionType.Transfer:
       break;
 
