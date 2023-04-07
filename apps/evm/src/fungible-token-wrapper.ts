@@ -124,7 +124,11 @@ function handleWithdrawTx(event: TransferEvent): void {
     event.params.value
   )
 }
-
+/**
+ *
+ * Handler for FungibleTokenWrapper transfer event
+ *
+ * */
 export function handleTransfer(event: TransferEvent): void {
   const eventType = getTransactionType(event);
   log.debug(`Event type for vAnchor {}`, [getTransactionTypeMessage(eventType)]);
