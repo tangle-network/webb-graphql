@@ -1,10 +1,10 @@
 {
   "Hermes": {
     "VAnchor": {
-      "address": "0xc705034ded85e817b9E56C977E61A2098362898B"
+      "address": "0x968d628e0Efc57371162D03C623E70af5D90553b"
     },
     "FungibleTokenWrapper": {
-      "address": "0xcbD945E77ADB65651F503723aC322591f3435cC5"
+      "address": "0xe30aEb7eCB2e03617A2699d5773E0652F872bB41"
     },
     "DeterministicDeployFactor": {
       "address": "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"

@@ -6,7 +6,7 @@ dataSources:
     name: VAnchor
     network: Hermes
     source:
-      address: "0xc705034ded85e817b9E56C977E61A2098362898B"
+      address: "0x968d628e0Efc57371162D03C623E70af5D90553b"
       abi: VAnchor
     mapping:
       kind: ethereum/events
@@ -40,7 +40,7 @@ dataSources:
     name: FungibleTokenWrapper
     network: Hermes
     source:
-      address: "0x4e3df2073bf4b43B9944b8e5A463b1E185D6448C"
+      address: "0xe30aEb7eCB2e03617A2699d5773E0652F872bB41"
       abi: FungibleTokenWrapper
       startBlock: 1
     mapping:

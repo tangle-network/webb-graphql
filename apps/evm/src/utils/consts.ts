@@ -5,10 +5,10 @@ export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 export const chains = ["Hermes", "Athena", "Demter"];
 
 export const vAnchorConfig: Map<string, Address> = new Map<string, Address>();
-vAnchorConfig.set(chains[0], Address.fromString("0xc705034ded85e817b9E56C977E61A2098362898B"));
+vAnchorConfig.set(chains[0], Address.fromString("0x968d628e0Efc57371162D03C623E70af5D90553b"));
 
 export const fungibleTokenWrapperConfig: Map<string, Address> = new Map<string, Address>();
-fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0x4e3df2073bf4b43B9944b8e5A463b1E185D6448C"));
+fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0xe30aEb7eCB2e03617A2699d5773E0652F872bB41"));
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);
