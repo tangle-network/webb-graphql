@@ -5,6 +5,9 @@
     },
     "FungibleTokenWrapper": {
       "address": "0xcbD945E77ADB65651F503723aC322591f3435cC5"
+    },
+    "DeterministicDeployFactor": {
+      "address": "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"
     }
   }
 }
