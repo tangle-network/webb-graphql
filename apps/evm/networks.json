@@ -9,5 +9,16 @@
     "DeterministicDeployFactor": {
       "address": "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"
     }
+  },
+  "Athena": {
+    "VAnchor": {
+      "address": "0xcAFBfD7554D7fFc3cDd36f2500F5aF289c511e1D"
+    },
+    "FungibleTokenWrapper": {
+      "address": "0x9B0be65637Bb432E2d13DD45132078d09Eb483eA"
+    },
+    "DeterministicDeployFactor": {
+      "address": "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"
+    }
   }
 }
