@@ -1,120 +1,141 @@
-import {
-  Approval as ApprovalEvent,
-  Paused as PausedEvent,
-  RoleAdminChanged as RoleAdminChangedEvent,
-  RoleGranted as RoleGrantedEvent,
-  RoleRevoked as RoleRevokedEvent,
-  Transfer as TransferEvent,
-  Unpaused as UnpausedEvent
-} from "../generated/FungibleTokenWrapper/FungibleTokenWrapper"
-import {
-  Approval,
-  Paused,
-  RoleAdminChanged,
-  RoleGranted,
-  RoleRevoked,
+import {Address, BigInt, Bytes, log} from '@graphprotocol/graph-ts';
+import {Transfer as TransferEvent} from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
+import {DepositTx, Transfer, VAnchor, WithdrawTx} from '../generated/schema';
+import {isVAnchorAddress} from './utils/consts';
+
+function ensureVAnchor(contractAddress:Address):VAnchor{
+ const vAnchor = VAnchor.load(contractAddress);
+ if(vAnchor){
+   return vAnchor
+ }
+ const newVAnchor =  new VAnchor(contractAddress);
+ newVAnchor.contractAddress =contractAddress;
+ newVAnchor.chainId = BigInt.fromI32(0);
+ newVAnchor.valueLocked = BigInt.fromI32(0);
+ newVAnchor.save();
+ return newVAnchor
+}
+
+function newTransfer(event: TransferEvent): void {
+  let entity = new Transfer(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  entity.contractAddress = event.address;
+  entity.from = event.params.from;
+  entity.to = event.params.to;
+  entity.value = event.params.value;
+
+  entity.blockNumber = event.block.number;
+  entity.blockTimestamp = event.block.timestamp;
+  entity.transactionHash = event.transaction.hash;
+
+  entity.save();
+}
+
+enum TransactionType {
+  Deposit,
+  Withdraw,
   Transfer,
-  Unpaused
-} from "../generated/schema"
-
-export function handleApproval(event: ApprovalEvent): void {
-  let entity = new Approval(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.owner = event.params.owner
-  entity.spender = event.params.spender
-  entity.value = event.params.value
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
 }
 
-export function handlePaused(event: PausedEvent): void {
-  let entity = new Paused(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.account = event.params.account
+function getTransactionType(event: TransferEvent): TransactionType {
+  const senderAddress = event.params.from;
+  const receiverAddress = event.params.to;
 
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
+  // Check for Deposit
+  if (isVAnchorAddress(receiverAddress)) {
+    return TransactionType.Deposit;
+  }
+  if (isVAnchorAddress(senderAddress)) {
+    return TransactionType.Withdraw;
+  }
 
-  entity.save()
+  return TransactionType.Transfer;
 }
 
-export function handleRoleAdminChanged(event: RoleAdminChangedEvent): void {
-  let entity = new RoleAdminChanged(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.role = event.params.role
-  entity.previousAdminRole = event.params.previousAdminRole
-  entity.newAdminRole = event.params.newAdminRole
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
+function getTransactionTypeMessage(transactionType: TransactionType): string {
+  switch (transactionType) {
+    case TransactionType.Deposit:
+      return 'deposit';
+    case TransactionType.Withdraw:
+      return 'withdraw';
+    case TransactionType.Transfer:
+      return 'transfer';
+    default:
+      return 'transfer+def';
+  }
 }
 
-export function handleRoleGranted(event: RoleGrantedEvent): void {
-  let entity = new RoleGranted(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.role = event.params.role
-  entity.account = event.params.account
-  entity.sender = event.params.sender
 
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
+export function formatVAnchorTransactionId(txHash:Bytes , logIndex:i32):Bytes {
+  return txHash.concatI32(logIndex)
 }
 
-export function handleRoleRevoked(event: RoleRevokedEvent): void {
-  let entity = new RoleRevoked(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
+function decreaseVAnchorVolume(
+  vAnchorAddress:Address,
+  value:BigInt
+):void {
+  const vAnchor = ensureVAnchor(vAnchorAddress);
+  vAnchor.valueLocked = vAnchor.valueLocked.minus(value);
+  vAnchor.save();
+
+}
+
+function increaseVAnchorVolume(
+  vAnchorAddress:Address,
+  value:BigInt
+):void {
+  const vAnchor = ensureVAnchor(vAnchorAddress);
+  vAnchor.valueLocked = vAnchor.valueLocked.plus(value);
+  vAnchor.save();
+
+}
+function handleDepositTx(event: TransferEvent): void {
+  const id = formatVAnchorTransactionId(event.transaction.hash , event.logIndex.toI32());
+  let entity = new DepositTx(id);
+  entity.fungibleTokenWrapper = event.address;
+  entity.depositor = event.params.from;
+  entity.value = event.params.value;
+  entity.vAnchorAddress = event.params.to;
+  entity.blockNumber = event.block.number;
+  entity.blockTimestamp = event.block.timestamp;
+  entity.transactionHash = event.transaction.hash;
+  entity.save();
+  increaseVAnchorVolume(
+    event.params.to,
+    event.params.value
   )
-  entity.role = event.params.role
-  entity.account = event.params.account
-  entity.sender = event.params.sender
+}
 
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
+function handleWithdrawTx(event: TransferEvent): void {
+  const id = formatVAnchorTransactionId(event.transaction.hash , event.logIndex.toI32());
 
-  entity.save()
+
+  let entity = new WithdrawTx(id);
+  entity.fungibleTokenWrapper = event.address;
+  entity.beneficiary = event.params.to;
+  entity.vAnchorAddress = event.params.from;
+  entity.value = event.params.value;
+
+  entity.blockNumber = event.block.number;
+  entity.blockTimestamp = event.block.timestamp;
+  entity.transactionHash = event.transaction.hash;
+  entity.save();
+  decreaseVAnchorVolume(
+    event.params.from,
+    event.params.value
+  )
 }
 
 export function handleTransfer(event: TransferEvent): void {
-  let entity = new Transfer(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.contractAddress = event.address
-  entity.from = event.params.from
-  entity.to = event.params.to
-  entity.value = event.params.value
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
-}
-
-export function handleUnpaused(event: UnpausedEvent): void {
-  let entity = new Unpaused(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  entity.account = event.params.account
-
-  entity.blockNumber = event.block.number
-  entity.blockTimestamp = event.block.timestamp
-  entity.transactionHash = event.transaction.hash
-
-  entity.save()
+  const eventType = getTransactionType(event);
+  log.debug(`Event type for vAnchor {}`, [getTransactionTypeMessage(eventType)]);
+  switch (eventType) {
+    case TransactionType.Deposit:
+      handleDepositTx(event);
+      break;
+    case TransactionType.Withdraw:
+      handleWithdrawTx(event);
+      break;
+    case TransactionType.Transfer:
+      break;
+  }
 }

@@ -1,13 +1,14 @@
 {
   "extends": [
-    "@graphprotocol/graph-ts/types/tsconfig.base.json",
-    "../../tsconfig.json"
+    "../../tsconfig.json",
+    "@graphprotocol/graph-ts/types/tsconfig.base.json"
   ],
   "include": [
     "src",
-    "@graphprotocol/graph-ts/types"
+    "@graphprotocol/graph-ts/types",
   ],
   "compilerOptions": {
-    "target": "ES5"
+    "target": "ES5",
+    "types": ["@graphprotocol/graph-ts"]
   }
 }
