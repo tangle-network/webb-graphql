@@ -25,8 +25,8 @@
   "license": "MIT",
   "devDependencies": {
     "@polkadot/api": "^9.0.1",
-    "@subql/cli": "latest",
-    "@subql/types": "latest",
+    "@subql/cli": "1.11.0",
+    "@subql/types": "1.7.1",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
     "@webb-tools/types": "0.1.4-98",

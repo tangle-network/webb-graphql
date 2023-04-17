@@ -4,6 +4,7 @@ import '@webb-tools/types';
 import { EventDecoder } from '../../../utils';
 import { DKGProposalHandlerEvent } from './types';
 import {
+  createNonceWithProposalType,
   createProposalCounter,
   createProposalId,
   dkgPayloadKeyToProposalType,
@@ -28,7 +29,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
       {
         const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalAdded);
         const proposalId = createProposalId(eventData.targetChain, eventData.key);
-        const nonce = Number(eventData.key.value.toString());
+        // const nonce = Number(eventData.key.value.toString());
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         const chainId = eventData.targetChain.value.toString();
         const blockNumber = eventDecoder.blockNumber;
         // Create a new unsigned proposal
@@ -50,7 +52,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalRemoved);
         const proposalId = createProposalId(eventData.targetChain, eventData.key);
         const blockNumber = eventDecoder.blockNumber;
-        const nonce = String(parseInt(eventData.key.value.toHex()));
+        // const nonce = String(parseInt(eventData.key.value.toHex()));
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         const chainId = Number(eventData.targetChain.value.toString());
 
         logger.info(`Unsigned Proposal Removed: ${proposalId}`);
@@ -58,7 +61,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         await removeProposal(
           {
             blockId: blockNumber,
-            nonce,
+            nonce: String(nonce),
             chainId: String(chainId),
           },
           blockNumber
@@ -76,7 +79,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const proposalId = createProposalId(targetChainId, proposalKey);
         const proposalType = dkgPayloadKeyToProposalType(proposalKey);
         const blockNumber = eventDecoder.metaData.blockNumber;
-        const nonce = Number(proposalKey.value.toString());
+        // const nonce = Number(proposalKey.value.toString());
+        const nonce = createNonceWithProposalType(Number(proposalKey.value.toString()), proposalKey);
         const chainId = targetChainId.value.toString();
         await ensureProposalItemStorage({
           proposalId,
@@ -90,7 +94,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         await signProposal(
           {
             blockId: blockNumber,
-            nonce: String(parseInt(eventData.key.value.toHex())),
+            nonce: String(nonce),
             chainId: targetChainId.value.toString(),
           },
           signature,

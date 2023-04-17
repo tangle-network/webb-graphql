@@ -130,6 +130,23 @@ export function createProposalId(
   return `${dkgKeyHash.replace('0x', '')}-${chainIdValue.trim() || '0'}`;
 }
 
+function stringToHash(str: string) {
+  let hash = 0;
+  if (str.length === 0) return hash;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash);
+}
+
+export function createNonceWithProposalType(nonce: number, dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey): number {
+  const dkgKeyHash = dkgKey.hash.toString();
+  const concatenatedString = `${nonce}${dkgKeyHash.replace('0x', '')}`;
+  return stringToHash(concatenatedString);
+}
+
 export type ProposalCreateInput = {
   blockId: string;
   proposalId: string;
@@ -165,6 +182,7 @@ async function ensureAbstainVotes(blockId: string, proposalId: string, proposalC
     );
   }
 }
+
 /**
  *
  * Ensure a proposal item is added
@@ -172,8 +190,10 @@ async function ensureAbstainVotes(blockId: string, proposalId: string, proposalC
  * */
 export async function ensureProposalItemStorage(input: ProposalCreateInput): Promise<ProposalItem> {
   const id = String(input.nonce);
+  logger.info(`INPUT ITEM 📩 NONCE => ${input.nonce} TYPE => ${input.type}`);
   const proposalItem = await ProposalItem.get(id);
   if (proposalItem) {
+    logger.info(`PROPOSAL ITEM 🔥 NONCE => ${proposalItem.nonce} TYPE => ${proposalItem.type}`);
     return proposalItem;
   }
   const { blockId, type, data, nonce } = input;

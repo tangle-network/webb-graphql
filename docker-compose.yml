@@ -18,7 +18,7 @@ services:
       retries: 5
 
   subquery-node:
-    image: onfinality/subql-node:latest
+    image: onfinality/subql-node:v1.21.1
     depends_on:
       - 'postgres'
     restart: always
