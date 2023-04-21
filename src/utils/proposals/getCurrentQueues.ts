@@ -16,7 +16,10 @@ import {
   UnsignedProposalsQueueItem,
   VoteType,
 } from '../../types';
-const { DkgRuntimePrimitivesProposalDkgPayloadKey, WebbProposalsHeaderTypedChainId } = require('@webb-tools/dkg-substrate-types/interfaces/lookup');
+const {
+  DkgRuntimePrimitivesProposalDkgPayloadKey,
+  WebbProposalsHeaderTypedChainId,
+} = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
 import { ensureAccount, ensureBlock } from '../../handlers';
 import { AccountId32 } from '@polkadot/types/interfaces/runtime';
 import { Vec } from '@polkadot/types-codec';
@@ -142,9 +145,8 @@ function stringToHash(str: string) {
   return Math.abs(hash);
 }
 
-export function createNonceWithProposalType(nonce: number, dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey): number {
-  const dkgKeyHash = dkgKey.hash.toString();
-  const concatenatedString = `${nonce}${dkgKeyHash.replace('0x', '')}`;
+export function createNonceWithProposalType(nonce: number, proposalType: string): number {
+  const concatenatedString = `${nonce}${proposalType.toLowerCase()}`;
   return stringToHash(concatenatedString);
 }
 
@@ -398,7 +400,7 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
       typeof DkgRuntimePrimitivesProposalDkgPayloadKey
     ];
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any);
-    const nonce = createNonceWithProposalType(dkgKey.value, dkgKey);
+    const nonce = createNonceWithProposalType(dkgKey.value, Object.keys(JSON.parse(dkgKey.toString()))[0]);
     return {
       proposalId: nonce,
       proposalType,
@@ -410,7 +412,7 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
       typeof DkgRuntimePrimitivesProposalDkgPayloadKey
     ];
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any);
-    const nonce = createNonceWithProposalType(dkgKey.value, dkgKey);
+    const nonce = createNonceWithProposalType(dkgKey.value, Object.keys(JSON.parse(dkgKey.toString()))[0]);
     return {
       chainId: chainId.value.toString(),
       proposalId: nonce,
