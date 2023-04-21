@@ -9,7 +9,7 @@ import {
 } from '../enums'
 
 
-export type ProposalItemProps = Omit<ProposalItem, NonNullable<FunctionPropertyNames<ProposalItem>>>;
+export type ProposalItemProps = Omit<ProposalItem, NonNullable<FunctionPropertyNames<ProposalItem>>| '_name'>;
 
 export class ProposalItem implements Entity {
 
@@ -38,6 +38,10 @@ export class ProposalItem implements Entity {
 
     public blockId: string;
 
+
+    get _name(): string {
+        return 'ProposalItem';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

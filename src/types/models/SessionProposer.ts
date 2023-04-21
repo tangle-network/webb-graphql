@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type SessionProposerProps = Omit<SessionProposer, NonNullable<FunctionPropertyNames<SessionProposer>>>;
+export type SessionProposerProps = Omit<SessionProposer, NonNullable<FunctionPropertyNames<SessionProposer>>| '_name'>;
 
 export class SessionProposer implements Entity {
 
@@ -20,6 +20,10 @@ export class SessionProposer implements Entity {
 
     public proposerId: string;
 
+
+    get _name(): string {
+        return 'SessionProposer';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

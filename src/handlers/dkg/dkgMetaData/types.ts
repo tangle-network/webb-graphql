@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import type { Codec } from '@polkadot/types-codec/types';
-import { PalletDkgMetadataEvent } from '@polkadot/types/lookup';
+const { PalletDkgMetadataEvent } = require('@webb-tools/dkg-substrate-types/interfaces/lookup');
 import { Struct, u16 } from '@polkadot/types-codec';
 
 export enum DKGMethod {
@@ -16,15 +17,15 @@ export interface KeygenThresholdArgs {
 }
 
 export type DKGMetaDataEvent = {
-  PublicKeySubmitted: PalletDkgMetadataEvent['asPublicKeySubmitted'];
-  NextPublicKeySubmitted: PalletDkgMetadataEvent['asNextPublicKeySubmitted'];
-  NextPublicKeySignatureSubmitted: PalletDkgMetadataEvent['asNextPublicKeySignatureSubmitted'] &
-    PalletDkgMetadataEvent['asPublicKeySubmitted'];
-  PublicKeyChanged: PalletDkgMetadataEvent['asPublicKeyChanged'];
-  PublicKeySignatureChanged: PalletDkgMetadataEvent['asPublicKeySignatureChanged'] &
-    PalletDkgMetadataEvent['asPublicKeySubmitted'];
-  MisbehaviourReportsSubmitted: PalletDkgMetadataEvent['asMisbehaviourReportsSubmitted'];
-  RefreshKeysFinished: PalletDkgMetadataEvent['asRefreshKeysFinished'];
+  PublicKeySubmitted: (typeof PalletDkgMetadataEvent)['asPublicKeySubmitted'];
+  NextPublicKeySubmitted: (typeof PalletDkgMetadataEvent)['asNextPublicKeySubmitted'];
+  NextPublicKeySignatureSubmitted: (typeof PalletDkgMetadataEvent)['asNextPublicKeySignatureSubmitted'] &
+    (typeof PalletDkgMetadataEvent)['asPublicKeySubmitted'];
+  PublicKeyChanged: (typeof PalletDkgMetadataEvent)['asPublicKeyChanged'];
+  PublicKeySignatureChanged: (typeof PalletDkgMetadataEvent)['asPublicKeySignatureChanged'] &
+    (typeof PalletDkgMetadataEvent)['asPublicKeySubmitted'];
+  MisbehaviourReportsSubmitted: (typeof PalletDkgMetadataEvent)['asMisbehaviourReportsSubmitted'];
+  RefreshKeysFinished: (typeof PalletDkgMetadataEvent)['asRefreshKeysFinished'];
   NextKeygenThresholdUpdated: Struct & {
     nextKeygenThreshold: u16;
   };

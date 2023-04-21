@@ -9,7 +9,7 @@ import {
 } from '../enums'
 
 
-export type ThresholdProps = Omit<Threshold, NonNullable<FunctionPropertyNames<Threshold>>>;
+export type ThresholdProps = Omit<Threshold, NonNullable<FunctionPropertyNames<Threshold>>| '_name'>;
 
 export class Threshold implements Entity {
 
@@ -30,6 +30,10 @@ export class Threshold implements Entity {
 
     public variant: ThresholdVariant;
 
+
+    get _name(): string {
+        return 'Threshold';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

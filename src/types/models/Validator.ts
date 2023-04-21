@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type ValidatorProps = Omit<Validator, NonNullable<FunctionPropertyNames<Validator>>>;
+export type ValidatorProps = Omit<Validator, NonNullable<FunctionPropertyNames<Validator>>| '_name'>;
 
 export class Validator implements Entity {
 
@@ -20,6 +20,10 @@ export class Validator implements Entity {
 
     public authorityId: string;
 
+
+    get _name(): string {
+        return 'Validator';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

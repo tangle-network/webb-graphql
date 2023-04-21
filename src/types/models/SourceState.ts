@@ -9,7 +9,7 @@ import {
 
 
 
-export type SourceStateProps = Omit<SourceState, NonNullable<FunctionPropertyNames<SourceState>>>;
+export type SourceStateProps = Omit<SourceState, NonNullable<FunctionPropertyNames<SourceState>>| '_name'>;
 
 export class SourceState implements Entity {
 
@@ -24,6 +24,10 @@ export class SourceState implements Entity {
 
     public numberOfSessions: number;
 
+
+    get _name(): string {
+        return 'SourceState';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

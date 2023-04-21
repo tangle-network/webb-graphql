@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type SessionValidatorProps = Omit<SessionValidator, NonNullable<FunctionPropertyNames<SessionValidator>>>;
+export type SessionValidatorProps = Omit<SessionValidator, NonNullable<FunctionPropertyNames<SessionValidator>>| '_name'>;
 
 export class SessionValidator implements Entity {
 
@@ -36,6 +36,10 @@ export class SessionValidator implements Entity {
 
     public blockNumber: bigint;
 
+
+    get _name(): string {
+        return 'SessionValidator';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

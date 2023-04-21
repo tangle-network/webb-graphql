@@ -9,7 +9,7 @@ import {
 
 
 
-export type PublicKeyProps = Omit<PublicKey, NonNullable<FunctionPropertyNames<PublicKey>>>;
+export type PublicKeyProps = Omit<PublicKey, NonNullable<FunctionPropertyNames<PublicKey>>| '_name'>;
 
 export class PublicKey implements Entity {
 
@@ -28,6 +28,10 @@ export class PublicKey implements Entity {
 
     public blockId: string;
 
+
+    get _name(): string {
+        return 'PublicKey';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

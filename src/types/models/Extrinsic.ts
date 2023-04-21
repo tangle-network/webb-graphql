@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type ExtrinsicProps = Omit<Extrinsic, NonNullable<FunctionPropertyNames<Extrinsic>>>;
+export type ExtrinsicProps = Omit<Extrinsic, NonNullable<FunctionPropertyNames<Extrinsic>>| '_name'>;
 
 export class Extrinsic implements Entity {
 
@@ -36,6 +36,10 @@ export class Extrinsic implements Entity {
 
     public isSuccess?: boolean;
 
+
+    get _name(): string {
+        return 'Extrinsic';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

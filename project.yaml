@@ -8,7 +8,7 @@ repository: 'https://github.com/subquery/subql-starter'
 runner:
   node:
     name: '@subql/node'
-    version: '>=1.0.0'
+    version: '=v1.21.1'
   query:
     name: '@subql/query'
     version: '*'
@@ -18,11 +18,11 @@ schema:
 
 network:
   # Use Tangle network endpoint for Arana Alpha testnet see: https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstats-dev.api.webb.tools%2Fpublic-ws#/settings/metadata
-  chainId: '0xde00413eb27fbc6ccc8e389a7ce049a07f0a397af8a730253d3b00f2da10cbeb'
+  chainId: '0xf683531ea077ffeeb9358d8d87cd9a0026dfdb27d8f22d47ae08c5d1bd52cf87'
   # using testnet archive node endpoint
   endpoint: 'wss://stats-dev.api.webb.tools/public-ws'
   # if you are using docker, uncomment the below line
-  # endpoint: "ws://host.docker.internal:9944"
+  # endpoint: 'ws://host.docker.internal:9944'
   # if you are not using Docker and want to run locally, uncomment the below line
   # endpoint: 'ws://127.0.0.1:9944'
 

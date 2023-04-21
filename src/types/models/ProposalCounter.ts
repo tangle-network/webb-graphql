@@ -11,7 +11,7 @@ import {
 
 
 
-export type ProposalCounterProps = Omit<ProposalCounter, NonNullable<FunctionPropertyNames<ProposalCounter>>>;
+export type ProposalCounterProps = Omit<ProposalCounter, NonNullable<FunctionPropertyNames<ProposalCounter>>| '_name'>;
 
 export class ProposalCounter implements Entity {
 
@@ -36,6 +36,10 @@ export class ProposalCounter implements Entity {
 
     public blockId: string;
 
+
+    get _name(): string {
+        return 'ProposalCounter';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

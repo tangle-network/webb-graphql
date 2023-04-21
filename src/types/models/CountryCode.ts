@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type CountryCodeProps = Omit<CountryCode, NonNullable<FunctionPropertyNames<CountryCode>>>;
+export type CountryCodeProps = Omit<CountryCode, NonNullable<FunctionPropertyNames<CountryCode>>| '_name'>;
 
 export class CountryCode implements Entity {
 
@@ -18,6 +18,10 @@ export class CountryCode implements Entity {
 
     public code: string;
 
+
+    get _name(): string {
+        return 'CountryCode';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

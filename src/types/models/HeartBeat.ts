@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type HeartBeatProps = Omit<HeartBeat, NonNullable<FunctionPropertyNames<HeartBeat>>>;
+export type HeartBeatProps = Omit<HeartBeat, NonNullable<FunctionPropertyNames<HeartBeat>>| '_name'>;
 
 export class HeartBeat implements Entity {
 
@@ -22,6 +22,10 @@ export class HeartBeat implements Entity {
 
     public accountId: string;
 
+
+    get _name(): string {
+        return 'HeartBeat';
+    }
 
     async save(): Promise<void>{
         let id = this.id;
