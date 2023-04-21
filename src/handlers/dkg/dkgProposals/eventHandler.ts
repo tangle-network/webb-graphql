@@ -48,7 +48,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.VoteFor:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.VoteFor);
-        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
+        const proposalType = eventData[0] === 'Refresh' ? 'RefreshVote' : eventData[0] + 'Proposal';
+        const nonce = createNonceWithProposalType(Number(eventData[2]), proposalType);
         await addVote(
           {
             blockId: eventDecoded.blockNumber,
@@ -81,7 +82,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalApproved:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalApproved);
-        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
+        const proposalType = eventData[0] === 'Refresh' ? 'RefreshVote' : eventData[0] + 'Proposal';
+        const nonce = createNonceWithProposalType(Number(eventData[2]), proposalType);
         await approveProposal(
           {
             blockId: eventDecoded.blockNumber,
@@ -95,7 +97,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalRejected:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalRejected);
-        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
+        const proposalType = eventData[0] === 'Refresh' ? 'RefreshVote' : eventData[0] + 'Proposal';
+        const nonce = createNonceWithProposalType(Number(eventData[2]), proposalType);
         await rejectProposal(
           {
             blockId: eventDecoded.blockNumber,
@@ -109,7 +112,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalSucceeded:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalSucceeded);
-        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
+        const proposalType = eventData[0] === 'Refresh' ? 'RefreshVote' : eventData[0] + 'Proposal';
+        const nonce = createNonceWithProposalType(Number(eventData[2]), proposalType);
         await executedProposal(
           {
             blockId: eventDecoded.blockNumber,
@@ -123,7 +127,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalFailed:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalFailed);
-        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
+        const proposalType = eventData[0] === 'Refresh' ? 'RefreshVote' : eventData[0] + 'Proposal';
+        const nonce = createNonceWithProposalType(Number(eventData[2]), proposalType);
         await failedProposal(
           {
             blockId: eventDecoded.blockNumber,

@@ -2,7 +2,7 @@
 import { ensureBlock } from './block';
 import { Proposer, Session, SessionProposer, SessionValidator, Threshold, ThresholdVariant, Validator } from '../types';
 import { u16, u32, Vec } from '@polkadot/types-codec';
-const { DkgRuntimePrimitivesCryptoPublic } = require('@webb-tools/dkg-substrate-types/interfaces/lookup');
+const { DkgRuntimePrimitivesCryptoPublic } = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
 import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
 import { ITuple } from '@polkadot/types-codec/types';
 import { AbstractInt } from '@polkadot/types-codec';
