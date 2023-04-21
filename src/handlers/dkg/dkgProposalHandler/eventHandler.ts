@@ -1,6 +1,5 @@
 import { SubstrateEvent } from '@subql/types';
 import { DKGProposalHandlerSection, DKGSections } from '../type';
-import '@webb-tools/types';
 import { EventDecoder } from '../../../utils';
 import { DKGProposalHandlerEvent } from './types';
 import {
@@ -29,7 +28,6 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
       {
         const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalAdded);
         const proposalId = createProposalId(eventData.targetChain, eventData.key);
-        // const nonce = Number(eventData.key.value.toString());
         const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         const chainId = eventData.targetChain.value.toString();
         const blockNumber = eventDecoder.blockNumber;

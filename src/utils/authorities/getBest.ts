@@ -8,6 +8,7 @@ export async function getBestAuthorities(): Promise<Omit<AuthoritiesProps, 'id'>
   const next = await api.query.dkg.nextBestAuthorities();
 
   return {
+    _name: 'Authorities',
     current: current.toJSON() as string[],
     next: next.toJSON() as string[],
     blockId: '0',

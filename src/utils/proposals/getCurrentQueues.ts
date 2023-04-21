@@ -15,7 +15,8 @@ import {
   UnsignedProposalsQueueItem,
   VoteType,
 } from '../../types';
-import { DkgRuntimePrimitivesProposalDkgPayloadKey, WebbProposalsHeaderTypedChainId } from '@polkadot/types/lookup';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { DkgRuntimePrimitivesProposalDkgPayloadKey, WebbProposalsHeaderTypedChainId } = require('@webb-tools/dkg-substrate-types/interfaces/lookup');
 import { ensureAccount, ensureBlock } from '../../handlers';
 import { AccountId32 } from '@polkadot/types/interfaces/runtime';
 import { Vec } from '@polkadot/types-codec';
@@ -54,7 +55,7 @@ export interface Proposal {
   signed: Signed;
 }
 
-export function dkgPayloadKeyToProposalType(dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey): ProposalType {
+export function dkgPayloadKeyToProposalType(dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey): ProposalType {
   switch (dkgKey.type) {
     case 'EvmProposal':
       return ProposalType.EvmProposal;
@@ -122,8 +123,8 @@ const ensureProposalQueueItem = async (blockId: string, proposalId: string, chai
 };
 
 export function createProposalId(
-  chainId: WebbProposalsHeaderTypedChainId,
-  dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey
+  chainId: typeof WebbProposalsHeaderTypedChainId,
+  dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey
 ): string {
   const dkgKeyHash = dkgKey.hash.toString();
   const chainIdValue = chainId.value.toString();
@@ -141,7 +142,7 @@ function stringToHash(str: string) {
   return Math.abs(hash);
 }
 
-export function createNonceWithProposalType(nonce: number, dkgKey: DkgRuntimePrimitivesProposalDkgPayloadKey): number {
+export function createNonceWithProposalType(nonce: number, dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey): number {
   const dkgKeyHash = dkgKey.hash.toString();
   const concatenatedString = `${nonce}${dkgKeyHash.replace('0x', '')}`;
   return stringToHash(concatenatedString);
@@ -190,10 +191,8 @@ async function ensureAbstainVotes(blockId: string, proposalId: string, proposalC
  * */
 export async function ensureProposalItemStorage(input: ProposalCreateInput): Promise<ProposalItem> {
   const id = String(input.nonce);
-  logger.info(`INPUT ITEM 📩 NONCE => ${input.nonce} TYPE => ${input.type}`);
   const proposalItem = await ProposalItem.get(id);
   if (proposalItem) {
-    logger.info(`PROPOSAL ITEM 🔥 NONCE => ${proposalItem.nonce} TYPE => ${proposalItem.type}`);
     return proposalItem;
   }
   const { blockId, type, data, nonce } = input;
@@ -395,11 +394,11 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
   const unSignedProposalsData = await api.query.dkgProposalHandler.unsignedProposalQueue.entries();
   const parsedSigProposals = signedProposalsData.map(([key]) => {
     const [_chainId, dkgKey] = key.args as unknown as [
-      WebbProposalsHeaderTypedChainId,
-      DkgRuntimePrimitivesProposalDkgPayloadKey
+      typeof WebbProposalsHeaderTypedChainId,
+      typeof DkgRuntimePrimitivesProposalDkgPayloadKey
     ];
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any);
-    const nonce = dkgKey.value.toString();
+    const nonce = createNonceWithProposalType(dkgKey.value, dkgKey);
     return {
       proposalId: nonce,
       proposalType,
@@ -407,12 +406,11 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
   });
   const parsedUnSigProposals = unSignedProposalsData.map(([key]) => {
     const [chainId, dkgKey] = key.args as unknown as [
-      WebbProposalsHeaderTypedChainId,
-      DkgRuntimePrimitivesProposalDkgPayloadKey
+      typeof WebbProposalsHeaderTypedChainId,
+      typeof DkgRuntimePrimitivesProposalDkgPayloadKey
     ];
     const proposalType = dkgPayloadKeyToProposalType(dkgKey as any);
-    const nonce = dkgKey.value.toString();
-
+    const nonce = createNonceWithProposalType(dkgKey.value, dkgKey);
     return {
       chainId: chainId.value.toString(),
       proposalId: nonce,
@@ -425,12 +423,12 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
   parsedSigProposals.forEach((proposal) => {
     if (signedCounter[proposal.proposalType]) {
       signedCounter[proposal.proposalType].count = String(Number(signedCounter[proposal.proposalType].count) + 1);
-      signedCounter[proposal.proposalType].proposalId.push(proposal.proposalId);
+      signedCounter[proposal.proposalType].proposalId.push(proposal.proposalId.toString());
     } else {
       signedCounter[proposal.proposalType] = {
         count: '1',
         type: proposal.proposalType.toString(),
-        proposalId: [proposal.proposalId],
+        proposalId: [proposal.proposalId.toString()],
       };
     }
   });
@@ -438,12 +436,12 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
   parsedUnSigProposals.forEach((proposal) => {
     if (unSignedCounter[proposal.proposalType]) {
       unSignedCounter[proposal.proposalType].count = String(Number(unSignedCounter[proposal.proposalType].count) + 1);
-      unSignedCounter[proposal.proposalType].proposalId.push(proposal.proposalId);
+      unSignedCounter[proposal.proposalType].proposalId.push(proposal.proposalId.toString());
     } else {
       unSignedCounter[proposal.proposalType] = {
         count: '1',
         type: proposal.proposalType.toString(),
-        proposalId: [proposal.proposalId],
+        proposalId: [proposal.proposalId.toString()],
       };
     }
   });
@@ -488,7 +486,7 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
   await ensureProposalQueue(blockId);
   await Promise.all(
     parsedUnSigProposals.map((p) => {
-      return ensureProposalQueueItem(blockId, p.proposalId, p.chainId);
+      return ensureProposalQueueItem(blockId, p.proposalId.toString(), p.chainId);
     })
   );
   await counter.save();

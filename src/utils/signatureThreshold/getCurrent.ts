@@ -9,6 +9,7 @@ export async function getCurrentSignatureThreshold(): Promise<Omit<SignatureThre
   const next = await api.query.dkg.nextSignatureThreshold();
 
   return {
+    _name: 'SignatureThreshold',
     current: parseInt(current.toHex()),
     pending: parseInt(pending.toHex()),
     next: parseInt(next.toHex()),

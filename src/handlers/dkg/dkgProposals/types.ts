@@ -1,15 +1,16 @@
-import { PalletDkgProposalsEvent } from '@webb-tools/dkg-substrate-types/interfaces/types-lookup';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { PalletDkgProposalsEvent } = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
 
 export type DKGProposalsEvent = {
-  ProposerThresholdChanged: PalletDkgProposalsEvent['asProposerThresholdChanged'];
-  ChainWhitelisted: PalletDkgProposalsEvent['asChainWhitelisted'];
-  ProposerAdded: PalletDkgProposalsEvent['asProposerAdded'];
-  ProposerRemoved: PalletDkgProposalsEvent['asProposerRemoved'];
-  VoteFor: PalletDkgProposalsEvent['asVoteFor'];
-  VoteAgainst: PalletDkgProposalsEvent['asVoteAgainst'];
-  ProposalApproved: PalletDkgProposalsEvent['asProposalApproved'];
-  ProposalRejected: PalletDkgProposalsEvent['asProposalRejected'];
-  ProposalSucceeded: PalletDkgProposalsEvent['asProposalSucceeded'];
-  ProposalFailed: PalletDkgProposalsEvent['asProposalFailed'];
-  AuthorityProposersReset: PalletDkgProposalsEvent['asAuthorityProposersReset'];
+  ProposerThresholdChanged: typeof PalletDkgProposalsEvent['asProposerThresholdChanged'];
+  ChainWhitelisted: typeof PalletDkgProposalsEvent['asChainWhitelisted'];
+  ProposerAdded: typeof PalletDkgProposalsEvent['asProposerAdded'];
+  ProposerRemoved: typeof PalletDkgProposalsEvent['asProposerRemoved'];
+  VoteFor: typeof PalletDkgProposalsEvent['asVoteFor'];
+  VoteAgainst: typeof PalletDkgProposalsEvent['asVoteAgainst'];
+  ProposalApproved: typeof PalletDkgProposalsEvent['asProposalApproved'];
+  ProposalRejected: typeof PalletDkgProposalsEvent['asProposalRejected'];
+  ProposalSucceeded: typeof PalletDkgProposalsEvent['asProposalSucceeded'];
+  ProposalFailed: typeof PalletDkgProposalsEvent['asProposalFailed'];
+  AuthorityProposersReset: typeof PalletDkgProposalsEvent['asAuthorityProposersReset'];
 };

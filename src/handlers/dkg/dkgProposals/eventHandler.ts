@@ -1,14 +1,13 @@
 import { SubstrateEvent } from '@subql/types';
 import { DKGProposalsSection, DKGSections } from '../type';
 import { createProposerThreshold } from './proposerThreshold';
-import '@webb-tools/types';
-
 import { DKGProposalsEvent } from './types';
 import { EventDecoder } from '../../../utils';
 import { createOrUpdateSession, currentSessionId } from '../../session';
 import {
   addVote,
   approveProposal,
+  createNonceWithProposalType,
   executedProposal,
   failedProposal,
   rejectProposal,
@@ -49,10 +48,11 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.VoteFor:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.VoteFor);
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         await addVote(
           {
             blockId: eventDecoded.blockNumber,
-            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+            nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
           },
           eventData.who.toString(),
@@ -65,10 +65,11 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.VoteAgainst:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.VoteAgainst);
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         await addVote(
           {
             blockId: eventDecoded.blockNumber,
-            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+            nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
           },
           eventData.who.toString(),
@@ -80,10 +81,11 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalApproved:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalApproved);
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         await approveProposal(
           {
             blockId: eventDecoded.blockNumber,
-            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+            nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
           },
           eventDecoded.blockNumber
@@ -93,10 +95,11 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalRejected:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalRejected);
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         await rejectProposal(
           {
             blockId: eventDecoded.blockNumber,
-            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+            nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
           },
           eventDecoded.blockNumber
@@ -106,10 +109,11 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalSucceeded:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalSucceeded);
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         await executedProposal(
           {
             blockId: eventDecoded.blockNumber,
-            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+            nonce: String(nonce),
             chainId: eventData.chainId.toString(),
           },
           eventDecoded.blockNumber
@@ -119,10 +123,11 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
     case DKGProposalsSection.ProposalFailed:
       {
         const eventData = eventDecoded.as(DKGProposalsSection.ProposalFailed);
+        const nonce = createNonceWithProposalType(Number(eventData.key.value.toString()), eventData.key);
         await failedProposal(
           {
             blockId: eventDecoded.blockNumber,
-            nonce: String(parseInt(eventData.proposalNonce.toHex())),
+            nonce: String(nonce),
             chainId: eventData.chainId.toString(),
           },
           eventDecoded.blockNumber

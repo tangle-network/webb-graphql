@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { ensureBlock } from './block';
-import '@webb-tools/types';
 import { Proposer, Session, SessionProposer, SessionValidator, Threshold, ThresholdVariant, Validator } from '../types';
 import { u16, u32, Vec } from '@polkadot/types-codec';
-import { DkgRuntimePrimitivesCryptoPublic } from '@webb-tools/dkg-substrate-types/interfaces/lookup';
+const { DkgRuntimePrimitivesCryptoPublic } = require('@webb-tools/dkg-substrate-types/interfaces/lookup');
 import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
-
 import { ITuple } from '@polkadot/types-codec/types';
 import { AbstractInt } from '@polkadot/types-codec';
 import { ensureAccount, getCachedKeys } from './account';
@@ -86,10 +85,10 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
 
   // Fetch authorities for a block number
   const [authorities, nextAuthorities, bestAuthorities, nextBestAuthorities]: [
-    Vec<DkgRuntimePrimitivesCryptoPublic>,
-    Vec<DkgRuntimePrimitivesCryptoPublic>,
-    Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>>,
-    Vec<ITuple<[u16, DkgRuntimePrimitivesCryptoPublic]>>
+    Vec<typeof DkgRuntimePrimitivesCryptoPublic>,
+    Vec<typeof DkgRuntimePrimitivesCryptoPublic>,
+    Vec<ITuple<[u16, typeof DkgRuntimePrimitivesCryptoPublic]>>,
+    Vec<ITuple<[u16, typeof DkgRuntimePrimitivesCryptoPublic]>>
   ] = (await Promise.all([
     api.query.dkg.authorities(),
     api.query.dkg.nextAuthorities(),
@@ -118,7 +117,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     authorityReputationMap[authId] = val.toString();
   });
 
-  const dkgAuthorityMapper = (authIdRaw: DkgRuntimePrimitivesCryptoPublic): DKGAuthority => {
+  const dkgAuthorityMapper = (authIdRaw: typeof DkgRuntimePrimitivesCryptoPublic): DKGAuthority => {
     const authorityId = authIdRaw.toString().replace('0x', '');
     const accountId = authorityIdMap[authorityId];
     return {
