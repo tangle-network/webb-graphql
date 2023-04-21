@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type ProposerThresholdProps = Omit<ProposerThreshold, NonNullable<FunctionPropertyNames<ProposerThreshold>>>;
+export type ProposerThresholdProps = Omit<ProposerThreshold, NonNullable<FunctionPropertyNames<ProposerThreshold>>| '_name'>;
 
 export class ProposerThreshold implements Entity {
 
@@ -20,6 +20,10 @@ export class ProposerThreshold implements Entity {
 
     public blockId: string;
 
+
+    get _name(): string {
+        return 'ProposerThreshold';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

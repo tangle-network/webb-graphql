@@ -1,4 +1,4 @@
-import { PalletDkgProposalHandlerEvent } from '@polkadot/types/lookup';
+import { PalletDkgProposalHandlerEvent } from '@webb-tools/dkg-substrate-types/interfaces/lookup';
 
 export type DKGProposalHandlerEvent = {
   InvalidProposalSignature: PalletDkgProposalHandlerEvent['asInvalidProposalSignature'];

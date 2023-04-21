@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type EventProps = Omit<Event, NonNullable<FunctionPropertyNames<Event>>>;
+export type EventProps = Omit<Event, NonNullable<FunctionPropertyNames<Event>>| '_name'>;
 
 export class Event implements Entity {
 
@@ -36,6 +36,10 @@ export class Event implements Entity {
 
     public extrinsicId?: string;
 
+
+    get _name(): string {
+        return 'Event';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

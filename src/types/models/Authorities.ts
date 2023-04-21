@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type AuthoritiesProps = Omit<Authorities, NonNullable<FunctionPropertyNames<Authorities>>>;
+export type AuthoritiesProps = Omit<Authorities, NonNullable<FunctionPropertyNames<Authorities>>| '_name'>;
 
 export class Authorities implements Entity {
 
@@ -22,6 +22,10 @@ export class Authorities implements Entity {
 
     public blockId: string;
 
+
+    get _name(): string {
+        return 'Authorities';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

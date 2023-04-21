@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type SignatureThresholdProps = Omit<SignatureThreshold, NonNullable<FunctionPropertyNames<SignatureThreshold>>>;
+export type SignatureThresholdProps = Omit<SignatureThreshold, NonNullable<FunctionPropertyNames<SignatureThreshold>>| '_name'>;
 
 export class SignatureThreshold implements Entity {
 
@@ -24,6 +24,10 @@ export class SignatureThreshold implements Entity {
 
     public blockId: string;
 
+
+    get _name(): string {
+        return 'SignatureThreshold';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

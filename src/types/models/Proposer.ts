@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type ProposerProps = Omit<Proposer, NonNullable<FunctionPropertyNames<Proposer>>>;
+export type ProposerProps = Omit<Proposer, NonNullable<FunctionPropertyNames<Proposer>>| '_name'>;
 
 export class Proposer implements Entity {
 
@@ -18,6 +18,10 @@ export class Proposer implements Entity {
 
     public accountId: string;
 
+
+    get _name(): string {
+        return 'Proposer';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

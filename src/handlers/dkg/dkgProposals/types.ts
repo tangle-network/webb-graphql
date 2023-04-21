@@ -1,4 +1,4 @@
-import { PalletDkgProposalsEvent } from '@polkadot/types/lookup';
+import { PalletDkgProposalsEvent } from '@webb-tools/dkg-substrate-types/interfaces/types-lookup';
 
 export type DKGProposalsEvent = {
   ProposerThresholdChanged: PalletDkgProposalsEvent['asProposerThresholdChanged'];

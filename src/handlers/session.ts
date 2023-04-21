@@ -2,11 +2,11 @@ import { ensureBlock } from './block';
 import '@webb-tools/types';
 import { Proposer, Session, SessionProposer, SessionValidator, Threshold, ThresholdVariant, Validator } from '../types';
 import { u16, u32, Vec } from '@polkadot/types-codec';
-import { DkgRuntimePrimitivesCryptoPublic } from '@polkadot/types/lookup';
+import { DkgRuntimePrimitivesCryptoPublic } from '@webb-tools/dkg-substrate-types/interfaces/lookup';
 import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
 
 import { ITuple } from '@polkadot/types-codec/types';
-import { AbstractInt } from '@polkadot/types-codec/abstract/Int';
+import { AbstractInt } from '@polkadot/types-codec';
 import { ensureAccount, getCachedKeys } from './account';
 import { getUptimeMap, increaseSourceSession } from './source';
 import { getIntPercentage } from '../utils/int-percentage';

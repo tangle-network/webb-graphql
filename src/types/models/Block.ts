@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type BlockProps = Omit<Block, NonNullable<FunctionPropertyNames<Block>>>;
+export type BlockProps = Omit<Block, NonNullable<FunctionPropertyNames<Block>>| '_name'>;
 
 export class Block implements Entity {
 
@@ -30,6 +30,10 @@ export class Block implements Entity {
 
     public extrinsicsRoot?: string;
 
+
+    get _name(): string {
+        return 'Block';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

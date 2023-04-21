@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type KeygenThresholdProps = Omit<KeygenThreshold, NonNullable<FunctionPropertyNames<KeygenThreshold>>>;
+export type KeygenThresholdProps = Omit<KeygenThreshold, NonNullable<FunctionPropertyNames<KeygenThreshold>>| '_name'>;
 
 export class KeygenThreshold implements Entity {
 
@@ -24,6 +24,10 @@ export class KeygenThreshold implements Entity {
 
     public blockId: string;
 
+
+    get _name(): string {
+        return 'KeygenThreshold';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type UnsignedProposalsQueueProps = Omit<UnsignedProposalsQueue, NonNullable<FunctionPropertyNames<UnsignedProposalsQueue>>>;
+export type UnsignedProposalsQueueProps = Omit<UnsignedProposalsQueue, NonNullable<FunctionPropertyNames<UnsignedProposalsQueue>>| '_name'>;
 
 export class UnsignedProposalsQueue implements Entity {
 
@@ -20,6 +20,10 @@ export class UnsignedProposalsQueue implements Entity {
 
     public blockNumber: number;
 
+
+    get _name(): string {
+        return 'UnsignedProposalsQueue';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

@@ -25,11 +25,10 @@
   "license": "MIT",
   "devDependencies": {
     "@polkadot/api": "^9.0.1",
-    "@subql/cli": "1.11.0",
-    "@subql/types": "1.7.1",
+    "@subql/cli": "latest",
+    "@subql/types": "latest",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "@webb-tools/types": "0.1.4-98",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
@@ -38,5 +37,8 @@
   },
   "resolutions": {
     "ipfs-unixfs": "6.0.6"
+  },
+  "dependencies": {
+    "@webb-tools/dkg-substrate-types": "^0.0.5"
   }
 }

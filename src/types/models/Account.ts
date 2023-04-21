@@ -5,7 +5,7 @@ import assert from 'assert';
 
 
 
-export type AccountProps = Omit<Account, NonNullable<FunctionPropertyNames<Account>>>;
+export type AccountProps = Omit<Account, NonNullable<FunctionPropertyNames<Account>>| '_name'>;
 
 export class Account implements Entity {
 
@@ -40,6 +40,10 @@ export class Account implements Entity {
 
     public countryCodeId?: string;
 
+
+    get _name(): string {
+        return 'Account';
+    }
 
     async save(): Promise<void>{
         let id = this.id;

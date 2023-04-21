@@ -9,7 +9,7 @@ import {
 } from '../enums'
 
 
-export type ProposalTimelineStatusProps = Omit<ProposalTimelineStatus, NonNullable<FunctionPropertyNames<ProposalTimelineStatus>>>;
+export type ProposalTimelineStatusProps = Omit<ProposalTimelineStatus, NonNullable<FunctionPropertyNames<ProposalTimelineStatus>>| '_name'>;
 
 export class ProposalTimelineStatus implements Entity {
 
@@ -30,6 +30,10 @@ export class ProposalTimelineStatus implements Entity {
 
     public timestamp: Date;
 
+
+    get _name(): string {
+        return 'ProposalTimelineStatus';
+    }
 
     async save(): Promise<void>{
         let id = this.id;
