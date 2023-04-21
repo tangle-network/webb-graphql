@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /**
  * Get current signed and unsigned queues
  */
@@ -15,7 +16,6 @@ import {
   UnsignedProposalsQueueItem,
   VoteType,
 } from '../../types';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { DkgRuntimePrimitivesProposalDkgPayloadKey, WebbProposalsHeaderTypedChainId } = require('@webb-tools/dkg-substrate-types/interfaces/lookup');
 import { ensureAccount, ensureBlock } from '../../handlers';
 import { AccountId32 } from '@polkadot/types/interfaces/runtime';
