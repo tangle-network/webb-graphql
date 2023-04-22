@@ -1,16 +1,16 @@
 /* eslint-disable prefer-const */
-import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
 
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 export const chains = ["Hermes", "Athena", "Demter"];
 
 export const vAnchorConfig: Map<string, Address> = new Map<string, Address>();
-vAnchorConfig.set(chains[0], Address.fromString("0x968d628e0Efc57371162D03C623E70af5D90553b"));
-vAnchorConfig.set(chains[1], Address.fromString("0xcAFBfD7554D7fFc3cDd36f2500F5aF289c511e1D"));
+vAnchorConfig.set(chains[0], Address.fromString("0x5D3b0d1AC094A8551bAB3818Eff758dc1893e6C7"));
+vAnchorConfig.set(chains[1], Address.fromString("0x1b376B18A065D3B8Ce5e6354fAd5F35B9FbdC21c"));
 
 export const fungibleTokenWrapperConfig: Map<string, Address> = new Map<string, Address>();
-fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0xe30aEb7eCB2e03617A2699d5773E0652F872bB41"));
-fungibleTokenWrapperConfig.set(chains[1], Address.fromString("0x9B0be65637Bb432E2d13DD45132078d09Eb483eA"));
+fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0x2946259E0334f33A064106302415aD3391BeD384"));
+fungibleTokenWrapperConfig.set(chains[1], Address.fromString("0xDe09E74d4888Bc4e65F589e8c13Bce9F71DdF4c7"));
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);

@@ -153,6 +153,7 @@ function handleWithdrawTx(event: TransferEvent): void {
  *
  * */
 export function handleTransfer(event: TransferEvent): void {
+  log.debug("Handler transfer works" , [])
   const eventType = getTransactionType(event);
   log.debug(`Event type for vAnchor {}`, [getTransactionTypeMessage(eventType)]);
   switch (eventType) {

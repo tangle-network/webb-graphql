@@ -14,6 +14,7 @@ import {
   NewNullifier,
   PublicKey
 } from "../generated/schema"
+import { log } from "@graphprotocol/graph-ts";
 
 /**
  * EdgeAddition event handler
@@ -86,6 +87,7 @@ export function handleInsertion(event: InsertionEvent): void {
  *
  * */
 export function handleNewCommitment(event: NewCommitmentEvent): void {
+  log.info("Handler for new commitment" ,[]);
   let entity = new NewCommitment(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )

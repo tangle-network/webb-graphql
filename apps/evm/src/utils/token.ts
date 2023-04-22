@@ -1,5 +1,4 @@
 import { Address } from "@graphprotocol/graph-ts";
-import { FungibleTokenWrapper } from "../../generated/FungibleTokenWrapper/FungibleTokenWrapper";
 
 class FungibleTokenWrapperMetaData {
   name: string;
@@ -12,9 +11,9 @@ class FungibleTokenWrapperMetaData {
 }
 
 export function fetchTokenData(tokenAddress: Address): FungibleTokenWrapperMetaData {
-  const fungibleTokenWrapper = FungibleTokenWrapper.bind(tokenAddress);
-  const symbol = fungibleTokenWrapper.symbol();
-  const name = fungibleTokenWrapper.name();
+  // const fungibleTokenWrapper = FungibleTokenWrapper.bind(tokenAddress);
+  const symbol = "EDG";
+  const name = "EDG";
 
   return new FungibleTokenWrapperMetaData(name, symbol);
 }
