@@ -107,10 +107,10 @@ type VAnchor @entity(immutable: false) {
   chainId:BigInt!
   contractAddress:Bytes!
   valueLocked:BigInt!
-  token:FungableToken!
+  token:FungibleToken!
 }
 
-type FungableToken @entity(immutable: true) {
+type FungibleToken @entity(immutable: true) {
   id:Bytes!
   typedChainId:BigInt!
   contractAddress:Bytes!

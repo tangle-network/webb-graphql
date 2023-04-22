@@ -1,14 +1,14 @@
 import { Address, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 import { Transfer as TransferEvent } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
-import { DepositTx, Transfer, VAnchor, WithdrawTx, FungableToken } from '../generated/schema';
+import { DepositTx, Transfer, VAnchor, WithdrawTx, FungibleToken } from '../generated/schema';
 import { isVAnchorAddress } from './utils/consts';
 
-function ensureFungibleToken(fTAddress: Address): FungableToken {
-  const ft = FungableToken.load(fTAddress);
+function ensureFungibleToken(fTAddress: Address): FungibleToken {
+  const ft = FungibleToken.load(fTAddress);
   if (ft) {
     return ft;
   }
-  let newFT = new FungableToken(fTAddress);
+  let newFT = new FungibleToken(fTAddress);
   newFT.contractAddress = fTAddress;
   newFT.typedChainId = BigInt.fromI32(0);
   return newFT;
