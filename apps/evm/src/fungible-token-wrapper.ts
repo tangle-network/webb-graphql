@@ -1,19 +1,36 @@
-import {Address, BigInt, Bytes, log} from '@graphprotocol/graph-ts';
-import {Transfer as TransferEvent} from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
-import {DepositTx, Transfer, VAnchor, WithdrawTx} from '../generated/schema';
-import {isVAnchorAddress} from './utils/consts';
+import { Address, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
+import { Transfer as TransferEvent } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
+import { DepositTx, Transfer, VAnchor, WithdrawTx, FungableToken } from '../generated/schema';
+import { isVAnchorAddress } from './utils/consts';
 
-function ensureVAnchor(contractAddress:Address):VAnchor{
- const vAnchor = VAnchor.load(contractAddress);
- if(vAnchor){
-   return vAnchor
- }
- const newVAnchor =  new VAnchor(contractAddress);
- newVAnchor.contractAddress =contractAddress;
- newVAnchor.chainId = BigInt.fromI32(0);
- newVAnchor.valueLocked = BigInt.fromI32(0);
- newVAnchor.save();
- return newVAnchor
+function ensureFungibleToken(fTAddress: Address): FungableToken {
+  const ft = FungableToken.load(fTAddress);
+  if (ft) {
+    return ft;
+  }
+  let newFT = new FungableToken(fTAddress);
+  newFT.contractAddress = fTAddress;
+  newFT.typedChainId = BigInt.fromI32(0);
+  return newFT;
+}
+/**
+ *
+ * Ensures that the vAnchor instance is created and added to the database
+ *
+ * */
+function ensureVAnchor(contractAddress: Address, fungibleTokenAddress: Address): VAnchor {
+  const vAnchor = VAnchor.load(contractAddress);
+  ensureFungibleToken(fungibleTokenAddress);
+  if (vAnchor) {
+    return vAnchor;
+  }
+  const newVAnchor = new VAnchor(contractAddress);
+  newVAnchor.contractAddress = contractAddress;
+  newVAnchor.chainId = BigInt.fromI32(0);
+  newVAnchor.valueLocked = BigInt.fromI32(0);
+  newVAnchor.token = fungibleTokenAddress;
+  newVAnchor.save();
+  return newVAnchor;
 }
 
 function newTransfer(event: TransferEvent): void {
@@ -64,32 +81,35 @@ function getTransactionTypeMessage(transactionType: TransactionType): string {
   }
 }
 
-
-export function formatVAnchorTransactionId(txHash:Bytes , logIndex:i32):Bytes {
-  return txHash.concatI32(logIndex)
+/**
+ * Create a vAnchor transaction id helper
+ *
+ * */
+export function formatVAnchorTransactionId(txHash: Bytes, logIndex: i32): Bytes {
+  return txHash.concatI32(logIndex);
 }
 
-function decreaseVAnchorVolume(
-  vAnchorAddress:Address,
-  value:BigInt
-):void {
-  const vAnchor = ensureVAnchor(vAnchorAddress);
+function decreaseVAnchorVolume(vAnchorAddress: Address, tokenAddress: Address, value: BigInt): void {
+  const vAnchor = ensureVAnchor(vAnchorAddress, tokenAddress);
   vAnchor.valueLocked = vAnchor.valueLocked.minus(value);
   vAnchor.save();
-
 }
-
-function increaseVAnchorVolume(
-  vAnchorAddress:Address,
-  value:BigInt
-):void {
-  const vAnchor = ensureVAnchor(vAnchorAddress);
+/**
+ *
+ * Increase the volume of the vAnchor on deposits
+ * */
+function increaseVAnchorVolume(vAnchorAddress: Address, tokenAddress: Address, value: BigInt): void {
+  const vAnchor = ensureVAnchor(vAnchorAddress, tokenAddress);
   vAnchor.valueLocked = vAnchor.valueLocked.plus(value);
   vAnchor.save();
-
 }
+
+/**
+ * Handles the storage of vAnchor Deposit transactions
+ * And Decreases the volume locked
+ * */
 function handleDepositTx(event: TransferEvent): void {
-  const id = formatVAnchorTransactionId(event.transaction.hash , event.logIndex.toI32());
+  const id = formatVAnchorTransactionId(event.transaction.hash, event.logIndex.toI32());
   let entity = new DepositTx(id);
   entity.fungibleTokenWrapper = event.address;
   entity.depositor = event.params.from;
@@ -99,15 +119,15 @@ function handleDepositTx(event: TransferEvent): void {
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
   entity.save();
-  increaseVAnchorVolume(
-    event.params.to,
-    event.params.value
-  )
+  increaseVAnchorVolume(event.params.to, event.address, event.params.value);
 }
 
+/**
+ * Handles the storage of vAnchor withdraw transactions
+ * And Decreases the volume locked
+ * */
 function handleWithdrawTx(event: TransferEvent): void {
-  const id = formatVAnchorTransactionId(event.transaction.hash , event.logIndex.toI32());
-
+  const id = formatVAnchorTransactionId(event.transaction.hash, event.logIndex.toI32());
 
   let entity = new WithdrawTx(id);
   entity.fungibleTokenWrapper = event.address;
@@ -119,10 +139,8 @@ function handleWithdrawTx(event: TransferEvent): void {
   entity.blockTimestamp = event.block.timestamp;
   entity.transactionHash = event.transaction.hash;
   entity.save();
-  decreaseVAnchorVolume(
-    event.params.from,
-    event.params.value
-  )
+
+  decreaseVAnchorVolume(event.params.from, event.address, event.params.value);
 }
 /**
  *
