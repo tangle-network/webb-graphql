@@ -114,6 +114,8 @@ type FungibleToken @entity(immutable: true) {
   id:Bytes!
   typedChainId:BigInt!
   contractAddress:Bytes!
+  name:Bytes!
+  symbol:Bytes!
 }
 type Deploy @entity(immutable: true) {
   id: Bytes!

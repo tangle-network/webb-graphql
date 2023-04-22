@@ -4,10 +4,10 @@ schema:
 dataSources:
   - kind: ethereum
     name: VAnchor
-    network: Athena
+    network: Hermes
     source:
       abi: VAnchor
-      address: "0xcAFBfD7554D7fFc3cDd36f2500F5aF289c511e1D"
+      address: "0x968d628e0Efc57371162D03C623E70af5D90553b"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -38,10 +38,10 @@ dataSources:
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
-    network: Athena
+    network: Hermes
     source:
       abi: FungibleTokenWrapper
-      address: "0x9B0be65637Bb432E2d13DD45132078d09Eb483eA"
+      address: "0xe30aEb7eCB2e03617A2699d5773E0652F872bB41"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -67,7 +67,7 @@ dataSources:
       file: ./src/fungible-token-wrapper.ts
   - kind: ethereum
     name: DeterministicDeployFactor
-    network: Athena
+    network: Hermes
     source:
       abi: DeterministicDeployFactor
       address: "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"

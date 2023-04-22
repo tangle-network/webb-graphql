@@ -2,6 +2,7 @@ import { Address, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 import { Transfer as TransferEvent } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
 import { DepositTx, Transfer, VAnchor, WithdrawTx, FungibleToken } from '../generated/schema';
 import { isVAnchorAddress } from './utils/consts';
+import { fetchTokenData } from "./utils/token";
 
 function ensureFungibleToken(fTAddress: Address): FungibleToken {
   const ft = FungibleToken.load(fTAddress);
@@ -9,8 +10,12 @@ function ensureFungibleToken(fTAddress: Address): FungibleToken {
     return ft;
   }
   let newFT = new FungibleToken(fTAddress);
+  const tokenData = fetchTokenData(fTAddress);
   newFT.contractAddress = fTAddress;
   newFT.typedChainId = BigInt.fromI32(0);
+  newFT.symbol = Bytes.fromUTF8(tokenData.symbol);
+  newFT.name = Bytes.fromUTF8(tokenData.name);
+
   return newFT;
 }
 /**
