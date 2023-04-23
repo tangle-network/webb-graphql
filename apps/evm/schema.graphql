@@ -115,3 +115,10 @@ type FungableToken @entity(immutable: true) {
   contractAddress:Bytes!
   lockedValue: BigInt!
 }
+type Deploy @entity(immutable: true) {
+  id: Bytes!
+  addr: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

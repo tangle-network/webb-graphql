@@ -4,10 +4,10 @@ schema:
 dataSources:
   - kind: ethereum
     name: VAnchor
-    network: Hermes
+    network: Athena
     source:
-      address: "0xc705034ded85e817b9E56C977E61A2098362898B"
       abi: VAnchor
+      address: "0xcAFBfD7554D7fFc3cDd36f2500F5aF289c511e1D"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -38,11 +38,10 @@ dataSources:
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
-    network: Hermes
+    network: Athena
     source:
-      address: "0x4e3df2073bf4b43B9944b8e5A463b1E185D6448C"
       abi: FungibleTokenWrapper
-      startBlock: 1
+      address: "0x9B0be65637Bb432E2d13DD45132078d09Eb483eA"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -66,3 +65,22 @@ dataSources:
         - event: Unpaused(address)
           handler: handleUnpaused
       file: ./src/fungible-token-wrapper.ts
+  - kind: ethereum
+    name: DeterministicDeployFactor
+    network: Athena
+    source:
+      abi: DeterministicDeployFactor
+      address: "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Deploy
+      abis:
+        - name: DeterministicDeployFactor
+          file: ./abis/DeterministicDeployFactor.json
+      eventHandlers:
+        - event: Deploy(address)
+          handler: handleDeploy
+      file: ./src/deterministic-deploy-factor.ts
