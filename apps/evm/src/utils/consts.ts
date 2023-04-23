@@ -27,9 +27,11 @@ export function isVAnchorAddress(address: Address): boolean {
 
   for (let i = 0; i < addresses.length; i++) {
     if (isSameAddress(addresses[i], address)) {
+      log.info(`Address {} is a vanchor ` , [address.toHexString()])
       return true;
     }
   }
+  log.info(`Address {} isnot a vanchor ` , [address.toHexString()])
   return false;
 }
 

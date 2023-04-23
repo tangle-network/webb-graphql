@@ -124,3 +124,7 @@ type Deploy @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+type TransferData @entity(immutable:false){
+  id:Bytes!
+  info:String!
+}

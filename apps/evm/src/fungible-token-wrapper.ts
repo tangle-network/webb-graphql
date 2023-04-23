@@ -1,6 +1,6 @@
 import { Address, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 import { Transfer as TransferEvent } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
-import { DepositTx, Transfer, VAnchor, WithdrawTx, FungibleToken } from '../generated/schema';
+import { DepositTx, Transfer, VAnchor, WithdrawTx, FungibleToken, TransferData } from "../generated/schema";
 import { isVAnchorAddress } from './utils/consts';
 import { fetchTokenData } from "./utils/token";
 
@@ -153,9 +153,9 @@ function handleWithdrawTx(event: TransferEvent): void {
  *
  * */
 export function handleTransfer(event: TransferEvent): void {
-  log.debug("Handler transfer works" , [])
+  log.info("Handler transfer works" , [])
   const eventType = getTransactionType(event);
-  log.debug(`Event type for vAnchor {}`, [getTransactionTypeMessage(eventType)]);
+  log.info(`Event type for vAnchor {}`, [getTransactionTypeMessage(eventType)]);
   switch (eventType) {
     case TransactionType.Deposit:
       handleDepositTx(event);
