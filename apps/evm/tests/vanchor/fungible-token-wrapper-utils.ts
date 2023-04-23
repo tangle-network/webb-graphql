@@ -3,7 +3,7 @@ import {Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { Transfer } from "../../generated/FungibleTokenWrapper/FungibleTokenWrapper";
 
 export const VANCHOR_ADDRESS:string = "0x5d3b0d1ac094a8551bab3818eff758dc1893e6c7";
-export const FUNGIBLE_TOKEN_WRAPPER_ADDRESS:string ="0x2946259e0334f33a064106302415ad3391bed384";
+export const FUNGIBLE_TOKEN_WRAPPER_ADDRESS:string ="0xFdaACACb85484c4D492414F4911524F57d2549F4";
 let logIndex = 0;
 export function createTransferEvent(
   from: Address,

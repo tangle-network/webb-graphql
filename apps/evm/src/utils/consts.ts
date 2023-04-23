@@ -9,8 +9,8 @@ vAnchorConfig.set(chains[0], Address.fromString("0x5D3b0d1AC094A8551bAB3818Eff75
 vAnchorConfig.set(chains[1], Address.fromString("0x1b376B18A065D3B8Ce5e6354fAd5F35B9FbdC21c"));
 
 export const fungibleTokenWrapperConfig: Map<string, Address> = new Map<string, Address>();
-fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0x2946259E0334f33A064106302415aD3391BeD384"));
-fungibleTokenWrapperConfig.set(chains[1], Address.fromString("0xDe09E74d4888Bc4e65F589e8c13Bce9F71DdF4c7"));
+fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0xFdaACACb85484c4D492414F4911524F57d2549F4"));
+fungibleTokenWrapperConfig.set(chains[1], Address.fromString("0x3CE626a78B6b2779805b37ACBFc8126555B739bF"));
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);

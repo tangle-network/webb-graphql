@@ -41,7 +41,7 @@ dataSources:
     network: Hermes
     source:
       abi: FungibleTokenWrapper
-      address: "0x2946259E0334f33A064106302415aD3391BeD384"
+      address: "0xFdaACACb85484c4D492414F4911524F57d2549F4"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
