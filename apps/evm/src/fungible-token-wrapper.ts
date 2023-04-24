@@ -1,7 +1,7 @@
-import { Address, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
-import { Transfer as TransferEvent } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
-import { DepositTx, Transfer, VAnchor, WithdrawTx, FungibleToken, TransferData } from "../generated/schema";
-import { isVAnchorAddress } from './utils/consts';
+import { Address, BigInt, Bytes, ethereum, log } from "@graphprotocol/graph-ts";
+import { Transfer as TransferEvent  } from "../generated/FungibleTokenWrapper/FungibleTokenWrapper";
+import { DepositTx, FungibleToken, Transfer, VAnchor, WithdrawTx } from "../generated/schema";
+import { isVAnchorAddress } from "./utils/consts";
 import { fetchTokenData } from "./utils/token";
 
 function ensureFungibleToken(fTAddress: Address): FungibleToken {
