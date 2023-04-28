@@ -58,8 +58,8 @@ function ensureVAnchor(address: Address): VAnchor {
  * */
 
 function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
-  vAnchor.valueLocked = vAnchor.valueLocked.plus(amount);
-  vAnchor.finalValueLocked = vAnchor.finalValueLocked.plus(finalAmount);
+  vAnchor.valueLocked = vAnchor.valueLocked.minus(amount);
+  vAnchor.finalValueLocked = vAnchor.finalValueLocked.minus(finalAmount);
 
   vAnchor.numberOfWithdraws = vAnchor.numberOfWithdraws.plus(ONE_BI);
   // update the max withdraw amount
@@ -82,8 +82,8 @@ function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount
  * */
 
 function vAnchorDepositSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
-  vAnchor.valueLocked = vAnchor.valueLocked.minus(amount);
-  vAnchor.finalValueLocked = vAnchor.finalValueLocked.minus(finalAmount);
+  vAnchor.valueLocked = vAnchor.valueLocked.plus(amount);
+  vAnchor.finalValueLocked = vAnchor.finalValueLocked.plus(finalAmount);
 
   vAnchor.numberOfDeposits = vAnchor.numberOfDeposits.plus(ONE_BI);
   // update the max withdraw amount
@@ -99,7 +99,6 @@ function vAnchorDepositSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount:
 
   vAnchor.save();
 
-  vAnchor.save();
 }
 
 function updateFee(vAnchor: VAnchor, fees: BigInt): void {
@@ -205,7 +204,7 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.transactionHash = event.transaction.hash;
         entity.save();
         // Update vAnchor volume locked
-        vAnchorWithdrawSideEffect(vAnchor, amount, finalAmount);
+        vAnchorDepositSideEffect(vAnchor, amount, finalAmount);
       } else if (transactionType === TransactionType.Withdraw) {
         let entity = new WithdrawTx(txId);
 
@@ -223,7 +222,7 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.save();
 
         // Update vAnchor volume locked
-        vAnchorDepositSideEffect(vAnchor, amount, finalAmount);
+        vAnchorWithdrawSideEffect(vAnchor, amount, finalAmount);
       } else if (transactionType === TransactionType.Transfer) {
         let entity = new Transfer(txId);
         entity.from = event.transaction.from;
