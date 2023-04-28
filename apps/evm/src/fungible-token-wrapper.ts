@@ -58,20 +58,6 @@ enum TransactionType {
   Transfer,
 }
 
-function getTransactionType(event: TransferEvent): TransactionType {
-  const senderAddress = event.params.from;
-  const receiverAddress = event.params.to;
-
-  // Check for Deposit
-  if (isVAnchorAddress(receiverAddress)) {
-    return TransactionType.Deposit;
-  }
-  if (isVAnchorAddress(senderAddress)) {
-    return TransactionType.Withdraw;
-  }
-
-  return TransactionType.Transfer;
-}
 
 function getTransactionTypeMessage(transactionType: TransactionType): string {
   switch (transactionType) {
@@ -153,17 +139,5 @@ function handleWithdrawTx(event: TransferEvent): void {
  *
  * */
 export function handleTransfer(event: TransferEvent): void {
-  log.info("Handler transfer works" , [])
-  const eventType = getTransactionType(event);
-  log.info(`Event type for vAnchor {}`, [getTransactionTypeMessage(eventType)]);
-  switch (eventType) {
-    case TransactionType.Deposit:
-      handleDepositTx(event);
-      break;
-    case TransactionType.Withdraw:
-      handleWithdrawTx(event);
-      break;
-    case TransactionType.Transfer:
-      break;
-  }
+
 }

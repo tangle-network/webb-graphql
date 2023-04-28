@@ -6,8 +6,61 @@ import {
   NewNullifier as NewNullifierEvent,
   PublicKey as PublicKeyEvent,
 } from '../generated/VAnchor/VAnchor';
-import { EdgeAddition, EdgeUpdate, Insertion, NewCommitment, NewNullifier, PublicKey } from '../generated/schema';
-import { Bytes, ethereum, log } from '@graphprotocol/graph-ts';
+import {
+  DepositTx,
+  EdgeAddition,
+  EdgeUpdate,
+  Insertion,
+  NewCommitment,
+  NewNullifier,
+  PublicKey,
+  Transfer,
+  WithdrawTx,
+  VAnchor,
+} from '../generated/schema';
+import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
+import { ExternalData, TransactionType } from './utils/transact';
+
+/**
+ * Ensure that the vAnchor entity is created and stored
+ *
+ * */
+function ensureVAnchor(address: Address): VAnchor {
+  const vAnchor = VAnchor.load(address);
+  if (vAnchor) {
+    return vAnchor;
+  }
+  let newVAnchor = new VAnchor(address);
+  newVAnchor.chainId = BigInt.fromI32(0);
+  newVAnchor.contractAddress = address;
+  newVAnchor.valueLocked = BigInt.fromI32(0);
+  newVAnchor.save();
+  return newVAnchor;
+}
+/**
+ * increase vAnchor liquidity
+ *
+ * */
+
+function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt) {
+  vAnchor.valueLocked = vAnchor.valueLocked.plus(amount);
+  vAnchor.save();
+}
+
+/**
+ * increase vAnchor liquidity
+ *
+ * */
+
+function decreaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt) {
+  vAnchor.valueLocked = vAnchor.valueLocked.minus(amount);
+  vAnchor.save();
+}
+
+function updateFee(vAnchor: VAnchor, fees: BigInt) {
+  vAnchor.totalFees = vAnchor.totalFees.plus(fees);
+  vAnchor.save();
+}
 
 /**
  * EdgeAddition event handler
@@ -26,6 +79,7 @@ export function handleEdgeAddition(event: EdgeAdditionEvent): void {
 
   entity.save();
 }
+
 /**
  *
  * EdgeUpdate event handler
@@ -54,6 +108,7 @@ function getTxnInputDataToDecode(event: ethereum.Event): Bytes {
   const hexStringToDecode = '0x0000000000000000000000000000000000000000000000000000000000000020' + inputDataHexString; // prepend tuple offset
   return Bytes.fromByteArray(Bytes.fromHexString(hexStringToDecode));
 }
+
 /**
  * Insertion event handler
  *  - System Merkle tree insertion event
@@ -62,10 +117,13 @@ function getTxnInputDataToDecode(event: ethereum.Event): Bytes {
  * */
 export function handleInsertion(event: InsertionEvent): void {
   const callInput = getTxnInputDataToDecode(event);
+
+  // Decode the transaction
   const data = ethereum.decode(
     '(bytes,bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes,uint256[],uint256[2],uint256,uint256),(bytes,bytes))',
     Bytes.fromUint8Array(callInput)
   );
+
   if (data !== null) {
     const inputs = data.toTuple();
     // const proof = input[0];
@@ -74,16 +132,52 @@ export function handleInsertion(event: InsertionEvent): void {
     // const publicInputs = inputs[3];
     // const encryptions = inputs[4];
     if (externalData !== null) {
-      const externalDataList = externalData.toTuple();
+      const extData = ExternalData.fromEthereumValue(externalData);
+      const vAnchorAddress = event.address;
+      const vAnchor = ensureVAnchor(vAnchorAddress);
+      const token = extData.token;
+      const finalAmount = extData.getFinalAmount();
+      const fees = extData.getFee();
+      let transactionType = extData.getTransactionType();
+      // Update fees
+      updateFee(vAnchor, fees);
+      if (transactionType === TransactionType.Deposit) {
+        let entity = new DepositTx(event.transaction.hash.concatI32(event.logIndex));
 
-      log.info('External data form tx , recipient {} extAmount {} relayer {} fee {} refund {} token {}', [
-        externalDataList[0].toAddress().toHexString(),
-        externalDataList[1].toBigInt().toString(),
-        externalDataList[2].toAddress().toHexString(),
-        externalDataList[3].toBigInt().toString(),
-        externalDataList[4].toBigInt().toString(),
-        externalDataList[5].toAddress().toHexString(),
-      ]);
+        entity.fungibleTokenWrapper = token;
+        entity.depositor = event.transaction.from;
+        entity.value = extData.amount;
+        entity.vAnchorAddress = vAnchorAddress;
+        entity.blockNumber = event.block.number;
+        entity.blockTimestamp = event.block.timestamp;
+        entity.transactionHash = event.transaction.hash;
+        entity.save();
+        // Update vAnchor volume locked
+        increaseVAnchorTVL(vAnchor, finalAmount);
+      } else if (transactionType === TransactionType.Withdraw) {
+        let entity = new WithdrawTx(event.transaction.hash.concatI32(event.logIndex));
+
+        entity.fungibleTokenWrapper = token;
+        entity.beneficiary = extData.recipient;
+        entity.value = extData.amount;
+        entity.vAnchorAddress = vAnchorAddress;
+        entity.blockNumber = event.block.number;
+        entity.blockTimestamp = event.block.timestamp;
+        entity.transactionHash = event.transaction.hash;
+        entity.save();
+
+        // Update vAnchor volume locked
+        decreaseVAnchorTVL(vAnchor, finalAmount);
+      } else if (transactionType === TransactionType.Transfer) {
+        let entity = new Transfer(event.transaction.hash.concatI32(event.logIndex));
+        entity.from = event.transaction.from;
+        entity.to = extData.recipient;
+        entity.value = extData.amount;
+        entity.blockNumber = event.block.number;
+        entity.blockTimestamp = event.block.timestamp;
+        entity.transactionHash = event.transaction.hash;
+        entity.save();
+      }
     }
   } else {
     log.info('Data is null', []);
@@ -99,6 +193,7 @@ export function handleInsertion(event: InsertionEvent): void {
 
   entity.save();
 }
+
 /**
  * NewCommitment event handler
  *  - Leaf commitment insertion on a subtree
