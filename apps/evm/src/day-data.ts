@@ -26,6 +26,10 @@ export function ensureDay(block: ethereum.Block, vAnchor: VAnchor): VAnchorDayDa
   return newDayData;
 }
 
+/**
+ * Update vAnchor day data
+ *
+ * */
 export function updateVAnchorDayData(
   block: ethereum.Block,
   vAnchor: VAnchor,
@@ -36,6 +40,7 @@ export function updateVAnchorDayData(
   const finalAmount = extData.getFinalAmount();
   const fee = extData.getFee();
   const txType = extData.getTransactionType();
+  // Check for deposit tx to store the number of deposits and other relatd data
   if (txType === TransactionType.Deposit) {
     vAnchorDayData.numberOfDeposits = vAnchorDayData.numberOfDeposits.plus(BigInt.fromI32(1));
     const depositTransactions = vAnchorDayData.depositTx;
@@ -46,6 +51,7 @@ export function updateVAnchorDayData(
   } else if (txType === TransactionType.Withdraw) {
     vAnchorDayData.volume.minus(finalAmount);
   }
+  // Store fees regardless of the transactin type
   vAnchorDayData.fees = vAnchorDayData.fees.plus(fee);
   vAnchorDayData.save();
 }
