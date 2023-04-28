@@ -125,3 +125,10 @@ type Deploy @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+type Deploy @entity(immutable: true) {
+  id: Bytes!
+  addr: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
