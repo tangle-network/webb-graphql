@@ -65,6 +65,7 @@ type Transfer @entity(immutable: true) {
   to: Bytes! # address
   value: BigInt! # uint256
   finalValue:BigInt! # value without fees
+  fee:BigInt!
 
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -78,6 +79,7 @@ type DepositTx @entity(immutable: true) {
   # deposit amount
   value: BigInt! # uint256
   finalValue:BigInt! # value without fees
+  fee:BigInt!
 
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -95,6 +97,7 @@ type WithdrawTx @entity(immutable: true) {
   # deposit amount
   value: BigInt! # uint256
   finalValue:BigInt! # value without fees
+  fee:BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
   vAnchorAddress:Bytes!

@@ -34,6 +34,8 @@ function ensureVAnchor(address: Address): VAnchor {
   newVAnchor.chainId = BigInt.fromI32(0);
   newVAnchor.contractAddress = address;
   newVAnchor.valueLocked = BigInt.fromI32(0);
+  newVAnchor.finalValueLocked = BigInt.fromI32(0);
+  newVAnchor.totalFees = BigInt.fromI32(0);
   newVAnchor.save();
   return newVAnchor;
 }
@@ -42,8 +44,9 @@ function ensureVAnchor(address: Address): VAnchor {
  *
  * */
 
-function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt) {
+function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt ,finalAmount:BigInt):void {
   vAnchor.valueLocked = vAnchor.valueLocked.plus(amount);
+  vAnchor.finalValueLocked = vAnchor.finalValueLocked.plus(finalAmount);
   vAnchor.save();
 }
 
@@ -52,12 +55,13 @@ function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt) {
  *
  * */
 
-function decreaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt) {
+function decreaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt,finalAmount:BigInt):void {
   vAnchor.valueLocked = vAnchor.valueLocked.minus(amount);
+  vAnchor.finalValueLocked = vAnchor.finalValueLocked.minus(finalAmount);
   vAnchor.save();
 }
 
-function updateFee(vAnchor: VAnchor, fees: BigInt) {
+function updateFee(vAnchor: VAnchor, fees: BigInt):void {
   vAnchor.totalFees = vAnchor.totalFees.plus(fees);
   vAnchor.save();
 }
@@ -138,28 +142,38 @@ export function handleInsertion(event: InsertionEvent): void {
       const token = extData.token;
       const finalAmount = extData.getFinalAmount();
       const fees = extData.getFee();
+      const amount = extData.amount;
       let transactionType = extData.getTransactionType();
       // Update fees
       updateFee(vAnchor, fees);
       if (transactionType === TransactionType.Deposit) {
-        let entity = new DepositTx(event.transaction.hash.concatI32(event.logIndex));
+        let entity = new DepositTx(event.transaction.hash.concatI32(event.logIndex.toI32()));
 
         entity.fungibleTokenWrapper = token;
         entity.depositor = event.transaction.from;
-        entity.value = extData.amount;
+
+        entity.value = amount;
+        entity.finalValue = finalAmount;
+        entity.fee = fees;
+
         entity.vAnchorAddress = vAnchorAddress;
+
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;
         entity.save();
         // Update vAnchor volume locked
-        increaseVAnchorTVL(vAnchor, finalAmount);
+        increaseVAnchorTVL(vAnchor, amount ,finalAmount);
       } else if (transactionType === TransactionType.Withdraw) {
-        let entity = new WithdrawTx(event.transaction.hash.concatI32(event.logIndex));
+        let entity = new WithdrawTx(event.transaction.hash.concatI32(event.logIndex.toI32()));
 
         entity.fungibleTokenWrapper = token;
         entity.beneficiary = extData.recipient;
-        entity.value = extData.amount;
+
+        entity.value = amount;
+        entity.finalValue = finalAmount;
+        entity.fee = fees;
+
         entity.vAnchorAddress = vAnchorAddress;
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
@@ -167,12 +181,16 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.save();
 
         // Update vAnchor volume locked
-        decreaseVAnchorTVL(vAnchor, finalAmount);
+        decreaseVAnchorTVL(vAnchor, amount,finalAmount);
       } else if (transactionType === TransactionType.Transfer) {
-        let entity = new Transfer(event.transaction.hash.concatI32(event.logIndex));
+        let entity = new Transfer(event.transaction.hash.concatI32(event.logIndex.toI32()));
         entity.from = event.transaction.from;
         entity.to = extData.recipient;
-        entity.value = extData.amount;
+
+        entity.value = amount;
+        entity.finalValue = finalAmount;
+        entity.fee = fees;
+
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;
