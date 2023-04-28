@@ -15,12 +15,13 @@ import {
   NewNullifier,
   PublicKey,
   Transfer,
-  WithdrawTx,
   VAnchor,
+  WithdrawTx,
 } from '../generated/schema';
 import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
 import { updateVAnchorDayData } from './day-data';
+import { ONE_BI } from './utils/consts';
 
 /**
  * Ensure that the vAnchor entity is created and stored
@@ -37,28 +38,67 @@ function ensureVAnchor(address: Address): VAnchor {
   newVAnchor.valueLocked = BigInt.fromI32(0);
   newVAnchor.finalValueLocked = BigInt.fromI32(0);
   newVAnchor.totalFees = BigInt.fromI32(0);
+
+  newVAnchor.numberOfDeposits = BigInt.fromI32(0);
+  newVAnchor.averageDepositAmount = BigInt.fromI32(0);
+  newVAnchor.maxDepositAmount = BigInt.fromI32(0);
+  newVAnchor.minDepositAmount = BigInt.fromI32(0);
+
+  newVAnchor.numberOfWithdraws = BigInt.fromI32(0);
+  newVAnchor.averageWithdrawAmount = BigInt.fromI32(0);
+  newVAnchor.maxWithdrawAmount = BigInt.fromI32(0);
+  newVAnchor.minWithdrawAmount = BigInt.fromI32(0);
+
   newVAnchor.save();
   return newVAnchor;
 }
 /**
- * increase vAnchor liquidity
+ * Handling the  vAnchor side effect for withdraw transaction
  *
  * */
 
-function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
+function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
   vAnchor.valueLocked = vAnchor.valueLocked.plus(amount);
   vAnchor.finalValueLocked = vAnchor.finalValueLocked.plus(finalAmount);
+
+  vAnchor.numberOfWithdraws = vAnchor.numberOfWithdraws.plus(ONE_BI);
+  // update the max withdraw amount
+  if (vAnchor.maxWithdrawAmount.lt(amount)) {
+    vAnchor.maxWithdrawAmount = amount;
+  }
+  if(vAnchor.minWithdrawAmount.gt(amount)){
+    vAnchor.minWithdrawAmount = amount;
+  }
+  vAnchor.averageWithdrawAmount = vAnchor.valueLocked
+    .div(vAnchor.numberOfWithdraws);
+
+
   vAnchor.save();
 }
 
 /**
- * increase vAnchor liquidity
+ * Handling the  vAnchor side effect for depoist transaction
  *
  * */
 
-function decreaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
+function vAnchorDepositSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
   vAnchor.valueLocked = vAnchor.valueLocked.minus(amount);
   vAnchor.finalValueLocked = vAnchor.finalValueLocked.minus(finalAmount);
+
+  vAnchor.numberOfDeposits = vAnchor.numberOfDeposits.plus(ONE_BI);
+  // update the max withdraw amount
+  if (vAnchor.maxDepositAmount.lt(amount)) {
+    vAnchor.maxDepositAmount = amount;
+  }
+  if(vAnchor.minDepositAmount.gt(amount)){
+    vAnchor.minDepositAmount = amount;
+  }
+  vAnchor.averageDepositAmount = vAnchor.valueLocked
+    .div(vAnchor.numberOfDeposits);
+
+
+  vAnchor.save();
+
   vAnchor.save();
 }
 
@@ -165,7 +205,7 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.transactionHash = event.transaction.hash;
         entity.save();
         // Update vAnchor volume locked
-        increaseVAnchorTVL(vAnchor, amount, finalAmount);
+        vAnchorWithdrawSideEffect(vAnchor, amount, finalAmount);
       } else if (transactionType === TransactionType.Withdraw) {
         let entity = new WithdrawTx(txId);
 
@@ -183,7 +223,7 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.save();
 
         // Update vAnchor volume locked
-        decreaseVAnchorTVL(vAnchor, amount, finalAmount);
+        vAnchorDepositSideEffect(vAnchor, amount, finalAmount);
       } else if (transactionType === TransactionType.Transfer) {
         let entity = new Transfer(txId);
         entity.from = event.transaction.from;
@@ -199,7 +239,6 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.save();
       }
       updateVAnchorDayData(event.block, vAnchor, extData, txId);
-
     }
   } else {
     log.info('Data is null', []);

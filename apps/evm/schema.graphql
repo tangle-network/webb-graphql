@@ -107,6 +107,17 @@ type VAnchor @entity(immutable: false) {
   contractAddress: Bytes!
   valueLocked: BigInt!
   finalValueLocked: BigInt!
+
+  maxDepositAmount:BigInt!
+  minDepositAmount:BigInt!
+  numberOfDeposits:BigInt!
+  averageDepositAmount:BigInt!
+
+  maxWithdrawAmount:BigInt!
+  minWithdrawAmount:BigInt!
+  numberOfWithdraws:BigInt!
+  averageWithdrawAmount:BigInt!
+
   totalFees: BigInt!
 }
 
