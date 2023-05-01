@@ -61,9 +61,12 @@ type PublicKey @entity(immutable: true) {
 type Transfer @entity(immutable: true) {
 
   id: Bytes!
-  from: Bytes! # address
+  from: Bytes! # addresss
   to: Bytes! # address
   value: BigInt! # uint256
+  finalValue:BigInt! # value without fees
+  fee:BigInt!
+
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -75,6 +78,8 @@ type DepositTx @entity(immutable: true) {
   depositor:Bytes!
   # deposit amount
   value: BigInt! # uint256
+  finalValue:BigInt! # value without fees
+  fee:BigInt!
 
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -91,7 +96,8 @@ type WithdrawTx @entity(immutable: true) {
   beneficiary:Bytes!
   # deposit amount
   value: BigInt! # uint256
-
+  finalValue:BigInt! # value without fees
+  fee:BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
   vAnchorAddress:Bytes!
@@ -107,13 +113,17 @@ type VAnchor @entity(immutable: false) {
   chainId:BigInt!
   contractAddress:Bytes!
   valueLocked:BigInt!
+  finalValueLocked:BigInt!
+  totalFees:BigInt!
 }
 
-type FungableToken @entity(immutable: true) {
-  id:Bytes!
-  typedChainId:Bytes!
-  contractAddress:Bytes!
-  lockedValue: BigInt!
+
+type Deploy @entity(immutable: true) {
+  id: Bytes!
+  addr: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
 }
 type Deploy @entity(immutable: true) {
   id: Bytes!
