@@ -1,0 +1,60 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "Deploy",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes", "name": "bytecode", "type": "bytes" },
+      { "internalType": "uint256", "name": "_salt", "type": "uint256" }
+    ],
+    "name": "deploy",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes", "name": "bytecode", "type": "bytes" },
+      { "internalType": "uint256", "name": "_salt", "type": "uint256" },
+      { "internalType": "uint16", "name": "_feePercentage", "type": "uint16" },
+      { "internalType": "address", "name": "_feeRecipient", "type": "address" },
+      { "internalType": "address", "name": "_handler", "type": "address" },
+      { "internalType": "uint256", "name": "_limit", "type": "uint256" },
+      { "internalType": "bool", "name": "_isNativeAllowed", "type": "bool" }
+    ],
+    "name": "deployFungibleToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes", "name": "bytecode", "type": "bytes" },
+      { "internalType": "uint256", "name": "_salt", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "_minimalWithdrawalAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maximumDepositAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "deployVAnchor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

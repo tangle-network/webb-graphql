@@ -2,7 +2,8 @@ import { newMockEvent ,  } from "matchstick-as";
 import {Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { Transfer } from "../../generated/FungibleTokenWrapper/FungibleTokenWrapper";
 
-
+export const VANCHOR_ADDRESS:string = "0x5d3b0d1ac094a8551bab3818eff758dc1893e6c7";
+export const FUNGIBLE_TOKEN_WRAPPER_ADDRESS:string ="0xFdaACACb85484c4D492414F4911524F57d2549F4";
 let logIndex = 0;
 export function createTransferEvent(
   from: Address,
@@ -26,7 +27,7 @@ export function createTransferEvent(
     new ethereum.EventParam("value", ethereum.Value.fromUnsignedBigInt(value))
   )
 
-  transferEvent.address = Address.fromString("0x4e3df2073bf4b43b9944b8e5a463b1e185d6448c");
+  transferEvent.address = Address.fromString(FUNGIBLE_TOKEN_WRAPPER_ADDRESS);
   return transferEvent
 }
 

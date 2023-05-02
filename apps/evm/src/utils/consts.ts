@@ -1,14 +1,16 @@
 /* eslint-disable prefer-const */
-import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
 
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 export const chains = ["Hermes", "Athena", "Demter"];
 
 export const vAnchorConfig: Map<string, Address> = new Map<string, Address>();
-vAnchorConfig.set(chains[0], Address.fromString("0xc705034ded85e817b9E56C977E61A2098362898B"));
+vAnchorConfig.set(chains[0], Address.fromString("0x5D3b0d1AC094A8551bAB3818Eff758dc1893e6C7"));
+vAnchorConfig.set(chains[1], Address.fromString("0x1b376B18A065D3B8Ce5e6354fAd5F35B9FbdC21c"));
 
 export const fungibleTokenWrapperConfig: Map<string, Address> = new Map<string, Address>();
-fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0x4e3df2073bf4b43B9944b8e5A463b1E185D6448C"));
+fungibleTokenWrapperConfig.set(chains[0], Address.fromString("0xFdaACACb85484c4D492414F4911524F57d2549F4"));
+fungibleTokenWrapperConfig.set(chains[1], Address.fromString("0x3CE626a78B6b2779805b37ACBFc8126555B739bF"));
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);
@@ -25,9 +27,11 @@ export function isVAnchorAddress(address: Address): boolean {
 
   for (let i = 0; i < addresses.length; i++) {
     if (isSameAddress(addresses[i], address)) {
+      log.info(`Address {} is a vanchor ` , [address.toHexString()])
       return true;
     }
   }
+  log.info(`Address {} isnot a vanchor ` , [address.toHexString()])
   return false;
 }
 
