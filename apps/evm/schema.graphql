@@ -1,5 +1,5 @@
 type EdgeAddition @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   chainID: BigInt! # uint256
   latestLeafIndex: BigInt! # uint256
   merkleRoot: BigInt! # uint256
@@ -9,7 +9,7 @@ type EdgeAddition @entity(immutable: true) {
 }
 
 type EdgeUpdate @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   chainID: BigInt! # uint256
   latestLeafIndex: BigInt! # uint256
   merkleRoot: BigInt! # uint256
@@ -19,7 +19,7 @@ type EdgeUpdate @entity(immutable: true) {
 }
 
 type Insertion @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   commitment: BigInt! # uint256
   leafIndex: BigInt! # uint32
   timestamp: BigInt! # uint256
@@ -40,7 +40,7 @@ type NewCommitment @entity(immutable: true) {
 }
 
 type NewNullifier @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   nullifier: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -48,7 +48,7 @@ type NewNullifier @entity(immutable: true) {
 }
 
 type PublicKey @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   owner: Bytes! # address
   key: Bytes! # bytes
   blockNumber: BigInt!
@@ -56,77 +56,75 @@ type PublicKey @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-
-
 type Transfer @entity(immutable: true) {
-
-  id: Bytes!
+  id: ID!
   from: Bytes! # addresss
   to: Bytes! # address
   value: BigInt! # uint256
-  finalValue:BigInt! # value without fees
-  fee:BigInt!
+  finalValue: BigInt! # value without fees
+  fee: BigInt!
 
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-  contractAddress:Bytes!
+  contractAddress: Bytes!
 }
 
 type DepositTx @entity(immutable: true) {
-  id: Bytes!
-  depositor:Bytes!
+  id: ID!
+  depositor: Bytes!
   # deposit amount
   value: BigInt! # uint256
-  finalValue:BigInt! # value without fees
-  fee:BigInt!
+  finalValue: BigInt! # value without fees
+  fee: BigInt!
 
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 
-  vAnchorAddress:Bytes!
-  fungibleTokenWrapper:Bytes!
+  vAnchorAddress: Bytes!
+  fungibleTokenWrapper: Bytes!
   blockNumber: BigInt!
-
-
 }
 
 type WithdrawTx @entity(immutable: true) {
-  id: Bytes!
-  beneficiary:Bytes!
+  id: ID!
+  beneficiary: Bytes!
   # deposit amount
   value: BigInt! # uint256
-  finalValue:BigInt! # value without fees
-  fee:BigInt!
+  finalValue: BigInt! # value without fees
+  fee: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-  vAnchorAddress:Bytes!
-  fungibleTokenWrapper:Bytes!
+  vAnchorAddress: Bytes!
+  fungibleTokenWrapper: Bytes!
 
   blockNumber: BigInt!
-
-
 }
 
 type VAnchor @entity(immutable: false) {
-  id: Bytes!
-  chainId:BigInt!
-  contractAddress:Bytes!
-  valueLocked:BigInt!
-  finalValueLocked:BigInt!
-  totalFees:BigInt!
+  id: ID!
+  chainId: BigInt!
+  contractAddress: Bytes!
+  valueLocked: BigInt!
+  finalValueLocked: BigInt!
+  totalFees: BigInt!
 }
 
+type VAnchorDayData @entity(immutable: false) {
+  # <Day index>-<vAnchorAddress>
+  id: ID!
+  date: Int!
 
-type Deploy @entity(immutable: true) {
-  id: Bytes!
-  addr: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  vAnchor: VAnchor!
+  fees: BigInt!
+  volume: BigInt!
+  numberOfDeposits: BigInt!
+  depositTx: [DepositTx!]!
+
+  startBlockNumber: BigInt!
 }
 type Deploy @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   addr: Bytes! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
