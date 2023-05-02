@@ -20,17 +20,18 @@ import {
 } from '../generated/schema';
 import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
+import { updateVAnchorDayData } from './day-data';
 
 /**
  * Ensure that the vAnchor entity is created and stored
  *
  * */
 function ensureVAnchor(address: Address): VAnchor {
-  const vAnchor = VAnchor.load(address);
+  const vAnchor = VAnchor.load(address.toHexString());
   if (vAnchor) {
     return vAnchor;
   }
-  let newVAnchor = new VAnchor(address);
+  let newVAnchor = new VAnchor(address.toHexString());
   newVAnchor.chainId = BigInt.fromI32(0);
   newVAnchor.contractAddress = address;
   newVAnchor.valueLocked = BigInt.fromI32(0);
@@ -44,7 +45,7 @@ function ensureVAnchor(address: Address): VAnchor {
  *
  * */
 
-function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt ,finalAmount:BigInt):void {
+function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
   vAnchor.valueLocked = vAnchor.valueLocked.plus(amount);
   vAnchor.finalValueLocked = vAnchor.finalValueLocked.plus(finalAmount);
   vAnchor.save();
@@ -55,13 +56,13 @@ function increaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt ,finalAmount:BigInt
  *
  * */
 
-function decreaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt,finalAmount:BigInt):void {
+function decreaseVAnchorTVL(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
   vAnchor.valueLocked = vAnchor.valueLocked.minus(amount);
   vAnchor.finalValueLocked = vAnchor.finalValueLocked.minus(finalAmount);
   vAnchor.save();
 }
 
-function updateFee(vAnchor: VAnchor, fees: BigInt):void {
+function updateFee(vAnchor: VAnchor, fees: BigInt): void {
   vAnchor.totalFees = vAnchor.totalFees.plus(fees);
   vAnchor.save();
 }
@@ -72,7 +73,7 @@ function updateFee(vAnchor: VAnchor, fees: BigInt):void {
  *
  * */
 export function handleEdgeAddition(event: EdgeAdditionEvent): void {
-  let entity = new EdgeAddition(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  let entity = new EdgeAddition(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
   entity.chainID = event.params.chainID;
   entity.latestLeafIndex = event.params.latestLeafIndex;
   entity.merkleRoot = event.params.merkleRoot;
@@ -94,7 +95,7 @@ export function handleEdgeAddition(event: EdgeAdditionEvent): void {
  *
  * */
 export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
-  let entity = new EdgeUpdate(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  let entity = new EdgeUpdate(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
   entity.chainID = event.params.chainID;
   entity.latestLeafIndex = event.params.latestLeafIndex;
   entity.merkleRoot = event.params.merkleRoot;
@@ -144,10 +145,11 @@ export function handleInsertion(event: InsertionEvent): void {
       const fees = extData.getFee();
       const amount = extData.amount;
       let transactionType = extData.getTransactionType();
+      let txId = event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString();
       // Update fees
       updateFee(vAnchor, fees);
       if (transactionType === TransactionType.Deposit) {
-        let entity = new DepositTx(event.transaction.hash.concatI32(event.logIndex.toI32()));
+        let entity = new DepositTx(txId);
 
         entity.fungibleTokenWrapper = token;
         entity.depositor = event.transaction.from;
@@ -163,9 +165,9 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.transactionHash = event.transaction.hash;
         entity.save();
         // Update vAnchor volume locked
-        increaseVAnchorTVL(vAnchor, amount ,finalAmount);
+        increaseVAnchorTVL(vAnchor, amount, finalAmount);
       } else if (transactionType === TransactionType.Withdraw) {
-        let entity = new WithdrawTx(event.transaction.hash.concatI32(event.logIndex.toI32()));
+        let entity = new WithdrawTx(txId);
 
         entity.fungibleTokenWrapper = token;
         entity.beneficiary = extData.recipient;
@@ -181,9 +183,9 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.save();
 
         // Update vAnchor volume locked
-        decreaseVAnchorTVL(vAnchor, amount,finalAmount);
+        decreaseVAnchorTVL(vAnchor, amount, finalAmount);
       } else if (transactionType === TransactionType.Transfer) {
-        let entity = new Transfer(event.transaction.hash.concatI32(event.logIndex.toI32()));
+        let entity = new Transfer(txId);
         entity.from = event.transaction.from;
         entity.to = extData.recipient;
 
@@ -196,11 +198,13 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.transactionHash = event.transaction.hash;
         entity.save();
       }
+      updateVAnchorDayData(event.block, vAnchor, extData, txId);
+
     }
   } else {
     log.info('Data is null', []);
   }
-  let entity = new Insertion(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  let entity = new Insertion(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
   entity.commitment = event.params.commitment;
   entity.leafIndex = event.params.leafIndex;
   entity.timestamp = event.params.timestamp;
@@ -239,7 +243,7 @@ export function handleNewCommitment(event: NewCommitmentEvent): void {
  *
  * */
 export function handleNewNullifier(event: NewNullifierEvent): void {
-  let entity = new NewNullifier(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  let entity = new NewNullifier(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
   entity.nullifier = event.params.nullifier;
 
   entity.blockNumber = event.block.number;
@@ -254,7 +258,7 @@ export function handleNewNullifier(event: NewNullifierEvent): void {
  *  -  New public key is register
  * */
 export function handlePublicKey(event: PublicKeyEvent): void {
-  let entity = new PublicKey(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  let entity = new PublicKey(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
   entity.owner = event.params.owner;
   entity.key = event.params.key;
 

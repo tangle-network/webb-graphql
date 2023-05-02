@@ -3,7 +3,7 @@ import { Deploy } from "../generated/schema"
 
 export function handleDeploy(event: DeployEvent): void {
   let entity = new Deploy(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
+    event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString()
   )
   entity.addr = event.params.addr
 

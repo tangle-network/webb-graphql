@@ -23,11 +23,17 @@ export class ExternalData {
     if (externalData !== null) {
       const externalDataList = externalData.toTuple();
       return new ExternalData(
+        // Recipient address
         externalDataList[0].toAddress(),
+        // Transactions amount
         externalDataList[1].toBigInt(),
+        // Relayer address
         externalDataList[2].toAddress(),
+        // Fee amount
         externalDataList[3].toBigInt(),
+        //Refund amount
         externalDataList[4].toBigInt(),
+        // Token address
         externalDataList[5].toAddress()
       );
     }
