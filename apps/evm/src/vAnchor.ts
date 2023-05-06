@@ -66,12 +66,10 @@ function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount
   if (vAnchor.maxWithdrawAmount.lt(amount)) {
     vAnchor.maxWithdrawAmount = amount;
   }
-  if(vAnchor.minWithdrawAmount.gt(amount)){
+  if (vAnchor.minWithdrawAmount.gt(amount)) {
     vAnchor.minWithdrawAmount = amount;
   }
-  vAnchor.averageWithdrawAmount = vAnchor.valueLocked
-    .div(vAnchor.numberOfWithdraws);
-
+  vAnchor.averageWithdrawAmount = vAnchor.valueLocked.div(vAnchor.numberOfWithdraws);
 
   vAnchor.save();
 }
@@ -90,15 +88,12 @@ function vAnchorDepositSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount:
   if (vAnchor.maxDepositAmount.lt(amount)) {
     vAnchor.maxDepositAmount = amount;
   }
-  if(vAnchor.minDepositAmount.gt(amount)){
+  if (vAnchor.minDepositAmount.gt(amount)) {
     vAnchor.minDepositAmount = amount;
   }
-  vAnchor.averageDepositAmount = vAnchor.valueLocked
-    .div(vAnchor.numberOfDeposits);
-
+  vAnchor.averageDepositAmount = vAnchor.valueLocked.div(vAnchor.numberOfDeposits);
 
   vAnchor.save();
-
 }
 
 function updateFee(vAnchor: VAnchor, fees: BigInt): void {
@@ -145,10 +140,11 @@ export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
 
   entity.save();
 }
-
+const tuplePrefix: string = '0x0000000000000000000000000000000000000000000000000000000000000020';
 // ethabi cargo crate does not expect function signature, but instead expects a tuple offset.
-function getTxnInputDataToDecode(event: ethereum.Event): Bytes {
-  const inputDataHexString = event.transaction.input.toHexString().slice(10); //take away function signature: '0x????????'
+export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
+
+  const inputDataHexString = txInput.toHexString().slice(10); //take away function signature: '0x????????'
   const hexStringToDecode = '0x0000000000000000000000000000000000000000000000000000000000000020' + inputDataHexString; // prepend tuple offset
   return Bytes.fromByteArray(Bytes.fromHexString(hexStringToDecode));
 }
@@ -160,7 +156,8 @@ function getTxnInputDataToDecode(event: ethereum.Event): Bytes {
  *
  * */
 export function handleInsertion(event: InsertionEvent): void {
-  const callInput = getTxnInputDataToDecode(event);
+  const callInput = getTxnInputDataToDecode(event.transaction.input);
+  log.info("Raw call data input {}" ,[event.transaction.input.toHexString()])
 
   // Decode the transaction
   const data = ethereum.decode(

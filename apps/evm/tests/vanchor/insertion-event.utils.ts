@@ -1,6 +1,50 @@
-import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
 
-function buildTransactData(
+/*export function decodeTransactCall(callData: Bytes) {
+  const callInput = getTxnInputDataToDecode(callData);
+  let proofBytes: null | Bytes = null;
+  let auxPublicInputs: null | Bytes = null;
+  const data = ethereum.decode(
+    '(bytes,bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes,uint256[],uint256[2],uint256,uint256),(bytes,bytes))',
+    Bytes.fromUint8Array(callInput)
+  );
+
+  if (data !== null) {
+    const inputs = data.toTuple();
+    const proof = inputs[0];
+    const auxPub = inputs[1];
+    const externalData = inputs[2];
+    const publicInputs = inputs[3];
+    const encryptions = inputs[4];
+    if (proof !== null) {
+      proofBytes = ethereum.encode(proof);
+    }
+    if (auxPub !== null) {
+      auxPublicInputs = ethereum.encode(auxPub);
+    }
+
+    if (externalData !== null) {
+      const extData = ExternalData.fromEthereumValue(externalData);
+    }
+    if (publicInputs !== null) {
+      const publicInputs = auxPub.toTuple();
+      const roots = publicInputs[0].toBytes();
+      const extenRoots = publicInputs[1].toBytes();
+      const nullifiers = publicInputs[2].toArray();
+      const commitments = publicInputs[3].toArray();
+      const commitments = publicInputs[4].toBigInt();
+      const extDataHash = publicInputs[5].toBigInt();
+    }
+    if (encryptions !== null) {
+      const enc = encryptions.toTuple();
+      const output1 = enc[0].toBytes();
+      const output2 = enc[1].toBytes();
+    }
+  } else {
+    throw 'Data failed';
+  }
+}*/
+export function buildTransactData(
   recipient: Address,
   amount: BigInt,
   relayer: Address,
@@ -8,7 +52,7 @@ function buildTransactData(
   refund: BigInt,
   token: Address
 ): Bytes {
-  const dummyFunctionSig:string = '0xa38f76e8';
+  const dummyFunctionSig: string = '0xa38f76e8';
 
   const proof = Bytes.fromHexString(
     '0x0475bdaa274a1d55391cfcf587afefadc4c497c70b6d0a62e1b51154ed5969bb26642b4c5ee9f6e1bdfd4d8fa06a600699c1a2599197b6fa82b95b3a0ce58779000a1f1af2b452e0f0342719a0777f5b0e3cfdc3e261b62fa971b9a247bb6ece0500aea30437d112bd5cd8e5bf8cfb65418ebb41b642d371c6ea49b555450f6d069721c72857cf2f30b931f2eed6e4665f4053fbbc1a91932e4d58343ece88e32617430f4ffac8617e1a380afa6ce4f0c5244d0f916813538808ce9778d3cabd1b44b57c47b4939020ea973b8e71e375a65bee652727a5bbf14d556c7dce9689038cf25dd97a23785a5131c27d2daf3e340c40afad489da83a588c182bbc2616'
@@ -19,22 +63,20 @@ function buildTransactData(
   );
   const extensionRoots = Bytes.fromHexString('0x');
   const inputNullifier1 = Bytes.fromHexString(
-    '0x21226830769161788640160748259612406388032005022297056334991032758157742607698'
+    '0x212268307691617886401607482596124063880320050222970563349910327581577426076981'
   );
   const inputNullifier2 = Bytes.fromHexString(
-    '0x13587132602647988697943222527053126006013515262685945391205733997569856330261'
+    '0x135871326026479886979432225270531260060135152626859453912057339975698563302611'
   );
 
   const auxPublicInputsBytes = Bytes.fromHexString(
     '0x0000000000000000000000000000000000000000000000000000000000000000'
   );
 
-  const com1 = Bytes.fromHexString('0x12280358413391051954815982034481046421101717515441136535267837962801360590685');
-  const com2 = Bytes.fromHexString('0x17753123288225924871335292858341090548246001490837206477243902898474793113394');
+  const com1 = Bytes.fromHexString('0x122803584133910519548159820344810464211017175154411365352678379628013605906851');
+  const com2 = Bytes.fromHexString('0x177531232882259248713352928583410905482460014908372064772439028984747931133941');
   const pubAmount = BigInt.fromString('50000000000000000000');
-  const extDataHash = Bytes.fromHexString(
-    '0x5851782729587194271435774257001525337865823128641196509784354335913672864280'
-  );
+  const extDataHash = BigInt.fromString('50000000000000000000');
 
   const enc1 = Bytes.fromHexString(
     '0x56dc89653fd49ee105c84cc2d6b6bae5362cac2aff8fbbd2765ae912d6450c9d2298ccd25053133c6e08e9e3c773b8496baf8ea3de3d12055e3a3183bc50d83337956849df1263dcad79bba7512e8166d04df05cf4fcf2dc1b35008452f3e98b626c1bea2b0953324c96380eb9a5f6e9b59822eb6a8330232ec524522da3a4de8ef90fc8cb257cbe5d01e17a147d229466c821ef475f03ce55ddac216160a42e1f9f89ff8c8485f6'
@@ -63,17 +105,45 @@ function buildTransactData(
   publicInputsDataList[3] = ethereum.Value.fromArray([ethereum.Value.fromBytes(com1), ethereum.Value.fromBytes(com2)]);
 
   publicInputsDataList[4] = ethereum.Value.fromUnsignedBigInt(pubAmount);
-  publicInputsDataList[5] = ethereum.Value.fromBytes(extDataHash);
+  publicInputsDataList[5] = ethereum.Value.fromUnsignedBigInt(extDataHash);
 
   const proofData = ethereum.Value.fromBytes(proof);
   const auxPublicInputs = ethereum.Value.fromBytes(auxPublicInputsBytes);
 
-  const externalData = ethereum.Value.fromArray(externalDataList);
-  const publicInputs = ethereum.Value.fromArray(publicInputsDataList);
-  const encryptedOutput = ethereum.Value.fromArray([ethereum.Value.fromBytes(enc1), ethereum.Value.fromBytes(enc2)]);
+  const externalData = new ethereum.Tuple();
+  externalData.push(externalDataList[0]);
+  externalData.push(externalDataList[1]);
+  externalData.push(externalDataList[2]);
+  externalData.push(externalDataList[3]);
+  externalData.push(externalDataList[4]);
+  externalData.push(externalDataList[5]);
 
-  const txParams = ethereum.Value.fromArray([proofData, auxPublicInputs, externalData, publicInputs, encryptedOutput]);
-  const callDataHex =  txParams.toBytes().toHexString();
-  const fullHexData = dummyFunctionSig + callDataHex.slice(2);
-  return Bytes.fromHexString(fullHexData)
+  const publicInputs = new ethereum.Tuple();
+ publicInputs.push( publicInputsDataList[0])
+ publicInputs.push( publicInputsDataList[1])
+ publicInputs.push( publicInputsDataList[2])
+ publicInputs.push( publicInputsDataList[3])
+ publicInputs.push( publicInputsDataList[4])
+ publicInputs.push( publicInputsDataList[5])
+
+
+
+  const encryptedOutput = new ethereum.Tuple();
+ encryptedOutput.push(ethereum.Value.fromBytes(enc1));
+ encryptedOutput.push(ethereum.Value.fromBytes(enc2));
+
+  const txParams = new ethereum.Tuple();
+
+  txParams.push(proofData);
+  txParams.push(auxPublicInputs);
+  txParams.push(ethereum.Value.fromTuple(externalData));
+  txParams.push(ethereum.Value.fromTuple(publicInputs));
+  txParams.push(ethereum.Value.fromTuple(encryptedOutput));
+
+  const callDataHex = ethereum.encode(ethereum.Value.fromTuple(txParams));
+  if (callDataHex) {
+    const fullHexData = dummyFunctionSig + callDataHex.toHexString().slice(2);
+    return Bytes.fromHexString(fullHexData);
+  }
+  throw 'failed to build';
 }
