@@ -1,27 +1,9 @@
-import {
-  EdgeAddition as EdgeAdditionEvent,
-  EdgeUpdate as EdgeUpdateEvent,
-  Insertion as InsertionEvent,
-  NewCommitment as NewCommitmentEvent,
-  NewNullifier as NewNullifierEvent,
-  PublicKey as PublicKeyEvent,
-} from '../generated/VAnchor/VAnchor';
-import {
-  DepositTx,
-  EdgeAddition,
-  EdgeUpdate,
-  Insertion,
-  NewCommitment,
-  NewNullifier,
-  PublicKey,
-  TransferTx,
-  VAnchor,
-  WithdrawTx,
-} from '../generated/schema';
-import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
-import { ExternalData, TransactionType } from './utils/transact';
-import { updateVAnchorDayData } from './day-data';
-import { ONE_BI } from './utils/consts';
+import { Insertion as InsertionEvent } from "../generated/VAnchor/VAnchor";
+import { DepositTx, Insertion, TransferTx, VAnchor, WithdrawTx } from "../generated/schema";
+import { Address, BigInt, Bytes, ethereum, log } from "@graphprotocol/graph-ts";
+import { ExternalData, TransactionType } from "./utils/transact";
+import { updateVAnchorDayData } from "./day-data";
+import { ONE_BI } from "./utils/consts";
 
 /**
  * Ensure that the vAnchor entity is created and stored
@@ -101,49 +83,11 @@ function updateFee(vAnchor: VAnchor, fees: BigInt): void {
   vAnchor.save();
 }
 
-/**
- * EdgeAddition event handler
- *  - An Edge linking event
- *
+/*
+ * Setup the tx data from the tx input
+ * Adding the tuple prefix
  * */
-export function handleEdgeAddition(event: EdgeAdditionEvent): void {
-  let entity = new EdgeAddition(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
-  entity.chainID = event.params.chainID;
-  entity.latestLeafIndex = event.params.latestLeafIndex;
-  entity.merkleRoot = event.params.merkleRoot;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
-}
-
-/**
- *
- * EdgeUpdate event handler
- * - An Edge linking event
- *
- *
- *
- *
- * */
-export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
-  let entity = new EdgeUpdate(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
-  entity.chainID = event.params.chainID;
-  entity.latestLeafIndex = event.params.latestLeafIndex;
-  entity.merkleRoot = event.params.merkleRoot;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
-}
-const tuplePrefix: string = '0x0000000000000000000000000000000000000000000000000000000000000020';
-// ethabi cargo crate does not expect function signature, but instead expects a tuple offset.
 export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
-
   const inputDataHexString = txInput.toHexString().slice(10); //take away function signature: '0x????????'
   const hexStringToDecode = '0x0000000000000000000000000000000000000000000000000000000000000020' + inputDataHexString; // prepend tuple offset
   return Bytes.fromByteArray(Bytes.fromHexString(hexStringToDecode));
@@ -183,7 +127,7 @@ export function handleInsertion(event: InsertionEvent): void {
       let txId = event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString();
       // Update fees
       updateFee(vAnchor, fees);
-      log.info("Transaction type {}" ,[transactionType.toString()])
+      log.info('Transaction type {}', [transactionType.toString()]);
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
 
@@ -224,7 +168,7 @@ export function handleInsertion(event: InsertionEvent): void {
         let entity = new TransferTx(txId);
         entity.from = event.transaction.from;
         entity.to = extData.recipient;
-        entity.contractAddress = event.address
+        entity.contractAddress = event.address;
         entity.value = amount;
         entity.finalValue = finalAmount;
         entity.fee = fees;
@@ -243,59 +187,6 @@ export function handleInsertion(event: InsertionEvent): void {
   entity.commitment = event.params.commitment;
   entity.leafIndex = event.params.leafIndex;
   entity.timestamp = event.params.timestamp;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
-}
-
-/**
- * NewCommitment event handler
- *  - Leaf commitment insertion on a subtree
- *
- *
- * */
-export function handleNewCommitment(event: NewCommitmentEvent): void {
-  log.info('Handler for new commitment', []);
-  let entity = new NewCommitment(event.transaction.hash.concatI32(event.logIndex.toI32()));
-  entity.commitment = event.params.commitment;
-  entity.subTreeIndex = event.params.subTreeIndex;
-  entity.leafIndex = event.params.leafIndex;
-  entity.encryptedOutput = event.params.encryptedOutput;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
-}
-
-/**
- * NewNullifier event handler
- *  - New nullifier is emitted when execution the commitment insertion
- *
- * */
-export function handleNewNullifier(event: NewNullifierEvent): void {
-  let entity = new NewNullifier(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
-  entity.nullifier = event.params.nullifier;
-
-  entity.blockNumber = event.block.number;
-  entity.blockTimestamp = event.block.timestamp;
-  entity.transactionHash = event.transaction.hash;
-
-  entity.save();
-}
-
-/**
- * PublicKey event handler
- *  -  New public key is register
- * */
-export function handlePublicKey(event: PublicKeyEvent): void {
-  let entity = new PublicKey(event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString());
-  entity.owner = event.params.owner;
-  entity.key = event.params.key;
 
   entity.blockNumber = event.block.number;
   entity.blockTimestamp = event.block.timestamp;
