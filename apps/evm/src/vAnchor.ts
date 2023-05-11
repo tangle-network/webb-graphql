@@ -14,7 +14,7 @@ import {
   NewCommitment,
   NewNullifier,
   PublicKey,
-  Transfer,
+  TransferTx,
   VAnchor,
   WithdrawTx,
 } from '../generated/schema';
@@ -221,10 +221,10 @@ export function handleInsertion(event: InsertionEvent): void {
         // Update vAnchor volume locked
         vAnchorWithdrawSideEffect(vAnchor, amount, finalAmount);
       } else if (transactionType === TransactionType.Transfer) {
-        let entity = new Transfer(txId);
+        let entity = new TransferTx(txId);
         entity.from = event.transaction.from;
         entity.to = extData.recipient;
-
+        entity.contractAddress = event.address
         entity.value = amount;
         entity.finalValue = finalAmount;
         entity.fee = fees;
