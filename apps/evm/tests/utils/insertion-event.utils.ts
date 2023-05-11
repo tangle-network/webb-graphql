@@ -99,7 +99,12 @@ export function buildTransactData(
 
   const callDataHex = ethereum.encode(ethereum.Value.fromTuple(txParams));
   if (callDataHex) {
-    const fullHexData = dummyFunctionSig + callDataHex.toHexString().slice(2);
+    /**
+     * 66 bytes
+     * - remove the `0x` prefix
+     * - remove the tuple bytes which is 64
+     * */
+    const fullHexData = dummyFunctionSig + callDataHex.toHexString().slice(66);
     return Bytes.fromHexString(fullHexData);
   }
   throw 'failed to build';

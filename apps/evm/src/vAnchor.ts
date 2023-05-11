@@ -157,7 +157,6 @@ export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
  * */
 export function handleInsertion(event: InsertionEvent): void {
   const callInput = getTxnInputDataToDecode(event.transaction.input);
-  log.info("Raw call data input {}" ,[event.transaction.input.toHexString()])
 
   // Decode the transaction
   const data = ethereum.decode(
@@ -184,6 +183,7 @@ export function handleInsertion(event: InsertionEvent): void {
       let txId = event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString();
       // Update fees
       updateFee(vAnchor, fees);
+      log.info("Transaction type {}" ,[transactionType.toString()])
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
 
