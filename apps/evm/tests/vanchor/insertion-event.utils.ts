@@ -1,49 +1,6 @@
 import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
 
-/*export function decodeTransactCall(callData: Bytes) {
-  const callInput = getTxnInputDataToDecode(callData);
-  let proofBytes: null | Bytes = null;
-  let auxPublicInputs: null | Bytes = null;
-  const data = ethereum.decode(
-    '(bytes,bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes,uint256[],uint256[2],uint256,uint256),(bytes,bytes))',
-    Bytes.fromUint8Array(callInput)
-  );
 
-  if (data !== null) {
-    const inputs = data.toTuple();
-    const proof = inputs[0];
-    const auxPub = inputs[1];
-    const externalData = inputs[2];
-    const publicInputs = inputs[3];
-    const encryptions = inputs[4];
-    if (proof !== null) {
-      proofBytes = ethereum.encode(proof);
-    }
-    if (auxPub !== null) {
-      auxPublicInputs = ethereum.encode(auxPub);
-    }
-
-    if (externalData !== null) {
-      const extData = ExternalData.fromEthereumValue(externalData);
-    }
-    if (publicInputs !== null) {
-      const publicInputs = auxPub.toTuple();
-      const roots = publicInputs[0].toBytes();
-      const extenRoots = publicInputs[1].toBytes();
-      const nullifiers = publicInputs[2].toArray();
-      const commitments = publicInputs[3].toArray();
-      const commitments = publicInputs[4].toBigInt();
-      const extDataHash = publicInputs[5].toBigInt();
-    }
-    if (encryptions !== null) {
-      const enc = encryptions.toTuple();
-      const output1 = enc[0].toBytes();
-      const output2 = enc[1].toBytes();
-    }
-  } else {
-    throw 'Data failed';
-  }
-}*/
 export function buildTransactData(
   recipient: Address,
   amount: BigInt,
