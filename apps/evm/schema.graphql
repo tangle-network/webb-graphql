@@ -56,7 +56,7 @@ type PublicKey @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type Transfer @entity(immutable: true) {
+type TransferTx @entity(immutable: true) {
   id: ID!
   from: Bytes! # addresss
   to: Bytes! # address

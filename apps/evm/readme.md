@@ -57,6 +57,12 @@ Install dependencies:
 ```bash
  yarn install
 ```
+### Running tests
+
+```bash
+cd ./apps/evm
+yarn test
+```
 
 ### Using evm local-net
 
