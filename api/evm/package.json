@@ -8,7 +8,7 @@
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ ",
     "create-local": "graph create --node http://localhost:8020/ VAnchor ",
     "remove-local": "graph remove --node http://localhost:8020/ VAnchor",
-    "deploy-localA": "graph deploy --node http://localhost:8020/ VAnchor --ipfs http://localhost:6001 --network  Hermes",
+    "deploy-localA": "graph deploy --node http://localhost:8020/ VAnchor --ipfs http://localhost:6001 --network  Sepolia",
     "deploy-localB": "graph deploy --node http://localhost:8020/ VAnchor --ipfs http://localhost:6001 --network Athena",
     "test": "graph test  vanchor -l  -v 0.5.4"
   },
