@@ -29,7 +29,7 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
     volumes:
-      - ./apps/substrate:/app
+      - ./api/substrate:/app
     command:
       - -f=/app
       - --db-schema=app

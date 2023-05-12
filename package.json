@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This project can be used as a starting point for developing your SubQuery project",
   "scripts": {
-    "subql:deploy:dev": "cd apps/substrate && yarn deploy:dev",
+    "subql:deploy:dev": "cd api/substrate && yarn deploy:dev",
     "ts-check": "tsc --noEmit -p ./tsconfig.json",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
@@ -23,7 +23,7 @@
   },
   "private": true,
   "workspaces": [
-    "apps/**"
+    "api/**"
   ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.44.0",
