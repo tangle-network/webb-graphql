@@ -60,7 +60,7 @@ Install dependencies:
 ### Running tests
 
 ```bash
-cd ./apps/evm
+cd ./api/evm
 yarn test
 ```
 

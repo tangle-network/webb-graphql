@@ -108,7 +108,7 @@ dist
 .data
 .project-cid
 
-/apps/**/build/
-/apps/**/dist/
+/api/**/build/
+/api/**/dist/
 /node_modules/
 
