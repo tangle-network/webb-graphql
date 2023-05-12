@@ -8,6 +8,7 @@ dataSources:
     source:
       abi: VAnchor
       address: "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D"
+      startBlock: 3146553
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

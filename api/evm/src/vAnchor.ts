@@ -1,5 +1,6 @@
 import { Insertion as InsertionEvent } from "../generated/VAnchor/VAnchor";
 import { DepositTx, Insertion, TransferTx, VAnchor, WithdrawTx } from "../generated/schema";
+import {VAnchor as VAnchorContract} from "../generated/VAnchor/VAnchor";
 import { Address, BigInt, Bytes, ethereum, log } from "@graphprotocol/graph-ts";
 import { ExternalData, TransactionType } from "./utils/transact";
 import { updateVAnchorDayData } from "./day-data";
@@ -108,6 +109,9 @@ export function handleInsertion(event: InsertionEvent): void {
     Bytes.fromUint8Array(callInput)
   );
   log.info("Insertion happen", []);
+  const vAnchorContract = VAnchorContract.bind(event.address);
+  const token = vAnchorContract.token();
+  log.info('VAnchor token Address from chain {}' , [token.toHexString()])
   if (data !== null) {
     const inputs = data.toTuple();
     // const proof = input[0];
