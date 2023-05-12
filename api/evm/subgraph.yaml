@@ -23,18 +23,8 @@ dataSources:
         - name: VAnchor
           file: ./abis/VAnchor.json
       eventHandlers:
-        - event: EdgeAddition(uint256,uint256,uint256)
-          handler: handleEdgeAddition
-        - event: EdgeUpdate(uint256,uint256,uint256)
-          handler: handleEdgeUpdate
         - event: Insertion(indexed uint256,uint32,uint256)
           handler: handleInsertion
-        - event: NewCommitment(uint256,uint256,uint256,bytes)
-          handler: handleNewCommitment
-        - event: NewNullifier(uint256)
-          handler: handleNewNullifier
-        - event: PublicKey(indexed address,bytes)
-          handler: handlePublicKey
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
