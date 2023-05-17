@@ -103,14 +103,14 @@ export class VolumeDTO {
 export function updateVAnchorDayData(
   block: ethereum.Block,
   vAnchor: VAnchor,
-  dayDataPayload: VolumeDTO,
+  volumeDTO: VolumeDTO,
   txId: string
 ): void {
   const vAnchorDayData = ensureDay(block, vAnchor);
-  let dayVolumeComposition = ensureDayVolumeComposition(vAnchorDayData, dayDataPayload.token);
-  const finalAmount = dayDataPayload.finalAmount;
-  const fee = dayDataPayload.totalFees;
-  const txType = dayDataPayload.txType;
+  let dayVolumeComposition = ensureDayVolumeComposition(vAnchorDayData, volumeDTO.token);
+  const finalAmount = volumeDTO.finalAmount;
+  const fee = volumeDTO.totalFees;
+  const txType = volumeDTO.txType;
   // Check for deposit tx to store the number of deposits and other relatd data
   if (txType === TransactionType.Deposit) {
     vAnchorDayData.numberOfDeposits = vAnchorDayData.numberOfDeposits.plus(BigInt.fromI32(1));
@@ -133,9 +133,9 @@ export function updateVAnchorDayData(
   }
   // Store fees regardless of the transactin type
   dayVolumeComposition.fees = dayVolumeComposition.fees.plus(fee);
-  dayVolumeComposition.relayerFees = dayVolumeComposition.relayerFees.plus(dayDataPayload.relayerFees);
-  dayVolumeComposition.wrappingFees = dayVolumeComposition.wrappingFees.plus(dayDataPayload.wrappingFees);
-  dayVolumeComposition.unWrappingFees = dayVolumeComposition.unWrappingFees.plus(dayDataPayload.wrappingFees);
+  dayVolumeComposition.relayerFees = dayVolumeComposition.relayerFees.plus(volumeDTO.relayerFees);
+  dayVolumeComposition.wrappingFees = dayVolumeComposition.wrappingFees.plus(volumeDTO.wrappingFees);
+  dayVolumeComposition.unWrappingFees = dayVolumeComposition.unWrappingFees.plus(volumeDTO.wrappingFees);
   dayVolumeComposition.save();
   vAnchorDayData.save();
 }
