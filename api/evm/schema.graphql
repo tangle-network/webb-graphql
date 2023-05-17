@@ -113,15 +113,25 @@ type WithdrawTx @entity(immutable: true) {
 
   blockNumber: BigInt!
 }
-
+type VAnchorVolume @entity {
+  #<VAnchorId>-<TokenId>
+  id:ID!
+  #Wrapped Token of the transact call
+  token: Token!
+  vAnchor:VAnchor!
+  valueLocked: BigInt!
+  finalValueLocked: BigInt!
+  totalFees: BigInt!
+  totalWrappingFees: BigInt!
+}
 type VAnchor @entity(immutable: false) {
   id: ID!
   contractAddress: Bytes!
-  token: Bytes!
   chainId: BigInt!
   typedChainId: Bytes!
-  valueLocked: BigInt!
-  finalValueLocked: BigInt!
+  token: Bytes!
+
+  volumeComposition: [VAnchorVolume!]!
 
   maxDepositAmount: BigInt!
   minDepositAmount: BigInt!
@@ -132,8 +142,6 @@ type VAnchor @entity(immutable: false) {
   minWithdrawAmount: BigInt!
   numberOfWithdraws: BigInt!
   averageWithdrawAmount: BigInt!
-
-  totalFees: BigInt!
 }
 
 type VAnchorDayData @entity(immutable: false) {
@@ -152,6 +160,7 @@ type VAnchorDayData @entity(immutable: false) {
   numberOfDeposits: BigInt!
   numberOfWithdraws: BigInt!
   numberOfTransfers: BigInt!
+
   depositTx: [DepositTx!]!
   withdrawTx: [WithdrawTx!]!
   transferTx: [TransferTx!]!

@@ -1,5 +1,5 @@
 import { Insertion as InsertionEvent, VAnchor as VAnchorContract } from '../generated/VAnchor/VAnchor';
-import { DepositTx, Insertion, TransferTx, VAnchor, WithdrawTx } from '../generated/schema';
+import { DepositTx, Insertion, Token, TransferTx, VAnchor, VAnchorVolume, WithdrawTx } from '../generated/schema';
 import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
 import { updateVAnchorDayData } from './day-data';
@@ -19,27 +19,50 @@ function ensureVAnchor(address: Address): VAnchor {
   const vAnchorContract = VAnchorContract.bind(address);
 
   let newVAnchor = new VAnchor(address.toHexString());
-  newVAnchor.chainId = BigInt.fromI32(0);
+  newVAnchor.chainId = BigInt.zero();
   newVAnchor.contractAddress = address;
-  newVAnchor.valueLocked = BigInt.fromI32(0);
-  newVAnchor.finalValueLocked = BigInt.fromI32(0);
-  newVAnchor.totalFees = BigInt.fromI32(0);
+
   newVAnchor.token = vAnchorContract.token();
   newVAnchor.typedChainId = vAnchorContract.EVM_CHAIN_ID_TYPE();
   newVAnchor.chainId = vAnchorContract.getChainId();
+  newVAnchor.volumeComposition = [];
+  newVAnchor.numberOfDeposits = BigInt.zero();
+  newVAnchor.averageDepositAmount = BigInt.zero();
+  newVAnchor.maxDepositAmount = BigInt.zero();
+  newVAnchor.minDepositAmount = BigInt.zero();
 
-  newVAnchor.numberOfDeposits = BigInt.fromI32(0);
-  newVAnchor.averageDepositAmount = BigInt.fromI32(0);
-  newVAnchor.maxDepositAmount = BigInt.fromI32(0);
-  newVAnchor.minDepositAmount = BigInt.fromI32(0);
-
-  newVAnchor.numberOfWithdraws = BigInt.fromI32(0);
-  newVAnchor.averageWithdrawAmount = BigInt.fromI32(0);
-  newVAnchor.maxWithdrawAmount = BigInt.fromI32(0);
-  newVAnchor.minWithdrawAmount = BigInt.fromI32(0);
+  newVAnchor.numberOfWithdraws = BigInt.zero();
+  newVAnchor.averageWithdrawAmount = BigInt.zero();
+  newVAnchor.maxWithdrawAmount = BigInt.zero();
+  newVAnchor.minWithdrawAmount = BigInt.zero();
 
   newVAnchor.save();
   return newVAnchor;
+}
+
+function ensureVAnchorTokenVolume(vAnchor: VAnchor, token: Token): VAnchorVolume {
+  const vAnchorVolumeId = vAnchor.id.concat('-').concat(token.id.toHexString());
+  const vAnchorVolume = VAnchorVolume.load(vAnchorVolumeId);
+  if (vAnchorVolume) {
+    return vAnchorVolume;
+  }
+  let newVAnchorVolume = new VAnchorVolume(vAnchorVolumeId);
+  newVAnchorVolume.token = token.id;
+  newVAnchorVolume.vAnchor = vAnchor.id;
+  newVAnchorVolume.valueLocked = BigInt.zero();
+  newVAnchorVolume.finalValueLocked = BigInt.zero();
+  newVAnchorVolume.totalFees = BigInt.zero();
+  newVAnchorVolume.totalWrappingFees = BigInt.zero();
+  newVAnchorVolume.save();
+
+
+  // update VAnchor volumes
+  const vAnchorVolumes = vAnchor.volumeComposition;
+  vAnchorVolumes.push(newVAnchorVolume.id)
+  vAnchor.volumeComposition = vAnchorVolumes;
+  vAnchor.save()
+
+  return newVAnchorVolume;
 }
 
 /**
@@ -47,9 +70,14 @@ function ensureVAnchor(address: Address): VAnchor {
  *
  * */
 
-function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
-  vAnchor.valueLocked = vAnchor.valueLocked.minus(amount);
-  vAnchor.finalValueLocked = vAnchor.finalValueLocked.minus(finalAmount);
+function vAnchorWithdrawSideEffect(
+  vAnchor: VAnchor,
+  vAnchorVolume: VAnchorVolume,
+  amount: BigInt,
+  finalAmount: BigInt
+): void {
+  vAnchorVolume.valueLocked = vAnchorVolume.valueLocked.minus(amount);
+  vAnchorVolume.finalValueLocked = vAnchorVolume.finalValueLocked.minus(finalAmount);
 
   vAnchor.numberOfWithdraws = vAnchor.numberOfWithdraws.plus(ONE_BI);
   // update the max withdraw amount
@@ -59,9 +87,10 @@ function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount
   if (vAnchor.minWithdrawAmount.gt(amount)) {
     vAnchor.minWithdrawAmount = amount;
   }
-  vAnchor.averageWithdrawAmount = vAnchor.valueLocked.div(vAnchor.numberOfWithdraws);
+  vAnchor.averageWithdrawAmount = vAnchorVolume.valueLocked.div(vAnchor.numberOfWithdraws);
 
   vAnchor.save();
+  vAnchorVolume.save();
 }
 
 /**
@@ -69,9 +98,14 @@ function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount
  *
  * */
 
-function vAnchorDepositSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount: BigInt): void {
-  vAnchor.valueLocked = vAnchor.valueLocked.plus(amount);
-  vAnchor.finalValueLocked = vAnchor.finalValueLocked.plus(finalAmount);
+function vAnchorDepositSideEffect(
+  vAnchor: VAnchor,
+  vAnchorVolume: VAnchorVolume,
+  amount: BigInt,
+  finalAmount: BigInt
+): void {
+  vAnchorVolume.valueLocked = vAnchorVolume.valueLocked.plus(amount);
+  vAnchorVolume.finalValueLocked = vAnchorVolume.finalValueLocked.plus(finalAmount);
 
   vAnchor.numberOfDeposits = vAnchor.numberOfDeposits.plus(ONE_BI);
   // update the max withdraw amount
@@ -81,12 +115,13 @@ function vAnchorDepositSideEffect(vAnchor: VAnchor, amount: BigInt, finalAmount:
   if (vAnchor.minDepositAmount.gt(amount)) {
     vAnchor.minDepositAmount = amount;
   }
-  vAnchor.averageDepositAmount = vAnchor.valueLocked.div(vAnchor.numberOfDeposits);
+  vAnchor.averageDepositAmount = vAnchorVolume.valueLocked.div(vAnchor.numberOfDeposits);
 
   vAnchor.save();
+  vAnchorVolume.save();
 }
 
-function updateFee(vAnchor: VAnchor, fees: BigInt): void {
+function updateFee(vAnchor: VAnchorVolume, fees: BigInt): void {
   vAnchor.totalFees = vAnchor.totalFees.plus(fees);
   vAnchor.save();
 }
@@ -129,9 +164,11 @@ export function handleInsertion(event: InsertionEvent): void {
     // const encryptions = inputs[4];
     if (externalData !== null) {
       const extData = ExternalData.fromEthereumValue(externalData);
-      const vAnchorAddress = event.address;
+      // WrappedToken
       const token = extData.token;
       const wrappedToken = ensureToken(token);
+      const vAnchorVolume = ensureVAnchorTokenVolume(vAnchor, wrappedToken);
+
       const finalAmount = extData.getFinalAmount();
       const fees = extData.getFee();
       const amount = extData.amount;
@@ -146,9 +183,7 @@ export function handleInsertion(event: InsertionEvent): void {
       }
 
       // Update fees
-
-      updateFee(vAnchor, fees);
-      log.info('Transaction type {}', [transactionType.toString()]);
+      updateFee(vAnchorVolume, fees);
 
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
@@ -183,7 +218,7 @@ export function handleInsertion(event: InsertionEvent): void {
 
         entity.save();
         // Update vAnchor volume locked
-        vAnchorDepositSideEffect(vAnchor, amount, entity.finalValue);
+        vAnchorDepositSideEffect(vAnchor, vAnchorVolume, amount, entity.finalValue);
       } else if (transactionType === TransactionType.Withdraw) {
         let entity = new WithdrawTx(txId);
 
@@ -220,7 +255,7 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.save();
 
         // Update vAnchor volume locked
-        vAnchorWithdrawSideEffect(vAnchor, amount, entity.finalValue);
+        vAnchorWithdrawSideEffect(vAnchor, vAnchorVolume, amount, entity.finalValue);
       } else if (transactionType === TransactionType.Transfer) {
         let entity = new TransferTx(txId);
         entity.from = event.transaction.from;
