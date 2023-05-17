@@ -189,7 +189,7 @@ export function handleInsertion(event: InsertionEvent): void {
       const hasWrapping = !isSameAddress(Address.fromBytes(vAnchor.token), token);
       let transactionType = extData.getTransactionType();
       // DayData payload
-      let dayDataPayload = VolumeDTO.default();
+      let dayDataPayload = VolumeDTO.withToken(wrappedToken);
       dayDataPayload.relayerFees = fees;
       dayDataPayload.txType = transactionType;
 

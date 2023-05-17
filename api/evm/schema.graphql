@@ -115,10 +115,10 @@ type WithdrawTx @entity(immutable: true) {
 }
 type VAnchorVolume @entity {
   #<VAnchorId>-<TokenId>
-  id:ID!
+  id: ID!
   #Wrapped Token of the transact call
   token: Token!
-  vAnchor:VAnchor!
+  vAnchor: VAnchor!
   valueLocked: BigInt!
   finalValueLocked: BigInt!
   totalFees: BigInt!
@@ -143,19 +143,27 @@ type VAnchor @entity(immutable: false) {
   numberOfWithdraws: BigInt!
   averageWithdrawAmount: BigInt!
 }
-
-type VAnchorDayData @entity(immutable: false) {
-  # <Day index>-<vAnchorAddress>
+type VAnchorVolumeComposition @entity {
+  # <Day index>-<vAnchorAddress>-<token>
   id: ID!
-  date: Int!
 
-  vAnchor: VAnchor!
+  token: Token!
+  VAnchorDayData: VAnchorDayData!
+
   relayerFees: BigInt!
   wrappingFees: BigInt!
   unWrappingFees: BigInt!
 
   fees: BigInt!
   volume: BigInt!
+}
+type VAnchorDayData @entity(immutable: false) {
+  # <Day index>-<vAnchorAddress>
+  id: ID!
+  date: Int!
+
+  vAnchor: VAnchor!
+  composition: [VAnchorVolumeComposition!]!
 
   numberOfDeposits: BigInt!
   numberOfWithdraws: BigInt!
