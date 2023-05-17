@@ -3,8 +3,9 @@ import { DepositTx, Insertion, TransferTx, VAnchor, WithdrawTx } from '../genera
 import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
 import { updateVAnchorDayData } from './day-data';
-import { ONE_BI } from './utils/consts';
+import { isSameAddress, ONE_BI } from './utils/consts';
 import { ensureFungibleTokenWrapper } from './fungible-token-wrapper';
+import { FungibleTokenWrapper } from '../generated/VAnchor/FungibleTokenWrapper';
 
 /**
  * Ensure that the vAnchor entity is created and stored
@@ -27,7 +28,6 @@ function ensureVAnchor(address: Address): VAnchor {
   newVAnchor.typedChainId = vAnchorContract.EVM_CHAIN_ID_TYPE();
   newVAnchor.chainId = vAnchorContract.getChainId();
 
-
   newVAnchor.numberOfDeposits = BigInt.fromI32(0);
   newVAnchor.averageDepositAmount = BigInt.fromI32(0);
   newVAnchor.maxDepositAmount = BigInt.fromI32(0);
@@ -41,6 +41,7 @@ function ensureVAnchor(address: Address): VAnchor {
   newVAnchor.save();
   return newVAnchor;
 }
+
 /**
  * Handling the  vAnchor side effect for withdraw transaction
  *
@@ -115,7 +116,10 @@ export function handleInsertion(event: InsertionEvent): void {
     Bytes.fromUint8Array(callInput)
   );
   log.info('Insertion happen', []);
-  const vAnchorContract = VAnchorContract.bind(event.address);
+  const vAnchorAddress = event.address;
+  const vAnchor = ensureVAnchor(vAnchorAddress);
+  ensureFungibleTokenWrapper(vAnchor.token);
+  const ftw = FungibleTokenWrapper.bind(vAnchor.token);
 
   if (data !== null) {
     const inputs = data.toTuple();
@@ -127,24 +131,19 @@ export function handleInsertion(event: InsertionEvent): void {
     if (externalData !== null) {
       const extData = ExternalData.fromEthereumValue(externalData);
       const vAnchorAddress = event.address;
-      const vAnchor = ensureVAnchor(vAnchorAddress);
       const token = extData.token;
       const finalAmount = extData.getFinalAmount();
       const fees = extData.getFee();
       const amount = extData.amount;
+      const txValue = event.transaction.value;
+      const isNative = isSameAddress(extData.token, Address.zero());
+      const hasWrapping = !isSameAddress(vAnchor.token, token);
       let transactionType = extData.getTransactionType();
       let txId = event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString();
       // Update fees
       updateFee(vAnchor, fees);
       log.info('Transaction type {}', [transactionType.toString()]);
-      //VAnchor token
-      const contractToken = vAnchorContract.token();
 
-      ensureFungibleTokenWrapper(contractToken);
-      log.info('VAnchor token Address from chain  {} , contract address from ext data {}', [
-        contractToken.toHexString(),
-        token.toHexString(),
-      ]);
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
 
@@ -152,21 +151,31 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.depositor = event.transaction.from;
         // Values
         entity.value = amount;
-        entity.finalValue = finalAmount;
-        // Fees
-        entity.fullFee = fees;
-        entity.RelayerFee = BigInt.zero();
-        entity.wrappingFee = BigInt.zero();
+        entity.RelayerFee = fees;
 
-        entity.isWrapAndDeposit = false;
+        if (hasWrapping) {
+          const wrapAmount = isNative ? txValue : ftw.getAmountToWrap(amount);
+          const wrappingFee = ftw.getFeeFromAmount(wrapAmount);
+          const finalAmount = wrapAmount.minus(wrappingFee);
+          entity.wrappingFee = wrappingFee;
+          entity.finalValue = finalAmount;
+        } else {
+          entity.wrappingFee = BigInt.zero();
+          entity.finalValue = finalAmount;
+        }
+
+        entity.isWrapAndDeposit = hasWrapping;
         entity.vAnchorAddress = vAnchorAddress;
 
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;
+
+        entity.fullFee = entity.RelayerFee.plus(entity.wrappingFee);
+
         entity.save();
         // Update vAnchor volume locked
-        vAnchorDepositSideEffect(vAnchor, amount, finalAmount);
+        vAnchorDepositSideEffect(vAnchor, amount, entity.finalValue);
       } else if (transactionType === TransactionType.Withdraw) {
         let entity = new WithdrawTx(txId);
 
@@ -176,20 +185,31 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.value = amount;
         entity.finalValue = finalAmount;
         // Fees
-        entity.fullFee = fees;
-        entity.RelayerFee = BigInt.zero();
-        entity.unWrappingFee = BigInt.zero();
+        entity.RelayerFee = fees;
 
-        entity.isUnwrapAndWithdraw = false;
+        if (hasWrapping) {
+          const wrapAmount = isNative ? txValue : ftw.getAmountToWrap(amount);
+          const wrappingFee = ftw.getFeeFromAmount(wrapAmount);
+          const finalAmount = wrapAmount.minus(wrappingFee);
+          entity.unWrappingFee = wrappingFee;
+          entity.finalValue = finalAmount;
+        } else {
+          entity.unWrappingFee = BigInt.zero();
+          entity.finalValue = finalAmount;
+        }
+
+        entity.isUnwrapAndWithdraw = hasWrapping;
 
         entity.vAnchorAddress = vAnchorAddress;
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;
+        entity.fullFee = entity.RelayerFee.plus(entity.unWrappingFee);
+
         entity.save();
 
         // Update vAnchor volume locked
-        vAnchorWithdrawSideEffect(vAnchor, amount, finalAmount);
+        vAnchorWithdrawSideEffect(vAnchor, amount, entity.finalValue);
       } else if (transactionType === TransactionType.Transfer) {
         let entity = new TransferTx(txId);
         entity.from = event.transaction.from;
