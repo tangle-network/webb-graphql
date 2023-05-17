@@ -4,7 +4,7 @@ import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
 import { updateVAnchorDayData } from './day-data';
 import { isSameAddress, ONE_BI } from './utils/consts';
-import { ensureFungibleTokenWrapper } from './fungible-token-wrapper';
+import { ensureFungibleTokenWrapper, ensureToken } from './fungible-token-wrapper';
 import { FungibleTokenWrapper } from '../generated/VAnchor/FungibleTokenWrapper';
 
 /**
@@ -118,7 +118,7 @@ export function handleInsertion(event: InsertionEvent): void {
   log.info('Insertion happen', []);
   const vAnchorAddress = event.address;
   const vAnchor = ensureVAnchor(vAnchorAddress);
-  ensureFungibleTokenWrapper(Address.fromBytes(vAnchor.token));
+  const fungibleTokenWrapper = ensureFungibleTokenWrapper(Address.fromBytes(vAnchor.token));
   const ftw = FungibleTokenWrapper.bind(Address.fromBytes(vAnchor.token));
   if (data !== null) {
     const inputs = data.toTuple();
@@ -131,6 +131,7 @@ export function handleInsertion(event: InsertionEvent): void {
       const extData = ExternalData.fromEthereumValue(externalData);
       const vAnchorAddress = event.address;
       const token = extData.token;
+      const wrappedToken = ensureToken(token);
       const finalAmount = extData.getFinalAmount();
       const fees = extData.getFee();
       const amount = extData.amount;
@@ -152,7 +153,9 @@ export function handleInsertion(event: InsertionEvent): void {
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
 
-        entity.fungibleTokenWrapper = token;
+        entity.vAnchor = vAnchor.id;
+        entity.fungibleTokenWrapper = fungibleTokenWrapper.id;
+        entity.wrappedToken = wrappedToken.id;
         entity.depositor = event.transaction.from;
         // Values
         entity.value = amount;
@@ -170,7 +173,6 @@ export function handleInsertion(event: InsertionEvent): void {
         }
 
         entity.isWrapAndDeposit = hasWrapping;
-        entity.vAnchorAddress = vAnchorAddress;
 
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
@@ -185,7 +187,10 @@ export function handleInsertion(event: InsertionEvent): void {
       } else if (transactionType === TransactionType.Withdraw) {
         let entity = new WithdrawTx(txId);
 
-        entity.fungibleTokenWrapper = token;
+        entity.vAnchor = vAnchor.id;
+        entity.fungibleTokenWrapper = fungibleTokenWrapper.id;
+        entity.wrappedToken = wrappedToken.id;
+
         entity.beneficiary = extData.recipient;
 
         entity.value = amount;
@@ -206,7 +211,6 @@ export function handleInsertion(event: InsertionEvent): void {
 
         entity.isUnwrapAndWithdraw = hasWrapping;
 
-        entity.vAnchorAddress = vAnchorAddress;
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;

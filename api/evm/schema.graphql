@@ -86,8 +86,10 @@ type DepositTx @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 
-  vAnchorAddress: Bytes!
-  fungibleTokenWrapper: Bytes!
+  vAnchor: VAnchor!
+  fungibleTokenWrapper: FungibleTokenWrapper!
+  wrappedToken:Token!
+
   blockNumber: BigInt!
 }
 
@@ -107,8 +109,10 @@ type WithdrawTx @entity(immutable: true) {
   finalValue: BigInt! # value without fees
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-  vAnchorAddress: Bytes!
-  fungibleTokenWrapper: Bytes!
+
+  vAnchor: VAnchor!
+  fungibleTokenWrapper: FungibleTokenWrapper!
+  wrappedToken:Token!
 
   blockNumber: BigInt!
 }
