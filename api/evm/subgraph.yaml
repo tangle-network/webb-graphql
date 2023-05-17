@@ -4,44 +4,35 @@ schema:
 dataSources:
   - kind: ethereum
     name: VAnchor
-    network: Hermes
+    network: Sepolia
     source:
       abi: VAnchor
-      address: "0x5D3b0d1AC094A8551bAB3818Eff758dc1893e6C7"
+      address: "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D"
+      startBlock: 3146553
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - EdgeAddition
-        - EdgeUpdate
         - Insertion
-        - NewCommitment
-        - NewNullifier
-        - PublicKey
       abis:
         - name: VAnchor
           file: ./abis/VAnchor.json
+        - name: FungibleTokenWrapper
+          file: ./abis/FungibleTokenWrapper.json
+        - name: IERC20
+          file: ./abis/IERC20.json
       eventHandlers:
-        - event: EdgeAddition(uint256,uint256,uint256)
-          handler: handleEdgeAddition
-        - event: EdgeUpdate(uint256,uint256,uint256)
-          handler: handleEdgeUpdate
         - event: Insertion(indexed uint256,uint32,uint256)
           handler: handleInsertion
-        - event: NewCommitment(uint256,uint256,uint256,bytes)
-          handler: handleNewCommitment
-        - event: NewNullifier(uint256)
-          handler: handleNewNullifier
-        - event: PublicKey(indexed address,bytes)
-          handler: handlePublicKey
+          receipt: true
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
-    network: Hermes
+    network: Sepolia
     source:
       abi: FungibleTokenWrapper
-      address: "0xFdaACACb85484c4D492414F4911524F57d2549F4"
+      address: "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -57,6 +48,8 @@ dataSources:
       abis:
         - name: FungibleTokenWrapper
           file: ./abis/FungibleTokenWrapper.json
+        - name: IERC20
+          file: ./abis/IERC20.json
       eventHandlers:
         - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
           handler: handleRoleRevoked
@@ -65,22 +58,3 @@ dataSources:
         - event: Unpaused(address)
           handler: handleUnpaused
       file: ./src/fungible-token-wrapper.ts
-  - kind: ethereum
-    name: DeterministicDeployFactor
-    network: Hermes
-    source:
-      abi: DeterministicDeployFactor
-      address: "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - Deploy
-      abis:
-        - name: DeterministicDeployFactor
-          file: ./abis/DeterministicDeployFactor.json
-      eventHandlers:
-        - event: Deploy(address)
-          handler: handleDeploy
-      file: ./src/deterministic-deploy-factor.ts

@@ -6,10 +6,11 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ ",
+    "create-test": "graph create --node http://localhost:8020/ VAnchorTest ",
     "create-local": "graph create --node http://localhost:8020/ VAnchor ",
     "remove-local": "graph remove --node http://localhost:8020/ VAnchor",
-    "deploy-localA": "graph deploy --node http://localhost:8020/ VAnchor --ipfs http://localhost:6001 --network  Hermes",
-    "deploy-localB": "graph deploy --node http://localhost:8020/ VAnchor --ipfs http://localhost:6001 --network Athena",
+    "deploy-localA": "graph deploy --node http://localhost:8020/ VAnchor --ipfs http://localhost:6001 --network  Sepolia",
+    "deploy-localB": "graph deploy --node http://localhost:8020/ VAnchorTest --ipfs http://localhost:6001 --network Hermes",
     "test": "graph test  vanchor -l  -v 0.5.4"
   },
   "dependencies": {

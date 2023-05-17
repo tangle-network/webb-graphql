@@ -1,5 +1,5 @@
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
-import { ADDRESS_ZERO, ZERO_BI } from "./consts";
+import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts';
+import { ADDRESS_ZERO, ZERO_BI } from './consts';
 
 export enum TransactionType {
   Deposit,
@@ -50,7 +50,6 @@ export class ExternalData {
     this.token = token;
   }
 
-
   /**
    *  Final amount without fees
    *
@@ -60,9 +59,9 @@ export class ExternalData {
     return isRelayedTransaction ? this.amount.minus(this.fee) : this.amount;
   }
 
-  getFee():BigInt{
+  getFee(): BigInt {
     const isRelayedTransaction = this.relayer.toHexString() === ADDRESS_ZERO;
-    return isRelayedTransaction ? this.fee : BigInt.fromI32(0)
+    return isRelayedTransaction ? this.fee : BigInt.fromI32(0);
   }
   getTransactionType(): TransactionType {
     const finalAmount = this.getFinalAmount();

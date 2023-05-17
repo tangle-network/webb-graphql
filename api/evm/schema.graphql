@@ -75,14 +75,19 @@ type DepositTx @entity(immutable: true) {
   depositor: Bytes!
   # deposit amount
   value: BigInt! # uint256
+  isWrapAndDeposit: Boolean!
+  wrappingFee: BigInt!
+  RelayerFee: BigInt!
+  fullFee: BigInt!
+  gasUsed: BigInt!
   finalValue: BigInt! # value without fees
-  fee: BigInt!
-
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 
-  vAnchorAddress: Bytes!
-  fungibleTokenWrapper: Bytes!
+  vAnchor: VAnchor!
+  fungibleTokenWrapper: FungibleTokenWrapper!
+  wrappedToken: Token!
+
   blockNumber: BigInt!
 }
 
@@ -91,46 +96,82 @@ type WithdrawTx @entity(immutable: true) {
   beneficiary: Bytes!
   # deposit amount
   value: BigInt! # uint256
+  gasUsed: BigInt!
+
+  isUnwrapAndWithdraw: Boolean!
+  unWrappingFee: BigInt!
+  RelayerFee: BigInt!
+  fullFee: BigInt!
+
   finalValue: BigInt! # value without fees
-  fee: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-  vAnchorAddress: Bytes!
-  fungibleTokenWrapper: Bytes!
+
+  vAnchor: VAnchor!
+  fungibleTokenWrapper: FungibleTokenWrapper!
+  wrappedToken: Token!
 
   blockNumber: BigInt!
 }
-
-type VAnchor @entity(immutable: false) {
+type VAnchorVolume @entity {
+  #<VAnchorId>-<TokenId>
   id: ID!
-  chainId: BigInt!
-  contractAddress: Bytes!
+  #Wrapped Token of the transact call
+  token: Token!
+  vAnchor: VAnchor!
   valueLocked: BigInt!
   finalValueLocked: BigInt!
-
-  maxDepositAmount:BigInt!
-  minDepositAmount:BigInt!
-  numberOfDeposits:BigInt!
-  averageDepositAmount:BigInt!
-
-  maxWithdrawAmount:BigInt!
-  minWithdrawAmount:BigInt!
-  numberOfWithdraws:BigInt!
-  averageWithdrawAmount:BigInt!
-
   totalFees: BigInt!
+  totalWrappingFees: BigInt!
 }
+type VAnchor @entity(immutable: false) {
+  id: ID!
+  contractAddress: Bytes!
+  chainId: BigInt!
+  typedChainId: Bytes!
+  token: Bytes!
 
+  volumeComposition: [VAnchorVolume!]!
+
+  maxDepositAmount: BigInt!
+  minDepositAmount: BigInt!
+  numberOfDeposits: BigInt!
+  averageDepositAmount: BigInt!
+
+  maxWithdrawAmount: BigInt!
+  minWithdrawAmount: BigInt!
+  numberOfWithdraws: BigInt!
+  averageWithdrawAmount: BigInt!
+}
+type VAnchorVolumeComposition @entity {
+  # <Day index>-<vAnchorAddress>-<token>
+  id: ID!
+
+  token: Token!
+  VAnchorDayData: VAnchorDayData!
+
+  relayerFees: BigInt!
+  wrappingFees: BigInt!
+  unWrappingFees: BigInt!
+
+  fees: BigInt!
+  volume: BigInt!
+}
 type VAnchorDayData @entity(immutable: false) {
   # <Day index>-<vAnchorAddress>
   id: ID!
   date: Int!
 
   vAnchor: VAnchor!
-  fees: BigInt!
-  volume: BigInt!
+  composition: [VAnchorVolumeComposition!]!
+
   numberOfDeposits: BigInt!
+  numberOfWithdraws: BigInt!
+  numberOfTransfers: BigInt!
+
   depositTx: [DepositTx!]!
+  withdrawTx: [WithdrawTx!]!
+  transferTx: [TransferTx!]!
 
   startBlockNumber: BigInt!
 }
@@ -140,4 +181,18 @@ type Deploy @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+}
+
+type Token @entity(immutable: false) {
+  id: Bytes!
+  address: Bytes!
+}
+type FungibleTokenWrapper @entity(immutable: false) {
+  id: Bytes!
+  name: String!
+  address: Bytes!
+  symbol: String!
+  tokens: [Token!]!
+  decimals: Int!
+  feePercentage: Int!
 }

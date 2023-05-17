@@ -5,7 +5,7 @@ export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 export const chains = ["Hermes", "Athena", "Demter"];
 
 export const vAnchorConfig: Map<string, Address> = new Map<string, Address>();
-vAnchorConfig.set(chains[0], Address.fromString("0x5D3b0d1AC094A8551bAB3818Eff758dc1893e6C7"));
+vAnchorConfig.set(chains[0], Address.fromString("0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D"));
 vAnchorConfig.set(chains[1], Address.fromString("0x1b376B18A065D3B8Ce5e6354fAd5F35B9FbdC21c"));
 
 export const fungibleTokenWrapperConfig: Map<string, Address> = new Map<string, Address>();

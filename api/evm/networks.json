@@ -5,9 +5,15 @@
     },
     "FungibleTokenWrapper": {
       "address": "0xFdaACACb85484c4D492414F4911524F57d2549F4"
+    }
+  },
+  "Sepolia": {
+    "VAnchor": {
+      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
+      "startBlock": 3146553
     },
-    "DeterministicDeployFactor": {
-      "address": "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"
+    "FungibleTokenWrapper": {
+      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
     }
   },
   "Athena": {
@@ -16,9 +22,15 @@
     },
     "FungibleTokenWrapper": {
       "address": "0x3CE626a78B6b2779805b37ACBFc8126555B739bF"
+    }
+  },
+  "goerli": {
+    "VAnchor": {
+      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
+      "startBlock": 8703495
     },
-    "DeterministicDeployFactor": {
-      "address": "0x7E5F4552091A69125d5DfCb7b8C2659029395Bdf"
+    "FungibleTokenWrapper": {
+      "address": "0xFdaACACb85484c4D492414F4911524F57d2549F4"
     }
   }
 }
