@@ -1,10 +1,10 @@
-import { Insertion as InsertionEvent } from "../generated/VAnchor/VAnchor";
-import { DepositTx, Insertion, TransferTx, VAnchor, WithdrawTx } from "../generated/schema";
-import {VAnchor as VAnchorContract} from "../generated/VAnchor/VAnchor";
-import { Address, BigInt, Bytes, ethereum, log } from "@graphprotocol/graph-ts";
-import { ExternalData, TransactionType } from "./utils/transact";
-import { updateVAnchorDayData } from "./day-data";
-import { ONE_BI } from "./utils/consts";
+import { Insertion as InsertionEvent, VAnchor as VAnchorContract } from '../generated/VAnchor/VAnchor';
+import { DepositTx, Insertion, TransferTx, VAnchor, WithdrawTx } from '../generated/schema';
+import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
+import { ExternalData, TransactionType } from './utils/transact';
+import { updateVAnchorDayData } from './day-data';
+import { ONE_BI } from './utils/consts';
+import { ensureFungibleTokenWrapper } from './fungible-token-wrapper';
 
 /**
  * Ensure that the vAnchor entity is created and stored
@@ -108,10 +108,9 @@ export function handleInsertion(event: InsertionEvent): void {
     '(bytes,bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes,uint256[],uint256[2],uint256,uint256),(bytes,bytes))',
     Bytes.fromUint8Array(callInput)
   );
-  log.info("Insertion happen", []);
+  log.info('Insertion happen', []);
   const vAnchorContract = VAnchorContract.bind(event.address);
-  const token = vAnchorContract.token();
-  log.info('VAnchor token Address from chain {}' , [token.toHexString()])
+
   if (data !== null) {
     const inputs = data.toTuple();
     // const proof = input[0];
@@ -132,16 +131,29 @@ export function handleInsertion(event: InsertionEvent): void {
       // Update fees
       updateFee(vAnchor, fees);
       log.info('Transaction type {}', [transactionType.toString()]);
+      //VAnchor token
+      const contractToken = vAnchorContract.token();
+
+      ensureFungibleTokenWrapper(contractToken);
+      log.info('VAnchor token Address from chain  {} , contract address from ext data {}', [
+        contractToken.toHexString(),
+        token.toHexString(),
+      ]);
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
 
         entity.fungibleTokenWrapper = token;
         entity.depositor = event.transaction.from;
-
+        // Values
         entity.value = amount;
         entity.finalValue = finalAmount;
-        entity.fee = fees;
+        // Fees
+        entity.fullFee = fees;
+        entity.RelayerFee = BigInt.zero();
+        entity.wrappingFee = BigInt.zero();
 
+
+        entity.isWrapAndDeposit = false;
         entity.vAnchorAddress = vAnchorAddress;
 
         entity.blockNumber = event.block.number;
@@ -158,7 +170,12 @@ export function handleInsertion(event: InsertionEvent): void {
 
         entity.value = amount;
         entity.finalValue = finalAmount;
-        entity.fee = fees;
+        // Fees
+        entity.fullFee = fees;
+        entity.RelayerFee = BigInt.zero();
+        entity.unWrappingFee = BigInt.zero();
+
+        entity.isUnwrapAndWithdraw = false;
 
         entity.vAnchorAddress = vAnchorAddress;
         entity.blockNumber = event.block.number;

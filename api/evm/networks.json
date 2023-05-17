@@ -1,10 +1,10 @@
 {
   "Hermes": {
     "VAnchor": {
-      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D"
+      "address": "0x5D3b0d1AC094A8551bAB3818Eff758dc1893e6C7"
     },
     "FungibleTokenWrapper": {
-      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
+      "address": "0xFdaACACb85484c4D492414F4911524F57d2549F4"
     }
   },
   "Sepolia": {
@@ -13,15 +13,24 @@
       "startBlock": 3146553
     },
     "FungibleTokenWrapper": {
-      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
+      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
     }
   },
   "Athena": {
     "VAnchor": {
-      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D"
+      "address": "0x1b376B18A065D3B8Ce5e6354fAd5F35B9FbdC21c"
     },
     "FungibleTokenWrapper": {
-      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
+      "address": "0x3CE626a78B6b2779805b37ACBFc8126555B739bF"
+    }
+  },
+  "goerli": {
+    "VAnchor": {
+      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
+      "startBlock": 8703495
+    },
+    "FungibleTokenWrapper": {
+      "address": "0xFdaACACb85484c4D492414F4911524F57d2549F4"
     }
   }
 }

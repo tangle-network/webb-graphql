@@ -75,8 +75,13 @@ type DepositTx @entity(immutable: true) {
   depositor: Bytes!
   # deposit amount
   value: BigInt! # uint256
+
+  isWrapAndDeposit:Boolean!
+  wrappingFee:BigInt!
+  RelayerFee:BigInt!
+  fullFee: BigInt!
+
   finalValue: BigInt! # value without fees
-  fee: BigInt!
 
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -91,8 +96,14 @@ type WithdrawTx @entity(immutable: true) {
   beneficiary: Bytes!
   # deposit amount
   value: BigInt! # uint256
+
+  isUnwrapAndWithdraw:Boolean!
+  unWrappingFee:BigInt!
+  RelayerFee:BigInt!
+  fullFee: BigInt!
+
+
   finalValue: BigInt! # value without fees
-  fee: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
   vAnchorAddress: Bytes!
@@ -140,4 +151,18 @@ type Deploy @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+}
+
+type Token @entity(immutable: false) {
+  id: Bytes!
+  address:Bytes!
+}
+type FungibleTokenWrapper @entity(immutable: false) {
+  id: Bytes!
+  name:String!
+  address:Bytes!
+  symbol:String!
+  tokens:[Token!]!
+  decimals:Int!
+  feePercentage:Int!
 }
