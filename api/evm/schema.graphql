@@ -80,7 +80,7 @@ type DepositTx @entity(immutable: true) {
   wrappingFee:BigInt!
   RelayerFee:BigInt!
   fullFee: BigInt!
-
+  gasUsed:BigInt!
   finalValue: BigInt! # value without fees
 
   blockTimestamp: BigInt!
@@ -96,6 +96,7 @@ type WithdrawTx @entity(immutable: true) {
   beneficiary: Bytes!
   # deposit amount
   value: BigInt! # uint256
+  gasUsed:BigInt!
 
   isUnwrapAndWithdraw:Boolean!
   unWrappingFee:BigInt!

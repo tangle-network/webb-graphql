@@ -118,9 +118,8 @@ export function handleInsertion(event: InsertionEvent): void {
   log.info('Insertion happen', []);
   const vAnchorAddress = event.address;
   const vAnchor = ensureVAnchor(vAnchorAddress);
-  ensureFungibleTokenWrapper(vAnchor.token);
-  const ftw = FungibleTokenWrapper.bind(vAnchor.token);
-
+  ensureFungibleTokenWrapper(Address.fromBytes(vAnchor.token));
+  const ftw = FungibleTokenWrapper.bind(Address.fromBytes(vAnchor.token));
   if (data !== null) {
     const inputs = data.toTuple();
     // const proof = input[0];
@@ -137,10 +136,16 @@ export function handleInsertion(event: InsertionEvent): void {
       const amount = extData.amount;
       const txValue = event.transaction.value;
       const isNative = isSameAddress(extData.token, Address.zero());
-      const hasWrapping = !isSameAddress(vAnchor.token, token);
+      const hasWrapping = !isSameAddress(Address.fromBytes(vAnchor.token), token);
       let transactionType = extData.getTransactionType();
       let txId = event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString();
+      let gasUsed = BigInt.zero();
+      if (event.receipt != null) {
+        gasUsed = BigInt.fromI32(gasUsed.toI32());
+      }
+
       // Update fees
+
       updateFee(vAnchor, fees);
       log.info('Transaction type {}', [transactionType.toString()]);
 
@@ -171,6 +176,7 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;
 
+        entity.gasUsed = gasUsed;
         entity.fullFee = entity.RelayerFee.plus(entity.wrappingFee);
 
         entity.save();
@@ -205,6 +211,7 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;
         entity.fullFee = entity.RelayerFee.plus(entity.unWrappingFee);
+        entity.gasUsed = gasUsed;
 
         entity.save();
 

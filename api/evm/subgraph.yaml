@@ -24,6 +24,7 @@ dataSources:
       eventHandlers:
         - event: Insertion(indexed uint256,uint32,uint256)
           handler: handleInsertion
+          receipt: true
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
