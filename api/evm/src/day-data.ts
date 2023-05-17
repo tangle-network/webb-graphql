@@ -3,7 +3,7 @@ import { Token, VAnchor, VAnchorDayData, VAnchorVolumeComposition } from '../gen
 import { TransactionType } from './utils/transact';
 
 export function ensureDayVolumeComposition(dayData: VAnchorDayData, token: Token): VAnchorVolumeComposition {
-  const id = dayData.id.concat(token.id.toString());
+  const id = dayData.id.concat(token.id.toHexString());
   const dayVolume = VAnchorVolumeComposition.load(id);
   if (dayVolume) {
     return dayVolume;
