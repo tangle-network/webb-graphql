@@ -2,7 +2,7 @@ import { Insertion as InsertionEvent, VAnchor as VAnchorContract } from '../gene
 import { DepositTx, Insertion, Token, TransferTx, VAnchor, VAnchorVolume, WithdrawTx } from '../generated/schema';
 import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
-import { updateVAnchorDayData } from './day-data';
+import { VolumeDTO, updateVAnchorDayData } from './day-data';
 import { isSameAddress, ONE_BI } from './utils/consts';
 import { ensureFungibleTokenWrapper, ensureToken } from './fungible-token-wrapper';
 import { FungibleTokenWrapper } from '../generated/VAnchor/FungibleTokenWrapper';
@@ -55,12 +55,11 @@ function ensureVAnchorTokenVolume(vAnchor: VAnchor, token: Token): VAnchorVolume
   newVAnchorVolume.totalWrappingFees = BigInt.zero();
   newVAnchorVolume.save();
 
-
   // update VAnchor volumes
   const vAnchorVolumes = vAnchor.volumeComposition;
-  vAnchorVolumes.push(newVAnchorVolume.id)
+  vAnchorVolumes.push(newVAnchorVolume.id);
   vAnchor.volumeComposition = vAnchorVolumes;
-  vAnchor.save()
+  vAnchor.save();
 
   return newVAnchorVolume;
 }
@@ -120,9 +119,13 @@ function vAnchorDepositSideEffect(
   vAnchor.save();
   vAnchorVolume.save();
 }
-
-function updateFee(vAnchor: VAnchorVolume, fees: BigInt): void {
-  vAnchor.totalFees = vAnchor.totalFees.plus(fees);
+/**
+ *
+ * Update vAnchor fees
+ * */
+function updateFee(vAnchor: VAnchorVolume, dayDataPayload: VolumeDTO): void {
+  vAnchor.totalFees = vAnchor.totalFees.plus(dayDataPayload.totalFees);
+  vAnchor.totalWrappingFees = vAnchor.totalWrappingFees.plus(dayDataPayload.totalWrappingFees);
   vAnchor.save();
 }
 
@@ -143,18 +146,25 @@ export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
  *
  * */
 export function handleInsertion(event: InsertionEvent): void {
+  // Prepare the transaction input
   const callInput = getTxnInputDataToDecode(event.transaction.input);
-
   // Decode the transaction
   const data = ethereum.decode(
     '(bytes,bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes,uint256[],uint256[2],uint256,uint256),(bytes,bytes))',
     Bytes.fromUint8Array(callInput)
   );
-  log.info('Insertion happen', []);
-  const vAnchorAddress = event.address;
-  const vAnchor = ensureVAnchor(vAnchorAddress);
+  // Gas used for the transaction
+  let gasUsed = BigInt.zero();
+  if (event.receipt != null) {
+    gasUsed = BigInt.fromI32(gasUsed.toI32());
+  }
+  let txId = event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString();
+
+  // Ensure storage items
+  const vAnchor = ensureVAnchor(event.address);
   const fungibleTokenWrapper = ensureFungibleTokenWrapper(Address.fromBytes(vAnchor.token));
   const ftw = FungibleTokenWrapper.bind(Address.fromBytes(vAnchor.token));
+  // Ensure that data from tx input is parses correctly
   if (data !== null) {
     const inputs = data.toTuple();
     // const proof = input[0];
@@ -163,10 +173,12 @@ export function handleInsertion(event: InsertionEvent): void {
     // const publicInputs = inputs[3];
     // const encryptions = inputs[4];
     if (externalData !== null) {
+      // Decode the ExtData
       const extData = ExternalData.fromEthereumValue(externalData);
       // WrappedToken
       const token = extData.token;
       const wrappedToken = ensureToken(token);
+      // Ensure there is a tracker for the wrapped token
       const vAnchorVolume = ensureVAnchorTokenVolume(vAnchor, wrappedToken);
 
       const finalAmount = extData.getFinalAmount();
@@ -176,14 +188,10 @@ export function handleInsertion(event: InsertionEvent): void {
       const isNative = isSameAddress(extData.token, Address.zero());
       const hasWrapping = !isSameAddress(Address.fromBytes(vAnchor.token), token);
       let transactionType = extData.getTransactionType();
-      let txId = event.transaction.hash.concatI32(event.logIndex.toI32()).toHexString();
-      let gasUsed = BigInt.zero();
-      if (event.receipt != null) {
-        gasUsed = BigInt.fromI32(gasUsed.toI32());
-      }
-
-      // Update fees
-      updateFee(vAnchorVolume, fees);
+      // DayData payload
+      let dayDataPayload = VolumeDTO.default();
+      dayDataPayload.relayerFees = fees;
+      dayDataPayload.txType = transactionType;
 
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
@@ -202,9 +210,12 @@ export function handleInsertion(event: InsertionEvent): void {
           const finalAmount = wrapAmount.minus(wrappingFee);
           entity.wrappingFee = wrappingFee;
           entity.finalValue = finalAmount;
+          dayDataPayload.wrappingFees = wrappingFee;
+          dayDataPayload.finalAmount = finalAmount;
         } else {
           entity.wrappingFee = BigInt.zero();
           entity.finalValue = finalAmount;
+          dayDataPayload.finalAmount = finalAmount;
         }
 
         entity.isWrapAndDeposit = hasWrapping;
@@ -239,9 +250,12 @@ export function handleInsertion(event: InsertionEvent): void {
           const finalAmount = wrapAmount.minus(wrappingFee);
           entity.unWrappingFee = wrappingFee;
           entity.finalValue = finalAmount;
+          dayDataPayload.unWrappingFees = wrappingFee;
+          dayDataPayload.finalAmount = finalAmount;
         } else {
           entity.unWrappingFee = BigInt.zero();
           entity.finalValue = finalAmount;
+          dayDataPayload.finalAmount = finalAmount;
         }
 
         entity.isUnwrapAndWithdraw = hasWrapping;
@@ -270,7 +284,10 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.transactionHash = event.transaction.hash;
         entity.save();
       }
-      updateVAnchorDayData(event.block, vAnchor, extData, txId);
+      // Update fees
+      updateFee(vAnchorVolume, dayDataPayload);
+      // Update day data
+      updateVAnchorDayData(event.block, vAnchor, dayDataPayload, txId);
     }
   } else {
     log.info('Data is null', []);

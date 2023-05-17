@@ -1,11 +1,11 @@
-import { BigInt, ethereum } from "@graphprotocol/graph-ts";
-import { VAnchor, VAnchorDayData } from "../generated/schema";
-import { TransactionType } from "./utils/transact";
+import { BigInt, ethereum } from '@graphprotocol/graph-ts';
+import { VAnchor, VAnchorDayData } from '../generated/schema';
+import { TransactionType } from './utils/transact';
 
 export function ensureDay(block: ethereum.Block, vAnchor: VAnchor): VAnchorDayData {
   const timestamp = block.timestamp.toI32();
   const dayIndex = timestamp / 86400; // rounded
-  const dayId = dayIndex.toString().concat("-").concat(vAnchor.id);
+  const dayId = dayIndex.toString().concat('-').concat(vAnchor.id);
   const dayData = VAnchorDayData.load(dayId);
 
   if (dayData) {
@@ -36,7 +36,7 @@ export function ensureDay(block: ethereum.Block, vAnchor: VAnchor): VAnchorDayDa
   return newDayData;
 }
 
-export class DayDataPayload {
+export class VolumeDTO {
   public relayerFees: BigInt;
   public wrappingFees: BigInt;
   public unWrappingFees: BigInt;
@@ -57,12 +57,15 @@ export class DayDataPayload {
     this.txType = txType;
   }
 
-  static default(): DayDataPayload {
-    return new DayDataPayload(BigInt.zero(), BigInt.zero(), BigInt.zero(), BigInt.zero(), TransactionType.Deposit);
+  static default(): VolumeDTO {
+    return new VolumeDTO(BigInt.zero(), BigInt.zero(), BigInt.zero(), BigInt.zero(), TransactionType.Deposit);
   }
 
   get totalFees(): BigInt {
-    return this.relayerFees.plus(this.wrappingFees).plus(this.unWrappingFees);
+    return this.relayerFees.plus(this.totalWrappingFees)
+  }
+  get totalWrappingFees(): BigInt {
+    return this.wrappingFees.plus(this.unWrappingFees);
   }
 }
 
@@ -73,7 +76,7 @@ export class DayDataPayload {
 export function updateVAnchorDayData(
   block: ethereum.Block,
   vAnchor: VAnchor,
-  dayDataPayload: DayDataPayload,
+  dayDataPayload: VolumeDTO,
   txId: string
 ): void {
   const vAnchorDayData = ensureDay(block, vAnchor);
