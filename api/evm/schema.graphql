@@ -116,6 +116,9 @@ type VAnchor @entity(immutable: false) {
   id: ID!
   chainId: BigInt!
   contractAddress: Bytes!
+  token:Bytes!
+  chainId:BigInt!
+  typedChainId:Bytes!
   valueLocked: BigInt!
   finalValueLocked: BigInt!
 

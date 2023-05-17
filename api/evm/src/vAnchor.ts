@@ -15,12 +15,18 @@ function ensureVAnchor(address: Address): VAnchor {
   if (vAnchor) {
     return vAnchor;
   }
+  const vAnchorContract = VAnchorContract.bind(address);
+
   let newVAnchor = new VAnchor(address.toHexString());
   newVAnchor.chainId = BigInt.fromI32(0);
   newVAnchor.contractAddress = address;
   newVAnchor.valueLocked = BigInt.fromI32(0);
   newVAnchor.finalValueLocked = BigInt.fromI32(0);
   newVAnchor.totalFees = BigInt.fromI32(0);
+  newVAnchor.token = vAnchorContract.token();
+  newVAnchor.typedChainId = vAnchorContract.EVM_CHAIN_ID_TYPE();
+  newVAnchor.chainId = vAnchorContract.getChainId();
+
 
   newVAnchor.numberOfDeposits = BigInt.fromI32(0);
   newVAnchor.averageDepositAmount = BigInt.fromI32(0);
@@ -151,7 +157,6 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.fullFee = fees;
         entity.RelayerFee = BigInt.zero();
         entity.wrappingFee = BigInt.zero();
-
 
         entity.isWrapAndDeposit = false;
         entity.vAnchorAddress = vAnchorAddress;
