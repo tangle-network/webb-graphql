@@ -1,6 +1,32 @@
-type Bridge {
-  id:String!
+type Composition {
+  token: String!
+  value: Int!
 }
+
+type BridgeSide {
+  id: String!
+  contractAddress: String!
+  chainId: Int!
+  typedChainId: String!
+  token: String!
+  volumeUSD: Int!
+  composition: [Composition!]!
+  maxDepositAmount: Int!
+  minDepositAmount: Int!
+  numberOfDeposits: Int!
+  averageDepositAmount: Int!
+  maxWithdrawAmount: Int!
+  minWithdrawAmount: Int!
+  numberOfWithdraws: Int!
+  averageWithdrawAmount: Int!
+}
+
+type Bridge {
+  id: String!
+  sides: [BridgeSide!]!
+}
+
 type Query {
-  bridges:[Bridge!]!
+  bridges: [Bridge!]!
+  bridgeSides: [BridgeSide!]!
 }

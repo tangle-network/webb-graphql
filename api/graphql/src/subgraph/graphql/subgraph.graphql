@@ -1,0 +1,14 @@
+  query VAnchorListing {
+    vanchors{
+      id
+      volumeComposition{
+        id
+        token {
+          id
+        }
+        valueLocked
+      }
+    }
+
+  }
+

@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { BridgeModule } from './bridge/bridge.module';
 import { PricingModule } from './pricing/pricing.module';
+import {SubgraphModule} from "./subgraph/subgraph.module";
 
 @Module({
   imports: [
@@ -17,7 +18,9 @@ import { PricingModule } from './pricing/pricing.module';
       },
     }),
     BridgeModule,
+
     PricingModule,
+    SubgraphModule,
   ],
   controllers: [AppController],
   providers: [AppService],
