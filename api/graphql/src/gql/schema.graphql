@@ -8,7 +8,7 @@ type BridgeSide {
   contractAddress: String!
   chainId: Int!
   typedChainId: String!
-  volumeUSD: Int!
+  volumeUSD: Float!
   composition: [Composition!]!
   maxDepositAmount: Int!
   minDepositAmount: Int!
