@@ -18,17 +18,15 @@ export interface BridgeSide {
     contractAddress: string;
     chainId: number;
     typedChainId: string;
-    token: string;
     volumeUSD: number;
     composition: Composition[];
     maxDepositAmount: number;
     minDepositAmount: number;
     numberOfDeposits: number;
     averageDepositAmount: number;
-    maxWithdrawAmount: number;
-    minWithdrawAmount: number;
     numberOfWithdraws: number;
     averageWithdrawAmount: number;
+    token: string;
 }
 
 export interface Bridge {

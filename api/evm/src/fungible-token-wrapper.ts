@@ -4,6 +4,7 @@ import {
   Transfer as TransferEvent,
 } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
 import { FungibleTokenWrapper, Token } from '../generated/schema';
+import {IERC20} from "../generated/VAnchor/IERC20";
 
 export function ensureToken(tokenAddress: Address): Token {
   let maybeToken = Token.load(tokenAddress);

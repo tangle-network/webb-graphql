@@ -8,17 +8,15 @@ type BridgeSide {
   contractAddress: String!
   chainId: Int!
   typedChainId: String!
-  token: String!
   volumeUSD: Int!
   composition: [Composition!]!
   maxDepositAmount: Int!
   minDepositAmount: Int!
   numberOfDeposits: Int!
   averageDepositAmount: Int!
-  maxWithdrawAmount: Int!
-  minWithdrawAmount: Int!
   numberOfWithdraws: Int!
   averageWithdrawAmount: Int!
+  token:String!
 }
 
 type Bridge {

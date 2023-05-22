@@ -1,19 +1,41 @@
 import {Injectable} from '@nestjs/common';
 import {gql, GraphQLClient} from "graphql-request";
 import {} from '../generated/graphql'
+import {VAnchorQueryData} from "./types";
 const vAnchorsQuery = gql`
-  query VAnchorListing {
+  query  vAnchorList {
     vanchors{
       id
-      volumeComposition{
+      chainId
+      typedChainId
+      contractAddress
+      token{
         id
-        token {
-          id
-        }
-        valueLocked
+        contractAddress
       }
-    }
 
+      volumeComposition {
+        id
+        token{
+          id
+          address
+
+        }
+        finalValueLocked
+        valueLocked
+        totalFees
+        totalWrappingFees
+      }
+
+      numberOfDeposits
+      numberOfWithdraws
+
+      minDepositAmount
+      maxDepositAmount
+
+      averageDepositAmount
+
+    }
   }
 
 
@@ -26,7 +48,7 @@ export class VAnchorService {
     this.client = new GraphQLClient("http://localhost:8000/subgraphs/name/VAnchor");
   }
 
-  public  async fetchAnchors(){
-    const data =  await this.client.request(vAnchorsQuery) as Query['vanchors'];
+  public  async fetchAnchors():Promise<VAnchorQueryData>{
+    return await this.client.request(vAnchorsQuery) as VAnchorQueryData;
   }
 }
