@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {gql, GraphQLClient} from "graphql-request";
-
+import {} from '../generated/graphql'
 const vAnchorsQuery = gql`
   query VAnchorListing {
     vanchors{
@@ -27,6 +27,6 @@ export class VAnchorService {
   }
 
   public  async fetchAnchors(){
-    return await this.client.request(vAnchorsQuery);
+    const data =  await this.client.request(vAnchorsQuery) as Query['vanchors'];
   }
 }

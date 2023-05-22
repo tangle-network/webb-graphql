@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "subgraph-codegen": "graphql-codegen --config codegen.ts"
+    "subgraph-codegen": "graphql-codegen --config codegen.ts",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
@@ -32,6 +33,11 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "3.3.1",
+    "@graphql-codegen/introspection": "3.0.1",
+    "@graphql-codegen/typescript": "3.0.4",
+    "@graphql-codegen/typescript-document-nodes": "3.0.4",
+    "@graphql-codegen/typescript-resolvers": "3.2.1",
+    "@graphql-codegen/typescript-urql": "^3.7.3",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
@@ -52,10 +58,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.2.0",
-    "typescript": "^5.0.0",
-    "@graphql-codegen/typescript-resolvers": "3.2.1",
-    "@graphql-codegen/typescript": "3.0.4",
-    "@graphql-codegen/introspection": "3.0.1"
+    "typescript": "^5.0.0"
   },
   "jest": {
     "moduleFileExtensions": [
