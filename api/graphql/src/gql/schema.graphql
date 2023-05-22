@@ -1,0 +1,6 @@
+type Bridge {
+  id:String!
+}
+type Query {
+  bridges:[Bridge!]!
+}
