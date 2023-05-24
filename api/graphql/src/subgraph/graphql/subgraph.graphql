@@ -1,14 +1,31 @@
-  query VAnchorListing {
-    vanchors{
+query  vAnchorList {
+  vanchors{
+    id
+    chainId
+    typedChainId
+    contractAddress
+    token
+
+    volumeComposition {
       id
-      volumeComposition{
+      token{
         id
-        token {
-          id
-        }
-        valueLocked
+        address
+
       }
+      finalValueLocked
+      valueLocked
+      totalFees
+      totalWrappingFees
     }
 
-  }
+    numberOfDeposits
+    numberOfWithdraws
 
+    minDepositAmount
+    maxDepositAmount
+
+    averageDepositAmount
+
+  }
+}

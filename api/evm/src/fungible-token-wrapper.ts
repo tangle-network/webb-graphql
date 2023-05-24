@@ -14,8 +14,18 @@ export function ensureToken(tokenAddress: Address): Token {
   const token = new Token(tokenAddress);
 
   const tokenContract = ERC20Contract.bind(tokenAddress);
-  token.name = tokenContract.name();
-  token.symbol  = tokenContract.symbol();
+  const name = tokenContract.try_name();
+  if(name.reverted){
+    token.name = "Ethereum"
+  }else{
+    token.name = name.value;
+  }
+  const symbol = tokenContract.try_symbol();
+  if(symbol.reverted){
+    token.symbol = 'ETH'
+  }else{
+    token.symbol  = symbol.value;
+  }
   token.decimals  = 18;
   token.address = tokenAddress;
   token.save();

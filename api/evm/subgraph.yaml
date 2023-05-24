@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: VAnchor
-    network: Hermes
+    network: Sepolia
     source:
       abi: VAnchor
-      address: "0x968d628e0Efc57371162D03C623E70af5D90553b"
-      startBlock: 20
+      address: "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D"
+      startBlock: 3146553
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -29,10 +29,10 @@ dataSources:
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
-    network: Hermes
+    network: Sepolia
     source:
       abi: FungibleTokenWrapper
-      address: "0x2946259E0334f33A064106302415aD3391BeD384"
+      address: "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
