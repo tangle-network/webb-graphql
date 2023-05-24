@@ -4,7 +4,7 @@ import {
   Transfer as TransferEvent,
 } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
 import { FungibleTokenWrapper, Token } from '../generated/schema';
-import {IERC20} from "../generated/VAnchor/IERC20";
+import {ERC20 as ERC20Contract} from "../generated/VAnchor/ERC20";
 
 export function ensureToken(tokenAddress: Address): Token {
   let maybeToken = Token.load(tokenAddress);
@@ -12,6 +12,11 @@ export function ensureToken(tokenAddress: Address): Token {
     return maybeToken;
   }
   const token = new Token(tokenAddress);
+
+  const tokenContract = ERC20Contract.bind(tokenAddress);
+  token.name = tokenContract.name();
+  token.symbol  = tokenContract.symbol();
+  token.decimals  = 18;
   token.address = tokenAddress;
   token.save();
   return token;

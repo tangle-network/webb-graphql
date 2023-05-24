@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: VAnchor
-    network: Sepolia
+    network: Hermes
     source:
       abi: VAnchor
-      address: "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D"
-      startBlock: 3146553
+      address: "0x968d628e0Efc57371162D03C623E70af5D90553b"
+      startBlock: 20
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -20,8 +20,8 @@ dataSources:
           file: ./abis/VAnchor.json
         - name: FungibleTokenWrapper
           file: ./abis/FungibleTokenWrapper.json
-        - name: IERC20
-          file: ./abis/IERC20.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: Insertion(indexed uint256,uint32,uint256)
           handler: handleInsertion
@@ -29,10 +29,10 @@ dataSources:
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
-    network: Sepolia
+    network: Hermes
     source:
       abi: FungibleTokenWrapper
-      address: "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
+      address: "0x2946259E0334f33A064106302415aD3391BeD384"
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -48,8 +48,8 @@ dataSources:
       abis:
         - name: FungibleTokenWrapper
           file: ./abis/FungibleTokenWrapper.json
-        - name: IERC20
-          file: ./abis/IERC20.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
           handler: handleRoleRevoked

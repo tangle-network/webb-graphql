@@ -33,12 +33,14 @@
     "ts-morph": "^18.0.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "3.3.1",
-    "@graphql-codegen/introspection": "3.0.1",
-    "@graphql-codegen/typescript": "3.0.4",
-    "@graphql-codegen/typescript-document-nodes": "3.0.4",
-    "@graphql-codegen/typescript-resolvers": "3.2.1",
-    "@graphql-codegen/typescript-urql": "^3.7.3",
+    "@graphql-codegen/cli": "4.0.0",
+    "@graphql-codegen/introspection": "4.0.0",
+    "@graphql-codegen/typescript": "4.0.0",
+    "@graphql-codegen/typescript-document-nodes": "4.0.0",
+    "@graphql-codegen/typescript-resolvers": "4.0.0",
+    "@graphql-codegen/typescript-urql": "4.0.0-alpha-20230524165839-271d36891",
+    "@graphql-codegen/typescript-operations": "4.0.0",
+
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
