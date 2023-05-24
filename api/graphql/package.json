@@ -22,7 +22,6 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.14",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
@@ -31,8 +30,7 @@
     "graphql-request": "^6.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "ts-morph": "^18.0.0",
-    "urql": "^4.0.2"
+    "ts-morph": "^18.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "4.0.0",
@@ -40,10 +38,9 @@
     "@graphql-codegen/typed-document-node": "4.0.0",
     "@graphql-codegen/typescript": "4.0.0",
     "@graphql-codegen/typescript-document-nodes": "4.0.0",
-    "@graphql-codegen/typescript-generic-sdk": "4.0.0-alpha-20230524213020-629a9daaf",
+    "@graphql-codegen/typescript-graphql-request": "4.0.0",
     "@graphql-codegen/typescript-operations": "4.0.0",
     "@graphql-codegen/typescript-resolvers": "4.0.0",
-    "@graphql-codegen/typescript-urql": "4.0.0-alpha-20230524165839-271d36891",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",

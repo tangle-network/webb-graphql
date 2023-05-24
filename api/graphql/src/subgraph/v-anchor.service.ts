@@ -1,21 +1,27 @@
 import {Injectable} from '@nestjs/common';
-import {gql, GraphQLClient} from "graphql-request";
-import {VAnchorListQuery} from '../generated/graphql'
+import {gql} from "graphql-request";
 
 import {VAnchorQueryData} from "./types";
+import {GqlClientService} from "./gql-client.service";
+
 const vAnchorsQuery = gql`
 
 
 `
 
+
+export type Subgraph = {
+  uri:string
+}
 @Injectable()
 export class VAnchorService {
-  private client:GraphQLClient;
-  constructor() {
-    this.client = new GraphQLClient("http://localhost:8000/subgraphs/name/VAnchor");
+  constructor(private gqlClientService:GqlClientService) {
   }
 
-  public  async fetchAnchors():Promise<VAnchorQueryData>{
+  public  async fetchAnchorOfSubGraph(subgraph:Subgraph):Promise<VAnchorQueryData>{
+    const url = subgraph.uri;
+    const sdk = this.gqlClientService.getSdkOfClient(url);
+    sdk
     return await this.client.request(vAnchorsQuery) as VAnchorQueryData;
   }
 }
