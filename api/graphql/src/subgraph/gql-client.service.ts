@@ -18,10 +18,9 @@ export class GqlClientService {
 
   getSdkOfClient(uri): ReturnType<typeof getSdk> {
     const client =  this.ensureClient(uri) ;
-    return getSdk()
+    return getSdk(client)
   }
 
 
 }
 
-export type Sdk = ReturnType<GqlClientService['getSdk']>;

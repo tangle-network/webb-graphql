@@ -18,12 +18,7 @@
   "author": "@webb-developers",
   "license": "MIT",
   "dependencies": {
-    "@apollo/server": "^4.7.1",
-    "@graphprotocol/graph-cli": "0.42.4",
-    "@graphprotocol/graph-ts": "0.29.1",
-    "@nestjs/apollo": "^11.0.5",
-    "@nestjs/graphql": "^11.0.5",
-    "graphql": "^16.6.0"
+
   },
   "private": true,
   "workspaces": [
@@ -39,6 +34,5 @@
     "typescript": "^4.9.3"
   },
   "resolutions": {
-    "ipfs-unixfs": "6.0.6"
   }
 }

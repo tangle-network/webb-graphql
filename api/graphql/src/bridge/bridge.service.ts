@@ -16,7 +16,9 @@ export class BridgeService {
 
     const bridges: Record<string, Bridge> = {};
     // All vAnchors
-    const {vanchors} = await this.vAnchorService.fetchAnchors();
+    const {vanchors} = await this.vAnchorService.fetchAnchorOfSubGraph({
+      uri:"http://localhost:8000/subgraphs/name/VAnchor"
+    });
     for (const vanchor of vanchors) {
 
       const tokens = vanchor.volumeComposition.map(c => ({

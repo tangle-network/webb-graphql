@@ -10,9 +10,10 @@ const config: CodegenConfig = {
       plugins: ['typescript', 'typescript-operations',
 
         'typescript-graphql-request',
-        'typed-document-node'],
+        ],
       config: {
         rawRequest: true,
+        extensionsType: 'unknown'
       },
 
     },

@@ -21,7 +21,7 @@ export class VAnchorService {
   public  async fetchAnchorOfSubGraph(subgraph:Subgraph):Promise<VAnchorQueryData>{
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
-    sdk
-    return await this.client.request(vAnchorsQuery) as VAnchorQueryData;
+    const data =(await sdk.vAnchorList(undefined)).data
+    return data
   }
 }

@@ -1,4 +1,8 @@
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/dist/types.dom';
+import { GraphQLError } from 'graphql-request/dist/types';
+import { print } from 'graphql'
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -2705,4 +2709,44 @@ export type VAnchorListQueryVariables = Exact<{ [key: string]: never; }>;
 export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any } }> }> };
 
 
-export const VAnchorListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"vAnchorList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vanchors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"chainId"}},{"kind":"Field","name":{"kind":"Name","value":"typedChainId"}},{"kind":"Field","name":{"kind":"Name","value":"contractAddress"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"volumeComposition"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"token"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}},{"kind":"Field","name":{"kind":"Name","value":"finalValueLocked"}},{"kind":"Field","name":{"kind":"Name","value":"valueLocked"}},{"kind":"Field","name":{"kind":"Name","value":"totalFees"}},{"kind":"Field","name":{"kind":"Name","value":"totalWrappingFees"}}]}},{"kind":"Field","name":{"kind":"Name","value":"numberOfDeposits"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfWithdraws"}},{"kind":"Field","name":{"kind":"Name","value":"minDepositAmount"}},{"kind":"Field","name":{"kind":"Name","value":"maxDepositAmount"}},{"kind":"Field","name":{"kind":"Name","value":"averageDepositAmount"}}]}}]}}]} as unknown as DocumentNode<VAnchorListQuery, VAnchorListQueryVariables>;
+export const VAnchorListDocument = gql`
+    query vAnchorList {
+  vanchors {
+    id
+    chainId
+    typedChainId
+    contractAddress
+    token
+    volumeComposition {
+      id
+      token {
+        id
+        address
+      }
+      finalValueLocked
+      valueLocked
+      totalFees
+      totalWrappingFees
+    }
+    numberOfDeposits
+    numberOfWithdraws
+    minDepositAmount
+    maxDepositAmount
+    averageDepositAmount
+  }
+}
+    `;
+
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
+const VAnchorListDocumentString = print(VAnchorListDocument);
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    vAnchorList(variables?: VAnchorListQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: VAnchorListQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<VAnchorListQuery>(VAnchorListDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'vAnchorList');
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;
