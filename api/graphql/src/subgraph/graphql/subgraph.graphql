@@ -11,7 +11,8 @@ query  vAnchorList {
       token{
         id
         address
-
+        decimals
+        name
       }
       finalValueLocked
       valueLocked

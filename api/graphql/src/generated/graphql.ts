@@ -2706,7 +2706,7 @@ export enum _SubgraphErrorPolicy_ {
 export type VAnchorListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any } }> }> };
+export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, decimals: number, name: string } }> }> };
 
 
 export const VAnchorListDocument = gql`
@@ -2722,6 +2722,8 @@ export const VAnchorListDocument = gql`
       token {
         id
         address
+        decimals
+        name
       }
       finalValueLocked
       valueLocked
