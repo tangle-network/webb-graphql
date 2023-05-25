@@ -34,7 +34,6 @@ export class BridgeService {
         }
       )
 
-
       const bridgeSide: BridgeSide = {
         averageDepositAmount: Number(vanchor.averageDepositAmount),
         chainId: Number(vanchor.chainId),

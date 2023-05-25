@@ -1,6 +1,6 @@
 type Composition {
   token: String!
-  value: Int!
+  value: Float!
 }
 
 type BridgeSide {
