@@ -1,32 +1,218 @@
+fragment TokenDetailsFragment on Token {
+  id
+  address
+  name
+  decimals
+}
+fragment FungibleTokenWrapperDetails  on FungibleTokenWrapper {
+  id
+  name
+  decimals
+  symbol
+
+}
+
+fragment FungibleTokenWrapperBasicDetails  on VAnchor{
+  id
+  chainId
+  typedChainId
+  contractAddress
+
+}
+
+fragment VAnchorDetailsFragment on VAnchor {
+  id
+  chainId
+  typedChainId
+  contractAddress
+  token
+
+  volumeComposition {
+    id
+    token{
+      ...TokenDetailsFragment
+    }
+    finalValueLocked
+    valueLocked
+    totalFees
+    totalWrappingFees
+  }
+
+  numberOfDeposits
+  numberOfWithdraws
+
+  minDepositAmount
+  maxDepositAmount
+
+  averageDepositAmount
+}
+
+# Query All vAnchors
 query  vAnchorList {
   vanchors{
-    id
-    chainId
-    typedChainId
-    contractAddress
-    token
+    ...VAnchorDetailsFragment
 
-    volumeComposition {
+  }
+}
+
+query vAnchorDetails($id:ID!) {
+  vanchor(id: $id ){
+    ...VAnchorDetailsFragment
+  }
+}
+query allTokens {
+  tokens{
+    ...TokenDetailsFragment
+  }
+}
+
+
+query dayDetails{
+  vanchorDayDatas(first:1 , orderBy: date , orderDirection: asc){
+    id
+    date
+
+    composition{
       id
-      token{
-        id
-        address
-        decimals
-        name
+      unWrappingFees
+      wrappingFees
+      fees
+      relayerFees
+      token {
+        ...TokenDetailsFragment
       }
-      finalValueLocked
-      valueLocked
-      totalFees
-      totalWrappingFees
+      volume
     }
 
     numberOfDeposits
+    numberOfTransfers
     numberOfWithdraws
+  }
+}
 
-    minDepositAmount
-    maxDepositAmount
 
-    averageDepositAmount
+fragment DepositTxFragment  on DepositTx{
+  id
+  depositor
 
+
+  wrappedToken {
+    ...TokenDetailsFragment
+  }
+
+  value
+  finalValue
+
+
+  isWrapAndDeposit
+
+  fullFee
+  wrappingFee
+  RelayerFee
+
+  fungibleTokenWrapper {
+    ...FungibleTokenWrapperDetails
+  }
+  vAnchor {
+    ...VAnchorDetailsFragment
+  }
+  transactionHash
+  gasUsed
+  blockTimestamp
+  blockNumber
+
+}
+
+fragment WithdrawTxFragment  on WithdrawTx{
+  id
+  beneficiary
+
+
+  wrappedToken {
+    ...TokenDetailsFragment
+  }
+
+  value
+  finalValue
+
+
+  isUnwrapAndWithdraw
+
+  fullFee
+  unWrappingFee
+  RelayerFee
+
+  fungibleTokenWrapper {
+    ...FungibleTokenWrapperDetails
+  }
+  vAnchor {
+    ...VAnchorDetailsFragment
+  }
+  transactionHash
+  gasUsed
+  blockTimestamp
+  blockNumber
+
+}
+
+
+query depositTXesListing(
+  $first: Int = 10,
+  $skip: Int = 0,
+  $block: Block_height,
+
+  $orderBy: DepositTx_orderBy,
+  $orderDirection: OrderDirection,
+  $where: DepositTx_filter
+
+  $subgraphError: _SubgraphErrorPolicy_! = deny,
+){
+  depositTxes(
+    block:$block
+    first:$first
+    orderBy:$orderBy
+    orderDirection:$orderDirection
+    skip:$skip
+    subgraphError:$subgraphError
+    where:$where
+  ) {
+    ...DepositTxFragment
+  }
+}
+
+
+query withdrawTXesListing(
+  $where: WithdrawTx_filter
+  $first: Int = 100,
+  $skip: Int = 0,
+  $orderBy: WithdrawTx_orderBy,
+  $block: Block_height,
+  $orderDirection: OrderDirection,
+  $subgraphError: _SubgraphErrorPolicy_! = deny,
+){
+  withdrawTxes(
+  block:$block
+  first:$first
+  orderBy:$orderBy
+  orderDirection:$orderDirection
+  skip:$skip
+  subgraphError:$subgraphError
+  where:$where
+  ){
+  ...WithdrawTxFragment
+
+}
+}
+
+
+query depositTXDetails($id:ID!){
+depositTx(id: $id){
+  ...DepositTxFragment
+}
+}
+
+query withdrawTXDetails($id:ID!){
+  withdrawTx(id: $id){
+    ...WithdrawTxFragment
   }
 }

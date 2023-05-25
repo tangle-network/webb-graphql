@@ -2703,51 +2703,307 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type TokenDetailsFragmentFragment = { __typename?: 'Token', id: any, address: any, name: string, decimals: number };
+
+export type FungibleTokenWrapperDetailsFragment = { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string };
+
+export type FungibleTokenWrapperBasicDetailsFragment = { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any };
+
+export type VAnchorDetailsFragmentFragment = { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> };
+
 export type VAnchorListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, decimals: number, name: string } }> }> };
+export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> }> };
+
+export type VAnchorDetailsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
 
 
+export type VAnchorDetailsQuery = { __typename?: 'Query', vanchor?: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } | null };
+
+export type AllTokensQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllTokensQuery = { __typename?: 'Query', tokens: Array<{ __typename?: 'Token', id: any, address: any, name: string, decimals: number }> };
+
+export type DayDetailsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DayDetailsQuery = { __typename?: 'Query', vanchorDayDatas: Array<{ __typename?: 'VAnchorDayData', id: string, date: number, numberOfDeposits: any, numberOfTransfers: any, numberOfWithdraws: any, composition: Array<{ __typename?: 'VAnchorVolumeComposition', id: string, unWrappingFees: any, wrappingFees: any, fees: any, relayerFees: any, volume: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> }> };
+
+export type DepositTxFragmentFragment = { __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } };
+
+export type WithdrawTxFragmentFragment = { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } };
+
+export type DepositTXesListingQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  block?: InputMaybe<Block_Height>;
+  orderBy?: InputMaybe<DepositTx_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DepositTx_Filter>;
+  subgraphError?: _SubgraphErrorPolicy_;
+}>;
+
+
+export type DepositTXesListingQuery = { __typename?: 'Query', depositTxes: Array<{ __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } }> };
+
+export type WithdrawTXesListingQueryVariables = Exact<{
+  where?: InputMaybe<WithdrawTx_Filter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<WithdrawTx_OrderBy>;
+  block?: InputMaybe<Block_Height>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  subgraphError?: _SubgraphErrorPolicy_;
+}>;
+
+
+export type WithdrawTXesListingQuery = { __typename?: 'Query', withdrawTxes: Array<{ __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } }> };
+
+export type DepositTxDetailsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DepositTxDetailsQuery = { __typename?: 'Query', depositTx?: { __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } } | null };
+
+export type WithdrawTxDetailsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type WithdrawTxDetailsQuery = { __typename?: 'Query', withdrawTx?: { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } } | null };
+
+export const FungibleTokenWrapperBasicDetailsFragmentDoc = gql`
+    fragment FungibleTokenWrapperBasicDetails on VAnchor {
+  id
+  chainId
+  typedChainId
+  contractAddress
+}
+    `;
+export const TokenDetailsFragmentFragmentDoc = gql`
+    fragment TokenDetailsFragment on Token {
+  id
+  address
+  name
+  decimals
+}
+    `;
+export const FungibleTokenWrapperDetailsFragmentDoc = gql`
+    fragment FungibleTokenWrapperDetails on FungibleTokenWrapper {
+  id
+  name
+  decimals
+  symbol
+}
+    `;
+export const VAnchorDetailsFragmentFragmentDoc = gql`
+    fragment VAnchorDetailsFragment on VAnchor {
+  id
+  chainId
+  typedChainId
+  contractAddress
+  token
+  volumeComposition {
+    id
+    token {
+      ...TokenDetailsFragment
+    }
+    finalValueLocked
+    valueLocked
+    totalFees
+    totalWrappingFees
+  }
+  numberOfDeposits
+  numberOfWithdraws
+  minDepositAmount
+  maxDepositAmount
+  averageDepositAmount
+}
+    ${TokenDetailsFragmentFragmentDoc}`;
+export const DepositTxFragmentFragmentDoc = gql`
+    fragment DepositTxFragment on DepositTx {
+  id
+  depositor
+  wrappedToken {
+    ...TokenDetailsFragment
+  }
+  value
+  finalValue
+  isWrapAndDeposit
+  fullFee
+  wrappingFee
+  RelayerFee
+  fungibleTokenWrapper {
+    ...FungibleTokenWrapperDetails
+  }
+  vAnchor {
+    ...VAnchorDetailsFragment
+  }
+  transactionHash
+  gasUsed
+  blockTimestamp
+  blockNumber
+}
+    ${TokenDetailsFragmentFragmentDoc}
+${FungibleTokenWrapperDetailsFragmentDoc}
+${VAnchorDetailsFragmentFragmentDoc}`;
+export const WithdrawTxFragmentFragmentDoc = gql`
+    fragment WithdrawTxFragment on WithdrawTx {
+  id
+  beneficiary
+  wrappedToken {
+    ...TokenDetailsFragment
+  }
+  value
+  finalValue
+  isUnwrapAndWithdraw
+  fullFee
+  unWrappingFee
+  RelayerFee
+  fungibleTokenWrapper {
+    ...FungibleTokenWrapperDetails
+  }
+  vAnchor {
+    ...VAnchorDetailsFragment
+  }
+  transactionHash
+  gasUsed
+  blockTimestamp
+  blockNumber
+}
+    ${TokenDetailsFragmentFragmentDoc}
+${FungibleTokenWrapperDetailsFragmentDoc}
+${VAnchorDetailsFragmentFragmentDoc}`;
 export const VAnchorListDocument = gql`
     query vAnchorList {
   vanchors {
-    id
-    chainId
-    typedChainId
-    contractAddress
-    token
-    volumeComposition {
-      id
-      token {
-        id
-        address
-        decimals
-        name
-      }
-      finalValueLocked
-      valueLocked
-      totalFees
-      totalWrappingFees
-    }
-    numberOfDeposits
-    numberOfWithdraws
-    minDepositAmount
-    maxDepositAmount
-    averageDepositAmount
+    ...VAnchorDetailsFragment
   }
 }
-    `;
+    ${VAnchorDetailsFragmentFragmentDoc}`;
+export const VAnchorDetailsDocument = gql`
+    query vAnchorDetails($id: ID!) {
+  vanchor(id: $id) {
+    ...VAnchorDetailsFragment
+  }
+}
+    ${VAnchorDetailsFragmentFragmentDoc}`;
+export const AllTokensDocument = gql`
+    query allTokens {
+  tokens {
+    ...TokenDetailsFragment
+  }
+}
+    ${TokenDetailsFragmentFragmentDoc}`;
+export const DayDetailsDocument = gql`
+    query dayDetails {
+  vanchorDayDatas(first: 1, orderBy: date, orderDirection: asc) {
+    id
+    date
+    composition {
+      id
+      unWrappingFees
+      wrappingFees
+      fees
+      relayerFees
+      token {
+        ...TokenDetailsFragment
+      }
+      volume
+    }
+    numberOfDeposits
+    numberOfTransfers
+    numberOfWithdraws
+  }
+}
+    ${TokenDetailsFragmentFragmentDoc}`;
+export const DepositTXesListingDocument = gql`
+    query depositTXesListing($first: Int = 10, $skip: Int = 0, $block: Block_height, $orderBy: DepositTx_orderBy, $orderDirection: OrderDirection, $where: DepositTx_filter, $subgraphError: _SubgraphErrorPolicy_! = deny) {
+  depositTxes(
+    block: $block
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    subgraphError: $subgraphError
+    where: $where
+  ) {
+    ...DepositTxFragment
+  }
+}
+    ${DepositTxFragmentFragmentDoc}`;
+export const WithdrawTXesListingDocument = gql`
+    query withdrawTXesListing($where: WithdrawTx_filter, $first: Int = 100, $skip: Int = 0, $orderBy: WithdrawTx_orderBy, $block: Block_height, $orderDirection: OrderDirection, $subgraphError: _SubgraphErrorPolicy_! = deny) {
+  withdrawTxes(
+    block: $block
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    subgraphError: $subgraphError
+    where: $where
+  ) {
+    ...WithdrawTxFragment
+  }
+}
+    ${WithdrawTxFragmentFragmentDoc}`;
+export const DepositTxDetailsDocument = gql`
+    query depositTXDetails($id: ID!) {
+  depositTx(id: $id) {
+    ...DepositTxFragment
+  }
+}
+    ${DepositTxFragmentFragmentDoc}`;
+export const WithdrawTxDetailsDocument = gql`
+    query withdrawTXDetails($id: ID!) {
+  withdrawTx(id: $id) {
+    ...WithdrawTxFragment
+  }
+}
+    ${WithdrawTxFragmentFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
 const VAnchorListDocumentString = print(VAnchorListDocument);
+const VAnchorDetailsDocumentString = print(VAnchorDetailsDocument);
+const AllTokensDocumentString = print(AllTokensDocument);
+const DayDetailsDocumentString = print(DayDetailsDocument);
+const DepositTXesListingDocumentString = print(DepositTXesListingDocument);
+const WithdrawTXesListingDocumentString = print(WithdrawTXesListingDocument);
+const DepositTxDetailsDocumentString = print(DepositTxDetailsDocument);
+const WithdrawTxDetailsDocumentString = print(WithdrawTxDetailsDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     vAnchorList(variables?: VAnchorListQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: VAnchorListQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<VAnchorListQuery>(VAnchorListDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'vAnchorList');
+    },
+    vAnchorDetails(variables: VAnchorDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: VAnchorDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<VAnchorDetailsQuery>(VAnchorDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'vAnchorDetails');
+    },
+    allTokens(variables?: AllTokensQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: AllTokensQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<AllTokensQuery>(AllTokensDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'allTokens');
+    },
+    dayDetails(variables?: DayDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DayDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<DayDetailsQuery>(DayDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'dayDetails');
+    },
+    depositTXesListing(variables?: DepositTXesListingQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DepositTXesListingQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<DepositTXesListingQuery>(DepositTXesListingDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'depositTXesListing');
+    },
+    withdrawTXesListing(variables?: WithdrawTXesListingQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: WithdrawTXesListingQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<WithdrawTXesListingQuery>(WithdrawTXesListingDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'withdrawTXesListing');
+    },
+    depositTXDetails(variables: DepositTxDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DepositTxDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<DepositTxDetailsQuery>(DepositTxDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'depositTXDetails');
+    },
+    withdrawTXDetails(variables: WithdrawTxDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: WithdrawTxDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<WithdrawTxDetailsQuery>(WithdrawTxDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'withdrawTXDetails');
     }
   };
 }
