@@ -1,6 +1,7 @@
 type Composition {
-  token: String!
+  token: Token!
   value: String!
+  valueUSD:String!
 }
 
 type BridgeSide {
@@ -8,7 +9,9 @@ type BridgeSide {
   contractAddress: String!
   chainId: Int!
   typedChainId: String!
-  volumeUSD: Float!
+
+  volumeUSD: String!
+
   composition: [Composition!]!
   maxDepositAmount: String!
   minDepositAmount: String!
@@ -30,4 +33,116 @@ type Bridge {
 type Query {
   bridges: [Bridge!]!
   bridgeSides: [BridgeSide!]!
+}
+
+type Token {
+  id: String!
+  address: String!
+  isFungibleTokenWrapper:Boolean!
+  name: String!
+  symbol: String!
+  decimals: Int!
+}
+
+
+
+type BrideSideDayData {
+  # <Day index>
+  id:String!
+  date: String!
+
+#  brideSide:BrBridgeSide
+  compositions:[Composition!]!
+
+  numberOfDeposits: String!
+  numberOfWithdraws: String!
+  numberOfTransfers: String!
+
+  fees:String!
+  volumeUSD:String!
+}
+
+type BrideDayData {
+  # <Day index>
+  id:String!
+  date: String!
+
+  compositions:[Composition!]!
+#    bridge:BrBridgeSide
+
+  numberOfDeposits: String!
+  numberOfWithdraws: String!
+  numberOfTransfers: String!
+
+  fees:String!
+  volumeUSD:String!
+}
+
+type DayData {
+  # <Day index>
+  id:String!
+  date: String!
+
+  compositions:[Composition!]!
+
+  numberOfDeposits: String!
+  numberOfWithdraws: String!
+  numberOfTransfers: String!
+
+  fees:String!
+  volumeUSD:String!
+
+}
+
+type DepositTx  {
+  id: String!
+  depositor: String!
+  # deposit amount
+  value: String! # uint256
+  isWrapAndDeposit: Boolean!
+  wrappingFee: String!
+  RelayerFee: String!
+  fullFee: String!
+  gasUsed: String!
+  finalValue: String! # value without fees
+  blockTimestamp: String!
+  transactionHash: String!
+
+  vAnchor: BridgeSide!
+  wrappedToken: Token!
+
+  blockNumber: String!
+}
+
+type WithdrawTx  {
+  id: String!
+  beneficiary: String!
+  # deposit amount
+  value: String! # uint256
+  gasUsed: String!
+
+  isUnwrapAndWithdraw: Boolean!
+  unWrappingFee: String!
+  RelayerFee: String!
+  fullFee: String!
+
+  finalValue: String! # value without fees
+  blockTimestamp: String!
+  transactionHash: String!
+
+  vAnchor: BridgeSide!
+  wrappedToken: Token!
+
+  blockNumber: String!
+}
+
+type TransferTx  {
+  id: String!
+  from: String! # addresss
+  fee: String!
+
+  blockNumber: String!
+  blockTimestamp: String!
+  transactionHash: String!
+  contractAddress: String!
 }
