@@ -3,6 +3,7 @@ import {Bridge, BridgeSide, Composition} from '../../gql/graphql';
 import {VAnchorService} from "../subgraph/v-anchor.service";
 import {PricingService} from "../pricing/pricing.service";
 
+
 @Injectable()
 export class BridgeService {
   private logger = new ConsoleLogger('BridgeService')
@@ -24,16 +25,16 @@ export class BridgeService {
     const bridges: Record<string, Bridge> = {};
     // All vAnchors
     const {vanchors} = await this.vAnchorService.fetchAnchorOfSubGraph({
-      uri:"http://localhost:8000/subgraphs/name/VAnchor"
+      uri: "http://localhost:8000/subgraphs/name/VAnchor"
     });
     for (const vanchor of vanchors) {
 
       const tokens = vanchor.volumeComposition.map(c => ({
         chainId: Number(vanchor.chainId),
         contractAddress: c.token.address,
-        value: Number(c.valueLocked) * Math.pow(10 , -18)
+        value: Number(c.valueLocked) * Math.pow(10, -18)
       }));
-      const tokensPrice =await Promise.all(tokens.map(token => this.pricingService.getTokenPriceWithChainAndContract(token.chainId, token.contractAddress)))
+      const tokensPrice = await Promise.all(tokens.map(token => this.pricingService.getTokenPriceWithChainAndContract(token.chainId, token.contractAddress)))
       let volumeUSD = 0;
       tokens.forEach((token, index) => {
           const price = tokensPrice[index];
@@ -45,8 +46,16 @@ export class BridgeService {
         averageDepositAmount: vanchor.averageDepositAmount,
         chainId: Number(vanchor.chainId),
         composition: vanchor.volumeComposition.map((composition): Composition => ({
-          token: composition.token.id,
-          value: String(composition.finalValueLocked)
+          token: {
+            id: composition.token.id,
+            name: composition.token.name,
+            decimals: composition.token.decimals,
+            address: composition.token.address,
+            isFungibleTokenWrapper: composition.token.isFungibleTokenWrapper,
+            symbol: composition.token.symbol
+          },
+          value: String(composition.finalValueLocked),
+          valueUSD: '0'
         })),
         contractAddress: vanchor.contractAddress,
         id: vanchor.id,
@@ -57,7 +66,7 @@ export class BridgeService {
         numberOfWithdraws: Number(vanchor.numberOfWithdraws),
         token: vanchor.token,
         typedChainId: vanchor.typedChainId,
-        volumeUSD
+        volumeUSD: String(volumeUSD)
 
       }
 

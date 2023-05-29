@@ -20,7 +20,7 @@ export class VAnchorService {
   constructor(private gqlClientService: GqlClientService) {
   }
 
-  public async fetchAnchorOfSubGraph(subgraph: Subgraph): Promise<VAnchorQueryData> {
+  public async fetchAnchorOfSubGraph(subgraph: Subgraph) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     return (await sdk.vAnchorList(undefined)).data
@@ -29,13 +29,13 @@ export class VAnchorService {
   public async fetchVAnchorDetails(subgraph: Subgraph, queryVariables: VAnchorDetailsQueryVariables) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
-    const response = (await sdk.vAnchorDetails(queryVariables));
+   const response = (await sdk.vAnchorDetails(queryVariables));
     return response.data
   }
 
   public async fetchDepositTransactions(
     subgraph: Subgraph,
-    queryVariables: DepositTXesListingQueryVariables
+    queryVariables?: DepositTXesListingQueryVariables
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
@@ -45,7 +45,7 @@ export class VAnchorService {
 
   public async fetchWithdrawTransactions(
     subgraph: Subgraph,
-    queryVariables: WithdrawTXesListingQueryVariables
+    queryVariables?: WithdrawTXesListingQueryVariables
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
@@ -55,7 +55,7 @@ export class VAnchorService {
 
   public async fetchDepositTransactionDetails(
     subgraph: Subgraph,
-    queryVariables: DepositTxDetailsQueryVariables
+    queryVariables?: DepositTxDetailsQueryVariables
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
@@ -65,7 +65,7 @@ export class VAnchorService {
 
   public async fetchWithdrawTransactionDetails(
     subgraph: Subgraph,
-    queryVariables: WithdrawTxDetailsQueryVariables
+    queryVariables?: WithdrawTxDetailsQueryVariables
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);

@@ -3,6 +3,9 @@ fragment TokenDetailsFragment on Token {
   address
   name
   decimals
+  symbol
+  isFungibleTokenWrapper
+
 }
 fragment FungibleTokenWrapperDetails  on FungibleTokenWrapper {
   id
@@ -29,7 +32,7 @@ fragment VAnchorDetailsFragment on VAnchor {
 
   volumeComposition {
     id
-    token{
+    token {
       ...TokenDetailsFragment
     }
     finalValueLocked

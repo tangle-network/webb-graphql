@@ -322,6 +322,7 @@ export enum DepositTx_OrderBy {
   WrappedTokenAddress = 'wrappedToken__address',
   WrappedTokenDecimals = 'wrappedToken__decimals',
   WrappedTokenId = 'wrappedToken__id',
+  WrappedTokenIsFungibleTokenWrapper = 'wrappedToken__isFungibleTokenWrapper',
   WrappedTokenName = 'wrappedToken__name',
   WrappedTokenSymbol = 'wrappedToken__symbol',
   WrappingFee = 'wrappingFee'
@@ -1624,6 +1625,7 @@ export type Token = {
   address: Scalars['Bytes']['output'];
   decimals: Scalars['Int']['output'];
   id: Scalars['Bytes']['output'];
+  isFungibleTokenWrapper: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   symbol: Scalars['String']['output'];
 };
@@ -1660,6 +1662,10 @@ export type Token_Filter = {
   id_not?: InputMaybe<Scalars['Bytes']['input']>;
   id_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
   id_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  isFungibleTokenWrapper?: InputMaybe<Scalars['Boolean']['input']>;
+  isFungibleTokenWrapper_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  isFungibleTokenWrapper_not?: InputMaybe<Scalars['Boolean']['input']>;
+  isFungibleTokenWrapper_not_in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
   name_contains?: InputMaybe<Scalars['String']['input']>;
   name_contains_nocase?: InputMaybe<Scalars['String']['input']>;
@@ -1707,6 +1713,7 @@ export enum Token_OrderBy {
   Address = 'address',
   Decimals = 'decimals',
   Id = 'id',
+  IsFungibleTokenWrapper = 'isFungibleTokenWrapper',
   Name = 'name',
   Symbol = 'symbol'
 }
@@ -2177,6 +2184,7 @@ export enum VAnchorVolumeComposition_OrderBy {
   TokenAddress = 'token__address',
   TokenDecimals = 'token__decimals',
   TokenId = 'token__id',
+  TokenIsFungibleTokenWrapper = 'token__isFungibleTokenWrapper',
   TokenName = 'token__name',
   TokenSymbol = 'token__symbol',
   UnWrappingFees = 'unWrappingFees',
@@ -2280,6 +2288,7 @@ export enum VAnchorVolume_OrderBy {
   TokenAddress = 'token__address',
   TokenDecimals = 'token__decimals',
   TokenId = 'token__id',
+  TokenIsFungibleTokenWrapper = 'token__isFungibleTokenWrapper',
   TokenName = 'token__name',
   TokenSymbol = 'token__symbol',
   TotalFees = 'totalFees',
@@ -2665,6 +2674,7 @@ export enum WithdrawTx_OrderBy {
   WrappedTokenAddress = 'wrappedToken__address',
   WrappedTokenDecimals = 'wrappedToken__decimals',
   WrappedTokenId = 'wrappedToken__id',
+  WrappedTokenIsFungibleTokenWrapper = 'wrappedToken__isFungibleTokenWrapper',
   WrappedTokenName = 'wrappedToken__name',
   WrappedTokenSymbol = 'wrappedToken__symbol'
 }
@@ -2703,39 +2713,39 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
-export type TokenDetailsFragmentFragment = { __typename?: 'Token', id: any, address: any, name: string, decimals: number };
+export type TokenDetailsFragmentFragment = { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean };
 
 export type FungibleTokenWrapperDetailsFragment = { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string };
 
 export type FungibleTokenWrapperBasicDetailsFragment = { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any };
 
-export type VAnchorDetailsFragmentFragment = { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> };
+export type VAnchorDetailsFragmentFragment = { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> };
 
 export type VAnchorListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> }> };
+export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> }> };
 
 export type VAnchorDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type VAnchorDetailsQuery = { __typename?: 'Query', vanchor?: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } | null };
+export type VAnchorDetailsQuery = { __typename?: 'Query', vanchor?: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } | null };
 
 export type AllTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTokensQuery = { __typename?: 'Query', tokens: Array<{ __typename?: 'Token', id: any, address: any, name: string, decimals: number }> };
+export type AllTokensQuery = { __typename?: 'Query', tokens: Array<{ __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }> };
 
 export type DayDetailsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DayDetailsQuery = { __typename?: 'Query', vanchorDayDatas: Array<{ __typename?: 'VAnchorDayData', id: string, date: number, numberOfDeposits: any, numberOfTransfers: any, numberOfWithdraws: any, composition: Array<{ __typename?: 'VAnchorVolumeComposition', id: string, unWrappingFees: any, wrappingFees: any, fees: any, relayerFees: any, volume: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> }> };
+export type DayDetailsQuery = { __typename?: 'Query', vanchorDayDatas: Array<{ __typename?: 'VAnchorDayData', id: string, date: number, numberOfDeposits: any, numberOfTransfers: any, numberOfWithdraws: any, composition: Array<{ __typename?: 'VAnchorVolumeComposition', id: string, unWrappingFees: any, wrappingFees: any, fees: any, relayerFees: any, volume: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> }> };
 
-export type DepositTxFragmentFragment = { __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } };
+export type DepositTxFragmentFragment = { __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } };
 
-export type WithdrawTxFragmentFragment = { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } };
+export type WithdrawTxFragmentFragment = { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } };
 
 export type DepositTXesListingQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2748,7 +2758,7 @@ export type DepositTXesListingQueryVariables = Exact<{
 }>;
 
 
-export type DepositTXesListingQuery = { __typename?: 'Query', depositTxes: Array<{ __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } }> };
+export type DepositTXesListingQuery = { __typename?: 'Query', depositTxes: Array<{ __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } }> };
 
 export type WithdrawTXesListingQueryVariables = Exact<{
   where?: InputMaybe<WithdrawTx_Filter>;
@@ -2761,21 +2771,21 @@ export type WithdrawTXesListingQueryVariables = Exact<{
 }>;
 
 
-export type WithdrawTXesListingQuery = { __typename?: 'Query', withdrawTxes: Array<{ __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } }> };
+export type WithdrawTXesListingQuery = { __typename?: 'Query', withdrawTxes: Array<{ __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } }> };
 
 export type DepositTxDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type DepositTxDetailsQuery = { __typename?: 'Query', depositTx?: { __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } } | null };
+export type DepositTxDetailsQuery = { __typename?: 'Query', depositTx?: { __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } } | null };
 
 export type WithdrawTxDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type WithdrawTxDetailsQuery = { __typename?: 'Query', withdrawTx?: { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number } }> } } | null };
+export type WithdrawTxDetailsQuery = { __typename?: 'Query', withdrawTx?: { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } } | null };
 
 export const FungibleTokenWrapperBasicDetailsFragmentDoc = gql`
     fragment FungibleTokenWrapperBasicDetails on VAnchor {
@@ -2791,6 +2801,8 @@ export const TokenDetailsFragmentFragmentDoc = gql`
   address
   name
   decimals
+  symbol
+  isFungibleTokenWrapper
 }
     `;
 export const FungibleTokenWrapperDetailsFragmentDoc = gql`

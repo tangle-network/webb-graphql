@@ -35,11 +35,6 @@ export interface Bridge {
     sides: BridgeSide[];
 }
 
-export interface IQuery {
-    bridges(): Bridge[] | Promise<Bridge[]>;
-    bridgeSides(): BridgeSide[] | Promise<BridgeSide[]>;
-}
-
 export interface Token {
     id: string;
     address: string;
@@ -124,6 +119,12 @@ export interface TransferTx {
     blockTimestamp: string;
     transactionHash: string;
     contractAddress: string;
+}
+
+export interface IQuery {
+    bridges(): Bridge[] | Promise<Bridge[]>;
+    bridgeSides(): BridgeSide[] | Promise<BridgeSide[]>;
+    depositTransactions(): DepositTx[] | Promise<DepositTx[]>;
 }
 
 type Nullable<T> = T | null;
