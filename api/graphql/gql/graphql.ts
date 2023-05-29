@@ -125,6 +125,7 @@ export interface TransferTx {
 export interface IQuery {
     bridges(): Bridge[] | Promise<Bridge[]>;
     bridgeSides(): BridgeSide[] | Promise<BridgeSide[]>;
+    dayData(): DayData | Promise<DayData>;
     depositTransactions(): DepositTx[] | Promise<DepositTx[]>;
 }
 

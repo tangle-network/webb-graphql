@@ -61,21 +61,6 @@ type BrideSideDayData {
   volumeUSD:String!
 }
 
-type BrideDayData {
-  # <Day index>
-  id:String!
-  date: String!
-
-  compositions:[Composition!]!
-#    bridge:BrBridgeSide
-
-  numberOfDeposits: String!
-  numberOfWithdraws: String!
-  numberOfTransfers: String!
-
-  fees:String!
-  volumeUSD:String!
-}
 
 type DayData {
   # <Day index>
@@ -149,6 +134,8 @@ type TransferTx  {
 type Query {
   bridges: [Bridge!]!
   bridgeSides: [BridgeSide!]!
+  dayData:DayData!
+
 
   depositTransactions:[DepositTx!]!
 }
