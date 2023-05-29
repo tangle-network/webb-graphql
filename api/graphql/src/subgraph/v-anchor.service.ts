@@ -20,7 +20,7 @@ export class VAnchorService {
   constructor(private gqlClientService: GqlClientService) {
   }
 
-  public async fetchAnchorOfSubGraph(subgraph: Subgraph) {
+  public async fetchVAnchorsOfSubGraph(subgraph: Subgraph) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     return (await sdk.vAnchorList(undefined)).data

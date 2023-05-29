@@ -33,6 +33,7 @@ export interface BridgeSide {
 export interface Bridge {
     id: string;
     sides: BridgeSide[];
+    volumeUSD: string;
 }
 
 export interface Token {

@@ -10,10 +10,7 @@ export class BridgeResolver {
   }
   @Query()
   public async bridges(): Promise<Bridge[]> {
-    const bridges  = await this.bridgeService.getBridges();
-    return bridges.map(bridge => ({
-      id:bridge.id,
-      sides:bridge.sides
-    }))
+    return this.bridgeService.getBridges();
+
   }
 }
