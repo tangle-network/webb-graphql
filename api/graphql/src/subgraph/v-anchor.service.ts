@@ -1,98 +1,94 @@
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import {VAnchorQueryData} from "./types";
-import {GqlClientService} from "./gql-client.service";
+import { VAnchorQueryData } from './types';
+import { GqlClientService } from './gql-client.service';
 import {
   DayDetailsQueryVariables,
   DepositTxDetailsQueryVariables,
   DepositTXesListingQueryVariables,
   VAnchorDetailsQueryVariables,
   WithdrawTxDetailsQueryVariables,
-  WithdrawTXesListingQueryVariables
-} from "../generated/graphql";
-
+  WithdrawTXesListingQueryVariables,
+} from '../generated/graphql';
 
 export type Subgraph = {
-  uri: string
-}
+  uri: string;
+};
 
 @Injectable()
 export class VAnchorService {
-  constructor(private gqlClientService: GqlClientService) {
-  }
+  constructor(private gqlClientService: GqlClientService) {}
 
   public async fetchVAnchorsOfSubGraph(subgraph: Subgraph) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
-    return (await sdk.vAnchorList(undefined)).data
+    return (await sdk.vAnchorList(undefined)).data;
   }
 
-  public async fetchVAnchorDetails(subgraph: Subgraph, queryVariables: VAnchorDetailsQueryVariables) {
+  public async fetchVAnchorDetails(
+    subgraph: Subgraph,
+    queryVariables: VAnchorDetailsQueryVariables,
+  ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
-   const response = (await sdk.vAnchorDetails(queryVariables));
-    return response.data
+    const response = await sdk.vAnchorDetails(queryVariables);
+    return response.data;
   }
 
   public async fetchDepositTransactions(
     subgraph: Subgraph,
-    queryVariables?: DepositTXesListingQueryVariables
+    queryVariables?: DepositTXesListingQueryVariables,
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     const response = await sdk.depositTXesListing(queryVariables);
-    return response.data
+    return response.data;
   }
 
   public async fetchWithdrawTransactions(
     subgraph: Subgraph,
-    queryVariables?: WithdrawTXesListingQueryVariables
+    queryVariables?: WithdrawTXesListingQueryVariables,
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     const response = await sdk.withdrawTXesListing(queryVariables);
-    return response.data
+    return response.data;
   }
 
   public async fetchDepositTransactionDetails(
     subgraph: Subgraph,
-    queryVariables?: DepositTxDetailsQueryVariables
+    queryVariables?: DepositTxDetailsQueryVariables,
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     const response = await sdk.depositTXDetails(queryVariables);
-    return response.data
+    return response.data;
   }
 
   public async fetchWithdrawTransactionDetails(
     subgraph: Subgraph,
-    queryVariables?: WithdrawTxDetailsQueryVariables
+    queryVariables?: WithdrawTxDetailsQueryVariables,
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     const response = await sdk.withdrawTXDetails(queryVariables);
-    return response.data
+    return response.data;
   }
-
 
   public async fetchDayData(
     subgraph: Subgraph,
-    queryVariables: DayDetailsQueryVariables
+    queryVariables: DayDetailsQueryVariables,
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     const response = await sdk.dayDetails(queryVariables);
-    return response.data
+    return response.data;
   }
 
-
-  public async discoverVAnchorsOfSubgraph(
-    subgraph: Subgraph,
-  ){
+  public async discoverVAnchorsOfSubgraph(subgraph: Subgraph) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     const response = await sdk.discoverVAnchors(undefined);
-    return response.data
-
+    return response.data;
   }
 }

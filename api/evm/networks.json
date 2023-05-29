@@ -16,23 +16,8 @@
     "FungibleTokenWrapper": {
       "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
     }
-  }, "Goerli": {
-    "VAnchor": {
-      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
-      "startBlock": 8703495
-    },
-    "FungibleTokenWrapper": {
-      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
-    }
-  }, "Mumbai": {
-    "VAnchor": {
-      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
-      "startBlock": 33462722
-    },
-    "FungibleTokenWrapper": {
-      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
-    }
-  }, "Moonbase": {
+  },
+  "Moonbase": {
     "VAnchor": {
       "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
       "startBlock": 3996742
@@ -40,7 +25,8 @@
     "FungibleTokenWrapper": {
       "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
     }
-  }, "Fuji": {
+  },
+  "Fuji": {
     "VAnchor": {
       "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
       "startBlock": 20151492
@@ -48,7 +34,8 @@
     "FungibleTokenWrapper": {
       "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
     }
-  }, "ScroolAlpha": {
+  },
+  "ScroolAlpha": {
     "VAnchor": {
       "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
       "startBlock": 666098
@@ -61,7 +48,6 @@
     "VAnchor": {
       "address": "0x968d628e0Efc57371162D03C623E70af5D90553b",
       "startBlock": 20
-
     },
     "FungibleTokenWrapper": {
       "address": "0x3CE626a78B6b2779805b37ACBFc8126555B739bF"
@@ -71,7 +57,6 @@
     "VAnchor": {
       "address": "0x968d628e0Efc57371162D03C623E70af5D90553b",
       "startBlock": 20
-
     },
     "FungibleTokenWrapper": {
       "address": "0x2946259E0334f33A064106302415aD3391BeD384"

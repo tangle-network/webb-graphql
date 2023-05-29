@@ -1,1 +1,1 @@
-export * from './vanchor-query'
+export * from './vanchor-query';

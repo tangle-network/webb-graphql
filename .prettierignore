@@ -2,3 +2,12 @@
 
 /dist
 /coverage
+# Add files here to ignore them from prettier formatting
+
+/build
+/api/evm/generated/**/*
+/api/evm/build/**/*
+/api/graphql/dist/**/*
+/node_modules
+/.vscode
+/**/.next

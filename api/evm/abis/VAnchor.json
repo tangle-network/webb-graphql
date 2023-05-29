@@ -363,9 +363,7 @@
   {
     "inputs": [],
     "name": "getHasher",
-    "outputs": [
-      { "internalType": "contract IHasher", "name": "", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "contract IHasher", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -377,9 +375,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_subtreeId", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "_subtreeId", "type": "uint256" }],
     "name": "getLastSubtreeRoot",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
@@ -415,9 +411,7 @@
   {
     "inputs": [],
     "name": "getLatestNeighborRoots",
-    "outputs": [
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
-    ],
+    "outputs": [{ "internalType": "uint256[]", "name": "", "type": "uint256[]" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -457,9 +451,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_chainID", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "_chainID", "type": "uint256" }],
     "name": "hasEdge",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
@@ -478,9 +470,7 @@
   {
     "inputs": [],
     "name": "hasher",
-    "outputs": [
-      { "internalType": "contract IHasher", "name": "", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "contract IHasher", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -524,9 +514,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_root", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "_root", "type": "uint256" }],
     "name": "isKnownRoot",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
@@ -543,9 +531,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_nullifierHash", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "_nullifierHash", "type": "uint256" }],
     "name": "isSpent",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
@@ -565,9 +551,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256[]", "name": "_roots", "type": "uint256[]" }
-    ],
+    "inputs": [{ "internalType": "uint256[]", "name": "_roots", "type": "uint256[]" }],
     "name": "isValidRoots",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
@@ -649,9 +633,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "bytes32", "name": "_resourceId", "type": "bytes32" }
-    ],
+    "inputs": [{ "internalType": "bytes32", "name": "_resourceId", "type": "bytes32" }],
     "name": "parseChainIdFromResourceId",
     "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
     "stateMutability": "pure",
@@ -897,9 +879,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256[8]", "name": "_proof", "type": "uint256[8]" }
-    ],
+    "inputs": [{ "internalType": "uint256[8]", "name": "_proof", "type": "uint256[8]" }],
     "name": "unpackProof",
     "outputs": [
       { "internalType": "uint256[2]", "name": "", "type": "uint256[2]" },

@@ -5,22 +5,19 @@ fragment TokenDetailsFragment on Token {
   decimals
   symbol
   isFungibleTokenWrapper
-
 }
-fragment FungibleTokenWrapperDetails  on FungibleTokenWrapper {
+fragment FungibleTokenWrapperDetails on FungibleTokenWrapper {
   id
   name
   decimals
   symbol
-
 }
 
-fragment FungibleTokenWrapperBasicDetails  on VAnchor{
+fragment FungibleTokenWrapperBasicDetails on VAnchor {
   id
   chainId
   typedChainId
   contractAddress
-
 }
 
 fragment VAnchorDetailsFragment on VAnchor {
@@ -51,34 +48,34 @@ fragment VAnchorDetailsFragment on VAnchor {
 }
 
 # Query All vAnchors
-query  vAnchorList {
-  vanchors{
+query vAnchorList {
+  vanchors {
     ...VAnchorDetailsFragment
-
   }
 }
 
-query vAnchorDetails($id:ID!) {
-  vanchor(id: $id ){
+query vAnchorDetails($id: ID!) {
+  vanchor(id: $id) {
     ...VAnchorDetailsFragment
   }
 }
 query allTokens {
-  tokens{
+  tokens {
     ...TokenDetailsFragment
   }
 }
 
-
-query dayDetails($vAnchorId:String!){
-  vanchorDayDatas(first:1 , orderBy: date , orderDirection: asc , where: {
-
-    vAnchor: $vAnchorId
-  }){
+query dayDetails($vAnchorId: String!) {
+  vanchorDayDatas(
+    first: 1
+    orderBy: date
+    orderDirection: asc
+    where: { vAnchor: $vAnchorId }
+  ) {
     id
     date
 
-    composition{
+    composition {
       id
       unWrappingFees
       wrappingFees
@@ -96,11 +93,9 @@ query dayDetails($vAnchorId:String!){
   }
 }
 
-
-fragment DepositTxFragment  on DepositTx{
+fragment DepositTxFragment on DepositTx {
   id
   depositor
-
 
   wrappedToken {
     ...TokenDetailsFragment
@@ -108,7 +103,6 @@ fragment DepositTxFragment  on DepositTx{
 
   value
   finalValue
-
 
   isWrapAndDeposit
 
@@ -126,13 +120,11 @@ fragment DepositTxFragment  on DepositTx{
   gasUsed
   blockTimestamp
   blockNumber
-
 }
 
-fragment WithdrawTxFragment  on WithdrawTx{
+fragment WithdrawTxFragment on WithdrawTx {
   id
   beneficiary
-
 
   wrappedToken {
     ...TokenDetailsFragment
@@ -140,7 +132,6 @@ fragment WithdrawTxFragment  on WithdrawTx{
 
   value
   finalValue
-
 
   isUnwrapAndWithdraw
 
@@ -158,73 +149,66 @@ fragment WithdrawTxFragment  on WithdrawTx{
   gasUsed
   blockTimestamp
   blockNumber
-
 }
 
-
 query depositTXesListing(
-  $first: Int = 10,
-  $skip: Int = 0,
-  $block: Block_height,
-
-  $orderBy: DepositTx_orderBy,
-  $orderDirection: OrderDirection,
+  $first: Int = 10
+  $skip: Int = 0
+  $block: Block_height
+  $orderBy: DepositTx_orderBy
+  $orderDirection: OrderDirection
   $where: DepositTx_filter
-
-  $subgraphError: _SubgraphErrorPolicy_! = deny,
-){
+  $subgraphError: _SubgraphErrorPolicy_! = deny
+) {
   depositTxes(
-    block:$block
-    first:$first
-    orderBy:$orderBy
-    orderDirection:$orderDirection
-    skip:$skip
-    subgraphError:$subgraphError
-    where:$where
+    block: $block
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    subgraphError: $subgraphError
+    where: $where
   ) {
     ...DepositTxFragment
   }
 }
 
-
 query withdrawTXesListing(
   $where: WithdrawTx_filter
-  $first: Int = 100,
-  $skip: Int = 0,
-  $orderBy: WithdrawTx_orderBy,
-  $block: Block_height,
-  $orderDirection: OrderDirection,
-  $subgraphError: _SubgraphErrorPolicy_! = deny,
-){
+  $first: Int = 100
+  $skip: Int = 0
+  $orderBy: WithdrawTx_orderBy
+  $block: Block_height
+  $orderDirection: OrderDirection
+  $subgraphError: _SubgraphErrorPolicy_! = deny
+) {
   withdrawTxes(
-  block:$block
-  first:$first
-  orderBy:$orderBy
-  orderDirection:$orderDirection
-  skip:$skip
-  subgraphError:$subgraphError
-  where:$where
-  ){
-  ...WithdrawTxFragment
-
-}
-}
-
-
-query depositTXDetails($id:ID!){
-depositTx(id: $id){
-  ...DepositTxFragment
-}
-}
-
-query withdrawTXDetails($id:ID!){
-  withdrawTx(id: $id){
+    block: $block
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    subgraphError: $subgraphError
+    where: $where
+  ) {
     ...WithdrawTxFragment
   }
 }
 
-query discoverVAnchors{
-  vanchors{
+query depositTXDetails($id: ID!) {
+  depositTx(id: $id) {
+    ...DepositTxFragment
+  }
+}
+
+query withdrawTXDetails($id: ID!) {
+  withdrawTx(id: $id) {
+    ...WithdrawTxFragment
+  }
+}
+
+query discoverVAnchors {
+  vanchors {
     id
   }
 }

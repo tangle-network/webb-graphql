@@ -1,19 +1,18 @@
-import {ConsoleLogger, Injectable} from '@nestjs/common';
-import {Bridge, BridgeSide, Composition} from '../../gql/graphql';
-import {Subgraph, VAnchorService} from "../subgraph/v-anchor.service";
-import {PricingService} from "../pricing/pricing.service";
-import {mapTokenFragment} from "../helpers";
-import {VAnchorDetailsFragmentFragment} from "../generated/graphql";
-
+import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { Bridge, BridgeSide, Composition } from '../../gql/graphql';
+import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
+import { PricingService } from '../pricing/pricing.service';
+import { mapTokenFragment } from '../helpers';
+import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
 
 @Injectable()
 export class BridgeService {
-  private logger = new ConsoleLogger('BridgeService')
+  private logger = new ConsoleLogger('BridgeService');
 
-  constructor(private readonly vAnchorService: VAnchorService,
-              private readonly pricingService: PricingService
-  ) {
-  }
+  constructor(
+    private readonly vAnchorService: VAnchorService,
+    private readonly pricingService: PricingService,
+  ) {}
 
   /**
    *
@@ -23,11 +22,10 @@ export class BridgeService {
    * Fetch prices based on composition and wither the composition is fungibleTokenWrapper or an ERC20
    * */
   async getBridges(): Promise<Bridge[]> {
-
     const bridges: Record<string, Bridge> = {};
     // All vAnchors
-    const {vanchors} = await this.vAnchorService.fetchVAnchorsOfSubGraph({
-      uri: "http://localhost:8000/subgraphs/name/VAnchor"
+    const { vanchors } = await this.vAnchorService.fetchVAnchorsOfSubGraph({
+      uri: 'http://localhost:8000/subgraphs/name/VAnchor',
     });
     for (const vAnchor of vanchors) {
       const bridgeSide = await this.vAnchorIntoBridgeSide(vAnchor);
@@ -35,23 +33,24 @@ export class BridgeService {
         bridges[bridgeSide.id] = {
           ...bridges[bridgeSide.id],
           sides: [...bridges[bridgeSide.id].sides, bridgeSide],
-          volumeUSD: String(Number(bridges[bridgeSide.id].volumeUSD)+ Number(bridgeSide.volumeUSD))
-
-        }
+          volumeUSD: String(
+            Number(bridges[bridgeSide.id].volumeUSD) +
+              Number(bridgeSide.volumeUSD),
+          ),
+        };
       } else {
         bridges[bridgeSide.id] = {
           id: bridgeSide.id,
           sides: [bridgeSide],
-          volumeUSD:bridgeSide.volumeUSD
-        }
+          volumeUSD: bridgeSide.volumeUSD,
+        };
       }
     }
     return Object.values(bridges) as any;
   }
 
-
   private async vAnchorIntoBridgeSide(
-    vAnchor: VAnchorDetailsFragmentFragment
+    vAnchor: VAnchorDetailsFragmentFragment,
   ): Promise<BridgeSide> {
     const {
       id,
@@ -68,49 +67,47 @@ export class BridgeService {
       numberOfDeposits,
 
       maxDepositAmount,
-
     } = vAnchor;
-    const compositionWithSymbol = vAnchor.volumeComposition.map(c => {
-
+    const compositionWithSymbol = vAnchor.volumeComposition.map((c) => {
       if (c.token.isFungibleTokenWrapper) {
         return {
           ...c,
-          symbol: 'WETH'
-        }
-
+          symbol: 'WETH',
+        };
       }
       return {
         ...c,
-        symbol: c.token.symbol
-      }
+        symbol: c.token.symbol,
+      };
     });
 
-    const tokens = compositionWithSymbol.map(c => c.symbol);
+    const tokens = compositionWithSymbol.map((c) => c.symbol);
     const prices = await this.pricingService.getPriceUSD(tokens);
     let totalValueUSD = 0;
 
-    const composition = compositionWithSymbol.map((composition): Composition => {
-      const decimals = composition.token.decimals;
-      const amount = Number(composition.valueLocked);
-      const amountFormatted = amount * Math.pow(10, -decimals);
-      const price = prices[composition.symbol];
-      const valueUSD = price * amountFormatted
+    const composition = compositionWithSymbol.map(
+      (composition): Composition => {
+        const decimals = composition.token.decimals;
+        const amount = Number(composition.valueLocked);
+        const amountFormatted = amount * Math.pow(10, -decimals);
+        const price = prices[composition.symbol];
+        const valueUSD = price * amountFormatted;
 
-      totalValueUSD = totalValueUSD + valueUSD
-      return {
-
-        valueUSD: String(valueUSD),
-        value: composition.valueLocked,
-        token: mapTokenFragment(composition.token)
-      }
-    });
+        totalValueUSD = totalValueUSD + valueUSD;
+        return {
+          valueUSD: String(valueUSD),
+          value: composition.valueLocked,
+          token: mapTokenFragment(composition.token),
+        };
+      },
+    );
 
     return {
       id,
       chainId: Number(chainId),
 
       averageDepositAmount: String(averageDepositAmount),
-      averageWithdrawAmount: "",
+      averageWithdrawAmount: '',
       composition,
 
       contractAddress: contractAddress,
@@ -121,20 +118,20 @@ export class BridgeService {
       numberOfWithdraws: Number(numberOfDeposits),
       token: String(token),
       typedChainId: String(typedChainId),
-      volumeUSD: String(totalValueUSD)
-
-    }
+      volumeUSD: String(totalValueUSD),
+    };
   }
 
   public async fetchBridgeSide(
     subgraph: Subgraph,
     vAnchorAddress: string,
   ): Promise<BridgeSide> {
-    const {vanchor} = await this.vAnchorService.fetchVAnchorDetails(subgraph, {
-      id: vAnchorAddress
-    });
-    return this.vAnchorIntoBridgeSide(vanchor)
-
-
+    const { vanchor } = await this.vAnchorService.fetchVAnchorDetails(
+      subgraph,
+      {
+        id: vAnchorAddress,
+      },
+    );
+    return this.vAnchorIntoBridgeSide(vanchor);
   }
 }

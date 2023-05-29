@@ -6,7 +6,7 @@
     "subql:deploy:dev": "cd api/substrate && yarn deploy:dev",
     "ts-check": "tsc --noEmit -p ./tsconfig.json",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write ."
+    "format": "prettier --write 'api//**/*.{ts,json ,graphql}' "
   },
   "homepage": "https://github.com/subquery/subql-starter",
   "repository": "github:subquery/subql-starter",

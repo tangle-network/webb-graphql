@@ -1,10 +1,10 @@
-import {Address, Bytes, ethereum} from '@graphprotocol/graph-ts';
+import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import {
   FungibleTokenWrapper as FungibleTokenWrapperContract,
   Transfer as TransferEvent,
 } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
 import { FungibleTokenWrapper, Token } from '../generated/schema';
-import {ERC20 as ERC20Contract} from "../generated/VAnchor/ERC20";
+import { ERC20 as ERC20Contract } from '../generated/VAnchor/ERC20';
 
 export function ensureToken(tokenAddress: Address): Token {
   let maybeToken = Token.load(tokenAddress);
@@ -15,22 +15,22 @@ export function ensureToken(tokenAddress: Address): Token {
 
   const tokenContract = ERC20Contract.bind(tokenAddress);
   const name = tokenContract.try_name();
-  if(name.reverted){
-    token.name = "Ethereum"
-  }else{
+  if (name.reverted) {
+    token.name = 'Ethereum';
+  } else {
     token.name = name.value;
   }
   const symbol = tokenContract.try_symbol();
-  if(symbol.reverted){
-    token.symbol = 'ETH'
-  }else{
-    token.symbol  = symbol.value;
+  if (symbol.reverted) {
+    token.symbol = 'ETH';
+  } else {
+    token.symbol = symbol.value;
   }
-  const decimals  = tokenContract.try_decimals();
-  if(decimals.reverted){
-    token.decimals = 18
-  }else{
-    token.decimals = decimals.value
+  const decimals = tokenContract.try_decimals();
+  if (decimals.reverted) {
+    token.decimals = 18;
+  } else {
+    token.decimals = decimals.value;
   }
 
   token.address = tokenAddress;
@@ -60,7 +60,7 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
   fungibleTokenWrapperEntity.tokens = FTWTokens;
   fungibleTokenWrapperEntity.symbol = ftw.symbol();
   fungibleTokenWrapperEntity.decimals = ftw.decimals();
-  fungibleTokenWrapperEntity.feePercentage = ftw.feePercentage()
+  fungibleTokenWrapperEntity.feePercentage = ftw.feePercentage();
   fungibleTokenWrapperEntity.address = tokenAddress;
   fungibleTokenWrapperEntity.save();
   return fungibleTokenWrapperEntity;

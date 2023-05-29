@@ -1,4 +1,4 @@
 import { Resolver } from '@nestjs/graphql';
 
-@Resolver("TransferTx")
+@Resolver('TransferTx')
 export class TransferResolver {}

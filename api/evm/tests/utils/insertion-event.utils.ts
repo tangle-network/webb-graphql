@@ -1,6 +1,5 @@
 import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
 
-
 export function buildTransactData(
   recipient: Address,
   amount: BigInt,
@@ -76,18 +75,16 @@ export function buildTransactData(
   externalData.push(externalDataList[5]);
 
   const publicInputs = new ethereum.Tuple();
- publicInputs.push( publicInputsDataList[0])
- publicInputs.push( publicInputsDataList[1])
- publicInputs.push( publicInputsDataList[2])
- publicInputs.push( publicInputsDataList[3])
- publicInputs.push( publicInputsDataList[4])
- publicInputs.push( publicInputsDataList[5])
-
-
+  publicInputs.push(publicInputsDataList[0]);
+  publicInputs.push(publicInputsDataList[1]);
+  publicInputs.push(publicInputsDataList[2]);
+  publicInputs.push(publicInputsDataList[3]);
+  publicInputs.push(publicInputsDataList[4]);
+  publicInputs.push(publicInputsDataList[5]);
 
   const encryptedOutput = new ethereum.Tuple();
- encryptedOutput.push(ethereum.Value.fromBytes(enc1));
- encryptedOutput.push(ethereum.Value.fromBytes(enc2));
+  encryptedOutput.push(ethereum.Value.fromBytes(enc1));
+  encryptedOutput.push(ethereum.Value.fromBytes(enc2));
 
   const txParams = new ethereum.Tuple();
 

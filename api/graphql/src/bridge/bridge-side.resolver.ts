@@ -5,8 +5,6 @@ import { BridgeSide } from '../../gql/graphql';
 export class BridgeSideResolver {
   @Query()
   public async bridges(): Promise<BridgeSide[]> {
-    return [
-
-    ];
+    return [];
   }
 }

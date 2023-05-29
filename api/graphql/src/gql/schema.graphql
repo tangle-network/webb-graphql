@@ -1,7 +1,7 @@
 type Composition {
   token: Token!
   value: String!
-  valueUSD:String!
+  valueUSD: String!
 }
 
 type BridgeSide {
@@ -16,10 +16,9 @@ type BridgeSide {
   maxDepositAmount: String!
   minDepositAmount: String!
 
-
   averageDepositAmount: String!
   averageWithdrawAmount: String!
-  token:String!
+  token: String!
 
   numberOfDeposits: Int!
   numberOfWithdraws: Int!
@@ -29,56 +28,50 @@ type Bridge {
   id: String!
   sides: [BridgeSide!]!
 
-  volumeUSD:String!
-
+  volumeUSD: String!
 }
-
 
 type Token {
   id: String!
   address: String!
-  isFungibleTokenWrapper:Boolean!
+  isFungibleTokenWrapper: Boolean!
   name: String!
   symbol: String!
   decimals: Int!
 }
 
-
-
 type BrideSideDayData {
   # <Day index>
-  id:String!
+  id: String!
   date: String!
 
-#  brideSide:BrBridgeSide
-  compositions:[Composition!]!
+  #  brideSide:BrBridgeSide
+  compositions: [Composition!]!
 
   numberOfDeposits: String!
   numberOfWithdraws: String!
   numberOfTransfers: String!
 
-  fees:String!
-  volumeUSD:String!
+  fees: String!
+  volumeUSD: String!
 }
-
 
 type DayData {
   # <Day index>
-  id:String!
+  id: String!
   date: String!
 
-  compositions:[Composition!]!
+  compositions: [Composition!]!
 
   numberOfDeposits: Int!
   numberOfWithdraws: Int!
   numberOfTransfers: Int!
 
-  feesUSD:String!
-  volumeUSD:String!
-
+  feesUSD: String!
+  volumeUSD: String!
 }
 
-type DepositTx  {
+type DepositTx {
   id: String!
   depositor: String!
   # deposit amount
@@ -98,7 +91,7 @@ type DepositTx  {
   blockNumber: String!
 }
 
-type WithdrawTx  {
+type WithdrawTx {
   id: String!
   beneficiary: String!
   # deposit amount
@@ -120,7 +113,7 @@ type WithdrawTx  {
   blockNumber: String!
 }
 
-type TransferTx  {
+type TransferTx {
   id: String!
   from: String! # addresss
   fee: String!
@@ -134,9 +127,8 @@ type TransferTx  {
 type Query {
   bridges: [Bridge!]!
   bridgeSides: [BridgeSide!]!
-  bridgesDayData:[DayData!]!
-  bridgeDayData(bridgeId:String!):DayData!
+  bridgesDayData: [DayData!]!
+  bridgeDayData(bridgeId: String!): DayData!
 
-
-  depositTransactions:[DepositTx!]!
+  depositTransactions: [DepositTx!]!
 }

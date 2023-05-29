@@ -1,1 +1,1 @@
-export * from './map-token-fragment'
+export * from './map-token-fragment';
