@@ -13,6 +13,6 @@ export class DayDataResolve {
 
   @Query('bridgeDayData')
   public bridgeDayData(@Args('bridgeId') bridgeId: string): Promise<DayData> {
-    return this.dayDataService.bridgeSideDayData(bridgeId);
+    return this.dayDataService.bridgeSideDayDataByNetworkName(bridgeId, '');
   }
 }

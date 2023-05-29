@@ -1,8 +1,9 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { VAnchorService } from '../subgraph/v-anchor.service';
+import { Injectable } from '@nestjs/common';
+import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
 import { Composition, DayData } from '../../gql/graphql';
 import { mapTokenFragment } from '../helpers';
+import { NetworksService } from '../subgraph/networks.service';
 
 const subgraph = {
   uri: 'http://localhost:8000/subgraphs/name/VAnchor',
@@ -13,68 +14,96 @@ export class DayDataService {
   constructor(
     private readonly vAnchorService: VAnchorService,
     private readonly pricingService: PricingService,
+    private readonly networkService: NetworksService,
   ) {}
+
+  private async allSubgraphVAnchors() {
+    const vanchors = await Promise.all(
+      this.networkService.networks.map((network) => {
+        return this.vAnchorService.discoverVAnchorsOfSubgraph({
+          uri: network.subgraphUri,
+        });
+      }),
+    );
+
+    return this.networkService.networks.map((network, index) => {
+      return {
+        subgraph: {
+          uri: network.subgraphUri,
+        },
+        vanchors: vanchors[index].vanchors,
+      };
+    });
+  }
 
   public async bridgesDayData(): Promise<DayData[]> {
     const dayDataMap: Record<string, DayData> = {};
 
-    const subgraph = {
-      uri: 'http://localhost:8000/subgraphs/name/VAnchor',
-    };
-    const { vanchors } = await this.vAnchorService.discoverVAnchorsOfSubgraph(
-      subgraph,
-    );
-    for (const vanchor of vanchors) {
-      const dayData = await this.bridgeSideDayData(vanchor.id);
+    const allSubgraphsVAnchors = await this.allSubgraphVAnchors();
 
-      if (dayDataMap[vanchor.id]) {
-        const mergedComposition: Composition[] =
-          dayDataMap[vanchor.id].compositions;
-        dayData.compositions.forEach((dayComposition) => {
-          const compositionEntry = mergedComposition.find(
-            (entry) => entry.token.id === dayComposition.token.id,
-          );
-          if (compositionEntry) {
-            compositionEntry.value = String(
-              Number(compositionEntry.value) + Number(dayComposition.value),
-            );
-            compositionEntry.valueUSD = String(
-              Number(compositionEntry.valueUSD) +
-                Number(dayComposition.valueUSD),
-            );
-          } else {
-            mergedComposition.push(dayComposition);
-          }
-        });
+    for (const { vanchors, subgraph } of allSubgraphsVAnchors) {
+      for (const vanchor of vanchors) {
+        const dayData = await this.bridgeSideDayData(vanchor.id, subgraph);
 
-        dayDataMap[vanchor.id] = {
-          ...dayDataMap[vanchor.id],
-          compositions: mergedComposition,
-          feesUSD: String(
-            Number(dayDataMap[vanchor.id].feesUSD) + Number(dayData.feesUSD),
-          ),
-          numberOfDeposits:
-            dayDataMap[vanchor.id].numberOfDeposits + dayData.numberOfDeposits,
-          numberOfTransfers:
-            dayDataMap[vanchor.id].numberOfTransfers +
-            dayData.numberOfTransfers,
-          numberOfWithdraws:
-            dayDataMap[vanchor.id].numberOfWithdraws +
-            dayData.numberOfWithdraws,
-          volumeUSD: String(
-            Number(dayDataMap[vanchor.id].volumeUSD) +
-              Number(dayData.volumeUSD),
-          ),
-        };
-      } else {
-        dayDataMap[vanchor.id] = dayData;
+        if (dayDataMap[vanchor.id]) {
+          const mergedComposition: Composition[] =
+            dayDataMap[vanchor.id].compositions;
+          dayData.compositions.forEach((dayComposition) => {
+            const compositionEntry = mergedComposition.find(
+              (entry) => entry.token.id === dayComposition.token.id,
+            );
+            if (compositionEntry) {
+              compositionEntry.value = String(
+                Number(compositionEntry.value) + Number(dayComposition.value),
+              );
+              compositionEntry.valueUSD = String(
+                Number(compositionEntry.valueUSD) +
+                  Number(dayComposition.valueUSD),
+              );
+            } else {
+              mergedComposition.push(dayComposition);
+            }
+          });
+
+          dayDataMap[vanchor.id] = {
+            ...dayDataMap[vanchor.id],
+            compositions: mergedComposition,
+            feesUSD: String(
+              Number(dayDataMap[vanchor.id].feesUSD) + Number(dayData.feesUSD),
+            ),
+            numberOfDeposits:
+              dayDataMap[vanchor.id].numberOfDeposits +
+              dayData.numberOfDeposits,
+            numberOfTransfers:
+              dayDataMap[vanchor.id].numberOfTransfers +
+              dayData.numberOfTransfers,
+            numberOfWithdraws:
+              dayDataMap[vanchor.id].numberOfWithdraws +
+              dayData.numberOfWithdraws,
+            volumeUSD: String(
+              Number(dayDataMap[vanchor.id].volumeUSD) +
+                Number(dayData.volumeUSD),
+            ),
+          };
+        } else {
+          dayDataMap[vanchor.id] = dayData;
+        }
       }
     }
 
     return Object.values(dayDataMap);
   }
-
-  public async bridgeSideDayData(vAnchorId: string): Promise<DayData> {
+  public async bridgeSideDayDataByNetworkName(
+    vAnchorId: string,
+    networkName: string,
+  ) {
+    const subgraph = this.networkService.getSubgraphConfig(networkName);
+    return this.bridgeSideDayData(vAnchorId, subgraph);
+  }
+  private async bridgeSideDayData(
+    vAnchorId: string,
+    subgraph: Subgraph,
+  ): Promise<DayData> {
     const { vanchorDayDatas } = await this.vAnchorService.fetchDayData(
       subgraph,
       { vAnchorId },

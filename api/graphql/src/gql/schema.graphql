@@ -124,11 +124,15 @@ type TransferTx {
   contractAddress: String!
 }
 
+type Network {
+  name:String!
+}
+
 type Query {
   bridges: [Bridge!]!
   bridgeSides: [BridgeSide!]!
   bridgesDayData: [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
-
+  networks:[Network!]!
   depositTransactions: [DepositTx!]!
 }
