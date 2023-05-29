@@ -18,8 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "subgraph-codegen": "graphql-codegen --config codegen.ts",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "gen-gql-ts": "node ./scripts/types-gen.js"
   },
   "dependencies": {
     "@apollo/server": "^4.7.1",
@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@urql/core": "^4.0.7",
     "axios": "^1.4.0",
+    "bignumber.js": "^9.1.1",
     "graphql": "15.7.2",
     "graphql-request": "5.1.0",
     "reflect-metadata": "^0.1.13",

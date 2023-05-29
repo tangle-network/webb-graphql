@@ -26,7 +26,7 @@ export class VAnchorService {
     return (await sdk.vAnchorList(undefined)).data
   }
 
-  public async FetchVAnchorDetails(subgraph: Subgraph, queryVariables: VAnchorDetailsQueryVariables) {
+  public async fetchVAnchorDetails(subgraph: Subgraph, queryVariables: VAnchorDetailsQueryVariables) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
     const response = (await sdk.vAnchorDetails(queryVariables));

@@ -35,7 +35,7 @@ export class BridgeService {
       )
 
       const bridgeSide: BridgeSide = {
-        averageDepositAmount: Number(vanchor.averageDepositAmount),
+        averageDepositAmount: vanchor.averageDepositAmount,
         chainId: Number(vanchor.chainId),
         composition: vanchor.volumeComposition.map((composition): Composition => ({
           token: composition.token.id,
@@ -43,9 +43,9 @@ export class BridgeService {
         })),
         contractAddress: vanchor.contractAddress,
         id: vanchor.id,
-        maxDepositAmount: Number(vanchor.maxDepositAmount),
-        averageWithdrawAmount: Number(0),
-        minDepositAmount: Number(vanchor.minDepositAmount),
+        maxDepositAmount: String(vanchor.maxDepositAmount),
+        averageWithdrawAmount: String(0),
+        minDepositAmount: String(vanchor.minDepositAmount),
         numberOfDeposits: Number(vanchor.numberOfDeposits),
         numberOfWithdraws: Number(vanchor.numberOfWithdraws),
         token: vanchor.token,

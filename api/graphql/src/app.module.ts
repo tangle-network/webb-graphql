@@ -15,6 +15,7 @@ import {SubgraphModule} from "./subgraph/subgraph.module";
       typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), 'gql/graphql.ts'),
+
       },
     }),
     BridgeModule,
