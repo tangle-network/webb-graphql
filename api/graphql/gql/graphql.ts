@@ -121,7 +121,8 @@ export interface IQuery {
     bridgesDayData(): DayData[] | Promise<DayData[]>;
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;
     networks(): Network[] | Promise<Network[]>;
-    depositTransactions(): DepositTx[] | Promise<DepositTx[]>;
+    depositTransactions(network: string): DepositTx[] | Promise<DepositTx[]>;
+    withdrawTransactions(network: string): WithdrawTx[] | Promise<WithdrawTx[]>;
 }
 
 type Nullable<T> = T | null;

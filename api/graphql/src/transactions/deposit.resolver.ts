@@ -1,4 +1,4 @@
-import { Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { RawDepositTx, TransactionService } from './transaction.service';
 import { BridgeSide } from '../../gql/graphql';
 
@@ -7,8 +7,10 @@ export class DepositResolver {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Query('depositTransactions')
-  public fetchDepositTransactions(): Promise<RawDepositTx[]> {
-    return this.transactionService.fetchDepositTransactions();
+  public fetchDepositTransactions(
+    @Args('network') network: string,
+  ): Promise<RawDepositTx[]> {
+    return this.transactionService.fetchDepositTransactions(network);
   }
 
   @ResolveField('bridgeSide')

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as process from 'process';
 import { join } from 'path';
 import * as fs from 'fs';
+import { Subgraph } from './v-anchor.service';
 
 type ConfigNetworkEntry = {
   subgraphUri: string;
@@ -23,6 +24,10 @@ export class NetworksService {
 
   get networks(): ConfigNetworkEntry[] {
     return this.config.networks;
+  }
+
+  get subgraphs(): Subgraph[] {
+    return this.networks.map((network) => ({ uri: network.subgraphUri }));
   }
 
   getSubgraphConfig(name: string) {

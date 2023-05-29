@@ -134,5 +134,6 @@ type Query {
   bridgesDayData: [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
   networks:[Network!]!
-  depositTransactions: [DepositTx!]!
+  depositTransactions(network:String!): [DepositTx!]!
+  withdrawTransactions(network:String!): [WithdrawTx!]!
 }

@@ -4,6 +4,7 @@ import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
 import { mapTokenFragment } from '../helpers';
 import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
+import { NetworksService } from '../subgraph/networks.service';
 
 @Injectable()
 export class BridgeService {
@@ -12,6 +13,7 @@ export class BridgeService {
   constructor(
     private readonly vAnchorService: VAnchorService,
     private readonly pricingService: PricingService,
+    private readonly networkService: NetworksService,
   ) {}
 
   /**
@@ -23,10 +25,21 @@ export class BridgeService {
    * */
   async getBridges(): Promise<Bridge[]> {
     const bridges: Record<string, Bridge> = {};
-    // All vAnchors
-    const { vanchors } = await this.vAnchorService.fetchVAnchorsOfSubGraph({
-      uri: 'http://localhost:8000/subgraphs/name/VAnchor',
-    });
+    // All vAnchors{
+    for (const subgraph of this.networkService.subgraphs) {
+      await this.reduceToBridge(subgraph, bridges);
+    }
+
+    return Object.values(bridges) as any;
+  }
+
+  private async reduceToBridge(
+    subgraph: Subgraph,
+    bridges: Record<string, Bridge>,
+  ) {
+    const { vanchors } = await this.vAnchorService.fetchVAnchorsOfSubGraph(
+      subgraph,
+    );
     for (const vAnchor of vanchors) {
       const bridgeSide = await this.vAnchorIntoBridgeSide(vAnchor);
       if (bridges[bridgeSide.id]) {
@@ -46,7 +59,6 @@ export class BridgeService {
         };
       }
     }
-    return Object.values(bridges) as any;
   }
 
   private async vAnchorIntoBridgeSide(

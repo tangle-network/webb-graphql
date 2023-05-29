@@ -7,17 +7,22 @@ import {
   WithdrawTxFragmentFragment,
 } from '../generated/graphql';
 import { mapTokenFragment } from '../helpers';
+import { NetworksService } from '../subgraph/networks.service';
 
 export type RawDepositTx = Omit<DepositTx, 'bridgeSide'> & {
   vAnchorId: string;
+  networkName: string;
 };
 
 export type RawWithdrawTx = Omit<WithdrawTx, 'bridgeSide'> & {
   vAnchorId: string;
+  networkName: string;
 };
 
 interface RawTx {
   vAnchorId: string;
+  networkName: string;
+
   // typedChainId:string,
   // chainId:number
 }
@@ -27,9 +32,13 @@ export class TransactionService {
   constructor(
     private readonly vAnchorService: VAnchorService,
     private readonly bridgeService: BridgeService,
+    private readonly networkService: NetworksService,
   ) {}
 
-  private mapWithdrawTx(tx: WithdrawTxFragmentFragment): RawWithdrawTx {
+  private mapWithdrawTx(
+    tx: WithdrawTxFragmentFragment,
+    networkName: string,
+  ): RawWithdrawTx {
     return {
       id: tx.id,
       value: tx.value,
@@ -45,9 +54,13 @@ export class TransactionService {
       wrappedToken: mapTokenFragment(tx.wrappedToken),
       vAnchorId: tx.vAnchor.id,
       blockNumber: String(tx.blockNumber),
+      networkName,
     };
   }
-  private mapDepositTx(tx: DepositTxFragmentFragment): RawDepositTx {
+  private mapDepositTx(
+    tx: DepositTxFragmentFragment,
+    networkName: string,
+  ): RawDepositTx {
     return {
       id: tx.id,
       depositor: tx.depositor,
@@ -63,42 +76,46 @@ export class TransactionService {
       wrappedToken: mapTokenFragment(tx.wrappedToken),
       vAnchorId: tx.vAnchor.id,
       blockNumber: String(tx.blockNumber),
+      networkName,
     };
   }
 
-  public async fetchWithdrawTransactions(): Promise<RawWithdrawTx[]> {
+  public async fetchWithdrawTransactions(
+    networkName: string,
+  ): Promise<RawWithdrawTx[]> {
+    const subgraph = this.networkService.getSubgraphConfig(networkName);
     const transactions = await this.vAnchorService.fetchWithdrawTransactions(
-      {
-        uri: 'http://localhost:8000/subgraphs/name/VAnchor',
-      },
+      subgraph,
       {},
     );
 
     return transactions.withdrawTxes.map(
-      (tx): RawWithdrawTx => this.mapWithdrawTx(tx),
+      (tx): RawWithdrawTx => this.mapWithdrawTx(tx, networkName),
     );
   }
 
-  public async fetchDepositTransactions(): Promise<RawDepositTx[]> {
+  public async fetchDepositTransactions(
+    networkName: string,
+  ): Promise<RawDepositTx[]> {
+    const subgraph = this.networkService.getSubgraphConfig(networkName);
     const transactions = await this.vAnchorService.fetchDepositTransactions(
-      {
-        uri: 'http://localhost:8000/subgraphs/name/VAnchor',
-      },
-      {},
+      subgraph,
     );
 
     return transactions.depositTxes.map(
-      (tx): RawDepositTx => this.mapDepositTx(tx),
+      (tx): RawDepositTx => this.mapDepositTx(tx, networkName),
     );
   }
 
   public async fetchBridgeOfTransaction<T extends RawTx>(
     rawTransaction: T,
   ): Promise<BridgeSide> {
+    const subgraph = this.networkService.getSubgraphConfig(
+      rawTransaction.networkName,
+    );
+
     return this.bridgeService.fetchBridgeSide(
-      {
-        uri: 'http://localhost:8000/subgraphs/name/VAnchor',
-      },
+      subgraph,
       rawTransaction.vAnchorId,
     );
   }

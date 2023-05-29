@@ -5,10 +5,6 @@ import { Composition, DayData } from '../../gql/graphql';
 import { mapTokenFragment } from '../helpers';
 import { NetworksService } from '../subgraph/networks.service';
 
-const subgraph = {
-  uri: 'http://localhost:8000/subgraphs/name/VAnchor',
-};
-
 @Injectable()
 export class DayDataService {
   constructor(
