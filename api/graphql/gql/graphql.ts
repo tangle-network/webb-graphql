@@ -56,17 +56,6 @@ export interface BrideSideDayData {
     volumeUSD: string;
 }
 
-export interface BrideDayData {
-    id: string;
-    date: string;
-    compositions: Composition[];
-    numberOfDeposits: string;
-    numberOfWithdraws: string;
-    numberOfTransfers: string;
-    fees: string;
-    volumeUSD: string;
-}
-
 export interface DayData {
     id: string;
     date: string;

@@ -11,7 +11,9 @@ export class DayDataService {
   ) {
   }
 
-
+  public async bridgeDayData():Promise<DayData>{
+    return this.bridgeSideDayData()
+  }
   public  async bridgeSideDayData():Promise<DayData>{
     const {vanchorDayDatas} = await this.vAnchorService.fetchDayData({
       uri: "http://localhost:8000/subgraphs/name/VAnchor"
