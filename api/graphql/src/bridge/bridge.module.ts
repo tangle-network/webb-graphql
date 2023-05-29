@@ -6,6 +6,7 @@ import {PricingModule} from "../pricing/pricing.module";
 
 @Module({
   imports:[SubgraphModule ,  PricingModule],
-  providers: [BridgeService, BridgeResolver]
+  providers: [BridgeService, BridgeResolver],
+  exports:[BridgeService]
 })
 export class BridgeModule {}

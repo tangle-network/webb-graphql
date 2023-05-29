@@ -89,7 +89,7 @@ export interface DepositTx {
     finalValue: string;
     blockTimestamp: string;
     transactionHash: string;
-    vAnchor: BridgeSide;
+    bridgeSide: BridgeSide;
     wrappedToken: Token;
     blockNumber: string;
 }
@@ -106,7 +106,7 @@ export interface WithdrawTx {
     finalValue: string;
     blockTimestamp: string;
     transactionHash: string;
-    vAnchor: BridgeSide;
+    bridgeSide: BridgeSide;
     wrappedToken: Token;
     blockNumber: string;
 }

@@ -4,9 +4,10 @@ import { DepositResolver } from './deposit/deposit.resolver';
 import { TransferResolver } from './transfer/transfer.resolver';
 import {SubgraphModule} from "../subgraph/subgraph.module";
 import { TransactionService } from './transaction/transaction.service';
+import {BridgeModule} from "../bridge/bridge.module";
 
 @Module({
-  imports:[SubgraphModule],
+  imports:[SubgraphModule , BridgeModule],
   providers: [WithdrawResolver, DepositResolver, TransferResolver, TransactionService]
 })
 export class TransactionsModule {}

@@ -1,8 +1,9 @@
 import {Injectable} from '@nestjs/common';
 import {VAnchorService} from "../../subgraph/v-anchor.service";
-import {DepositTx ,WithdrawTx}  from "../../../gql/graphql";
+import {BridgeSide, DepositTx, WithdrawTx} from "../../../gql/graphql";
+import {BridgeService} from "../../bridge/bridge.service";
 
-export type RawDepositTx = Omit<DepositTx, 'vAnchor'> & {
+export type RawDepositTx = Omit<DepositTx, 'bridgeSide'> & {
   vAnchorId: string
 };
 
@@ -11,10 +12,19 @@ export type RawWithdrawTx = Omit<WithdrawTx, 'vAnchor'> & {
 };
 
 
+interface RawTx {
+  vAnchorId:string,
+  typedChainId:string,
+  chainId:number
+}
+
 @Injectable()
 export class TransactionService {
 
-  constructor(private readonly vAnchorService: VAnchorService) {
+  constructor(
+    private readonly vAnchorService: VAnchorService,
+    private readonly bridgeService: BridgeService
+  ) {
   }
 
 
@@ -23,7 +33,7 @@ export class TransactionService {
       uri: "http://localhost:8000/subgraphs/name/VAnchor"
     }, {})
 
-   return  transactions.depositTxes.map((tx): RawDepositTx => ({
+    return transactions.depositTxes.map((tx): RawDepositTx => ({
       id: tx.id,
       depositor: tx.depositor,
       value: tx.value,
@@ -46,6 +56,17 @@ export class TransactionService {
       vAnchorId: tx.vAnchor.id,
       blockNumber: String(tx.blockNumber),
     }))
+  }
+
+  public async fetchBridgeOfTransaction(
+    rawTransaction: RawTx
+  ): Promise<BridgeSide> {
+    return this.bridgeService.fetchBridgeSide(
+      {
+        uri: "http://localhost:8000/subgraphs/name/VAnchor"
+      },
+      rawTransaction.vAnchorId
+    )
   }
 
 }

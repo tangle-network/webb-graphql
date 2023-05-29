@@ -1,6 +1,6 @@
 import {ConsoleLogger, Injectable} from '@nestjs/common';
 import {Bridge, BridgeSide, Composition} from '../../gql/graphql';
-import {VAnchorService} from "../subgraph/v-anchor.service";
+import {Subgraph, VAnchorService} from "../subgraph/v-anchor.service";
 import {PricingService} from "../pricing/pricing.service";
 
 
@@ -82,5 +82,64 @@ export class BridgeService {
       }
     }
     return Object.values(bridges) as any;
+  }
+
+  public async fetchBridgeSide(
+    subgraph: Subgraph,
+    vAnchorAddress: string,
+  ): Promise<BridgeSide> {
+
+    const {vanchor} = await this.vAnchorService.fetchVAnchorDetails(subgraph, {
+      id: vAnchorAddress
+    });
+
+    const {
+      id,
+      contractAddress,
+      chainId,
+      typedChainId,
+      token,
+
+      averageDepositAmount,
+
+      minDepositAmount,
+
+      numberOfWithdraws,
+      numberOfDeposits,
+
+      maxDepositAmount,
+
+    } = vanchor;
+    return {
+      id,
+      chainId: Number(chainId),
+
+      averageDepositAmount: String(averageDepositAmount),
+      averageWithdrawAmount: "",
+      composition: vanchor.volumeComposition.map((composition): Composition => ({
+        valueUSD: "0",
+        value: composition.finalValueLocked,
+        token: {
+          id: composition.token.id,
+          name: composition.token.name,
+          decimals: composition.token.decimals,
+          address: composition.token.address,
+          isFungibleTokenWrapper: composition.token.isFungibleTokenWrapper,
+          symbol: composition.token.symbol
+        }
+      })),
+
+      contractAddress: contractAddress,
+      maxDepositAmount: String(maxDepositAmount),
+      minDepositAmount: String(minDepositAmount),
+
+      numberOfDeposits: Number(numberOfWithdraws),
+      numberOfWithdraws: Number(numberOfDeposits),
+      token: String(token),
+      typedChainId: String(typedChainId),
+      volumeUSD: "0"
+
+    }
+
   }
 }

@@ -104,7 +104,7 @@ type DepositTx  {
   blockTimestamp: String!
   transactionHash: String!
 
-  vAnchor: BridgeSide!
+  bridgeSide: BridgeSide!
   wrappedToken: Token!
 
   blockNumber: String!
@@ -126,7 +126,7 @@ type WithdrawTx  {
   blockTimestamp: String!
   transactionHash: String!
 
-  vAnchor: BridgeSide!
+  bridgeSide: BridgeSide!
   wrappedToken: Token!
 
   blockNumber: String!
