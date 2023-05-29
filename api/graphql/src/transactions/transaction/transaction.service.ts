@@ -2,7 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {VAnchorService} from "../../subgraph/v-anchor.service";
 import {BridgeSide, DepositTx, WithdrawTx} from "../../../gql/graphql";
 import {BridgeService} from "../../bridge/bridge.service";
-
+import {mapTokenFragment} from "../../helpers";
 export type RawDepositTx = Omit<DepositTx, 'bridgeSide'> & {
   vAnchorId: string
 };
@@ -14,8 +14,8 @@ export type RawWithdrawTx = Omit<WithdrawTx, 'vAnchor'> & {
 
 interface RawTx {
   vAnchorId:string,
-  typedChainId:string,
-  chainId:number
+  // typedChainId:string,
+  // chainId:number
 }
 
 @Injectable()
@@ -45,21 +45,15 @@ export class TransactionService {
       finalValue: String(tx.finalValue),
       blockTimestamp: String(tx.blockTimestamp),
       transactionHash: String(tx.transactionHash),
-      wrappedToken: {
-        id: tx.wrappedToken.id,
-        name: tx.wrappedToken.name,
-        decimals: tx.wrappedToken.decimals,
-        address: tx.wrappedToken.address,
-        isFungibleTokenWrapper: tx.wrappedToken.isFungibleTokenWrapper,
-        symbol: tx.wrappedToken.symbol
-      },
+      wrappedToken:mapTokenFragment(tx.wrappedToken),
       vAnchorId: tx.vAnchor.id,
       blockNumber: String(tx.blockNumber),
     }))
+
   }
 
-  public async fetchBridgeOfTransaction(
-    rawTransaction: RawTx
+  public async fetchBridgeOfTransaction<T extends RawTx>(
+    rawTransaction: T
   ): Promise<BridgeSide> {
     return this.bridgeService.fetchBridgeSide(
       {

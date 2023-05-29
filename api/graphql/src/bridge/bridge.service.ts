@@ -2,6 +2,7 @@ import {ConsoleLogger, Injectable} from '@nestjs/common';
 import {Bridge, BridgeSide, Composition} from '../../gql/graphql';
 import {Subgraph, VAnchorService} from "../subgraph/v-anchor.service";
 import {PricingService} from "../pricing/pricing.service";
+import {mapTokenFragment} from "../helpers";
 
 
 @Injectable()
@@ -46,14 +47,8 @@ export class BridgeService {
         averageDepositAmount: vanchor.averageDepositAmount,
         chainId: Number(vanchor.chainId),
         composition: vanchor.volumeComposition.map((composition): Composition => ({
-          token: {
-            id: composition.token.id,
-            name: composition.token.name,
-            decimals: composition.token.decimals,
-            address: composition.token.address,
-            isFungibleTokenWrapper: composition.token.isFungibleTokenWrapper,
-            symbol: composition.token.symbol
-          },
+          token: mapTokenFragment(composition.token),
+
           value: String(composition.finalValueLocked),
           valueUSD: '0'
         })),
@@ -88,7 +83,6 @@ export class BridgeService {
     subgraph: Subgraph,
     vAnchorAddress: string,
   ): Promise<BridgeSide> {
-
     const {vanchor} = await this.vAnchorService.fetchVAnchorDetails(subgraph, {
       id: vAnchorAddress
     });
@@ -110,24 +104,48 @@ export class BridgeService {
       maxDepositAmount,
 
     } = vanchor;
+    const compositionWithSymbol = vanchor.volumeComposition.map(c =>{
+
+      if(c.token.isFungibleTokenWrapper){
+        return  {
+          ...c,
+          symbol:'WETH'
+        }
+
+      }
+      return {
+        ...c,
+        symbol:c.token.symbol
+      }
+    });
+
+    const tokens = compositionWithSymbol.map(c => c.symbol);
+    const prices = await this.pricingService.getPriceUSD(tokens);
+    let totalValueUSD = 0;
+
+    const composition = compositionWithSymbol.map((composition):Composition =>{
+      const decimals = composition.token.decimals;
+      const amount = Number(composition.valueLocked);
+      const amountFormatted = amount * Math.pow(10, -decimals);
+      const price = prices[composition.symbol];
+      const valueUSD =  price * amountFormatted
+
+      totalValueUSD = totalValueUSD + valueUSD
+      return {
+
+        valueUSD:String(valueUSD),
+        value: composition.valueLocked,
+        token: mapTokenFragment(composition.token)
+      }});
+    this.logger.log('Rerun')
+
     return {
       id,
       chainId: Number(chainId),
 
       averageDepositAmount: String(averageDepositAmount),
       averageWithdrawAmount: "",
-      composition: vanchor.volumeComposition.map((composition): Composition => ({
-        valueUSD: "0",
-        value: composition.finalValueLocked,
-        token: {
-          id: composition.token.id,
-          name: composition.token.name,
-          decimals: composition.token.decimals,
-          address: composition.token.address,
-          isFungibleTokenWrapper: composition.token.isFungibleTokenWrapper,
-          symbol: composition.token.symbol
-        }
-      })),
+      composition,
 
       contractAddress: contractAddress,
       maxDepositAmount: String(maxDepositAmount),
@@ -137,7 +155,7 @@ export class BridgeService {
       numberOfWithdraws: Number(numberOfDeposits),
       token: String(token),
       typedChainId: String(typedChainId),
-      volumeUSD: "0"
+      volumeUSD: String(totalValueUSD)
 
     }
 
