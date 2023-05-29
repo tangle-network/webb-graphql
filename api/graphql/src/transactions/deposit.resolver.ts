@@ -1,6 +1,6 @@
 import {Parent, Query, ResolveField, Resolver} from '@nestjs/graphql';
-import {RawDepositTx, TransactionService} from "../transaction/transaction.service";
-import {BridgeSide} from "../../../gql/graphql";
+import {RawDepositTx, TransactionService} from "./transaction.service";
+import {BridgeSide} from "../../gql/graphql";
 
 @Resolver("DepositTx")
 export class DepositResolver {
