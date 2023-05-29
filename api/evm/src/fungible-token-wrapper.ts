@@ -1,4 +1,4 @@
-import { Address, Bytes } from '@graphprotocol/graph-ts';
+import {Address, Bytes, ethereum} from '@graphprotocol/graph-ts';
 import {
   FungibleTokenWrapper as FungibleTokenWrapperContract,
   Transfer as TransferEvent,
@@ -26,8 +26,17 @@ export function ensureToken(tokenAddress: Address): Token {
   }else{
     token.symbol  = symbol.value;
   }
-  token.decimals  = 18;
+  const decimals  = tokenContract.try_decimals();
+  if(decimals.reverted){
+    token.decimals = 18
+  }else{
+    token.decimals = decimals.value
+  }
+
   token.address = tokenAddress;
+
+  token.isFungibleTokenWrapper = FungibleTokenWrapper.load(tokenAddress) != null;
+
   token.save();
   return token;
 }

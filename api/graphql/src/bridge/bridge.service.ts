@@ -12,6 +12,13 @@ export class BridgeService {
   ) {
   }
 
+  /**
+   *
+   * Query all bridges
+   * Fetches all VAnchors from the SubGraphs
+   * Combine the VAnchors that has the same contract address
+   * Fetch prices based on composition and wither the composition is fungibleTokenWrapper or an ERC20
+   * */
   async getBridges(): Promise<Bridge[]> {
 
     const bridges: Record<string, Bridge> = {};
@@ -39,7 +46,7 @@ export class BridgeService {
         chainId: Number(vanchor.chainId),
         composition: vanchor.volumeComposition.map((composition): Composition => ({
           token: composition.token.id,
-          value: Number(composition.finalValueLocked)
+          value: String(composition.finalValueLocked)
         })),
         contractAddress: vanchor.contractAddress,
         id: vanchor.id,

@@ -186,6 +186,7 @@ type Deploy @entity(immutable: true) {
 type Token @entity(immutable: false) {
   id: Bytes!
   address: Bytes!
+  isFungibleTokenWrapper:Boolean!
   name: String!
   symbol: String!
   decimals: Int!
