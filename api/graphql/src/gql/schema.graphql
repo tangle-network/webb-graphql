@@ -69,11 +69,11 @@ type DayData {
 
   compositions:[Composition!]!
 
-  numberOfDeposits: String!
-  numberOfWithdraws: String!
-  numberOfTransfers: String!
+  numberOfDeposits: Int!
+  numberOfWithdraws: Int!
+  numberOfTransfers: Int!
 
-  fees:String!
+  feesUSD:String!
   volumeUSD:String!
 
 }
@@ -134,7 +134,8 @@ type TransferTx  {
 type Query {
   bridges: [Bridge!]!
   bridgeSides: [BridgeSide!]!
-  dayData:DayData!
+  bridgesDayData:[DayData!]!
+  bridgeDayData(bridgeId:String!):DayData!
 
 
   depositTransactions:[DepositTx!]!

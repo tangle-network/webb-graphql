@@ -70,8 +70,11 @@ query allTokens {
 }
 
 
-query dayDetails{
-  vanchorDayDatas(first:1 , orderBy: date , orderDirection: asc){
+query dayDetails($vAnchorId:String!){
+  vanchorDayDatas(first:1 , orderBy: date , orderDirection: asc , where: {
+
+    vAnchor: $vAnchorId
+  }){
     id
     date
 
@@ -217,5 +220,11 @@ depositTx(id: $id){
 query withdrawTXDetails($id:ID!){
   withdrawTx(id: $id){
     ...WithdrawTxFragment
+  }
+}
+
+query discoverVAnchors{
+  vanchors{
+    id
   }
 }

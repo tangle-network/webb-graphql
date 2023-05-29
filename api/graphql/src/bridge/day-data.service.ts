@@ -1,8 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import {ConsoleLogger, Injectable} from '@nestjs/common';
 import {VAnchorService} from "../subgraph/v-anchor.service";
 import {PricingService} from "../pricing/pricing.service";
 import {Composition, DayData} from "../../gql/graphql";
 import {mapTokenFragment} from "../helpers";
+
+const subgraph = {
+  uri: "http://localhost:8000/subgraphs/name/VAnchor"
+};
 
 @Injectable()
 export class DayDataService {
@@ -11,13 +15,54 @@ export class DayDataService {
   ) {
   }
 
-  public async bridgeDayData():Promise<DayData>{
-    return this.bridgeSideDayData()
-  }
-  public  async bridgeSideDayData():Promise<DayData>{
-    const {vanchorDayDatas} = await this.vAnchorService.fetchDayData({
+  public async bridgesDayData(): Promise<DayData[]> {
+
+    const dayDataMap: Record<string, DayData> = {}
+
+    const subgraph = {
       uri: "http://localhost:8000/subgraphs/name/VAnchor"
-    });
+    };
+    const {vanchors} = await this.vAnchorService.discoverVAnchorsOfSubgraph(subgraph)
+    for (const vanchor of vanchors) {
+      const dayData = await this.bridgeSideDayData(vanchor.id);
+
+      if (dayDataMap[vanchor.id]) {
+        const mergedComposition: Composition[] = dayDataMap[vanchor.id].compositions;
+        dayData.compositions.forEach(dayComposition => {
+          const compositionEntry = mergedComposition.find(entry => entry.token.id === dayComposition.token.id)
+          if (compositionEntry) {
+            compositionEntry.value = String(Number(compositionEntry.value) + Number(dayComposition.value));
+            compositionEntry.valueUSD = String(Number(compositionEntry.valueUSD) + Number(dayComposition.valueUSD));
+          } else {
+            mergedComposition.push(dayComposition)
+          }
+        })
+
+        dayDataMap[vanchor.id] = {
+          ...dayDataMap[vanchor.id],
+          compositions: mergedComposition,
+          feesUSD: String(Number(dayDataMap[vanchor.id].feesUSD) + Number(dayData.feesUSD)),
+          numberOfDeposits: dayDataMap[vanchor.id].numberOfDeposits + dayData.numberOfDeposits,
+          numberOfTransfers: dayDataMap[vanchor.id].numberOfTransfers + dayData.numberOfTransfers,
+          numberOfWithdraws: dayDataMap[vanchor.id].numberOfWithdraws + dayData.numberOfWithdraws,
+          volumeUSD: String(Number(dayDataMap[vanchor.id].volumeUSD) + Number(dayData.volumeUSD))
+
+        }
+
+      } else {
+        dayDataMap[vanchor.id] = dayData
+      }
+    }
+
+    return Object.values(dayDataMap)
+
+  }
+
+  public async bridgeSideDayData(vAnchorId: string): Promise<DayData> {
+    const {vanchorDayDatas} = await this.vAnchorService.fetchDayData(
+      subgraph,
+      {vAnchorId}
+    );
 
     const {
       id,
@@ -76,12 +121,12 @@ export class DayDataService {
       id,
 
       compositions,
-      date:String(date) ,
-      numberOfDeposits: String(numberOfDeposits),
-      numberOfTransfers: String(numberOfTransfers),
-      numberOfWithdraws: String(numberOfWithdraws),
+      date: String(date),
+      numberOfDeposits: Number(numberOfDeposits),
+      numberOfTransfers: Number(numberOfTransfers),
+      numberOfWithdraws: Number(numberOfWithdraws),
       volumeUSD: String(totalValueUSD),
-      fees: String(totalFeesUSD),
+      feesUSD: String(totalFeesUSD),
 
     }
   }

@@ -2738,7 +2738,9 @@ export type AllTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllTokensQuery = { __typename?: 'Query', tokens: Array<{ __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }> };
 
-export type DayDetailsQueryVariables = Exact<{ [key: string]: never; }>;
+export type DayDetailsQueryVariables = Exact<{
+  vAnchorId: Scalars['String']['input'];
+}>;
 
 
 export type DayDetailsQuery = { __typename?: 'Query', vanchorDayDatas: Array<{ __typename?: 'VAnchorDayData', id: string, date: number, numberOfDeposits: any, numberOfTransfers: any, numberOfWithdraws: any, composition: Array<{ __typename?: 'VAnchorVolumeComposition', id: string, unWrappingFees: any, wrappingFees: any, fees: any, relayerFees: any, volume: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> }> };
@@ -2786,6 +2788,11 @@ export type WithdrawTxDetailsQueryVariables = Exact<{
 
 
 export type WithdrawTxDetailsQuery = { __typename?: 'Query', withdrawTx?: { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, token: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, volumeComposition: Array<{ __typename?: 'VAnchorVolume', id: string, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> } } | null };
+
+export type DiscoverVAnchorsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DiscoverVAnchorsQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string }> };
 
 export const FungibleTokenWrapperBasicDetailsFragmentDoc = gql`
     fragment FungibleTokenWrapperBasicDetails on VAnchor {
@@ -2913,8 +2920,13 @@ export const AllTokensDocument = gql`
 }
     ${TokenDetailsFragmentFragmentDoc}`;
 export const DayDetailsDocument = gql`
-    query dayDetails {
-  vanchorDayDatas(first: 1, orderBy: date, orderDirection: asc) {
+    query dayDetails($vAnchorId: String!) {
+  vanchorDayDatas(
+    first: 1
+    orderBy: date
+    orderDirection: asc
+    where: {vAnchor: $vAnchorId}
+  ) {
     id
     date
     composition {
@@ -2978,6 +2990,13 @@ export const WithdrawTxDetailsDocument = gql`
   }
 }
     ${WithdrawTxFragmentFragmentDoc}`;
+export const DiscoverVAnchorsDocument = gql`
+    query discoverVAnchors {
+  vanchors {
+    id
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
 
@@ -2991,6 +3010,7 @@ const DepositTXesListingDocumentString = print(DepositTXesListingDocument);
 const WithdrawTXesListingDocumentString = print(WithdrawTXesListingDocument);
 const DepositTxDetailsDocumentString = print(DepositTxDetailsDocument);
 const WithdrawTxDetailsDocumentString = print(WithdrawTxDetailsDocument);
+const DiscoverVAnchorsDocumentString = print(DiscoverVAnchorsDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     vAnchorList(variables?: VAnchorListQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: VAnchorListQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
@@ -3002,7 +3022,7 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     allTokens(variables?: AllTokensQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: AllTokensQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<AllTokensQuery>(AllTokensDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'allTokens');
     },
-    dayDetails(variables?: DayDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DayDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+    dayDetails(variables: DayDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DayDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<DayDetailsQuery>(DayDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'dayDetails');
     },
     depositTXesListing(variables?: DepositTXesListingQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DepositTXesListingQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
@@ -3016,6 +3036,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     withdrawTXDetails(variables: WithdrawTxDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: WithdrawTxDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<WithdrawTxDetailsQuery>(WithdrawTxDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'withdrawTXDetails');
+    },
+    discoverVAnchors(variables?: DiscoverVAnchorsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DiscoverVAnchorsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<DiscoverVAnchorsQuery>(DiscoverVAnchorsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'discoverVAnchors');
     }
   };
 }

@@ -60,10 +60,10 @@ export interface DayData {
     id: string;
     date: string;
     compositions: Composition[];
-    numberOfDeposits: string;
-    numberOfWithdraws: string;
-    numberOfTransfers: string;
-    fees: string;
+    numberOfDeposits: number;
+    numberOfWithdraws: number;
+    numberOfTransfers: number;
+    feesUSD: string;
     volumeUSD: string;
 }
 
@@ -114,7 +114,8 @@ export interface TransferTx {
 export interface IQuery {
     bridges(): Bridge[] | Promise<Bridge[]>;
     bridgeSides(): BridgeSide[] | Promise<BridgeSide[]>;
-    dayData(): DayData | Promise<DayData>;
+    bridgesDayData(): DayData[] | Promise<DayData[]>;
+    bridgeDayData(bridgeId: string): DayData | Promise<DayData>;
     depositTransactions(): DepositTx[] | Promise<DepositTx[]>;
 }
 

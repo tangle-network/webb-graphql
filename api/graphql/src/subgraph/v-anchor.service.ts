@@ -3,6 +3,7 @@ import {Injectable} from '@nestjs/common';
 import {VAnchorQueryData} from "./types";
 import {GqlClientService} from "./gql-client.service";
 import {
+  DayDetailsQueryVariables,
   DepositTxDetailsQueryVariables,
   DepositTXesListingQueryVariables,
   VAnchorDetailsQueryVariables,
@@ -76,11 +77,22 @@ export class VAnchorService {
 
   public async fetchDayData(
     subgraph: Subgraph,
+    queryVariables: DayDetailsQueryVariables
   ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
-    const response = await sdk.dayDetails(undefined);
+    const response = await sdk.dayDetails(queryVariables);
     return response.data
   }
 
+
+  public async discoverVAnchorsOfSubgraph(
+    subgraph: Subgraph,
+  ){
+    const url = subgraph.uri;
+    const sdk = this.gqlClientService.getSdkOfClient(url);
+    const response = await sdk.discoverVAnchors(undefined);
+    return response.data
+
+  }
 }
