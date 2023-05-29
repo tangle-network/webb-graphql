@@ -20,7 +20,6 @@ import { TransactionsModule } from './transactions/transactions.module';
       },
     }),
     BridgeModule,
-
     PricingModule,
     SubgraphModule,
     TransactionsModule,
