@@ -7,6 +7,7 @@ import { join } from 'path';
 import { BridgeModule } from './bridge/bridge.module';
 import { PricingModule } from './pricing/pricing.module';
 import {SubgraphModule} from "./subgraph/subgraph.module";
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import {SubgraphModule} from "./subgraph/subgraph.module";
 
     PricingModule,
     SubgraphModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
