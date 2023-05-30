@@ -107,11 +107,17 @@ export async function ensureProposalQueue(blockId: string) {
   return newQueue;
 }
 
-const ensureProposalQueueItem = async (blockId: string, proposalId: string, chainId: string) => {
+const ensureProposalQueueItem = async (
+  blockId: string,
+  proposalId: string,
+  chainId: string,
+  proposalType: ProposalType,
+  data: string
+) => {
   const id = `${blockId}-${proposalId}`;
   const item = await UnsignedProposalsQueueItem.get(id);
   // TODO : Debug this more as the proposal isn't created while it should be
-  await ensureProposalItem({ blockId, nonce: proposalId, chainId });
+  await ensureProposalItem({ blockId, nonce: proposalId, chainId, proposalType, data });
   if (item) {
     return item;
   }
@@ -170,7 +176,13 @@ function constructProposalItemId(
     input.signature ? '1' : '0'
   }`;
 }
-async function ensureAbstainVotes(blockId: string, proposalId: string, proposalChainId: string) {
+async function ensureAbstainVotes(
+  blockId: string,
+  proposalId: string,
+  proposalChainId: string,
+  proposalType: ProposalType,
+  data: string
+) {
   const proposersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any;
   for (const account of proposersAccounts) {
     await addVote(
@@ -178,6 +190,8 @@ async function ensureAbstainVotes(blockId: string, proposalId: string, proposalC
         blockId,
         nonce: proposalId,
         chainId: proposalChainId,
+        proposalType,
+        data,
       },
       account.toString(),
       null,
@@ -207,15 +221,15 @@ export async function ensureProposalItemStorage(input: ProposalCreateInput): Pro
     timestamp: block.timestamp ?? new Date(),
   };
   const newProposal = ProposalItem.create({
+    id,
+    chainId: BigInt(input.chainId),
     blockId,
     data,
     removed: false,
     nonce,
-    id,
     type,
     status: status.status.toString(),
     blockNumber: Number(blockId),
-    chainId: BigInt(input.chainId),
   });
   const statusId = `${id}-${status.status}`;
 
@@ -228,7 +242,7 @@ export async function ensureProposalItemStorage(input: ProposalCreateInput): Pro
   });
   await Promise.all([newProposal.save(), newStatus.save()]);
 
-  await ensureAbstainVotes(blockId, id, input.chainId);
+  await ensureAbstainVotes(blockId, id, input.chainId, type, data);
 
   return newProposal;
 }
@@ -237,6 +251,8 @@ type ProposalItemFindInput = {
   blockId: string;
   nonce: string;
   chainId: string;
+  proposalType: ProposalType;
+  data: string;
 };
 
 export async function ensureProposalItem(input: ProposalItemFindInput) {
@@ -257,12 +273,12 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
     id,
     chainId: BigInt(input.chainId),
     blockId: input.blockId,
-    data: '0x00',
+    data: input.data,
     removed: false,
     nonce: Number(id),
-    type: ProposalType.Unknown,
-    status: status.status.toString(),
+    type: input.proposalType,
     signature: undefined,
+    status: status.status.toString(),
     blockNumber: Number(blockId),
   });
   const statusId = `${id}-${status.status}`;
@@ -276,7 +292,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
 
   await Promise.all([newProposal.save(), newStatus.save()]);
   // create abstain proposers
-  await ensureAbstainVotes(blockId, id, input.chainId);
+  await ensureAbstainVotes(blockId, id, input.chainId, input.proposalType, input.data);
   return newProposal;
 }
 
@@ -417,6 +433,7 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
       chainId: chainId.value.toString(),
       proposalId: nonce,
       proposalType,
+      data: dkgKey.toString(),
     };
   });
   const signedCounter: Partial<Record<ProposalType, ProposalTypeCount>> = {};
@@ -488,7 +505,7 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
   await ensureProposalQueue(blockId);
   await Promise.all(
     parsedUnSigProposals.map((p) => {
-      return ensureProposalQueueItem(blockId, p.proposalId.toString(), p.chainId);
+      return ensureProposalQueueItem(blockId, p.proposalId.toString(), p.chainId, p.proposalType, p.data);
     })
   );
   await counter.save();

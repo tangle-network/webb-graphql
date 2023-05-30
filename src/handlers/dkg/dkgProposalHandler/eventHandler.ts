@@ -67,6 +67,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
             blockId: blockNumber,
             nonce: String(nonce),
             chainId: String(chainId),
+            proposalType: dkgPayloadKeyToProposalType(eventData.key),
+            data: eventData.data.toString(),
           },
           blockNumber
         );
@@ -103,6 +105,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
             blockId: blockNumber,
             nonce: String(nonce),
             chainId: targetChainId.value.toString(),
+            proposalType,
+            data,
           },
           signature,
           blockNumber
