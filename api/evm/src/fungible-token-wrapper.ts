@@ -52,12 +52,19 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
   fungibleTokenWrapperEntity.name = ftw.name();
   // list of tokens for
   const tokens = ftw.getTokens();
-  ftw.isNativeAllowed();
   let FTWTokens: Array<Bytes> = [];
   for (let i = 0; i < tokens.length; i++) {
     ensureToken(tokens[i]);
     FTWTokens.push(tokens[i]);
   }
+
+  // Adding the native token to the list of tokens
+  if(ftw.isNativeAllowed()){
+    ensureToken(Address.zero());
+    FTWTokens.push(Address.zero())
+
+  }
+
   fungibleTokenWrapperEntity.tokens = FTWTokens;
   fungibleTokenWrapperEntity.symbol = ftw.symbol();
   fungibleTokenWrapperEntity.decimals = ftw.decimals();
