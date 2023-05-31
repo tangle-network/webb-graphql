@@ -422,7 +422,7 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
       proposalType,
     };
   });
-  const parsedUnSigProposals = unSignedProposalsData.map(([key]) => {
+  const parsedUnSigProposals = unSignedProposalsData.map(([key, data]) => {
     const [chainId, dkgKey] = key.args as unknown as [
       typeof WebbProposalsHeaderTypedChainId,
       typeof DkgRuntimePrimitivesProposalDkgPayloadKey
@@ -433,7 +433,7 @@ export async function createProposalCounter(blockId: string): Promise<ProposalCo
       chainId: chainId.value.toString(),
       proposalId: nonce,
       proposalType,
-      data: dkgKey.toString(),
+      data: JSON.parse(data.toString()).proposal.unsigned.data,
     };
   });
   const signedCounter: Partial<Record<ProposalType, ProposalTypeCount>> = {};

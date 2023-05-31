@@ -5,5 +5,5 @@ export type DKGProposalHandlerEvent = {
   InvalidProposalSignature: (typeof PalletDkgProposalHandlerEvent)['asInvalidProposalSignature'];
   ProposalSigned: (typeof PalletDkgProposalHandlerEvent)['asProposalSigned'];
   ProposalAdded: Omit<(typeof PalletDkgProposalHandlerEvent)['asProposalSigned'], 'signature'>;
-  ProposalRemoved: Omit<(typeof PalletDkgProposalHandlerEvent)['asProposalSigned'], 'signature' | 'data'>;
+  ProposalRemoved: Omit<(typeof PalletDkgProposalHandlerEvent)['asProposalSigned'], 'signature'>;
 };
