@@ -53,20 +53,19 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalRemoved);
         const proposalId = createProposalId(eventData.targetChain, eventData.key);
         const blockNumber = eventDecoder.blockNumber;
-        // const nonce = String(parseInt(eventData.key.value.toHex()));
         const nonce = createNonceWithProposalType(
           Number(eventData.key.value.toString()),
           Object.keys(JSON.parse(eventData.key.toString()))[0]
         );
         const chainId = Number(eventData.targetChain.value.toString());
-
-        logger.info(`Unsigned Proposal Removed: ${proposalId}`);
         // Create a new removed proposal
         await removeProposal(
           {
             blockId: blockNumber,
             nonce: String(nonce),
             chainId: String(chainId),
+            proposalType: dkgPayloadKeyToProposalType(eventData.key),
+            data: '0x00',
           },
           blockNumber
         );
@@ -83,7 +82,6 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const proposalId = createProposalId(targetChainId, proposalKey);
         const proposalType = dkgPayloadKeyToProposalType(proposalKey);
         const blockNumber = eventDecoder.metaData.blockNumber;
-        // const nonce = Number(proposalKey.value.toString());
         const nonce = createNonceWithProposalType(
           Number(proposalKey.value.toString()),
           Object.keys(JSON.parse(eventData.key.toString()))[0]
@@ -103,6 +101,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
             blockId: blockNumber,
             nonce: String(nonce),
             chainId: targetChainId.value.toString(),
+            proposalType,
+            data,
           },
           signature,
           blockNumber
