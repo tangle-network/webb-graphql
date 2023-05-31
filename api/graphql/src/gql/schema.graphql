@@ -130,7 +130,10 @@ type Network {
 
 type Query {
   bridges: [Bridge!]!
-  bridgeSides: [BridgeSide!]!
+  bridgeSide(
+    network:String!,
+    contractAddress:String!
+  ): BridgeSide!
   bridgesDayData: [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
   networks:[Network!]!

@@ -45,11 +45,4 @@ export class PricingService {
     }
     return prices;
   }
-
-  async getTokenPriceWithChainAndContract(
-    chainId: number,
-    contractAddress: string,
-  ) {
-    return 1880;
-  }
 }

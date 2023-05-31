@@ -146,4 +146,8 @@ export class BridgeService {
     );
     return this.vAnchorIntoBridgeSide(vanchor);
   }
+  public async getBridgeSide(networkName: string, contractAddress: string) {
+    const subgraph = this.networkService.getSubgraphConfig(networkName);
+    return this.fetchBridgeSide(subgraph, contractAddress);
+  }
 }

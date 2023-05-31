@@ -52,6 +52,7 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
   fungibleTokenWrapperEntity.name = ftw.name();
   // list of tokens for
   const tokens = ftw.getTokens();
+  ftw.isNativeAllowed();
   let FTWTokens: Array<Bytes> = [];
   for (let i = 0; i < tokens.length; i++) {
     ensureToken(tokens[i]);

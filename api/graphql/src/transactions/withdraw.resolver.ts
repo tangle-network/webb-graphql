@@ -19,8 +19,8 @@ export class WithdrawResolver {
 
   @ResolveField('bridgeSide')
   public resolveBridgeSide(
-    @Parent() depositTx: RawDepositTx,
+    @Parent() withdrawTx: RawWithdrawTx,
   ): Promise<BridgeSide> {
-    return this.transactionService.fetchBridgeOfTransaction(depositTx);
+    return this.transactionService.fetchBridgeOfTransaction(withdrawTx);
   }
 }

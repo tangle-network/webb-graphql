@@ -117,7 +117,7 @@ export interface Network {
 
 export interface IQuery {
     bridges(): Bridge[] | Promise<Bridge[]>;
-    bridgeSides(): BridgeSide[] | Promise<BridgeSide[]>;
+    bridgeSide(network: string, contractAddress: string): BridgeSide | Promise<BridgeSide>;
     bridgesDayData(): DayData[] | Promise<DayData[]>;
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;
     networks(): Network[] | Promise<Network[]>;

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { BridgeSide, DepositTx, WithdrawTx } from '../../gql/graphql';
 import { BridgeService } from '../bridge/bridge.service';
 import { VAnchorService } from '../subgraph/v-anchor.service';
@@ -113,7 +113,6 @@ export class TransactionService {
     const subgraph = this.networkService.getSubgraphConfig(
       rawTransaction.networkName,
     );
-
     return this.bridgeService.fetchBridgeSide(
       subgraph,
       rawTransaction.vAnchorId,
