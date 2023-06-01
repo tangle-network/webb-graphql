@@ -1,5 +1,4 @@
 import { SubstrateBlock, SubstrateEvent, SubstrateExtrinsic } from '@subql/types';
-import { BLOCK_INTERVAL } from '../constants';
 import {
   createBlock,
   createEvent,
@@ -15,9 +14,13 @@ import { checkAndAddSignatureThreshold } from '../utils/signatureThreshold';
 import { handleDkgEvents } from '../handlers/dkg';
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
+  const sessionPeriod = await api.consts.dkg.sessionPeriod;
+  const sessionHeight = Number(sessionPeriod.toString());
+
   const blockRecord = await createBlock(block);
-  // Perform the checking for update each `BLOCK_INTERVAL`
-  if ((blockRecord.number - BigInt(1)) % BigInt(BLOCK_INTERVAL) === BigInt(0)) {
+
+  // Perform a check for an update after every new session
+  if ((blockRecord.number - BigInt(1)) % BigInt(sessionHeight) === BigInt(0)) {
     await Promise.all([
       checkAndAddSignatureThreshold(blockRecord),
       checkAndAddKeygenThreshold(blockRecord),
