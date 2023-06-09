@@ -25,18 +25,16 @@ fragment VAnchorDetailsFragment on VAnchor {
   chainId
   typedChainId
   contractAddress
-  token
-
-  volumeComposition {
+  token {
     id
-    token {
-      ...TokenDetailsFragment
-    }
-    finalValueLocked
-    valueLocked
-    totalFees
-    totalWrappingFees
+
+    decimals
   }
+
+  finalValueLocked
+  valueLocked
+  totalFees
+  totalWrappingFees
 
   numberOfDeposits
   numberOfWithdraws
