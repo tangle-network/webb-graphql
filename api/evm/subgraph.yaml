@@ -29,7 +29,7 @@ dataSources:
       file: ./src/vAnchor.ts
   - kind: ethereum
     name: FungibleTokenWrapper
-    network: ScroolAlpha
+    network: ScrollAlpha
     source:
       abi: FungibleTokenWrapper
       address: "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
