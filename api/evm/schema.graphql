@@ -129,9 +129,16 @@ type VAnchor @entity(immutable: false) {
   contractAddress: Bytes!
   chainId: BigInt!
   typedChainId: Bytes!
-  token: Bytes!
+  token: Token!
 
-  volumeComposition: [VAnchorVolume!]!
+#  volumeComposition: [VAnchorVolume!]!
+  # VAnchor locked volume
+  valueLocked: BigInt!
+  finalValueLocked: BigInt!
+  totalFees: BigInt!
+  totalWrappingFees: BigInt!
+
+
 
   maxDepositAmount: BigInt!
   minDepositAmount: BigInt!
