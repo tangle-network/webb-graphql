@@ -13,7 +13,7 @@
       "chainName": "Fuji"
     },
     {
-      "subgraphUri": "http://localhost:8000/subgraphs/name/VAnchorScroolAlpha",
+      "subgraphUri": "http://localhost:8000/subgraphs/name/VAnchorScrollAlpha",
       "chainName": "ScroolAlpha"
     }
   ]
