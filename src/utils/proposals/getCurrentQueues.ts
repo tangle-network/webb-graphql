@@ -19,6 +19,7 @@ import {
 const {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
+  WebbProposalsProposalProposalKind,
 } = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
 import { ensureAccount, ensureBlock } from '../../handlers';
 import { AccountId32 } from '@polkadot/types/interfaces/runtime';
@@ -58,37 +59,39 @@ export interface Proposal {
   signed: Signed;
 }
 
-export function dkgPayloadKeyToProposalType(dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey): ProposalType {
+export function dkgPayloadKeyToProposalType(
+  dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey | typeof WebbProposalsProposalProposalKind
+): ProposalType {
   switch (dkgKey.type) {
-    case 'EvmProposal':
+    case 'EvmProposal' || 'Evm':
       return ProposalType.EvmProposal;
-    case 'RefreshVote':
+    case 'RefreshVote' || 'Refresh':
       return ProposalType.RefreshVote;
-    case 'ProposerSetUpdateProposal':
+    case 'ProposerSetUpdateProposal' || 'ProposerSetUpdate':
       return ProposalType.ProposerSetUpdateProposal;
-    case 'AnchorCreateProposal':
+    case 'AnchorCreateProposal' || 'AnchorCreate':
       return ProposalType.AnchorCreateProposal;
-    case 'AnchorUpdateProposal':
+    case 'AnchorUpdateProposal' || 'AnchorUpdate':
       return ProposalType.AnchorUpdateProposal;
-    case 'TokenAddProposal':
+    case 'TokenAddProposal' || 'TokenAdd':
       return ProposalType.TokenAddProposal;
-    case 'TokenRemoveProposal':
+    case 'TokenRemoveProposal' || 'TokenRemove':
       return ProposalType.TokenRemoveProposal;
-    case 'WrappingFeeUpdateProposal':
+    case 'WrappingFeeUpdateProposal' || 'WrappingFeeUpdate':
       return ProposalType.WrappingFeeUpdateProposal;
-    case 'ResourceIdUpdateProposal':
+    case 'ResourceIdUpdateProposal' || 'ResourceIdUpdate':
       return ProposalType.ResourceIdUpdateProposal;
-    case 'RescueTokensProposal':
+    case 'RescueTokensProposal' || 'RescueTokens':
       return ProposalType.RescueTokensProposal;
-    case 'MaxDepositLimitUpdateProposal':
+    case 'MaxDepositLimitUpdateProposal' || 'MaxDepositLimitUpdate':
       return ProposalType.MaxDepositLimitUpdateProposal;
-    case 'MinWithdrawalLimitUpdateProposal':
+    case 'MinWithdrawalLimitUpdateProposal' || 'MinWithdrawalLimitUpdate':
       return ProposalType.MinWithdrawalLimitUpdateProposal;
-    case 'SetVerifierProposal':
+    case 'SetVerifierProposal' || 'SetVerifier':
       return ProposalType.SetVerifierProposal;
-    case 'SetTreasuryHandlerProposal':
+    case 'SetTreasuryHandlerProposal' || 'SetTreasuryHandler':
       return ProposalType.SetTreasuryHandlerProposal;
-    case 'FeeRecipientUpdateProposal':
+    case 'FeeRecipientUpdateProposal' || 'FeeRecipientUpdate':
       return ProposalType.FeeRecipientUpdateProposal;
   }
 }
