@@ -10,7 +10,7 @@
     "remove-local": "graph remove --node http://localhost:8020/ VAnchor",
     "remove-localB": "graph remove --node http://localhost:8020/ VAnchorTest",
     "create-local": "graph create --node http://localhost:8020/ VAnchorScrollAlpha ",
-    "deploy-localA": "graph deploy --node http://localhost:8020/ VAnchorScroolAlpha --ipfs http://localhost:6001 --network  ScroolAlpha",
+    "deploy-localA": "graph deploy --node http://localhost:8020/ VAnchorScrollAlpha --ipfs http://localhost:6001 --network  ScrollAlpha",
     "deploy-localB": "graph deploy --node http://localhost:8020/ VAnchorTest --ipfs http://localhost:6001 --network Hermes",
     "test": "graph test  vanchor -l  -v 0.5.4"
   },
