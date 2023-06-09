@@ -56,8 +56,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
-            proposalType: dkgPayloadKeyToProposalType(eventData.key),
-            data: eventData.data.toString(),
+            proposalType: dkgPayloadKeyToProposalType(eventData.kind),
+            data: '0x00',
           },
           eventData.who.toString(),
           true,
@@ -75,8 +75,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
-            proposalType: dkgPayloadKeyToProposalType(eventData.key),
-            data: eventData.data.toString(),
+            proposalType: dkgPayloadKeyToProposalType(eventData.kind),
+            data: '0x00',
           },
           eventData.who.toString(),
           false,
@@ -94,8 +94,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
-            proposalType: dkgPayloadKeyToProposalType(eventData.key),
-            data: eventData.data.toString(),
+            proposalType: dkgPayloadKeyToProposalType(eventData.kind),
+            data: '0x00',
           },
           eventDecoded.blockNumber
         );
@@ -111,8 +111,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(nonce),
             chainId: eventData.chainId.toHex(),
-            proposalType: dkgPayloadKeyToProposalType(eventData.key),
-            data: eventData.data.toString(),
+            proposalType: dkgPayloadKeyToProposalType(eventData.kind),
+            data: '0x00',
           },
           eventDecoded.blockNumber
         );
@@ -128,8 +128,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(nonce),
             chainId: eventData.chainId.toString(),
-            proposalType: dkgPayloadKeyToProposalType(eventData.key),
-            data: eventData.data.toString(),
+            proposalType: dkgPayloadKeyToProposalType(eventData.kind),
+            data: '0x00',
           },
           eventDecoded.blockNumber
         );
@@ -145,8 +145,8 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
             blockId: eventDecoded.blockNumber,
             nonce: String(nonce),
             chainId: eventData.chainId.toString(),
-            proposalType: dkgPayloadKeyToProposalType(eventData.key),
-            data: eventData.data.toString(),
+            proposalType: dkgPayloadKeyToProposalType(eventData.kind),
+            data: '0x00',
           },
           eventDecoded.blockNumber
         );
