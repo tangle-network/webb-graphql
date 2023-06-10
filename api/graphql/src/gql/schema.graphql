@@ -53,7 +53,7 @@ type BrideSideDayData {
   totalFeesUSD: String!
   totalVolumeLockedUSD: String!
 
-  fees:String!
+  fees: String!
   totalVolumeLocked: String!
 }
 
@@ -129,17 +129,22 @@ type Network {
 
 input BridgesFilterInput {
   where: [String!]
-  networks:[String!]
+  networks: [String!]
+}
+
+input BridgesDayDataInput {
+  where: [String!]
+  networks: [String!]
 }
 
 type Query {
   bridges(filter: BridgesFilterInput): [Bridge!]!
-  bridge(id:String!): Bridge!
+  bridge(id: String!): Bridge!
   bridgeSide(network: String!, contractAddress: String!): BridgeSide!
 
-  bridgesDayData: [DayData!]!
+  bridgesDayData(filter:BridgesDayDataInput): [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
-  bridgeSideDayData(bridgeId:String! , networks:String!):DayData!
+  bridgeSideDayData(bridgeId: String!, networks: String!): DayData!
 
   networks: [Network!]!
   depositTransactions(network: String!): [DepositTx!]!
