@@ -86,7 +86,12 @@ export class BridgeService {
       maxDepositAmount,
     } = vAnchor;
     const decimals = token.decimals;
-    const formatedValue = formatUnits(Number(valueLocked), decimals);
+    // TODO fix this as we use the local bridge
+    const symbol = 'ETH';
+    // const symbol = token.baseTokenSymbol
+    const formattedValue = formatUnits(Number(valueLocked), decimals);
+    const price = await this.pricingService.getPriceUSD([symbol]);
+    const totalLockedVolumeUSD = price[symbol] * Number(formattedValue);
     return {
       id,
       chainId: Number(chainId),
@@ -101,8 +106,8 @@ export class BridgeService {
       numberOfWithdraws: Number(numberOfDeposits),
       token: String(token.symbol),
       typedChainId: String(typedChainId),
-      totalLockedVolume: String(formatedValue),
-      totalLockedVolumeUSD: String(0),
+      totalLockedVolume: String(formattedValue),
+      totalLockedVolumeUSD: String(totalLockedVolumeUSD),
     };
   }
 

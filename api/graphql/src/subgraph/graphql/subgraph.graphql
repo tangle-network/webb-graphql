@@ -11,6 +11,7 @@ fragment FungibleTokenWrapperDetails on FungibleTokenWrapper {
   name
   decimals
   symbol
+  baseTokenSymbol
 }
 
 fragment FungibleTokenWrapperBasicDetails on VAnchor {
@@ -26,7 +27,7 @@ fragment VAnchorDetailsFragment on VAnchor {
   typedChainId
   contractAddress
   token {
-      ...TokenDetailsFragment
+      ...FungibleTokenWrapperDetails
   }
 
   finalValueLocked
