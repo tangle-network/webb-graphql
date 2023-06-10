@@ -42,28 +42,8 @@ export class DayDataService {
         const dayData = await this.bridgeSideDayData(vanchor.id, subgraph);
 
         if (dayDataMap[vanchor.id]) {
-          const mergedComposition: Composition[] =
-            dayDataMap[vanchor.id].compositions;
-          dayData.compositions.forEach((dayComposition) => {
-            const compositionEntry = mergedComposition.find(
-              (entry) => entry.token.id === dayComposition.token.id,
-            );
-            if (compositionEntry) {
-              compositionEntry.value = String(
-                Number(compositionEntry.value) + Number(dayComposition.value),
-              );
-              compositionEntry.valueUSD = String(
-                Number(compositionEntry.valueUSD) +
-                  Number(dayComposition.valueUSD),
-              );
-            } else {
-              mergedComposition.push(dayComposition);
-            }
-          });
-
           dayDataMap[vanchor.id] = {
             ...dayDataMap[vanchor.id],
-            compositions: mergedComposition,
             feesUSD: String(
               Number(dayDataMap[vanchor.id].feesUSD) + Number(dayData.feesUSD),
             ),
@@ -159,7 +139,6 @@ export class DayDataService {
     return {
       id,
 
-      compositions,
       date: String(date),
       numberOfDeposits: Number(numberOfDeposits),
       numberOfTransfers: Number(numberOfTransfers),

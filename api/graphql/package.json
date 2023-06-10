@@ -31,6 +31,7 @@
     "@urql/core": "^4.0.7",
     "axios": "^1.4.0",
     "bignumber.js": "^9.1.1",
+    "ethers": "^6.5.1",
     "graphql": "15.7.2",
     "graphql-request": "5.1.0",
     "reflect-metadata": "^0.1.13",

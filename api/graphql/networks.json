@@ -1,20 +1,8 @@
 {
   "networks": [
     {
-      "subgraphUri": "http://localhost:8000/subgraphs/name/VAnchorSepolia",
-      "chainName": "Sepolia"
-    },
-    {
-      "subgraphUri": "http://localhost:8000/subgraphs/name/VAnchorMoonbase",
-      "chainName": "Moonbase"
-    },
-    {
-      "subgraphUri": "http://localhost:8000/subgraphs/name/VAnchorFuji",
-      "chainName": "Fuji"
-    },
-    {
-      "subgraphUri": "http://localhost:8000/subgraphs/name/VAnchorScrollAlpha",
-      "chainName": "ScrollAlpha"
+      "subgraphUri": "http://localhost:8000/subgraphs/name/VAnchorTest",
+      "chainName": "Hermes"
     }
   ]
 }

@@ -129,16 +129,14 @@ type VAnchor @entity(immutable: false) {
   contractAddress: Bytes!
   chainId: BigInt!
   typedChainId: Bytes!
-  token: Token!
+  token: FungibleTokenWrapper!
 
-#  volumeComposition: [VAnchorVolume!]!
+  #  volumeComposition: [VAnchorVolume!]!
   # VAnchor locked volume
   valueLocked: BigInt!
   finalValueLocked: BigInt!
   totalFees: BigInt!
   totalWrappingFees: BigInt!
-
-
 
   maxDepositAmount: BigInt!
   minDepositAmount: BigInt!
@@ -204,6 +202,7 @@ type FungibleTokenWrapper @entity(immutable: false) {
   address: Bytes!
   symbol: String!
   tokens: [Token!]!
+  baseTokenSymbol: String
   decimals: Int!
   feePercentage: Int!
 }

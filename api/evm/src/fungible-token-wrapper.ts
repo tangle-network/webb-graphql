@@ -1,4 +1,4 @@
-import { Address, Bytes, dataSource } from '@graphprotocol/graph-ts';
+import { Address, Bytes } from '@graphprotocol/graph-ts';
 import {
   FungibleTokenWrapper as FungibleTokenWrapperContract,
   Transfer as TransferEvent,
@@ -57,12 +57,15 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
     ensureToken(tokens[i]);
     FTWTokens.push(tokens[i]);
   }
-
   // Adding the native token to the list of tokens
-  if(ftw.isNativeAllowed()){
+  if (ftw.isNativeAllowed()) {
     ensureToken(Address.zero());
-    FTWTokens.push(Address.zero())
-
+    FTWTokens.push(Address.zero());
+    // TODO: Ensure the token symbol is the native token for the used chain
+    fungibleTokenWrapperEntity.baseTokenSymbol = 'ETH';
+  } else if (tokens.length > 0) {
+    const token = ensureToken(tokens[0]);
+    fungibleTokenWrapperEntity.baseTokenSymbol = token.symbol;
   }
 
   fungibleTokenWrapperEntity.tokens = FTWTokens;

@@ -10,9 +10,9 @@ type BridgeSide {
   chainId: Int!
   typedChainId: String!
 
-  volumeUSD: String!
+  totalLockedVolumeUSD: String!
+  totalLockedVolume:String!
 
-  composition: [Composition!]!
   maxDepositAmount: String!
   minDepositAmount: String!
 
@@ -28,7 +28,8 @@ type Bridge {
   id: String!
   sides: [BridgeSide!]!
 
-  volumeUSD: String!
+  totalVolumeLockedUSD: String!
+  totalVolumeLocked:String!
 }
 
 type Token {
@@ -45,9 +46,6 @@ type BrideSideDayData {
   id: String!
   date: String!
 
-  #  brideSide:BrBridgeSide
-  compositions: [Composition!]!
-
   numberOfDeposits: String!
   numberOfWithdraws: String!
   numberOfTransfers: String!
@@ -61,7 +59,6 @@ type DayData {
   id: String!
   date: String!
 
-  compositions: [Composition!]!
 
   numberOfDeposits: Int!
   numberOfWithdraws: Int!

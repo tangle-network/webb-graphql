@@ -26,9 +26,7 @@ fragment VAnchorDetailsFragment on VAnchor {
   typedChainId
   contractAddress
   token {
-    id
-
-    decimals
+      ...TokenDetailsFragment
   }
 
   finalValueLocked

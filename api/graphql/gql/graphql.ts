@@ -19,8 +19,8 @@ export interface BridgeSide {
     contractAddress: string;
     chainId: number;
     typedChainId: string;
-    volumeUSD: string;
-    composition: Composition[];
+    totalLockedVolumeUSD: string;
+    totalLockedVolume: string;
     maxDepositAmount: string;
     minDepositAmount: string;
     averageDepositAmount: string;
@@ -33,7 +33,8 @@ export interface BridgeSide {
 export interface Bridge {
     id: string;
     sides: BridgeSide[];
-    volumeUSD: string;
+    totalVolumeLockedUSD: string;
+    totalVolumeLocked: string;
 }
 
 export interface Token {
@@ -48,7 +49,6 @@ export interface Token {
 export interface BrideSideDayData {
     id: string;
     date: string;
-    compositions: Composition[];
     numberOfDeposits: string;
     numberOfWithdraws: string;
     numberOfTransfers: string;
@@ -59,7 +59,6 @@ export interface BrideSideDayData {
 export interface DayData {
     id: string;
     date: string;
-    compositions: Composition[];
     numberOfDeposits: number;
     numberOfWithdraws: number;
     numberOfTransfers: number;
