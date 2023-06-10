@@ -37,6 +37,13 @@ export class BridgeService {
     return Object.values(bridges) as any;
   }
 
+  async getBridge(bridgeId: string): Promise<Bridge> {
+    const bridges = await this.getBridges({
+      where: [bridgeId],
+    });
+    return bridges[0];
+  }
+
   private async reduceToBridge(
     subgraph: Subgraph,
     bridges: Record<string, Bridge>,

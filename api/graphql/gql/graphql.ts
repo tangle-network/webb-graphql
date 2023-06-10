@@ -120,6 +120,7 @@ export interface Network {
 
 export interface IQuery {
     bridges(filter?: Nullable<BridgesFilterInput>): Bridge[] | Promise<Bridge[]>;
+    bridge(id: string): Bridge | Promise<Bridge>;
     bridgeSide(network: string, contractAddress: string): BridgeSide | Promise<BridgeSide>;
     bridgesDayData(): DayData[] | Promise<DayData[]>;
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;

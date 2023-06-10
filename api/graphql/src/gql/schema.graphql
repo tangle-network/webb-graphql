@@ -130,6 +130,7 @@ input BridgesFilterInput {
 
 type Query {
   bridges(filter: BridgesFilterInput): [Bridge!]!
+  bridge(id:String!): Bridge!
   bridgeSide(network: String!, contractAddress: String!): BridgeSide!
   bridgesDayData: [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
