@@ -1,5 +1,5 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { Bridge, BridgeSide } from '../../gql/graphql';
+import { Bridge, BridgesFilterInput, BridgeSide } from '../../gql/graphql';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
 import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
@@ -23,11 +23,15 @@ export class BridgeService {
    * Combine the VAnchors that has the same contract address
    * Fetch prices based on composition and wither the composition is fungibleTokenWrapper or an ERC20
    * */
-  async getBridges(): Promise<Bridge[]> {
+  async getBridges(filterInput?: BridgesFilterInput): Promise<Bridge[]> {
     const bridges: Record<string, Bridge> = {};
+    let targetVAnchors: string[] = [];
+    if (filterInput?.where) {
+      targetVAnchors = filterInput.where;
+    }
     // All vAnchors{
     for (const subgraph of this.networkService.subgraphs) {
-      await this.reduceToBridge(subgraph, bridges);
+      await this.reduceToBridge(subgraph, bridges, targetVAnchors);
     }
 
     return Object.values(bridges) as any;
@@ -36,9 +40,17 @@ export class BridgeService {
   private async reduceToBridge(
     subgraph: Subgraph,
     bridges: Record<string, Bridge>,
+    targetVAnchors?: string[],
   ) {
     const { vanchors } = await this.vAnchorService.fetchVAnchorsOfSubGraph(
       subgraph,
+      targetVAnchors?.length > 0
+        ? {
+            where: {
+              id_in: targetVAnchors,
+            },
+          }
+        : undefined,
     );
     for (const vAnchor of vanchors) {
       const bridgeSide = await this.vAnchorIntoBridgeSide(vAnchor);

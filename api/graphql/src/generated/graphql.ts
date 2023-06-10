@@ -2797,7 +2797,9 @@ export type FungibleTokenWrapperBasicDetailsFragment = { __typename?: 'VAnchor',
 
 export type VAnchorDetailsFragmentFragment = { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } };
 
-export type VAnchorListQueryVariables = Exact<{ [key: string]: never; }>;
+export type VAnchorListQueryVariables = Exact<{
+  where?: InputMaybe<VAnchor_Filter>;
+}>;
 
 
 export type VAnchorListQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } }> };
@@ -2972,8 +2974,8 @@ export const WithdrawTxFragmentFragmentDoc = gql`
 ${FungibleTokenWrapperDetailsFragmentDoc}
 ${VAnchorDetailsFragmentFragmentDoc}`;
 export const VAnchorListDocument = gql`
-    query vAnchorList {
-  vanchors {
+    query vAnchorList($where: VAnchor_filter) {
+  vanchors(where: $where) {
     ...VAnchorDetailsFragment
   }
 }

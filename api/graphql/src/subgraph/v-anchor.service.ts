@@ -7,6 +7,7 @@ import {
   DepositTxDetailsQueryVariables,
   DepositTXesListingQueryVariables,
   VAnchorDetailsQueryVariables,
+  VAnchorListQueryVariables,
   WithdrawTxDetailsQueryVariables,
   WithdrawTXesListingQueryVariables,
 } from '../generated/graphql';
@@ -19,10 +20,13 @@ export type Subgraph = {
 export class VAnchorService {
   constructor(private gqlClientService: GqlClientService) {}
 
-  public async fetchVAnchorsOfSubGraph(subgraph: Subgraph) {
+  public async fetchVAnchorsOfSubGraph(
+    subgraph: Subgraph,
+    variables?: VAnchorListQueryVariables,
+  ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
-    return (await sdk.vAnchorList(undefined)).data;
+    return (await sdk.vAnchorList(variables)).data;
   }
 
   public async fetchVAnchorDetails(

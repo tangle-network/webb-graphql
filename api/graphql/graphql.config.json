@@ -2,8 +2,8 @@
   "schema": "./graphql.schema.json",
   "extensions": {
     "endpoints": {
-      "url": "http://localhost:8000/subgraphs/name/VAnchor",
-      "subscription": "http://localhost:8000/subgraphs/name/VAnchor"
+      "url": "http://localhost:8000/subgraphs/name/VAnchorTest",
+      "subscription": "http://localhost:8000/subgraphs/name/VAnchorTest"
     }
   }
 }

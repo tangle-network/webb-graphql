@@ -27,7 +27,7 @@ fragment VAnchorDetailsFragment on VAnchor {
   typedChainId
   contractAddress
   token {
-      ...FungibleTokenWrapperDetails
+    ...FungibleTokenWrapperDetails
   }
 
   finalValueLocked
@@ -45,8 +45,8 @@ fragment VAnchorDetailsFragment on VAnchor {
 }
 
 # Query All vAnchors
-query vAnchorList {
-  vanchors {
+query vAnchorList($where: VAnchor_filter) {
+  vanchors(where: $where) {
     ...VAnchorDetailsFragment
   }
 }

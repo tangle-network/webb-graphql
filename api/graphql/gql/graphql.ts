@@ -8,6 +8,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export interface BridgesFilterInput {
+    where?: Nullable<string[]>;
+}
+
 export interface Composition {
     token: Token;
     value: string;
@@ -115,7 +119,7 @@ export interface Network {
 }
 
 export interface IQuery {
-    bridges(): Bridge[] | Promise<Bridge[]>;
+    bridges(filter?: Nullable<BridgesFilterInput>): Bridge[] | Promise<Bridge[]>;
     bridgeSide(network: string, contractAddress: string): BridgeSide | Promise<BridgeSide>;
     bridgesDayData(): DayData[] | Promise<DayData[]>;
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;

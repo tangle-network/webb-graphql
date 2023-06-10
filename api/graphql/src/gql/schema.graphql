@@ -11,7 +11,7 @@ type BridgeSide {
   typedChainId: String!
 
   totalVolumeLockedUSD: String!
-  totalVolumeLocked:String!
+  totalVolumeLocked: String!
 
   maxDepositAmount: String!
   minDepositAmount: String!
@@ -29,7 +29,7 @@ type Bridge {
   sides: [BridgeSide!]!
 
   totalVolumeLockedUSD: String!
-  totalVolumeLocked:String!
+  totalVolumeLocked: String!
 }
 
 type Token {
@@ -58,7 +58,6 @@ type DayData {
   # <Day index>
   id: String!
   date: String!
-
 
   numberOfDeposits: Int!
   numberOfWithdraws: Int!
@@ -122,18 +121,19 @@ type TransferTx {
 }
 
 type Network {
-  name:String!
+  name: String!
+}
+
+input BridgesFilterInput {
+  where: [String!]
 }
 
 type Query {
-  bridges: [Bridge!]!
-  bridgeSide(
-    network:String!,
-    contractAddress:String!
-  ): BridgeSide!
+  bridges(filter: BridgesFilterInput): [Bridge!]!
+  bridgeSide(network: String!, contractAddress: String!): BridgeSide!
   bridgesDayData: [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
-  networks:[Network!]!
-  depositTransactions(network:String!): [DepositTx!]!
-  withdrawTransactions(network:String!): [WithdrawTx!]!
+  networks: [Network!]!
+  depositTransactions(network: String!): [DepositTx!]!
+  withdrawTransactions(network: String!): [WithdrawTx!]!
 }
