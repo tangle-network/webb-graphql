@@ -19,8 +19,8 @@ export interface BridgeSide {
     contractAddress: string;
     chainId: number;
     typedChainId: string;
-    totalLockedVolumeUSD: string;
-    totalLockedVolume: string;
+    totalVolumeLockedUSD: string;
+    totalVolumeLocked: string;
     maxDepositAmount: string;
     minDepositAmount: string;
     averageDepositAmount: string;

@@ -8,13 +8,19 @@ type PriceUSDResponse = Record<string, { usd: number }>;
 @Injectable()
 export class PricingService {
   private coinIdCache = new Map<string, string>();
+  private pricesCache = new Map<string, PriceMap>();
 
   /**
    * Coin pricing
    * input is the tokens ids
    * */
   async getPriceUSD(symbols: string[]): Promise<PriceMap> {
+    const pricesKey = symbols.toString();
     const prices = {};
+
+    if (this.pricesCache.has(pricesKey)) {
+      return this.pricesCache.get(pricesKey);
+    }
     const coinGeckoIds = symbols.map((symbol) => {
       if (this.coinIdCache.has(symbol)) {
         return this.coinIdCache.get(symbol);
@@ -43,6 +49,10 @@ export class PricingService {
       const id = this.coinIdCache.get(coin);
       prices[coin] = data[id].usd;
     }
+    this.pricesCache.set(pricesKey, prices);
+    setTimeout(() => {
+      this.pricesCache.delete(pricesKey);
+    }, 30_000);
     return prices;
   }
 }

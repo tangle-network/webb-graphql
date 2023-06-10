@@ -1,10 +1,10 @@
-import { ConsoleLogger, Injectable } from "@nestjs/common";
-import { Bridge, BridgeSide } from "../../gql/graphql";
-import { Subgraph, VAnchorService } from "../subgraph/v-anchor.service";
-import { PricingService } from "../pricing/pricing.service";
-import { VAnchorDetailsFragmentFragment } from "../generated/graphql";
-import { NetworksService } from "../subgraph/networks.service";
-import { formatUnits } from "ethers";
+import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { Bridge, BridgeSide } from '../../gql/graphql';
+import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
+import { PricingService } from '../pricing/pricing.service';
+import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
+import { NetworksService } from '../subgraph/networks.service';
+import { formatUnits } from 'ethers';
 
 @Injectable()
 export class BridgeService {
@@ -48,19 +48,19 @@ export class BridgeService {
           sides: [...bridges[bridgeSide.id].sides, bridgeSide],
           totalVolumeLockedUSD: String(
             Number(bridges[bridgeSide.id].totalVolumeLockedUSD) +
-              Number(bridgeSide.totalLockedVolumeUSD),
+              Number(bridgeSide.totalVolumeLockedUSD),
           ),
           totalVolumeLocked: String(
             Number(bridges[bridgeSide.id].totalVolumeLocked) +
-              Number(bridgeSide.totalLockedVolume),
+              Number(bridgeSide.totalVolumeLocked),
           ),
         };
       } else {
         bridges[bridgeSide.id] = {
           id: bridgeSide.id,
           sides: [bridgeSide],
-          totalVolumeLocked: bridgeSide.totalLockedVolume,
-          totalVolumeLockedUSD: bridgeSide.totalLockedVolumeUSD,
+          totalVolumeLocked: bridgeSide.totalVolumeLocked,
+          totalVolumeLockedUSD: bridgeSide.totalVolumeLockedUSD,
         };
       }
     }
@@ -106,8 +106,8 @@ export class BridgeService {
       numberOfWithdraws: Number(numberOfDeposits),
       token: String(token.symbol),
       typedChainId: String(typedChainId),
-      totalLockedVolume: String(formattedValue),
-      totalLockedVolumeUSD: String(totalLockedVolumeUSD),
+      totalVolumeLocked: String(formattedValue),
+      totalVolumeLockedUSD: String(totalLockedVolumeUSD),
     };
   }
 

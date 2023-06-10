@@ -10,8 +10,8 @@ type BridgeSide {
   chainId: Int!
   typedChainId: String!
 
-  totalLockedVolumeUSD: String!
-  totalLockedVolume:String!
+  totalVolumeLockedUSD: String!
+  totalVolumeLocked:String!
 
   maxDepositAmount: String!
   minDepositAmount: String!
