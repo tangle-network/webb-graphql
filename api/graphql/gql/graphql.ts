@@ -10,6 +10,7 @@
 
 export interface BridgesFilterInput {
     where?: Nullable<string[]>;
+    networks?: Nullable<string[]>;
 }
 
 export interface Composition {
@@ -56,8 +57,10 @@ export interface BrideSideDayData {
     numberOfDeposits: string;
     numberOfWithdraws: string;
     numberOfTransfers: string;
+    totalFeesUSD: string;
+    totalVolumeLockedUSD: string;
     fees: string;
-    volumeUSD: string;
+    totalVolumeLocked: string;
 }
 
 export interface DayData {
@@ -124,6 +127,7 @@ export interface IQuery {
     bridgeSide(network: string, contractAddress: string): BridgeSide | Promise<BridgeSide>;
     bridgesDayData(): DayData[] | Promise<DayData[]>;
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;
+    bridgeSideDayData(bridgeId: string, networks: string): DayData | Promise<DayData>;
     networks(): Network[] | Promise<Network[]>;
     depositTransactions(network: string): DepositTx[] | Promise<DepositTx[]>;
     withdrawTransactions(network: string): WithdrawTx[] | Promise<WithdrawTx[]>;

@@ -42,7 +42,7 @@ type Token {
 }
 
 type BrideSideDayData {
-  # <Day index>
+  # <Day index><bridge-id>
   id: String!
   date: String!
 
@@ -50,8 +50,11 @@ type BrideSideDayData {
   numberOfWithdraws: String!
   numberOfTransfers: String!
 
-  fees: String!
-  volumeUSD: String!
+  totalFeesUSD: String!
+  totalVolumeLockedUSD: String!
+
+  fees:String!
+  totalVolumeLocked: String!
 }
 
 type DayData {
@@ -126,14 +129,18 @@ type Network {
 
 input BridgesFilterInput {
   where: [String!]
+  networks:[String!]
 }
 
 type Query {
   bridges(filter: BridgesFilterInput): [Bridge!]!
   bridge(id:String!): Bridge!
   bridgeSide(network: String!, contractAddress: String!): BridgeSide!
+
   bridgesDayData: [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
+  bridgeSideDayData(bridgeId:String! , networks:String!):DayData!
+
   networks: [Network!]!
   depositTransactions(network: String!): [DepositTx!]!
   withdrawTransactions(network: String!): [WithdrawTx!]!
