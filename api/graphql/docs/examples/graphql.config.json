@@ -1,0 +1,9 @@
+{
+  "schema": "./graphql.schema.json",
+  "extensions": {
+    "endpoints": {
+      "url": "http://localhost:3000/graphql",
+      "subscription": "http://localhost:3000/graphql"
+    }
+  }
+}
