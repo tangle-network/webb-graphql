@@ -29,6 +29,8 @@ export interface BridgeSide {
     contractAddress: string;
     chainId: number;
     typedChainId: string;
+    totalFees: string;
+    totalFeesUSD: string;
     totalVolumeLockedUSD: string;
     totalVolumeLocked: string;
     maxDepositAmount: string;
@@ -45,6 +47,8 @@ export interface Bridge {
     sides: BridgeSide[];
     totalVolumeLockedUSD: string;
     totalVolumeLocked: string;
+    totalFees: string;
+    totalFeesUSD: string;
 }
 
 export interface Token {

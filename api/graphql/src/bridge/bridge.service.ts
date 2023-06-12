@@ -77,6 +77,16 @@ export class BridgeService {
             Number(bridges[bridgeSide.id].totalVolumeLocked) +
               Number(bridgeSide.totalVolumeLocked),
           ),
+
+          totalFees: String(
+            Number(bridges[bridgeSide.id].totalFees) +
+              Number(bridgeSide.totalFees),
+          ),
+
+          totalFeesUSD: String(
+            Number(bridges[bridgeSide.id].totalFeesUSD) +
+              Number(bridgeSide.totalFeesUSD),
+          ),
         };
       } else {
         bridges[bridgeSide.id] = {
@@ -84,6 +94,9 @@ export class BridgeService {
           sides: [bridgeSide],
           totalVolumeLocked: bridgeSide.totalVolumeLocked,
           totalVolumeLockedUSD: bridgeSide.totalVolumeLockedUSD,
+
+          totalFees: bridgeSide.totalFees,
+          totalFeesUSD: bridgeSide.totalFeesUSD,
         };
       }
     }
@@ -106,6 +119,7 @@ export class BridgeService {
       numberOfWithdraws,
       numberOfDeposits,
 
+      totalFees,
       maxDepositAmount,
     } = vAnchor;
     const decimals = token.decimals;
@@ -113,8 +127,12 @@ export class BridgeService {
     const symbol = 'ETH';
     // const symbol = token.baseTokenSymbol
     const formattedValue = formatUnits(Number(valueLocked), decimals);
+    const formattedTotalFees = formatUnits(Number(totalFees), decimals);
+
     const price = await this.pricingService.getPriceUSD([symbol]);
+
     const totalLockedVolumeUSD = price[symbol] * Number(formattedValue);
+    const totalFeesUSD = price[symbol] * Number(formattedTotalFees);
     return {
       id,
       chainId: Number(chainId),
@@ -129,7 +147,11 @@ export class BridgeService {
       numberOfWithdraws: Number(numberOfDeposits),
       token: String(token.symbol),
       typedChainId: String(typedChainId),
-      totalVolumeLocked: String(formattedValue),
+
+      totalFees: formattedTotalFees,
+      totalFeesUSD: String(totalFeesUSD),
+
+      totalVolumeLocked: formattedValue,
       totalVolumeLockedUSD: String(totalLockedVolumeUSD),
     };
   }

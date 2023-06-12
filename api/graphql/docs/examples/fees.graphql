@@ -1,0 +1,64 @@
+#TVL for a set of bridges collectively
+
+##  Give me the total volume locked
+query BridgesTVL {
+  bridges {
+    id
+    totalFees
+    totalFeesUSD
+  }
+}
+
+#Given a set of bridges give me the total volume locked
+query SetOfBridgesTVL {
+  bridges(
+    filter: {
+      where: [
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a46cc"
+      ]
+    }
+  ) {
+    id
+    totalFees
+    totalFeesUSD
+  }
+}
+
+#TVL for any given bridge (e.g. all sides of particular bridge)
+query TVLOFBridge {
+  bridge(id: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d") {
+    id
+    totalFees
+    totalFeesUSD
+  }
+}
+
+#TVL for any given side of any given bridge
+query TVLSideOFBridge {
+  bridgeSide(
+    contractAddress: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+    network: "Hermes"
+  ) {
+    id
+    totalFees
+    totalFeesUSD
+  }
+}
+
+# TVL for any given side of a set of bridges
+## Given a set of bridges give me the total volume locked on Hermes
+query bridgeSideOfNetworkTVL {
+  bridges(filter: { networks: ["Hermes"] }) {
+    id
+    totalFees
+    totalFeesUSD
+  }
+}
+
+
+# TVL for any given token on any given bridge
+## TODO
+
+#- TVL for any given token on any given side of bridge
+## TODO

@@ -10,6 +10,9 @@ type BridgeSide {
   chainId: Int!
   typedChainId: String!
 
+  totalFees:String!
+  totalFeesUSD:String!
+
   totalVolumeLockedUSD: String!
   totalVolumeLocked: String!
 
@@ -30,6 +33,9 @@ type Bridge {
 
   totalVolumeLockedUSD: String!
   totalVolumeLocked: String!
+
+  totalFees:String!
+  totalFeesUSD:String!
 }
 
 type Token {
