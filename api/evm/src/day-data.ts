@@ -51,6 +51,13 @@ export function ensureDay(block: ethereum.Block, vAnchor: VAnchor): VAnchorDayDa
   newDayData.numberOfWithdraws = BigInt.zero();
   newDayData.numberOfTransfers = BigInt.zero();
 
+  newDayData.fees = BigInt.zero();
+  newDayData.wrappingFees = BigInt.zero();
+  newDayData.relayerFees = BigInt.zero();
+  newDayData.volume = BigInt.zero();
+  newDayData.depositedVolume = BigInt.zero();
+  newDayData.withdrawnVolume = BigInt.zero();
+
   newDayData.depositTx = [];
   newDayData.withdrawTx = [];
   newDayData.transferTx = [];
@@ -118,8 +125,14 @@ export function updateVAnchorDayData(
     depositTransactions.push(txId);
     vAnchorDayData.depositTx = depositTransactions;
     dayVolumeComposition.volume = dayVolumeComposition.volume.plus(finalAmount);
+    vAnchorDayData.volume = vAnchorDayData.volume.plus(finalAmount);
+    vAnchorDayData.depositedVolume = vAnchorDayData.depositedVolume.plus(finalAmount);
   } else if (txType === TransactionType.Withdraw) {
     dayVolumeComposition.volume = dayVolumeComposition.volume.minus(finalAmount);
+    vAnchorDayData.withdrawnVolume = vAnchorDayData.withdrawnVolume.plus(finalAmount);
+
+    vAnchorDayData.volume = vAnchorDayData.volume.minus(finalAmount);
+
     vAnchorDayData.numberOfWithdraws = vAnchorDayData.numberOfWithdraws.plus(BigInt.fromI32(1));
 
     const withdrawTransactions = vAnchorDayData.depositTx;
@@ -136,6 +149,13 @@ export function updateVAnchorDayData(
   dayVolumeComposition.relayerFees = dayVolumeComposition.relayerFees.plus(volumeDTO.relayerFees);
   dayVolumeComposition.wrappingFees = dayVolumeComposition.wrappingFees.plus(volumeDTO.wrappingFees);
   dayVolumeComposition.unWrappingFees = dayVolumeComposition.unWrappingFees.plus(volumeDTO.wrappingFees);
+
+  vAnchorDayData.fees = vAnchorDayData.fees.plus(fee);
+  vAnchorDayData.relayerFees = vAnchorDayData.relayerFees.plus(volumeDTO.relayerFees);
+  vAnchorDayData.wrappingFees = vAnchorDayData.wrappingFees.plus(volumeDTO.wrappingFees.plus(volumeDTO.wrappingFees));
+
+
+
   dayVolumeComposition.save();
   vAnchorDayData.save();
 }

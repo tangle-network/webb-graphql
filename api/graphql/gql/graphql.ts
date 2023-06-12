@@ -13,6 +13,11 @@ export interface BridgesFilterInput {
     networks?: Nullable<string[]>;
 }
 
+export interface BridgesDayDataInput {
+    where?: Nullable<string[]>;
+    networks?: Nullable<string[]>;
+}
+
 export interface Composition {
     token: Token;
     value: string;
@@ -125,7 +130,7 @@ export interface IQuery {
     bridges(filter?: Nullable<BridgesFilterInput>): Bridge[] | Promise<Bridge[]>;
     bridge(id: string): Bridge | Promise<Bridge>;
     bridgeSide(network: string, contractAddress: string): BridgeSide | Promise<BridgeSide>;
-    bridgesDayData(): DayData[] | Promise<DayData[]>;
+    bridgesDayData(filter?: Nullable<BridgesDayDataInput>): DayData[] | Promise<DayData[]>;
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;
     bridgeSideDayData(bridgeId: string, networks: string): DayData | Promise<DayData>;
     networks(): Network[] | Promise<Network[]>;

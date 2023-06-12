@@ -1,8 +1,8 @@
 import { Insertion as InsertionEvent, VAnchor as VAnchorContract } from '../generated/VAnchor/VAnchor';
-import { DepositTx, Insertion, Token, TransferTx, VAnchor, VAnchorVolume, WithdrawTx } from '../generated/schema';
+import { DepositTx, Insertion, TransferTx, VAnchor, WithdrawTx } from '../generated/schema';
 import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
-import { VolumeDTO, updateVAnchorDayData } from './day-data';
+import { updateVAnchorDayData, VolumeDTO } from './day-data';
 import { isSameAddress, ONE_BI } from './utils/consts';
 import { ensureFungibleTokenWrapper, ensureToken } from './fungible-token-wrapper';
 import { FungibleTokenWrapper } from '../generated/VAnchor/FungibleTokenWrapper';
@@ -45,17 +45,12 @@ function ensureVAnchor(address: Address): VAnchor {
   return newVAnchor;
 }
 
-
 /**
  * Handling the  vAnchor side effect for withdraw transaction
  *
  * */
 
-function vAnchorWithdrawSideEffect(
-  vAnchor: VAnchor,
-  amount: BigInt,
-  valueLocked: BigInt
-): void {
+function vAnchorWithdrawSideEffect(vAnchor: VAnchor, amount: BigInt, valueLocked: BigInt): void {
   vAnchor.valueLocked = valueLocked;
 
   vAnchor.numberOfWithdraws = vAnchor.numberOfWithdraws.plus(ONE_BI);
@@ -76,11 +71,7 @@ function vAnchorWithdrawSideEffect(
  *
  * */
 
-function vAnchorDepositSideEffect(
-  vAnchor: VAnchor,
-  amount: BigInt,
-  valueLocked: BigInt
-): void {
+function vAnchorDepositSideEffect(vAnchor: VAnchor, amount: BigInt, valueLocked: BigInt): void {
   vAnchor.valueLocked = valueLocked;
 
   vAnchor.numberOfDeposits = vAnchor.numberOfDeposits.plus(ONE_BI);
@@ -95,6 +86,7 @@ function vAnchorDepositSideEffect(
 
   vAnchor.save();
 }
+
 /**
  *
  * Update vAnchor fees
@@ -115,6 +107,21 @@ export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
   return Bytes.fromByteArray(Bytes.fromHexString(hexStringToDecode));
 }
 
+export function isTxHandled(txId: string): boolean {
+  const maybeDepositTx = DepositTx.load(txId);
+  if (maybeDepositTx != null) {
+    return true;
+  }
+
+  const maybeWithdrawTx = WithdrawTx.load(txId);
+  if (maybeWithdrawTx != null) {
+    return true;
+  }
+
+  const maybeTransferTx = TransferTx.load(txId);
+  return maybeTransferTx != null;
+}
+
 /**
  * Insertion event handler
  *  - System Merkle tree insertion event
@@ -122,6 +129,14 @@ export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
  *
  * */
 export function handleInsertion(event: InsertionEvent): void {
+  // Handle the transact call only once per insertion
+  let txId = event.transaction.hash.toHexString();
+  // Check if the transaction is already handled
+  const isHandedTx = isTxHandled(txId);
+  if (isHandedTx) {
+    return;
+  }
+
   // Prepare the transaction input
   const callInput = getTxnInputDataToDecode(event.transaction.input);
   // Decode the transaction
@@ -134,8 +149,6 @@ export function handleInsertion(event: InsertionEvent): void {
   if (event.receipt != null) {
     gasUsed = BigInt.fromI32(gasUsed.toI32());
   }
-  // Handle the transact call only once per insertion
-  let txId = event.transaction.hash.toHexString()
 
   // Ensure storage items
   const vAnchor = ensureVAnchor(event.address);

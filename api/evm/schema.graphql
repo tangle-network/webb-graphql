@@ -170,6 +170,14 @@ type VAnchorDayData @entity(immutable: false) {
   vAnchor: VAnchor!
   composition: [VAnchorVolumeComposition!]!
 
+  relayerFees: BigInt!
+  wrappingFees: BigInt!
+  fees: BigInt!
+  volume: BigInt!
+  depositedVolume:BigInt!
+  withdrawnVolume:BigInt!
+
+
   numberOfDeposits: BigInt!
   numberOfWithdraws: BigInt!
   numberOfTransfers: BigInt!
