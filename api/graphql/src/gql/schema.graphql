@@ -163,4 +163,5 @@ type Query {
 
   depositTransactions(filter: TransactionFilterInput): [DepositTx!]!
   withdrawTransactions(filter: TransactionFilterInput): [WithdrawTx!]!
+  transferTransactions(filter: TransactionFilterInput): [TransferTx!]!
 }

@@ -1,0 +1,78 @@
+#Transfer transaction data for all bridges collectively
+
+query TransferTransactionsForAllBridges {
+  transferTransactions {
+    id
+    blockTimestamp
+    transactionHash
+
+
+    bridgeSide {
+      id
+      chainId
+      typedChainId
+    }
+  }
+}
+
+#Transfer transaction data for set of  bridges collectively
+query TransferTransactionsForAllBridges {
+  transferTransactions(
+    filter: {
+      bridges: [
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463c"
+      ]
+    }
+  ) {
+    id
+    blockTimestamp
+    transactionHash
+
+
+    bridgeSide {
+      id
+      chainId
+      typedChainId
+    }
+  }
+}
+
+#Transfer transaction data for any given bridge (e.g. all sides of particular bridge)
+query TransferTransactionsForAllBridges {
+  transferTransactions(
+    filter: { bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }
+  ) {
+    id
+    blockTimestamp
+    transactionHash
+
+
+    bridgeSide {
+      id
+      chainId
+      typedChainId
+    }
+  }
+}
+
+# Transfer transaction data for any given side of the bridge
+query TransferTransactionsForAllBridges {
+  transferTransactions(
+    filter: {
+      bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"]
+      networks: ["Hermes"]
+    }
+  ) {
+    id
+    blockTimestamp
+    transactionHash
+
+
+    bridgeSide {
+      id
+      chainId
+      typedChainId
+    }
+  }
+}

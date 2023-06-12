@@ -132,7 +132,7 @@ export class TransactionService {
       );
 
       const mappedTxs = rawTXs.transferTxes.map(
-        (tx): RawTransferTx => this.mapWithdrawTx(tx, subgraph.network),
+        (tx): RawTransferTx => this.mapTransferTx(tx, subgraph.network),
       );
       transactions.push(...mappedTxs);
     }
