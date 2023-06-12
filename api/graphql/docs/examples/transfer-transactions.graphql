@@ -16,7 +16,7 @@ query TransferTransactionsForAllBridges {
 }
 
 #Transfer transaction data for set of  bridges collectively
-query TransferTransactionsForAllBridges {
+query TransferTransactionForSetOfBridges {
   transferTransactions(
     filter: {
       bridges: [
@@ -39,7 +39,7 @@ query TransferTransactionsForAllBridges {
 }
 
 #Transfer transaction data for any given bridge (e.g. all sides of particular bridge)
-query TransferTransactionsForAllBridges {
+query TransferTransactionForABridge {
   transferTransactions(
     filter: { bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }
   ) {
@@ -57,11 +57,11 @@ query TransferTransactionsForAllBridges {
 }
 
 # Transfer transaction data for any given side of the bridge
-query TransferTransactionsForAllBridges {
+query TransferTransactionForABridgeSide {
   transferTransactions(
     filter: {
       bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"]
-      networks: ["Hermes"]
+      networks: ["Sepolia"]
     }
   ) {
     id

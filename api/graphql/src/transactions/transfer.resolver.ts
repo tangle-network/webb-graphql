@@ -6,7 +6,7 @@ import { BridgeSide, TransactionFilterInput } from '../../gql/graphql';
 export class TransferResolver {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Query('withdrawTransactions')
+  @Query('transferTransactions')
   public fetchWithdrawTransactions(
     @Args('filter') filterInput: TransactionFilterInput,
   ): Promise<RawTransferTx[]> {

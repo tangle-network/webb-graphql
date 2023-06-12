@@ -11,16 +11,12 @@ query DepositTransactionsForAllBridges {
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
+
   }
 }
 
 #Deposit transaction data for set of  bridges collectively
-query DepositTransactionsForAllBridges {
+query DepositTransactionForSetOfBridges {
   depositTransactions(
     filter: {
       bridges: [
@@ -38,16 +34,12 @@ query DepositTransactionsForAllBridges {
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
+
   }
 }
 
 #Deposit transaction data for any given bridge (e.g. all sides of particular bridge)
-query DepositTransactionsForAllBridges {
+query DepositTransactionForABridge {
   depositTransactions(
     filter: { bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }
   ) {
@@ -60,20 +52,16 @@ query DepositTransactionsForAllBridges {
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
+
   }
 }
 
 # Deposit transaction data for any given side of the bridge
-query DepositTransactionsForAllBridges {
+query DepositTransactionForABridgeSide {
   depositTransactions(
     filter: {
       bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"]
-      networks: ["Hermes"]
+      networks: ["Sepolia"]
     }
   ) {
     id
@@ -85,10 +73,6 @@ query DepositTransactionsForAllBridges {
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
+
   }
 }

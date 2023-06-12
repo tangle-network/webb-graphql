@@ -6,21 +6,17 @@ query WithdrawTransactionsForAllBridges {
     blockTimestamp
     transactionHash
 
-    isUnwrapAndWithdraw
+
 
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
+
   }
 }
 
 #Withdraw transaction data for set of  bridges collectively
-query WithdrawTransactionsForAllBridges {
+query WithdrawTransactionForSetOfBridges {
   withdrawTransactions(
     filter: {
       bridges: [
@@ -33,21 +29,16 @@ query WithdrawTransactionsForAllBridges {
     blockTimestamp
     transactionHash
 
-    isUnwrapAndWithdraw
+
 
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
   }
 }
 
 #Withdraw transaction data for any given bridge (e.g. all sides of particular bridge)
-query WithdrawTransactionsForAllBridges {
+query WithdrawTransactionForABridge {
   withdrawTransactions(
     filter: { bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }
   ) {
@@ -55,40 +46,30 @@ query WithdrawTransactionsForAllBridges {
     blockTimestamp
     transactionHash
 
-    isUnwrapAndWithdraw
+
 
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
   }
 }
 
 # Withdraw transaction data for any given side of the bridge
-query WithdrawTransactionsForAllBridges {
+query WithdrawTransactionForABridgeSide {
   withdrawTransactions(
     filter: {
       bridges: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"]
-      networks: ["Hermes"]
+      networks: ["Sepolia"]
     }
   ) {
     id
     blockTimestamp
     transactionHash
 
-    isUnwrapAndWithdraw
+
 
     value
     fullFee
 
-    bridgeSide {
-      id
-      chainId
-      typedChainId
-    }
   }
 }

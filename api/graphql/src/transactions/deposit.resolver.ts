@@ -1,6 +1,12 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { RawDepositTx, TransactionService } from './transaction.service';
+import {
+  RawDepositTx,
+  RawWithdrawTx,
+  TransactionService,
+} from './transaction.service';
 import { BridgeSide, TransactionFilterInput } from '../../gql/graphql';
+import { ConsoleLogger } from '@nestjs/common';
+const console = new ConsoleLogger();
 
 @Resolver('DepositTx')
 export class DepositResolver {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import {
   BridgeSide,
   DepositTx,
@@ -141,6 +141,8 @@ export class TransactionService {
   public async fetchWithdrawTransactions(
     filterInput?: TransactionFilterInput,
   ): Promise<RawWithdrawTx[]> {
+    const console = new ConsoleLogger();
+    console.log(JSON.stringify(filterInput));
     const graphs = this.filterInputIntoSubgraph(filterInput);
     const bridgeSet = filterInput?.bridges ?? [];
     const transactions = [];
