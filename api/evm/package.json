@@ -13,6 +13,12 @@
     "create-local": "graph create --node http://localhost:8020/ VAnchorScrollAlpha ",
     "deploy-localA": "graph deploy --node http://localhost:8020/ VAnchorScrollAlpha --ipfs http://localhost:6001 --network  ScrollAlpha",
     "deploy-localB": "graph deploy --node http://localhost:8020/ VAnchorTest --ipfs http://localhost:6001 --network Hermes",
+    "create-sepolia": "graph create --node http://localhost:8020/ SepoliaVAnchor",
+    "deploy-sepolia": "graph deploy --node http://localhost:8020/ SepoliaVAnchor --ipfs http://localhost:6001 --network  Sepolia",
+    "create-scrollalpha": "graph create --node http://localhost:8020/ ScrollAlphaVAnchor",
+    "deploy-scrollalpha": "graph deploy --node http://localhost:8020/ ScrollAlphaVAnchor --ipfs http://localhost:6001 --network  ScrollAlpha",
+    "create-fuji": "graph create --node http://localhost:8020/ FujiVAnchor",
+    "deploy-fuji": "graph deploy --node http://localhost:8020/ FujiVAnchor --ipfs http://localhost:6001 --network  Fuji",
     "test": "graph test  vanchor -l  -v 0.5.4"
   },
   "dependencies": {

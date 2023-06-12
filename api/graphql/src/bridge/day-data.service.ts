@@ -132,7 +132,7 @@ export class DayDataService {
       numberOfDeposits,
     } = vanchorDayDatas[0];
 
-    const tokenSymbol = 'ETH';
+    const tokenSymbol = token.baseTokenSymbol;
     const decimals = token.decimals;
 
     const prices = await this.pricingService.getPriceUSD([tokenSymbol]);

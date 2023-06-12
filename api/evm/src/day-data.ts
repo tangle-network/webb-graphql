@@ -63,12 +63,12 @@ export function ensureDay(block: ethereum.Block, vAnchor: VAnchor): VAnchorDayDa
   newDayData.withdrawTx = [];
   newDayData.transferTx = [];
   newDayData.startBlockNumber = block.number;
-
+  newDayData.save();
   const token = vAnchor.token;
   const ftw = ensureFungibleTokenWrapper(Address.fromBytes(token));
   const possibleWrappedTokens = ftw.tokens;
-  for (const token of possibleWrappedTokens) {
-    ensureDayVolumeComposition(newDayData, token);
+  for (let i = 0; i < possibleWrappedTokens.length; i++) {
+    ensureDayVolumeComposition(newDayData, possibleWrappedTokens[i]);
   }
 
   newDayData.save();

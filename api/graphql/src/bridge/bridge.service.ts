@@ -134,8 +134,7 @@ export class BridgeService {
       maxDepositAmount,
     } = vAnchor;
     const decimals = token.decimals;
-    // TODO fix this as we use the local bridge
-    const symbol = 'ETH';
+    const symbol = token.baseTokenSymbol;
     // const symbol = token.baseTokenSymbol
     const formattedValue = formatUnits(Number(valueLocked), decimals);
     const formattedTotalFees = formatUnits(Number(totalFees), decimals);

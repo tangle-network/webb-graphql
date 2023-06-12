@@ -56,7 +56,7 @@ function ensureVAnchor(address: Address): VAnchor {
   newVAnchor.finalValueLocked = BigInt.zero();
   newVAnchor.totalFees = BigInt.zero();
   newVAnchor.totalWrappingFees = BigInt.zero();
-
+  newVAnchor.interactedToken = [];
   newVAnchor.numberOfDeposits = BigInt.zero();
   newVAnchor.averageDepositAmount = BigInt.zero();
   newVAnchor.maxDepositAmount = BigInt.zero();
@@ -66,9 +66,12 @@ function ensureVAnchor(address: Address): VAnchor {
   newVAnchor.averageWithdrawAmount = BigInt.zero();
   newVAnchor.maxWithdrawAmount = BigInt.zero();
   newVAnchor.minWithdrawAmount = BigInt.zero();
+
+  newVAnchor.save();
+
   // populate the compostion of the vAnchors
-  for (const token of possibleWrappedTokens) {
-    ensureVAnchorTokenVolume(vAnchor, token);
+  for (let i = 0; i < possibleWrappedTokens.length; i++) {
+    ensureVAnchorTokenVolume(newVAnchor, possibleWrappedTokens[i]);
   }
   newVAnchor.save();
   return newVAnchor;
