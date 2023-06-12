@@ -1,7 +1,7 @@
-#TVL for a set of bridges collectively
+#Total fees for a set of bridges collectively
 
-##  Give me the total volume locked
-query BridgesTVL {
+##  Give me the total trading fees
+query AllBridgesFees {
   bridges {
     id
     totalFees
@@ -9,8 +9,8 @@ query BridgesTVL {
   }
 }
 
-#Given a set of bridges give me the total volume locked
-query SetOfBridgesTVL {
+# Given a set of bridges give me the total trading fees
+query SetOfBridgesFees {
   bridges(
     filter: {
       where: [
@@ -25,8 +25,8 @@ query SetOfBridgesTVL {
   }
 }
 
-#TVL for any given bridge (e.g. all sides of particular bridge)
-query TVLOFBridge {
+#Fees for any given bridge (e.g. all sides of particular bridge)
+query FeesOFBridge {
   bridge(id: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d") {
     id
     totalFees
@@ -34,8 +34,8 @@ query TVLOFBridge {
   }
 }
 
-#TVL for any given side of any given bridge
-query TVLSideOFBridge {
+#Fees for any given side of any given bridge
+query FeesSideOFBridge {
   bridgeSide(
     contractAddress: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
     network: "Hermes"
@@ -46,9 +46,9 @@ query TVLSideOFBridge {
   }
 }
 
-# TVL for any given side of a set of bridges
-## Given a set of bridges give me the total volume locked on Hermes
-query bridgeSideOfNetworkTVL {
+# Fees for any given side of a set of bridges
+## Given a set of bridges give me the total fees locked on Hermes
+query bridgeSideOfNetworkFees {
   bridges(filter: { networks: ["Hermes"] }) {
     id
     totalFees
@@ -57,8 +57,8 @@ query bridgeSideOfNetworkTVL {
 }
 
 
-# TVL for any given token on any given bridge
+# Fees for any given token on any given bridge
 ## TODO
 
-#- TVL for any given token on any given side of bridge
+#- Fees for any given token on any given side of bridge
 ## TODO
