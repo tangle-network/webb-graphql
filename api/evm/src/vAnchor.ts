@@ -269,6 +269,13 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.finalValue = finalAmount;
         entity.fee = fees;
 
+        entity.vAnchor = vAnchor.id;
+        entity.fungibleTokenWrapper = fungibleTokenWrapper.id;
+
+        entity.blockNumber = event.block.number;
+        entity.blockTimestamp = event.block.timestamp;
+        entity.transactionHash = event.transaction.hash;
+
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;

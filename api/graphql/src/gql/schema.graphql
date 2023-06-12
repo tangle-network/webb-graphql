@@ -128,7 +128,8 @@ type TransferTx {
   blockNumber: String!
   blockTimestamp: String!
   transactionHash: String!
-  contractAddress: String!
+
+  bridgeSide: BridgeSide!
 }
 
 type Network {

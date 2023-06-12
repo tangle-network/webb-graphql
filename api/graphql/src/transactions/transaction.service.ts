@@ -4,12 +4,15 @@ import {
   DepositTx,
   TransactionFilterInput,
   WithdrawTx,
+  TransferTx,
 } from '../../gql/graphql';
 import { BridgeService } from '../bridge/bridge.service';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import {
   DepositTXesListingQueryVariables,
   DepositTxFragmentFragment,
+  TransferTXesListingQueryVariables,
+  TransferTxFragmentFragment,
   WithdrawTXesListingQueryVariables,
   WithdrawTxFragmentFragment,
 } from '../generated/graphql';
@@ -26,6 +29,10 @@ export type RawWithdrawTx = Omit<WithdrawTx, 'bridgeSide'> & {
   networkName: string;
 };
 
+export type RawTransferTx = Omit<TransferTx, 'bridgeSide'> & {
+  vAnchorId: string;
+  networkName: string;
+};
 interface RawTx {
   vAnchorId: string;
   networkName: string;
@@ -88,6 +95,49 @@ export class TransactionService {
     };
   }
 
+  private mapTransferTx(
+    tx: TransferTxFragmentFragment,
+    networkName: string,
+  ): RawTransferTx {
+    return {
+      id: tx.id,
+      vAnchorId: tx.vAnchor.id,
+
+      blockTimestamp: String(tx.blockTimestamp),
+      transactionHash: String(tx.transactionHash),
+      blockNumber: String(tx.blockNumber),
+      networkName,
+    };
+  }
+
+  public async fetchTransferTransactions(
+    filterInput?: TransactionFilterInput,
+  ): Promise<RawTransferTx[]> {
+    const transactions = [];
+    const graphs = this.filterInputIntoSubgraph(filterInput);
+    const bridgeSet = filterInput?.bridges ?? [];
+    const queryVariables: TransferTXesListingQueryVariables | undefined =
+      bridgeSet.length > 0
+        ? {
+            where: {
+              vAnchor_in: bridgeSet,
+            },
+          }
+        : undefined;
+
+    for (const subgraph of graphs) {
+      const rawTXs = await this.vAnchorService.fetchTransferTransactions(
+        subgraph,
+        queryVariables,
+      );
+
+      const mappedTxs = rawTXs.transferTxes.map(
+        (tx): RawTransferTx => this.mapWithdrawTx(tx, subgraph.network),
+      );
+      transactions.push(...mappedTxs);
+    }
+    return transactions;
+  }
   public async fetchWithdrawTransactions(
     filterInput?: TransactionFilterInput,
   ): Promise<RawWithdrawTx[]> {

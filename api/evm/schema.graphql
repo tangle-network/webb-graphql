@@ -64,6 +64,9 @@ type TransferTx @entity(immutable: true) {
   finalValue: BigInt! # value without fees
   fee: BigInt!
 
+  vAnchor: VAnchor!
+  fungibleTokenWrapper: FungibleTokenWrapper!
+
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

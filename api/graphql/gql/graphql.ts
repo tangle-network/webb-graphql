@@ -128,7 +128,7 @@ export interface TransferTx {
     blockNumber: string;
     blockTimestamp: string;
     transactionHash: string;
-    contractAddress: string;
+    bridgeSide: BridgeSide;
 }
 
 export interface Network {

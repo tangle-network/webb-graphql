@@ -1752,9 +1752,11 @@ export type TransferTx = {
   fee: Scalars['BigInt']['output'];
   finalValue: Scalars['BigInt']['output'];
   from: Scalars['Bytes']['output'];
+  fungibleTokenWrapper: FungibleTokenWrapper;
   id: Scalars['ID']['output'];
   to: Scalars['Bytes']['output'];
   transactionHash: Scalars['Bytes']['output'];
+  vAnchor: VAnchor;
   value: Scalars['BigInt']['output'];
 };
 
@@ -1814,6 +1816,27 @@ export type TransferTx_Filter = {
   from_not?: InputMaybe<Scalars['Bytes']['input']>;
   from_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
   from_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  fungibleTokenWrapper?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_?: InputMaybe<FungibleTokenWrapper_Filter>;
+  fungibleTokenWrapper_contains?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_ends_with?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_gt?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_gte?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  fungibleTokenWrapper_lt?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_lte?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_not?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_not_contains?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  fungibleTokenWrapper_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_starts_with?: InputMaybe<Scalars['String']['input']>;
+  fungibleTokenWrapper_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   id_gt?: InputMaybe<Scalars['ID']['input']>;
   id_gte?: InputMaybe<Scalars['ID']['input']>;
@@ -1843,6 +1866,27 @@ export type TransferTx_Filter = {
   transactionHash_not?: InputMaybe<Scalars['Bytes']['input']>;
   transactionHash_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
   transactionHash_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  vAnchor?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_?: InputMaybe<VAnchor_Filter>;
+  vAnchor_contains?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_ends_with?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_gt?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_gte?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  vAnchor_lt?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_lte?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_not?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_not_contains?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  vAnchor_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_starts_with?: InputMaybe<Scalars['String']['input']>;
+  vAnchor_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   value?: InputMaybe<Scalars['BigInt']['input']>;
   value_gt?: InputMaybe<Scalars['BigInt']['input']>;
   value_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -1860,9 +1904,34 @@ export enum TransferTx_OrderBy {
   Fee = 'fee',
   FinalValue = 'finalValue',
   From = 'from',
+  FungibleTokenWrapper = 'fungibleTokenWrapper',
+  FungibleTokenWrapperAddress = 'fungibleTokenWrapper__address',
+  FungibleTokenWrapperBaseTokenSymbol = 'fungibleTokenWrapper__baseTokenSymbol',
+  FungibleTokenWrapperDecimals = 'fungibleTokenWrapper__decimals',
+  FungibleTokenWrapperFeePercentage = 'fungibleTokenWrapper__feePercentage',
+  FungibleTokenWrapperId = 'fungibleTokenWrapper__id',
+  FungibleTokenWrapperName = 'fungibleTokenWrapper__name',
+  FungibleTokenWrapperSymbol = 'fungibleTokenWrapper__symbol',
   Id = 'id',
   To = 'to',
   TransactionHash = 'transactionHash',
+  VAnchor = 'vAnchor',
+  VAnchorAverageDepositAmount = 'vAnchor__averageDepositAmount',
+  VAnchorAverageWithdrawAmount = 'vAnchor__averageWithdrawAmount',
+  VAnchorChainId = 'vAnchor__chainId',
+  VAnchorContractAddress = 'vAnchor__contractAddress',
+  VAnchorFinalValueLocked = 'vAnchor__finalValueLocked',
+  VAnchorId = 'vAnchor__id',
+  VAnchorMaxDepositAmount = 'vAnchor__maxDepositAmount',
+  VAnchorMaxWithdrawAmount = 'vAnchor__maxWithdrawAmount',
+  VAnchorMinDepositAmount = 'vAnchor__minDepositAmount',
+  VAnchorMinWithdrawAmount = 'vAnchor__minWithdrawAmount',
+  VAnchorNumberOfDeposits = 'vAnchor__numberOfDeposits',
+  VAnchorNumberOfWithdraws = 'vAnchor__numberOfWithdraws',
+  VAnchorTotalFees = 'vAnchor__totalFees',
+  VAnchorTotalWrappingFees = 'vAnchor__totalWrappingFees',
+  VAnchorTypedChainId = 'vAnchor__typedChainId',
+  VAnchorValueLocked = 'vAnchor__valueLocked',
   Value = 'value'
 }
 
@@ -2893,6 +2962,8 @@ export type DepositTxFragmentFragment = { __typename?: 'DepositTx', id: string, 
 
 export type WithdrawTxFragmentFragment = { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } };
 
+export type TransferTxFragmentFragment = { __typename?: 'TransferTx', id: string, value: any, finalValue: any, transactionHash: any, blockTimestamp: any, blockNumber: any, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } };
+
 export type DepositTXesListingQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -2919,6 +2990,19 @@ export type WithdrawTXesListingQueryVariables = Exact<{
 
 export type WithdrawTXesListingQuery = { __typename?: 'Query', withdrawTxes: Array<{ __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } }> };
 
+export type TransferTXesListingQueryVariables = Exact<{
+  where?: InputMaybe<TransferTx_Filter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<TransferTx_OrderBy>;
+  block?: InputMaybe<Block_Height>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  subgraphError?: _SubgraphErrorPolicy_;
+}>;
+
+
+export type TransferTXesListingQuery = { __typename?: 'Query', transferTxes: Array<{ __typename?: 'TransferTx', id: string, value: any, finalValue: any, transactionHash: any, blockTimestamp: any, blockNumber: any, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } }> };
+
 export type DepositTxDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -2932,6 +3016,13 @@ export type WithdrawTxDetailsQueryVariables = Exact<{
 
 
 export type WithdrawTxDetailsQuery = { __typename?: 'Query', withdrawTx?: { __typename?: 'WithdrawTx', id: string, beneficiary: any, value: any, finalValue: any, isUnwrapAndWithdraw: boolean, fullFee: any, unWrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } } | null };
+
+export type TransferTxDetailsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type TransferTxDetailsQuery = { __typename?: 'Query', transferTx?: { __typename?: 'TransferTx', id: string, value: any, finalValue: any, transactionHash: any, blockTimestamp: any, blockNumber: any, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } } | null };
 
 export type DiscoverVAnchorsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3039,6 +3130,23 @@ export const WithdrawTxFragmentFragmentDoc = gql`
     ${TokenDetailsFragmentFragmentDoc}
 ${FungibleTokenWrapperDetailsFragmentDoc}
 ${VAnchorDetailsFragmentFragmentDoc}`;
+export const TransferTxFragmentFragmentDoc = gql`
+    fragment TransferTxFragment on TransferTx {
+  id
+  value
+  finalValue
+  transactionHash
+  fungibleTokenWrapper {
+    ...FungibleTokenWrapperDetails
+  }
+  vAnchor {
+    ...VAnchorDetailsFragment
+  }
+  blockTimestamp
+  blockNumber
+}
+    ${FungibleTokenWrapperDetailsFragmentDoc}
+${VAnchorDetailsFragmentFragmentDoc}`;
 export const VAnchorListDocument = gql`
     query vAnchorList($where: VAnchor_filter) {
   vanchors(where: $where) {
@@ -3129,6 +3237,21 @@ export const WithdrawTXesListingDocument = gql`
   }
 }
     ${WithdrawTxFragmentFragmentDoc}`;
+export const TransferTXesListingDocument = gql`
+    query transferTXesListing($where: TransferTx_filter, $first: Int = 100, $skip: Int = 0, $orderBy: TransferTx_orderBy, $block: Block_height, $orderDirection: OrderDirection, $subgraphError: _SubgraphErrorPolicy_! = deny) {
+  transferTxes(
+    block: $block
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    subgraphError: $subgraphError
+    where: $where
+  ) {
+    ...TransferTxFragment
+  }
+}
+    ${TransferTxFragmentFragmentDoc}`;
 export const DepositTxDetailsDocument = gql`
     query depositTXDetails($id: ID!) {
   depositTx(id: $id) {
@@ -3143,6 +3266,13 @@ export const WithdrawTxDetailsDocument = gql`
   }
 }
     ${WithdrawTxFragmentFragmentDoc}`;
+export const TransferTxDetailsDocument = gql`
+    query transferTXDetails($id: ID!) {
+  transferTx(id: $id) {
+    ...TransferTxFragment
+  }
+}
+    ${TransferTxFragmentFragmentDoc}`;
 export const DiscoverVAnchorsDocument = gql`
     query discoverVAnchors {
   vanchors {
@@ -3161,8 +3291,10 @@ const AllTokensDocumentString = print(AllTokensDocument);
 const DayDetailsDocumentString = print(DayDetailsDocument);
 const DepositTXesListingDocumentString = print(DepositTXesListingDocument);
 const WithdrawTXesListingDocumentString = print(WithdrawTXesListingDocument);
+const TransferTXesListingDocumentString = print(TransferTXesListingDocument);
 const DepositTxDetailsDocumentString = print(DepositTxDetailsDocument);
 const WithdrawTxDetailsDocumentString = print(WithdrawTxDetailsDocument);
+const TransferTxDetailsDocumentString = print(TransferTxDetailsDocument);
 const DiscoverVAnchorsDocumentString = print(DiscoverVAnchorsDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
@@ -3184,11 +3316,17 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     withdrawTXesListing(variables?: WithdrawTXesListingQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: WithdrawTXesListingQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<WithdrawTXesListingQuery>(WithdrawTXesListingDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'withdrawTXesListing');
     },
+    transferTXesListing(variables?: TransferTXesListingQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: TransferTXesListingQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<TransferTXesListingQuery>(TransferTXesListingDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'transferTXesListing');
+    },
     depositTXDetails(variables: DepositTxDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DepositTxDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<DepositTxDetailsQuery>(DepositTxDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'depositTXDetails');
     },
     withdrawTXDetails(variables: WithdrawTxDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: WithdrawTxDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<WithdrawTxDetailsQuery>(WithdrawTxDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'withdrawTXDetails');
+    },
+    transferTXDetails(variables: TransferTxDetailsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: TransferTxDetailsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<TransferTxDetailsQuery>(TransferTxDetailsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'transferTXDetails');
     },
     discoverVAnchors(variables?: DiscoverVAnchorsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data?: DiscoverVAnchorsQuery | undefined; extensions?: any; headers: Dom.Headers; status: number; errors?: GraphQLError[] | undefined; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<DiscoverVAnchorsQuery>(DiscoverVAnchorsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'discoverVAnchors');

@@ -161,6 +161,23 @@ fragment WithdrawTxFragment on WithdrawTx {
   blockNumber
 }
 
+fragment TransferTxFragment on TransferTx {
+  id
+
+  value
+  finalValue
+
+  transactionHash
+  fungibleTokenWrapper {
+    ...FungibleTokenWrapperDetails
+  }
+  vAnchor {
+    ...VAnchorDetailsFragment
+  }
+  blockTimestamp
+  blockNumber
+}
+
 query depositTXesListing(
   $first: Int = 10
   $skip: Int = 0
@@ -205,6 +222,28 @@ query withdrawTXesListing(
   }
 }
 
+query transferTXesListing(
+  $where: TransferTx_filter
+  $first: Int = 100
+  $skip: Int = 0
+  $orderBy: TransferTx_orderBy
+  $block: Block_height
+  $orderDirection: OrderDirection
+  $subgraphError: _SubgraphErrorPolicy_! = deny
+) {
+  transferTxes(
+    block: $block
+    first: $first
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    skip: $skip
+    subgraphError: $subgraphError
+    where: $where
+  ) {
+    ...TransferTxFragment
+  }
+}
+
 query depositTXDetails($id: ID!) {
   depositTx(id: $id) {
     ...DepositTxFragment
@@ -214,6 +253,12 @@ query depositTXDetails($id: ID!) {
 query withdrawTXDetails($id: ID!) {
   withdrawTx(id: $id) {
     ...WithdrawTxFragment
+  }
+}
+
+query transferTXDetails($id: ID!) {
+  transferTx(id: $id) {
+    ...TransferTxFragment
   }
 }
 

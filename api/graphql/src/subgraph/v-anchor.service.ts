@@ -6,6 +6,8 @@ import {
   DayDetailsQueryVariables,
   DepositTxDetailsQueryVariables,
   DepositTXesListingQueryVariables,
+  TransferTxDetailsQueryVariables,
+  TransferTXesListingQueryVariables,
   VAnchorDetailsQueryVariables,
   VAnchorListQueryVariables,
   WithdrawTxDetailsQueryVariables,
@@ -60,6 +62,16 @@ export class VAnchorService {
     return response.data;
   }
 
+  public async fetchTransferTransactions(
+    subgraph: Subgraph,
+    queryVariables?: TransferTXesListingQueryVariables,
+  ) {
+    const url = subgraph.uri;
+    const sdk = this.gqlClientService.getSdkOfClient(url);
+    const response = await sdk.transferTXesListing(queryVariables);
+    return response.data;
+  }
+
   public async fetchDepositTransactionDetails(
     subgraph: Subgraph,
     queryVariables?: DepositTxDetailsQueryVariables,
@@ -79,7 +91,15 @@ export class VAnchorService {
     const response = await sdk.withdrawTXDetails(queryVariables);
     return response.data;
   }
-
+  public async fetchTransferTransactionDetails(
+    subgraph: Subgraph,
+    queryVariables?: TransferTxDetailsQueryVariables,
+  ) {
+    const url = subgraph.uri;
+    const sdk = this.gqlClientService.getSdkOfClient(url);
+    const response = await sdk.transferTXDetails(queryVariables);
+    return response.data;
+  }
   public async fetchDayData(
     subgraph: Subgraph,
     queryVariables: DayDetailsQueryVariables,
