@@ -258,7 +258,7 @@
               "deprecationReason": null
             },
             {
-              "name": "averageWithdrawAmount",
+              "name": "averageDepositAmountUSD",
               "description": null,
               "args": [],
               "type": {
@@ -400,6 +400,38 @@
             },
             {
               "name": "totalVolumeLocked",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "averageDepositAmount",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "averageDepositAmountUSD",
               "description": null,
               "args": [],
               "type": {

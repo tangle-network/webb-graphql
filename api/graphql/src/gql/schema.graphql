@@ -20,7 +20,7 @@ type BridgeSide {
   minDepositAmount: String!
 
   averageDepositAmount: String!
-  averageWithdrawAmount: String!
+  averageDepositAmountUSD: String!
   token: String!
 
   numberOfDeposits: Int!
@@ -33,6 +33,9 @@ type Bridge {
 
   totalVolumeLockedUSD: String!
   totalVolumeLocked: String!
+
+  averageDepositAmount:String!
+  averageDepositAmountUSD:String!
 
   totalFees:String!
   totalFeesUSD:String!

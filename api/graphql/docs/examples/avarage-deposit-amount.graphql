@@ -1,0 +1,58 @@
+#Total fees for a set of bridges collectively
+
+##  Give me the average deposit amount for all bridges
+query AllBridgesAverageDepositAmount {
+  bridges {
+    id
+    averageDepositAmount
+    averageDepositAmountUSD
+  }
+}
+
+# Given a set of bridges give me the total trading fees
+query SetOfBridgesAverageDepositAmount {
+  bridges(
+    filter: {
+      where: [
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a46cc"
+      ]
+    }
+  ) {
+    id
+    averageDepositAmount
+    averageDepositAmountUSD
+  }
+}
+
+#Average deposit amount for any given bridge (e.g. all sides of particular bridge)
+query AverageDepositAmountOFBridge {
+  bridge(id: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d") {
+    id
+    averageDepositAmount
+    averageDepositAmountUSD
+  }
+}
+
+#Average deposit amount for any given side of any given bridge
+query AverageDepositAmountSideOFBridge {
+  bridgeSide(
+    contractAddress: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+    network: "Hermes"
+  ) {
+    id
+    averageDepositAmount
+    averageDepositAmountUSD
+  }
+}
+
+# AverageDepositAmount for any given side of a set of bridges
+## Given a set of bridges give me the total fees locked on Hermes
+query bridgeSideOfNetworkAverageDepositAmount {
+  bridges(filter: { networks: ["Hermes"] }) {
+    id
+    averageDepositAmount
+    averageDepositAmountUSD
+  }
+}
+

@@ -87,6 +87,16 @@ export class BridgeService {
             Number(bridges[bridgeSide.id].totalFeesUSD) +
               Number(bridgeSide.totalFeesUSD),
           ),
+
+          averageDepositAmount: String(
+            Number(bridges[bridgeSide.id].averageDepositAmount) +
+              Number(bridgeSide.averageDepositAmount),
+          ),
+
+          averageDepositAmountUSD: String(
+            Number(bridges[bridgeSide.id].averageDepositAmountUSD) +
+              Number(bridgeSide.averageDepositAmountUSD),
+          ),
         };
       } else {
         bridges[bridgeSide.id] = {
@@ -94,7 +104,8 @@ export class BridgeService {
           sides: [bridgeSide],
           totalVolumeLocked: bridgeSide.totalVolumeLocked,
           totalVolumeLockedUSD: bridgeSide.totalVolumeLockedUSD,
-
+          averageDepositAmountUSD: bridgeSide.averageDepositAmountUSD,
+          averageDepositAmount: bridgeSide.averageDepositAmount,
           totalFees: bridgeSide.totalFees,
           totalFeesUSD: bridgeSide.totalFeesUSD,
         };
@@ -128,17 +139,25 @@ export class BridgeService {
     // const symbol = token.baseTokenSymbol
     const formattedValue = formatUnits(Number(valueLocked), decimals);
     const formattedTotalFees = formatUnits(Number(totalFees), decimals);
+    const formattedAverageDepositAmount = formatUnits(
+      Number(totalFees),
+      averageDepositAmount,
+    );
 
     const price = await this.pricingService.getPriceUSD([symbol]);
 
     const totalLockedVolumeUSD = price[symbol] * Number(formattedValue);
     const totalFeesUSD = price[symbol] * Number(formattedTotalFees);
+
+    const averageDepositAmountUSD =
+      price[symbol] * Number(formattedAverageDepositAmount);
     return {
       id,
       chainId: Number(chainId),
 
-      averageDepositAmount: String(averageDepositAmount),
-      averageWithdrawAmount: '',
+      averageDepositAmount: formattedAverageDepositAmount,
+      averageDepositAmountUSD: String(averageDepositAmountUSD),
+
       contractAddress: contractAddress,
       maxDepositAmount: String(maxDepositAmount),
       minDepositAmount: String(minDepositAmount),

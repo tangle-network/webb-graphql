@@ -41,7 +41,7 @@ export interface BridgeSide {
     maxDepositAmount: string;
     minDepositAmount: string;
     averageDepositAmount: string;
-    averageWithdrawAmount: string;
+    averageDepositAmountUSD: string;
     token: string;
     numberOfDeposits: number;
     numberOfWithdraws: number;
@@ -52,6 +52,8 @@ export interface Bridge {
     sides: BridgeSide[];
     totalVolumeLockedUSD: string;
     totalVolumeLocked: string;
+    averageDepositAmount: string;
+    averageDepositAmountUSD: string;
     totalFees: string;
     totalFeesUSD: string;
 }
@@ -145,6 +147,7 @@ export interface IQuery {
     networks(): Network[] | Promise<Network[]>;
     depositTransactions(filter?: Nullable<TransactionFilterInput>): DepositTx[] | Promise<DepositTx[]>;
     withdrawTransactions(filter?: Nullable<TransactionFilterInput>): WithdrawTx[] | Promise<WithdrawTx[]>;
+    transferTransactions(filter?: Nullable<TransactionFilterInput>): TransferTx[] | Promise<TransferTx[]>;
 }
 
 type Nullable<T> = T | null;
