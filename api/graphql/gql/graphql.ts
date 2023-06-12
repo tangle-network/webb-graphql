@@ -18,6 +18,11 @@ export interface BridgesDayDataInput {
     networks?: Nullable<string[]>;
 }
 
+export interface TransactionFilterInput {
+    bridges?: Nullable<string[]>;
+    networks?: Nullable<string[]>;
+}
+
 export interface Composition {
     token: Token;
     value: string;
@@ -120,8 +125,6 @@ export interface WithdrawTx {
 
 export interface TransferTx {
     id: string;
-    from: string;
-    fee: string;
     blockNumber: string;
     blockTimestamp: string;
     transactionHash: string;
@@ -140,8 +143,8 @@ export interface IQuery {
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;
     bridgeSideDayData(bridgeId: string, networks: string): DayData | Promise<DayData>;
     networks(): Network[] | Promise<Network[]>;
-    depositTransactions(network: string): DepositTx[] | Promise<DepositTx[]>;
-    withdrawTransactions(network: string): WithdrawTx[] | Promise<WithdrawTx[]>;
+    depositTransactions(filter?: Nullable<TransactionFilterInput>): DepositTx[] | Promise<DepositTx[]>;
+    withdrawTransactions(filter?: Nullable<TransactionFilterInput>): WithdrawTx[] | Promise<WithdrawTx[]>;
 }
 
 type Nullable<T> = T | null;

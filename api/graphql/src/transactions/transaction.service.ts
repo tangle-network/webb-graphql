@@ -1,8 +1,14 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { BridgeSide, DepositTx, WithdrawTx } from '../../gql/graphql';
+import { Injectable } from '@nestjs/common';
+import {
+  BridgeSide,
+  DepositTx,
+  TransactionFilterInput,
+  WithdrawTx,
+} from '../../gql/graphql';
 import { BridgeService } from '../bridge/bridge.service';
 import { VAnchorService } from '../subgraph/v-anchor.service';
 import {
+  DepositTXesListingQueryVariables,
   DepositTxFragmentFragment,
   WithdrawTxFragmentFragment,
 } from '../generated/graphql';
@@ -57,6 +63,7 @@ export class TransactionService {
       networkName,
     };
   }
+
   private mapDepositTx(
     tx: DepositTxFragmentFragment,
     networkName: string,
@@ -95,16 +102,40 @@ export class TransactionService {
   }
 
   public async fetchDepositTransactions(
-    networkName: string,
+    filterInput?: TransactionFilterInput,
   ): Promise<RawDepositTx[]> {
-    const subgraph = this.networkService.getSubgraphConfig(networkName);
-    const transactions = await this.vAnchorService.fetchDepositTransactions(
-      subgraph,
-    );
+    const networks = filterInput?.networks ?? [];
+    const bridgeSet = filterInput?.bridges ?? [];
 
-    return transactions.depositTxes.map(
-      (tx): RawDepositTx => this.mapDepositTx(tx, networkName),
-    );
+    const graphs =
+      networks.length === 0
+        ? this.networkService.subgraphs
+        : networks.map((network) =>
+            this.networkService.getSubgraphConfig(network),
+          );
+
+    const queryVariables: DepositTXesListingQueryVariables | undefined =
+      bridgeSet.length > 0
+        ? {
+            where: {
+              vAnchor_in: bridgeSet,
+            },
+          }
+        : undefined;
+
+    const transactions = [];
+    for (const subgraph of graphs) {
+      const rawTXs = await this.vAnchorService.fetchDepositTransactions(
+        subgraph,
+        queryVariables,
+      );
+
+      const mappedTransactions = rawTXs.depositTxes.map(
+        (tx): RawDepositTx => this.mapDepositTx(tx, subgraph.network),
+      );
+      transactions.push(...mappedTransactions);
+    }
+    return transactions;
   }
 
   public async fetchBridgeOfTransaction<T extends RawTx>(

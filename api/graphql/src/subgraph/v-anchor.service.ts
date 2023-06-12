@@ -14,6 +14,7 @@ import {
 
 export type Subgraph = {
   uri: string;
+  network: string;
 };
 
 @Injectable()

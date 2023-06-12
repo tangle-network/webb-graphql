@@ -1,6 +1,6 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { RawDepositTx, TransactionService } from './transaction.service';
-import { BridgeSide } from '../../gql/graphql';
+import { BridgeSide, TransactionFilterInput } from '../../gql/graphql';
 
 @Resolver('DepositTx')
 export class DepositResolver {
@@ -8,9 +8,9 @@ export class DepositResolver {
 
   @Query('depositTransactions')
   public fetchDepositTransactions(
-    @Args('network') network: string,
+    @Args('filter') filterInput?: TransactionFilterInput,
   ): Promise<RawDepositTx[]> {
-    return this.transactionService.fetchDepositTransactions(network);
+    return this.transactionService.fetchDepositTransactions(filterInput);
   }
 
   @ResolveField('bridgeSide')

@@ -18,6 +18,7 @@ export class DayDataService {
       this.networkService.networks.map((network) => {
         return this.vAnchorService.discoverVAnchorsOfSubgraph({
           uri: network.subgraphUri,
+          network: network.chainName,
         });
       }),
     );
@@ -26,6 +27,7 @@ export class DayDataService {
       return {
         subgraph: {
           uri: network.subgraphUri,
+          network: network.subgraphUri,
         },
         vanchors: vanchors[index].vanchors,
       };

@@ -30,9 +30,9 @@ export class BridgeService {
       targetVAnchors = filterInput.where;
     }
     const subgraphs =
-      filterInput?.networks?.map((network) => ({
-        uri: this.networkService.getSubgraphConfig(network).uri,
-      })) ?? this.networkService.subgraphs;
+      filterInput?.networks?.map((network) =>
+        this.networkService.getSubgraphConfig(network),
+      ) ?? this.networkService.subgraphs;
     // All vAnchors{
     for (const subgraph of subgraphs) {
       await this.reduceToBridge(subgraph, bridges, targetVAnchors);

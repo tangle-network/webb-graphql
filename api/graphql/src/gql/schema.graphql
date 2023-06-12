@@ -124,8 +124,6 @@ type WithdrawTx {
 
 type TransferTx {
   id: String!
-  from: String! # addresss
-  fee: String!
 
   blockNumber: String!
   blockTimestamp: String!
@@ -146,6 +144,10 @@ input BridgesDayDataInput {
   where: [String!]
   networks: [String!]
 }
+input TransactionFilterInput {
+  bridges:[String!]
+  networks:[String!]
+}
 
 type Query {
   bridges(filter: BridgesFilterInput): [Bridge!]!
@@ -157,6 +159,7 @@ type Query {
   bridgeSideDayData(bridgeId: String!, networks: String!): DayData!
 
   networks: [Network!]!
-  depositTransactions(network: String!): [DepositTx!]!
-  withdrawTransactions(network: String!): [WithdrawTx!]!
+
+  depositTransactions(filter: TransactionFilterInput): [DepositTx!]!
+  withdrawTransactions(filter: TransactionFilterInput): [WithdrawTx!]!
 }
