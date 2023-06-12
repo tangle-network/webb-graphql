@@ -6,10 +6,11 @@ import {
   WithdrawTx,
 } from '../../gql/graphql';
 import { BridgeService } from '../bridge/bridge.service';
-import { VAnchorService } from '../subgraph/v-anchor.service';
+import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import {
   DepositTXesListingQueryVariables,
   DepositTxFragmentFragment,
+  WithdrawTXesListingQueryVariables,
   WithdrawTxFragmentFragment,
 } from '../generated/graphql';
 import { mapTokenFragment } from '../helpers';
@@ -88,31 +89,50 @@ export class TransactionService {
   }
 
   public async fetchWithdrawTransactions(
-    networkName: string,
+    filterInput?: TransactionFilterInput,
   ): Promise<RawWithdrawTx[]> {
-    const subgraph = this.networkService.getSubgraphConfig(networkName);
-    const transactions = await this.vAnchorService.fetchWithdrawTransactions(
-      subgraph,
-      {},
-    );
+    const graphs = this.filterInputIntoSubgraph(filterInput);
+    const bridgeSet = filterInput?.bridges ?? [];
+    const transactions = [];
+    const queryVariables: WithdrawTXesListingQueryVariables | undefined =
+      bridgeSet.length > 0
+        ? {
+            where: {
+              vAnchor_in: bridgeSet,
+            },
+          }
+        : undefined;
+    for (const subgraph of graphs) {
+      const rawTXs = await this.vAnchorService.fetchWithdrawTransactions(
+        subgraph,
+        queryVariables,
+      );
 
-    return transactions.withdrawTxes.map(
-      (tx): RawWithdrawTx => this.mapWithdrawTx(tx, networkName),
-    );
+      const mappedTxs = rawTXs.withdrawTxes.map(
+        (tx): RawWithdrawTx => this.mapWithdrawTx(tx, subgraph.network),
+      );
+      transactions.push(...mappedTxs);
+    }
+    return transactions;
+  }
+
+  private filterInputIntoSubgraph(
+    filterInput?: TransactionFilterInput,
+  ): Subgraph[] {
+    const networks = filterInput?.networks ?? [];
+    return networks.length === 0
+      ? this.networkService.subgraphs
+      : networks.map((network) =>
+          this.networkService.getSubgraphConfig(network),
+        );
   }
 
   public async fetchDepositTransactions(
     filterInput?: TransactionFilterInput,
   ): Promise<RawDepositTx[]> {
-    const networks = filterInput?.networks ?? [];
     const bridgeSet = filterInput?.bridges ?? [];
 
-    const graphs =
-      networks.length === 0
-        ? this.networkService.subgraphs
-        : networks.map((network) =>
-            this.networkService.getSubgraphConfig(network),
-          );
+    const graphs = this.filterInputIntoSubgraph(filterInput);
 
     const queryVariables: DepositTXesListingQueryVariables | undefined =
       bridgeSet.length > 0
