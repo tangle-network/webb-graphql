@@ -1,9 +1,10 @@
-import { BigInt, ethereum } from '@graphprotocol/graph-ts';
+import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { Token, VAnchor, VAnchorDayData, VAnchorVolumeComposition } from '../generated/schema';
 import { TransactionType } from './utils/transact';
+import { ensureFungibleTokenWrapper } from './fungible-token-wrapper';
 
-export function ensureDayVolumeComposition(dayData: VAnchorDayData, token: Token): VAnchorVolumeComposition {
-  const id = dayData.id.concat(token.id.toHexString());
+export function ensureDayVolumeComposition(dayData: VAnchorDayData, token: Bytes): VAnchorVolumeComposition {
+  const id = dayData.id.concat(token.toHexString());
   const dayVolume = VAnchorVolumeComposition.load(id);
   if (dayVolume) {
     return dayVolume;
@@ -11,7 +12,7 @@ export function ensureDayVolumeComposition(dayData: VAnchorDayData, token: Token
 
   let newDayVolumeComposition = new VAnchorVolumeComposition(id);
 
-  newDayVolumeComposition.token = token.id;
+  newDayVolumeComposition.token = token;
   newDayVolumeComposition.VAnchorDayData = dayData.id;
 
   newDayVolumeComposition.volume = BigInt.zero();
@@ -62,8 +63,15 @@ export function ensureDay(block: ethereum.Block, vAnchor: VAnchor): VAnchorDayDa
   newDayData.withdrawTx = [];
   newDayData.transferTx = [];
   newDayData.startBlockNumber = block.number;
-  newDayData.save();
 
+  const token = vAnchor.token;
+  const ftw = ensureFungibleTokenWrapper(Address.fromBytes(token));
+  const possibleWrappedTokens = ftw.tokens;
+  for (const token of possibleWrappedTokens) {
+    ensureDayVolumeComposition(newDayData, token);
+  }
+
+  newDayData.save();
   return newDayData;
 }
 
@@ -114,7 +122,7 @@ export function updateVAnchorDayData(
   txId: string
 ): void {
   const vAnchorDayData = ensureDay(block, vAnchor);
-  let dayVolumeComposition = ensureDayVolumeComposition(vAnchorDayData, volumeDTO.token);
+  let dayVolumeComposition = ensureDayVolumeComposition(vAnchorDayData, volumeDTO.token.id);
   const finalAmount = volumeDTO.finalAmount;
   const fee = volumeDTO.totalFees;
   const txType = volumeDTO.txType;
@@ -153,8 +161,6 @@ export function updateVAnchorDayData(
   vAnchorDayData.fees = vAnchorDayData.fees.plus(fee);
   vAnchorDayData.relayerFees = vAnchorDayData.relayerFees.plus(volumeDTO.relayerFees);
   vAnchorDayData.wrappingFees = vAnchorDayData.wrappingFees.plus(volumeDTO.wrappingFees.plus(volumeDTO.wrappingFees));
-
-
 
   dayVolumeComposition.save();
   vAnchorDayData.save();

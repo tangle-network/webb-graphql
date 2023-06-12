@@ -134,7 +134,7 @@ type VAnchor @entity(immutable: false) {
   typedChainId: Bytes!
   token: FungibleTokenWrapper!
 
-  #  volumeComposition: [VAnchorVolume!]!
+  interactedToken: [VAnchorVolume!]!
   # VAnchor locked volume
   valueLocked: BigInt!
   finalValueLocked: BigInt!
