@@ -76,6 +76,8 @@ export interface DayData {
     numberOfTransfers: number;
     feesUSD: string;
     volumeUSD: string;
+    depositedVolumeUSD: string;
+    withdrawVolumeUSD: string;
 }
 
 export interface DepositTx {

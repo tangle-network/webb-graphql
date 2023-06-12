@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
-import { Composition, DayData } from '../../gql/graphql';
-import { mapTokenFragment } from '../helpers';
+import { DayData } from '../../gql/graphql';
 import { NetworksService } from '../subgraph/networks.service';
+import { formatUnits } from 'ethers';
 
 @Injectable()
 export class DayDataService {
@@ -90,60 +90,50 @@ export class DayDataService {
 
       composition,
       date,
+      vAnchor: { token },
+      fees,
+      volume,
+      depositedVolume,
+      withdrawnVolume,
 
       numberOfWithdraws,
       numberOfTransfers,
       numberOfDeposits,
     } = vanchorDayDatas[0];
 
-    const compositionWithSymbol = composition.map((c) => {
-      if (c.token.isFungibleTokenWrapper) {
-        return {
-          ...c,
-          symbol: 'WETH',
-        };
-      }
-      return {
-        ...c,
-        symbol: c.token.symbol,
-      };
-    });
-    const tokens = compositionWithSymbol.map((c) => c.symbol);
-    const prices = await this.pricingService.getPriceUSD(tokens);
+    const tokenSymbol = 'ETH';
+    const decimals = token.decimals;
 
-    let totalValueUSD = 0;
-    let totalFeesUSD = 0;
+    const prices = await this.pricingService.getPriceUSD([tokenSymbol]);
+    const tokenPrice = prices[tokenSymbol];
 
-    const compositions = compositionWithSymbol.map(
-      (composition): Composition => {
-        const decimals = composition.token.decimals;
-        const amount = Number(composition.volume);
-        const fees = Number(composition.fees);
-        const amountFormatted = amount * Math.pow(10, -decimals);
-        const feesFormatted = fees * Math.pow(10, -decimals);
-        const price = prices[composition.symbol];
+    const formattedFees = formatUnits(Number(fees), decimals);
+    const totalFeesUSD = Number(formattedFees) * tokenPrice;
 
-        const valueUSD = price * amountFormatted;
-        const feesUSD = feesFormatted * amountFormatted;
+    const formattedVolume = formatUnits(Number(volume), decimals);
+    const volumeUSD = Number(formattedVolume) * tokenPrice;
 
-        totalValueUSD = totalValueUSD + valueUSD;
-        totalFeesUSD = totalFeesUSD + feesUSD;
-        return {
-          valueUSD: String(valueUSD),
-          value: composition.volume,
-          token: mapTokenFragment(composition.token),
-        };
-      },
+    const formattedDepositedVolume = formatUnits(
+      Number(depositedVolume),
+      decimals,
     );
+    const depositedVolumeUSD = Number(formattedDepositedVolume) * tokenPrice;
 
+    const formattedWithdrawnVolume = formatUnits(
+      Number(withdrawnVolume),
+      decimals,
+    );
+    const withdrawnVolumeUSD = Number(formattedWithdrawnVolume) * tokenPrice;
     return {
       id,
+      depositedVolumeUSD: String(depositedVolumeUSD),
+      withdrawVolumeUSD: String(withdrawnVolumeUSD),
 
       date: String(date),
       numberOfDeposits: Number(numberOfDeposits),
       numberOfTransfers: Number(numberOfTransfers),
       numberOfWithdraws: Number(numberOfWithdraws),
-      volumeUSD: String(totalValueUSD),
+      volumeUSD: String(volumeUSD),
       feesUSD: String(totalFeesUSD),
     };
   }

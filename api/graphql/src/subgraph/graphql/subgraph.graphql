@@ -72,6 +72,19 @@ query dayDetails($vAnchorId: String!) {
     id
     date
 
+    vAnchor {
+      token {
+        decimals
+        baseTokenSymbol
+      }
+    }
+    relayerFees
+    wrappingFees
+    fees
+    volume
+    depositedVolume
+    withdrawnVolume
+
     composition {
       id
       unWrappingFees

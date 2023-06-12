@@ -68,6 +68,10 @@ type DayData {
 
   feesUSD: String!
   volumeUSD: String!
+
+  depositedVolumeUSD:String!
+  withdrawVolumeUSD:String!
+
 }
 
 type DepositTx {

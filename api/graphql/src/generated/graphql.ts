@@ -1892,14 +1892,20 @@ export type VAnchorDayData = {
   composition: Array<VAnchorVolumeComposition>;
   date: Scalars['Int']['output'];
   depositTx: Array<DepositTx>;
+  depositedVolume: Scalars['BigInt']['output'];
+  fees: Scalars['BigInt']['output'];
   id: Scalars['ID']['output'];
   numberOfDeposits: Scalars['BigInt']['output'];
   numberOfTransfers: Scalars['BigInt']['output'];
   numberOfWithdraws: Scalars['BigInt']['output'];
+  relayerFees: Scalars['BigInt']['output'];
   startBlockNumber: Scalars['BigInt']['output'];
   transferTx: Array<TransferTx>;
   vAnchor: VAnchor;
+  volume: Scalars['BigInt']['output'];
   withdrawTx: Array<WithdrawTx>;
+  withdrawnVolume: Scalars['BigInt']['output'];
+  wrappingFees: Scalars['BigInt']['output'];
 };
 
 
@@ -1964,6 +1970,22 @@ export type VAnchorDayData_Filter = {
   depositTx_not?: InputMaybe<Array<Scalars['String']['input']>>;
   depositTx_not_contains?: InputMaybe<Array<Scalars['String']['input']>>;
   depositTx_not_contains_nocase?: InputMaybe<Array<Scalars['String']['input']>>;
+  depositedVolume?: InputMaybe<Scalars['BigInt']['input']>;
+  depositedVolume_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  depositedVolume_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  depositedVolume_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  depositedVolume_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  depositedVolume_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  depositedVolume_not?: InputMaybe<Scalars['BigInt']['input']>;
+  depositedVolume_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  fees?: InputMaybe<Scalars['BigInt']['input']>;
+  fees_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  fees_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  fees_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  fees_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  fees_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  fees_not?: InputMaybe<Scalars['BigInt']['input']>;
+  fees_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   id?: InputMaybe<Scalars['ID']['input']>;
   id_gt?: InputMaybe<Scalars['ID']['input']>;
   id_gte?: InputMaybe<Scalars['ID']['input']>;
@@ -1997,6 +2019,14 @@ export type VAnchorDayData_Filter = {
   numberOfWithdraws_not?: InputMaybe<Scalars['BigInt']['input']>;
   numberOfWithdraws_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   or?: InputMaybe<Array<InputMaybe<VAnchorDayData_Filter>>>;
+  relayerFees?: InputMaybe<Scalars['BigInt']['input']>;
+  relayerFees_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  relayerFees_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  relayerFees_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  relayerFees_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  relayerFees_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  relayerFees_not?: InputMaybe<Scalars['BigInt']['input']>;
+  relayerFees_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   startBlockNumber?: InputMaybe<Scalars['BigInt']['input']>;
   startBlockNumber_gt?: InputMaybe<Scalars['BigInt']['input']>;
   startBlockNumber_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -2033,6 +2063,14 @@ export type VAnchorDayData_Filter = {
   vAnchor_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   vAnchor_starts_with?: InputMaybe<Scalars['String']['input']>;
   vAnchor_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  volume?: InputMaybe<Scalars['BigInt']['input']>;
+  volume_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  volume_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  volume_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  volume_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  volume_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  volume_not?: InputMaybe<Scalars['BigInt']['input']>;
+  volume_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   withdrawTx?: InputMaybe<Array<Scalars['String']['input']>>;
   withdrawTx_?: InputMaybe<WithdrawTx_Filter>;
   withdrawTx_contains?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -2040,16 +2078,35 @@ export type VAnchorDayData_Filter = {
   withdrawTx_not?: InputMaybe<Array<Scalars['String']['input']>>;
   withdrawTx_not_contains?: InputMaybe<Array<Scalars['String']['input']>>;
   withdrawTx_not_contains_nocase?: InputMaybe<Array<Scalars['String']['input']>>;
+  withdrawnVolume?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawnVolume_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawnVolume_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawnVolume_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  withdrawnVolume_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawnVolume_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawnVolume_not?: InputMaybe<Scalars['BigInt']['input']>;
+  withdrawnVolume_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  wrappingFees?: InputMaybe<Scalars['BigInt']['input']>;
+  wrappingFees_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  wrappingFees_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  wrappingFees_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  wrappingFees_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  wrappingFees_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  wrappingFees_not?: InputMaybe<Scalars['BigInt']['input']>;
+  wrappingFees_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
 export enum VAnchorDayData_OrderBy {
   Composition = 'composition',
   Date = 'date',
   DepositTx = 'depositTx',
+  DepositedVolume = 'depositedVolume',
+  Fees = 'fees',
   Id = 'id',
   NumberOfDeposits = 'numberOfDeposits',
   NumberOfTransfers = 'numberOfTransfers',
   NumberOfWithdraws = 'numberOfWithdraws',
+  RelayerFees = 'relayerFees',
   StartBlockNumber = 'startBlockNumber',
   TransferTx = 'transferTx',
   VAnchor = 'vAnchor',
@@ -2069,7 +2126,10 @@ export enum VAnchorDayData_OrderBy {
   VAnchorTotalWrappingFees = 'vAnchor__totalWrappingFees',
   VAnchorTypedChainId = 'vAnchor__typedChainId',
   VAnchorValueLocked = 'vAnchor__valueLocked',
-  WithdrawTx = 'withdrawTx'
+  Volume = 'volume',
+  WithdrawTx = 'withdrawTx',
+  WithdrawnVolume = 'withdrawnVolume',
+  WrappingFees = 'wrappingFees'
 }
 
 export type VAnchorVolume = {
@@ -2195,11 +2255,17 @@ export type VAnchorVolumeComposition_Filter = {
 export enum VAnchorVolumeComposition_OrderBy {
   VAnchorDayData = 'VAnchorDayData',
   VAnchorDayDataDate = 'VAnchorDayData__date',
+  VAnchorDayDataDepositedVolume = 'VAnchorDayData__depositedVolume',
+  VAnchorDayDataFees = 'VAnchorDayData__fees',
   VAnchorDayDataId = 'VAnchorDayData__id',
   VAnchorDayDataNumberOfDeposits = 'VAnchorDayData__numberOfDeposits',
   VAnchorDayDataNumberOfTransfers = 'VAnchorDayData__numberOfTransfers',
   VAnchorDayDataNumberOfWithdraws = 'VAnchorDayData__numberOfWithdraws',
+  VAnchorDayDataRelayerFees = 'VAnchorDayData__relayerFees',
   VAnchorDayDataStartBlockNumber = 'VAnchorDayData__startBlockNumber',
+  VAnchorDayDataVolume = 'VAnchorDayData__volume',
+  VAnchorDayDataWithdrawnVolume = 'VAnchorDayData__withdrawnVolume',
+  VAnchorDayDataWrappingFees = 'VAnchorDayData__wrappingFees',
   Fees = 'fees',
   Id = 'id',
   RelayerFees = 'relayerFees',
@@ -2821,7 +2887,7 @@ export type DayDetailsQueryVariables = Exact<{
 }>;
 
 
-export type DayDetailsQuery = { __typename?: 'Query', vanchorDayDatas: Array<{ __typename?: 'VAnchorDayData', id: string, date: number, numberOfDeposits: any, numberOfTransfers: any, numberOfWithdraws: any, composition: Array<{ __typename?: 'VAnchorVolumeComposition', id: string, unWrappingFees: any, wrappingFees: any, fees: any, relayerFees: any, volume: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> }> };
+export type DayDetailsQuery = { __typename?: 'Query', vanchorDayDatas: Array<{ __typename?: 'VAnchorDayData', id: string, date: number, relayerFees: any, wrappingFees: any, fees: any, volume: any, depositedVolume: any, withdrawnVolume: any, numberOfDeposits: any, numberOfTransfers: any, numberOfWithdraws: any, vAnchor: { __typename?: 'VAnchor', token: { __typename?: 'FungibleTokenWrapper', decimals: number, baseTokenSymbol?: string | null } }, composition: Array<{ __typename?: 'VAnchorVolumeComposition', id: string, unWrappingFees: any, wrappingFees: any, fees: any, relayerFees: any, volume: any, token: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean } }> }> };
 
 export type DepositTxFragmentFragment = { __typename?: 'DepositTx', id: string, depositor: any, value: any, finalValue: any, isWrapAndDeposit: boolean, fullFee: any, wrappingFee: any, RelayerFee: any, transactionHash: any, gasUsed: any, blockTimestamp: any, blockNumber: any, wrappedToken: { __typename?: 'Token', id: any, address: any, name: string, decimals: number, symbol: string, isFungibleTokenWrapper: boolean }, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } };
 
@@ -3004,6 +3070,18 @@ export const DayDetailsDocument = gql`
   ) {
     id
     date
+    vAnchor {
+      token {
+        decimals
+        baseTokenSymbol
+      }
+    }
+    relayerFees
+    wrappingFees
+    fees
+    volume
+    depositedVolume
+    withdrawnVolume
     composition {
       id
       unWrappingFees

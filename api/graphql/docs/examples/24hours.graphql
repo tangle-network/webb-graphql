@@ -1,0 +1,84 @@
+# Total volume for a set of bridges collectively
+
+#-> All bridges
+query AllBridgesDayData {
+  bridgesDayData {
+    id
+
+    numberOfDeposits
+    numberOfWithdraws
+    numberOfTransfers
+
+    withdrawVolumeUSD
+    depositedVolumeUSD
+
+    feesUSD
+    volumeUSD
+  }
+}
+#-> Set of bridges bridges
+query SetOfBridgesDaydata {
+  bridgesDayData(
+    filter: {
+      where: [
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a46cc"
+      ]
+    }
+  ) {
+    id
+
+    numberOfDeposits
+    numberOfWithdraws
+    numberOfTransfers
+
+    withdrawVolumeUSD
+    depositedVolumeUSD
+
+    feesUSD
+    volumeUSD
+  }
+}
+# Total volume for any given bridge (e.g. all sides of a particular bridge)
+
+query DayDataOfBridge {
+  bridgeDayData(bridgeId: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d") {
+    id
+
+    numberOfDeposits
+    numberOfWithdraws
+    numberOfTransfers
+
+    withdrawVolumeUSD
+    depositedVolumeUSD
+
+    feesUSD
+    volumeUSD
+  }
+}
+
+# Total volume for any given side of any given bridge
+query BridgeSideDayData {
+  bridgeSideDayData(
+    bridgeId: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+    networks: "Hermes"
+  ) {
+    id
+
+    numberOfDeposits
+    numberOfWithdraws
+    numberOfTransfers
+
+    withdrawVolumeUSD
+    depositedVolumeUSD
+
+    feesUSD
+    volumeUSD
+  }
+}
+
+# Total volume for any given token on any given bridge
+## TODO
+
+#- Total volume for any given token on any given side of bridge
+## TODO
