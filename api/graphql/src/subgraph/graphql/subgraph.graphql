@@ -262,8 +262,8 @@ query transferTXDetails($id: ID!) {
   }
 }
 
-query discoverVAnchors {
-  vanchors {
+query discoverVAnchors($where: VAnchor_filter) {
+  vanchors(where: $where) {
     id
   }
 }

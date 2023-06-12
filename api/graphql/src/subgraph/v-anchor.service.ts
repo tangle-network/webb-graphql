@@ -6,6 +6,8 @@ import {
   DayDetailsQueryVariables,
   DepositTxDetailsQueryVariables,
   DepositTXesListingQueryVariables,
+  DiscoverVAnchorsQuery,
+  DiscoverVAnchorsQueryVariables,
   TransferTxDetailsQueryVariables,
   TransferTXesListingQueryVariables,
   VAnchorDetailsQueryVariables,
@@ -110,10 +112,13 @@ export class VAnchorService {
     return response.data;
   }
 
-  public async discoverVAnchorsOfSubgraph(subgraph: Subgraph) {
+  public async discoverVAnchorsOfSubgraph(
+    subgraph: Subgraph,
+    queryVariables?: DiscoverVAnchorsQueryVariables,
+  ) {
     const url = subgraph.uri;
     const sdk = this.gqlClientService.getSdkOfClient(url);
-    const response = await sdk.discoverVAnchors(undefined);
+    const response = await sdk.discoverVAnchors(queryVariables);
     return response.data;
   }
 }

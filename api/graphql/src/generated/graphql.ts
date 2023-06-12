@@ -3024,7 +3024,9 @@ export type TransferTxDetailsQueryVariables = Exact<{
 
 export type TransferTxDetailsQuery = { __typename?: 'Query', transferTx?: { __typename?: 'TransferTx', id: string, value: any, finalValue: any, transactionHash: any, blockTimestamp: any, blockNumber: any, fungibleTokenWrapper: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null }, vAnchor: { __typename?: 'VAnchor', id: string, chainId: any, typedChainId: any, contractAddress: any, finalValueLocked: any, valueLocked: any, totalFees: any, totalWrappingFees: any, numberOfDeposits: any, numberOfWithdraws: any, minDepositAmount: any, maxDepositAmount: any, averageDepositAmount: any, token: { __typename?: 'FungibleTokenWrapper', id: any, name: string, decimals: number, symbol: string, baseTokenSymbol?: string | null } } } | null };
 
-export type DiscoverVAnchorsQueryVariables = Exact<{ [key: string]: never; }>;
+export type DiscoverVAnchorsQueryVariables = Exact<{
+  where?: InputMaybe<VAnchor_Filter>;
+}>;
 
 
 export type DiscoverVAnchorsQuery = { __typename?: 'Query', vanchors: Array<{ __typename?: 'VAnchor', id: string }> };
@@ -3274,8 +3276,8 @@ export const TransferTxDetailsDocument = gql`
 }
     ${TransferTxFragmentFragmentDoc}`;
 export const DiscoverVAnchorsDocument = gql`
-    query discoverVAnchors {
-  vanchors {
+    query discoverVAnchors($where: VAnchor_filter) {
+  vanchors(where: $where) {
     id
   }
 }

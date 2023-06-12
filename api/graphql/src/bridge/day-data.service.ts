@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
-import { DayData } from '../../gql/graphql';
+import { BridgesDayDataInput, DayData } from '../../gql/graphql';
 import { NetworksService } from '../subgraph/networks.service';
 import { formatUnits } from 'ethers';
+import { DiscoverVAnchorsQueryVariables } from '../generated/graphql';
 
 @Injectable()
 export class DayDataService {
@@ -13,31 +14,51 @@ export class DayDataService {
     private readonly networkService: NetworksService,
   ) {}
 
-  private async allSubgraphVAnchors() {
+  private async allSubgraphVAnchors(filter?: BridgesDayDataInput) {
+    const graphs = this.filterInputIntoSubgraph(filter);
+    const targetBridges = filter?.where ?? [];
+    const queryVariables: DiscoverVAnchorsQueryVariables | undefined =
+      targetBridges.length > 0
+        ? {
+            where: {
+              id_in: targetBridges,
+            },
+          }
+        : undefined;
     const vanchors = await Promise.all(
-      this.networkService.networks.map((network) => {
-        return this.vAnchorService.discoverVAnchorsOfSubgraph({
-          uri: network.subgraphUri,
-          network: network.chainName,
-        });
+      graphs.map((subraph) => {
+        return this.vAnchorService.discoverVAnchorsOfSubgraph(
+          subraph,
+          queryVariables,
+        );
       }),
     );
 
-    return this.networkService.networks.map((network, index) => {
+    return graphs.map((subgraph, index) => {
       return {
-        subgraph: {
-          uri: network.subgraphUri,
-          network: network.subgraphUri,
-        },
+        subgraph,
         vanchors: vanchors[index].vanchors,
       };
     });
   }
 
-  public async bridgesDayData(): Promise<DayData[]> {
+  private filterInputIntoSubgraph(
+    filterInput?: BridgesDayDataInput,
+  ): Subgraph[] {
+    const networks = filterInput?.networks ?? [];
+    return networks.length === 0
+      ? this.networkService.subgraphs
+      : networks.map((network) =>
+          this.networkService.getSubgraphConfig(network),
+        );
+  }
+
+  public async bridgesDayData(
+    filter?: BridgesDayDataInput,
+  ): Promise<DayData[]> {
     const dayDataMap: Record<string, DayData> = {};
 
-    const allSubgraphsVAnchors = await this.allSubgraphVAnchors();
+    const allSubgraphsVAnchors = await this.allSubgraphVAnchors(filter);
 
     for (const { vanchors, subgraph } of allSubgraphsVAnchors) {
       for (const vanchor of vanchors) {
@@ -71,6 +92,13 @@ export class DayDataService {
 
     return Object.values(dayDataMap);
   }
+
+  public async bridgeDayData(bridgeId: string): Promise<DayData> {
+    const dayDataList = await this.bridgesDayData({
+      where: [bridgeId],
+    });
+    return dayDataList[0];
+  }
   public async bridgeSideDayDataByNetworkName(
     vAnchorId: string,
     networkName: string,
@@ -78,6 +106,7 @@ export class DayDataService {
     const subgraph = this.networkService.getSubgraphConfig(networkName);
     return this.bridgeSideDayData(vAnchorId, subgraph);
   }
+
   private async bridgeSideDayData(
     vAnchorId: string,
     subgraph: Subgraph,
