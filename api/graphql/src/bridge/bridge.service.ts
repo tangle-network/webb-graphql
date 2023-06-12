@@ -4,7 +4,7 @@ import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
 import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
 import { NetworksService } from '../subgraph/networks.service';
-import { formatUnits } from 'ethers';
+import { formatUnits, parseUnits } from 'ethers';
 
 @Injectable()
 export class BridgeService {
@@ -136,16 +136,14 @@ export class BridgeService {
     const decimals = token.decimals;
     const symbol = token.baseTokenSymbol;
     // const symbol = token.baseTokenSymbol
-    const formattedValue = formatUnits(Number(valueLocked), decimals);
-    const formattedTotalFees = formatUnits(Number(totalFees), decimals);
-    const formattedAverageDepositAmount = formatUnits(
-      Number(totalFees),
-      averageDepositAmount,
-    );
+    const formattedValue = formatUnits(valueLocked, decimals);
+    const formattedTotalFees = formatUnits(totalFees, decimals);
+    const formattedAverageDepositAmount = formatUnits(totalFees, decimals);
 
     const price = await this.pricingService.getPriceUSD([symbol]);
 
     const totalLockedVolumeUSD = price[symbol] * Number(formattedValue);
+
     const totalFeesUSD = price[symbol] * Number(formattedTotalFees);
 
     const averageDepositAmountUSD =

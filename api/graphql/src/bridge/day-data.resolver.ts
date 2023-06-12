@@ -13,7 +13,7 @@ export class DayDataResolve {
     return this.dayDataService.bridgesDayData(filterInput);
   }
 
-  @Query('bridgeSideDayData')
+  @Query('bridgeDayData')
   public bridgeDayData(@Args('bridgeId') bridgeId: string): Promise<DayData> {
     return this.dayDataService.bridgeDayData(bridgeId);
   }

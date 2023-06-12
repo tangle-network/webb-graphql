@@ -4,16 +4,18 @@
 query AllBridgesDayData {
   bridgesDayData {
     id
+    date
 
     numberOfDeposits
     numberOfWithdraws
     numberOfTransfers
 
-    withdrawVolumeUSD
+
     depositedVolumeUSD
 
     feesUSD
     volumeUSD
+
   }
 }
 #-> Set of bridges bridges
@@ -22,7 +24,6 @@ query SetOfBridgesDaydata {
     filter: {
       where: [
         "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
-        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a46cc"
       ]
     }
   ) {
@@ -61,7 +62,7 @@ query DayDataOfBridge {
 query BridgeSideDayData {
   bridgeSideDayData(
     bridgeId: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
-    networks: "Hermes"
+    network: "Sepolia"
   ) {
     id
 

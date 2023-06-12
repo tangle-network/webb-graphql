@@ -1841,7 +1841,7 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "networks",
+                  "name": "network",
                   "description": null,
                   "type": {
                     "kind": "NON_NULL",

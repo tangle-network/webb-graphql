@@ -6,6 +6,9 @@ query BridgesTVL {
     id
     totalVolumeLocked
     totalVolumeLockedUSD
+    sides {
+      chainId
+    }
   }
 }
 
@@ -15,7 +18,6 @@ query SetOfBridgesTVL {
     filter: {
       where: [
         "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
-        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a46cc"
       ]
     }
   ) {
@@ -38,7 +40,7 @@ query TVLOFBridge {
 query TVLSideOFBridge {
   bridgeSide(
     contractAddress: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
-    network: "Hermes"
+    network: "Sepolia"
   ) {
     id
     totalVolumeLocked
@@ -49,7 +51,7 @@ query TVLSideOFBridge {
 # TVL for any given side of a set of bridges
 ## Given a set of bridges give me the total volume locked on Hermes
 query bridgeSideOfNetworkTVL {
-  bridges(filter: { networks: ["Hermes"] }) {
+  bridges(filter: { networks: ["Sepolia"] }) {
     id
     totalVolumeLocked
     totalVolumeLockedUSD

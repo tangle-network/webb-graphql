@@ -160,7 +160,7 @@ type Query {
 
   bridgesDayData(filter:BridgesDayDataInput): [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
-  bridgeSideDayData(bridgeId: String!, networks: String!): DayData!
+  bridgeSideDayData(bridgeId: String!, network: String!): DayData!
 
   networks: [Network!]!
 

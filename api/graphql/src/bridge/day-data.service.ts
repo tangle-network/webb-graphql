@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
 import { BridgesDayDataInput, DayData } from '../../gql/graphql';
@@ -103,6 +103,8 @@ export class DayDataService {
     vAnchorId: string,
     networkName: string,
   ) {
+    const c = new ConsoleLogger();
+
     const subgraph = this.networkService.getSubgraphConfig(networkName);
     return this.bridgeSideDayData(vAnchorId, subgraph);
   }
@@ -134,26 +136,20 @@ export class DayDataService {
 
     const tokenSymbol = token.baseTokenSymbol;
     const decimals = token.decimals;
-
     const prices = await this.pricingService.getPriceUSD([tokenSymbol]);
     const tokenPrice = prices[tokenSymbol];
 
-    const formattedFees = formatUnits(Number(fees), decimals);
+    const formattedFees = formatUnits(fees, decimals);
     const totalFeesUSD = Number(formattedFees) * tokenPrice;
 
-    const formattedVolume = formatUnits(Number(volume), decimals);
+    const formattedVolume = formatUnits(volume, decimals);
+
     const volumeUSD = Number(formattedVolume) * tokenPrice;
 
-    const formattedDepositedVolume = formatUnits(
-      Number(depositedVolume),
-      decimals,
-    );
+    const formattedDepositedVolume = formatUnits(depositedVolume, decimals);
     const depositedVolumeUSD = Number(formattedDepositedVolume) * tokenPrice;
 
-    const formattedWithdrawnVolume = formatUnits(
-      Number(withdrawnVolume),
-      decimals,
-    );
+    const formattedWithdrawnVolume = formatUnits(withdrawnVolume, decimals);
     const withdrawnVolumeUSD = Number(formattedWithdrawnVolume) * tokenPrice;
     return {
       id,

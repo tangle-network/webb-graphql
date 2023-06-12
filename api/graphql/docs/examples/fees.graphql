@@ -15,7 +15,6 @@ query SetOfBridgesFees {
     filter: {
       where: [
         "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
-        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a46cc"
       ]
     }
   ) {
@@ -38,7 +37,7 @@ query FeesOFBridge {
 query FeesSideOFBridge {
   bridgeSide(
     contractAddress: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
-    network: "Hermes"
+    network: "Sepolia"
   ) {
     id
     totalFees
@@ -47,9 +46,9 @@ query FeesSideOFBridge {
 }
 
 # Fees for any given side of a set of bridges
-## Given a set of bridges give me the total fees locked on Hermes
+## Given a set of bridges give me the total fees locked on Sepolia
 query bridgeSideOfNetworkFees {
-  bridges(filter: { networks: ["Hermes"] }) {
+  bridges(filter: { networks: ["Sepolia"] }) {
     id
     totalFees
     totalFeesUSD
