@@ -4,7 +4,7 @@ import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import { ExternalData, TransactionType } from './utils/transact';
 import { updateVAnchorDayData, VolumeDTO } from './day-data';
 import { isSameAddress, ONE_BI } from './utils/consts';
-import { ensureFungibleTokenWrapper, ensureToken } from './fungible-token-wrapper';
+import { ensureFungibleTokenWrapper, ensureToken, updateCompositionOfToken } from './fungible-token-wrapper';
 import { FungibleTokenWrapper } from '../generated/VAnchor/FungibleTokenWrapper';
 
 function ensureVAnchorTokenVolume(vAnchor: VAnchor, token: Bytes): VAnchorVolume {
@@ -244,6 +244,8 @@ export function handleInsertion(event: InsertionEvent): void {
         // Values
         entity.value = amount;
         entity.RelayerFee = fees;
+        // Update fungibleTokenWrapper composition
+        updateCompositionOfToken(wrappedToken, fungibleTokenWrapper);
 
         if (hasWrapping) {
           const wrapAmount = isNative ? txValue : fungibleTokenWrapperContract.getAmountToWrap(amount);

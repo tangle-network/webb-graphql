@@ -40,7 +40,7 @@ export function ensureToken(tokenAddress: Address): Token {
   token.save();
   return token;
 }
-function ensureFTComposition(token: Token, FTW: FungibleTokenWrapper) {
+function ensureFTWComposition(token: Token, FTW: FungibleTokenWrapper): FungibleTokenWrapperComposition {
   const id: Bytes = FTW.id.concat(token.id);
   const composition = FungibleTokenWrapperComposition.load(id);
 
@@ -48,16 +48,32 @@ function ensureFTComposition(token: Token, FTW: FungibleTokenWrapper) {
     return composition;
   }
   const newComposition = new FungibleTokenWrapperComposition(id);
+
+  const ERC20 = ERC20Contract.bind(Address.fromBytes(token.address));
+  const ftwBalance = ERC20.balanceOf(Address.fromBytes(FTW.address));
   newComposition.token = token.id;
-  newComposition.volume = BigInt.zero();
+  newComposition.volume = ftwBalance;
   newComposition.save();
 
   const compositions = FTW.composition;
 
   compositions.push(newComposition.id);
+
   FTW.composition = compositions;
   FTW.save();
+
+  return newComposition;
 }
+
+export function updateCompositionOfToken(token: Token, FTW: FungibleTokenWrapper): void {
+  const composition = ensureFTWComposition(token, FTW);
+
+  const ERC20 = ERC20Contract.bind(Address.fromBytes(token.address));
+  const balance = ERC20.balanceOf(Address.fromBytes(FTW.address));
+  composition.volume = balance;
+  composition.save();
+}
+
 export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleTokenWrapper {
   let maybeFungibleTokenWrapper = FungibleTokenWrapper.load(tokenAddress);
   if (maybeFungibleTokenWrapper) {
@@ -80,13 +96,13 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
   let FTWTokens: Array<Bytes> = [];
   for (let i = 0; i < tokens.length; i++) {
     const token = ensureToken(tokens[i]);
-    ensureFTComposition(token, fungibleTokenWrapperEntity);
+    ensureFTWComposition(token, fungibleTokenWrapperEntity);
     FTWTokens.push(tokens[i]);
   }
   // Adding the native token to the list of tokens
   if (ftw.isNativeAllowed()) {
     const token = ensureToken(Address.zero());
-    ensureFTComposition(token, fungibleTokenWrapperEntity);
+    ensureFTWComposition(token, fungibleTokenWrapperEntity);
 
     FTWTokens.push(Address.zero());
     // TODO: Ensure the token symbol is the native token for the used chain
