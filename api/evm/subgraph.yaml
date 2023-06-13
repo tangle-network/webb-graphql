@@ -27,30 +27,4 @@ dataSources:
           handler: handleInsertion
           receipt: true
       file: ./src/vAnchor.ts
-  - kind: ethereum
-    name: FungibleTokenWrapper
-    network: Fuji
-    source:
-      abi: FungibleTokenWrapper
-      address: "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Paused
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
-        - Transfer
-        - Unpaused
-      abis:
-        - name: FungibleTokenWrapper
-          file: ./abis/FungibleTokenWrapper.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/fungible-token-wrapper.ts
+
