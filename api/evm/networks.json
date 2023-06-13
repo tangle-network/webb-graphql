@@ -14,7 +14,7 @@
       "startBlock": 3146552
     },
     "FungibleTokenWrapper": {
-      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
+      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
     }
   },
   "Moonbase": {
@@ -23,16 +23,16 @@
       "startBlock": 3996742
     },
     "FungibleTokenWrapper": {
-      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
+      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
     }
   },
   "Fuji": {
     "VAnchor": {
       "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
-      "startBlock": 20151492,
+      "startBlock": 20151492
     },
     "FungibleTokenWrapper": {
-      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
+      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
     }
   },
   "ScrollAlpha": {
@@ -41,7 +41,7 @@
       "startBlock": 666094
     },
     "FungibleTokenWrapper": {
-      "address": "0xe5c04ddc447bee02a0f734d0670e1caa752e9ae3"
+      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
     }
   },
   "Athena": {
@@ -59,7 +59,7 @@
       "startBlock": 20
     },
     "FungibleTokenWrapper": {
-      "address": "0x2946259E0334f33A064106302415aD3391BeD384"
+      "address": "0x01eb50a7c42b525fa7c3bd340ab1f6f81257fe01"
     }
   }
 }

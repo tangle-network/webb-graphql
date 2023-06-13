@@ -177,9 +177,8 @@ type VAnchorDayData @entity(immutable: false) {
   wrappingFees: BigInt!
   fees: BigInt!
   volume: BigInt!
-  depositedVolume:BigInt!
-  withdrawnVolume:BigInt!
-
+  depositedVolume: BigInt!
+  withdrawnVolume: BigInt!
 
   numberOfDeposits: BigInt!
   numberOfWithdraws: BigInt!
@@ -207,13 +206,25 @@ type Token @entity(immutable: false) {
   symbol: String!
   decimals: Int!
 }
+
+type FungibleTokenWrapperComposition @entity(immutable: false) {
+  #<FTW id>-<Token id>
+  id: Bytes!
+  token: Token!
+  volume:BigInt!
+}
 type FungibleTokenWrapper @entity(immutable: false) {
+  # FungibleTokenWrapper contract address
   id: Bytes!
   name: String!
+  # Contract address
   address: Bytes!
   symbol: String!
+  # List of underlying tokens (Token that can be wrapped into the FTW, or the FTW can unwrap to)
   tokens: [Token!]!
+  # The symbol of one the of the underlying tokens
   baseTokenSymbol: String
   decimals: Int!
   feePercentage: Int!
+  composition:[FungibleTokenWrapperComposition!]!
 }

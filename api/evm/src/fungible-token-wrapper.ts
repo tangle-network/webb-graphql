@@ -1,9 +1,9 @@
-import { Address, Bytes } from '@graphprotocol/graph-ts';
+import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   FungibleTokenWrapper as FungibleTokenWrapperContract,
   Transfer as TransferEvent,
 } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
-import { FungibleTokenWrapper, Token } from '../generated/schema';
+import { FungibleTokenWrapper, FungibleTokenWrapperComposition, Token } from '../generated/schema';
 import { ERC20 as ERC20Contract } from '../generated/VAnchor/ERC20';
 
 export function ensureToken(tokenAddress: Address): Token {
@@ -40,7 +40,24 @@ export function ensureToken(tokenAddress: Address): Token {
   token.save();
   return token;
 }
+function ensureFTComposition(token: Token, FTW: FungibleTokenWrapper) {
+  const id: Bytes = FTW.id.concat(token.id);
+  const composition = FungibleTokenWrapperComposition.load(id);
 
+  if (composition) {
+    return composition;
+  }
+  const newComposition = new FungibleTokenWrapperComposition(id);
+  newComposition.token = token.id;
+  newComposition.volume = BigInt.zero();
+  newComposition.save();
+
+  const compositions = FTW.composition;
+
+  compositions.push(newComposition.id);
+  FTW.composition = compositions;
+  FTW.save();
+}
 export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleTokenWrapper {
   let maybeFungibleTokenWrapper = FungibleTokenWrapper.load(tokenAddress);
   if (maybeFungibleTokenWrapper) {
@@ -50,16 +67,27 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
   const ftw = FungibleTokenWrapperContract.bind(tokenAddress);
   // token name
   fungibleTokenWrapperEntity.name = ftw.name();
+  fungibleTokenWrapperEntity.tokens = [];
+  fungibleTokenWrapperEntity.symbol = ftw.symbol();
+  fungibleTokenWrapperEntity.decimals = ftw.decimals();
+  fungibleTokenWrapperEntity.feePercentage = ftw.feePercentage();
+  fungibleTokenWrapperEntity.address = tokenAddress;
+  fungibleTokenWrapperEntity.save();
+
   // list of tokens for
   const tokens = ftw.getTokens();
+
   let FTWTokens: Array<Bytes> = [];
   for (let i = 0; i < tokens.length; i++) {
-    ensureToken(tokens[i]);
+    const token = ensureToken(tokens[i]);
+    ensureFTComposition(token, fungibleTokenWrapperEntity);
     FTWTokens.push(tokens[i]);
   }
   // Adding the native token to the list of tokens
   if (ftw.isNativeAllowed()) {
-    ensureToken(Address.zero());
+    const token = ensureToken(Address.zero());
+    ensureFTComposition(token, fungibleTokenWrapperEntity);
+
     FTWTokens.push(Address.zero());
     // TODO: Ensure the token symbol is the native token for the used chain
     fungibleTokenWrapperEntity.baseTokenSymbol = 'ETH';
@@ -69,11 +97,8 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
   }
 
   fungibleTokenWrapperEntity.tokens = FTWTokens;
-  fungibleTokenWrapperEntity.symbol = ftw.symbol();
-  fungibleTokenWrapperEntity.decimals = ftw.decimals();
-  fungibleTokenWrapperEntity.feePercentage = ftw.feePercentage();
-  fungibleTokenWrapperEntity.address = tokenAddress;
   fungibleTokenWrapperEntity.save();
+
   return fungibleTokenWrapperEntity;
 }
 
