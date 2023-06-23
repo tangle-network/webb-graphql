@@ -1,6 +1,7 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { RawTransferTx, TransactionService } from './transaction.service';
 import { BridgeSide, TransactionFilterInput } from '../../gql/graphql';
+import { BridgeSideWithoutComposition } from '../bridge/bridge.service';
 
 @Resolver('TransferTx')
 export class TransferResolver {
@@ -16,7 +17,7 @@ export class TransferResolver {
   @ResolveField('bridgeSide')
   public resolveBridgeSide(
     @Parent() transferTx: RawTransferTx,
-  ): Promise<BridgeSide> {
+  ): Promise<BridgeSideWithoutComposition> {
     return this.transactionService.fetchBridgeOfTransaction(transferTx);
   }
 }

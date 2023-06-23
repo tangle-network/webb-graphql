@@ -52,7 +52,7 @@ export class PricingService {
     this.pricesCache.set(pricesKey, prices);
     setTimeout(() => {
       this.pricesCache.delete(pricesKey);
-    }, 30_000);
+    }, 60_000);
     return prices;
   }
 }

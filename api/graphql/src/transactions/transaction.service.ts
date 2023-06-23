@@ -6,7 +6,10 @@ import {
   WithdrawTx,
   TransferTx,
 } from '../../gql/graphql';
-import { BridgeService } from '../bridge/bridge.service';
+import {
+  BridgeService,
+  BridgeSideWithoutComposition,
+} from '../bridge/bridge.service';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import {
   DepositTXesListingQueryVariables,
@@ -212,7 +215,7 @@ export class TransactionService {
 
   public async fetchBridgeOfTransaction<T extends RawTx>(
     rawTransaction: T,
-  ): Promise<BridgeSide> {
+  ): Promise<BridgeSideWithoutComposition> {
     const subgraph = this.networkService.getSubgraphConfig(
       rawTransaction.networkName,
     );

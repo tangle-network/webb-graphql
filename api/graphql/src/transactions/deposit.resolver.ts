@@ -6,6 +6,7 @@ import {
 } from './transaction.service';
 import { BridgeSide, TransactionFilterInput } from '../../gql/graphql';
 import { ConsoleLogger } from '@nestjs/common';
+import { BridgeSideWithoutComposition } from '../bridge/bridge.service';
 const console = new ConsoleLogger();
 
 @Resolver('DepositTx')
@@ -22,7 +23,7 @@ export class DepositResolver {
   @ResolveField('bridgeSide')
   public resolveBridgeSide(
     @Parent() depositTx: RawDepositTx,
-  ): Promise<BridgeSide> {
+  ): Promise<BridgeSideWithoutComposition> {
     return this.transactionService.fetchBridgeOfTransaction(depositTx);
   }
 }

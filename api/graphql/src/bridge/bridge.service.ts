@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import {
-  Bridge,
+  Bridge as BridgeRaw,
   BridgesFilterInput,
   BridgeSide,
   Composition,
@@ -11,6 +11,13 @@ import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
 import { NetworksService } from '../subgraph/networks.service';
 import { formatUnits } from 'ethers';
 
+export type BridgeSideWithoutComposition = Omit<BridgeSide, 'composition'> & {
+  fungibleTokenWrapper: VAnchorDetailsFragmentFragment['token'];
+  networkName: string;
+};
+export type Bridge = Omit<BridgeRaw, 'sides'> & {
+  sides: BridgeSideWithoutComposition[];
+};
 @Injectable()
 export class BridgeService {
   private logger = new ConsoleLogger('BridgeService');
@@ -121,10 +128,52 @@ export class BridgeService {
     }
   }
 
+  async getCompositionsOfBridgeSide(
+    bridgeSide: BridgeSideWithoutComposition,
+  ): Promise<Composition[]> {
+    const composition: Array<Composition> = [];
+
+    const token = bridgeSide.fungibleTokenWrapper;
+    const decimals = token.decimals;
+    const symbol = token.baseTokenSymbol;
+    const price = await this.pricingService.getPriceUSD([symbol]);
+    const pricePerUnit = price[symbol];
+    for (const compositionEntry of token.composition) {
+      const formattedValue = formatUnits(compositionEntry.volume, decimals);
+      const valueUSD = pricePerUnit * Number(formattedValue);
+
+      const entry: Composition = {
+        valueUSD: String(valueUSD),
+        value: formattedValue,
+        token: {
+          id: compositionEntry.token.id,
+          symbol: compositionEntry.token.symbol,
+          name: compositionEntry.token.name,
+          decimals: compositionEntry.token.decimals,
+          address: compositionEntry.token.address,
+          isFungibleTokenWrapper: compositionEntry.token.isFungibleTokenWrapper,
+        },
+      };
+      if (compositionEntry.isNative) {
+        // query native balance
+        const balanceFormatted = await this.networkService.getNativeBalance(
+          bridgeSide.networkName,
+          String(token.id),
+        );
+        const valueUSD = pricePerUnit * Number(balanceFormatted);
+        entry.valueUSD = String(valueUSD);
+        entry.value = balanceFormatted;
+      }
+
+      composition.push(entry);
+    }
+    return composition;
+  }
+
   private async vAnchorIntoBridgeSide(
     vAnchor: VAnchorDetailsFragmentFragment,
     networkName: string,
-  ): Promise<BridgeSide> {
+  ): Promise<BridgeSideWithoutComposition> {
     const {
       id,
       contractAddress,
@@ -152,47 +201,16 @@ export class BridgeService {
     const totalLockedVolumeUSD = pricePerUnit * Number(formattedValue);
 
     const totalFeesUSD = pricePerUnit * Number(formattedTotalFees);
-    const composition: Array<Composition> = [];
-
-    for (const compositionEntry of token.composition) {
-      const formattedValue = formatUnits(compositionEntry.volume, decimals);
-      const valueUSD = pricePerUnit * Number(formattedValue);
-
-      const entry: Composition = {
-        valueUSD: String(valueUSD),
-        value: formattedValue,
-        token: {
-          id: compositionEntry.token.id,
-          symbol: compositionEntry.token.symbol,
-          name: compositionEntry.token.name,
-          decimals: compositionEntry.token.decimals,
-          address: compositionEntry.token.address,
-          isFungibleTokenWrapper: compositionEntry.token.isFungibleTokenWrapper,
-        },
-      };
-      if (compositionEntry.isNative) {
-        // query native balance
-        const balanceFormatted = await this.networkService.getNativeBalance(
-          networkName,
-          String(token.id),
-        );
-        const valueUSD = pricePerUnit * Number(balanceFormatted);
-        entry.valueUSD = String(valueUSD);
-        entry.value = balanceFormatted;
-      }
-
-      composition.push(entry);
-    }
 
     const averageDepositAmountUSD =
       price[symbol] * Number(formattedAverageDepositAmount);
     return {
       id,
       chainId: Number(chainId),
-      composition,
+      fungibleTokenWrapper: token,
       averageDepositAmount: formattedAverageDepositAmount,
       averageDepositAmountUSD: String(averageDepositAmountUSD),
-
+      networkName,
       contractAddress: contractAddress,
       maxDepositAmount: String(maxDepositAmount),
       minDepositAmount: String(minDepositAmount),
@@ -213,7 +231,7 @@ export class BridgeService {
   public async fetchBridgeSide(
     subgraph: Subgraph,
     vAnchorAddress: string,
-  ): Promise<BridgeSide> {
+  ): Promise<BridgeSideWithoutComposition> {
     const { vanchor } = await this.vAnchorService.fetchVAnchorDetails(
       subgraph,
       {

@@ -1,6 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { Bridge, BridgesFilterInput } from '../../gql/graphql';
-import { BridgeService } from './bridge.service';
+import { BridgesFilterInput } from '../../gql/graphql';
+import { Bridge, BridgeService } from './bridge.service';
+import { ConsoleLogger } from '@nestjs/common';
 
 @Resolver('Bridge')
 export class BridgeResolver {
@@ -28,10 +29,15 @@ export class BridgeResolver {
   /**
    * TVL for any given side of a set of bridges
    * */
-  bridgeSide(
+  async bridgeSide(
     @Args('network') network: string,
     @Args('contractAddress') contractAddress: string,
   ) {
-    return this.bridgeService.getBridgeSide(network, contractAddress);
+    const side = await this.bridgeService.getBridgeSide(
+      network,
+      contractAddress,
+    );
+
+    return side;
   }
 }

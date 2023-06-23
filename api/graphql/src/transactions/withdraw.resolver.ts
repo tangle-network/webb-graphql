@@ -2,6 +2,7 @@ import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { RawWithdrawTx, TransactionService } from './transaction.service';
 import { BridgeSide, TransactionFilterInput } from '../../gql/graphql';
 import { ConsoleLogger } from '@nestjs/common';
+import { BridgeSideWithoutComposition } from '../bridge/bridge.service';
 
 const console = new ConsoleLogger();
 
@@ -19,7 +20,7 @@ export class WithdrawResolver {
   @ResolveField('bridgeSide')
   public resolveBridgeSide(
     @Parent() withdrawTx: RawWithdrawTx,
-  ): Promise<BridgeSide> {
+  ): Promise<BridgeSideWithoutComposition> {
     return this.transactionService.fetchBridgeOfTransaction(withdrawTx);
   }
 }

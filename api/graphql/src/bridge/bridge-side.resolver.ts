@@ -1,10 +1,15 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { BridgeSide } from '../../gql/graphql';
+import { BridgeService, BridgeSideWithoutComposition } from './bridge.service';
 
 @Resolver('BridgeSide')
 export class BridgeSideResolver {
-  @Query()
-  public async bridges(): Promise<BridgeSide[]> {
-    return [];
+  constructor(private bridgeService: BridgeService) {}
+
+  @ResolveField('composition')
+  async fetchCompositionOfBridgeSide(
+    @Parent() side: BridgeSideWithoutComposition,
+  ) {
+    return this.bridgeService.getCompositionsOfBridgeSide(side);
   }
 }
