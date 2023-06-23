@@ -14,13 +14,7 @@ query BridgesTVL {
 
 #Given a set of bridges give me the total volume locked
 query SetOfBridgesTVL {
-  bridges(
-    filter: {
-      where: [
-        "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
-      ]
-    }
-  ) {
+  bridges(filter: { where: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }) {
     id
     totalVolumeLocked
     totalVolumeLockedUSD
@@ -57,7 +51,6 @@ query bridgeSideOfNetworkTVL {
     totalVolumeLockedUSD
   }
 }
-
 
 # TVL for any given token on any given bridge
 ## TODO

@@ -6,12 +6,8 @@ query WithdrawTransactionsForAllBridges {
     blockTimestamp
     transactionHash
 
-
-
     value
     fullFee
-
-
   }
 }
 
@@ -29,11 +25,8 @@ query WithdrawTransactionForSetOfBridges {
     blockTimestamp
     transactionHash
 
-
-
     value
     fullFee
-
   }
 }
 
@@ -46,11 +39,8 @@ query WithdrawTransactionForABridge {
     blockTimestamp
     transactionHash
 
-
-
     value
     fullFee
-
   }
 }
 
@@ -66,10 +56,7 @@ query WithdrawTransactionForABridgeSide {
     blockTimestamp
     transactionHash
 
-
-
     value
     fullFee
-
   }
 }

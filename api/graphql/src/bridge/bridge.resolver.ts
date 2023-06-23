@@ -6,7 +6,6 @@ import { BridgeService } from './bridge.service';
 export class BridgeResolver {
   constructor(private readonly bridgeService: BridgeService) {}
 
-
   @Query()
   /**(
    * TVL for a set of bridges collectively

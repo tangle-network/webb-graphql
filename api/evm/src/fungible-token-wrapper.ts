@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
+import { Address, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 import {
   FungibleTokenWrapper as FungibleTokenWrapperContract,
   Transfer as TransferEvent,
@@ -43,6 +43,7 @@ export function ensureToken(tokenAddress: Address): Token {
 function ensureFTWComposition(token: Token, FTW: FungibleTokenWrapper): FungibleTokenWrapperComposition {
   const id: Bytes = FTW.id.concat(token.id);
   const composition = FungibleTokenWrapperComposition.load(id);
+  log.info('Ensure composition token', []);
 
   if (composition) {
     return composition;
@@ -67,6 +68,7 @@ function ensureFTWComposition(token: Token, FTW: FungibleTokenWrapper): Fungible
 
 export function updateCompositionOfToken(token: Token, FTW: FungibleTokenWrapper): void {
   const composition = ensureFTWComposition(token, FTW);
+  log.info('update token composition', []);
 
   const ERC20 = ERC20Contract.bind(Address.fromBytes(token.address));
   const balance = ERC20.balanceOf(Address.fromBytes(FTW.address));
@@ -84,6 +86,8 @@ export function ensureFungibleTokenWrapper(tokenAddress: Address): FungibleToken
   // token name
   fungibleTokenWrapperEntity.name = ftw.name();
   fungibleTokenWrapperEntity.tokens = [];
+  fungibleTokenWrapperEntity.composition = [];
+
   fungibleTokenWrapperEntity.symbol = ftw.symbol();
   fungibleTokenWrapperEntity.decimals = ftw.decimals();
   fungibleTokenWrapperEntity.feePercentage = ftw.feePercentage();

@@ -194,6 +194,7 @@ export function handleInsertion(event: InsertionEvent): void {
     '(bytes,bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes,uint256[],uint256[2],uint256,uint256),(bytes,bytes))',
     Bytes.fromUint8Array(callInput)
   );
+  log.info('Decoded the tx data', []);
   // Gas used for the transaction
   let gasUsed = BigInt.zero();
   if (event.receipt != null) {

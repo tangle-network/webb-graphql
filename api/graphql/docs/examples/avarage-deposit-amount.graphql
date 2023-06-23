@@ -55,4 +55,3 @@ query bridgeSideOfNetworkAverageDepositAmount {
     averageDepositAmountUSD
   }
 }
-

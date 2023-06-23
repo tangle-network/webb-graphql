@@ -211,7 +211,7 @@ type FungibleTokenWrapperComposition @entity(immutable: false) {
   #<FTW id>-<Token id>
   id: Bytes!
   token: Token!
-  volume:BigInt!
+  volume: BigInt!
 }
 type FungibleTokenWrapper @entity(immutable: false) {
   # FungibleTokenWrapper contract address
@@ -226,5 +226,5 @@ type FungibleTokenWrapper @entity(immutable: false) {
   baseTokenSymbol: String
   decimals: Int!
   feePercentage: Int!
-  composition:[FungibleTokenWrapperComposition!]!
+  composition: [FungibleTokenWrapperComposition!]!
 }

@@ -6,7 +6,6 @@ query TransferTransactionsForAllBridges {
     blockTimestamp
     transactionHash
 
-
     bridgeSide {
       id
       chainId
@@ -29,7 +28,6 @@ query TransferTransactionForSetOfBridges {
     blockTimestamp
     transactionHash
 
-
     bridgeSide {
       id
       chainId
@@ -46,7 +44,6 @@ query TransferTransactionForABridge {
     id
     blockTimestamp
     transactionHash
-
 
     bridgeSide {
       id
@@ -67,7 +64,6 @@ query TransferTransactionForABridgeSide {
     id
     blockTimestamp
     transactionHash
-
 
     bridgeSide {
       id
