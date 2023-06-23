@@ -53,7 +53,36 @@ query bridgeSideOfNetworkTVL {
 }
 
 # TVL for any given token on any given bridge
-## TODO
+query FungibleTokenWrapperCompositionForSepolia {
+  bridges {
+    id
+    totalVolumeLocked
+    totalVolumeLockedUSD
+    composition(
+      filter: { tokenSymbols: ["ETH", "WETH"], chains: ["Sepolia"] }
+    ) {
+      network
+      composition {
+        token {
+          symbol
+        }
+        valueUSD
+      }
+    }
+  }
+}
 
 #- TVL for any given token on any given side of bridge
-## TODO
+query SepoliaBridgeComposition {
+  bridgeSide(
+    contractAddress: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+    network: "Sepolia"
+  ) {
+    composition {
+      token {
+        symbol
+      }
+      valueUSD
+    }
+  }
+}
