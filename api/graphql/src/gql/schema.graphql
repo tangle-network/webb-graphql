@@ -171,7 +171,11 @@ type Query {
 
   bridgesDayData(filter: BridgesDayDataInput): [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
-  bridgeSideDayData(bridgeId: String!, network: String! ,tokens:[String!]): DayData!
+  bridgeSideDayData(
+    bridgeId: String!
+    network: String!
+    tokens: [String!]
+  ): DayData!
 
   networks: [Network!]!
 

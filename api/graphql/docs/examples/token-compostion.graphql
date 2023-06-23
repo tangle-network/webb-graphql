@@ -41,7 +41,7 @@ query SetOfBridgesComposition {
 #- Example: `Give me the token composition in $ for the 0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d bridge`
 
 query BridgeComposition {
-  bridge(id: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d" ) {
+  bridge(id: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d") {
     id
     sides {
       id
@@ -78,14 +78,11 @@ query SepoliaBridgeComposition {
 #- Total token composition by $ for any given side of a set of bridges
 #- Example: `Give me the token composition in $ on Ethereum for all bridges`
 query CompositionEthForSepoli {
-  bridges(filter: { where: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] })
-  {
+  bridges(filter: { where: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }) {
     id
     totalVolumeLocked
     totalVolumeLockedUSD
-    composition(
-      filter: { tokenSymbols: ["ETH"], chains: ["Sepolia"] }
-    ) {
+    composition(filter: { tokenSymbols: ["ETH"], chains: ["Sepolia"] }) {
       network
       composition {
         token {

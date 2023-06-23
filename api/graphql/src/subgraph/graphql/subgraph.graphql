@@ -12,7 +12,7 @@ fragment FungibleTokenWrapperDetails on FungibleTokenWrapper {
   decimals
   symbol
   baseTokenSymbol
-  composition{
+  composition {
     id
     volume
     isNative
@@ -106,7 +106,6 @@ query dayDetails($vAnchorId: String!) {
       token {
         ...TokenDetailsFragment
       }
-
     }
 
     numberOfDeposits
