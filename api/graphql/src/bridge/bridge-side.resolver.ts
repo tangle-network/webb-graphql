@@ -10,6 +10,9 @@ export class BridgeSideResolver {
   async fetchCompositionOfBridgeSide(
     @Parent() side: BridgeSideWithoutComposition,
   ) {
-    return this.bridgeService.getCompositionsOfBridgeSide(side);
+    return this.bridgeService.getCompositionOfFTW(
+      side.fungibleTokenWrapper,
+      side.networkName,
+    );
   }
 }

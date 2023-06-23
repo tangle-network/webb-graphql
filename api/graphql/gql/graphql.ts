@@ -8,6 +8,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export interface CompositionFilter {
+    tokenSymbols?: Nullable<string[]>;
+    chains?: Nullable<string[]>;
+}
+
 export interface BridgesFilterInput {
     where?: Nullable<string[]>;
     networks?: Nullable<string[]>;
@@ -27,6 +32,11 @@ export interface Composition {
     token: Token;
     value: string;
     valueUSD: string;
+}
+
+export interface BridgeComposition {
+    composition: Composition[];
+    network: string;
 }
 
 export interface BridgeSide {
@@ -55,6 +65,7 @@ export interface Bridge {
     totalVolumeLocked: string;
     averageDepositAmount: string;
     averageDepositAmountUSD: string;
+    composition?: BridgeComposition[];
     totalFees: string;
     totalFeesUSD: string;
 }

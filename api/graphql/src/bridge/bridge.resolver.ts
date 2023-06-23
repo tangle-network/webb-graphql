@@ -1,5 +1,9 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
-import { BridgesFilterInput } from '../../gql/graphql';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  BridgeComposition,
+  BridgesFilterInput,
+  CompositionFilter,
+} from '../../gql/graphql';
 import { Bridge, BridgeService } from './bridge.service';
 import { ConsoleLogger } from '@nestjs/common';
 
@@ -39,5 +43,16 @@ export class BridgeResolver {
     );
 
     return side;
+  }
+
+  @ResolveField('composition')
+  getBridgeComposition(
+    @Parent() bridge: Bridge,
+    @Args('filter') compositionFilter?: CompositionFilter,
+  ): Promise<BridgeComposition[]> {
+    return this.bridgeService.getCompositionOfBridge(
+      bridge.id,
+      compositionFilter,
+    );
   }
 }

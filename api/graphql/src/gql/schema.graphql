@@ -4,6 +4,11 @@ type Composition {
   valueUSD: String!
 }
 
+type BridgeComposition {
+  composition: [Composition!]!
+  network: String!
+}
+
 type BridgeSide {
   id: String!
   contractAddress: String!
@@ -22,9 +27,15 @@ type BridgeSide {
   averageDepositAmount: String!
   averageDepositAmountUSD: String!
   token: String!
-  composition:[Composition!]!
+  composition: [Composition!]!
   numberOfDeposits: Int!
   numberOfWithdraws: Int!
+}
+
+
+input CompositionFilter {
+  tokenSymbols:[String!]
+  chains:[String!]
 }
 
 type Bridge {
@@ -36,6 +47,8 @@ type Bridge {
 
   averageDepositAmount: String!
   averageDepositAmountUSD: String!
+
+  composition(filter:CompositionFilter): [BridgeComposition!]!
 
   totalFees: String!
   totalFeesUSD: String!

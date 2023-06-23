@@ -1,23 +1,31 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import {
   Bridge as BridgeRaw,
+  BridgeComposition,
   BridgesFilterInput,
   BridgeSide,
   Composition,
+  CompositionFilter,
 } from '../../gql/graphql';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
-import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
+import {
+  FungibleTokenWrapperDetailsFragment,
+  VAnchorDetailsFragmentFragment,
+} from '../generated/graphql';
 import { NetworksService } from '../subgraph/networks.service';
 import { formatUnits } from 'ethers';
+import { Args } from '@nestjs/graphql';
 
 export type BridgeSideWithoutComposition = Omit<BridgeSide, 'composition'> & {
-  fungibleTokenWrapper: VAnchorDetailsFragmentFragment['token'];
+  fungibleTokenWrapper: FungibleTokenWrapperDetailsFragment;
   networkName: string;
 };
-export type Bridge = Omit<BridgeRaw, 'sides'> & {
+
+export interface Bridge extends Omit<BridgeRaw, 'sides' | 'composition'> {
   sides: BridgeSideWithoutComposition[];
-};
+}
+
 @Injectable()
 export class BridgeService {
   private logger = new ConsoleLogger('BridgeService');
@@ -58,6 +66,47 @@ export class BridgeService {
       where: [bridgeId],
     });
     return bridges[0];
+  }
+
+  async getCompositionOfBridge(
+    bridgeId: string,
+    compositionFilter?: CompositionFilter,
+  ): Promise<BridgeComposition[]> {
+    const tokens = compositionFilter?.tokenSymbols ?? [];
+    const targetNetworks = compositionFilter?.chains ?? [];
+    // Map of china id -> map of token symbol -> Composition
+    const perChainComposition: Record<string, Composition[]> = {};
+    const subgraphs = this.networkService.subgraphs;
+    for (const subgraph of subgraphs) {
+      if (
+        targetNetworks.length > 0 &&
+        !targetNetworks.includes(subgraph.network)
+      ) {
+        continue;
+      }
+      const { vanchor } = await this.vAnchorService.fetchVAnchorDetails(
+        subgraph,
+        {
+          id: bridgeId,
+        },
+      );
+      const chainsComposition = await this.getCompositionOfFTW(
+        vanchor.token,
+        subgraph.network,
+      );
+      if (tokens.length > 0) {
+        perChainComposition[subgraph.network] = chainsComposition.filter((c) =>
+          tokens.includes(c.token.symbol),
+        );
+      } else {
+        perChainComposition[subgraph.network] = chainsComposition;
+      }
+    }
+
+    return Object.keys(perChainComposition).map((key) => ({
+      network: key,
+      composition: perChainComposition[key],
+    }));
   }
 
   private async reduceToBridge(
@@ -128,12 +177,13 @@ export class BridgeService {
     }
   }
 
-  async getCompositionsOfBridgeSide(
-    bridgeSide: BridgeSideWithoutComposition,
+  async getCompositionOfFTW(
+    fungibleTokenWrapper: FungibleTokenWrapperDetailsFragment,
+    networkName: string,
   ): Promise<Composition[]> {
     const composition: Array<Composition> = [];
 
-    const token = bridgeSide.fungibleTokenWrapper;
+    const token = fungibleTokenWrapper;
     const decimals = token.decimals;
     const symbol = token.baseTokenSymbol;
     const price = await this.pricingService.getPriceUSD([symbol]);
@@ -157,7 +207,7 @@ export class BridgeService {
       if (compositionEntry.isNative) {
         // query native balance
         const balanceFormatted = await this.networkService.getNativeBalance(
-          bridgeSide.networkName,
+          networkName,
           String(token.id),
         );
         const valueUSD = pricePerUnit * Number(balanceFormatted);
