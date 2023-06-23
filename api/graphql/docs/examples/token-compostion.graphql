@@ -2,7 +2,7 @@
 
 # Example: `Give me the token composition in $ for all bridges`
 
-query BridgesTVL {
+query BridgesCompostion {
   bridges {
     id
     composition {
@@ -20,7 +20,7 @@ query BridgesTVL {
 }
 
 # Example: `Given a set of bridges give me the token composition in $`
-query SetOfBridgesTVL {
+query SetOfBridgesComposition {
   bridges(filter: { where: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }) {
     id
     composition {
@@ -40,8 +40,8 @@ query SetOfBridgesTVL {
 #- Token composition for any given bridge (e.g. all sides of a particular bridge)
 #- Example: `Give me the token composition in $ for the 0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d bridge`
 
-query SetOfBridgesTVL {
-  bridges(filter: { where: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] }) {
+query BridgeComposition {
+  bridge(id: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d" ) {
     id
     sides {
       id
@@ -77,14 +77,14 @@ query SepoliaBridgeComposition {
 
 #- Total token composition by $ for any given side of a set of bridges
 #- Example: `Give me the token composition in $ on Ethereum for all bridges`
-query FungibleTokenWrapperCompositionForSepolia {
+query CompositionEthForSepoli {
   bridges(filter: { where: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"] })
   {
     id
     totalVolumeLocked
     totalVolumeLockedUSD
     composition(
-      filter: { tokenSymbols: ["ETH", "WETH"], chains: ["Sepolia"] }
+      filter: { tokenSymbols: ["ETH"], chains: ["Sepolia"] }
     ) {
       network
       composition {
