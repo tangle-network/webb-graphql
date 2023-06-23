@@ -73,7 +73,41 @@ query BridgeSideDayData {
 }
 
 # Total volume for any given token on any given bridge
-## TODO
+query SetOfBridgesDaydata {
+  bridgesDayData(
+    filter: { where: ["0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"]  , tokens: ["ETH"]}
+  ) {
+    id
+
+    numberOfDeposits
+    numberOfWithdraws
+    numberOfTransfers
+
+    withdrawVolumeUSD
+    depositedVolumeUSD
+
+    feesUSD
+    volumeUSD
+  }
+}
 
 #- Total volume for any given token on any given side of bridge
-## TODO
+query BridgeSideDayData {
+  bridgeSideDayData(
+    bridgeId: "0x38e7aa90c77f86747fab355eecaa0c2e4c3a463d"
+    network: "Sepolia"
+    tokens:["ETH"]
+  ) {
+    id
+
+    numberOfDeposits
+    numberOfWithdraws
+    numberOfTransfers
+
+    withdrawVolumeUSD
+    depositedVolumeUSD
+
+    feesUSD
+    volumeUSD
+  }
+}

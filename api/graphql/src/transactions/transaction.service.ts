@@ -61,7 +61,6 @@ export class TransactionService {
       value: tx.value,
       beneficiary: tx.beneficiary,
       isUnwrapAndWithdraw: tx.isUnwrapAndWithdraw,
-      unWrappingFee: String(tx.unWrappingFee),
       RelayerFee: String(tx.RelayerFee),
       fullFee: String(tx.fullFee),
       gasUsed: String(tx.gasUsed),

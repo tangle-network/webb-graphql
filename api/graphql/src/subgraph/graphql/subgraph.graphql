@@ -95,14 +95,18 @@ query dayDetails($vAnchorId: String!) {
 
     composition {
       id
-      unWrappingFees
+
+      depositedVolume
+      withdrawnVolume
+      volume
+
       wrappingFees
       fees
       relayerFees
       token {
         ...TokenDetailsFragment
       }
-      volume
+
     }
 
     numberOfDeposits
@@ -154,7 +158,6 @@ fragment WithdrawTxFragment on WithdrawTx {
   isUnwrapAndWithdraw
 
   fullFee
-  unWrappingFee
   RelayerFee
 
   fungibleTokenWrapper {

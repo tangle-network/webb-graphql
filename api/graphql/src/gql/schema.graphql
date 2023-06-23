@@ -32,10 +32,9 @@ type BridgeSide {
   numberOfWithdraws: Int!
 }
 
-
 input CompositionFilter {
-  tokenSymbols:[String!]
-  chains:[String!]
+  tokenSymbols: [String!]
+  chains: [String!]
 }
 
 type Bridge {
@@ -48,7 +47,7 @@ type Bridge {
   averageDepositAmount: String!
   averageDepositAmountUSD: String!
 
-  composition(filter:CompositionFilter): [BridgeComposition!]!
+  composition(filter: CompositionFilter): [BridgeComposition!]!
 
   totalFees: String!
   totalFeesUSD: String!
@@ -123,7 +122,6 @@ type WithdrawTx {
   gasUsed: String!
 
   isUnwrapAndWithdraw: Boolean!
-  unWrappingFee: String!
   RelayerFee: String!
   fullFee: String!
 
@@ -159,6 +157,7 @@ input BridgesFilterInput {
 input BridgesDayDataInput {
   where: [String!]
   networks: [String!]
+  tokens: [String!]
 }
 input TransactionFilterInput {
   bridges: [String!]
@@ -172,7 +171,7 @@ type Query {
 
   bridgesDayData(filter: BridgesDayDataInput): [DayData!]!
   bridgeDayData(bridgeId: String!): DayData!
-  bridgeSideDayData(bridgeId: String!, network: String!): DayData!
+  bridgeSideDayData(bridgeId: String!, network: String! ,tokens:[String!]): DayData!
 
   networks: [Network!]!
 

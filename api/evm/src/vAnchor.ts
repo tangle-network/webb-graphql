@@ -49,7 +49,7 @@ function ensureVAnchor(address: Address): VAnchor {
   const possibleWrappedTokens = token.tokens;
 
   newVAnchor.token = token.id;
-  newVAnchor.typedChainId = Bytes.fromHexString(vAnchorContract.getChainIdType().toHexString());
+  newVAnchor.typedChainId = Bytes.fromByteArray(Bytes.fromBigInt(vAnchorContract.getChainIdType()));
   newVAnchor.chainId = vAnchorContract.getChainId();
 
   newVAnchor.valueLocked = BigInt.zero();
@@ -235,6 +235,11 @@ export function handleInsertion(event: InsertionEvent): void {
       dayDataPayload.relayerFees = fees;
       dayDataPayload.txType = transactionType;
 
+      if (hasWrapping) {
+        // Update fungibleTokenWrapper composition
+        updateCompositionOfToken(wrappedToken, fungibleTokenWrapper);
+      }
+
       if (transactionType === TransactionType.Deposit) {
         let entity = new DepositTx(txId);
 
@@ -247,9 +252,6 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.RelayerFee = fees;
 
         if (hasWrapping) {
-          // Update fungibleTokenWrapper composition
-          updateCompositionOfToken(wrappedToken, fungibleTokenWrapper);
-
           const wrapAmount = isNative ? txValue : fungibleTokenWrapperContract.getAmountToWrap(amount);
           const wrappingFee = fungibleTokenWrapperContract.getFeeFromAmount(wrapAmount);
           const finalAmount = wrapAmount.minus(wrappingFee);
@@ -293,12 +295,9 @@ export function handleInsertion(event: InsertionEvent): void {
           const wrapAmount = isNative ? txValue : fungibleTokenWrapperContract.getAmountToWrap(amount);
           const wrappingFee = fungibleTokenWrapperContract.getFeeFromAmount(wrapAmount);
           const finalAmount = wrapAmount.minus(wrappingFee);
-          entity.unWrappingFee = wrappingFee;
           entity.finalValue = finalAmount;
-          dayDataPayload.unWrappingFees = wrappingFee;
           dayDataPayload.finalAmount = finalAmount;
         } else {
-          entity.unWrappingFee = BigInt.zero();
           entity.finalValue = finalAmount;
           dayDataPayload.finalAmount = finalAmount;
         }
@@ -308,7 +307,6 @@ export function handleInsertion(event: InsertionEvent): void {
         entity.blockNumber = event.block.number;
         entity.blockTimestamp = event.block.timestamp;
         entity.transactionHash = event.transaction.hash;
-        entity.fullFee = entity.RelayerFee.plus(entity.unWrappingFee);
         entity.gasUsed = gasUsed;
 
         entity.save();

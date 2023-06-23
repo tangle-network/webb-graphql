@@ -22,10 +22,12 @@ export class DayDataResolve {
   public bridgeSideDayData(
     @Args('bridgeId') bridgeId: string,
     @Args('network') network: string,
+    @Args('tokens') tokens?: string[],
   ): Promise<DayData> {
     return this.dayDataService.bridgeSideDayDataByNetworkName(
       bridgeId,
       network,
+      tokens ?? [],
     );
   }
 }

@@ -21,6 +21,7 @@ export interface BridgesFilterInput {
 export interface BridgesDayDataInput {
     where?: Nullable<string[]>;
     networks?: Nullable<string[]>;
+    tokens?: Nullable<string[]>;
 }
 
 export interface TransactionFilterInput {
@@ -126,7 +127,6 @@ export interface WithdrawTx {
     value: string;
     gasUsed: string;
     isUnwrapAndWithdraw: boolean;
-    unWrappingFee: string;
     RelayerFee: string;
     fullFee: string;
     finalValue: string;
@@ -155,7 +155,7 @@ export interface IQuery {
     bridgeSide(network: string, contractAddress: string): BridgeSide | Promise<BridgeSide>;
     bridgesDayData(filter?: Nullable<BridgesDayDataInput>): DayData[] | Promise<DayData[]>;
     bridgeDayData(bridgeId: string): DayData | Promise<DayData>;
-    bridgeSideDayData(bridgeId: string, network: string): DayData | Promise<DayData>;
+    bridgeSideDayData(bridgeId: string, network: string, tokens?: Nullable<string[]>): DayData | Promise<DayData>;
     networks(): Network[] | Promise<Network[]>;
     depositTransactions(filter?: Nullable<TransactionFilterInput>): DepositTx[] | Promise<DepositTx[]>;
     withdrawTransactions(filter?: Nullable<TransactionFilterInput>): WithdrawTx[] | Promise<WithdrawTx[]>;

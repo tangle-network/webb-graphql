@@ -20,7 +20,9 @@ export function ensureDayVolumeComposition(dayData: VAnchorDayData, token: Bytes
 
   newDayVolumeComposition.relayerFees = BigInt.zero();
   newDayVolumeComposition.wrappingFees = BigInt.zero();
-  newDayVolumeComposition.unWrappingFees = BigInt.zero();
+
+  newDayVolumeComposition.depositedVolume = BigInt.zero();
+  newDayVolumeComposition.withdrawnVolume = BigInt.zero();
   newDayVolumeComposition.save();
 
   let vAnchorCompositions = dayData.composition;
@@ -79,35 +81,26 @@ export class VolumeDTO {
   public token: Token;
   public relayerFees: BigInt;
   public wrappingFees: BigInt;
-  public unWrappingFees: BigInt;
   public finalAmount: BigInt;
   public txType: TransactionType;
 
-  constructor(
-    token: Token,
-    relayerFees: BigInt,
-    wrappingFees: BigInt,
-    unWrappingFees: BigInt,
-    finalAmount: BigInt,
-    txType: TransactionType
-  ) {
+  constructor(token: Token, relayerFees: BigInt, wrappingFees: BigInt, finalAmount: BigInt, txType: TransactionType) {
     this.token = token;
     this.relayerFees = relayerFees;
     this.wrappingFees = wrappingFees;
-    this.unWrappingFees = unWrappingFees;
     this.finalAmount = finalAmount;
     this.txType = txType;
   }
 
   static withToken(token: Token): VolumeDTO {
-    return new VolumeDTO(token, BigInt.zero(), BigInt.zero(), BigInt.zero(), BigInt.zero(), TransactionType.Deposit);
+    return new VolumeDTO(token, BigInt.zero(), BigInt.zero(), BigInt.zero(), TransactionType.Deposit);
   }
 
   get totalFees(): BigInt {
     return this.relayerFees.plus(this.totalWrappingFees);
   }
   get totalWrappingFees(): BigInt {
-    return this.wrappingFees.plus(this.unWrappingFees);
+    return this.wrappingFees;
   }
 }
 
@@ -132,11 +125,12 @@ export function updateVAnchorDayData(
     const depositTransactions = vAnchorDayData.depositTx;
     depositTransactions.push(txId);
     vAnchorDayData.depositTx = depositTransactions;
-    dayVolumeComposition.volume = dayVolumeComposition.volume.plus(finalAmount);
     vAnchorDayData.volume = vAnchorDayData.volume.plus(finalAmount);
     vAnchorDayData.depositedVolume = vAnchorDayData.depositedVolume.plus(finalAmount);
+
+    dayVolumeComposition.volume = dayVolumeComposition.volume.plus(finalAmount);
+    dayVolumeComposition.depositedVolume = dayVolumeComposition.depositedVolume.plus(finalAmount);
   } else if (txType === TransactionType.Withdraw) {
-    dayVolumeComposition.volume = dayVolumeComposition.volume.minus(finalAmount);
     vAnchorDayData.withdrawnVolume = vAnchorDayData.withdrawnVolume.plus(finalAmount);
 
     vAnchorDayData.volume = vAnchorDayData.volume.minus(finalAmount);
@@ -146,6 +140,9 @@ export function updateVAnchorDayData(
     const withdrawTransactions = vAnchorDayData.depositTx;
     withdrawTransactions.push(txId);
     vAnchorDayData.withdrawTx = withdrawTransactions;
+
+    dayVolumeComposition.volume = dayVolumeComposition.volume.minus(finalAmount);
+    dayVolumeComposition.withdrawnVolume = dayVolumeComposition.withdrawnVolume.plus(finalAmount);
   } else if (txType === TransactionType.Transfer) {
     const TransferTransactions = vAnchorDayData.depositTx;
     TransferTransactions.push(txId);
@@ -156,7 +153,6 @@ export function updateVAnchorDayData(
   dayVolumeComposition.fees = dayVolumeComposition.fees.plus(fee);
   dayVolumeComposition.relayerFees = dayVolumeComposition.relayerFees.plus(volumeDTO.relayerFees);
   dayVolumeComposition.wrappingFees = dayVolumeComposition.wrappingFees.plus(volumeDTO.wrappingFees);
-  dayVolumeComposition.unWrappingFees = dayVolumeComposition.unWrappingFees.plus(volumeDTO.wrappingFees);
 
   vAnchorDayData.fees = vAnchorDayData.fees.plus(fee);
   vAnchorDayData.relayerFees = vAnchorDayData.relayerFees.plus(volumeDTO.relayerFees);

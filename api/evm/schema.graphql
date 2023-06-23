@@ -102,7 +102,6 @@ type WithdrawTx @entity(immutable: true) {
   gasUsed: BigInt!
 
   isUnwrapAndWithdraw: Boolean!
-  unWrappingFee: BigInt!
   RelayerFee: BigInt!
   fullFee: BigInt!
 
@@ -160,8 +159,8 @@ type VAnchorVolumeComposition @entity {
 
   relayerFees: BigInt!
   wrappingFees: BigInt!
-  unWrappingFees: BigInt!
-
+  depositedVolume: BigInt!
+  withdrawnVolume: BigInt!
   fees: BigInt!
   volume: BigInt!
 }
