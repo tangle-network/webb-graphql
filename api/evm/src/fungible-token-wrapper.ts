@@ -5,6 +5,7 @@ import {
 } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
 import { FungibleTokenWrapper, FungibleTokenWrapperComposition, Token } from '../generated/schema';
 import { ERC20 as ERC20Contract } from '../generated/VAnchor/ERC20';
+import { isSameAddress } from './utils/consts';
 
 export function ensureToken(tokenAddress: Address): Token {
   let maybeToken = Token.load(tokenAddress);
@@ -49,11 +50,16 @@ function ensureFTWComposition(token: Token, FTW: FungibleTokenWrapper): Fungible
     return composition;
   }
   const newComposition = new FungibleTokenWrapperComposition(id);
-
+  newComposition.isNative = isSameAddress(Address.zero(), Address.fromBytes(token.address));
   const ERC20 = ERC20Contract.bind(Address.fromBytes(token.address));
-  const ftwBalance = ERC20.balanceOf(Address.fromBytes(FTW.address));
+
+  const ftwBalance = ERC20.try_balanceOf(Address.fromBytes(FTW.address));
+  if (ftwBalance.reverted) {
+    newComposition.volume = BigInt.zero();
+  } else {
+    newComposition.volume = ftwBalance.value;
+  }
   newComposition.token = token.id;
-  newComposition.volume = ftwBalance;
   newComposition.save();
 
   const compositions = FTW.composition;
@@ -71,8 +77,13 @@ export function updateCompositionOfToken(token: Token, FTW: FungibleTokenWrapper
   log.info('update token composition', []);
 
   const ERC20 = ERC20Contract.bind(Address.fromBytes(token.address));
-  const balance = ERC20.balanceOf(Address.fromBytes(FTW.address));
-  composition.volume = balance;
+
+  const ftwBalance = ERC20.try_balanceOf(Address.fromBytes(FTW.address));
+  if (ftwBalance.reverted) {
+    composition.volume = BigInt.zero();
+  } else {
+    composition.volume = ftwBalance.value;
+  }
   composition.save();
 }
 

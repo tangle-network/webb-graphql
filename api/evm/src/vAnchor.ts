@@ -245,10 +245,11 @@ export function handleInsertion(event: InsertionEvent): void {
         // Values
         entity.value = amount;
         entity.RelayerFee = fees;
-        // Update fungibleTokenWrapper composition
-        updateCompositionOfToken(wrappedToken, fungibleTokenWrapper);
 
         if (hasWrapping) {
+          // Update fungibleTokenWrapper composition
+          updateCompositionOfToken(wrappedToken, fungibleTokenWrapper);
+
           const wrapAmount = isNative ? txValue : fungibleTokenWrapperContract.getAmountToWrap(amount);
           const wrappingFee = fungibleTokenWrapperContract.getFeeFromAmount(wrapAmount);
           const finalAmount = wrapAmount.minus(wrappingFee);

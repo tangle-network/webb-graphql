@@ -212,6 +212,7 @@ type FungibleTokenWrapperComposition @entity(immutable: false) {
   id: Bytes!
   token: Token!
   volume: BigInt!
+  isNative:Boolean!
 }
 type FungibleTokenWrapper @entity(immutable: false) {
   # FungibleTokenWrapper contract address
