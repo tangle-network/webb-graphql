@@ -118,19 +118,23 @@ export class TransactionService {
     const transactions = [];
     const graphs = this.filterInputIntoSubgraph(filterInput);
     const bridgeSet = filterInput?.bridges ?? [];
-    const queryVariables: TransferTXesListingQueryVariables | undefined =
+    const queryVariables: TransferTXesListingQueryVariables =
       bridgeSet.length > 0
         ? {
             where: {
               vAnchor_in: bridgeSet,
             },
           }
-        : undefined;
+        : {};
 
     for (const subgraph of graphs) {
       const rawTXs = await this.vAnchorService.fetchTransferTransactions(
         subgraph,
-        queryVariables,
+        {
+          ...queryVariables,
+          first: filterInput?.pagination?.first || 20,
+          skip: filterInput?.pagination?.skip || 0,
+        },
       );
 
       const mappedTxs = rawTXs.transferTxes.map(
@@ -148,18 +152,22 @@ export class TransactionService {
     const graphs = this.filterInputIntoSubgraph(filterInput);
     const bridgeSet = filterInput?.bridges ?? [];
     const transactions = [];
-    const queryVariables: WithdrawTXesListingQueryVariables | undefined =
+    const queryVariables: WithdrawTXesListingQueryVariables =
       bridgeSet.length > 0
         ? {
             where: {
               vAnchor_in: bridgeSet,
             },
           }
-        : undefined;
+        : {};
     for (const subgraph of graphs) {
       const rawTXs = await this.vAnchorService.fetchWithdrawTransactions(
         subgraph,
-        queryVariables,
+        {
+          ...queryVariables,
+          first: filterInput?.pagination?.first || 20,
+          skip: filterInput?.pagination?.skip || 0,
+        },
       );
 
       const mappedTxs = rawTXs.withdrawTxes.map(
@@ -188,20 +196,24 @@ export class TransactionService {
 
     const graphs = this.filterInputIntoSubgraph(filterInput);
 
-    const queryVariables: DepositTXesListingQueryVariables | undefined =
+    const queryVariables: DepositTXesListingQueryVariables =
       bridgeSet.length > 0
         ? {
             where: {
               vAnchor_in: bridgeSet,
             },
           }
-        : undefined;
+        : {};
 
     const transactions = [];
     for (const subgraph of graphs) {
       const rawTXs = await this.vAnchorService.fetchDepositTransactions(
         subgraph,
-        queryVariables,
+        {
+          ...queryVariables,
+          first: filterInput?.pagination?.first || 20,
+          skip: filterInput?.pagination?.skip || 0,
+        },
       );
 
       const mappedTransactions = rawTXs.depositTxes.map(

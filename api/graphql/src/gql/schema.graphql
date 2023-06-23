@@ -162,6 +162,12 @@ input BridgesDayDataInput {
 input TransactionFilterInput {
   bridges: [String!]
   networks: [String!]
+  pagination: PaginationInput
+}
+
+input PaginationInput {
+  first: Int
+  skip: Int
 }
 
 type Query {

@@ -27,6 +27,12 @@ export interface BridgesDayDataInput {
 export interface TransactionFilterInput {
     bridges?: Nullable<string[]>;
     networks?: Nullable<string[]>;
+    pagination?: Nullable<PaginationInput>;
+}
+
+export interface PaginationInput {
+    first?: Nullable<number>;
+    skip?: Nullable<number>;
 }
 
 export interface Composition {
