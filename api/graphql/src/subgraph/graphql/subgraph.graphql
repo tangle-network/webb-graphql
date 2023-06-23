@@ -12,6 +12,14 @@ fragment FungibleTokenWrapperDetails on FungibleTokenWrapper {
   decimals
   symbol
   baseTokenSymbol
+  composition{
+    id
+    volume
+    isNative
+    token {
+      ...TokenDetailsFragment
+    }
+  }
 }
 
 fragment FungibleTokenWrapperBasicDetails on VAnchor {

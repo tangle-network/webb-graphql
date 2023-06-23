@@ -49,7 +49,7 @@ function ensureVAnchor(address: Address): VAnchor {
   const possibleWrappedTokens = token.tokens;
 
   newVAnchor.token = token.id;
-  newVAnchor.typedChainId = vAnchorContract.EVM_CHAIN_ID_TYPE();
+  newVAnchor.typedChainId = Bytes.fromHexString(vAnchorContract.getChainIdType().toHexString());
   newVAnchor.chainId = vAnchorContract.getChainId();
 
   newVAnchor.valueLocked = BigInt.zero();

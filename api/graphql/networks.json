@@ -2,15 +2,19 @@
   "networks": [
     {
       "subgraphUri": "http://localhost:8000/subgraphs/name/ScrollAlphaVAnchor",
-      "chainName": "ScrollAlpha"
+      "chainName": "ScrollAlpha",
+      "rpc": "https://alpha-rpc.scroll.io/l2"
     },
     {
       "subgraphUri": "http://localhost:8000/subgraphs/name/SepoliaVAnchor",
-      "chainName": "Sepolia"
+      "chainName": "Sepolia",
+      "rpc": "https://sepolia.infura.io/v3/9dabd25bdddc4d459e8743f8a3f40f8e"
+
     },
     {
       "subgraphUri": "http://localhost:8000/subgraphs/name/FujiVAnchor",
-      "chainName": "Fuji"
+      "chainName": "Fuji",
+      "rpc": "https://api.avax-test.network/ext/bc/C/rpc"
     }
   ]
 }

@@ -1,10 +1,15 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { Bridge, BridgesFilterInput, BridgeSide } from '../../gql/graphql';
+import {
+  Bridge,
+  BridgesFilterInput,
+  BridgeSide,
+  Composition,
+} from '../../gql/graphql';
 import { Subgraph, VAnchorService } from '../subgraph/v-anchor.service';
 import { PricingService } from '../pricing/pricing.service';
 import { VAnchorDetailsFragmentFragment } from '../generated/graphql';
 import { NetworksService } from '../subgraph/networks.service';
-import { formatUnits, parseUnits } from 'ethers';
+import { formatUnits } from 'ethers';
 
 @Injectable()
 export class BridgeService {
@@ -64,7 +69,10 @@ export class BridgeService {
         : undefined,
     );
     for (const vAnchor of vanchors) {
-      const bridgeSide = await this.vAnchorIntoBridgeSide(vAnchor);
+      const bridgeSide = await this.vAnchorIntoBridgeSide(
+        vAnchor,
+        subgraph.network,
+      );
       if (bridges[bridgeSide.id]) {
         bridges[bridgeSide.id] = {
           ...bridges[bridgeSide.id],
@@ -115,6 +123,7 @@ export class BridgeService {
 
   private async vAnchorIntoBridgeSide(
     vAnchor: VAnchorDetailsFragmentFragment,
+    networkName: string,
   ): Promise<BridgeSide> {
     const {
       id,
@@ -123,13 +132,11 @@ export class BridgeService {
       typedChainId,
       token,
       valueLocked,
-      averageDepositAmount,
 
       minDepositAmount,
 
       numberOfWithdraws,
       numberOfDeposits,
-
       totalFees,
       maxDepositAmount,
     } = vAnchor;
@@ -141,17 +148,48 @@ export class BridgeService {
     const formattedAverageDepositAmount = formatUnits(totalFees, decimals);
 
     const price = await this.pricingService.getPriceUSD([symbol]);
+    const pricePerUnit = price[symbol];
+    const totalLockedVolumeUSD = pricePerUnit * Number(formattedValue);
 
-    const totalLockedVolumeUSD = price[symbol] * Number(formattedValue);
+    const totalFeesUSD = pricePerUnit * Number(formattedTotalFees);
+    const composition: Array<Composition> = [];
 
-    const totalFeesUSD = price[symbol] * Number(formattedTotalFees);
+    for (const compositionEntry of token.composition) {
+      const formattedValue = formatUnits(compositionEntry.volume, decimals);
+      const valueUSD = pricePerUnit * Number(formattedValue);
+
+      const entry: Composition = {
+        valueUSD: String(valueUSD),
+        value: formattedValue,
+        token: {
+          id: compositionEntry.token.id,
+          symbol: compositionEntry.token.symbol,
+          name: compositionEntry.token.name,
+          decimals: compositionEntry.token.decimals,
+          address: compositionEntry.token.address,
+          isFungibleTokenWrapper: compositionEntry.token.isFungibleTokenWrapper,
+        },
+      };
+      if (compositionEntry.isNative) {
+        // query native balance
+        const balanceFormatted = await this.networkService.getNativeBalance(
+          networkName,
+          String(token.id),
+        );
+        const valueUSD = pricePerUnit * Number(balanceFormatted);
+        entry.valueUSD = String(valueUSD);
+        entry.value = balanceFormatted;
+      }
+
+      composition.push(entry);
+    }
 
     const averageDepositAmountUSD =
       price[symbol] * Number(formattedAverageDepositAmount);
     return {
       id,
       chainId: Number(chainId),
-
+      composition,
       averageDepositAmount: formattedAverageDepositAmount,
       averageDepositAmountUSD: String(averageDepositAmountUSD),
 
@@ -182,7 +220,7 @@ export class BridgeService {
         id: vAnchorAddress,
       },
     );
-    return this.vAnchorIntoBridgeSide(vanchor);
+    return this.vAnchorIntoBridgeSide(vanchor, subgraph.network);
   }
 
   public async getBridgeSide(networkName: string, contractAddress: string) {

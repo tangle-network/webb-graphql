@@ -22,7 +22,7 @@ type BridgeSide {
   averageDepositAmount: String!
   averageDepositAmountUSD: String!
   token: String!
-
+  composition:[Composition!]!
   numberOfDeposits: Int!
   numberOfWithdraws: Int!
 }
