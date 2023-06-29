@@ -2,6 +2,7 @@
   "name": "webb-graphql",
   "version": "1.0.0",
   "description": "A collection of Subgraphs for Webb's protocols",
+  "private": true,
   "workspaces": [
     "packages/**"
   ]
