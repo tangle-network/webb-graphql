@@ -110,5 +110,6 @@ dist
 
 /api/**/build/
 /api/**/dist/
+/api/**/data
 /node_modules/
 

@@ -1,6 +1,4 @@
 import { ConsoleLogger, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
@@ -57,7 +55,7 @@ import { GraphQLFormattedError } from 'graphql/error';
     SubgraphModule,
     TransactionsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

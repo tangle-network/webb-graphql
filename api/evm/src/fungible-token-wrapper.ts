@@ -2,7 +2,7 @@ import { Address, BigInt, Bytes, log } from '@graphprotocol/graph-ts';
 import {
   FungibleTokenWrapper as FungibleTokenWrapperContract,
   Transfer as TransferEvent,
-} from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
+} from '../generated/VAnchor/FungibleTokenWrapper';
 import { FungibleTokenWrapper, FungibleTokenWrapperComposition, Token } from '../generated/schema';
 import { ERC20 as ERC20Contract } from '../generated/VAnchor/ERC20';
 import { isSameAddress } from './utils/consts';
