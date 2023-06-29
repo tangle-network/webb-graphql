@@ -1,0 +1,39 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: VAnchor
+    network: Sepolia
+    source:
+      abi: VAnchor
+      address: '0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D'
+      startBlock: 3146552
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EdgeAddition
+        - EdgeUpdate
+        - Insertion
+        - NewCommitment
+        - NewNullifier
+        - PublicKey
+      abis:
+        - name: VAnchor
+          file: ./abis/VAnchor.json
+      eventHandlers:
+        - event: EdgeAddition(uint256,uint256,uint256)
+          handler: handleEdgeAddition
+        - event: EdgeUpdate(uint256,uint256,uint256)
+          handler: handleEdgeUpdate
+        - event: Insertion(indexed uint256,uint32,uint256,indexed uint256)
+          handler: handleInsertion
+        - event: NewCommitment(uint256,uint256,uint256,bytes)
+          handler: handleNewCommitment
+        - event: NewNullifier(uint256)
+          handler: handleNewNullifier
+        - event: PublicKey(indexed address,bytes)
+          handler: handlePublicKey
+      file: ./src/v-anchor.ts
