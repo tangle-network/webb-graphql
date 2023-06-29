@@ -1,0 +1,173 @@
+type EdgeAddition @entity(immutable: true) {
+  id: Bytes!
+  chainID: BigInt! # uint256
+  latestLeafIndex: BigInt! # uint256
+  merkleRoot: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EdgeUpdate @entity(immutable: true) {
+  id: Bytes!
+  chainID: BigInt! # uint256
+  latestLeafIndex: BigInt! # uint256
+  merkleRoot: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Insertion @entity(immutable: true) {
+  id: Bytes!
+  commitment: BigInt! # uint256
+  leafIndex: BigInt! # uint32
+  timestamp: BigInt! # uint256
+  newMerkleRoot: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NewCommitment @entity(immutable: true) {
+  id: Bytes!
+  commitment: BigInt! # uint256
+  subTreeIndex: BigInt! # uint256
+  leafIndex: BigInt! # uint256
+  encryptedOutput: Bytes! # bytes
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NewNullifier @entity(immutable: true) {
+  id: Bytes!
+  nullifier: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PublicKey @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  key: Bytes! # bytes
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  spender: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type HandlerUpdated @entity(immutable: true) {
+  id: Bytes!
+  _handler: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Paused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleAdminChanged @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  previousAdminRole: Bytes! # bytes32
+  newAdminRole: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleGranted @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleRevoked @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# The ERC20 Token entity
+type Token @entity {
+  id: Bytes!
+  address: Bytes!
+  decimals: Int!
+  name: String!
+  symbol: String!
+}
+
+type ExternalData @entity(immutable: true) {
+  id: Bytes!
+  recipient: Bytes! # address
+  extAmount: BigInt! # int256
+  relayer: Bytes! # address
+  fee: BigInt! # uint256
+  refund: BigInt! # uint256
+  token: String! # address
+}
+
+type PublicInputs @entity(immutable: true) {
+  id: Bytes!
+  roots: Bytes! # bytes
+  extensionRoots: Bytes! # bytes
+  inputNullifiers: [BigInt!]! # uint256[]
+  outputCommitments: [BigInt!]! # uint256[2]
+  publicAmount: BigInt! # uint256
+  extDataHash: BigInt! # uint256
+}
+
+type Encryptions @entity(immutable: true) {
+  id: Bytes!
+  encryptedOutput1: Bytes! # bytes
+  encryptedOutput2: Bytes! # bytes
+}
+
+type ShieldedTransaction @entity(immutable: true) {
+  id: Bytes!
+  vanchor: Bytes! # address
+  sender: Bytes! # address
+  value: BigInt! # uint256
+  proof: Bytes! # bytes
+  auxPublicInputs: Bytes! # bytes
+  externalData: ExternalData! # ExternalData
+  publicInputs: PublicInputs! # PublicInputs
+  encryptions: Encryptions! # Encryptions
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

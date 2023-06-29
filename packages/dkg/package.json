@@ -1,0 +1,42 @@
+{
+  "name": "webb-dkg-subgraph",
+  "version": "1.0.0",
+  "description": "A subgraph for Webb DKG networks",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "subql build",
+    "prepack": "rm -rf dist && npm run build",
+    "test": "jest",
+    "codegen": "./node_modules/.bin/subql codegen",
+    "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
+    "deploy:dev": "yarn codegen && yarn build && docker-compose up",
+    "ts-check": "tsc --noEmit -p ./tsconfig.json",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write ."
+  },
+  "homepage": "https://github.com/subquery/subql-starter",
+  "repository": "github:subquery/subql-starter",
+  "files": [
+    "dist",
+    "schema.graphql",
+    "project.yaml"
+  ],
+  "author": "@webb-developers",
+  "license": "MIT",
+  "devDependencies": {
+    "@polkadot/api": "^9.0.1",
+    "@subql/cli": "latest",
+    "@subql/types": "latest",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
+    "@webb-tools/dkg-substrate-types": "^0.0.5",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
+  },
+  "resolutions": {
+    "ipfs-unixfs": "6.0.6"
+  }
+}

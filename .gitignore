@@ -109,3 +109,6 @@ dist
 .project-cid 
 
 standalone-tangle/tangle/
+packages/**/node_modules
+packages/**/build
+packages/**/data
