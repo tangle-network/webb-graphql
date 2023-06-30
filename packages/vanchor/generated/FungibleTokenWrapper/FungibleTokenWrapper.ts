@@ -23,7 +23,7 @@ export class Approval__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get value(): BigInt {
+  get value(): bigint {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -163,7 +163,7 @@ export class Transfer__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get value(): BigInt {
+  get value(): bigint {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -192,52 +192,52 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
   }
 
   DEFAULT_ADMIN_ROLE(): Bytes {
-    let result = super.call('DEFAULT_ADMIN_ROLE', 'DEFAULT_ADMIN_ROLE():(bytes32)', []);
+    const result = super.call('DEFAULT_ADMIN_ROLE', 'DEFAULT_ADMIN_ROLE():(bytes32)', []);
 
     return result[0].toBytes();
   }
 
   try_DEFAULT_ADMIN_ROLE(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall('DEFAULT_ADMIN_ROLE', 'DEFAULT_ADMIN_ROLE():(bytes32)', []);
+    const result = super.tryCall('DEFAULT_ADMIN_ROLE', 'DEFAULT_ADMIN_ROLE():(bytes32)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   MINTER_ROLE(): Bytes {
-    let result = super.call('MINTER_ROLE', 'MINTER_ROLE():(bytes32)', []);
+    const result = super.call('MINTER_ROLE', 'MINTER_ROLE():(bytes32)', []);
 
     return result[0].toBytes();
   }
 
   try_MINTER_ROLE(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall('MINTER_ROLE', 'MINTER_ROLE():(bytes32)', []);
+    const result = super.tryCall('MINTER_ROLE', 'MINTER_ROLE():(bytes32)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   PAUSER_ROLE(): Bytes {
-    let result = super.call('PAUSER_ROLE', 'PAUSER_ROLE():(bytes32)', []);
+    const result = super.call('PAUSER_ROLE', 'PAUSER_ROLE():(bytes32)', []);
 
     return result[0].toBytes();
   }
 
   try_PAUSER_ROLE(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall('PAUSER_ROLE', 'PAUSER_ROLE():(bytes32)', []);
+    const result = super.tryCall('PAUSER_ROLE', 'PAUSER_ROLE():(bytes32)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  allowance(owner: Address, spender: Address): BigInt {
-    let result = super.call('allowance', 'allowance(address,address):(uint256)', [
+  allowance(owner: Address, spender: Address): bigint {
+    const result = super.call('allowance', 'allowance(address,address):(uint256)', [
       ethereum.Value.fromAddress(owner),
       ethereum.Value.fromAddress(spender),
     ]);
@@ -245,20 +245,20 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_allowance(owner: Address, spender: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('allowance', 'allowance(address,address):(uint256)', [
+  try_allowance(owner: Address, spender: Address): ethereum.CallResult<bigint> {
+    const result = super.tryCall('allowance', 'allowance(address,address):(uint256)', [
       ethereum.Value.fromAddress(owner),
       ethereum.Value.fromAddress(spender),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  approve(spender: Address, amount: BigInt): boolean {
-    let result = super.call('approve', 'approve(address,uint256):(bool)', [
+  approve(spender: Address, amount: bigint): boolean {
+    const result = super.call('approve', 'approve(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(amount),
     ]);
@@ -266,50 +266,50 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_approve(spender: Address, amount: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall('approve', 'approve(address,uint256):(bool)', [
+  try_approve(spender: Address, amount: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall('approve', 'approve(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(amount),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  balanceOf(account: Address): BigInt {
-    let result = super.call('balanceOf', 'balanceOf(address):(uint256)', [ethereum.Value.fromAddress(account)]);
+  balanceOf(account: Address): bigint {
+    const result = super.call('balanceOf', 'balanceOf(address):(uint256)', [ethereum.Value.fromAddress(account)]);
 
     return result[0].toBigInt();
   }
 
-  try_balanceOf(account: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('balanceOf', 'balanceOf(address):(uint256)', [ethereum.Value.fromAddress(account)]);
+  try_balanceOf(account: Address): ethereum.CallResult<bigint> {
+    const result = super.tryCall('balanceOf', 'balanceOf(address):(uint256)', [ethereum.Value.fromAddress(account)]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   decimals(): i32 {
-    let result = super.call('decimals', 'decimals():(uint8)', []);
+    const result = super.call('decimals', 'decimals():(uint8)', []);
 
     return result[0].toI32();
   }
 
   try_decimals(): ethereum.CallResult<i32> {
-    let result = super.tryCall('decimals', 'decimals():(uint8)', []);
+    const result = super.tryCall('decimals', 'decimals():(uint8)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
-  decreaseAllowance(spender: Address, subtractedValue: BigInt): boolean {
-    let result = super.call('decreaseAllowance', 'decreaseAllowance(address,uint256):(bool)', [
+  decreaseAllowance(spender: Address, subtractedValue: bigint): boolean {
+    const result = super.call('decreaseAllowance', 'decreaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(subtractedValue),
     ]);
@@ -317,135 +317,135 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_decreaseAllowance(spender: Address, subtractedValue: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall('decreaseAllowance', 'decreaseAllowance(address,uint256):(bool)', [
+  try_decreaseAllowance(spender: Address, subtractedValue: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall('decreaseAllowance', 'decreaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(subtractedValue),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   feePercentage(): i32 {
-    let result = super.call('feePercentage', 'feePercentage():(uint16)', []);
+    const result = super.call('feePercentage', 'feePercentage():(uint16)', []);
 
     return result[0].toI32();
   }
 
   try_feePercentage(): ethereum.CallResult<i32> {
-    let result = super.tryCall('feePercentage', 'feePercentage():(uint16)', []);
+    const result = super.tryCall('feePercentage', 'feePercentage():(uint16)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
   feeRecipient(): Address {
-    let result = super.call('feeRecipient', 'feeRecipient():(address)', []);
+    const result = super.call('feeRecipient', 'feeRecipient():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_feeRecipient(): ethereum.CallResult<Address> {
-    let result = super.tryCall('feeRecipient', 'feeRecipient():(address)', []);
+    const result = super.tryCall('feeRecipient', 'feeRecipient():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  getAmountToWrap(_deposit: BigInt): BigInt {
-    let result = super.call('getAmountToWrap', 'getAmountToWrap(uint256):(uint256)', [
+  getAmountToWrap(_deposit: bigint): bigint {
+    const result = super.call('getAmountToWrap', 'getAmountToWrap(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_deposit),
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_getAmountToWrap(_deposit: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('getAmountToWrap', 'getAmountToWrap(uint256):(uint256)', [
+  try_getAmountToWrap(_deposit: bigint): ethereum.CallResult<bigint> {
+    const result = super.tryCall('getAmountToWrap', 'getAmountToWrap(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_deposit),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   getFee(): i32 {
-    let result = super.call('getFee', 'getFee():(uint16)', []);
+    const result = super.call('getFee', 'getFee():(uint16)', []);
 
     return result[0].toI32();
   }
 
   try_getFee(): ethereum.CallResult<i32> {
-    let result = super.tryCall('getFee', 'getFee():(uint16)', []);
+    const result = super.tryCall('getFee', 'getFee():(uint16)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
-  getFeeFromAmount(_amountToWrap: BigInt): BigInt {
-    let result = super.call('getFeeFromAmount', 'getFeeFromAmount(uint256):(uint256)', [
+  getFeeFromAmount(_amountToWrap: bigint): bigint {
+    const result = super.call('getFeeFromAmount', 'getFeeFromAmount(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_amountToWrap),
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_getFeeFromAmount(_amountToWrap: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('getFeeFromAmount', 'getFeeFromAmount(uint256):(uint256)', [
+  try_getFeeFromAmount(_amountToWrap: bigint): ethereum.CallResult<bigint> {
+    const result = super.tryCall('getFeeFromAmount', 'getFeeFromAmount(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_amountToWrap),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getProposalNonce(): BigInt {
-    let result = super.call('getProposalNonce', 'getProposalNonce():(uint256)', []);
+  getProposalNonce(): bigint {
+    const result = super.call('getProposalNonce', 'getProposalNonce():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_getProposalNonce(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('getProposalNonce', 'getProposalNonce():(uint256)', []);
+  try_getProposalNonce(): ethereum.CallResult<bigint> {
+    const result = super.tryCall('getProposalNonce', 'getProposalNonce():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   getRoleAdmin(role: Bytes): Bytes {
-    let result = super.call('getRoleAdmin', 'getRoleAdmin(bytes32):(bytes32)', [ethereum.Value.fromFixedBytes(role)]);
+    const result = super.call('getRoleAdmin', 'getRoleAdmin(bytes32):(bytes32)', [ethereum.Value.fromFixedBytes(role)]);
 
     return result[0].toBytes();
   }
 
   try_getRoleAdmin(role: Bytes): ethereum.CallResult<Bytes> {
-    let result = super.tryCall('getRoleAdmin', 'getRoleAdmin(bytes32):(bytes32)', [
+    const result = super.tryCall('getRoleAdmin', 'getRoleAdmin(bytes32):(bytes32)', [
       ethereum.Value.fromFixedBytes(role),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  getRoleMember(role: Bytes, index: BigInt): Address {
-    let result = super.call('getRoleMember', 'getRoleMember(bytes32,uint256):(address)', [
+  getRoleMember(role: Bytes, index: bigint): Address {
+    const result = super.call('getRoleMember', 'getRoleMember(bytes32,uint256):(address)', [
       ethereum.Value.fromFixedBytes(role),
       ethereum.Value.fromUnsignedBigInt(index),
     ]);
@@ -453,69 +453,69 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toAddress();
   }
 
-  try_getRoleMember(role: Bytes, index: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall('getRoleMember', 'getRoleMember(bytes32,uint256):(address)', [
+  try_getRoleMember(role: Bytes, index: bigint): ethereum.CallResult<Address> {
+    const result = super.tryCall('getRoleMember', 'getRoleMember(bytes32,uint256):(address)', [
       ethereum.Value.fromFixedBytes(role),
       ethereum.Value.fromUnsignedBigInt(index),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  getRoleMemberCount(role: Bytes): BigInt {
-    let result = super.call('getRoleMemberCount', 'getRoleMemberCount(bytes32):(uint256)', [
+  getRoleMemberCount(role: Bytes): bigint {
+    const result = super.call('getRoleMemberCount', 'getRoleMemberCount(bytes32):(uint256)', [
       ethereum.Value.fromFixedBytes(role),
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_getRoleMemberCount(role: Bytes): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('getRoleMemberCount', 'getRoleMemberCount(bytes32):(uint256)', [
+  try_getRoleMemberCount(role: Bytes): ethereum.CallResult<bigint> {
+    const result = super.tryCall('getRoleMemberCount', 'getRoleMemberCount(bytes32):(uint256)', [
       ethereum.Value.fromFixedBytes(role),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   getTokens(): Array<Address> {
-    let result = super.call('getTokens', 'getTokens():(address[])', []);
+    const result = super.call('getTokens', 'getTokens():(address[])', []);
 
     return result[0].toAddressArray();
   }
 
   try_getTokens(): ethereum.CallResult<Array<Address>> {
-    let result = super.tryCall('getTokens', 'getTokens():(address[])', []);
+    const result = super.tryCall('getTokens', 'getTokens():(address[])', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddressArray());
   }
 
   handler(): Address {
-    let result = super.call('handler', 'handler():(address)', []);
+    const result = super.call('handler', 'handler():(address)', []);
 
     return result[0].toAddress();
   }
 
   try_handler(): ethereum.CallResult<Address> {
-    let result = super.tryCall('handler', 'handler():(address)', []);
+    const result = super.tryCall('handler', 'handler():(address)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   hasRole(role: Bytes, account: Address): boolean {
-    let result = super.call('hasRole', 'hasRole(bytes32,address):(bool)', [
+    const result = super.call('hasRole', 'hasRole(bytes32,address):(bool)', [
       ethereum.Value.fromFixedBytes(role),
       ethereum.Value.fromAddress(account),
     ]);
@@ -524,38 +524,38 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
   }
 
   try_hasRole(role: Bytes, account: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall('hasRole', 'hasRole(bytes32,address):(bool)', [
+    const result = super.tryCall('hasRole', 'hasRole(bytes32,address):(bool)', [
       ethereum.Value.fromFixedBytes(role),
       ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  historicalTokens(param0: BigInt): Address {
-    let result = super.call('historicalTokens', 'historicalTokens(uint256):(address)', [
+  historicalTokens(param0: bigint): Address {
+    const result = super.call('historicalTokens', 'historicalTokens(uint256):(address)', [
       ethereum.Value.fromUnsignedBigInt(param0),
     ]);
 
     return result[0].toAddress();
   }
 
-  try_historicalTokens(param0: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall('historicalTokens', 'historicalTokens(uint256):(address)', [
+  try_historicalTokens(param0: bigint): ethereum.CallResult<Address> {
+    const result = super.tryCall('historicalTokens', 'historicalTokens(uint256):(address)', [
       ethereum.Value.fromUnsignedBigInt(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   historicallyValid(param0: Address): boolean {
-    let result = super.call('historicallyValid', 'historicallyValid(address):(bool)', [
+    const result = super.call('historicallyValid', 'historicallyValid(address):(bool)', [
       ethereum.Value.fromAddress(param0),
     ]);
 
@@ -563,18 +563,18 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
   }
 
   try_historicallyValid(param0: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall('historicallyValid', 'historicallyValid(address):(bool)', [
+    const result = super.tryCall('historicallyValid', 'historicallyValid(address):(bool)', [
       ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  increaseAllowance(spender: Address, addedValue: BigInt): boolean {
-    let result = super.call('increaseAllowance', 'increaseAllowance(address,uint256):(bool)', [
+  increaseAllowance(spender: Address, addedValue: bigint): boolean {
+    const result = super.call('increaseAllowance', 'increaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(addedValue),
     ]);
@@ -582,112 +582,112 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_increaseAllowance(spender: Address, addedValue: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall('increaseAllowance', 'increaseAllowance(address,uint256):(bool)', [
+  try_increaseAllowance(spender: Address, addedValue: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall('increaseAllowance', 'increaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(addedValue),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   initialized(): boolean {
-    let result = super.call('initialized', 'initialized():(bool)', []);
+    const result = super.call('initialized', 'initialized():(bool)', []);
 
     return result[0].toBoolean();
   }
 
   try_initialized(): ethereum.CallResult<boolean> {
-    let result = super.tryCall('initialized', 'initialized():(bool)', []);
+    const result = super.tryCall('initialized', 'initialized():(bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   isNativeAllowed(): boolean {
-    let result = super.call('isNativeAllowed', 'isNativeAllowed():(bool)', []);
+    const result = super.call('isNativeAllowed', 'isNativeAllowed():(bool)', []);
 
     return result[0].toBoolean();
   }
 
   try_isNativeAllowed(): ethereum.CallResult<boolean> {
-    let result = super.tryCall('isNativeAllowed', 'isNativeAllowed():(bool)', []);
+    const result = super.tryCall('isNativeAllowed', 'isNativeAllowed():(bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   isValidToken(tokenAddress: Address): boolean {
-    let result = super.call('isValidToken', 'isValidToken(address):(bool)', [ethereum.Value.fromAddress(tokenAddress)]);
+    const result = super.call('isValidToken', 'isValidToken(address):(bool)', [ethereum.Value.fromAddress(tokenAddress)]);
 
     return result[0].toBoolean();
   }
 
   try_isValidToken(tokenAddress: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall('isValidToken', 'isValidToken(address):(bool)', [
+    const result = super.tryCall('isValidToken', 'isValidToken(address):(bool)', [
       ethereum.Value.fromAddress(tokenAddress),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   name(): string {
-    let result = super.call('name', 'name():(string)', []);
+    const result = super.call('name', 'name():(string)', []);
 
     return result[0].toString();
   }
 
   try_name(): ethereum.CallResult<string> {
-    let result = super.tryCall('name', 'name():(string)', []);
+    const result = super.tryCall('name', 'name():(string)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
   paused(): boolean {
-    let result = super.call('paused', 'paused():(bool)', []);
+    const result = super.call('paused', 'paused():(bool)', []);
 
     return result[0].toBoolean();
   }
 
   try_paused(): ethereum.CallResult<boolean> {
-    let result = super.tryCall('paused', 'paused():(bool)', []);
+    const result = super.tryCall('paused', 'paused():(bool)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  proposalNonce(): BigInt {
-    let result = super.call('proposalNonce', 'proposalNonce():(uint256)', []);
+  proposalNonce(): bigint {
+    const result = super.call('proposalNonce', 'proposalNonce():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_proposalNonce(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('proposalNonce', 'proposalNonce():(uint256)', []);
+  try_proposalNonce(): ethereum.CallResult<bigint> {
+    const result = super.tryCall('proposalNonce', 'proposalNonce():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   supportsInterface(interfaceId: Bytes): boolean {
-    let result = super.call('supportsInterface', 'supportsInterface(bytes4):(bool)', [
+    const result = super.call('supportsInterface', 'supportsInterface(bytes4):(bool)', [
       ethereum.Value.fromFixedBytes(interfaceId),
     ]);
 
@@ -695,63 +695,63 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
   }
 
   try_supportsInterface(interfaceId: Bytes): ethereum.CallResult<boolean> {
-    let result = super.tryCall('supportsInterface', 'supportsInterface(bytes4):(bool)', [
+    const result = super.tryCall('supportsInterface', 'supportsInterface(bytes4):(bool)', [
       ethereum.Value.fromFixedBytes(interfaceId),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   symbol(): string {
-    let result = super.call('symbol', 'symbol():(string)', []);
+    const result = super.call('symbol', 'symbol():(string)', []);
 
     return result[0].toString();
   }
 
   try_symbol(): ethereum.CallResult<string> {
-    let result = super.tryCall('symbol', 'symbol():(string)', []);
+    const result = super.tryCall('symbol', 'symbol():(string)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  tokens(param0: BigInt): Address {
-    let result = super.call('tokens', 'tokens(uint256):(address)', [ethereum.Value.fromUnsignedBigInt(param0)]);
+  tokens(param0: bigint): Address {
+    const result = super.call('tokens', 'tokens(uint256):(address)', [ethereum.Value.fromUnsignedBigInt(param0)]);
 
     return result[0].toAddress();
   }
 
-  try_tokens(param0: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall('tokens', 'tokens(uint256):(address)', [ethereum.Value.fromUnsignedBigInt(param0)]);
+  try_tokens(param0: bigint): ethereum.CallResult<Address> {
+    const result = super.tryCall('tokens', 'tokens(uint256):(address)', [ethereum.Value.fromUnsignedBigInt(param0)]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  totalSupply(): BigInt {
-    let result = super.call('totalSupply', 'totalSupply():(uint256)', []);
+  totalSupply(): bigint {
+    const result = super.call('totalSupply', 'totalSupply():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_totalSupply(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('totalSupply', 'totalSupply():(uint256)', []);
+  try_totalSupply(): ethereum.CallResult<bigint> {
+    const result = super.tryCall('totalSupply', 'totalSupply():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  transfer(to: Address, amount: BigInt): boolean {
-    let result = super.call('transfer', 'transfer(address,uint256):(bool)', [
+  transfer(to: Address, amount: bigint): boolean {
+    const result = super.call('transfer', 'transfer(address,uint256):(bool)', [
       ethereum.Value.fromAddress(to),
       ethereum.Value.fromUnsignedBigInt(amount),
     ]);
@@ -759,20 +759,20 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_transfer(to: Address, amount: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall('transfer', 'transfer(address,uint256):(bool)', [
+  try_transfer(to: Address, amount: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall('transfer', 'transfer(address,uint256):(bool)', [
       ethereum.Value.fromAddress(to),
       ethereum.Value.fromUnsignedBigInt(amount),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  transferFrom(from: Address, to: Address, amount: BigInt): boolean {
-    let result = super.call('transferFrom', 'transferFrom(address,address,uint256):(bool)', [
+  transferFrom(from: Address, to: Address, amount: bigint): boolean {
+    const result = super.call('transferFrom', 'transferFrom(address,address,uint256):(bool)', [
       ethereum.Value.fromAddress(from),
       ethereum.Value.fromAddress(to),
       ethereum.Value.fromUnsignedBigInt(amount),
@@ -781,8 +781,8 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_transferFrom(from: Address, to: Address, amount: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall('transferFrom', 'transferFrom(address,address,uint256):(bool)', [
+  try_transferFrom(from: Address, to: Address, amount: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall('transferFrom', 'transferFrom(address,address,uint256):(bool)', [
       ethereum.Value.fromAddress(from),
       ethereum.Value.fromAddress(to),
       ethereum.Value.fromUnsignedBigInt(amount),
@@ -790,37 +790,37 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   valid(param0: Address): boolean {
-    let result = super.call('valid', 'valid(address):(bool)', [ethereum.Value.fromAddress(param0)]);
+    const result = super.call('valid', 'valid(address):(bool)', [ethereum.Value.fromAddress(param0)]);
 
     return result[0].toBoolean();
   }
 
   try_valid(param0: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall('valid', 'valid(address):(bool)', [ethereum.Value.fromAddress(param0)]);
+    const result = super.tryCall('valid', 'valid(address):(bool)', [ethereum.Value.fromAddress(param0)]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  wrappingLimit(): BigInt {
-    let result = super.call('wrappingLimit', 'wrappingLimit():(uint256)', []);
+  wrappingLimit(): bigint {
+    const result = super.call('wrappingLimit', 'wrappingLimit():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_wrappingLimit(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall('wrappingLimit', 'wrappingLimit():(uint256)', []);
+  try_wrappingLimit(): ethereum.CallResult<bigint> {
+    const result = super.tryCall('wrappingLimit', 'wrappingLimit():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
@@ -880,7 +880,7 @@ export class AddCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -914,7 +914,7 @@ export class ApproveCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -948,7 +948,7 @@ export class BurnCall__Inputs {
     this._call = call;
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -982,7 +982,7 @@ export class BurnFromCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1016,7 +1016,7 @@ export class DecreaseAllowanceCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get subtractedValue(): BigInt {
+  get subtractedValue(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1088,7 +1088,7 @@ export class IncreaseAllowanceCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get addedValue(): BigInt {
+  get addedValue(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1134,7 +1134,7 @@ export class InitializeCall__Inputs {
     return this._call.inputValues[2].value.toAddress();
   }
 
-  get _limit(): BigInt {
+  get _limit(): bigint {
     return this._call.inputValues[3].value.toBigInt();
   }
 
@@ -1176,7 +1176,7 @@ export class MintCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1236,7 +1236,7 @@ export class RemoveCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1338,7 +1338,7 @@ export class SetFeeCall__Inputs {
     return this._call.inputValues[0].value.toI32();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1372,7 +1372,7 @@ export class SetFeeRecipientCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1466,7 +1466,7 @@ export class TransferCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1508,7 +1508,7 @@ export class TransferFromCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1572,7 +1572,7 @@ export class UnwrapCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1606,7 +1606,7 @@ export class UnwrapAndSendToCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 
@@ -1648,7 +1648,7 @@ export class UnwrapForCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1678,7 +1678,7 @@ export class UpdateLimitCall__Inputs {
     this._call = call;
   }
 
-  get _limit(): BigInt {
+  get _limit(): bigint {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -1712,7 +1712,7 @@ export class WrapCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1750,7 +1750,7 @@ export class WrapForCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1788,7 +1788,7 @@ export class WrapForAndSendToCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get amount(): bigint {
     return this._call.inputValues[2].value.toBigInt();
   }
 

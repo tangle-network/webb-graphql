@@ -3,7 +3,7 @@ import { ERC20 } from '../../generated/FungibleTokenWrapper/ERC20';
 import { Token } from '../../generated/schema';
 
 export function ensureToken(tokenAddress: Address): Address {
-  let maybeToken = Token.load(tokenAddress);
+  const maybeToken = Token.load(tokenAddress);
   if (maybeToken) {
     return tokenAddress;
   }

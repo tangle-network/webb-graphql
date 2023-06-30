@@ -1,0 +1,50 @@
+{
+  "root": true,
+  "plugins": ["@nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.js"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ],
+        "@typescript-eslint/no-empty-interface": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-unused-vars": 0
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {
+        "@typescript-eslint/no-empty-interface": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-unused-vars": 0
+      }
+    },
+    {
+      "files": ["*.js"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.js"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    }
+  ],
+  "extends": [],
+  "rules": {}
+}

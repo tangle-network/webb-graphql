@@ -9,99 +9,170 @@ import {
   PublicKey,
 } from '../generated/VAnchor/VAnchor';
 
-export function createEdgeAdditionEvent(chainID: BigInt, latestLeafIndex: BigInt, merkleRoot: BigInt): EdgeAddition {
-  let edgeAdditionEvent = changetype<EdgeAddition>(newMockEvent());
+export function createEdgeAdditionEvent(
+  chainID: bigint,
+  latestLeafIndex: bigint,
+  merkleRoot: bigint
+): EdgeAddition {
+  const edgeAdditionEvent = changetype<EdgeAddition>(newMockEvent());
 
-  edgeAdditionEvent.parameters = new Array();
+  edgeAdditionEvent.parameters = [];
 
-  edgeAdditionEvent.parameters.push(new ethereum.EventParam('chainID', ethereum.Value.fromUnsignedBigInt(chainID)));
   edgeAdditionEvent.parameters.push(
-    new ethereum.EventParam('latestLeafIndex', ethereum.Value.fromUnsignedBigInt(latestLeafIndex))
+    new ethereum.EventParam(
+      'chainID',
+      ethereum.Value.fromUnsignedBigInt(chainID)
+    )
   );
   edgeAdditionEvent.parameters.push(
-    new ethereum.EventParam('merkleRoot', ethereum.Value.fromUnsignedBigInt(merkleRoot))
+    new ethereum.EventParam(
+      'latestLeafIndex',
+      ethereum.Value.fromUnsignedBigInt(latestLeafIndex)
+    )
+  );
+  edgeAdditionEvent.parameters.push(
+    new ethereum.EventParam(
+      'merkleRoot',
+      ethereum.Value.fromUnsignedBigInt(merkleRoot)
+    )
   );
 
   return edgeAdditionEvent;
 }
 
-export function createEdgeUpdateEvent(chainID: BigInt, latestLeafIndex: BigInt, merkleRoot: BigInt): EdgeUpdate {
-  let edgeUpdateEvent = changetype<EdgeUpdate>(newMockEvent());
+export function createEdgeUpdateEvent(
+  chainID: bigint,
+  latestLeafIndex: bigint,
+  merkleRoot: bigint
+): EdgeUpdate {
+  const edgeUpdateEvent = changetype<EdgeUpdate>(newMockEvent());
 
-  edgeUpdateEvent.parameters = new Array();
+  edgeUpdateEvent.parameters = [];
 
-  edgeUpdateEvent.parameters.push(new ethereum.EventParam('chainID', ethereum.Value.fromUnsignedBigInt(chainID)));
   edgeUpdateEvent.parameters.push(
-    new ethereum.EventParam('latestLeafIndex', ethereum.Value.fromUnsignedBigInt(latestLeafIndex))
+    new ethereum.EventParam(
+      'chainID',
+      ethereum.Value.fromUnsignedBigInt(chainID)
+    )
   );
-  edgeUpdateEvent.parameters.push(new ethereum.EventParam('merkleRoot', ethereum.Value.fromUnsignedBigInt(merkleRoot)));
+  edgeUpdateEvent.parameters.push(
+    new ethereum.EventParam(
+      'latestLeafIndex',
+      ethereum.Value.fromUnsignedBigInt(latestLeafIndex)
+    )
+  );
+  edgeUpdateEvent.parameters.push(
+    new ethereum.EventParam(
+      'merkleRoot',
+      ethereum.Value.fromUnsignedBigInt(merkleRoot)
+    )
+  );
 
   return edgeUpdateEvent;
 }
 
 export function createInsertionEvent(
-  commitment: BigInt,
-  leafIndex: BigInt,
-  timestamp: BigInt,
-  newMerkleRoot: BigInt
+  commitment: bigint,
+  leafIndex: bigint,
+  timestamp: bigint,
+  newMerkleRoot: bigint
 ): Insertion {
-  let insertionEvent = changetype<Insertion>(newMockEvent());
+  const insertionEvent = changetype<Insertion>(newMockEvent());
 
-  insertionEvent.parameters = new Array();
+  insertionEvent.parameters = [];
 
-  insertionEvent.parameters.push(new ethereum.EventParam('commitment', ethereum.Value.fromUnsignedBigInt(commitment)));
-  insertionEvent.parameters.push(new ethereum.EventParam('leafIndex', ethereum.Value.fromUnsignedBigInt(leafIndex)));
-  insertionEvent.parameters.push(new ethereum.EventParam('timestamp', ethereum.Value.fromUnsignedBigInt(timestamp)));
   insertionEvent.parameters.push(
-    new ethereum.EventParam('newMerkleRoot', ethereum.Value.fromUnsignedBigInt(newMerkleRoot))
+    new ethereum.EventParam(
+      'commitment',
+      ethereum.Value.fromUnsignedBigInt(commitment)
+    )
+  );
+  insertionEvent.parameters.push(
+    new ethereum.EventParam(
+      'leafIndex',
+      ethereum.Value.fromUnsignedBigInt(leafIndex)
+    )
+  );
+  insertionEvent.parameters.push(
+    new ethereum.EventParam(
+      'timestamp',
+      ethereum.Value.fromUnsignedBigInt(timestamp)
+    )
+  );
+  insertionEvent.parameters.push(
+    new ethereum.EventParam(
+      'newMerkleRoot',
+      ethereum.Value.fromUnsignedBigInt(newMerkleRoot)
+    )
   );
 
   return insertionEvent;
 }
 
 export function createNewCommitmentEvent(
-  commitment: BigInt,
-  subTreeIndex: BigInt,
-  leafIndex: BigInt,
+  commitment: bigint,
+  subTreeIndex: bigint,
+  leafIndex: bigint,
   encryptedOutput: Bytes
 ): NewCommitment {
-  let newCommitmentEvent = changetype<NewCommitment>(newMockEvent());
+  const newCommitmentEvent = changetype<NewCommitment>(newMockEvent());
 
-  newCommitmentEvent.parameters = new Array();
+  newCommitmentEvent.parameters = [];
 
   newCommitmentEvent.parameters.push(
-    new ethereum.EventParam('commitment', ethereum.Value.fromUnsignedBigInt(commitment))
+    new ethereum.EventParam(
+      'commitment',
+      ethereum.Value.fromUnsignedBigInt(commitment)
+    )
   );
   newCommitmentEvent.parameters.push(
-    new ethereum.EventParam('subTreeIndex', ethereum.Value.fromUnsignedBigInt(subTreeIndex))
+    new ethereum.EventParam(
+      'subTreeIndex',
+      ethereum.Value.fromUnsignedBigInt(subTreeIndex)
+    )
   );
   newCommitmentEvent.parameters.push(
-    new ethereum.EventParam('leafIndex', ethereum.Value.fromUnsignedBigInt(leafIndex))
+    new ethereum.EventParam(
+      'leafIndex',
+      ethereum.Value.fromUnsignedBigInt(leafIndex)
+    )
   );
   newCommitmentEvent.parameters.push(
-    new ethereum.EventParam('encryptedOutput', ethereum.Value.fromBytes(encryptedOutput))
+    new ethereum.EventParam(
+      'encryptedOutput',
+      ethereum.Value.fromBytes(encryptedOutput)
+    )
   );
 
   return newCommitmentEvent;
 }
 
-export function createNewNullifierEvent(nullifier: BigInt): NewNullifier {
-  let newNullifierEvent = changetype<NewNullifier>(newMockEvent());
+export function createNewNullifierEvent(nullifier: bigint): NewNullifier {
+  const newNullifierEvent = changetype<NewNullifier>(newMockEvent());
 
-  newNullifierEvent.parameters = new Array();
+  newNullifierEvent.parameters = [];
 
-  newNullifierEvent.parameters.push(new ethereum.EventParam('nullifier', ethereum.Value.fromUnsignedBigInt(nullifier)));
+  newNullifierEvent.parameters.push(
+    new ethereum.EventParam(
+      'nullifier',
+      ethereum.Value.fromUnsignedBigInt(nullifier)
+    )
+  );
 
   return newNullifierEvent;
 }
 
 export function createPublicKeyEvent(owner: Address, key: Bytes): PublicKey {
-  let publicKeyEvent = changetype<PublicKey>(newMockEvent());
+  const publicKeyEvent = changetype<PublicKey>(newMockEvent());
 
-  publicKeyEvent.parameters = new Array();
+  publicKeyEvent.parameters = [];
 
-  publicKeyEvent.parameters.push(new ethereum.EventParam('owner', ethereum.Value.fromAddress(owner)));
-  publicKeyEvent.parameters.push(new ethereum.EventParam('key', ethereum.Value.fromBytes(key)));
+  publicKeyEvent.parameters.push(
+    new ethereum.EventParam('owner', ethereum.Value.fromAddress(owner))
+  );
+  publicKeyEvent.parameters.push(
+    new ethereum.EventParam('key', ethereum.Value.fromBytes(key))
+  );
 
   return publicKeyEvent;
 }
