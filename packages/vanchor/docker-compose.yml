@@ -1,18 +1,23 @@
 version: '3'
+
+networks:
+  orbit_webb_orbit:
+    external: true
+
 services:
   graph-node:
     image: graphprotocol/graph-node
+    networks:
+      - orbit_webb_orbit
     ports:
       - '8000:8000'
       - '8001:8001'
       - '8020:8020'
       - '8030:8030'
       - '8040:8040'
-#    depends_on:
-#      - ipfs
-#      - postgres
-#    extra_hosts:
-#      - host.docker.internal:host-gateway
+    depends_on:
+      - ipfs
+      - postgres
     environment:
       postgres_host: postgres
       postgres_user: graph-node
@@ -23,21 +28,23 @@ services:
       GRAPH_LOG: info
     volumes:
       - ./configs:/data/chains-configs
+
   ipfs:
     image: ipfs/go-ipfs:v0.10.0
     ports:
       - '6001:5001'
+    networks:
+      - orbit_webb_orbit
     volumes:
       - ./data/ipfs:/data/ipfs
+
   postgres:
     image: postgres
     ports:
       - '5432:5432'
-    command:
-      [
-        "postgres",
-        "-cshared_preload_libraries=pg_stat_statements"
-      ]
+    command: ['postgres', '-cshared_preload_libraries=pg_stat_statements']
+    networks:
+      - orbit_webb_orbit
     environment:
       POSTGRES_USER: graph-node
       POSTGRES_PASSWORD: let-me-in
@@ -45,7 +52,7 @@ services:
       # FIXME: remove this env. var. which we shouldn't need. Introduced by
       # <https://github.com/graphprotocol/graph-node/pull/3511>, maybe as a
       # workaround for https://github.com/docker/for-mac/issues/6270?
-      PGDATA: "/var/lib/postgresql/data"
-      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=C"
+      PGDATA: '/var/lib/postgresql/data'
+      POSTGRES_INITDB_ARGS: '-E UTF8 --locale=C'
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
