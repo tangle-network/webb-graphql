@@ -8,15 +8,15 @@ ingestor = "block_ingestor_node"
 
 [chains.Athena]
 shard = "primary"
-provider = [{ label = "athena", url = "http://host.docker.internal:5002" ,features= []}]
+provider = [{ label = "athena", url = "http://athena_chain:8545" ,features= []}]
 
 [chains.Hermes]
 shard = "primary"
-provider = [{ label = "hermes", url = "http://host.docker.internal:5001" ,features= []}]
+provider = [{ label = "hermes", url = "http://hermes_chain:8545" ,features= []}]
 
 [chains.Demeter]
 shard = "primary"
-provider = [{ label = "demeter", url = "http://host.docker.internal:5003" ,features= []}]
+provider = [{ label = "demeter", url = "http://demeter_chain:8545" ,features= []}]
 
 # [chains.Sepolia]
 # shard = "primary"
