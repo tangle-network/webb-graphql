@@ -10,10 +10,10 @@ import { createEdgeAdditionEvent } from './v-anchor-utils';
 
 describe('Describe entity assertions', () => {
   beforeAll(() => {
-    let chainID = BigInt.fromI32(234);
-    let latestLeafIndex = BigInt.fromI32(234);
-    let merkleRoot = BigInt.fromI32(234);
-    let newEdgeAdditionEvent = createEdgeAdditionEvent(chainID, latestLeafIndex, merkleRoot);
+    const chainID = BigInt.fromI32(234);
+    const latestLeafIndex = BigInt.fromI32(234);
+    const merkleRoot = BigInt.fromI32(234);
+    const newEdgeAdditionEvent = createEdgeAdditionEvent(chainID, latestLeafIndex, merkleRoot);
     handleEdgeAddition(newEdgeAdditionEvent);
   });
 

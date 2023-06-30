@@ -10,10 +10,10 @@ import { createApprovalEvent } from './fungible-token-wrapper-utils';
 
 describe('Describe entity assertions', () => {
   beforeAll(() => {
-    let owner = Address.fromString('0x0000000000000000000000000000000000000001');
-    let spender = Address.fromString('0x0000000000000000000000000000000000000001');
-    let value = BigInt.fromI32(234);
-    let newApprovalEvent = createApprovalEvent(owner, spender, value);
+    const owner = Address.fromString('0x0000000000000000000000000000000000000001');
+    const spender = Address.fromString('0x0000000000000000000000000000000000000001');
+    const value = BigInt.fromI32(234);
+    const newApprovalEvent = createApprovalEvent(owner, spender, value);
     handleApproval(newApprovalEvent);
   });
 

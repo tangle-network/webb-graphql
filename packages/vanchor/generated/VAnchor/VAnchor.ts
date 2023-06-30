@@ -23,15 +23,15 @@ export class EdgeAddition__Params {
     this._event = event;
   }
 
-  get chainID(): BigInt {
+  get chainID(): bigint {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get latestLeafIndex(): BigInt {
+  get latestLeafIndex(): bigint {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get merkleRoot(): BigInt {
+  get merkleRoot(): bigint {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -49,15 +49,15 @@ export class EdgeUpdate__Params {
     this._event = event;
   }
 
-  get chainID(): BigInt {
+  get chainID(): bigint {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get latestLeafIndex(): BigInt {
+  get latestLeafIndex(): bigint {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get merkleRoot(): BigInt {
+  get merkleRoot(): bigint {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -75,19 +75,19 @@ export class Insertion__Params {
     this._event = event;
   }
 
-  get commitment(): BigInt {
+  get commitment(): bigint {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get leafIndex(): BigInt {
+  get leafIndex(): bigint {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get timestamp(): BigInt {
+  get timestamp(): bigint {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get newMerkleRoot(): BigInt {
+  get newMerkleRoot(): bigint {
     return this._event.parameters[3].value.toBigInt();
   }
 }
@@ -105,15 +105,15 @@ export class NewCommitment__Params {
     this._event = event;
   }
 
-  get commitment(): BigInt {
+  get commitment(): bigint {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get subTreeIndex(): BigInt {
+  get subTreeIndex(): bigint {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get leafIndex(): BigInt {
+  get leafIndex(): bigint {
     return this._event.parameters[2].value.toBigInt();
   }
 
@@ -135,7 +135,7 @@ export class NewNullifier__Params {
     this._event = event;
   }
 
-  get nullifier(): BigInt {
+  get nullifier(): bigint {
     return this._event.parameters[0].value.toBigInt();
   }
 }
@@ -167,7 +167,7 @@ export class VAnchor___genExtDataHashInput_externalDataStruct extends ethereum.T
     return this[0].toAddress();
   }
 
-  get extAmount(): BigInt {
+  get extAmount(): bigint {
     return this[1].toBigInt();
   }
 
@@ -175,11 +175,11 @@ export class VAnchor___genExtDataHashInput_externalDataStruct extends ethereum.T
     return this[2].toAddress();
   }
 
-  get fee(): BigInt {
+  get fee(): bigint {
     return this[3].toBigInt();
   }
 
-  get refund(): BigInt {
+  get refund(): bigint {
     return this[4].toBigInt();
   }
 
@@ -199,12 +199,12 @@ export class VAnchor___genExtDataHashInput_encryptionsStruct extends ethereum.Tu
 }
 
 export class VAnchor__edgeListResult {
-  value0: BigInt;
-  value1: BigInt;
-  value2: BigInt;
+  value0: bigint;
+  value1: bigint;
+  value2: bigint;
   value3: Bytes;
 
-  constructor(value0: BigInt, value1: BigInt, value2: BigInt, value3: Bytes) {
+  constructor(value0: bigint, value1: bigint, value2: bigint, value3: Bytes) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
@@ -212,7 +212,7 @@ export class VAnchor__edgeListResult {
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
+    const map = new TypedMap<string, ethereum.Value>();
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
@@ -220,15 +220,15 @@ export class VAnchor__edgeListResult {
     return map;
   }
 
-  getChainID(): BigInt {
+  getChainID(): bigint {
     return this.value0;
   }
 
-  getRoot(): BigInt {
+  getRoot(): bigint {
     return this.value1;
   }
 
-  getLatestLeafIndex(): BigInt {
+  getLatestLeafIndex(): bigint {
     return this.value2;
   }
 
@@ -238,15 +238,15 @@ export class VAnchor__edgeListResult {
 }
 
 export class VAnchor__getLatestNeighborEdgesResultValue0Struct extends ethereum.Tuple {
-  get chainID(): BigInt {
+  get chainID(): bigint {
     return this[0].toBigInt();
   }
 
-  get root(): BigInt {
+  get root(): bigint {
     return this[1].toBigInt();
   }
 
-  get latestLeafIndex(): BigInt {
+  get latestLeafIndex(): bigint {
     return this[2].toBigInt();
   }
 
@@ -256,39 +256,39 @@ export class VAnchor__getLatestNeighborEdgesResultValue0Struct extends ethereum.
 }
 
 export class VAnchor__rootsResult {
-  value0: BigInt;
-  value1: BigInt;
+  value0: bigint;
+  value1: bigint;
 
-  constructor(value0: BigInt, value1: BigInt) {
+  constructor(value0: bigint, value1: bigint) {
     this.value0 = value0;
     this.value1 = value1;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
+    const map = new TypedMap<string, ethereum.Value>();
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     return map;
   }
 
-  getRoot(): BigInt {
+  getRoot(): bigint {
     return this.value0;
   }
 
-  getLatestLeafindex(): BigInt {
+  getLatestLeafindex(): bigint {
     return this.value1;
   }
 }
 
 export class VAnchor__unpackProofResult {
-  value0: Array<BigInt>;
-  value1: Array<Array<BigInt>>;
-  value2: Array<BigInt>;
+  value0: Array<bigint>;
+  value1: Array<Array<bigint>>;
+  value2: Array<bigint>;
 
   constructor(
-    value0: Array<BigInt>,
-    value1: Array<Array<BigInt>>,
-    value2: Array<BigInt>
+    value0: Array<bigint>,
+    value1: Array<Array<bigint>>,
+    value2: Array<bigint>
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -296,22 +296,22 @@ export class VAnchor__unpackProofResult {
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
+    const map = new TypedMap<string, ethereum.Value>();
     map.set("value0", ethereum.Value.fromUnsignedBigIntArray(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigIntMatrix(this.value1));
     map.set("value2", ethereum.Value.fromUnsignedBigIntArray(this.value2));
     return map;
   }
 
-  getValue0(): Array<BigInt> {
+  getValue0(): Array<bigint> {
     return this.value0;
   }
 
-  getValue1(): Array<Array<BigInt>> {
+  getValue1(): Array<Array<bigint>> {
     return this.value1;
   }
 
-  getValue2(): Array<BigInt> {
+  getValue2(): Array<bigint> {
     return this.value2;
   }
 }
@@ -322,7 +322,7 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   EVM_CHAIN_ID_TYPE(): Bytes {
-    let result = super.call(
+    const result = super.call(
       "EVM_CHAIN_ID_TYPE",
       "EVM_CHAIN_ID_TYPE():(bytes2)",
       []
@@ -332,7 +332,7 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_EVM_CHAIN_ID_TYPE(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "EVM_CHAIN_ID_TYPE",
       "EVM_CHAIN_ID_TYPE():(bytes2)",
       []
@@ -340,33 +340,33 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  FIELD_SIZE(): BigInt {
-    let result = super.call("FIELD_SIZE", "FIELD_SIZE():(uint256)", []);
+  FIELD_SIZE(): bigint {
+    const result = super.call("FIELD_SIZE", "FIELD_SIZE():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_FIELD_SIZE(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("FIELD_SIZE", "FIELD_SIZE():(uint256)", []);
+  try_FIELD_SIZE(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("FIELD_SIZE", "FIELD_SIZE():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  MAX_EXT_AMOUNT(): BigInt {
-    let result = super.call("MAX_EXT_AMOUNT", "MAX_EXT_AMOUNT():(int256)", []);
+  MAX_EXT_AMOUNT(): bigint {
+    const result = super.call("MAX_EXT_AMOUNT", "MAX_EXT_AMOUNT():(int256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_MAX_EXT_AMOUNT(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_MAX_EXT_AMOUNT(): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "MAX_EXT_AMOUNT",
       "MAX_EXT_AMOUNT():(int256)",
       []
@@ -374,27 +374,27 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  MAX_FEE(): BigInt {
-    let result = super.call("MAX_FEE", "MAX_FEE():(uint256)", []);
+  MAX_FEE(): bigint {
+    const result = super.call("MAX_FEE", "MAX_FEE():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_MAX_FEE(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("MAX_FEE", "MAX_FEE():(uint256)", []);
+  try_MAX_FEE(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("MAX_FEE", "MAX_FEE():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  ROOT_HISTORY_SIZE(): BigInt {
-    let result = super.call(
+  ROOT_HISTORY_SIZE(): bigint {
+    const result = super.call(
       "ROOT_HISTORY_SIZE",
       "ROOT_HISTORY_SIZE():(uint32)",
       []
@@ -403,8 +403,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_ROOT_HISTORY_SIZE(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_ROOT_HISTORY_SIZE(): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "ROOT_HISTORY_SIZE",
       "ROOT_HISTORY_SIZE():(uint32)",
       []
@@ -412,22 +412,22 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  ZERO_VALUE(): BigInt {
-    let result = super.call("ZERO_VALUE", "ZERO_VALUE():(uint256)", []);
+  ZERO_VALUE(): bigint {
+    const result = super.call("ZERO_VALUE", "ZERO_VALUE():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_ZERO_VALUE(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("ZERO_VALUE", "ZERO_VALUE():(uint256)", []);
+  try_ZERO_VALUE(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("ZERO_VALUE", "ZERO_VALUE():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
@@ -436,7 +436,7 @@ export class VAnchor extends ethereum.SmartContract {
     _externalData: VAnchor___genExtDataHashInput_externalDataStruct,
     _encryptions: VAnchor___genExtDataHashInput_encryptionsStruct
   ): Bytes {
-    let result = super.call(
+    const result = super.call(
       "_genExtDataHash",
       "_genExtDataHash(bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes)):(bytes32)",
       [
@@ -454,7 +454,7 @@ export class VAnchor extends ethereum.SmartContract {
     _externalData: VAnchor___genExtDataHashInput_externalDataStruct,
     _encryptions: VAnchor___genExtDataHashInput_encryptionsStruct
   ): ethereum.CallResult<Bytes> {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "_genExtDataHash",
       "_genExtDataHash(bytes,(address,int256,address,uint256,uint256,address),(bytes,bytes)):(bytes32)",
       [
@@ -466,12 +466,12 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  calculatePublicAmount(_extAmount: BigInt, _fee: BigInt): BigInt {
-    let result = super.call(
+  calculatePublicAmount(_extAmount: bigint, _fee: bigint): bigint {
+    const result = super.call(
       "calculatePublicAmount",
       "calculatePublicAmount(int256,uint256):(uint256)",
       [
@@ -484,10 +484,10 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_calculatePublicAmount(
-    _extAmount: BigInt,
-    _fee: BigInt
-  ): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+    _extAmount: bigint,
+    _fee: bigint
+  ): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "calculatePublicAmount",
       "calculatePublicAmount(int256,uint256):(uint256)",
       [
@@ -498,31 +498,31 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  commitments(param0: BigInt): boolean {
-    let result = super.call("commitments", "commitments(uint256):(bool)", [
+  commitments(param0: bigint): boolean {
+    const result = super.call("commitments", "commitments(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(param0)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_commitments(param0: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall("commitments", "commitments(uint256):(bool)", [
+  try_commitments(param0: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall("commitments", "commitments(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(param0)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  currentNeighborRootIndex(param0: BigInt): BigInt {
-    let result = super.call(
+  currentNeighborRootIndex(param0: bigint): bigint {
+    const result = super.call(
       "currentNeighborRootIndex",
       "currentNeighborRootIndex(uint256):(uint32)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -531,8 +531,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_currentNeighborRootIndex(param0: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_currentNeighborRootIndex(param0: bigint): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "currentNeighborRootIndex",
       "currentNeighborRootIndex(uint256):(uint32)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -540,12 +540,12 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  edgeExistsForChain(param0: BigInt): boolean {
-    let result = super.call(
+  edgeExistsForChain(param0: bigint): boolean {
+    const result = super.call(
       "edgeExistsForChain",
       "edgeExistsForChain(uint256):(bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -554,8 +554,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_edgeExistsForChain(param0: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
+  try_edgeExistsForChain(param0: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall(
       "edgeExistsForChain",
       "edgeExistsForChain(uint256):(bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -563,31 +563,31 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  edgeIndex(param0: BigInt): BigInt {
-    let result = super.call("edgeIndex", "edgeIndex(uint256):(uint256)", [
+  edgeIndex(param0: bigint): bigint {
+    const result = super.call("edgeIndex", "edgeIndex(uint256):(uint256)", [
       ethereum.Value.fromUnsignedBigInt(param0)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_edgeIndex(param0: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("edgeIndex", "edgeIndex(uint256):(uint256)", [
+  try_edgeIndex(param0: bigint): ethereum.CallResult<bigint> {
+    const result = super.tryCall("edgeIndex", "edgeIndex(uint256):(uint256)", [
       ethereum.Value.fromUnsignedBigInt(param0)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  edgeList(param0: BigInt): VAnchor__edgeListResult {
-    let result = super.call(
+  edgeList(param0: bigint): VAnchor__edgeListResult {
+    const result = super.call(
       "edgeList",
       "edgeList(uint256):(uint256,uint256,uint256,bytes32)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -601,8 +601,8 @@ export class VAnchor extends ethereum.SmartContract {
     );
   }
 
-  try_edgeList(param0: BigInt): ethereum.CallResult<VAnchor__edgeListResult> {
-    let result = super.tryCall(
+  try_edgeList(param0: bigint): ethereum.CallResult<VAnchor__edgeListResult> {
+    const result = super.tryCall(
       "edgeList",
       "edgeList(uint256):(uint256,uint256,uint256,bytes32)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -610,7 +610,7 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(
       new VAnchor__edgeListResult(
         value[0].toBigInt(),
@@ -621,8 +621,8 @@ export class VAnchor extends ethereum.SmartContract {
     );
   }
 
-  filledSubtrees(param0: BigInt): BigInt {
-    let result = super.call(
+  filledSubtrees(param0: bigint): bigint {
+    const result = super.call(
       "filledSubtrees",
       "filledSubtrees(uint256):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -631,8 +631,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_filledSubtrees(param0: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_filledSubtrees(param0: bigint): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "filledSubtrees",
       "filledSubtrees(uint256):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -640,33 +640,33 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getChainId(): BigInt {
-    let result = super.call("getChainId", "getChainId():(uint256)", []);
+  getChainId(): bigint {
+    const result = super.call("getChainId", "getChainId():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_getChainId(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("getChainId", "getChainId():(uint256)", []);
+  try_getChainId(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("getChainId", "getChainId():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getChainIdType(): BigInt {
-    let result = super.call("getChainIdType", "getChainIdType():(uint48)", []);
+  getChainIdType(): bigint {
+    const result = super.call("getChainIdType", "getChainIdType():(uint48)", []);
 
     return result[0].toBigInt();
   }
 
-  try_getChainIdType(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_getChainIdType(): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "getChainIdType",
       "getChainIdType():(uint48)",
       []
@@ -674,44 +674,44 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   getHasher(): Address {
-    let result = super.call("getHasher", "getHasher():(address)", []);
+    const result = super.call("getHasher", "getHasher():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_getHasher(): ethereum.CallResult<Address> {
-    let result = super.tryCall("getHasher", "getHasher():(address)", []);
+    const result = super.tryCall("getHasher", "getHasher():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  getLastRoot(): BigInt {
-    let result = super.call("getLastRoot", "getLastRoot():(uint256)", []);
+  getLastRoot(): bigint {
+    const result = super.call("getLastRoot", "getLastRoot():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_getLastRoot(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("getLastRoot", "getLastRoot():(uint256)", []);
+  try_getLastRoot(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("getLastRoot", "getLastRoot():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   getLatestNeighborEdges(): Array<
     VAnchor__getLatestNeighborEdgesResultValue0Struct
   > {
-    let result = super.call(
+    const result = super.call(
       "getLatestNeighborEdges",
       "getLatestNeighborEdges():((uint256,uint256,uint256,bytes32)[])",
       []
@@ -725,7 +725,7 @@ export class VAnchor extends ethereum.SmartContract {
   try_getLatestNeighborEdges(): ethereum.CallResult<
     Array<VAnchor__getLatestNeighborEdgesResultValue0Struct>
   > {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "getLatestNeighborEdges",
       "getLatestNeighborEdges():((uint256,uint256,uint256,bytes32)[])",
       []
@@ -733,14 +733,14 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(
       value[0].toTupleArray<VAnchor__getLatestNeighborEdgesResultValue0Struct>()
     );
   }
 
-  getLatestNeighborRoots(): Array<BigInt> {
-    let result = super.call(
+  getLatestNeighborRoots(): Array<bigint> {
+    const result = super.call(
       "getLatestNeighborRoots",
       "getLatestNeighborRoots():(uint256[])",
       []
@@ -749,8 +749,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBigIntArray();
   }
 
-  try_getLatestNeighborRoots(): ethereum.CallResult<Array<BigInt>> {
-    let result = super.tryCall(
+  try_getLatestNeighborRoots(): ethereum.CallResult<Array<bigint>> {
+    const result = super.tryCall(
       "getLatestNeighborRoots",
       "getLatestNeighborRoots():(uint256[])",
       []
@@ -758,42 +758,42 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
-  getLevels(): BigInt {
-    let result = super.call("getLevels", "getLevels():(uint32)", []);
+  getLevels(): bigint {
+    const result = super.call("getLevels", "getLevels():(uint32)", []);
 
     return result[0].toBigInt();
   }
 
-  try_getLevels(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("getLevels", "getLevels():(uint32)", []);
+  try_getLevels(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("getLevels", "getLevels():(uint32)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getNextIndex(): BigInt {
-    let result = super.call("getNextIndex", "getNextIndex():(uint32)", []);
+  getNextIndex(): bigint {
+    const result = super.call("getNextIndex", "getNextIndex():(uint32)", []);
 
     return result[0].toBigInt();
   }
 
-  try_getNextIndex(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("getNextIndex", "getNextIndex():(uint32)", []);
+  try_getNextIndex(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("getNextIndex", "getNextIndex():(uint32)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getProposalNonce(): BigInt {
-    let result = super.call(
+  getProposalNonce(): bigint {
+    const result = super.call(
       "getProposalNonce",
       "getProposalNonce():(uint256)",
       []
@@ -802,8 +802,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_getProposalNonce(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_getProposalNonce(): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "getProposalNonce",
       "getProposalNonce():(uint256)",
       []
@@ -811,65 +811,65 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getZeroHash(index: BigInt): BigInt {
-    let result = super.call("getZeroHash", "getZeroHash(uint32):(uint256)", [
+  getZeroHash(index: bigint): bigint {
+    const result = super.call("getZeroHash", "getZeroHash(uint32):(uint256)", [
       ethereum.Value.fromUnsignedBigInt(index)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_getZeroHash(index: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("getZeroHash", "getZeroHash(uint32):(uint256)", [
+  try_getZeroHash(index: bigint): ethereum.CallResult<bigint> {
+    const result = super.tryCall("getZeroHash", "getZeroHash(uint32):(uint256)", [
       ethereum.Value.fromUnsignedBigInt(index)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   handler(): Address {
-    let result = super.call("handler", "handler():(address)", []);
+    const result = super.call("handler", "handler():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_handler(): ethereum.CallResult<Address> {
-    let result = super.tryCall("handler", "handler():(address)", []);
+    const result = super.tryCall("handler", "handler():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  hasEdge(_chainID: BigInt): boolean {
-    let result = super.call("hasEdge", "hasEdge(uint256):(bool)", [
+  hasEdge(_chainID: bigint): boolean {
+    const result = super.call("hasEdge", "hasEdge(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(_chainID)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_hasEdge(_chainID: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall("hasEdge", "hasEdge(uint256):(bool)", [
+  try_hasEdge(_chainID: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall("hasEdge", "hasEdge(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(_chainID)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  hashLeftRight(_left: BigInt, _right: BigInt): BigInt {
-    let result = super.call(
+  hashLeftRight(_left: bigint, _right: bigint): bigint {
+    const result = super.call(
       "hashLeftRight",
       "hashLeftRight(uint256,uint256):(uint256)",
       [
@@ -882,10 +882,10 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_hashLeftRight(
-    _left: BigInt,
-    _right: BigInt
-  ): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+    _left: bigint,
+    _right: bigint
+  ): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "hashLeftRight",
       "hashLeftRight(uint256,uint256):(uint256)",
       [
@@ -896,27 +896,27 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   initialized(): boolean {
-    let result = super.call("initialized", "initialized():(bool)", []);
+    const result = super.call("initialized", "initialized():(bool)", []);
 
     return result[0].toBoolean();
   }
 
   try_initialized(): ethereum.CallResult<boolean> {
-    let result = super.tryCall("initialized", "initialized():(bool)", []);
+    const result = super.tryCall("initialized", "initialized():(bool)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   isCorrectExecutionChain(resourceID: Bytes): boolean {
-    let result = super.call(
+    const result = super.call(
       "isCorrectExecutionChain",
       "isCorrectExecutionChain(bytes32):(bool)",
       [ethereum.Value.fromFixedBytes(resourceID)]
@@ -926,7 +926,7 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_isCorrectExecutionChain(resourceID: Bytes): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "isCorrectExecutionChain",
       "isCorrectExecutionChain(bytes32):(bool)",
       [ethereum.Value.fromFixedBytes(resourceID)]
@@ -934,12 +934,12 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   isCorrectExecutionContext(resourceId: Bytes): boolean {
-    let result = super.call(
+    const result = super.call(
       "isCorrectExecutionContext",
       "isCorrectExecutionContext(bytes32):(bool)",
       [ethereum.Value.fromFixedBytes(resourceId)]
@@ -951,7 +951,7 @@ export class VAnchor extends ethereum.SmartContract {
   try_isCorrectExecutionContext(
     resourceId: Bytes
   ): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "isCorrectExecutionContext",
       "isCorrectExecutionContext(bytes32):(bool)",
       [ethereum.Value.fromFixedBytes(resourceId)]
@@ -959,12 +959,12 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  isKnownNeighborRoot(_neighborChainID: BigInt, _root: BigInt): boolean {
-    let result = super.call(
+  isKnownNeighborRoot(_neighborChainID: bigint, _root: bigint): boolean {
+    const result = super.call(
       "isKnownNeighborRoot",
       "isKnownNeighborRoot(uint256,uint256):(bool)",
       [
@@ -977,10 +977,10 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_isKnownNeighborRoot(
-    _neighborChainID: BigInt,
-    _root: BigInt
+    _neighborChainID: bigint,
+    _root: bigint
   ): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "isKnownNeighborRoot",
       "isKnownNeighborRoot(uint256,uint256):(bool)",
       [
@@ -991,50 +991,50 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  isKnownRoot(root: BigInt): boolean {
-    let result = super.call("isKnownRoot", "isKnownRoot(uint256):(bool)", [
+  isKnownRoot(root: bigint): boolean {
+    const result = super.call("isKnownRoot", "isKnownRoot(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(root)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_isKnownRoot(root: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall("isKnownRoot", "isKnownRoot(uint256):(bool)", [
+  try_isKnownRoot(root: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall("isKnownRoot", "isKnownRoot(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(root)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  isSpent(_nullifierHash: BigInt): boolean {
-    let result = super.call("isSpent", "isSpent(uint256):(bool)", [
+  isSpent(_nullifierHash: bigint): boolean {
+    const result = super.call("isSpent", "isSpent(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(_nullifierHash)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_isSpent(_nullifierHash: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall("isSpent", "isSpent(uint256):(bool)", [
+  try_isSpent(_nullifierHash: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall("isSpent", "isSpent(uint256):(bool)", [
       ethereum.Value.fromUnsignedBigInt(_nullifierHash)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  isSpentArray(_nullifierHashes: Array<BigInt>): Array<boolean> {
-    let result = super.call(
+  isSpentArray(_nullifierHashes: Array<bigint>): Array<boolean> {
+    const result = super.call(
       "isSpentArray",
       "isSpentArray(uint256[]):(bool[])",
       [ethereum.Value.fromUnsignedBigIntArray(_nullifierHashes)]
@@ -1044,9 +1044,9 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_isSpentArray(
-    _nullifierHashes: Array<BigInt>
+    _nullifierHashes: Array<bigint>
   ): ethereum.CallResult<Array<boolean>> {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "isSpentArray",
       "isSpentArray(uint256[]):(bool[])",
       [ethereum.Value.fromUnsignedBigIntArray(_nullifierHashes)]
@@ -1054,20 +1054,20 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBooleanArray());
   }
 
-  isValidRoots(_roots: Array<BigInt>): boolean {
-    let result = super.call("isValidRoots", "isValidRoots(uint256[]):(bool)", [
+  isValidRoots(_roots: Array<bigint>): boolean {
+    const result = super.call("isValidRoots", "isValidRoots(uint256[]):(bool)", [
       ethereum.Value.fromUnsignedBigIntArray(_roots)
     ]);
 
     return result[0].toBoolean();
   }
 
-  try_isValidRoots(_roots: Array<BigInt>): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
+  try_isValidRoots(_roots: Array<bigint>): ethereum.CallResult<boolean> {
+    const result = super.tryCall(
       "isValidRoots",
       "isValidRoots(uint256[]):(bool)",
       [ethereum.Value.fromUnsignedBigIntArray(_roots)]
@@ -1075,42 +1075,42 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  lastBalance(): BigInt {
-    let result = super.call("lastBalance", "lastBalance():(uint256)", []);
+  lastBalance(): bigint {
+    const result = super.call("lastBalance", "lastBalance():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_lastBalance(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("lastBalance", "lastBalance():(uint256)", []);
+  try_lastBalance(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("lastBalance", "lastBalance():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   maxEdges(): i32 {
-    let result = super.call("maxEdges", "maxEdges():(uint8)", []);
+    const result = super.call("maxEdges", "maxEdges():(uint8)", []);
 
     return result[0].toI32();
   }
 
   try_maxEdges(): ethereum.CallResult<i32> {
-    let result = super.tryCall("maxEdges", "maxEdges():(uint8)", []);
+    const result = super.tryCall("maxEdges", "maxEdges():(uint8)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
-  maximumDepositAmount(): BigInt {
-    let result = super.call(
+  maximumDepositAmount(): bigint {
+    const result = super.call(
       "maximumDepositAmount",
       "maximumDepositAmount():(uint256)",
       []
@@ -1119,8 +1119,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_maximumDepositAmount(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_maximumDepositAmount(): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "maximumDepositAmount",
       "maximumDepositAmount():(uint256)",
       []
@@ -1128,12 +1128,12 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  minimalWithdrawalAmount(): BigInt {
-    let result = super.call(
+  minimalWithdrawalAmount(): bigint {
+    const result = super.call(
       "minimalWithdrawalAmount",
       "minimalWithdrawalAmount():(uint256)",
       []
@@ -1142,8 +1142,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_minimalWithdrawalAmount(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_minimalWithdrawalAmount(): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "minimalWithdrawalAmount",
       "minimalWithdrawalAmount():(uint256)",
       []
@@ -1151,12 +1151,12 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  neighborRoots(param0: BigInt, param1: BigInt): BigInt {
-    let result = super.call(
+  neighborRoots(param0: bigint, param1: bigint): bigint {
+    const result = super.call(
       "neighborRoots",
       "neighborRoots(uint256,uint32):(uint256)",
       [
@@ -1169,10 +1169,10 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_neighborRoots(
-    param0: BigInt,
-    param1: BigInt
-  ): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+    param0: bigint,
+    param1: bigint
+  ): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "neighborRoots",
       "neighborRoots(uint256,uint32):(uint256)",
       [
@@ -1183,12 +1183,12 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  nullifierHashes(param0: BigInt): boolean {
-    let result = super.call(
+  nullifierHashes(param0: bigint): boolean {
+    const result = super.call(
       "nullifierHashes",
       "nullifierHashes(uint256):(bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -1197,8 +1197,8 @@ export class VAnchor extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_nullifierHashes(param0: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
+  try_nullifierHashes(param0: bigint): ethereum.CallResult<boolean> {
+    const result = super.tryCall(
       "nullifierHashes",
       "nullifierHashes(uint256):(bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
@@ -1206,27 +1206,27 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  outerLevels(): BigInt {
-    let result = super.call("outerLevels", "outerLevels():(uint32)", []);
+  outerLevels(): bigint {
+    const result = super.call("outerLevels", "outerLevels():(uint32)", []);
 
     return result[0].toBigInt();
   }
 
-  try_outerLevels(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("outerLevels", "outerLevels():(uint32)", []);
+  try_outerLevels(): ethereum.CallResult<bigint> {
+    const result = super.tryCall("outerLevels", "outerLevels():(uint32)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  parseChainIdFromResourceId(_resourceId: Bytes): BigInt {
-    let result = super.call(
+  parseChainIdFromResourceId(_resourceId: Bytes): bigint {
+    const result = super.call(
       "parseChainIdFromResourceId",
       "parseChainIdFromResourceId(bytes32):(uint64)",
       [ethereum.Value.fromFixedBytes(_resourceId)]
@@ -1237,8 +1237,8 @@ export class VAnchor extends ethereum.SmartContract {
 
   try_parseChainIdFromResourceId(
     _resourceId: Bytes
-  ): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  ): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "parseChainIdFromResourceId",
       "parseChainIdFromResourceId(bytes32):(uint64)",
       [ethereum.Value.fromFixedBytes(_resourceId)]
@@ -1246,18 +1246,18 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  proposalNonce(): BigInt {
-    let result = super.call("proposalNonce", "proposalNonce():(uint256)", []);
+  proposalNonce(): bigint {
+    const result = super.call("proposalNonce", "proposalNonce():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_proposalNonce(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
+  try_proposalNonce(): ethereum.CallResult<bigint> {
+    const result = super.tryCall(
       "proposalNonce",
       "proposalNonce():(uint256)",
       []
@@ -1265,48 +1265,48 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  roots(param0: BigInt): VAnchor__rootsResult {
-    let result = super.call("roots", "roots(uint256):(uint256,uint32)", [
+  roots(param0: bigint): VAnchor__rootsResult {
+    const result = super.call("roots", "roots(uint256):(uint256,uint32)", [
       ethereum.Value.fromUnsignedBigInt(param0)
     ]);
 
     return new VAnchor__rootsResult(result[0].toBigInt(), result[1].toBigInt());
   }
 
-  try_roots(param0: BigInt): ethereum.CallResult<VAnchor__rootsResult> {
-    let result = super.tryCall("roots", "roots(uint256):(uint256,uint32)", [
+  try_roots(param0: bigint): ethereum.CallResult<VAnchor__rootsResult> {
+    const result = super.tryCall("roots", "roots(uint256):(uint256,uint32)", [
       ethereum.Value.fromUnsignedBigInt(param0)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(
       new VAnchor__rootsResult(value[0].toBigInt(), value[1].toBigInt())
     );
   }
 
   token(): Address {
-    let result = super.call("token", "token():(address)", []);
+    const result = super.call("token", "token():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_token(): ethereum.CallResult<Address> {
-    let result = super.tryCall("token", "token():(address)", []);
+    const result = super.tryCall("token", "token():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  unpackProof(_proof: Array<BigInt>): VAnchor__unpackProofResult {
-    let result = super.call(
+  unpackProof(_proof: Array<bigint>): VAnchor__unpackProofResult {
+    const result = super.call(
       "unpackProof",
       "unpackProof(uint256[8]):(uint256[2],uint256[2][2],uint256[2])",
       [ethereum.Value.fromUnsignedBigIntArray(_proof)]
@@ -1320,9 +1320,9 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   try_unpackProof(
-    _proof: Array<BigInt>
+    _proof: Array<bigint>
   ): ethereum.CallResult<VAnchor__unpackProofResult> {
-    let result = super.tryCall(
+    const result = super.tryCall(
       "unpackProof",
       "unpackProof(uint256[8]):(uint256[2],uint256[2][2],uint256[2])",
       [ethereum.Value.fromUnsignedBigIntArray(_proof)]
@@ -1330,7 +1330,7 @@ export class VAnchor extends ethereum.SmartContract {
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(
       new VAnchor__unpackProofResult(
         value[0].toBigIntArray(),
@@ -1341,17 +1341,17 @@ export class VAnchor extends ethereum.SmartContract {
   }
 
   verifier(): Address {
-    let result = super.call("verifier", "verifier():(address)", []);
+    const result = super.call("verifier", "verifier():(address)", []);
 
     return result[0].toAddress();
   }
 
   try_verifier(): ethereum.CallResult<Address> {
-    let result = super.tryCall("verifier", "verifier():(address)", []);
+    const result = super.tryCall("verifier", "verifier():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
-    let value = result.value;
+    const value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 }
@@ -1381,7 +1381,7 @@ export class _executeWrappingCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get _extAmount(): BigInt {
+  get _extAmount(): bigint {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1393,7 +1393,7 @@ export class _executeWrappingCall__Outputs {
     this._call = call;
   }
 
-  get value0(): BigInt {
+  get value0(): bigint {
     return this._call.outputValues[0].value.toBigInt();
   }
 }
@@ -1449,7 +1449,7 @@ export class _genExtDataHashCall_externalDataStruct extends ethereum.Tuple {
     return this[0].toAddress();
   }
 
-  get extAmount(): BigInt {
+  get extAmount(): bigint {
     return this[1].toBigInt();
   }
 
@@ -1457,11 +1457,11 @@ export class _genExtDataHashCall_externalDataStruct extends ethereum.Tuple {
     return this[2].toAddress();
   }
 
-  get fee(): BigInt {
+  get fee(): bigint {
     return this[3].toBigInt();
   }
 
-  get refund(): BigInt {
+  get refund(): bigint {
     return this[4].toBigInt();
   }
 
@@ -1509,7 +1509,7 @@ export class _withdrawAndUnwrapCall__Inputs {
     return this._call.inputValues[2].value.toAddress();
   }
 
-  get _minusExtAmount(): BigInt {
+  get _minusExtAmount(): bigint {
     return this._call.inputValues[3].value.toBigInt();
   }
 }
@@ -1539,11 +1539,11 @@ export class ConfigureMaximumDepositLimitCall__Inputs {
     this._call = call;
   }
 
-  get _maximumDepositAmount(): BigInt {
+  get _maximumDepositAmount(): bigint {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1573,11 +1573,11 @@ export class ConfigureMinimalWithdrawalLimitCall__Inputs {
     this._call = call;
   }
 
-  get _minimalWithdrawalAmount(): BigInt {
+  get _minimalWithdrawalAmount(): bigint {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1607,11 +1607,11 @@ export class InitializeCall__Inputs {
     this._call = call;
   }
 
-  get _minimalWithdrawalAmount(): BigInt {
+  get _minimalWithdrawalAmount(): bigint {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get _maximumDepositAmount(): BigInt {
+  get _maximumDepositAmount(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1739,7 +1739,7 @@ export class RegisterAndTransactCall_externalDataStruct extends ethereum.Tuple {
     return this[0].toAddress();
   }
 
-  get extAmount(): BigInt {
+  get extAmount(): bigint {
     return this[1].toBigInt();
   }
 
@@ -1747,11 +1747,11 @@ export class RegisterAndTransactCall_externalDataStruct extends ethereum.Tuple {
     return this[2].toAddress();
   }
 
-  get fee(): BigInt {
+  get fee(): bigint {
     return this[3].toBigInt();
   }
 
-  get refund(): BigInt {
+  get refund(): bigint {
     return this[4].toBigInt();
   }
 
@@ -1769,19 +1769,19 @@ export class RegisterAndTransactCall_publicInputsStruct extends ethereum.Tuple {
     return this[1].toBytes();
   }
 
-  get inputNullifiers(): Array<BigInt> {
+  get inputNullifiers(): Array<bigint> {
     return this[2].toBigIntArray();
   }
 
-  get outputCommitments(): Array<BigInt> {
+  get outputCommitments(): Array<bigint> {
     return this[3].toBigIntArray();
   }
 
-  get publicAmount(): BigInt {
+  get publicAmount(): bigint {
     return this[4].toBigInt();
   }
 
-  get extDataHash(): BigInt {
+  get extDataHash(): bigint {
     return this[5].toBigInt();
   }
 }
@@ -1817,7 +1817,7 @@ export class SetHandlerCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1851,7 +1851,7 @@ export class SetVerifierCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): BigInt {
+  get _nonce(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1921,7 +1921,7 @@ export class TransactCall_externalDataStruct extends ethereum.Tuple {
     return this[0].toAddress();
   }
 
-  get extAmount(): BigInt {
+  get extAmount(): bigint {
     return this[1].toBigInt();
   }
 
@@ -1929,11 +1929,11 @@ export class TransactCall_externalDataStruct extends ethereum.Tuple {
     return this[2].toAddress();
   }
 
-  get fee(): BigInt {
+  get fee(): bigint {
     return this[3].toBigInt();
   }
 
-  get refund(): BigInt {
+  get refund(): bigint {
     return this[4].toBigInt();
   }
 
@@ -1951,19 +1951,19 @@ export class TransactCall_publicInputsStruct extends ethereum.Tuple {
     return this[1].toBytes();
   }
 
-  get inputNullifiers(): Array<BigInt> {
+  get inputNullifiers(): Array<bigint> {
     return this[2].toBigIntArray();
   }
 
-  get outputCommitments(): Array<BigInt> {
+  get outputCommitments(): Array<bigint> {
     return this[3].toBigIntArray();
   }
 
-  get publicAmount(): BigInt {
+  get publicAmount(): bigint {
     return this[4].toBigInt();
   }
 
-  get extDataHash(): BigInt {
+  get extDataHash(): bigint {
     return this[5].toBigInt();
   }
 }
@@ -1995,11 +1995,11 @@ export class UpdateEdgeCall__Inputs {
     this._call = call;
   }
 
-  get _root(): BigInt {
+  get _root(): bigint {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get _leafIndex(): BigInt {
+  get _leafIndex(): bigint {
     return this._call.inputValues[1].value.toBigInt();
   }
 
