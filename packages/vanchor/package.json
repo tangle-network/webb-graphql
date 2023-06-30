@@ -20,7 +20,9 @@
     "deploy-demeter-local": "graph deploy --node http://localhost:8020/ VAnchorDemeterLocal --ipfs http://localhost:6001 --network Demeter",
     "test": "graph test",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --fix --ext .ts "
+    "lint:fix": "eslint . --fix --ext .ts ",
+    "format": "prettier --write \"{libs,apps,tools}/**/*.{ts,js}\" ",
+    "format:check": "prettier --check \"{libs,apps,tools}/**/*.{ts,js}\" "
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.51.1",

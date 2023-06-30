@@ -1,4 +1,11 @@
-import { assert, describe, test, clearStore, beforeAll, afterAll } from 'matchstick-as/assembly/index';
+import {
+  assert,
+  describe,
+  test,
+  clearStore,
+  beforeAll,
+  afterAll,
+} from 'matchstick-as/assembly/index';
 import { BigInt, Bytes, Address } from '@graphprotocol/graph-ts';
 import { EdgeAddition } from '../generated/schema';
 import { EdgeAddition as EdgeAdditionEvent } from '../generated/VAnchor/VAnchor';
@@ -13,7 +20,11 @@ describe('Describe entity assertions', () => {
     const chainID = BigInt.fromI32(234);
     const latestLeafIndex = BigInt.fromI32(234);
     const merkleRoot = BigInt.fromI32(234);
-    const newEdgeAdditionEvent = createEdgeAdditionEvent(chainID, latestLeafIndex, merkleRoot);
+    const newEdgeAdditionEvent = createEdgeAdditionEvent(
+      chainID,
+      latestLeafIndex,
+      merkleRoot
+    );
     handleEdgeAddition(newEdgeAdditionEvent);
   });
 
@@ -28,9 +39,24 @@ describe('Describe entity assertions', () => {
     assert.entityCount('EdgeAddition', 1);
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
-    assert.fieldEquals('EdgeAddition', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1', 'chainID', '234');
-    assert.fieldEquals('EdgeAddition', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1', 'latestLeafIndex', '234');
-    assert.fieldEquals('EdgeAddition', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1', 'merkleRoot', '234');
+    assert.fieldEquals(
+      'EdgeAddition',
+      '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1',
+      'chainID',
+      '234'
+    );
+    assert.fieldEquals(
+      'EdgeAddition',
+      '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1',
+      'latestLeafIndex',
+      '234'
+    );
+    assert.fieldEquals(
+      'EdgeAddition',
+      '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1',
+      'merkleRoot',
+      '234'
+    );
 
     // More assert options:
     // https://thegraph.com/docs/en/developer/matchstick/#asserts

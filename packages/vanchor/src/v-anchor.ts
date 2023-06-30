@@ -6,11 +6,20 @@ import {
   NewNullifier as NewNullifierEvent,
   PublicKey as PublicKeyEvent,
 } from '../generated/VAnchor/VAnchor';
-import { EdgeAddition, EdgeUpdate, Insertion, NewCommitment, NewNullifier, PublicKey } from '../generated/schema';
+import {
+  EdgeAddition,
+  EdgeUpdate,
+  Insertion,
+  NewCommitment,
+  NewNullifier,
+  PublicKey,
+} from '../generated/schema';
 import { handleTransaction } from './custom';
 
 export function handleEdgeAddition(event: EdgeAdditionEvent): void {
-  const entity = new EdgeAddition(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const entity = new EdgeAddition(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
   entity.chainID = event.params.chainID;
   entity.latestLeafIndex = event.params.latestLeafIndex;
   entity.merkleRoot = event.params.merkleRoot;
@@ -23,7 +32,9 @@ export function handleEdgeAddition(event: EdgeAdditionEvent): void {
 }
 
 export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
-  const entity = new EdgeUpdate(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const entity = new EdgeUpdate(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
   entity.chainID = event.params.chainID;
   entity.latestLeafIndex = event.params.latestLeafIndex;
   entity.merkleRoot = event.params.merkleRoot;
@@ -36,7 +47,9 @@ export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
 }
 
 export function handleInsertion(event: InsertionEvent): void {
-  const entity = new Insertion(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const entity = new Insertion(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
   entity.commitment = event.params.commitment;
   entity.leafIndex = event.params.leafIndex;
   entity.timestamp = event.params.timestamp;
@@ -52,7 +65,9 @@ export function handleInsertion(event: InsertionEvent): void {
 }
 
 export function handleNewCommitment(event: NewCommitmentEvent): void {
-  const entity = new NewCommitment(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const entity = new NewCommitment(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
   entity.commitment = event.params.commitment;
   entity.subTreeIndex = event.params.subTreeIndex;
   entity.leafIndex = event.params.leafIndex;
@@ -66,7 +81,9 @@ export function handleNewCommitment(event: NewCommitmentEvent): void {
 }
 
 export function handleNewNullifier(event: NewNullifierEvent): void {
-  const entity = new NewNullifier(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const entity = new NewNullifier(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
   entity.nullifier = event.params.nullifier;
 
   entity.blockNumber = event.block.number;
@@ -77,7 +94,9 @@ export function handleNewNullifier(event: NewNullifierEvent): void {
 }
 
 export function handlePublicKey(event: PublicKeyEvent): void {
-  const entity = new PublicKey(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  const entity = new PublicKey(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  );
   entity.owner = event.params.owner;
   entity.key = event.params.key;
 

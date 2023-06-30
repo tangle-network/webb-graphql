@@ -7,11 +7,14 @@
     "packages/**"
   ],
   "scripts": {
-    "lint": "nx run-many --all --target=lint"
+    "lint": "nx run-many --all --target=lint",
+    "format": "prettier --write \"**/*.{ts,js}\" ",
+    "format:check": "prettier --check \"**/*.{ts,js}\" "
   },
   "devDependencies": {
     "@nx/eslint-plugin": "^16.4.1",
     "eslint-plugin-storybook": "^0.6.12",
-    "nx": "^16.4.1"
+    "nx": "^16.4.1",
+    "prettier": "^2.8.8"
   }
 }

@@ -1,4 +1,11 @@
-import { assert, describe, test, clearStore, beforeAll, afterAll } from 'matchstick-as/assembly/index';
+import {
+  assert,
+  describe,
+  test,
+  clearStore,
+  beforeAll,
+  afterAll,
+} from 'matchstick-as/assembly/index';
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { Approval } from '../generated/schema';
 import { Approval as ApprovalEvent } from '../generated/FungibleTokenWrapper/FungibleTokenWrapper';
@@ -10,8 +17,12 @@ import { createApprovalEvent } from './fungible-token-wrapper-utils';
 
 describe('Describe entity assertions', () => {
   beforeAll(() => {
-    const owner = Address.fromString('0x0000000000000000000000000000000000000001');
-    const spender = Address.fromString('0x0000000000000000000000000000000000000001');
+    const owner = Address.fromString(
+      '0x0000000000000000000000000000000000000001'
+    );
+    const spender = Address.fromString(
+      '0x0000000000000000000000000000000000000001'
+    );
     const value = BigInt.fromI32(234);
     const newApprovalEvent = createApprovalEvent(owner, spender, value);
     handleApproval(newApprovalEvent);
@@ -40,7 +51,12 @@ describe('Describe entity assertions', () => {
       'spender',
       '0x0000000000000000000000000000000000000001'
     );
-    assert.fieldEquals('Approval', '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1', 'value', '234');
+    assert.fieldEquals(
+      'Approval',
+      '0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1',
+      'value',
+      '234'
+    );
 
     // More assert options:
     // https://thegraph.com/docs/en/developer/matchstick/#asserts

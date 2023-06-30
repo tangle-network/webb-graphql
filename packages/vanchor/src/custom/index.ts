@@ -1,6 +1,12 @@
 import { Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { Insertion } from '../../generated/VAnchor/VAnchor';
-import { Encryptions, ExternalData, PublicInputs, ShieldedTransaction, Token } from '../../generated/schema';
+import {
+  Encryptions,
+  ExternalData,
+  PublicInputs,
+  ShieldedTransaction,
+  Token,
+} from '../../generated/schema';
 import { ensureToken } from './token';
 
 /**
@@ -11,7 +17,9 @@ import { ensureToken } from './token';
  */
 export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
   const inputDataHexString = txInput.toHexString().slice(10); //take away function signature: '0x????????'
-  const hexStringToDecode = '0x0000000000000000000000000000000000000000000000000000000000000020' + inputDataHexString; // prepend tuple offset
+  const hexStringToDecode =
+    '0x0000000000000000000000000000000000000000000000000000000000000020' +
+    inputDataHexString; // prepend tuple offset
   return Bytes.fromByteArray(Bytes.fromHexString(hexStringToDecode));
 }
 
@@ -57,7 +65,9 @@ export const handleTransaction = (event: Insertion): void => {
       // Refund amount
       externalDataEntity.refund = externalData[4].toBigInt();
       // Token
-      externalDataEntity.token = ensureToken(externalData[5].toAddress()).toHexString();
+      externalDataEntity.token = ensureToken(
+        externalData[5].toAddress()
+      ).toHexString();
       // Save the ExternalData entity
       externalDataEntity.save();
     }

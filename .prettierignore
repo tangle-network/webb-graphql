@@ -1,0 +1,10 @@
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
+/build
+/node_modules
+/**/node-modules
+/.vscode
+/**/.next
+/**/generated
