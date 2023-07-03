@@ -1,5 +1,5 @@
 import { Address } from '@graphprotocol/graph-ts';
-import { ERC20 } from '../../generated/FungibleTokenWrapper/ERC20';
+import { ERC20 } from '../../generated/VAnchor/ERC20';
 import { Token } from '../../generated/schema';
 
 export function ensureToken(tokenAddress: Address): Address {

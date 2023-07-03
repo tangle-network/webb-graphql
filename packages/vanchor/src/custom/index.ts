@@ -5,7 +5,6 @@ import {
   ExternalData,
   PublicInputs,
   ShieldedTransaction,
-  Token,
 } from '../../generated/schema';
 import { ensureToken } from './token';
 
