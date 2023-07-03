@@ -10,9 +10,9 @@ import {
 } from '../generated/VAnchor/VAnchor';
 
 export function createEdgeAdditionEvent(
-  chainID: bigint,
-  latestLeafIndex: bigint,
-  merkleRoot: bigint
+  chainID: BigInt,
+  latestLeafIndex: BigInt,
+  merkleRoot: BigInt
 ): EdgeAddition {
   const edgeAdditionEvent = changetype<EdgeAddition>(newMockEvent());
 
@@ -41,9 +41,9 @@ export function createEdgeAdditionEvent(
 }
 
 export function createEdgeUpdateEvent(
-  chainID: bigint,
-  latestLeafIndex: bigint,
-  merkleRoot: bigint
+  chainID: BigInt,
+  latestLeafIndex: BigInt,
+  merkleRoot: BigInt
 ): EdgeUpdate {
   const edgeUpdateEvent = changetype<EdgeUpdate>(newMockEvent());
 
@@ -72,10 +72,10 @@ export function createEdgeUpdateEvent(
 }
 
 export function createInsertionEvent(
-  commitment: bigint,
-  leafIndex: bigint,
-  timestamp: bigint,
-  newMerkleRoot: bigint
+  commitment: BigInt,
+  leafIndex: BigInt,
+  timestamp: BigInt,
+  newMerkleRoot: BigInt
 ): Insertion {
   const insertionEvent = changetype<Insertion>(newMockEvent());
 
@@ -110,9 +110,9 @@ export function createInsertionEvent(
 }
 
 export function createNewCommitmentEvent(
-  commitment: bigint,
-  subTreeIndex: bigint,
-  leafIndex: bigint,
+  commitment: BigInt,
+  subTreeIndex: BigInt,
+  leafIndex: BigInt,
   encryptedOutput: Bytes
 ): NewCommitment {
   const newCommitmentEvent = changetype<NewCommitment>(newMockEvent());
@@ -147,7 +147,7 @@ export function createNewCommitmentEvent(
   return newCommitmentEvent;
 }
 
-export function createNewNullifierEvent(nullifier: bigint): NewNullifier {
+export function createNewNullifierEvent(nullifier: BigInt): NewNullifier {
   const newNullifierEvent = changetype<NewNullifier>(newMockEvent());
 
   newNullifierEvent.parameters = [];

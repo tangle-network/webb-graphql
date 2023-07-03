@@ -54,7 +54,7 @@ export class EdgeAddition extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get chainID(): bigint {
+  get chainID(): BigInt {
     const value = this.get("chainID");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -63,11 +63,11 @@ export class EdgeAddition extends Entity {
     }
   }
 
-  set chainID(value: bigint) {
+  set chainID(value: BigInt) {
     this.set("chainID", Value.fromBigInt(value));
   }
 
-  get latestLeafIndex(): bigint {
+  get latestLeafIndex(): BigInt {
     const value = this.get("latestLeafIndex");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -76,11 +76,11 @@ export class EdgeAddition extends Entity {
     }
   }
 
-  set latestLeafIndex(value: bigint) {
+  set latestLeafIndex(value: BigInt) {
     this.set("latestLeafIndex", Value.fromBigInt(value));
   }
 
-  get merkleRoot(): bigint {
+  get merkleRoot(): BigInt {
     const value = this.get("merkleRoot");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -89,11 +89,11 @@ export class EdgeAddition extends Entity {
     }
   }
 
-  set merkleRoot(value: bigint) {
+  set merkleRoot(value: BigInt) {
     this.set("merkleRoot", Value.fromBigInt(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -102,11 +102,11 @@ export class EdgeAddition extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -115,7 +115,7 @@ export class EdgeAddition extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -176,7 +176,7 @@ export class EdgeUpdate extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get chainID(): bigint {
+  get chainID(): BigInt {
     const value = this.get("chainID");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -185,11 +185,11 @@ export class EdgeUpdate extends Entity {
     }
   }
 
-  set chainID(value: bigint) {
+  set chainID(value: BigInt) {
     this.set("chainID", Value.fromBigInt(value));
   }
 
-  get latestLeafIndex(): bigint {
+  get latestLeafIndex(): BigInt {
     const value = this.get("latestLeafIndex");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -198,11 +198,11 @@ export class EdgeUpdate extends Entity {
     }
   }
 
-  set latestLeafIndex(value: bigint) {
+  set latestLeafIndex(value: BigInt) {
     this.set("latestLeafIndex", Value.fromBigInt(value));
   }
 
-  get merkleRoot(): bigint {
+  get merkleRoot(): BigInt {
     const value = this.get("merkleRoot");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -211,11 +211,11 @@ export class EdgeUpdate extends Entity {
     }
   }
 
-  set merkleRoot(value: bigint) {
+  set merkleRoot(value: BigInt) {
     this.set("merkleRoot", Value.fromBigInt(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -224,11 +224,11 @@ export class EdgeUpdate extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -237,7 +237,7 @@ export class EdgeUpdate extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -298,7 +298,7 @@ export class Insertion extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get commitment(): bigint {
+  get commitment(): BigInt {
     const value = this.get("commitment");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -307,11 +307,11 @@ export class Insertion extends Entity {
     }
   }
 
-  set commitment(value: bigint) {
+  set commitment(value: BigInt) {
     this.set("commitment", Value.fromBigInt(value));
   }
 
-  get leafIndex(): bigint {
+  get leafIndex(): BigInt {
     const value = this.get("leafIndex");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -320,11 +320,11 @@ export class Insertion extends Entity {
     }
   }
 
-  set leafIndex(value: bigint) {
+  set leafIndex(value: BigInt) {
     this.set("leafIndex", Value.fromBigInt(value));
   }
 
-  get timestamp(): bigint {
+  get timestamp(): BigInt {
     const value = this.get("timestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -333,11 +333,11 @@ export class Insertion extends Entity {
     }
   }
 
-  set timestamp(value: bigint) {
+  set timestamp(value: BigInt) {
     this.set("timestamp", Value.fromBigInt(value));
   }
 
-  get newMerkleRoot(): bigint {
+  get newMerkleRoot(): BigInt {
     const value = this.get("newMerkleRoot");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -346,11 +346,11 @@ export class Insertion extends Entity {
     }
   }
 
-  set newMerkleRoot(value: bigint) {
+  set newMerkleRoot(value: BigInt) {
     this.set("newMerkleRoot", Value.fromBigInt(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -359,11 +359,11 @@ export class Insertion extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -372,7 +372,7 @@ export class Insertion extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -433,7 +433,7 @@ export class NewCommitment extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get commitment(): bigint {
+  get commitment(): BigInt {
     const value = this.get("commitment");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -442,11 +442,11 @@ export class NewCommitment extends Entity {
     }
   }
 
-  set commitment(value: bigint) {
+  set commitment(value: BigInt) {
     this.set("commitment", Value.fromBigInt(value));
   }
 
-  get subTreeIndex(): bigint {
+  get subTreeIndex(): BigInt {
     const value = this.get("subTreeIndex");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -455,11 +455,11 @@ export class NewCommitment extends Entity {
     }
   }
 
-  set subTreeIndex(value: bigint) {
+  set subTreeIndex(value: BigInt) {
     this.set("subTreeIndex", Value.fromBigInt(value));
   }
 
-  get leafIndex(): bigint {
+  get leafIndex(): BigInt {
     const value = this.get("leafIndex");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -468,7 +468,7 @@ export class NewCommitment extends Entity {
     }
   }
 
-  set leafIndex(value: bigint) {
+  set leafIndex(value: BigInt) {
     this.set("leafIndex", Value.fromBigInt(value));
   }
 
@@ -485,7 +485,7 @@ export class NewCommitment extends Entity {
     this.set("encryptedOutput", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -494,11 +494,11 @@ export class NewCommitment extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -507,7 +507,7 @@ export class NewCommitment extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -568,7 +568,7 @@ export class NewNullifier extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get nullifier(): bigint {
+  get nullifier(): BigInt {
     const value = this.get("nullifier");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -577,11 +577,11 @@ export class NewNullifier extends Entity {
     }
   }
 
-  set nullifier(value: bigint) {
+  set nullifier(value: BigInt) {
     this.set("nullifier", Value.fromBigInt(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -590,11 +590,11 @@ export class NewNullifier extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -603,7 +603,7 @@ export class NewNullifier extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -690,7 +690,7 @@ export class PublicKey extends Entity {
     this.set("key", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -699,11 +699,11 @@ export class PublicKey extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -712,7 +712,7 @@ export class PublicKey extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -797,7 +797,7 @@ export class Approval extends Entity {
     this.set("spender", Value.fromBytes(value));
   }
 
-  get value(): bigint {
+  get value(): BigInt {
     const value = this.get("value");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -806,11 +806,11 @@ export class Approval extends Entity {
     }
   }
 
-  set value(value: bigint) {
+  set value(value: BigInt) {
     this.set("value", Value.fromBigInt(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -819,11 +819,11 @@ export class Approval extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -832,7 +832,7 @@ export class Approval extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -906,7 +906,7 @@ export class HandlerUpdated extends Entity {
     this.set("_handler", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -915,11 +915,11 @@ export class HandlerUpdated extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -928,7 +928,7 @@ export class HandlerUpdated extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -1000,7 +1000,7 @@ export class Paused extends Entity {
     this.set("account", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1009,11 +1009,11 @@ export class Paused extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1022,7 +1022,7 @@ export class Paused extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -1122,7 +1122,7 @@ export class RoleAdminChanged extends Entity {
     this.set("newAdminRole", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1131,11 +1131,11 @@ export class RoleAdminChanged extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1144,7 +1144,7 @@ export class RoleAdminChanged extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -1244,7 +1244,7 @@ export class RoleGranted extends Entity {
     this.set("sender", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1253,11 +1253,11 @@ export class RoleGranted extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1266,7 +1266,7 @@ export class RoleGranted extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -1366,7 +1366,7 @@ export class RoleRevoked extends Entity {
     this.set("sender", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1375,11 +1375,11 @@ export class RoleRevoked extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1388,7 +1388,7 @@ export class RoleRevoked extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -1473,7 +1473,7 @@ export class Transfer extends Entity {
     this.set("to", Value.fromBytes(value));
   }
 
-  get value(): bigint {
+  get value(): BigInt {
     const value = this.get("value");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1482,11 +1482,11 @@ export class Transfer extends Entity {
     }
   }
 
-  set value(value: bigint) {
+  set value(value: BigInt) {
     this.set("value", Value.fromBigInt(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1495,11 +1495,11 @@ export class Transfer extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1508,7 +1508,7 @@ export class Transfer extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 
@@ -1676,7 +1676,7 @@ export class ExternalData extends Entity {
     this.set("recipient", Value.fromBytes(value));
   }
 
-  get extAmount(): bigint {
+  get extAmount(): BigInt {
     const value = this.get("extAmount");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1685,7 +1685,7 @@ export class ExternalData extends Entity {
     }
   }
 
-  set extAmount(value: bigint) {
+  set extAmount(value: BigInt) {
     this.set("extAmount", Value.fromBigInt(value));
   }
 
@@ -1702,7 +1702,7 @@ export class ExternalData extends Entity {
     this.set("relayer", Value.fromBytes(value));
   }
 
-  get fee(): bigint {
+  get fee(): BigInt {
     const value = this.get("fee");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1711,11 +1711,11 @@ export class ExternalData extends Entity {
     }
   }
 
-  set fee(value: bigint) {
+  set fee(value: BigInt) {
     this.set("fee", Value.fromBigInt(value));
   }
 
-  get refund(): bigint {
+  get refund(): BigInt {
     const value = this.get("refund");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1724,7 +1724,7 @@ export class ExternalData extends Entity {
     }
   }
 
-  set refund(value: bigint) {
+  set refund(value: BigInt) {
     this.set("refund", Value.fromBigInt(value));
   }
 
@@ -1811,7 +1811,7 @@ export class PublicInputs extends Entity {
     this.set("extensionRoots", Value.fromBytes(value));
   }
 
-  get inputNullifiers(): Array<bigint> {
+  get inputNullifiers(): Array<BigInt> {
     const value = this.get("inputNullifiers");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1820,11 +1820,11 @@ export class PublicInputs extends Entity {
     }
   }
 
-  set inputNullifiers(value: Array<bigint>) {
+  set inputNullifiers(value: Array<BigInt>) {
     this.set("inputNullifiers", Value.fromBigIntArray(value));
   }
 
-  get outputCommitments(): Array<bigint> {
+  get outputCommitments(): Array<BigInt> {
     const value = this.get("outputCommitments");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1833,11 +1833,11 @@ export class PublicInputs extends Entity {
     }
   }
 
-  set outputCommitments(value: Array<bigint>) {
+  set outputCommitments(value: Array<BigInt>) {
     this.set("outputCommitments", Value.fromBigIntArray(value));
   }
 
-  get publicAmount(): bigint {
+  get publicAmount(): BigInt {
     const value = this.get("publicAmount");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1846,11 +1846,11 @@ export class PublicInputs extends Entity {
     }
   }
 
-  set publicAmount(value: bigint) {
+  set publicAmount(value: BigInt) {
     this.set("publicAmount", Value.fromBigInt(value));
   }
 
-  get extDataHash(): bigint {
+  get extDataHash(): BigInt {
     const value = this.get("extDataHash");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -1859,7 +1859,7 @@ export class PublicInputs extends Entity {
     }
   }
 
-  set extDataHash(value: bigint) {
+  set extDataHash(value: BigInt) {
     this.set("extDataHash", Value.fromBigInt(value));
   }
 }
@@ -2003,7 +2003,7 @@ export class ShieldedTransaction extends Entity {
     this.set("sender", Value.fromBytes(value));
   }
 
-  get value(): bigint {
+  get value(): BigInt {
     const value = this.get("value");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -2012,7 +2012,7 @@ export class ShieldedTransaction extends Entity {
     }
   }
 
-  set value(value: bigint) {
+  set value(value: BigInt) {
     this.set("value", Value.fromBigInt(value));
   }
 
@@ -2081,7 +2081,7 @@ export class ShieldedTransaction extends Entity {
     this.set("encryptions", Value.fromBytes(value));
   }
 
-  get blockNumber(): bigint {
+  get blockNumber(): BigInt {
     const value = this.get("blockNumber");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -2090,11 +2090,11 @@ export class ShieldedTransaction extends Entity {
     }
   }
 
-  set blockNumber(value: bigint) {
+  set blockNumber(value: BigInt) {
     this.set("blockNumber", Value.fromBigInt(value));
   }
 
-  get blockTimestamp(): bigint {
+  get blockTimestamp(): BigInt {
     const value = this.get("blockTimestamp");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
@@ -2103,7 +2103,7 @@ export class ShieldedTransaction extends Entity {
     }
   }
 
-  set blockTimestamp(value: bigint) {
+  set blockTimestamp(value: BigInt) {
     this.set("blockTimestamp", Value.fromBigInt(value));
   }
 

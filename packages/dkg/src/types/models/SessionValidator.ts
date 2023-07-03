@@ -32,7 +32,7 @@ export class SessionValidator implements Entity {
 
   public uptime: number;
 
-  public blockNumber: bigint;
+  public blockNumber: BigInt;
 
   get _name(): string {
     return 'SessionValidator';

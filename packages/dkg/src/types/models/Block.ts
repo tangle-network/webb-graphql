@@ -11,7 +11,7 @@ export class Block implements Entity {
 
   public id: string;
 
-  public number: bigint;
+  public number: BigInt;
 
   public hash?: string;
 
@@ -49,7 +49,7 @@ export class Block implements Entity {
     }
   }
 
-  static async getByNumber(number: bigint): Promise<Block | undefined> {
+  static async getByNumber(number: BigInt): Promise<Block | undefined> {
     const record = await store.getOneByField('Block', 'number', number);
     if (record) {
       return this.create(record as BlockProps);

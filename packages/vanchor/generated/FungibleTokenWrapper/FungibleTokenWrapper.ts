@@ -23,7 +23,7 @@ export class Approval__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get value(): bigint {
+  get value(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -163,7 +163,7 @@ export class Transfer__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get value(): bigint {
+  get value(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -236,7 +236,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  allowance(owner: Address, spender: Address): bigint {
+  allowance(owner: Address, spender: Address): BigInt {
     const result = super.call('allowance', 'allowance(address,address):(uint256)', [
       ethereum.Value.fromAddress(owner),
       ethereum.Value.fromAddress(spender),
@@ -245,7 +245,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_allowance(owner: Address, spender: Address): ethereum.CallResult<bigint> {
+  try_allowance(owner: Address, spender: Address): ethereum.CallResult<BigInt> {
     const result = super.tryCall('allowance', 'allowance(address,address):(uint256)', [
       ethereum.Value.fromAddress(owner),
       ethereum.Value.fromAddress(spender),
@@ -257,7 +257,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  approve(spender: Address, amount: bigint): boolean {
+  approve(spender: Address, amount: BigInt): boolean {
     const result = super.call('approve', 'approve(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(amount),
@@ -266,7 +266,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_approve(spender: Address, amount: bigint): ethereum.CallResult<boolean> {
+  try_approve(spender: Address, amount: BigInt): ethereum.CallResult<boolean> {
     const result = super.tryCall('approve', 'approve(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(amount),
@@ -278,13 +278,13 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  balanceOf(account: Address): bigint {
+  balanceOf(account: Address): BigInt {
     const result = super.call('balanceOf', 'balanceOf(address):(uint256)', [ethereum.Value.fromAddress(account)]);
 
     return result[0].toBigInt();
   }
 
-  try_balanceOf(account: Address): ethereum.CallResult<bigint> {
+  try_balanceOf(account: Address): ethereum.CallResult<BigInt> {
     const result = super.tryCall('balanceOf', 'balanceOf(address):(uint256)', [ethereum.Value.fromAddress(account)]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -308,7 +308,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
-  decreaseAllowance(spender: Address, subtractedValue: bigint): boolean {
+  decreaseAllowance(spender: Address, subtractedValue: BigInt): boolean {
     const result = super.call('decreaseAllowance', 'decreaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(subtractedValue),
@@ -317,7 +317,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_decreaseAllowance(spender: Address, subtractedValue: bigint): ethereum.CallResult<boolean> {
+  try_decreaseAllowance(spender: Address, subtractedValue: BigInt): ethereum.CallResult<boolean> {
     const result = super.tryCall('decreaseAllowance', 'decreaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(subtractedValue),
@@ -359,7 +359,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  getAmountToWrap(_deposit: bigint): bigint {
+  getAmountToWrap(_deposit: BigInt): BigInt {
     const result = super.call('getAmountToWrap', 'getAmountToWrap(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_deposit),
     ]);
@@ -367,7 +367,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_getAmountToWrap(_deposit: bigint): ethereum.CallResult<bigint> {
+  try_getAmountToWrap(_deposit: BigInt): ethereum.CallResult<BigInt> {
     const result = super.tryCall('getAmountToWrap', 'getAmountToWrap(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_deposit),
     ]);
@@ -393,7 +393,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
-  getFeeFromAmount(_amountToWrap: bigint): bigint {
+  getFeeFromAmount(_amountToWrap: BigInt): BigInt {
     const result = super.call('getFeeFromAmount', 'getFeeFromAmount(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_amountToWrap),
     ]);
@@ -401,7 +401,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_getFeeFromAmount(_amountToWrap: bigint): ethereum.CallResult<bigint> {
+  try_getFeeFromAmount(_amountToWrap: BigInt): ethereum.CallResult<BigInt> {
     const result = super.tryCall('getFeeFromAmount', 'getFeeFromAmount(uint256):(uint256)', [
       ethereum.Value.fromUnsignedBigInt(_amountToWrap),
     ]);
@@ -412,13 +412,13 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getProposalNonce(): bigint {
+  getProposalNonce(): BigInt {
     const result = super.call('getProposalNonce', 'getProposalNonce():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_getProposalNonce(): ethereum.CallResult<bigint> {
+  try_getProposalNonce(): ethereum.CallResult<BigInt> {
     const result = super.tryCall('getProposalNonce', 'getProposalNonce():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -444,7 +444,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  getRoleMember(role: Bytes, index: bigint): Address {
+  getRoleMember(role: Bytes, index: BigInt): Address {
     const result = super.call('getRoleMember', 'getRoleMember(bytes32,uint256):(address)', [
       ethereum.Value.fromFixedBytes(role),
       ethereum.Value.fromUnsignedBigInt(index),
@@ -453,7 +453,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toAddress();
   }
 
-  try_getRoleMember(role: Bytes, index: bigint): ethereum.CallResult<Address> {
+  try_getRoleMember(role: Bytes, index: BigInt): ethereum.CallResult<Address> {
     const result = super.tryCall('getRoleMember', 'getRoleMember(bytes32,uint256):(address)', [
       ethereum.Value.fromFixedBytes(role),
       ethereum.Value.fromUnsignedBigInt(index),
@@ -465,7 +465,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  getRoleMemberCount(role: Bytes): bigint {
+  getRoleMemberCount(role: Bytes): BigInt {
     const result = super.call('getRoleMemberCount', 'getRoleMemberCount(bytes32):(uint256)', [
       ethereum.Value.fromFixedBytes(role),
     ]);
@@ -473,7 +473,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBigInt();
   }
 
-  try_getRoleMemberCount(role: Bytes): ethereum.CallResult<bigint> {
+  try_getRoleMemberCount(role: Bytes): ethereum.CallResult<BigInt> {
     const result = super.tryCall('getRoleMemberCount', 'getRoleMemberCount(bytes32):(uint256)', [
       ethereum.Value.fromFixedBytes(role),
     ]);
@@ -535,7 +535,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  historicalTokens(param0: bigint): Address {
+  historicalTokens(param0: BigInt): Address {
     const result = super.call('historicalTokens', 'historicalTokens(uint256):(address)', [
       ethereum.Value.fromUnsignedBigInt(param0),
     ]);
@@ -543,7 +543,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toAddress();
   }
 
-  try_historicalTokens(param0: bigint): ethereum.CallResult<Address> {
+  try_historicalTokens(param0: BigInt): ethereum.CallResult<Address> {
     const result = super.tryCall('historicalTokens', 'historicalTokens(uint256):(address)', [
       ethereum.Value.fromUnsignedBigInt(param0),
     ]);
@@ -573,7 +573,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  increaseAllowance(spender: Address, addedValue: bigint): boolean {
+  increaseAllowance(spender: Address, addedValue: BigInt): boolean {
     const result = super.call('increaseAllowance', 'increaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(addedValue),
@@ -582,7 +582,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_increaseAllowance(spender: Address, addedValue: bigint): ethereum.CallResult<boolean> {
+  try_increaseAllowance(spender: Address, addedValue: BigInt): ethereum.CallResult<boolean> {
     const result = super.tryCall('increaseAllowance', 'increaseAllowance(address,uint256):(bool)', [
       ethereum.Value.fromAddress(spender),
       ethereum.Value.fromUnsignedBigInt(addedValue),
@@ -671,13 +671,13 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  proposalNonce(): bigint {
+  proposalNonce(): BigInt {
     const result = super.call('proposalNonce', 'proposalNonce():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_proposalNonce(): ethereum.CallResult<bigint> {
+  try_proposalNonce(): ethereum.CallResult<BigInt> {
     const result = super.tryCall('proposalNonce', 'proposalNonce():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -720,13 +720,13 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  tokens(param0: bigint): Address {
+  tokens(param0: BigInt): Address {
     const result = super.call('tokens', 'tokens(uint256):(address)', [ethereum.Value.fromUnsignedBigInt(param0)]);
 
     return result[0].toAddress();
   }
 
-  try_tokens(param0: bigint): ethereum.CallResult<Address> {
+  try_tokens(param0: BigInt): ethereum.CallResult<Address> {
     const result = super.tryCall('tokens', 'tokens(uint256):(address)', [ethereum.Value.fromUnsignedBigInt(param0)]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -735,13 +735,13 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  totalSupply(): bigint {
+  totalSupply(): BigInt {
     const result = super.call('totalSupply', 'totalSupply():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_totalSupply(): ethereum.CallResult<bigint> {
+  try_totalSupply(): ethereum.CallResult<BigInt> {
     const result = super.tryCall('totalSupply', 'totalSupply():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -750,7 +750,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  transfer(to: Address, amount: bigint): boolean {
+  transfer(to: Address, amount: BigInt): boolean {
     const result = super.call('transfer', 'transfer(address,uint256):(bool)', [
       ethereum.Value.fromAddress(to),
       ethereum.Value.fromUnsignedBigInt(amount),
@@ -759,7 +759,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_transfer(to: Address, amount: bigint): ethereum.CallResult<boolean> {
+  try_transfer(to: Address, amount: BigInt): ethereum.CallResult<boolean> {
     const result = super.tryCall('transfer', 'transfer(address,uint256):(bool)', [
       ethereum.Value.fromAddress(to),
       ethereum.Value.fromUnsignedBigInt(amount),
@@ -771,7 +771,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  transferFrom(from: Address, to: Address, amount: bigint): boolean {
+  transferFrom(from: Address, to: Address, amount: BigInt): boolean {
     const result = super.call('transferFrom', 'transferFrom(address,address,uint256):(bool)', [
       ethereum.Value.fromAddress(from),
       ethereum.Value.fromAddress(to),
@@ -781,7 +781,7 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return result[0].toBoolean();
   }
 
-  try_transferFrom(from: Address, to: Address, amount: bigint): ethereum.CallResult<boolean> {
+  try_transferFrom(from: Address, to: Address, amount: BigInt): ethereum.CallResult<boolean> {
     const result = super.tryCall('transferFrom', 'transferFrom(address,address,uint256):(bool)', [
       ethereum.Value.fromAddress(from),
       ethereum.Value.fromAddress(to),
@@ -809,13 +809,13 @@ export class FungibleTokenWrapper extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  wrappingLimit(): bigint {
+  wrappingLimit(): BigInt {
     const result = super.call('wrappingLimit', 'wrappingLimit():(uint256)', []);
 
     return result[0].toBigInt();
   }
 
-  try_wrappingLimit(): ethereum.CallResult<bigint> {
+  try_wrappingLimit(): ethereum.CallResult<BigInt> {
     const result = super.tryCall('wrappingLimit', 'wrappingLimit():(uint256)', []);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -880,7 +880,7 @@ export class AddCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): bigint {
+  get _nonce(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -914,7 +914,7 @@ export class ApproveCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -948,7 +948,7 @@ export class BurnCall__Inputs {
     this._call = call;
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -982,7 +982,7 @@ export class BurnFromCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1016,7 +1016,7 @@ export class DecreaseAllowanceCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get subtractedValue(): bigint {
+  get subtractedValue(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1088,7 +1088,7 @@ export class IncreaseAllowanceCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get addedValue(): bigint {
+  get addedValue(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1134,7 +1134,7 @@ export class InitializeCall__Inputs {
     return this._call.inputValues[2].value.toAddress();
   }
 
-  get _limit(): bigint {
+  get _limit(): BigInt {
     return this._call.inputValues[3].value.toBigInt();
   }
 
@@ -1176,7 +1176,7 @@ export class MintCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1236,7 +1236,7 @@ export class RemoveCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): bigint {
+  get _nonce(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1338,7 +1338,7 @@ export class SetFeeCall__Inputs {
     return this._call.inputValues[0].value.toI32();
   }
 
-  get _nonce(): bigint {
+  get _nonce(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1372,7 +1372,7 @@ export class SetFeeRecipientCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _nonce(): bigint {
+  get _nonce(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1466,7 +1466,7 @@ export class TransferCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1508,7 +1508,7 @@ export class TransferFromCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1572,7 +1572,7 @@ export class UnwrapCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1606,7 +1606,7 @@ export class UnwrapAndSendToCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 
@@ -1648,7 +1648,7 @@ export class UnwrapForCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1678,7 +1678,7 @@ export class UpdateLimitCall__Inputs {
     this._call = call;
   }
 
-  get _limit(): bigint {
+  get _limit(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -1712,7 +1712,7 @@ export class WrapCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1750,7 +1750,7 @@ export class WrapForCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1788,7 +1788,7 @@ export class WrapForAndSendToCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get amount(): bigint {
+  get amount(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 

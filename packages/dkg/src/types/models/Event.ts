@@ -15,7 +15,7 @@ export class Event implements Entity {
 
   public blockId: string;
 
-  public blockNumber: bigint;
+  public blockNumber: BigInt;
 
   public timestamp?: Date;
 
@@ -60,7 +60,7 @@ export class Event implements Entity {
     return records.map((record) => this.create(record as EventProps));
   }
 
-  static async getByBlockNumber(blockNumber: bigint): Promise<Event[] | undefined> {
+  static async getByBlockNumber(blockNumber: BigInt): Promise<Event[] | undefined> {
     const records = await store.getByField('Event', 'blockNumber', blockNumber);
     return records.map((record) => this.create(record as EventProps));
   }
