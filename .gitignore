@@ -112,3 +112,4 @@ standalone-tangle/tangle/
 packages/**/node_modules
 packages/**/build
 packages/**/data
+packages/**/generated
