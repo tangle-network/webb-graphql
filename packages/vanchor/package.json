@@ -19,8 +19,8 @@
     "remove-demeter-local": "graph remove --node http://localhost:8020/ VAnchorDemeterLocal",
     "deploy-demeter-local": "graph deploy VAnchorDemeterLocal ./demeter.subgraph.yaml --node http://localhost:8020/  --ipfs http://localhost:6001 --network Demeter",
     "test": "graph test",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --fix --ext .ts ",
+    "lint": "eslint . --ext .ts --ignore-path ../../.eslintignore",
+    "lint:fix": "eslint . --fix --ext .ts  --ignore-path ../../.eslintignore",
     "format": "prettier --write \"{libs,apps,tools}/**/*.{ts,js}\" ",
     "format:check": "prettier --check \"{libs,apps,tools}/**/*.{ts,js}\" "
   },
