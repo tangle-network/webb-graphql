@@ -15,7 +15,7 @@ export class Extrinsic implements Entity {
 
   public blockId: string;
 
-  public blockNumber: bigint;
+  public blockNumber: BigInt;
 
   public isSigned?: boolean;
 
@@ -60,7 +60,7 @@ export class Extrinsic implements Entity {
     return records.map((record) => this.create(record as ExtrinsicProps));
   }
 
-  static async getByBlockNumber(blockNumber: bigint): Promise<Extrinsic[] | undefined> {
+  static async getByBlockNumber(blockNumber: BigInt): Promise<Extrinsic[] | undefined> {
     const records = await store.getByField('Extrinsic', 'blockNumber', blockNumber);
     return records.map((record) => this.create(record as ExtrinsicProps));
   }

@@ -14,7 +14,7 @@ import {
 export function createApprovalEvent(
   owner: Address,
   spender: Address,
-  value: bigint
+  value: BigInt
 ): Approval {
   const approvalEvent = changetype<Approval>(newMockEvent());
 
@@ -132,7 +132,7 @@ export function createRoleRevokedEvent(
 export function createTransferEvent(
   from: Address,
   to: Address,
-  value: bigint
+  value: BigInt
 ): Transfer {
   const transferEvent = changetype<Transfer>(newMockEvent());
 

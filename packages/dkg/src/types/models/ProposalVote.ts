@@ -19,7 +19,7 @@ export class ProposalVote implements Entity {
 
   public proposalId: string;
 
-  public blockNumber: bigint;
+  public blockNumber: BigInt;
 
   public blockId: string;
 

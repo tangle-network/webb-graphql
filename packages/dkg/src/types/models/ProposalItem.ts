@@ -15,7 +15,7 @@ export class ProposalItem implements Entity {
 
   public nonce: number;
 
-  public chainId?: bigint;
+  public chainId?: BigInt;
 
   public type: ProposalType;
 

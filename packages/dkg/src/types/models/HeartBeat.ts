@@ -11,7 +11,7 @@ export class HeartBeat implements Entity {
 
   public id: string;
 
-  public blockNumber: bigint;
+  public blockNumber: BigInt;
 
   public sessionId: string;
 

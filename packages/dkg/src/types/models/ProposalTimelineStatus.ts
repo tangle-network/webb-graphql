@@ -20,7 +20,7 @@ export class ProposalTimelineStatus implements Entity {
 
   public txHash?: string;
 
-  public blockNumber: bigint;
+  public blockNumber: BigInt;
 
   public proposalItemId: string;
 
