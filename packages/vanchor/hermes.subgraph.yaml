@@ -1,0 +1,38 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - network: Hermes
+    name: VAnchor
+    kind: ethereum
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EdgeAddition
+        - EdgeUpdate
+        - Insertion
+        - NewCommitment
+        - NewNullifier
+        - PublicKey
+      abis:
+        - name: VAnchorHermes
+          file: ./abis/VAnchor.json
+      eventHandlers:
+        - event: EdgeAddition(uint256,uint256,uint256)
+          handler: handleEdgeAddition
+        - event: EdgeUpdate(uint256,uint256,uint256)
+          handler: handleEdgeUpdate
+        - event: Insertion(indexed uint256,uint32,uint256,indexed uint256)
+          handler: handleInsertion
+        - event: NewCommitment(uint256,uint256,uint256,bytes)
+          handler: handleNewCommitment
+        - event: NewNullifier(uint256)
+          handler: handleNewNullifier
+        - event: PublicKey(indexed address,bytes)
+          handler: handlePublicKey
+      file: ./src/v-anchor.ts
+    source:
+      abi: VAnchorHermes
+      startBlock: 0
