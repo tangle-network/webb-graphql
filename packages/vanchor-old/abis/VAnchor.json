@@ -1,29 +1,5 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "contract IAnchorVerifier",
-        "name": "_verifier",
-        "type": "address"
-      },
-      {
-        "internalType": "uint32",
-        "name": "_merkleTreeLevels",
-        "type": "uint32"
-      },
-      {
-        "internalType": "contract IHasher",
-        "name": "_hasher",
-        "type": "address"
-      },
-      { "internalType": "address", "name": "_handler", "type": "address" },
-      { "internalType": "address", "name": "_token", "type": "address" },
-      { "internalType": "uint8", "name": "_maxEdges", "type": "uint8" }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -344,13 +320,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "currentRootIndex",
-    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "edgeExistsForChain",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
@@ -508,15 +477,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "hasher",
-    "outputs": [
-      { "internalType": "contract IHasher", "name": "", "type": "address" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -575,7 +535,7 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_root", "type": "uint256" }
+      { "internalType": "uint256", "name": "root", "type": "uint256" }
     ],
     "name": "isKnownRoot",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
@@ -622,13 +582,6 @@
   },
   {
     "inputs": [],
-    "name": "levels",
-    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "maxEdges",
     "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
     "stateMutability": "view",
@@ -655,13 +608,6 @@
     ],
     "name": "neighborRoots",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "nextIndex",
-    "outputs": [{ "internalType": "uint32", "name": "", "type": "uint32" }],
     "stateMutability": "view",
     "type": "function"
   },

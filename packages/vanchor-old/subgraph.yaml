@@ -2,13 +2,9 @@ specVersion: 0.0.5
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum
-    name: vanchor
-    network: Demeter
-    source:
-      abi: vanchor
-      address: "0x4B09F48CEcD2B15a7D1756284369E17dB5f70d2B"
-      startBlock: 0
+  - network: Hermes
+    name: VAnchor
+    kind: ethereum
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -21,8 +17,12 @@ dataSources:
         - NewNullifier
         - PublicKey
       abis:
-        - name: vanchor
-          file: ./abis/vanchor.json
+        - name: VAnchor
+          file: ./abis/VAnchor.json
+        - name: FungibleTokenWrapper
+          file: ./abis/FungibleTokenWrapper.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: EdgeAddition(uint256,uint256,uint256)
           handler: handleEdgeAddition
@@ -36,4 +36,8 @@ dataSources:
           handler: handleNewNullifier
         - event: PublicKey(indexed address,bytes)
           handler: handlePublicKey
-      file: ./src/vanchor.ts
+      file: ./src/v-anchor.ts
+    source:
+      abi: VAnchor
+      address: "0x1Ff1Fc15B41e47608ceAA1d57a2943AEa7ab1f6B"
+      startBlock: 0

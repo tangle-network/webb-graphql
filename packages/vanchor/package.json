@@ -1,34 +1,30 @@
 {
-  "name": "webb-vanchor-subgraph",
-  "version": "1.0.0",
-  "license": "(MIT or Apache-2.0)",
+  "name": "vanchor",
+  "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ webb",
-    "create-local": "graph create --node http://localhost:8020/ webb",
-    "remove-local": "graph remove --node http://localhost:8020/ webb",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:6001 webb --network Sepolia",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ vanchor",
+    "create-local": "graph create --node http://localhost:8020/ vanchor",
+    "remove-local": "graph remove --node http://localhost:8020/ vanchor",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 vanchor",
+    "test": "graph test",
     "create-athena-local": "graph create --node http://localhost:8020/ VAnchorAthenaLocal ",
     "remove-athena-local": "graph remove --node http://localhost:8020/ VAnchorAthenaLocal",
-    "deploy-athena-local": "graph deploy --node http://localhost:8020/ VAnchorAthenaLocal --ipfs http://localhost:6001 --network Athena",
-    "create-hermes-local": "graph create --node http://localhost:8020/ VAnchorHermesLocal ",
+    "deploy-athena-local": "graph deploy --node http://localhost:8020/ VAnchorAthenaLocal --ipfs http://localhost:5001 --network Athena",
+    "create-hermes-local": "graph create --node http://localhost:8020/ VAnchorHermesLocal",
     "remove-hermes-local": "graph remove --node http://localhost:8020/ VAnchorHermesLocal",
-    "deploy-hermes-local": "graph deploy --node http://localhost:8020/ VAnchorHermesLocal --ipfs http://localhost:6001 --network Hermes",
+    "deploy-hermes-local": "graph deploy --node http://localhost:8020/ VAnchorHermesLocal --ipfs http://localhost:5001 --network Hermes",
     "create-demeter-local": "graph create --node http://localhost:8020/ VAnchorDemeterLocal ",
     "remove-demeter-local": "graph remove --node http://localhost:8020/ VAnchorDemeterLocal",
-    "deploy-demeter-local": "graph deploy --node http://localhost:8020/ VAnchorDemeterLocal  --ipfs http://localhost:6001 --network Demeter",
-    "test": "graph test",
-    "lint": "eslint . --ext .ts --ignore-path ../../.eslintignore",
-    "lint:fix": "eslint . --fix --ext .ts  --ignore-path ../../.eslintignore",
-    "format": "prettier --write \"{libs,apps,tools}/**/*.{ts,js}\" ",
-    "format:check": "prettier --check \"{libs,apps,tools}/**/*.{ts,js}\" "
+    "deploy-demeter-local": "graph deploy --node http://localhost:8020/ VAnchorDemeterLocal --ipfs http://localhost:5001 --network Demeter",
+    "remove-all-local": "yarn remove-athena-local && yarn remove-hermes-local && yarn remove-demeter-local",
+    "deploy-all-local": "yarn deploy-athena-local && yarn deploy-hermes-local && yarn deploy-demeter-local",
+    "create-all-local": "yarn create-athena-local && yarn create-hermes-local && yarn create-demeter-local"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.51.1",
+    "@graphprotocol/graph-cli": "0.51.2",
     "@graphprotocol/graph-ts": "0.30.0"
   },
-  "devDependencies": {
-    "matchstick-as": "0.5.0"
-  }
+  "devDependencies": { "matchstick-as": "0.5.0" }
 }
