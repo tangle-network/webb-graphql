@@ -3,6 +3,7 @@ import { erc20 } from '../../generated/VAnchor/erc20';
 import { Token } from '../../generated/schema';
 
 export function ensureToken(tokenAddress: Address): Address {
+
     // const maybeToken = Token.load(tokenAddress);
     // if (maybeToken) {
     //     return tokenAddress;
@@ -32,5 +33,6 @@ export function ensureToken(tokenAddress: Address): Address {
     // token.address = tokenAddress;
 
     // token.save();
+
     return tokenAddress;
 }
