@@ -15,6 +15,8 @@ import {
   PublicKey
 } from "../generated/schema"
 
+import { handleTransaction } from './transaction/schieldedTransaction';
+
 export function handleEdgeAddition(event: EdgeAdditionEvent): void {
   let entity = new EdgeAddition(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -59,6 +61,8 @@ export function handleInsertion(event: InsertionEvent): void {
   entity.transactionHash = event.transaction.hash
 
   entity.save()
+
+  handleTransaction(event)
 }
 
 export function handleNewCommitment(event: NewCommitmentEvent): void {

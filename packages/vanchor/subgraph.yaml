@@ -23,6 +23,8 @@ dataSources:
       abis:
         - name: vanchor
           file: ./abis/vanchor.json
+        - name: erc20
+          file: ./abis/erc20.json
       eventHandlers:
         - event: EdgeAddition(uint256,uint256,uint256)
           handler: handleEdgeAddition

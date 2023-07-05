@@ -56,3 +56,53 @@ type PublicKey @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+# The ERC20 Token entity
+type Token @entity {
+  id: Bytes!
+  address: Bytes!
+  decimals: Int!
+  name: String!
+  symbol: String!
+}
+
+type ExternalData @entity(immutable: true) {
+  id: Bytes!
+  recipient: Bytes! # address
+  extAmount: BigInt! # int256
+  relayer: Bytes! # address
+  fee: BigInt! # uint256
+  refund: BigInt! # uint256
+  token: String! # address
+}
+
+type PublicInputs @entity(immutable: true) {
+  id: Bytes!
+  roots: Bytes! # bytes
+  extensionRoots: Bytes! # bytes
+  inputNullifiers: [BigInt!]! # uint256[]
+  outputCommitments: [BigInt!]! # uint256[2]
+  publicAmount: BigInt! # uint256
+  extDataHash: BigInt! # uint256
+}
+
+type Encryptions @entity(immutable: true) {
+  id: Bytes!
+  encryptedOutput1: Bytes! # bytes
+  encryptedOutput2: Bytes! # bytes
+}
+
+type ShieldedTransaction @entity(immutable: true) {
+  id: Bytes!
+  vanchor: Bytes! # address
+  sender: Bytes! # address
+  value: BigInt! # uint256
+  proof: Bytes! # bytes
+  auxPublicInputs: Bytes! # bytes
+  externalData: ExternalData! # ExternalData
+  publicInputs: PublicInputs! # PublicInputs
+  encryptions: Encryptions! # Encryptions
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
