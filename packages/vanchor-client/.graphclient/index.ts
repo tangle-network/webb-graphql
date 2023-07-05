@@ -1,27 +1,14 @@
 // @ts-nocheck
 import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import type { GetMeshOptions } from '@graphql-mesh/runtime';
-import type { YamlConfig } from '@graphql-mesh/types';
-import { PubSub } from '@graphql-mesh/utils';
-import { DefaultLogger } from '@graphql-mesh/utils';
-import MeshCache from "@graphql-mesh/cache-localforage";
-import { fetch as fetchFn } from '@whatwg-node/fetch';
-
-import { MeshResolvedSource } from '@graphql-mesh/runtime';
-import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
-import GraphqlHandler from "@graphql-mesh/graphql"
-import StitchingMerger from "@graphql-mesh/merger-stitching";
+import { findAndParseConfig } from '@graphql-mesh/cli';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
 import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import { ImportFn } from '@graphql-mesh/types';
 import type { AthenaTypes } from './sources/athena/types';
-import type { HermesTypes } from './sources/hermes/types';
 import type { DemeterTypes } from './sources/demeter/types';
-import * as importedModule$0 from "./sources/demeter/introspectionSchema";
-import * as importedModule$1 from "./sources/athena/introspectionSchema";
-import * as importedModule$2 from "./sources/hermes/introspectionSchema";
+import type { HermesTypes } from './sources/hermes/types';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -1962,7 +1949,7 @@ export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
   derivedFrom?: derivedFromDirectiveResolver<any, any, ContextType>;
 }>;
 
-export type MeshContext = DemeterTypes.Context & AthenaTypes.Context & HermesTypes.Context & BaseMeshContext;
+export type MeshContext = AthenaTypes.Context & DemeterTypes.Context & HermesTypes.Context & BaseMeshContext;
 
 
 const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/', '..');
@@ -1970,15 +1957,6 @@ const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/',
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
   switch(relativeModuleId) {
-    case ".graphclient/sources/demeter/introspectionSchema":
-      return Promise.resolve(importedModule$0) as T;
-    
-    case ".graphclient/sources/athena/introspectionSchema":
-      return Promise.resolve(importedModule$1) as T;
-    
-    case ".graphclient/sources/hermes/introspectionSchema":
-      return Promise.resolve(importedModule$2) as T;
-    
     default:
       return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
   }
@@ -1993,96 +1971,15 @@ const rootStore = new MeshStore('.graphclient', new FsStoreStorageAdapter({
   validate: false
 });
 
-export const rawServeConfig: YamlConfig.Config['serve'] = undefined as any
-export async function getMeshOptions(): Promise<GetMeshOptions> {
-const pubsub = new PubSub();
-const sourcesStore = rootStore.child('sources');
-const logger = new DefaultLogger("GraphClient");
-const cache = new (MeshCache as any)({
-      ...({} as any),
-      importFn,
-      store: rootStore.child('cache'),
-      pubsub,
-      logger,
-    } as any)
-
-const sources: MeshResolvedSource[] = [];
-const transforms: MeshTransform[] = [];
-const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
-const athenaTransforms = [];
-const demeterTransforms = [];
-const hermesTransforms = [];
-const additionalTypeDefs = [] as any[];
-const athenaHandler = new GraphqlHandler({
-              name: "athena",
-              config: {"endpoint":"http://localhost:8000/subgraphs/name/VAnchorAthenaLocal"},
-              baseDir,
-              cache,
-              pubsub,
-              store: sourcesStore.child("athena"),
-              logger: logger.child("athena"),
-              importFn,
-            });
-const demeterHandler = new GraphqlHandler({
-              name: "demeter",
-              config: {"endpoint":"http://localhost:8000/subgraphs/name/VAnchorDemeterLocal"},
-              baseDir,
-              cache,
-              pubsub,
-              store: sourcesStore.child("demeter"),
-              logger: logger.child("demeter"),
-              importFn,
-            });
-const hermesHandler = new GraphqlHandler({
-              name: "hermes",
-              config: {"endpoint":"http://localhost:8000/subgraphs/name/VAnchorHermesLocal"},
-              baseDir,
-              cache,
-              pubsub,
-              store: sourcesStore.child("hermes"),
-              logger: logger.child("hermes"),
-              importFn,
-            });
-sources[0] = {
-          name: 'athena',
-          handler: athenaHandler,
-          transforms: athenaTransforms
-        }
-sources[1] = {
-          name: 'demeter',
-          handler: demeterHandler,
-          transforms: demeterTransforms
-        }
-sources[2] = {
-          name: 'hermes',
-          handler: hermesHandler,
-          transforms: hermesTransforms
-        }
-const additionalResolvers = [] as any[]
-const merger = new(StitchingMerger as any)({
-        cache,
-        pubsub,
-        logger: logger.child('stitchingMerger'),
-        store: rootStore.child('stitchingMerger')
-      })
-
-  return {
-    sources,
-    transforms,
-    additionalTypeDefs,
-    additionalResolvers,
-    cache,
-    pubsub,
-    merger,
-    logger,
-    additionalEnvelopPlugins,
-    get documents() {
-      return [
-      
-    ];
-    },
-    fetchFn,
-  };
+export function getMeshOptions() {
+  console.warn('WARNING: These artifacts are built for development mode. Please run "graphclient build" to build production artifacts');
+  return findAndParseConfig({
+    dir: baseDir,
+    artifactsDir: ".graphclient",
+    configName: "graphclient",
+    additionalPackagePrefixes: ["@graphprotocol/client-"],
+    initialLoggerPrefix: "GraphClient",
+  });
 }
 
 export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandler<TServerContext> {
@@ -2092,7 +1989,6 @@ export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandl
     rawServeConfig: undefined,
   })
 }
-
 
 let meshInstance$: Promise<MeshInstance> | undefined;
 
