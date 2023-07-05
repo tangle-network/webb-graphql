@@ -1,25 +1,25 @@
 {
-  "Sepolia": {
-    "VAnchor": {
-      "address": "0x38E7AA90C77f86747fAb355eeCAa0c2E4c3a463D",
-      "startBlock": 3146552
+  "sepolia": {
+    "vanchor": {
+      "address": "0x91eB86019FD8D7c5a9E31143D422850A13F670A3",
+      "startBlock": 0
     }
   },
   "Athena": {
-    "VAnchor": {
-      "address": "0x1Ff1Fc15B41e47608ceAA1d57a2943AEa7ab1f6B",
+    "vanchor": {
+      "address": "0x4B09F48CEcD2B15a7D1756284369E17dB5f70d2B",
       "startBlock": 0
     }
   },
   "Hermes": {
-    "VAnchor": {
-      "address": "0x1Ff1Fc15B41e47608ceAA1d57a2943AEa7ab1f6B",
+    "vanchor": {
+      "address": "0x4B09F48CEcD2B15a7D1756284369E17dB5f70d2B",
       "startBlock": 0
     }
   },
   "Demeter": {
-    "VAnchor": {
-      "address": "0x1Ff1Fc15B41e47608ceAA1d57a2943AEa7ab1f6B",
+    "vanchor": {
+      "address": "0x4B09F48CEcD2B15a7D1756284369E17dB5f70d2B",
       "startBlock": 0
     }
   }

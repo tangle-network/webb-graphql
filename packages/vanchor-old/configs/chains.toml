@@ -1,0 +1,28 @@
+[store]
+[store.primary]
+connection = "postgresql://${postgres_user}:${postgres_pass}@${postgres_host}:5432/${postgres_db}"
+pool_size = 10
+
+[chains]
+ingestor = "block_ingestor_node"
+
+[chains.Athena]
+shard = "primary"
+provider = [{ label = "athena", url = "http://athena_chain:8545" ,features= []}]
+
+[chains.Hermes]
+shard = "primary"
+provider = [{ label = "hermes", url = "http://hermes_chain:8545" ,features= []}]
+
+[chains.Demeter]
+shard = "primary"
+provider = [{ label = "demeter", url = "http://demeter_chain:8545" ,features= []}]
+
+# [chains.Sepolia]
+# shard = "primary"
+# provider = [{ label = "sepolia", url = "https://sepolia.infura.io/v3/90de850aff68424ab8e7321017406586" ,features= []}]
+
+[deployment]
+shard = "primary"
+[[deployment.rule]]
+indexers = [ "default" ]
