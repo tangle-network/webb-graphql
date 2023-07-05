@@ -1,0 +1,13 @@
+{
+  "name": "vanchor-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "graphclient serve-dev",
+    "build": "graphclient build"
+  },
+  "devDependencies": {
+    "@graphprotocol/client-cli": "^3.0.0"
+  }
+}

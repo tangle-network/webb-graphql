@@ -1,0 +1,13 @@
+sources:
+  - name: athena
+    handler:
+      graphql:
+        endpoint: http://localhost:8000/subgraphs/name/VAnchorAthenaLocal
+  - name: demeter
+    handler:
+      graphql:
+        endpoint: http://localhost:8000/subgraphs/name/VAnchorDemeterLocal
+  - name: hermes
+    handler:
+      graphql:
+        endpoint: http://localhost:8000/subgraphs/name/VAnchorHermesLocal
