@@ -1,47 +1,8 @@
-import { getBuiltGraphSDK } from '../.graphclient'
+import { GetTotalValueLocked } from './queries/SchieldedTransactions'
 
 async function main() {
-    const sdk = getBuiltGraphSDK({
-        chainName: 'VAnchorAthenaLocal', // We can provide a default value here
-    })
-    // Second parameter is the context value
-    const results = await Promise.all([
-        sdk
-            .ShieldedTransactions(
-                {},
-                {
-                    chainName: 'VAnchorAthenaLocal', // And override it in here
-                },
-            )
-            .then((data) => {
-                console.log(data)
-                return data.shieldedTransactions
-            }),
-        sdk
-            .ShieldedTransactions(
-                {},
-                {
-                    chainName: 'VAnchorDemeterLocal', // And override it in here
-                },
-            )
-            .then((data) => {
-                console.log(data)
-                return data.shieldedTransactions
-            }),
-        sdk
-            .ShieldedTransactions(
-                {},
-                {
-                    chainName: 'VAnchorHermesLocal', // And override it in here
-                },
-            )
-            .then((data) => {
-                console.log(data)
-                return data.shieldedTransactions
-            })
-    ])
-
-    console.table(results.flat())
+    const value: number = await GetTotalValueLocked();
+    console.table(value)
 }
 
 main().catch((e) => {

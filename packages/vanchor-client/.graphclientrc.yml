@@ -13,7 +13,8 @@ additionalResolvers:
   - ./src/resolvers.ts
 
 documents:
-  - ./example-queries/SchieldedTransactions.graphql
+  - ./queries/SchieldedTransactions.graphql
+  - ./queries/SchieldedTransactionsValues.graphql
 
 codegen:
   contextType: 'MeshContext & { chainName: string }'
