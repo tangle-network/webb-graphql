@@ -1,14 +1,28 @@
 // @ts-nocheck
 import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { findAndParseConfig } from '@graphql-mesh/cli';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { gql } from '@graphql-mesh/utils';
+
+import type { GetMeshOptions } from '@graphql-mesh/runtime';
+import type { YamlConfig } from '@graphql-mesh/types';
+import { PubSub } from '@graphql-mesh/utils';
+import { DefaultLogger } from '@graphql-mesh/utils';
+import MeshCache from "@graphql-mesh/cache-localforage";
+import { fetch as fetchFn } from '@whatwg-node/fetch';
+
+import { MeshResolvedSource } from '@graphql-mesh/runtime';
+import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
+import GraphqlHandler from "@graphql-mesh/graphql"
+import { parse } from 'graphql';
+import BareMerger from "@graphql-mesh/merger-bare";
+import { printWithCache } from '@graphql-mesh/utils';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
 import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import { ImportFn } from '@graphql-mesh/types';
 import type { AthenaTypes } from './sources/athena/types';
-import type { DemeterTypes } from './sources/demeter/types';
-import type { HermesTypes } from './sources/hermes/types';
+import * as importedModule$0 from "./sources/athena/introspectionSchema";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -1230,6 +1244,7 @@ export type ShieldedTransaction = {
   blockNumber: Scalars['BigInt'];
   blockTimestamp: Scalars['BigInt'];
   transactionHash: Scalars['Bytes'];
+  chainName: Scalars['String'];
 };
 
 export type ShieldedTransaction_filter = {
@@ -1715,21 +1730,21 @@ export type ResolversParentTypes = ResolversObject<{
 
 export type entityDirectiveArgs = { };
 
-export type entityDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = entityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type entityDirectiveResolver<Result, Parent, ContextType = MeshContext & { chainName: string }, Args = entityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type subgraphIdDirectiveArgs = {
   id: Scalars['String'];
 };
 
-export type subgraphIdDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = subgraphIdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type subgraphIdDirectiveResolver<Result, Parent, ContextType = MeshContext & { chainName: string }, Args = subgraphIdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type derivedFromDirectiveArgs = {
   field: Scalars['String'];
 };
 
-export type derivedFromDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = derivedFromDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type derivedFromDirectiveResolver<Result, Parent, ContextType = MeshContext & { chainName: string }, Args = derivedFromDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+export type QueryResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   edgeAddition?: Resolver<Maybe<ResolversTypes['EdgeAddition']>, ParentType, ContextType, RequireFields<QueryedgeAdditionArgs, 'id' | 'subgraphError'>>;
   edgeAdditions?: Resolver<Array<ResolversTypes['EdgeAddition']>, ParentType, ContextType, RequireFields<QueryedgeAdditionsArgs, 'skip' | 'first' | 'subgraphError'>>;
   edgeUpdate?: Resolver<Maybe<ResolversTypes['EdgeUpdate']>, ParentType, ContextType, RequireFields<QueryedgeUpdateArgs, 'id' | 'subgraphError'>>;
@@ -1753,7 +1768,7 @@ export type QueryResolvers<ContextType = MeshContext, ParentType extends Resolve
   _meta?: Resolver<Maybe<ResolversTypes['_Meta_']>, ParentType, ContextType, Partial<Query_metaArgs>>;
 }>;
 
-export type SubscriptionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
+export type SubscriptionResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
   edgeAddition?: SubscriptionResolver<Maybe<ResolversTypes['EdgeAddition']>, "edgeAddition", ParentType, ContextType, RequireFields<SubscriptionedgeAdditionArgs, 'id' | 'subgraphError'>>;
   edgeAdditions?: SubscriptionResolver<Array<ResolversTypes['EdgeAddition']>, "edgeAdditions", ParentType, ContextType, RequireFields<SubscriptionedgeAdditionsArgs, 'skip' | 'first' | 'subgraphError'>>;
   edgeUpdate?: SubscriptionResolver<Maybe<ResolversTypes['EdgeUpdate']>, "edgeUpdate", ParentType, ContextType, RequireFields<SubscriptionedgeUpdateArgs, 'id' | 'subgraphError'>>;
@@ -1789,7 +1804,7 @@ export interface BytesScalarConfig extends GraphQLScalarTypeConfig<ResolversType
   name: 'Bytes';
 }
 
-export type EdgeAdditionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['EdgeAddition'] = ResolversParentTypes['EdgeAddition']> = ResolversObject<{
+export type EdgeAdditionResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['EdgeAddition'] = ResolversParentTypes['EdgeAddition']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   chainID?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   latestLeafIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -1800,7 +1815,7 @@ export type EdgeAdditionResolvers<ContextType = MeshContext, ParentType extends 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type EdgeUpdateResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['EdgeUpdate'] = ResolversParentTypes['EdgeUpdate']> = ResolversObject<{
+export type EdgeUpdateResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['EdgeUpdate'] = ResolversParentTypes['EdgeUpdate']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   chainID?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   latestLeafIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -1811,14 +1826,14 @@ export type EdgeUpdateResolvers<ContextType = MeshContext, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type EncryptionsResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Encryptions'] = ResolversParentTypes['Encryptions']> = ResolversObject<{
+export type EncryptionsResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['Encryptions'] = ResolversParentTypes['Encryptions']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   encryptedOutput1?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   encryptedOutput2?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type ExternalDataResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ExternalData'] = ResolversParentTypes['ExternalData']> = ResolversObject<{
+export type ExternalDataResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['ExternalData'] = ResolversParentTypes['ExternalData']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   extAmount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -1829,7 +1844,7 @@ export type ExternalDataResolvers<ContextType = MeshContext, ParentType extends 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type InsertionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Insertion'] = ResolversParentTypes['Insertion']> = ResolversObject<{
+export type InsertionResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['Insertion'] = ResolversParentTypes['Insertion']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   commitment?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   leafIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -1841,7 +1856,7 @@ export type InsertionResolvers<ContextType = MeshContext, ParentType extends Res
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type NewCommitmentResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['NewCommitment'] = ResolversParentTypes['NewCommitment']> = ResolversObject<{
+export type NewCommitmentResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['NewCommitment'] = ResolversParentTypes['NewCommitment']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   commitment?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   subTreeIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -1853,7 +1868,7 @@ export type NewCommitmentResolvers<ContextType = MeshContext, ParentType extends
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type NewNullifierResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['NewNullifier'] = ResolversParentTypes['NewNullifier']> = ResolversObject<{
+export type NewNullifierResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['NewNullifier'] = ResolversParentTypes['NewNullifier']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   nullifier?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   blockNumber?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -1862,7 +1877,7 @@ export type NewNullifierResolvers<ContextType = MeshContext, ParentType extends 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type PublicInputsResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PublicInputs'] = ResolversParentTypes['PublicInputs']> = ResolversObject<{
+export type PublicInputsResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['PublicInputs'] = ResolversParentTypes['PublicInputs']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   roots?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   extensionRoots?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -1873,7 +1888,7 @@ export type PublicInputsResolvers<ContextType = MeshContext, ParentType extends 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type PublicKeyResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['PublicKey'] = ResolversParentTypes['PublicKey']> = ResolversObject<{
+export type PublicKeyResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['PublicKey'] = ResolversParentTypes['PublicKey']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   key?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -1883,7 +1898,7 @@ export type PublicKeyResolvers<ContextType = MeshContext, ParentType extends Res
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type ShieldedTransactionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['ShieldedTransaction'] = ResolversParentTypes['ShieldedTransaction']> = ResolversObject<{
+export type ShieldedTransactionResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['ShieldedTransaction'] = ResolversParentTypes['ShieldedTransaction']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   vanchor?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -1896,10 +1911,11 @@ export type ShieldedTransactionResolvers<ContextType = MeshContext, ParentType e
   blockNumber?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   blockTimestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   transactionHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  chainName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type TokenResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = ResolversObject<{
+export type TokenResolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   address?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   decimals?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -1908,21 +1924,21 @@ export type TokenResolvers<ContextType = MeshContext, ParentType extends Resolve
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type _Block_Resolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['_Block_'] = ResolversParentTypes['_Block_']> = ResolversObject<{
+export type _Block_Resolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['_Block_'] = ResolversParentTypes['_Block_']> = ResolversObject<{
   hash?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
   number?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   timestamp?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type _Meta_Resolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['_Meta_'] = ResolversParentTypes['_Meta_']> = ResolversObject<{
+export type _Meta_Resolvers<ContextType = MeshContext & { chainName: string }, ParentType extends ResolversParentTypes['_Meta_'] = ResolversParentTypes['_Meta_']> = ResolversObject<{
   block?: Resolver<ResolversTypes['_Block_'], ParentType, ContextType>;
   deployment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   hasIndexingErrors?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type Resolvers<ContextType = MeshContext> = ResolversObject<{
+export type Resolvers<ContextType = MeshContext & { chainName: string }> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   BigDecimal?: GraphQLScalarType;
@@ -1943,13 +1959,13 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   _Meta_?: _Meta_Resolvers<ContextType>;
 }>;
 
-export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
+export type DirectiveResolvers<ContextType = MeshContext & { chainName: string }> = ResolversObject<{
   entity?: entityDirectiveResolver<any, any, ContextType>;
   subgraphId?: subgraphIdDirectiveResolver<any, any, ContextType>;
   derivedFrom?: derivedFromDirectiveResolver<any, any, ContextType>;
 }>;
 
-export type MeshContext = AthenaTypes.Context & DemeterTypes.Context & HermesTypes.Context & BaseMeshContext;
+export type MeshContext = AthenaTypes.Context & BaseMeshContext;
 
 
 const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/', '..');
@@ -1957,6 +1973,9 @@ const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/',
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
   switch(relativeModuleId) {
+    case ".graphclient/sources/athena/introspectionSchema":
+      return Promise.resolve(importedModule$0) as T;
+    
     default:
       return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
   }
@@ -1971,15 +1990,73 @@ const rootStore = new MeshStore('.graphclient', new FsStoreStorageAdapter({
   validate: false
 });
 
-export function getMeshOptions() {
-  console.warn('WARNING: These artifacts are built for development mode. Please run "graphclient build" to build production artifacts');
-  return findAndParseConfig({
-    dir: baseDir,
-    artifactsDir: ".graphclient",
-    configName: "graphclient",
-    additionalPackagePrefixes: ["@graphprotocol/client-"],
-    initialLoggerPrefix: "GraphClient",
-  });
+export const rawServeConfig: YamlConfig.Config['serve'] = undefined as any
+export async function getMeshOptions(): Promise<GetMeshOptions> {
+const pubsub = new PubSub();
+const sourcesStore = rootStore.child('sources');
+const logger = new DefaultLogger("GraphClient");
+const cache = new (MeshCache as any)({
+      ...({} as any),
+      importFn,
+      store: rootStore.child('cache'),
+      pubsub,
+      logger,
+    } as any)
+
+const sources: MeshResolvedSource[] = [];
+const transforms: MeshTransform[] = [];
+const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
+const athenaTransforms = [];
+const athenaHandler = new GraphqlHandler({
+              name: "athena",
+              config: {"endpoint":"http://localhost:8000/subgraphs/name/VAnchorAthenaLocal"},
+              baseDir,
+              cache,
+              pubsub,
+              store: sourcesStore.child("athena"),
+              logger: logger.child("athena"),
+              importFn,
+            });
+sources[0] = {
+          name: 'athena',
+          handler: athenaHandler,
+          transforms: athenaTransforms
+        }
+const additionalTypeDefs = [parse("extend type ShieldedTransaction {\n  chainName: String!\n}"),] as any[];
+const additionalResolvers = await Promise.all([
+        import("../src/resolvers.ts")
+            .then(m => m.resolvers || m.default || m)
+      ]);
+const merger = new(BareMerger as any)({
+        cache,
+        pubsub,
+        logger: logger.child('bareMerger'),
+        store: rootStore.child('bareMerger')
+      })
+
+  return {
+    sources,
+    transforms,
+    additionalTypeDefs,
+    additionalResolvers,
+    cache,
+    pubsub,
+    merger,
+    logger,
+    additionalEnvelopPlugins,
+    get documents() {
+      return [
+      {
+        document: ShieldedTransactionsDocument,
+        get rawSDL() {
+          return printWithCache(ShieldedTransactionsDocument);
+        },
+        location: 'ShieldedTransactionsDocument.graphql'
+      }
+    ];
+    },
+    fetchFn,
+  };
 }
 
 export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandler<TServerContext> {
@@ -1989,6 +2066,7 @@ export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandl
     rawServeConfig: undefined,
   })
 }
+
 
 let meshInstance$: Promise<MeshInstance> | undefined;
 
@@ -2008,3 +2086,31 @@ export function getBuiltGraphClient(): Promise<MeshInstance> {
 export const execute: ExecuteMeshFn = (...args) => getBuiltGraphClient().then(({ execute }) => execute(...args));
 
 export const subscribe: SubscribeMeshFn = (...args) => getBuiltGraphClient().then(({ subscribe }) => subscribe(...args));
+export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(globalContext?: TGlobalContext) {
+  const sdkRequester$ = getBuiltGraphClient().then(({ sdkRequesterFactory }) => sdkRequesterFactory(globalContext));
+  return getSdk<TOperationContext, TGlobalContext>((...args) => sdkRequester$.then(sdkRequester => sdkRequester(...args)));
+}
+export type ShieldedTransactionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShieldedTransactionsQuery = { shieldedTransactions: Array<Pick<ShieldedTransaction, 'id'>> };
+
+
+export const ShieldedTransactionsDocument = gql`
+    query ShieldedTransactions {
+  shieldedTransactions {
+    id
+  }
+}
+    ` as unknown as DocumentNode<ShieldedTransactionsQuery, ShieldedTransactionsQueryVariables>;
+
+
+export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
+export function getSdk<C, E>(requester: Requester<C, E>) {
+  return {
+    ShieldedTransactions(variables?: ShieldedTransactionsQueryVariables, options?: C): Promise<ShieldedTransactionsQuery> {
+      return requester<ShieldedTransactionsQuery, ShieldedTransactionsQueryVariables>(ShieldedTransactionsDocument, variables, options) as Promise<ShieldedTransactionsQuery>;
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;

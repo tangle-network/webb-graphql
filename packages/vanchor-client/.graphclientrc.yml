@@ -3,11 +3,25 @@ sources:
     handler:
       graphql:
         endpoint: http://localhost:8000/subgraphs/name/VAnchorAthenaLocal
-  - name: demeter
-    handler:
-      graphql:
-        endpoint: http://localhost:8000/subgraphs/name/VAnchorDemeterLocal
-  - name: hermes
-    handler:
-      graphql:
-        endpoint: http://localhost:8000/subgraphs/name/VAnchorHermesLocal
+  # - name: demeter
+  #   handler:
+  #     graphql:
+  #       endpoint: http://localhost:8000/subgraphs/name/VAnchorDemeterLocal
+  # - name: hermes
+  #   handler:
+  #     graphql:
+  #       endpoint: http://localhost:8000/subgraphs/name/VAnchorHermesLocal
+
+additionalTypeDefs: |
+  extend type ShieldedTransaction {
+    chainName: String!
+  }
+
+additionalResolvers:
+  - ./src/resolvers.ts
+
+documents:
+  - ./example-queries/SchieldedTransactions.graphql
+
+codegen:
+  contextType: 'MeshContext & { chainName: string }'
