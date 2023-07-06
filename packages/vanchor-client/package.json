@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "graphclient serve-dev",
     "build": "graphclient build",
-    "start": "graphclient build && ts-node ./src/index.ts"
+    "start": "graphclient build && ts-node ./src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@graphprotocol/client-cli": "^3.0.0"
