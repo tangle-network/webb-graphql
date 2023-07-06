@@ -2,7 +2,7 @@ import { getBuiltGraphSDK } from '../.graphclient'
 
 async function main() {
     const sdk = getBuiltGraphSDK({
-        chainName: 'bentobox-bsc', // We can provide a default value here
+        chainName: 'VAnchorAthenaLocal', // We can provide a default value here
     })
     // Second parameter is the context value
     const results = await Promise.all([
@@ -10,11 +10,35 @@ async function main() {
             .ShieldedTransactions(
                 {},
                 {
-                    chainName: 'athena', // And override it in here
+                    chainName: 'VAnchorAthenaLocal', // And override it in here
                 },
             )
-            .then((data) => data.shieldedTransactions),
-        sdk.ShieldedTransactions().then((data) => data.shieldedTransactions),
+            .then((data) => {
+                console.log(data)
+                return data.shieldedTransactions
+            }),
+        sdk
+            .ShieldedTransactions(
+                {},
+                {
+                    chainName: 'VAnchorDemeterLocal', // And override it in here
+                },
+            )
+            .then((data) => {
+                console.log(data)
+                return data.shieldedTransactions
+            }),
+        sdk
+            .ShieldedTransactions(
+                {},
+                {
+                    chainName: 'VAnchorHermesLocal', // And override it in here
+                },
+            )
+            .then((data) => {
+                console.log(data)
+                return data.shieldedTransactions
+            })
     ])
 
     console.table(results.flat())

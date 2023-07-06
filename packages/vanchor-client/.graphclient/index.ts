@@ -21,8 +21,8 @@ import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import { ImportFn } from '@graphql-mesh/types';
-import type { AthenaTypes } from './sources/athena/types';
-import * as importedModule$0 from "./sources/athena/introspectionSchema";
+import type { VanchorTypes } from './sources/vanchor/types';
+import * as importedModule$0 from "./sources/vanchor/introspectionSchema";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -1965,7 +1965,7 @@ export type DirectiveResolvers<ContextType = MeshContext & { chainName: string }
   derivedFrom?: derivedFromDirectiveResolver<any, any, ContextType>;
 }>;
 
-export type MeshContext = AthenaTypes.Context & BaseMeshContext;
+export type MeshContext = VanchorTypes.Context & BaseMeshContext;
 
 
 const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/', '..');
@@ -1973,7 +1973,7 @@ const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/',
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
   switch(relativeModuleId) {
-    case ".graphclient/sources/athena/introspectionSchema":
+    case ".graphclient/sources/vanchor/introspectionSchema":
       return Promise.resolve(importedModule$0) as T;
     
     default:
@@ -2006,23 +2006,23 @@ const cache = new (MeshCache as any)({
 const sources: MeshResolvedSource[] = [];
 const transforms: MeshTransform[] = [];
 const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
-const athenaTransforms = [];
-const athenaHandler = new GraphqlHandler({
-              name: "athena",
-              config: {"endpoint":"http://localhost:8000/subgraphs/name/VAnchorAthenaLocal"},
+const vanchorTransforms = [];
+const vanchorHandler = new GraphqlHandler({
+              name: "vanchor",
+              config: {"endpoint":"http://localhost:8000/subgraphs/name/{context.chainName:VAnchorAthenaLocal}"},
               baseDir,
               cache,
               pubsub,
-              store: sourcesStore.child("athena"),
-              logger: logger.child("athena"),
+              store: sourcesStore.child("vanchor"),
+              logger: logger.child("vanchor"),
               importFn,
             });
 sources[0] = {
-          name: 'athena',
-          handler: athenaHandler,
-          transforms: athenaTransforms
+          name: 'vanchor',
+          handler: vanchorHandler,
+          transforms: vanchorTransforms
         }
-const additionalTypeDefs = [parse("extend type ShieldedTransaction {\n  chainName: String!\n}"),] as any[];
+const additionalTypeDefs = [parse("extend type ShieldedTransaction {\n  chainName: String!\n}\n"),] as any[];
 const additionalResolvers = await Promise.all([
         import("../src/resolvers.ts")
             .then(m => m.resolvers || m.default || m)
