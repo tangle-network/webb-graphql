@@ -61,7 +61,6 @@ export const handleTransaction = (event: Insertion): void => {
             externalDataEntity.refund = externalData[4].toBigInt();
             // Token
 
-            // if token address == 0 then wrapping native token and then skip. 
             externalDataEntity.token = ensureToken(
                 externalData[5].toAddress()
             ).toHexString();
