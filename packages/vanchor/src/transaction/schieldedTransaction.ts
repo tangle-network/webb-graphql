@@ -5,6 +5,7 @@ import {
     ExternalData,
     PublicInputs,
     ShieldedTransaction,
+    VAnchorTotalValueLocked,
 } from '../../generated/schema';
 import { ensureToken } from '../token/token';
 
@@ -40,6 +41,7 @@ export const handleTransaction = (event: Insertion): void => {
         newShieldedTx.transactionHash = event.transaction.hash;
         newShieldedTx.sender = event.transaction.from;
         newShieldedTx.value = event.transaction.value;
+
         newShieldedTx.proof = inputs[0].toBytes();
         newShieldedTx.auxPublicInputs = inputs[1].toBytes();
 
@@ -58,11 +60,24 @@ export const handleTransaction = (event: Insertion): void => {
             // Refund amount
             externalDataEntity.refund = externalData[4].toBigInt();
             // Token
+
+            // if token address == 0 then wrapping native token and then skip. 
             externalDataEntity.token = ensureToken(
                 externalData[5].toAddress()
             ).toHexString();
             // Save the ExternalData entity
             externalDataEntity.save();
+
+            const vanchorTotalValueLocked = VAnchorTotalValueLocked.load(newShieldedTx.vanchor);
+
+            if (!vanchorTotalValueLocked) {
+                const newVanchorTotalValueLocked = new VAnchorTotalValueLocked(newShieldedTx.vanchor);
+                newVanchorTotalValueLocked.totalValueLocked = externalDataEntity.extAmount;
+                newVanchorTotalValueLocked.save();
+            } else {
+                vanchorTotalValueLocked.totalValueLocked = vanchorTotalValueLocked.totalValueLocked.plus(externalDataEntity.extAmount);
+                vanchorTotalValueLocked.save();
+            }
         }
 
         // Reference the ExternalData entity using the transaction hash as the identifier

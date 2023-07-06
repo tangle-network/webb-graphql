@@ -8,18 +8,29 @@ export const getSdk = () => {
     return sdk;
 }
 
-export const executeQuery = async (query: Function) => {
+
+export const executeQuery = async (query: Function, options: {
+    chainName: string,
+}) => {
+    return query(
+        {},
+        {
+            chainName: options.chainName,
+        },
+    )
+}
+
+export const executeQueryOnAllChains = async (query: Function) => {
 
     const promises = SubgaraphNames.map(async (chainName) => {
 
-        return query(
-            {},
-            {
-                chainName: chainName,
-            },
-        )
+        return executeQuery(query, {
+            chainName,
+        });
     });
 
     return await Promise.all(promises);
 
 }
+
+
