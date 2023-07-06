@@ -18,3 +18,4 @@ documents:
 
 codegen:
   contextType: 'MeshContext & { chainName: string }'
+
