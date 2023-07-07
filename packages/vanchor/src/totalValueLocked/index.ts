@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
+import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { VAnchorTotalValueLocked, VAnchorTotalValueLockedByToken } from '../../generated/schema';
 
 export function recordTotalValueLocked(vAnchorAddress: Bytes, tokenAddress: Bytes, amount: BigInt): void {
