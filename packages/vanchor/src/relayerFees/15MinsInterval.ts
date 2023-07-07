@@ -35,7 +35,7 @@ export function recordFee(vAnchorAddress: Bytes, tokenAddress: Bytes, fees: BigI
         newVanchorFee.fees = fees;
         newVanchorFee.save();
     } else {
-        vanchorFee.Fee = vanchorFee.Fee.plus(fees);
+        vanchorFee.fees = vanchorFee.fees.plus(fees);
         vanchorFee.save();
     }
 
