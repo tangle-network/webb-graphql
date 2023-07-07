@@ -15,7 +15,7 @@ import {
   PublicKey
 } from "../generated/schema"
 
-import { handleTransaction } from './transaction/schieldedTransaction';
+import { handleTransaction } from './transaction/shieldedTransaction';
 
 export function handleEdgeAddition(event: EdgeAdditionEvent): void {
   let entity = new EdgeAddition(
