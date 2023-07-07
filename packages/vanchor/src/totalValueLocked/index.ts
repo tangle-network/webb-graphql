@@ -1,15 +1,28 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
-import { VAnchorTotalValueLocked } from '../../generated/schema';
+import { VAnchorTotalValueLocked, VAnchorTotalValueLockedByToken } from '../../generated/schema';
 
 export function recordTotalValueLocked(vAnchorAddress: Bytes, tokenAddress: Bytes, amount: BigInt): void {
     const id = vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
-    const vanchorTotalValueLocked = VAnchorTotalValueLocked.load(id);
+    const vanchorTotalValueLockedByToken = VAnchorTotalValueLockedByToken.load(id);
+
+    if (!vanchorTotalValueLockedByToken) {
+        const newVanchorTotalValueLockedByToken = new VAnchorTotalValueLockedByToken(id);
+        newVanchorTotalValueLockedByToken.totalValueLocked = amount;
+        newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
+        newVanchorTotalValueLockedByToken.tokenAddress = tokenAddress;
+        newVanchorTotalValueLockedByToken.save();
+    } else {
+        vanchorTotalValueLockedByToken.totalValueLocked = vanchorTotalValueLockedByToken.totalValueLocked.plus(amount);
+        vanchorTotalValueLockedByToken.save();
+    }
+
+
+    // Update the total value locked for vanchor
+    const vanchorTotalValueLocked = VAnchorTotalValueLocked.load(vAnchorAddress.toHexString());
 
     if (!vanchorTotalValueLocked) {
-        const newVanchorTotalValueLocked = new VAnchorTotalValueLocked(id);
+        const newVanchorTotalValueLocked = new VAnchorTotalValueLocked(vAnchorAddress.toHexString());
         newVanchorTotalValueLocked.totalValueLocked = amount;
-        newVanchorTotalValueLocked.vAnchorAddress = vAnchorAddress;
-        newVanchorTotalValueLocked.tokenAddress = tokenAddress;
         newVanchorTotalValueLocked.save();
     } else {
         vanchorTotalValueLocked.totalValueLocked = vanchorTotalValueLocked.totalValueLocked.plus(amount);

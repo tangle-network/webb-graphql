@@ -108,13 +108,23 @@ type ShieldedTransaction @entity(immutable: true) {
 }
 
 type VAnchorTotalValueLocked @entity(immutable: false) {
+  id: String! # vAnchor address
+  totalValueLocked: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTotalRelayerFee @entity(immutable: false) {
+  id: String! # vAnchor address
+  fees: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTotalValueLockedByToken @entity(immutable: false) {
   id: String! # vAnchor address + token address
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
   totalValueLocked: BigInt! # total value locked in the vAnchor
 }
 
-type VAnchorTotalRelayerFee @entity(immutable: false) {
+type VAnchorTotalRelayerFeeByToken @entity(immutable: false) {
   id: String! # vAnchor address + token address
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
