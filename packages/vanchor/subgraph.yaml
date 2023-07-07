@@ -6,8 +6,8 @@ dataSources:
     name: vanchor
     network: Demeter
     source:
-      abi: vanchor
-      address: "0x4B09F48CEcD2B15a7D1756284369E17dB5f70d2B"
+      abi: VAnchor
+      address: "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -21,10 +21,12 @@ dataSources:
         - NewNullifier
         - PublicKey
       abis:
-        - name: vanchor
-          file: ./abis/vanchor.json
-        - name: erc20
-          file: ./abis/erc20.json
+        - name: VAnchor
+          file: ./abis/VAnchor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: FungibleTokenWrapper
+          file: ./abis/FungibleTokenWrapper.json
       eventHandlers:
         - event: EdgeAddition(uint256,uint256,uint256)
           handler: handleEdgeAddition

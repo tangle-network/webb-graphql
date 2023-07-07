@@ -1,5 +1,5 @@
 import { Address } from '@graphprotocol/graph-ts';
-import { erc20 } from '../../generated/VAnchor/erc20';
+import { ERC20 } from '../../generated/VAnchor/erc20';
 import { Token } from '../../generated/schema';
 
 export function ensureToken(tokenAddress: Address): Address {
@@ -10,7 +10,7 @@ export function ensureToken(tokenAddress: Address): Address {
     // }
     // const token = new Token(tokenAddress);
 
-    // const tokenContract = erc20.bind(tokenAddress);
+    // const tokenContract = ERC20.bind(tokenAddress);
     // const name = tokenContract.try_name();
     // if (name.reverted) {
     //     token.name = 'Ether';
