@@ -4,7 +4,7 @@ schema:
 dataSources:
   - kind: ethereum
     name: fungible-token-wrapper
-    network: Demeter
+    network: Athena
     source:
       abi: FungibleTokenWrapper
       address: "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E"
@@ -33,7 +33,7 @@ dataSources:
       file: ./src/fungible-token-wrapper.ts
   - kind: ethereum
     name: vanchor
-    network: Demeter
+    network: Athena
     source:
       abi: VAnchor
       address: "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E"

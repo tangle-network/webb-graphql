@@ -73,11 +73,11 @@ export const handleTransaction = (event: Insertion): void => {
                 externalData[5].toAddress()
             )
 
-            externalDataEntity.token = tokenAddress.toHexString();;
+            externalDataEntity.token = tokenAddress.toHexString();
             // Save the ExternalData entity
             externalDataEntity.save();
 
-            const tvl = isNativeToken(tokenAddress) ? newShieldedTx.value : externalDataEntity.extAmount;
+            const tvl = isNativeToken(tokenAddress.toHexString()) ? newShieldedTx.value : externalDataEntity.extAmount;
 
             // Record Total Value Locked
             recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, tvl);
