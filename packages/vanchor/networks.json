@@ -9,16 +9,28 @@
     "vanchor": {
       "address": "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E",
       "startBlock": 0
+    },
+    "fungible-token-wrapper": {
+      "address": "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E",
+      "startBlock": 0
     }
   },
   "Hermes": {
     "vanchor": {
       "address": "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E",
       "startBlock": 0
+    },
+     "fungible-token-wrapper": {
+      "address": "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E",
+      "startBlock": 0
     }
   },
   "Demeter": {
     "vanchor": {
+      "address": "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E",
+      "startBlock": 0
+    },
+     "fungible-token-wrapper": {
       "address": "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E",
       "startBlock": 0
     }

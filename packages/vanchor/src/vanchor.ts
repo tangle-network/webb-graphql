@@ -17,6 +17,8 @@ import {
 
 import { handleTransaction } from './transaction/shieldedTransaction';
 
+
+
 export function handleEdgeAddition(event: EdgeAdditionEvent): void {
   let entity = new EdgeAddition(
     event.transaction.hash.concatI32(event.logIndex.toI32())
@@ -31,6 +33,8 @@ export function handleEdgeAddition(event: EdgeAdditionEvent): void {
 
   entity.save()
 }
+
+
 
 export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
   let entity = new EdgeUpdate(
