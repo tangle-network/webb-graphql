@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "lint": "nx run-many --all --target=lint",
+    "lint:fix": "nx run-many --all --target=lint:fix",
     "format": "prettier --write \"**/*.{ts,js}\" ",
     "format:check": "prettier --check \"**/*.{ts,js}\" "
   },
