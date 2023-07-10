@@ -3,11 +3,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: vanchor
-    network: Demeter
+    name: fungible-token-wrapper
+    network: Athena
     source:
-      abi: vanchor
-      address: "0x4B09F48CEcD2B15a7D1756284369E17dB5f70d2B"
+      abi: FungibleTokenWrapper
+      address: "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -21,10 +21,41 @@ dataSources:
         - NewNullifier
         - PublicKey
       abis:
-        - name: vanchor
-          file: ./abis/vanchor.json
-        - name: erc20
-          file: ./abis/erc20.json
+        - name: FungibleTokenWrapper
+          file: ./abis/FungibleTokenWrapper.json
+        - name: VAnchor
+          file: ./abis/VAnchor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Wrapping(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleWrapping
+      file: ./src/fungible-token-wrapper.ts
+  - kind: ethereum
+    name: vanchor
+    network: Athena
+    source:
+      abi: VAnchor
+      address: "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E"
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EdgeAddition
+        - EdgeUpdate
+        - Insertion
+        - NewCommitment
+        - NewNullifier
+        - PublicKey
+      abis:
+        - name: FungibleTokenWrapper
+          file: ./abis/FungibleTokenWrapper.json
+        - name: VAnchor
+          file: ./abis/VAnchor.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: EdgeAddition(uint256,uint256,uint256)
           handler: handleEdgeAddition

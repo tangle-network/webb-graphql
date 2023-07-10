@@ -1,4 +1,4 @@
-import { Bytes, ethereum } from '@graphprotocol/graph-ts';
+import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { Insertion } from '../../generated/vanchor/vanchor';
 import {
     Encryptions,
@@ -7,7 +7,12 @@ import {
     ShieldedTransaction,
     VAnchorTotalValueLocked,
 } from '../../generated/schema';
-import { ensureToken } from '../token/token';
+import { ensureToken } from '../token';
+import { recordTotalValueLocked } from '../totalValueLocked';
+import { recordTotalFees } from '../relayerFees';
+import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
+import { record15MinsIntervalTotalValueLocked } from '../totalValueLocked/15MinsInterval';
+import { isNativeToken } from '../utils/token';
 
 export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
     const inputDataHexString = txInput.toHexString().slice(10); //take away function signature: '0x????????'
@@ -55,28 +60,33 @@ export const handleTransaction = (event: Insertion): void => {
             externalDataEntity.extAmount = externalData[1].toBigInt();
             // Relayer address
             externalDataEntity.relayer = externalData[2].toAddress();
-            // Fee amount
+            // Fee amount for relayer (NOT WRAPPING FEES)
             externalDataEntity.fee = externalData[3].toBigInt();
             // Refund amount
             externalDataEntity.refund = externalData[4].toBigInt();
             // Token
-
-            externalDataEntity.token = ensureToken(
+            // Address of the token contract
+            // Token: 0x0000000000000000000000000000000000000000 // NATIVE asset (WRAPPING)
+            // Token: 0x1985365e9f78359a9B6AD760e32412f4a445E862 // If not the VAnchor ERC20 token (WRAPPING)
+            // Token: 0xVANCHORTOKEN0000000000000000000000000000 // If VAnchor ERC20 token (NOT WRAPPING)
+            const tokenAddress: Address = ensureToken(
                 externalData[5].toAddress()
-            ).toHexString();
+            )
+
+            externalDataEntity.token = tokenAddress.toHexString();
             // Save the ExternalData entity
             externalDataEntity.save();
 
-            const vanchorTotalValueLocked = VAnchorTotalValueLocked.load(newShieldedTx.vanchor);
+            const tvl = isNativeToken(tokenAddress.toHexString()) ? newShieldedTx.value : externalDataEntity.extAmount;
 
-            if (!vanchorTotalValueLocked) {
-                const newVanchorTotalValueLocked = new VAnchorTotalValueLocked(newShieldedTx.vanchor);
-                newVanchorTotalValueLocked.totalValueLocked = externalDataEntity.extAmount;
-                newVanchorTotalValueLocked.save();
-            } else {
-                vanchorTotalValueLocked.totalValueLocked = vanchorTotalValueLocked.totalValueLocked.plus(externalDataEntity.extAmount);
-                vanchorTotalValueLocked.save();
-            }
+            // Record Total Value Locked
+            recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, tvl);
+            record15MinsIntervalTotalValueLocked(newShieldedTx.vanchor, tokenAddress, tvl, event.block.timestamp);
+
+            // Record Relayer Fees
+            recordTotalFees(newShieldedTx.vanchor, tokenAddress, externalDataEntity.fee);
+            recordFeeFor15MinsInterval(newShieldedTx.vanchor, tokenAddress, externalDataEntity.fee, event.block.timestamp);
+
         }
 
         // Reference the ExternalData entity using the transaction hash as the identifier
