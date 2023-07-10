@@ -1,6 +1,7 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { VAnchorTotalRelayerFeeByTokenEvery15Min, VAnchorTotalRelayerFee15Min } from '../../generated/schema';
 import { getStartInterval, getEndInterval } from '../utils/time';
+import { getTokenSymbol } from '../token';
 
 export function recordFeeFor15MinsInterval(vAnchorAddress: Bytes, tokenAddress: Bytes, fees: BigInt, time: BigInt): void {
 
@@ -15,6 +16,7 @@ export function recordFeeFor15MinsInterval(vAnchorAddress: Bytes, tokenAddress: 
         const newVanchorFeeByToken = new VAnchorTotalRelayerFeeByTokenEvery15Min(id);
         newVanchorFeeByToken.fees = fees;
         newVanchorFeeByToken.vAnchorAddress = vAnchorAddress;
+        newVanchorFeeByToken.tokenSymbol = getTokenSymbol(tokenAddress);
         newVanchorFeeByToken.tokenAddress = tokenAddress;
         newVanchorFeeByToken.startInterval = BigInt.fromString(startInterval.toString());
         newVanchorFeeByToken.endInterval = BigInt.fromString(endInterval.toString());

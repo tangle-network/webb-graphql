@@ -1,5 +1,6 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { VAnchorTotalRelayerFee, VAnchorTotalRelayerFeeByToken } from '../../generated/schema';
+import { getTokenSymbol } from '../token';
 
 export function recordTotalFees(vAnchorAddress: Bytes, tokenAddress: Bytes, fee: BigInt): void {
     const id = vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
@@ -9,6 +10,7 @@ export function recordTotalFees(vAnchorAddress: Bytes, tokenAddress: Bytes, fee:
         const newVanchorTotalValueLockedByToken = new VAnchorTotalRelayerFeeByToken(id);
         newVanchorTotalValueLockedByToken.fees = fee;
         newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
+        newVanchorTotalValueLockedByToken.tokenSymbol = getTokenSymbol(tokenAddress);
         newVanchorTotalValueLockedByToken.tokenAddress = tokenAddress;
         newVanchorTotalValueLockedByToken.save();
     } else {

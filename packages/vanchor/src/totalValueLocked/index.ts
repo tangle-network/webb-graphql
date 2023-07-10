@@ -1,13 +1,18 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { VAnchorTotalValueLocked, VAnchorTotalValueLockedByToken } from '../../generated/schema';
+import { ERC20 } from '../../generated/VAnchor/erc20';
+import { getTokenSymbol } from '../token';
 
 export function recordTotalValueLocked(vAnchorAddress: Bytes, tokenAddress: Bytes, amount: BigInt): void {
+
+
     const id = vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
     const vanchorTotalValueLockedByToken = VAnchorTotalValueLockedByToken.load(id);
 
     if (!vanchorTotalValueLockedByToken) {
         const newVanchorTotalValueLockedByToken = new VAnchorTotalValueLockedByToken(id);
         newVanchorTotalValueLockedByToken.totalValueLocked = amount;
+        newVanchorTotalValueLockedByToken.tokenSymbol = getTokenSymbol(tokenAddress);
         newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
         newVanchorTotalValueLockedByToken.tokenAddress = tokenAddress;
         newVanchorTotalValueLockedByToken.save();

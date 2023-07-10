@@ -1,6 +1,7 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { VAnchorTotalValueLockedByTokenEvery15Min, VAnchorTotalValueLockedEvery15Min } from '../../generated/schema';
 import { getStartInterval, getEndInterval } from '../utils/time';
+import { getTokenSymbol } from '../token';
 
 export function record15MinsIntervalTotalValueLocked(vAnchorAddress: Bytes, tokenAddress: Bytes, amount: BigInt, time: BigInt): void {
 
@@ -14,6 +15,7 @@ export function record15MinsIntervalTotalValueLocked(vAnchorAddress: Bytes, toke
         const newVanchorTotalValueLockedByToken = new VAnchorTotalValueLockedByTokenEvery15Min(id);
         newVanchorTotalValueLockedByToken.totalValueLocked = amount;
         newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
+        newVanchorTotalValueLockedByToken.tokenSymbol = getTokenSymbol(tokenAddress);
         newVanchorTotalValueLockedByToken.tokenAddress = tokenAddress;
         newVanchorTotalValueLockedByToken.startInterval = BigInt.fromString(startInterval.toString());
         newVanchorTotalValueLockedByToken.endInterval = BigInt.fromString(endInterval.toString());
