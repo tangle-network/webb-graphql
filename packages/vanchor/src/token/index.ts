@@ -1,9 +1,9 @@
-import { Address } from '@graphprotocol/graph-ts';
+import { Address, Bytes } from '@graphprotocol/graph-ts';
 import { ERC20 } from '../../generated/VAnchor/erc20';
 import { Token } from '../../generated/schema';
 
-export function getTokenSymbol(tokenAddress: Address): string {
-    const tokenContract = ERC20.bind(tokenAddress);
+export function getTokenSymbol(tokenAddress: Bytes): string {
+    const tokenContract = ERC20.bind(Address.fromBytes(tokenAddress));
     const symbol = tokenContract.try_symbol();
 
     if (symbol.reverted) {
@@ -13,8 +13,8 @@ export function getTokenSymbol(tokenAddress: Address): string {
     }
 }
 
-export function getTokenName(tokenAddress: Address): string {
-    const tokenContract = ERC20.bind(tokenAddress);
+export function getTokenName(tokenAddress: Bytes): string {
+    const tokenContract = ERC20.bind(Address.fromBytes(tokenAddress));
     const name = tokenContract.try_name();
     if (name.reverted) {
         return 'Ether';
