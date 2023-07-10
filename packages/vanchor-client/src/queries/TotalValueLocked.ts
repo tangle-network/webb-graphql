@@ -2,6 +2,8 @@ import { execute } from "../../.graphclient"
 
 export interface TotalValueLockedByChain { chainName: string, totalValueLocked: number }
 
+export interface TotalValueLockedByChainAndByToken extends TotalValueLockedByChain { tokenSymbol: string }
+
 export interface TotalValueLockedByVAnchor { vAnchorAddress: string, totalValueLocked: number }
 
 export const GetVAnchorTotalValueLockedByChain = async (chainName: string, vanchorAddress: string): Promise<TotalValueLockedByChain> => {
@@ -68,3 +70,27 @@ export const GetVAnchorsTotalValueLockedByChains = async (chainNames: Array<stri
   return await Promise.all(promises);
 
 }
+
+
+export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: string, vanchorAddress: string, tokenSymbol: string): Promise<TotalValueLockedByChainAndByToken> => {
+  const query = `
+  query MyQuery {
+  vanchorTotalValueLockedByTokens(
+    first: 1
+    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vanchorAddress}"}
+  ) {
+    totalValueLocked
+  }
+}
+`
+  const result = await execute(query, {}, {
+    chainName,
+  })
+
+  return {
+    totalValueLocked: result.data.vanchorTotalValueLocked[0].totalValueLocked,
+    chainName: chainName,
+    tokenSymbol: tokenSymbol
+  }
+}
+
