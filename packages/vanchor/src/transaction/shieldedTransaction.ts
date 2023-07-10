@@ -12,6 +12,7 @@ import { recordTotalValueLocked } from '../totalValueLocked';
 import { recordTotalFees } from '../relayerFees';
 import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
 import { record15MinsIntervalTotalValueLocked } from '../totalValueLocked/15MinsInterval';
+import { isNativeToken } from '../utils/token';
 
 export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
     const inputDataHexString = txInput.toHexString().slice(10); //take away function signature: '0x????????'
@@ -76,10 +77,11 @@ export const handleTransaction = (event: Insertion): void => {
             // Save the ExternalData entity
             externalDataEntity.save();
 
+            const tvl = isNativeToken(tokenAddress) ? newShieldedTx.value : externalDataEntity.extAmount;
 
             // Record Total Value Locked
-            recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, externalDataEntity.extAmount);
-            record15MinsIntervalTotalValueLocked(newShieldedTx.vanchor, tokenAddress, externalDataEntity.extAmount, event.block.timestamp);
+            recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, tvl);
+            record15MinsIntervalTotalValueLocked(newShieldedTx.vanchor, tokenAddress, tvl, event.block.timestamp);
 
             // Record Relayer Fees
             recordTotalFees(newShieldedTx.vanchor, tokenAddress, externalDataEntity.fee);
