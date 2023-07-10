@@ -40,7 +40,7 @@ export const GetVAnchorsTotalValueLockedByChain = async (chainName: string, vanc
   const query = `
   query TotalValueLockedByVAnchor {
   vanchorTotalValueLockeds(
-    where: {id_in: [${vanchorAddresses.map((address) => '\"' + address.toLowerCase() + '\"').join(",")}]}
+    where: {id_in: [${vanchorAddresses.map((address) => '"' + address.toLowerCase() + '"').join(",")}]}
   ) {
     id
     totalValueLocked

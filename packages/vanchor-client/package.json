@@ -8,6 +8,7 @@
     "build": "graphclient build",
     "start": "graphclient build && ts-node ./src/index.ts",
     "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write ."
   },
   "devDependencies": {
