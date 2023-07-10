@@ -10,6 +10,8 @@ import {
 import { ensureToken } from '../token';
 import { recordTotalValueLocked } from '../totalValueLocked';
 import { recordTotalFees } from '../relayerFees';
+import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
+import { record15MinsIntervalTotalValueLocked } from '../totalValueLocked/15MinsInterval';
 
 export function getTxnInputDataToDecode(txInput: Bytes): Bytes {
     const inputDataHexString = txInput.toHexString().slice(10); //take away function signature: '0x????????'
@@ -74,8 +76,15 @@ export const handleTransaction = (event: Insertion): void => {
             // Save the ExternalData entity
             externalDataEntity.save();
 
+
+            // Record Total Value Locked
             recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, externalDataEntity.extAmount);
+            record15MinsIntervalTotalValueLocked(newShieldedTx.vanchor, tokenAddress, externalDataEntity.extAmount, event.block.timestamp);
+
+            // Record Relayer Fees
             recordTotalFees(newShieldedTx.vanchor, tokenAddress, externalDataEntity.fee);
+            recordFeeFor15MinsInterval(newShieldedTx.vanchor, tokenAddress, externalDataEntity.fee, event.block.timestamp);
+
         }
 
         // Reference the ExternalData entity using the transaction hash as the identifier

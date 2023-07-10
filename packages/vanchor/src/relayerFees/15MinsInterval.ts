@@ -1,13 +1,14 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { VAnchorTotalRelayerFeeByTokenEvery15Min, VAnchorTotalRelayerFee15Min } from '../../generated/schema';
-import { getStartAndEndIntrerval } from '../utils/time';
+import { getStartInterval, getEndInterval } from '../utils/time';
 
-export function recordFee(vAnchorAddress: Bytes, tokenAddress: Bytes, fees: BigInt, time: BigInt): void {
+export function recordFeeFor15MinsInterval(vAnchorAddress: Bytes, tokenAddress: Bytes, fees: BigInt, time: BigInt): void {
 
 
-    const startAndEndInterval = getStartAndEndIntrerval(time, 15);
+    const startInterval: i32 = getStartInterval(time, 15);
+    const endInterval: i32 = getEndInterval(time, 15);
 
-    const id = startAndEndInterval.startInterval + '-' + vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
+    const id = startInterval.toString() + '-' + vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
     const vanchorFeeByToken = VAnchorTotalRelayerFeeByTokenEvery15Min.load(id);
 
     if (!vanchorFeeByToken) {
@@ -15,8 +16,8 @@ export function recordFee(vAnchorAddress: Bytes, tokenAddress: Bytes, fees: BigI
         newVanchorFeeByToken.fees = fees;
         newVanchorFeeByToken.vAnchorAddress = vAnchorAddress;
         newVanchorFeeByToken.tokenAddress = tokenAddress;
-        newVanchorFeeByToken.startInterval = BigInt.fromString(startAndEndInterval.startInterval.toString());
-        newVanchorFeeByToken.endInterval = BigInt.fromString(startAndEndInterval.endInterval.toString());
+        newVanchorFeeByToken.startInterval = BigInt.fromString(startInterval.toString());
+        newVanchorFeeByToken.endInterval = BigInt.fromString(endInterval.toString());
         newVanchorFeeByToken.save();
     } else {
         vanchorFeeByToken.fees = vanchorFeeByToken.fees.plus(fees);
@@ -25,13 +26,14 @@ export function recordFee(vAnchorAddress: Bytes, tokenAddress: Bytes, fees: BigI
 
 
     // Update the total value locked for vanchor
-    const recordId = startAndEndInterval.startInterval + '-' + vAnchorAddress.toHexString();
+    const recordId = startInterval.toString() + '-' + vAnchorAddress.toHexString();
     const vanchorFee = VAnchorTotalRelayerFee15Min.load(recordId);
 
     if (!vanchorFee) {
         const newVanchorFee = new VAnchorTotalRelayerFee15Min(recordId);
-        newVanchorFee.startInterval = BigInt.fromString(startAndEndInterval.startInterval.toString());
-        newVanchorFee.endInterval = BigInt.fromString(startAndEndInterval.endInterval.toString());
+        newVanchorFee.startInterval = BigInt.fromString(startInterval.toString());
+        newVanchorFee.endInterval = BigInt.fromString(endInterval.toString());
+        newVanchorFee.vAnchorAddress = vAnchorAddress;
         newVanchorFee.fees = fees;
         newVanchorFee.save();
     } else {
