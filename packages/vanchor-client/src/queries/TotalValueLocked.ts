@@ -10,6 +10,7 @@ export const GetVAnchorTotalValueLockedByChain = async (chainName: string, vAnch
   const query = `
   query TotalValueLocked {
   vanchorTotalValueLocked(id: "${vAnchorAddress.toLowerCase()}"){
+
     totalValueLocked
   }
 }
@@ -29,6 +30,7 @@ export const GetVAnchorTotalValueLockedByChains = async (chainNames: Array<strin
 
   for (const chainName of chainNames) {
     promises.push(GetVAnchorTotalValueLockedByChain(chainName, vAnchorAddress))
+
   }
 
   return await Promise.all(promises);
@@ -97,6 +99,7 @@ export const GetVAnchorTotalValueLockedByChainsAndByToken = async (chainNames: A
 
   for (const chainName of chainNames) {
     promises.push(GetVAnchorTotalValueLockedByChainAndByToken(chainName, vAnchorAddress, tokenSymbol))
+
   }
 
   return await Promise.all(promises);
