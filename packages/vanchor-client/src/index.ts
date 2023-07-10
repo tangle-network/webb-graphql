@@ -1,9 +1,15 @@
 import { SubgaraphNames } from '../config';
-import { GetTotalValueLocked } from './queries/VAnchor'
+import { GetVAnchorTotalValueLockedByChain, GetVAnchorTotalValueLockedByChainAndByToken, GetVAnchorsTotalValueLockedByChain, GetVAnchorsTotalValueLockedByChains } from './queries/TotalValueLocked'
 
 async function main() {
-    const value: number = await GetTotalValueLocked(SubgaraphNames[0], "0x4b09f48cecd2b15a7d1756284369e17db5f70d2b");
-    console.table(value)
+    console.table(await GetVAnchorTotalValueLockedByChainAndByToken(SubgaraphNames[0], "0x2b5c3cc8fcea8a7efc86e56bbfd9fcc9cdff215e", "ETH"))
+
+    console.table(await GetVAnchorsTotalValueLockedByChains([SubgaraphNames[0]], ["0x2b5c3cc8fcea8a7efc86e56bbfd9fcc9cdff215e"]))
+
+    //console.table(await GetVAnchorTotalValueLockedByChain(SubgaraphNames[0], "0x2b5c3cc8fcea8a7efc86e56bbfd9fcc9cdff215e"))
+
+
+
 }
 
 main().catch((e) => {

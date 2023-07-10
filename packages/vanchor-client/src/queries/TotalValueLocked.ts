@@ -9,7 +9,7 @@ export interface TotalValueLockedByVAnchor { vAnchorAddress: string, totalValueL
 export const GetVAnchorTotalValueLockedByChain = async (chainName: string, vanchorAddress: string): Promise<TotalValueLockedByChain> => {
   const query = `
   query TotalValueLocked {
-  vanchorTotalValueLocked(id: "${vanchorAddress}"){
+  vanchorTotalValueLocked(id: "${vanchorAddress.toLowerCase()}"){
     totalValueLocked
   }
 }
@@ -19,11 +19,10 @@ export const GetVAnchorTotalValueLockedByChain = async (chainName: string, vanch
   })
 
   return {
-    totalValueLocked: result.data.vanchorTotalValueLocked.totalValueLocked,
+    totalValueLocked: result.data.vanchorTotalValueLocked?.totalValueLocked,
     chainName: chainName
   }
 }
-
 
 export const GetVAnchorTotalValueLockedByChains = async (chainNames: Array<string>, vanchorAddress: string): Promise<Array<TotalValueLockedByChain>> => {
   const promises: Array<Promise<TotalValueLockedByChain>> = [];
@@ -39,7 +38,7 @@ export const GetVAnchorsTotalValueLockedByChain = async (chainName: string, vanc
   const query = `
   query TotalValueLockedByVAnchor {
   vanchorTotalValueLockeds(
-    where: {id_in: [${vanchorAddresses.map((address) => '\"' + address + '\"').join(",")}]}
+    where: {id_in: [${vanchorAddresses.map((address) => '\"' + address.toLowerCase() + '\"').join(",")}]}
   ) {
     id
     totalValueLocked
@@ -50,15 +49,14 @@ export const GetVAnchorsTotalValueLockedByChain = async (chainName: string, vanc
     chainName,
   })
 
-  return result.data.vanchorTotalValueLockeds.map((item) => {
+  return result.data.vanchorTotalValueLockeds?.map((item: any) => {
     return {
-      totalValueLocked: item.totalValueLocked,
-      vAnchorAddress: item.id
+      totalValueLocked: item?.totalValueLocked,
+      vAnchorAddress: item?.id
     }
   })
 
 }
-
 
 export const GetVAnchorsTotalValueLockedByChains = async (chainNames: Array<string>, vanchorAddresses: Array<string>): Promise<Array<Array<TotalValueLockedByVAnchor>>> => {
   const promises: Array<Promise<Array<TotalValueLockedByVAnchor>>> = [];
@@ -71,13 +69,12 @@ export const GetVAnchorsTotalValueLockedByChains = async (chainNames: Array<stri
 
 }
 
-
 export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: string, vanchorAddress: string, tokenSymbol: string): Promise<TotalValueLockedByChainAndByToken> => {
   const query = `
   query MyQuery {
   vanchorTotalValueLockedByTokens(
     first: 1
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vanchorAddress}"}
+    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vanchorAddress.toLowerCase()}"}
   ) {
     totalValueLocked
   }
@@ -87,13 +84,13 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: str
     chainName,
   })
 
+
   return {
-    totalValueLocked: result.data.vanchorTotalValueLocked[0]?.totalValueLocked,
+    totalValueLocked: result.data.vanchorTotalValueLockedByTokens && result.data.vanchorTotalValueLockedByTokens.length > 0 ? result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked : undefined,
     chainName: chainName,
     tokenSymbol: tokenSymbol
   }
 }
-
 
 export const GetVAnchorTotalValueLockedByChainsAndByToken = async (chainNames: Array<string>, vanchorAddress: string, tokenSymbol: string): Promise<Array<TotalValueLockedByChainAndByToken>> => {
   const promises: Array<Promise<TotalValueLockedByChainAndByToken>> = [];
