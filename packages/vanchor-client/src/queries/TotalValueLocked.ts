@@ -88,9 +88,22 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: str
   })
 
   return {
-    totalValueLocked: result.data.vanchorTotalValueLocked[0].totalValueLocked,
+    totalValueLocked: result.data.vanchorTotalValueLocked[0]?.totalValueLocked,
     chainName: chainName,
     tokenSymbol: tokenSymbol
   }
 }
+
+
+export const GetVAnchorTotalValueLockedByChainsAndByToken = async (chainNames: Array<string>, vanchorAddress: string, tokenSymbol: string): Promise<Array<TotalValueLockedByChainAndByToken>> => {
+  const promises: Array<Promise<TotalValueLockedByChainAndByToken>> = [];
+
+  for (const chainName of chainNames) {
+    promises.push(GetVAnchorTotalValueLockedByChainAndByToken(chainName, vanchorAddress, tokenSymbol))
+  }
+
+  return await Promise.all(promises);
+}
+
+
 
