@@ -4,10 +4,10 @@ schema:
 dataSources:
   - kind: ethereum
     name: fungible-token-wrapper
-    network: Athena
+    network: Demeter
     source:
       abi: FungibleTokenWrapper
-      address: "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E"
+      address: "0xd256A367384C96278CC3Ba228039A68f6217b91d"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -30,13 +30,15 @@ dataSources:
       eventHandlers:
         - event: Wrapping(indexed address,indexed address,indexed address,uint256,uint256)
           handler: handleWrapping
+        - event: Unwrapping(indexed address,indexed address,indexed address,uint256)
+          handler: handleUnwrapping
       file: ./src/fungible-token-wrapper.ts
   - kind: ethereum
     name: vanchor
-    network: Athena
+    network: Demeter
     source:
       abi: VAnchor
-      address: "0x2b5c3Cc8FcEa8A7eFC86E56bBfd9Fcc9CDff215E"
+      address: "0x4c5f214B4CfEb37F06ee81Ad7e2b901cCa3ec215"
       startBlock: 0
     mapping:
       kind: ethereum/events

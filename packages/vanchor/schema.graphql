@@ -168,3 +168,34 @@ type VAnchorTotalRelayerFeeByTokenEvery15Min @entity(immutable: false) {
   endInterval: BigInt! # end time of the interval
   fees: BigInt! # total value locked in the vAnchor
 }
+
+type VAnchorTotalWrappingFee @entity(immutable: false) {
+  id: String! # vAnchor address
+  fees: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTotalWrappingFeeByToken @entity(immutable: false) {
+  id: String! # vAnchor address + token address
+  vAnchorAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  tokenAddress: Bytes! # address
+  fees: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTotalWrappingFee15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  fees: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTotalWrappingFeeByTokenEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  fees: BigInt! # total value locked in the vAnchor
+}
