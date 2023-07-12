@@ -199,3 +199,22 @@ type VAnchorTotalWrappingFeeByTokenEvery15Min @entity(immutable: false) {
   endInterval: BigInt! # end time of the interval
   fees: BigInt! # total value locked in the vAnchor
 }
+
+type WrappingEventLog @entity(immutable: true) {
+  id: String! # time index-vanchor address
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  tokenAddress: Bytes! # token address
+  wrappingFee: BigInt! # fees to wrap
+  afterFeeAmount: BigInt! # amount minus fees
+  timestamp: BigInt! # block timestamp
+}
+
+type UnwrappingEventLog @entity(immutable: true) {
+  id: String! # time index-vanchor address
+  sender: Bytes! # address
+  recipient: Bytes! # address
+  tokenAddress: Bytes! # token address
+  amount: BigInt! # amount of token
+  timestamp: BigInt! # block timestamp
+}
