@@ -2,7 +2,6 @@ import {
     Wrapping as WrappingEvent,
     Unwrapping as UnwrappingEvent,
 } from "../generated/vanchor/FungibleTokenWrapper";
-import { log } from "@graphprotocol/graph-ts";
 import { recordTotalFees } from "./wrappingFees";
 import { recordFeeFor15MinsInterval } from "./wrappingFees/15MinsInterval";
 import { UnwrappingEventLog, WrappingEventLog } from "../generated/schema";
@@ -20,7 +19,7 @@ export function handleWrapping(event: WrappingEvent): void {
 
         const existingTransaction = WrappingEventLog.load(eventHash);
 
-        if (existingTransaction === null) {
+        if (existingTransaction !== null) {
             return;
         }
 
@@ -52,7 +51,7 @@ export function handleUnwrapping(event: UnwrappingEvent): void {
 
     const existingTransaction = UnwrappingEventLog.load(eventHash);
 
-    if (existingTransaction === null) {
+    if (existingTransaction !== null) {
         return;
     }
 
