@@ -218,3 +218,65 @@ type UnwrappingEventLog @entity(immutable: true) {
   amount: BigInt! # amount of token
   timestamp: BigInt! # block timestamp
 }
+
+type VAnchorWithdrawal @entity(immutable: false) {
+  id: String! # vAnchor address
+  withdrawal: BigInt! # withdrawal in the vAnchor
+}
+
+type VAnchorWithdrawalByToken @entity(immutable: false) {
+  id: String! # vAnchor address + token address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  withdrawal: BigInt! # withdrawal in the vAnchor
+}
+
+type VAnchorWithdrawalEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  withdrawal: BigInt! # withdrawal in the vAnchor
+}
+
+type VAnchorWithdrawalByTokenEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  withdrawal: BigInt! # withdrawal in the vAnchor
+}
+
+type VAnchorDeposit @entity(immutable: false) {
+  id: String! # vAnchor address
+  deposit: BigInt! # Deposit in the vAnchor
+}
+
+type VAnchorDepositByToken @entity(immutable: false) {
+  id: String! # vAnchor address + token address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  deposit: BigInt! # Deposit in the vAnchor
+}
+
+type VAnchorDepositEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  deposit: BigInt! # Deposit in the vAnchor
+}
+
+type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  deposit: BigInt! # Deposit in the vAnchor
+}
