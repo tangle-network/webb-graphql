@@ -1,4 +1,4 @@
-import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
+import { Address, Bytes, BigInt, ethereum } from '@graphprotocol/graph-ts';
 import { Insertion } from '../../generated/vanchor/vanchor';
 import {
     Encryptions,
@@ -13,6 +13,10 @@ import { recordTotalFees } from '../relayerFees';
 import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
 import { record15MinsIntervalTotalValueLocked } from '../totalValueLocked/15MinsInterval';
 import { getTxnInputDataToDecode, isNativeToken } from '../utils/token';
+import { recordDeposit } from '../deposit';
+import { record15MinsIntervalDeposit } from '../deposit/15MinsInterval';
+import { recordWithdrawal } from '../withdraw';
+import { record15MinsIntervalWithdrawal } from '../withdraw/15MinsInterval';
 
 
 
@@ -71,11 +75,25 @@ export const handleTransaction = (event: Insertion): void => {
             // Save the ExternalData entity
             externalDataEntity.save();
 
-            const tvl = isNativeToken(tokenAddress.toHexString()) ? newShieldedTx.value : externalDataEntity.extAmount;
+            const value = isNativeToken(tokenAddress.toHexString()) ? newShieldedTx.value : externalDataEntity.extAmount;
+
+            // Record Deposit
+            if (value.gt(BigInt.fromI32(0))) {
+                // Record Total Value Locked
+                recordDeposit(newShieldedTx.vanchor, tokenAddress, value);
+                record15MinsIntervalDeposit(newShieldedTx.vanchor, tokenAddress, value, event.block.timestamp);
+            }
+
+            // Record Withdrawal
+            if (value.lt(BigInt.fromI32(0))) {
+                // Record Total Value Locked
+                recordWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs());
+                record15MinsIntervalWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs(), event.block.timestamp);
+            }
 
             // Record Total Value Locked
-            recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, tvl);
-            record15MinsIntervalTotalValueLocked(newShieldedTx.vanchor, tokenAddress, tvl, event.block.timestamp);
+            recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, value);
+            record15MinsIntervalTotalValueLocked(newShieldedTx.vanchor, tokenAddress, value, event.block.timestamp);
 
             // Record Relayer Fees
             recordTotalFees(newShieldedTx.vanchor, tokenAddress, externalDataEntity.fee);
