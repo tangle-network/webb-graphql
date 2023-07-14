@@ -19,9 +19,13 @@ export function record15MinsIntervalDeposit(vAnchorAddress: Bytes, tokenAddress:
         newVanchorDepositByToken.tokenAddress = tokenAddress;
         newVanchorDepositByToken.startInterval = BigInt.fromString(startInterval.toString());
         newVanchorDepositByToken.endInterval = BigInt.fromString(endInterval.toString());
+        newVanchorDepositByToken.averageDeposit = amount;
+        newVanchorDepositByToken.totalCount = BigInt.fromI32(1);
         newVanchorDepositByToken.save();
     } else {
         vanchorDepositByToken.deposit = vanchorDepositByToken.deposit.plus(amount);
+        vanchorDepositByToken.totalCount = vanchorDepositByToken.totalCount.plus(BigInt.fromI32(1));
+        vanchorDepositByToken.averageDeposit = vanchorDepositByToken.deposit.div(vanchorDepositByToken.totalCount);
         vanchorDepositByToken.save();
     }
 
@@ -36,9 +40,13 @@ export function record15MinsIntervalDeposit(vAnchorAddress: Bytes, tokenAddress:
         newVanchorDeposit.endInterval = BigInt.fromString(endInterval.toString());
         newVanchorDeposit.vAnchorAddress = vAnchorAddress;
         newVanchorDeposit.deposit = amount;
+        newVanchorDeposit.averageDeposit = amount;
+        newVanchorDeposit.totalCount = BigInt.fromI32(1);
         newVanchorDeposit.save();
     } else {
         vanchorDeposit.deposit = vanchorDeposit.deposit.plus(amount);
+        vanchorDeposit.totalCount = vanchorDeposit.totalCount.plus(BigInt.fromI32(1));
+        vanchorDeposit.averageDeposit = vanchorDeposit.deposit.div(vanchorDeposit.totalCount);
         vanchorDeposit.save();
     }
 

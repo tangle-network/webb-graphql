@@ -251,6 +251,8 @@ type VAnchorWithdrawalEvery15Min @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average withdrawal in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorWithdrawalByTokenEvery15Min @entity(immutable: false) {
@@ -261,6 +263,8 @@ type VAnchorWithdrawalByTokenEvery15Min @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average withdrawal in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorDeposit @entity(immutable: false) {
@@ -286,6 +290,8 @@ type VAnchorDepositEvery15Min @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   deposit: BigInt! # Deposit in the vAnchor
+  averageDeposit: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
@@ -296,6 +302,8 @@ type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   deposit: BigInt! # Deposit in the vAnchor
+  averageDeposit: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorDepositLog @entity(immutable: true) {
