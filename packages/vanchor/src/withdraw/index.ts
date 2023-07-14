@@ -15,9 +15,13 @@ export function recordWithdrawal(vAnchorAddress: Bytes, tokenAddress: Bytes, amo
         newVanchorWithdrawalByToken.tokenSymbol = tokenSymbol;
         newVanchorWithdrawalByToken.vAnchorAddress = vAnchorAddress;
         newVanchorWithdrawalByToken.tokenAddress = tokenAddress;
+        newVanchorWithdrawalByToken.totalCount = BigInt.fromI32(1);
+        newVanchorWithdrawalByToken.averageWithdrawal = amount;
         newVanchorWithdrawalByToken.save();
     } else {
         vanchorWithdrawalByToken.withdrawal = vanchorWithdrawalByToken.withdrawal.plus(amount);
+        vanchorWithdrawalByToken.totalCount = vanchorWithdrawalByToken.totalCount.plus(BigInt.fromI32(1));
+        vanchorWithdrawalByToken.averageWithdrawal = vanchorWithdrawalByToken.withdrawal.div(vanchorWithdrawalByToken.totalCount);
         vanchorWithdrawalByToken.save();
     }
 
@@ -28,9 +32,13 @@ export function recordWithdrawal(vAnchorAddress: Bytes, tokenAddress: Bytes, amo
     if (!vanchorWithdrawal) {
         const newVanchorWithdrawal = new VAnchorWithdrawal(vAnchorAddress.toHexString());
         newVanchorWithdrawal.withdrawal = amount;
+        newVanchorWithdrawal.averageWithdrawal = amount;
+        newVanchorWithdrawal.totalCount = BigInt.fromI32(1);
         newVanchorWithdrawal.save();
     } else {
         vanchorWithdrawal.withdrawal = vanchorWithdrawal.withdrawal.plus(amount);
+        vanchorWithdrawal.totalCount = vanchorWithdrawal.totalCount.plus(BigInt.fromI32(1));
+        vanchorWithdrawal.averageWithdrawal = vanchorWithdrawal.withdrawal.div(vanchorWithdrawal.totalCount);
         vanchorWithdrawal.save();
     }
 

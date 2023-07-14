@@ -231,6 +231,8 @@ type VAnchorWithdrawalLog @entity(immutable: true) {
 type VAnchorWithdrawal @entity(immutable: false) {
   id: String! # vAnchor address
   withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average withdrawal in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorWithdrawalByToken @entity(immutable: false) {
@@ -239,6 +241,8 @@ type VAnchorWithdrawalByToken @entity(immutable: false) {
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average withdrawal in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorWithdrawalEvery15Min @entity(immutable: false) {
@@ -262,6 +266,8 @@ type VAnchorWithdrawalByTokenEvery15Min @entity(immutable: false) {
 type VAnchorDeposit @entity(immutable: false) {
   id: String! # vAnchor address
   deposit: BigInt! # Deposit in the vAnchor
+  averageDeposit: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorDepositByToken @entity(immutable: false) {
@@ -270,6 +276,8 @@ type VAnchorDepositByToken @entity(immutable: false) {
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   deposit: BigInt! # Deposit in the vAnchor
+  averageDeposit: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorDepositEvery15Min @entity(immutable: false) {
@@ -292,7 +300,15 @@ type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
 
 type VAnchorDepositLog @entity(immutable: true) {
   id: String! # tx hash
-  withdrawal: BigInt! # withdrawal in theis log.
+  deposit: BigInt! # withdrawal in theis log.
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  timestamp: BigInt! # block timestamp
+}
+
+type VAnchorTransferLog @entity(immutable: true) {
+  id: String! # tx hash
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol

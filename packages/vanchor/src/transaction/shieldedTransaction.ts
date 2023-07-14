@@ -16,6 +16,7 @@ import { recordDeposit, recordDepositLog } from '../deposit';
 import { record15MinsIntervalDeposit } from '../deposit/15MinsInterval';
 import { recordWithdrawal, recordWithdrawalLog } from '../withdraw';
 import { record15MinsIntervalWithdrawal } from '../withdraw/15MinsInterval';
+import { recordTransferLog } from '../transfer';
 
 
 
@@ -90,6 +91,13 @@ export const handleTransaction = (event: Insertion): void => {
                 recordWithdrawalLog(event.transaction.hash, newShieldedTx.vanchor, tokenAddress, value.abs(), event.block.timestamp)
                 recordWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs());
                 record15MinsIntervalWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs(), event.block.timestamp);
+            }
+
+
+            // Record Transfer
+            if (value.equals(BigInt.fromI32(0))) {
+                // Record Total Value Locked
+                recordTransferLog(event.transaction.hash, newShieldedTx.vanchor, tokenAddress, event.block.timestamp)
             }
 
             // Record Total Value Locked
