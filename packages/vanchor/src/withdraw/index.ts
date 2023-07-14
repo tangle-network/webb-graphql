@@ -1,5 +1,5 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
-import { VAnchorWithdrawal, VAnchorWithdrawalByToken } from '../../generated/schema';
+import { VAnchorWithdrawal, VAnchorWithdrawalByToken, VAnchorWithdrawalLog } from '../../generated/schema';
 import { ERC20 } from '../../generated/VAnchor/erc20';
 import { getTokenSymbol } from '../token';
 
@@ -8,11 +8,11 @@ export function recordWithdrawal(vAnchorAddress: Bytes, tokenAddress: Bytes, amo
 
     const id = vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
     const vanchorWithdrawalByToken = VAnchorWithdrawalByToken.load(id);
-
+    const tokenSymbol = getTokenSymbol(tokenAddress);
     if (!vanchorWithdrawalByToken) {
         const newVanchorWithdrawalByToken = new VAnchorWithdrawalByToken(id);
         newVanchorWithdrawalByToken.withdrawal = amount;
-        newVanchorWithdrawalByToken.tokenSymbol = getTokenSymbol(tokenAddress);
+        newVanchorWithdrawalByToken.tokenSymbol = tokenSymbol;
         newVanchorWithdrawalByToken.vAnchorAddress = vAnchorAddress;
         newVanchorWithdrawalByToken.tokenAddress = tokenAddress;
         newVanchorWithdrawalByToken.save();
@@ -34,4 +34,19 @@ export function recordWithdrawal(vAnchorAddress: Bytes, tokenAddress: Bytes, amo
         vanchorWithdrawal.save();
     }
 
+}
+
+
+export function recordWithdrawalLog(eventHash: Bytes, vAnchorAddress: Bytes, tokenAddress: Bytes, amount: BigInt, timestamp: BigInt): void {
+    const vanchorWithdrawal = VAnchorWithdrawalLog.load(eventHash.toHexString());
+
+    if (!vanchorWithdrawal) {
+        const newVanchorWithdrawal = new VAnchorWithdrawalLog(eventHash.toHexString());
+        newVanchorWithdrawal.vAnchorAddress = vAnchorAddress;
+        newVanchorWithdrawal.tokenAddress = tokenAddress;
+        newVanchorWithdrawal.timestamp = timestamp;
+        newVanchorWithdrawal.tokenSymbol = getTokenSymbol(tokenAddress);
+        newVanchorWithdrawal.withdrawal = amount;
+        newVanchorWithdrawal.save();
+    }
 }

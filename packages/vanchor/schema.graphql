@@ -219,6 +219,15 @@ type UnwrappingEventLog @entity(immutable: true) {
   timestamp: BigInt! # block timestamp
 }
 
+type VAnchorWithdrawalLog @entity(immutable: true) {
+  id: String! # tx hash
+  withdrawal: BigInt! # withdrawal in theis log.
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  timestamp: BigInt! # block timestamp
+}
+
 type VAnchorWithdrawal @entity(immutable: false) {
   id: String! # vAnchor address
   withdrawal: BigInt! # withdrawal in the vAnchor
@@ -279,4 +288,13 @@ type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   deposit: BigInt! # Deposit in the vAnchor
+}
+
+type VAnchorDepositLog @entity(immutable: true) {
+  id: String! # tx hash
+  withdrawal: BigInt! # withdrawal in theis log.
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  timestamp: BigInt! # block timestamp
 }

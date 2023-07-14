@@ -35,3 +35,20 @@ export function recordDeposit(vAnchorAddress: Bytes, tokenAddress: Bytes, amount
     }
 
 }
+
+
+
+export function recordDepositLog(eventHash: Bytes, vAnchorAddress: Bytes, tokenAddress: Bytes, amount: BigInt, timestamp: BigInt): void {
+    const vanchorDeposit = VAnchorDepositLog.load(eventHash.toHexString());
+
+    if (!vanchorDeposit) {
+        const newVanchorDeposit = new VAnchorDepositLog(eventHash.toHexString());
+        newVanchorDeposit.vAnchorAddress = vAnchorAddress;
+        newVanchorDeposit.tokenAddress = tokenAddress;
+        newVanchorDeposit.timestamp = timestamp;
+        newVanchorDeposit.tokenSymbol = getTokenSymbol(tokenAddress);
+        newVanchorDeposit.Deposit = amount;
+        newVanchorDeposit.save();
+    }
+}
+
