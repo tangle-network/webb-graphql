@@ -7,7 +7,7 @@ export interface TotalValueLockedByChainAndByTokenHistoryItem extends TotalValue
 
 export interface TotalValueLockedByVAnchorHistoryItem { vAnchorAddress: string, totalValueLocked: number }
 
-export const GetVAnchorTotalValueLockedByChain = async (chainName: string, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<TotalValueLockedByChainHistoryItem> => {
+export const GetVAnchorTotalValueLockedByChainHistory = async (chainName: string, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<TotalValueLockedByChainHistoryItem> => {
 
   const query = `
   query TotalValueLocked {
@@ -37,23 +37,22 @@ export const GetVAnchorTotalValueLockedByChain = async (chainName: string, vAnch
 }
 
 
-export const GetVAnchorTotalValueLockedByChains = async (chainNames: Array<string>, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<TotalValueLockedByChainHistoryItem>> => {
+export const GetVAnchorTotalValueLockedByChainsHistory = async (chainNames: Array<string>, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<TotalValueLockedByChainHistoryItem>> => {
   const promises: Array<Promise<TotalValueLockedByChainHistoryItem>> = [];
 
   for (const chainName of chainNames) {
-    promises.push(GetVAnchorTotalValueLockedByChain(chainName, vAnchorAddress, startTimestamp, endTimestamp))
-
+    promises.push(GetVAnchorTotalValueLockedByChainHistory(chainName, vAnchorAddress, startTimestamp, endTimestamp))
   }
 
   return await Promise.all(promises);
 }
 
 
-export const GetVAnchorsTotalValueLockedByChain = async (chainName: string, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<TotalValueLockedByVAnchorHistoryItem>> => {
+export const GetVAnchorsTotalValueLockedByChainHistory = async (chainName: string, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<TotalValueLockedByVAnchorHistoryItem>> => {
 
   const query = `
   query TotalValueLockedByVAnchor {
-  vanchorTotalValueLockedsEvery15Mins(
+  vanchorTotalValueLockedEvery15Mins(
     where: { endInterval_lte: "${DateUtil.fromDateToEpoch(endTimestamp)}", startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}", vAnchorAddress_in: [${vanchorAddresses.map((address) => '"' + address.toLowerCase() + '"').join(",")}]}
   ) {
     id
@@ -68,10 +67,10 @@ export const GetVAnchorsTotalValueLockedByChain = async (chainName: string, vanc
     chainName,
   })
 
-  const totalValueLockedMap = {};
+  const totalValueLockedMap: { [vanchorAddress: string]: number } = {};
 
 
-  result.data.vanchorTotalValueLockedsEvery15Mins?.map((item: any) => {
+  result.data.vanchorTotalValueLockedEvery15Mins?.map((item: any) => {
     if (!totalValueLockedMap[item?.vAnchorAddress]) {
       totalValueLockedMap[item?.vAnchorAddress] = 0;
     }
@@ -93,11 +92,11 @@ export const GetVAnchorsTotalValueLockedByChain = async (chainName: string, vanc
 
 }
 
-export const GetVAnchorsTotalValueLockedByChains = async (chainNames: Array<string>, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<Array<TotalValueLockedByVAnchorHistoryItem>>> => {
+export const GetVAnchorsTotalValueLockedByChainsHistory = async (chainNames: Array<string>, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<Array<TotalValueLockedByVAnchorHistoryItem>>> => {
   const promises: Array<Promise<Array<TotalValueLockedByVAnchorHistoryItem>>> = [];
 
   for (const chainName of chainNames) {
-    promises.push(GetVAnchorsTotalValueLockedByChain(chainName, vanchorAddresses, startTimestamp, endTimestamp));
+    promises.push(GetVAnchorsTotalValueLockedByChainHistory(chainName, vanchorAddresses, startTimestamp, endTimestamp));
   }
 
   return await Promise.all(promises);
@@ -106,14 +105,16 @@ export const GetVAnchorsTotalValueLockedByChains = async (chainNames: Array<stri
 
 
 
-export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: string, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<TotalValueLockedByChainAndByTokenHistoryItem> => {
+export const GetVAnchorTotalValueLockedByChainAndByTokenHistory = async (chainName: string, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<TotalValueLockedByChainAndByTokenHistoryItem>> => {
   const query = `
   query MyQuery {
-  vanchorTotalValueLockedByTokensEvery15Mins(
-    first: 1
+  vanchorTotalValueLockedByTokenEvery15Mins(
     where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(endTimestamp)}", startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}"}
   ) {
-    totalValueLocked
+    totalValueLocked,
+    startInterval,
+    endInterval,
+    vAnchorAddress
   }
 }
 `
@@ -121,7 +122,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: str
     chainName,
   })
 
-  return result.data.vanchorTotalValueLockedEvery15Mins?.map((item: any) => {
+  return result.data.vanchorTotalValueLockedByTokenEvery15Mins?.map((item: any) => {
     return {
       totalValueLocked: item?.totalValueLocked,
       chainName: chainName,
@@ -132,11 +133,11 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: str
   });
 }
 
-export const GetVAnchorTotalValueLockedByChainsAndByToken = async (chainNames: Array<string>, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<TotalValueLockedByChainAndByTokenHistoryItem>> => {
-  const promises: Array<Promise<TotalValueLockedByChainAndByTokenHistoryItem>> = [];
+export const GetVAnchorTotalValueLockedByChainsAndByTokenHistory = async (chainNames: Array<string>, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<Array<TotalValueLockedByChainAndByTokenHistoryItem>>> => {
+  const promises: Array<Promise<Array<TotalValueLockedByChainAndByTokenHistoryItem>>> = [];
 
   for (const chainName of chainNames) {
-    promises.push(GetVAnchorTotalValueLockedByChainAndByToken(chainName, vAnchorAddress, tokenSymbol, startTimestamp, endTimestamp))
+    promises.push(GetVAnchorTotalValueLockedByChainAndByTokenHistory(chainName, vAnchorAddress, tokenSymbol, startTimestamp, endTimestamp))
   }
 
   return await Promise.all(promises);
