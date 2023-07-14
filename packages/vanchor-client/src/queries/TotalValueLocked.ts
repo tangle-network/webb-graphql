@@ -6,6 +6,8 @@ export interface TotalValueLockedByChainAndByToken extends TotalValueLockedByCha
 
 export interface TotalValueLockedByVAnchor { vAnchorAddress: string, totalValueLocked: number }
 
+export interface TotalValueLockedByVAnchorByChain { vAnchorAddress: string, totalValueLocked: number, chainName: string }
+
 export const GetVAnchorTotalValueLockedByChain = async (chainName: string, vAnchorAddress: string): Promise<TotalValueLockedByChain> => {
   const query = `
   query TotalValueLocked {
@@ -85,7 +87,6 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (chainName: str
   const result = await execute(query, {}, {
     chainName,
   })
-
 
   return {
     totalValueLocked: result.data.vanchorTotalValueLockedByTokens && result.data.vanchorTotalValueLockedByTokens.length > 0 ? result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked : undefined,

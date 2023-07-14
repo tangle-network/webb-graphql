@@ -5,7 +5,6 @@ import {
     ExternalData,
     PublicInputs,
     ShieldedTransaction,
-    VAnchorTotalValueLocked,
 } from '../../generated/schema';
 import { ensureToken } from '../token';
 import { recordTotalValueLocked } from '../totalValueLocked';
@@ -13,10 +12,11 @@ import { recordTotalFees } from '../relayerFees';
 import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
 import { record15MinsIntervalTotalValueLocked } from '../totalValueLocked/15MinsInterval';
 import { getTxnInputDataToDecode, isNativeToken } from '../utils/token';
-import { recordDeposit } from '../deposit';
+import { recordDeposit, recordDepositLog } from '../deposit';
 import { record15MinsIntervalDeposit } from '../deposit/15MinsInterval';
-import { recordWithdrawal } from '../withdraw';
+import { recordWithdrawal, recordWithdrawalLog } from '../withdraw';
 import { record15MinsIntervalWithdrawal } from '../withdraw/15MinsInterval';
+import { recordTransferLog } from '../transfer';
 
 
 
@@ -80,15 +80,24 @@ export const handleTransaction = (event: Insertion): void => {
             // Record Deposit
             if (value.gt(BigInt.fromI32(0))) {
                 // Record Total Value Locked
-                recordDeposit(newShieldedTx.vanchor, tokenAddress, value);
-                record15MinsIntervalDeposit(newShieldedTx.vanchor, tokenAddress, value, event.block.timestamp);
+                recordDepositLog(event.transaction.hash, newShieldedTx.vanchor, tokenAddress, value.abs(), event.block.timestamp)
+                recordDeposit(newShieldedTx.vanchor, tokenAddress, value.abs());
+                record15MinsIntervalDeposit(newShieldedTx.vanchor, tokenAddress, value.abs(), event.block.timestamp);
             }
 
             // Record Withdrawal
             if (value.lt(BigInt.fromI32(0))) {
                 // Record Total Value Locked
+                recordWithdrawalLog(event.transaction.hash, newShieldedTx.vanchor, tokenAddress, value.abs(), event.block.timestamp)
                 recordWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs());
                 record15MinsIntervalWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs(), event.block.timestamp);
+            }
+
+
+            // Record Transfer
+            if (value.equals(BigInt.fromI32(0))) {
+                // Record Total Value Locked
+                recordTransferLog(event.transaction.hash, newShieldedTx.vanchor, tokenAddress, event.block.timestamp)
             }
 
             // Record Total Value Locked
