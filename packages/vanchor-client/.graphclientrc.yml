@@ -1,17 +1,16 @@
 sources:
   - name: vanchor
     handler:
-      graphql:
-        endpoint: http://localhost:8000/subgraphs/name/{context.chainName:VAnchorAthenaLocal}
+      graphql: 
+        endpoint: '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}'
 
 additionalTypeDefs: |
   extend type ShieldedTransaction {
-    chainName: String!
+    subgraphUrl: String!
   }
 
 additionalResolvers:
   - ./src/resolvers.ts
 
 codegen:
-  contextType: 'MeshContext & { chainName: string }'
-
+  contextType: 'MeshContext & { subgraphUrl: string }'

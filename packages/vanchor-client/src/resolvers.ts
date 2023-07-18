@@ -1,8 +1,8 @@
 import { Resolvers } from '../.graphclient'
-import { SubgaraphNames } from '../config'
+import { SubgraphUrl } from '../config'
 
 export const resolvers: Resolvers = {
     ShieldedTransaction: {
-        chainName: (root, args, context, info) => context.chainName || SubgaraphNames[0], // The value we provide in the config
+        subgraphUrl: (root, args, context, info) => context.subgraphUrl || SubgraphUrl.vAnchorAthenaLocal, // The value we provide in the config
     },
 }
