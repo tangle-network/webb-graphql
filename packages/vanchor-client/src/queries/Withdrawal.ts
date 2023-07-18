@@ -1,12 +1,12 @@
 import { execute } from "../../.graphclient"
 
-export interface WithdrawalByChain { chainName: string, withdrawal: number }
+export interface WithdrawalByChain { subgraphUrl: SubgraphUrl, withdrawal: number }
 
 export interface WithdrawalByChainAndByToken extends WithdrawalByChain { tokenSymbol: string }
 
 export interface WithdrawalByVAnchor { vAnchorAddress: string, withdrawal: number }
 
-export const GetVAnchorWithdrawalByChain = async (chainName: string, vAnchorAddress: string): Promise<WithdrawalByChain> => {
+export const GetVAnchorWithdrawalByChain = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string): Promise<WithdrawalByChain> => {
   const query = `
   query Withdrawal {
   vanchorWithdrawal(id: "${vAnchorAddress.toLowerCase()}"){
@@ -16,27 +16,27 @@ export const GetVAnchorWithdrawalByChain = async (chainName: string, vAnchorAddr
 }
 `
   const result = await execute(query, {}, {
-    chainName,
+    subgraphUrl,
   })
 
   return {
     withdrawal: result.data.vanchorWithdrawal?.withdrawal,
-    chainName: chainName
+    subgraphUrl: subgraphUrl
   }
 }
 
-export const GetVAnchorWithdrawalByChains = async (chainNames: Array<string>, vAnchorAddress: string): Promise<Array<WithdrawalByChain>> => {
+export const GetVAnchorWithdrawalByChains = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string): Promise<Array<WithdrawalByChain>> => {
   const promises: Array<Promise<WithdrawalByChain>> = [];
 
-  for (const chainName of chainNames) {
-    promises.push(GetVAnchorWithdrawalByChain(chainName, vAnchorAddress))
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(GetVAnchorWithdrawalByChain(subgraphUrl, vAnchorAddress))
 
   }
 
   return await Promise.all(promises);
 }
 
-export const GetVAnchorsWithdrawalByChain = async (chainName: string, vanchorAddresses: Array<string>): Promise<Array<WithdrawalByVAnchor>> => {
+export const GetVAnchorsWithdrawalByChain = async (subgraphUrl: SubgraphUrl, vanchorAddresses: Array<string>): Promise<Array<WithdrawalByVAnchor>> => {
   const query = `
   query WithdrawalByVAnchor {
   vanchorWithdrawals(
@@ -48,7 +48,7 @@ export const GetVAnchorsWithdrawalByChain = async (chainName: string, vanchorAdd
 }
 `
   const result = await execute(query, {}, {
-    chainName,
+    subgraphUrl,
   })
 
   return result.data.vanchorWithdrawals?.map((item: any) => {
@@ -60,18 +60,18 @@ export const GetVAnchorsWithdrawalByChain = async (chainName: string, vanchorAdd
 
 }
 
-export const GetVAnchorsWithdrawalByChains = async (chainNames: Array<string>, vanchorAddresses: Array<string>): Promise<Array<Array<WithdrawalByVAnchor>>> => {
+export const GetVAnchorsWithdrawalByChains = async (subgraphUrls: Array<SubgraphUrl>, vanchorAddresses: Array<string>): Promise<Array<Array<WithdrawalByVAnchor>>> => {
   const promises: Array<Promise<Array<WithdrawalByVAnchor>>> = [];
 
-  for (const chainName of chainNames) {
-    promises.push(GetVAnchorsWithdrawalByChain(chainName, vanchorAddresses))
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(GetVAnchorsWithdrawalByChain(subgraphUrl, vanchorAddresses))
   }
 
   return await Promise.all(promises);
 
 }
 
-export const GetVAnchorWithdrawalByChainAndByToken = async (chainName: string, vAnchorAddress: string, tokenSymbol: string): Promise<WithdrawalByChainAndByToken> => {
+export const GetVAnchorWithdrawalByChainAndByToken = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string, tokenSymbol: string): Promise<WithdrawalByChainAndByToken> => {
   const query = `
   query MyQuery {
   vanchorWithdrawalByTokens(
@@ -83,22 +83,22 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (chainName: string, v
 }
 `
   const result = await execute(query, {}, {
-    chainName,
+    subgraphUrl,
   })
 
 
   return {
     withdrawal: result.data.vanchorWithdrawalByTokens && result.data.vanchorWithdrawalByTokens.length > 0 ? result.data.vanchorWithdrawalByTokens[0].withdrawal : undefined,
-    chainName: chainName,
+    subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol
   }
 }
 
-export const GetVAnchorWithdrawalByChainsAndByToken = async (chainNames: Array<string>, vAnchorAddress: string, tokenSymbol: string): Promise<Array<WithdrawalByChainAndByToken>> => {
+export const GetVAnchorWithdrawalByChainsAndByToken = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string, tokenSymbol: string): Promise<Array<WithdrawalByChainAndByToken>> => {
   const promises: Array<Promise<WithdrawalByChainAndByToken>> = [];
 
-  for (const chainName of chainNames) {
-    promises.push(GetVAnchorWithdrawalByChainAndByToken(chainName, vAnchorAddress, tokenSymbol))
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(GetVAnchorWithdrawalByChainAndByToken(subgraphUrl, vAnchorAddress, tokenSymbol))
 
   }
 

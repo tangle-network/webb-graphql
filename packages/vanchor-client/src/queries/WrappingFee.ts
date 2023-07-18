@@ -1,12 +1,12 @@
 import { execute } from "../../.graphclient"
 
-export interface TotalWrappingFeeByChain { chainName: string, totalWrappingFee: number }
+export interface TotalWrappingFeeByChain { subgraphUrl: SubgraphUrl, totalWrappingFee: number }
 
 export interface TotalWrappingFeeByChainAndByToken extends TotalWrappingFeeByChain { tokenSymbol: string }
 
 export interface TotalWrappingFeeByVAnchor { vAnchorAddress: string, totalWrappingFee: number }
 
-export const GetVAnchorTotalWrappingFeeByChain = async (chainName: string, vAnchorAddress: string): Promise<TotalWrappingFeeByChain> => {
+export const GetVAnchorTotalWrappingFeeByChain = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string): Promise<TotalWrappingFeeByChain> => {
     const query = `
   query TotalWrappingFee {
   vanchorTotalWrappingFee(id: "${vAnchorAddress.toLowerCase()}"){
@@ -16,27 +16,27 @@ export const GetVAnchorTotalWrappingFeeByChain = async (chainName: string, vAnch
 }
 `
     const result = await execute(query, {}, {
-        chainName,
+        subgraphUrl,
     })
 
     return {
         totalWrappingFee: result.data.vanchorTotalWrappingFee?.totalWrappingFee,
-        chainName: chainName
+        subgraphUrl: subgraphUrl
     }
 }
 
-export const GetVAnchorTotalWrappingFeeByChains = async (chainNames: Array<string>, vAnchorAddress: string): Promise<Array<TotalWrappingFeeByChain>> => {
+export const GetVAnchorTotalWrappingFeeByChains = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string): Promise<Array<TotalWrappingFeeByChain>> => {
     const promises: Array<Promise<TotalWrappingFeeByChain>> = [];
 
-    for (const chainName of chainNames) {
-        promises.push(GetVAnchorTotalWrappingFeeByChain(chainName, vAnchorAddress))
+    for (const subgraphUrl of subgraphUrls) {
+        promises.push(GetVAnchorTotalWrappingFeeByChain(subgraphUrl, vAnchorAddress))
 
     }
 
     return await Promise.all(promises);
 }
 
-export const GetVAnchorsTotalWrappingFeeByChain = async (chainName: string, vanchorAddresses: Array<string>): Promise<Array<TotalWrappingFeeByVAnchor>> => {
+export const GetVAnchorsTotalWrappingFeeByChain = async (subgraphUrl: SubgraphUrl, vanchorAddresses: Array<string>): Promise<Array<TotalWrappingFeeByVAnchor>> => {
     const query = `
   query TotalWrappingFeeByVAnchor {
   vanchorTotalWrappingFees(
@@ -48,7 +48,7 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (chainName: string, vanc
 }
 `
     const result = await execute(query, {}, {
-        chainName,
+        subgraphUrl,
     })
 
     return result.data.vanchorTotalWrappingFees?.map((item: any) => {
@@ -60,18 +60,18 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (chainName: string, vanc
 
 }
 
-export const GetVAnchorsTotalWrappingFeeByChains = async (chainNames: Array<string>, vanchorAddresses: Array<string>): Promise<Array<Array<TotalWrappingFeeByVAnchor>>> => {
+export const GetVAnchorsTotalWrappingFeeByChains = async (subgraphUrls: Array<SubgraphUrl>, vanchorAddresses: Array<string>): Promise<Array<Array<TotalWrappingFeeByVAnchor>>> => {
     const promises: Array<Promise<Array<TotalWrappingFeeByVAnchor>>> = [];
 
-    for (const chainName of chainNames) {
-        promises.push(GetVAnchorsTotalWrappingFeeByChain(chainName, vanchorAddresses))
+    for (const subgraphUrl of subgraphUrls) {
+        promises.push(GetVAnchorsTotalWrappingFeeByChain(subgraphUrl, vanchorAddresses))
     }
 
     return await Promise.all(promises);
 
 }
 
-export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (chainName: string, vAnchorAddress: string, tokenSymbol: string): Promise<TotalWrappingFeeByChainAndByToken> => {
+export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string, tokenSymbol: string): Promise<TotalWrappingFeeByChainAndByToken> => {
     const query = `
   query MyQuery {
   vanchorTotalWrappingFeeByTokens(
@@ -83,22 +83,22 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (chainName: str
 }
 `
     const result = await execute(query, {}, {
-        chainName,
+        subgraphUrl,
     })
 
 
     return {
         totalWrappingFee: result.data.vanchorTotalWrappingFeeByTokens && result.data.vanchorTotalWrappingFeeByTokens.length > 0 ? result.data.vanchorTotalWrappingFeeByTokens[0].totalWrappingFee : undefined,
-        chainName: chainName,
+        subgraphUrl: subgraphUrl,
         tokenSymbol: tokenSymbol
     }
 }
 
-export const GetVAnchorTotalWrappingFeeByChainsAndByToken = async (chainNames: Array<string>, vAnchorAddress: string, tokenSymbol: string): Promise<Array<TotalWrappingFeeByChainAndByToken>> => {
+export const GetVAnchorTotalWrappingFeeByChainsAndByToken = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string, tokenSymbol: string): Promise<Array<TotalWrappingFeeByChainAndByToken>> => {
     const promises: Array<Promise<TotalWrappingFeeByChainAndByToken>> = [];
 
-    for (const chainName of chainNames) {
-        promises.push(GetVAnchorTotalWrappingFeeByChainAndByToken(chainName, vAnchorAddress, tokenSymbol))
+    for (const subgraphUrl of subgraphUrls) {
+        promises.push(GetVAnchorTotalWrappingFeeByChainAndByToken(subgraphUrl, vAnchorAddress, tokenSymbol))
 
     }
 

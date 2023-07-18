@@ -1,31 +1,31 @@
 import { getBuiltGraphSDK } from "./.graphclient";
-import { SubgaraphNames } from "./config";
+import { SubgraphUrl } from "./config";
 
 export const getSdk = () => {
     const sdk = getBuiltGraphSDK({
-        chainName: SubgaraphNames[0], //Default value, this can be overridden in the context
+        subgraphUrl: SubgraphUrl.vAnchorAthenaLocal, //Default value, this can be overridden in the context
     })
     return sdk;
 }
 
 
 export const executeQuery = async (query: Function, options: {
-    chainName: string,
+    subgraphUrl: SubgraphUrl,
 }) => {
     return query(
         {},
         {
-            chainName: options.chainName,
+            subgraphUrl: options.subgraphUrl,
         },
     )
 }
 
 export const executeQueryOnAllChains = async (query: Function) => {
 
-    const promises = SubgaraphNames.map(async (chainName) => {
+    const promises = SubgraphUrl.map(async (subgraphUrl) => {
 
         return executeQuery(query, {
-            chainName,
+            subgraphUrl,
         });
     });
 

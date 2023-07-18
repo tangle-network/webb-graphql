@@ -1,13 +1,13 @@
 import { execute } from "../../.graphclient"
 import { DateUtil } from "../utils/date"
 
-export interface RelayerFeeByChainHistoryItem { chainName: string, relayerFee: number, startInterval: Date, endInterval: Date, vAnchorAddress: string }
+export interface RelayerFeeByChainHistoryItem { subgraphUrl: SubgraphUrl, relayerFee: number, startInterval: Date, endInterval: Date, vAnchorAddress: string }
 
 export interface RelayerFeeByChainAndByTokenHistoryItem extends RelayerFeeByChainHistoryItem { tokenSymbol: string }
 
 export interface RelayerFeeByVAnchorHistoryItem { vAnchorAddress: string, relayerFee: number }
 
-export const GetVAnchorRelayerFeeByChainHistory = async (chainName: string, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<RelayerFeeByChainHistoryItem> => {
+export const GetVAnchorRelayerFeeByChainHistory = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<RelayerFeeByChainHistoryItem> => {
 
   const query = `
   query RelayerFee {
@@ -22,13 +22,13 @@ export const GetVAnchorRelayerFeeByChainHistory = async (chainName: string, vAnc
 }
 `
   const result = await execute(query, {}, {
-    chainName,
+    subgraphUrl,
   })
 
   return result.data.vanchorRelayerFeeEvery15Mins?.map((item: any) => {
     return {
       relayerFee: item?.relayerFee,
-      chainName: chainName,
+      subgraphUrl: subgraphUrl,
       startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
       endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
       vAnchorAddress: item?.vAnchorAddress
@@ -37,18 +37,18 @@ export const GetVAnchorRelayerFeeByChainHistory = async (chainName: string, vAnc
 }
 
 
-export const GetVAnchorRelayerFeeByChainsHistory = async (chainNames: Array<string>, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<RelayerFeeByChainHistoryItem>> => {
+export const GetVAnchorRelayerFeeByChainsHistory = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<RelayerFeeByChainHistoryItem>> => {
   const promises: Array<Promise<RelayerFeeByChainHistoryItem>> = [];
 
-  for (const chainName of chainNames) {
-    promises.push(GetVAnchorRelayerFeeByChainHistory(chainName, vAnchorAddress, startTimestamp, endTimestamp))
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(GetVAnchorRelayerFeeByChainHistory(subgraphUrl, vAnchorAddress, startTimestamp, endTimestamp))
   }
 
   return await Promise.all(promises);
 }
 
 
-export const GetVAnchorsRelayerFeeByChainHistory = async (chainName: string, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<RelayerFeeByVAnchorHistoryItem>> => {
+export const GetVAnchorsRelayerFeeByChainHistory = async (subgraphUrl: SubgraphUrl, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<RelayerFeeByVAnchorHistoryItem>> => {
 
   const query = `
   query RelayerFeeByVAnchor {
@@ -64,7 +64,7 @@ export const GetVAnchorsRelayerFeeByChainHistory = async (chainName: string, van
 }
 `
   const result = await execute(query, {}, {
-    chainName,
+    subgraphUrl,
   })
 
   const relayerFeeMap: { [vanchorAddress: string]: number } = {};
@@ -92,11 +92,11 @@ export const GetVAnchorsRelayerFeeByChainHistory = async (chainName: string, van
 
 }
 
-export const GetVAnchorsRelayerFeeByChainsHistory = async (chainNames: Array<string>, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<Array<RelayerFeeByVAnchorHistoryItem>>> => {
+export const GetVAnchorsRelayerFeeByChainsHistory = async (subgraphUrls: Array<SubgraphUrl>, vanchorAddresses: Array<string>, startTimestamp: Date, endTimestamp: Date): Promise<Array<Array<RelayerFeeByVAnchorHistoryItem>>> => {
   const promises: Array<Promise<Array<RelayerFeeByVAnchorHistoryItem>>> = [];
 
-  for (const chainName of chainNames) {
-    promises.push(GetVAnchorsRelayerFeeByChainHistory(chainName, vanchorAddresses, startTimestamp, endTimestamp));
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(GetVAnchorsRelayerFeeByChainHistory(subgraphUrl, vanchorAddresses, startTimestamp, endTimestamp));
   }
 
   return await Promise.all(promises);
@@ -105,7 +105,7 @@ export const GetVAnchorsRelayerFeeByChainsHistory = async (chainNames: Array<str
 
 
 
-export const GetVAnchorRelayerFeeByChainAndByTokenHistory = async (chainName: string, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<RelayerFeeByChainAndByTokenHistoryItem>> => {
+export const GetVAnchorRelayerFeeByChainAndByTokenHistory = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<RelayerFeeByChainAndByTokenHistoryItem>> => {
   const query = `
   query MyQuery {
   vanchorRelayerFeeByTokenEvery15Mins(
@@ -119,13 +119,13 @@ export const GetVAnchorRelayerFeeByChainAndByTokenHistory = async (chainName: st
 }
 `
   const result = await execute(query, {}, {
-    chainName,
+    subgraphUrl,
   })
 
   return result.data.vanchorRelayerFeeByTokenEvery15Mins?.map((item: any) => {
     return {
       relayerFee: item?.relayerFee,
-      chainName: chainName,
+      subgraphUrl: subgraphUrl,
       startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
       endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
       vAnchorAddress: item?.vAnchorAddress
@@ -133,11 +133,11 @@ export const GetVAnchorRelayerFeeByChainAndByTokenHistory = async (chainName: st
   });
 }
 
-export const GetVAnchorRelayerFeeByChainsAndByTokenHistory = async (chainNames: Array<string>, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<Array<RelayerFeeByChainAndByTokenHistoryItem>>> => {
+export const GetVAnchorRelayerFeeByChainsAndByTokenHistory = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string, tokenSymbol: string, startTimestamp: Date, endTimestamp: Date): Promise<Array<Array<RelayerFeeByChainAndByTokenHistoryItem>>> => {
   const promises: Array<Promise<Array<RelayerFeeByChainAndByTokenHistoryItem>>> = [];
 
-  for (const chainName of chainNames) {
-    promises.push(GetVAnchorRelayerFeeByChainAndByTokenHistory(chainName, vAnchorAddress, tokenSymbol, startTimestamp, endTimestamp))
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(GetVAnchorRelayerFeeByChainAndByTokenHistory(subgraphUrl, vAnchorAddress, tokenSymbol, startTimestamp, endTimestamp))
   }
 
   return await Promise.all(promises);
