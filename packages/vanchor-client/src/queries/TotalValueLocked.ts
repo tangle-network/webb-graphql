@@ -1,4 +1,5 @@
 import { execute } from "../../.graphclient"
+import { SubgraphUrl } from "../../config"
 
 export interface TotalValueLockedByChain { subgraphUrl: SubgraphUrl, totalValueLocked: number }
 

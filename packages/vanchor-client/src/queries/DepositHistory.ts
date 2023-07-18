@@ -1,5 +1,6 @@
 import { execute } from "../../.graphclient"
 import { DateUtil } from "../utils/date"
+import { SubgraphUrl } from "../../config"
 
 export interface DepositByChainHistoryItem { subgraphUrl: SubgraphUrl, deposit: number, startInterval: Date, endInterval: Date, vAnchorAddress: string }
 
