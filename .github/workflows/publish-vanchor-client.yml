@@ -1,3 +1,4 @@
+
 name: Publish
 
 on:
@@ -44,3 +45,4 @@ jobs:
           SLACK_USERNAME: 'Webb-Bot'
           SLACK_CHANNEL: '#webb-protocol-solidity'
           SLACK_MESSAGE: 'A new version of ${GITHUB_REPOSITORY} packages was published!'
+
