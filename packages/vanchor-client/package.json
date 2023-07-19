@@ -1,7 +1,7 @@
 {
   "name": "@webb-tools/vanchor-client",
   "main": "./src/index.ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "access": "public",
   "scripts": {
