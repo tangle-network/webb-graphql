@@ -3,7 +3,9 @@
   "main": "./src/index.ts",
   "version": "0.1.4",
   "license": "MIT",
-  "access": "public",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "graphclient serve-dev",
     "build": "graphclient build",
