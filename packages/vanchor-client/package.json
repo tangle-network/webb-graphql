@@ -1,5 +1,5 @@
 {
-  "name": "@webb-tools/vanchor-client",
+  "name": "@webb-tools/subgraph-client",
   "main": "./src/index.ts",
   "version": "1.0.3",
   "license": "MIT",
