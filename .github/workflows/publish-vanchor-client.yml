@@ -1,18 +1,48 @@
-name: Publish Package to npmjs
+
+name: Publish
+
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+    # Only publish when changes are made to the following paths
+    paths:
+      - 'packages/vanchor-client/**'
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
-  build:
+  release:
+    name: Packages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: cd packages/vanchor-client && npm ci
-      - run: cd packages/vanchor-client && npm publish
+          node-version: 18.15.x
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Publish to NPM registry
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # auto publishes PATCH version bump
+          publish: yarn publish:ci
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PA_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Slack Notification
+        if: steps.changesets.outputs.published == 'true'
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: 'Webb-Bot'
+          SLACK_CHANNEL: '#webb-protocol-solidity'
+          SLACK_MESSAGE: 'A new version of ${GITHUB_REPOSITORY} packages was published!'
+
