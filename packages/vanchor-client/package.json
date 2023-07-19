@@ -1,5 +1,5 @@
 {
-  "name": "@webb-tools/anchors",
+  "name": "@webb-tools/vanchor-client",
   "main": "./src/index.ts",
   "version": "1.0.0",
   "license": "MIT",
