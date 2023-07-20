@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "node_modules/@webb-tools/types",
+    "node_modules/@webb-tools/tangle-substrate-types",
     "node_modules/@subql/types/dist/global.d.ts",
     "packages/**/*"
   ],
