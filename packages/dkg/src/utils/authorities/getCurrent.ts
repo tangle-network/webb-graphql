@@ -12,5 +12,5 @@ export async function getCurrentAuthorities(): Promise<Omit<AuthoritiesProps, 'i
     current: current.toJSON() as string[],
     next: next.toJSON() as string[],
     blockId: '0',
-  };
+  } as any;
 }

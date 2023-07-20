@@ -14,7 +14,7 @@ export interface CallInfo {
  * @returns array of calls inside the extrinsic, each call contains `module`, `method`, and `args`
  */
 export function getInsideCalls(extrinsic: SubstrateExtrinsic): CallInfo[] {
-  const extrinsics = extrinsic.extrinsic.args.map((value) => value) as Extrinsic[];
+  const extrinsics = (extrinsic as any).extrinsic.args.map((value) => value) as Extrinsic[];
 
   return extrinsics.map((ex) => {
     const { method, section } = ex.registry.findMetaCall(ex.callIndex);
