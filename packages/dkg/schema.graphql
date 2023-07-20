@@ -158,7 +158,6 @@ type SessionKeyHistory @jsonField {
 }
 type SessionPublicKey @jsonField {
   compressedKey: String!
-  uncompressedKey: String!
   history: [SessionKeyHistory]!
 }
 
@@ -195,9 +194,6 @@ type PublicKey @entity {
 
   # Public key bytes 33 bytes
   compressed: String
-
-  # Public key bytes 65 bytes
-  uncompressed: String @index(unique: true)
 
   history: [SessionKeyHistory]!
 

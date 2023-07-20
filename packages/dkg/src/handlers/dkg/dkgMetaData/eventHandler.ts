@@ -35,14 +35,12 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySubmitted);
         const { sessionNumber: sessionId, sessionBlock } = await currentSessionId(eventDecoded.blockNumber);
-        const uncompressedPubKey = eventData.uncompressedPubKey.toString();
         await ensureSession(sessionId, sessionBlock);
         const block = await ensureBlock(eventDecoded.blockNumber);
 
         const key = await keyGenerated({
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
-          uncompressedPubKey: uncompressedPubKey,
           timestamp: block.timestamp ?? new Date(),
         });
         await setSessionKey(sessionId, sessionBlock, key.id);
@@ -84,8 +82,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         logger.info(
           `PublicKeySubmitted
 			compressedPubKey: ${eventData.compressedPubKey}
-			blockNumber: ${eventDecoded.blockNumber}
-			uncompressedPubKey: ${eventData.uncompressedPubKey}`
+			blockNumber: ${eventDecoded.blockNumber}`
         );
       }
       break;
@@ -93,22 +90,18 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.NextPublicKeySubmitted);
         const { sessionNumber: sessionId, sessionBlock } = await nextSessionId(eventDecoded.blockNumber);
-        const uncompressedPubKey = eventData.uncompressedPubKey.toString();
         await ensureSession(sessionId, sessionBlock);
         const block = await ensureBlock(eventDecoded.blockNumber);
         const key = await keyGenerated({
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
-          uncompressedPubKey: uncompressedPubKey,
           timestamp: block.timestamp ?? new Date(),
         });
         await setSessionKey(sessionId, sessionBlock, key.id);
         logger.info(
           `NextPublicKeySubmitted
 			compressedPubKey: ${eventData.compressedPubKey}
-			blockNumber: ${eventDecoded.blockNumber}
-			uncompressedPubKey: ${eventData.uncompressedPubKey}
-			`
+			blockNumber: ${eventDecoded.blockNumber}`
         );
       }
       break;
@@ -121,15 +114,12 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           status: SessionKeyStatus.Signed,
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
-          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
           timestamp: block.timestamp ?? new Date(),
         });
         logger.info(
           `NextPublicKeySignatureSubmitted
 					pubKeySig: ${eventData.pubKeySig.toString()}
-					compressedPubKey: ${eventData.compressedPubKey.toString()}
-					uncompressedPubKey: ${eventData.uncompressedPubKey.toString()}
-           `
+					compressedPubKey: ${eventData.compressedPubKey.toString()}`
         );
       }
       break;
@@ -139,9 +129,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         logger.info(
           `PublicKeyChanged
 			compressedPubKey: ${eventData.compressedPubKey}
-			blockNumber: ${eventDecoded.blockNumber}
-			uncompressedPubKey: ${eventData.uncompressedPubKey}
-			`
+			blockNumber: ${eventDecoded.blockNumber}`
         );
       }
       break;
@@ -160,7 +148,6 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           status: SessionKeyStatus.Rotated,
           blockNumber: eventDecoded.blockNumber,
           composedPubKey: eventData.compressedPubKey.toString(),
-          uncompressedPubKey: eventData.uncompressedPubKey.toString(),
           timestamp: block.timestamp ?? new Date(),
         });
       }
