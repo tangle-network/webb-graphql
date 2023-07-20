@@ -11,12 +11,6 @@ import { DKGSections } from '../type';
  *
  * */
 
-export type PublicKeyInput = {
-  blockNumber: string;
-  compressed: string;
-  uncompressed: string;
-};
-
 type PublicKeyGenerated = {
   composedPubKey: string;
   blockNumber: string;
