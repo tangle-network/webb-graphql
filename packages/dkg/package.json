@@ -19,6 +19,14 @@
     "schema.graphql",
     "project.yaml"
   ],
+  "dependencies": {
+    "@polkadot/api": "^9.0.1",
+    "@subql/cli": "latest",
+    "@subql/types": "latest",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
+    "@webb-tools/tangle-substrate-types": "^0.3.2"
+  },
   "author": "@webb-developers",
   "license": "MIT"
 }

@@ -1,5 +1,6 @@
 import { AuthoritiesProps } from '.';
 
+
 /**
  * Get current authorities data on blockchain
  */
@@ -8,9 +9,9 @@ export async function getBestAuthorities(): Promise<Omit<AuthoritiesProps, 'id'>
   const next = await api.query.dkg.nextBestAuthorities();
 
   return {
-    _name: 'Authorities',
-    current: current.toJSON() as string[],
-    next: next.toJSON() as string[],
+    // _name: 'Authorities',
+    current: current,
+    next: next,
     blockId: '0',
-  };
+  }
 }
