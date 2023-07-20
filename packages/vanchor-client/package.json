@@ -18,6 +18,7 @@
     "@graphprotocol/client-cli": "^3.0.0"
   },
   "dependencies": {
+    "@graphql-mesh/graphql": "^0.94.6",
     "@graphql-mesh/utils": "^0.94.5"
   }
 }
