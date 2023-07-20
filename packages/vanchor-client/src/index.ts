@@ -1,47 +1,46 @@
-import { SubgraphUrl } from '../config';
+
 import { GetVAnchorTotalValueLockedByChain, GetVAnchorTotalValueLockedByChainAndByToken, GetVAnchorsTotalValueLockedByChain, GetVAnchorsTotalValueLockedByChains } from './queries/TotalValueLocked'
 import { GetVAnchorTotalValueLockedByChainHistory, GetVAnchorTotalValueLockedByChainAndByTokenHistory, GetVAnchorsTotalValueLockedByChainHistory, GetVAnchorsTotalValueLockedByChainsHistory } from './queries/TotalValueLockedHistory'
-import { DateUtil } from './utils/date';
+import { GetVAnchorDepositByChain, GetVAnchorDepositByChainAndByToken, GetVAnchorsDepositByChain, GetVAnchorsDepositByChains } from './queries/Deposit'
+import { GetVAnchorDepositByChainHistory, GetVAnchorDepositByChainAndByTokenHistory, GetVAnchorsDepositByChainHistory, GetVAnchorsDepositByChainsHistory } from './queries/DepositHistory'
+import { GetVAnchorWithdrawalByChain, GetVAnchorWithdrawalByChainAndByToken, GetVAnchorsWithdrawalByChain, GetVAnchorsWithdrawalByChains } from './queries/Withdrawal'
+import { GetVAnchorWithdrawalByChainHistory, GetVAnchorWithdrawalByChainAndByTokenHistory, GetVAnchorsWithdrawalByChainHistory, GetVAnchorsWithdrawalByChainsHistory } from './queries/WithdrawalHistory'
+import { GetVAnchorTotalRelayerFeeByChain, GetVAnchorTotalRelayerFeeByChainAndByToken, GetVAnchorsTotalRelayerFeeByChain, GetVAnchorsTotalRelayerFeeByChains } from './queries/RelayerFee'
+import { GetVAnchorRelayerFeeByChainHistory, GetVAnchorRelayerFeeByChainAndByTokenHistory, GetVAnchorsRelayerFeeByChainHistory, GetVAnchorsRelayerFeeByChainsHistory } from './queries/RelayerFeeHistory'
+import { GetVAnchorTotalWrappingFeeByChain, GetVAnchorTotalWrappingFeeByChainAndByToken, GetVAnchorsTotalWrappingFeeByChain, GetVAnchorsTotalWrappingFeeByChains } from './queries/WrappingFee'
+import { GetVAnchorWrappingFeeByChainHistory, GetVAnchorWrappingFeeByChainAndByTokenHistory, GetVAnchorsWrappingFeeByChainHistory, GetVAnchorsWrappingFeeByChainsHistory } from './queries/WrappingFeeHistory'
 
-
-async function main() {
-    // Get total value locked by a vAnchor on a chain
-    await runTvlQueries();
-    // // Total Value Locked History Queries. 
-    await runTvlHistoryQueries();
+const result = {
+    RelayerFee: {
+        GetVAnchorTotalRelayerFeeByChain, GetVAnchorTotalRelayerFeeByChainAndByToken, GetVAnchorsTotalRelayerFeeByChain, GetVAnchorsTotalRelayerFeeByChains
+    },
+    RelayerFeeHistory: {
+        GetVAnchorRelayerFeeByChainHistory, GetVAnchorRelayerFeeByChainAndByTokenHistory, GetVAnchorsRelayerFeeByChainHistory, GetVAnchorsRelayerFeeByChainsHistory
+    },
+    WrappingFee: {
+        GetVAnchorTotalWrappingFeeByChain, GetVAnchorTotalWrappingFeeByChainAndByToken, GetVAnchorsTotalWrappingFeeByChain, GetVAnchorsTotalWrappingFeeByChains
+    },
+    WrappingFeeHistory: {
+        GetVAnchorWrappingFeeByChainHistory, GetVAnchorWrappingFeeByChainAndByTokenHistory, GetVAnchorsWrappingFeeByChainHistory, GetVAnchorsWrappingFeeByChainsHistory
+    },
+    Deposit: {
+        GetVAnchorDepositByChain, GetVAnchorDepositByChainAndByToken, GetVAnchorsDepositByChain, GetVAnchorsDepositByChains
+    },
+    DepositHistory: {
+        GetVAnchorDepositByChainHistory, GetVAnchorDepositByChainAndByTokenHistory, GetVAnchorsDepositByChainHistory, GetVAnchorsDepositByChainsHistory
+    },
+    Withdrawal: {
+        GetVAnchorWithdrawalByChain, GetVAnchorWithdrawalByChainAndByToken, GetVAnchorsWithdrawalByChain, GetVAnchorsWithdrawalByChains
+    },
+    WithdrawalHistory: {
+        GetVAnchorWithdrawalByChainHistory, GetVAnchorWithdrawalByChainAndByTokenHistory, GetVAnchorsWithdrawalByChainHistory, GetVAnchorsWithdrawalByChainsHistory
+    },
+    TotalValueLocked: {
+        GetVAnchorTotalValueLockedByChain, GetVAnchorTotalValueLockedByChainAndByToken, GetVAnchorsTotalValueLockedByChain, GetVAnchorsTotalValueLockedByChains
+    },
+    TotalValueLockedHistory: {
+        GetVAnchorTotalValueLockedByChainHistory, GetVAnchorTotalValueLockedByChainAndByTokenHistory, GetVAnchorsTotalValueLockedByChainHistory, GetVAnchorsTotalValueLockedByChainsHistory
+    }
 }
 
-main().catch((e) => {
-    console.error(e)
-    process.exit(1)
-})
-
-async function runTvlQueries() {
-    console.table(await GetVAnchorTotalValueLockedByChain(SubgraphUrl.vAnchorAthenaLocal, "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99"));
-
-    // Get total value locked by a vAnchor on a chain and by a token
-    console.table(await GetVAnchorTotalValueLockedByChainAndByToken(SubgraphUrl.vAnchorAthenaLocal, "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99", "webbWETH"));
-
-    // Get total value locked by a multiple vAnchors on a chain
-    console.table(await GetVAnchorsTotalValueLockedByChain(SubgraphUrl.vAnchorAthenaLocal, ["0xDa68464c391Da8ff60b40273F2Ef0a9971694F99"]));
-
-    // Get total value locked by a multiple vAnchors on a multiple chains
-    console.table(await GetVAnchorsTotalValueLockedByChains(Object.values(SubgraphUrl), ["0xDa68464c391Da8ff60b40273F2Ef0a9971694F99"]));
-}
-
-async function runTvlHistoryQueries() {
-    const startDate: Date = DateUtil.fromEpochToDate(1689260400);
-    const endDate: Date = DateUtil.fromEpochToDate(1689260400 + (60 * 60 * 24));
-
-    // Get total value locked by a vAnchor on a chain
-    console.table(await GetVAnchorTotalValueLockedByChainHistory(SubgraphUrl.vAnchorAthenaLocal, "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99", startDate, endDate));
-
-    // Get total value locked by a vAnchor on a chain and by a token
-    console.table(await GetVAnchorTotalValueLockedByChainAndByTokenHistory(SubgraphUrl.vAnchorAthenaLocal, "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99", "webbWETH", startDate, endDate));
-
-    // Get total value locked by a multiple vAnchors on a chain
-    console.table(await GetVAnchorsTotalValueLockedByChainHistory(SubgraphUrl.vAnchorAthenaLocal, ["0xDa68464c391Da8ff60b40273F2Ef0a9971694F99"], startDate, endDate));
-
-    // Get total value locked by a multiple vAnchors on a multiple chains
-    console.table(await GetVAnchorsTotalValueLockedByChainsHistory(Object.values(SubgraphUrl), ["0xDa68464c391Da8ff60b40273F2Ef0a9971694F99"], startDate, endDate));
-}
+export default result;
