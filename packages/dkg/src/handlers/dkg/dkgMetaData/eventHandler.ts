@@ -60,15 +60,15 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           },
         })*/
         const authorites = await fetchSessionAuthorizes(eventDecoded.blockNumber);
-        const providersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any;
-        const proposers = providersAccounts.map((i) => i.toString());
-        logger.info(`Update proposers for ${sessionId} ${JSON.stringify(proposers, null, 2)}`);
+        // const providersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any;
+        // const proposers = providersAccounts.map((i) => i.toString());
+        // logger.info(`Update proposers for ${sessionId} ${JSON.stringify(proposers, null, 2)}`);
         logger.info(
           `Update authorites for ${sessionId} ${JSON.stringify(
             {
               ...authorites,
-              proposers,
-              proposersCount: proposers.length,
+              // proposers,
+              // proposersCount: proposers.length,
             },
             null,
             2
@@ -76,8 +76,8 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         );
         await createOrUpdateSession({
           ...authorites,
-          proposers,
-          proposersCount: proposers.length,
+          // proposers,
+          // proposersCount: proposers.length,
         });
         logger.info(
           `PublicKeySubmitted
