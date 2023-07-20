@@ -3,41 +3,57 @@
 // Auto-generated , DO NOT EDIT
 
 export interface HeartBeatCounter {
-  authorityId: string;
 
-  numberOfHeartBeats: number;
+    authorityId: string;
+
+    numberOfHeartBeats: number;
+
 }
+
 
 export interface SessionKeyHistory {
-  stage: string;
 
-  txHash: string;
+    stage: string;
 
-  blockNumber: string;
+    txHash: string;
 
-  timestamp: Date;
+    blockNumber: string;
+
+    timestamp: Date;
+
 }
+
 
 export interface SessionPublicKey {
-  compressedKey: string;
 
-  uncompressedKey: string;
+    compressedKey: string;
 
-  history: SessionKeyHistory[];
+    uncompressedKey: string;
+
+    history: SessionKeyHistory[];
+
 }
+
 
 export interface ProposalTypeCount {
-  type: string;
 
-  count: string;
+    type: string;
 
-  proposalId: string[];
+    count: string;
+
+    proposalId: string[];
+
 }
+
 
 export interface ProposalStatusCount {
-  status: string;
 
-  count: string;
+    status: string;
 
-  proposalId: string[];
+    count: string;
+
+    proposalId: string[];
+
 }
+
+

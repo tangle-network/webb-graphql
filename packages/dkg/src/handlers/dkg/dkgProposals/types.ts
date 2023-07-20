@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { PalletDkgProposalsEvent } = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
+const { PalletDkgProposalsEvent } = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
 
 export type DKGProposalsEvent = {
   ProposerThresholdChanged: (typeof PalletDkgProposalsEvent)['asProposerThresholdChanged'];

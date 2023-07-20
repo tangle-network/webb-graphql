@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { PalletDkgProposalHandlerEvent } = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
+const { PalletDkgProposalHandlerEvent } = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
 
 export type DKGProposalHandlerEvent = {
   InvalidProposalSignature: (typeof PalletDkgProposalHandlerEvent)['asInvalidProposalSignature'];

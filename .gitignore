@@ -106,7 +106,7 @@ dist
 .DS_Store
 
 .data
-.project-cid 
+.project-cid
 
 standalone-tangle/tangle/
 packages/**/node_modules
@@ -114,3 +114,9 @@ packages/**/build
 packages/**/data
 packages/**/generated
 packages/**/.graphclient
+
+# DKG
+packages/dkg/node_modules
+packages/dkg/.data
+packages/dkg/dist
+packages/dkg/src/types

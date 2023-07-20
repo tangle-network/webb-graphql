@@ -20,7 +20,7 @@ const {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
   WebbProposalsProposalProposalKind,
-} = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
+} = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
 import { ensureAccount, ensureBlock } from '../../handlers';
 import { AccountId32 } from '@polkadot/types/interfaces/runtime';
 import { Vec } from '@polkadot/types-codec';

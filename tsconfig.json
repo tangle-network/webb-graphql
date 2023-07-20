@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
@@ -17,6 +15,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*", "../../node_modules/@subql/types/dist/global.d.ts", "../../node_modules/@webb-tools/types"],
-  "extends": "../../tsconfig.json"
+  "include": [
+    "node_modules/@webb-tools/types",
+    "node_modules/@subql/types/dist/global.d.ts",
+    "packages/**/*"
+  ],
+  "exclude": ["node_modules/@subql/@webb-tools/types/**/*", "*.json"]
 }
