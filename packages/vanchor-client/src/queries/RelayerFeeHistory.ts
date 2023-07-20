@@ -1,6 +1,6 @@
 import { execute } from "../../.graphclient"
 import { DateUtil } from "../utils/date"
-import { SubgraphUrl } from "../../config"
+import { SubgraphUrl } from "../config"
 
 export interface RelayerFeeByChainHistoryItem { subgraphUrl: SubgraphUrl, relayerFee: number, startInterval: Date, endInterval: Date, vAnchorAddress: string }
 

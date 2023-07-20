@@ -1,5 +1,5 @@
 import { execute } from "../../.graphclient"
-import { SubgraphUrl } from "../../config"
+import { SubgraphUrl } from "../config"
 
 export interface TotalWrappingFeeByChain { subgraphUrl: SubgraphUrl, totalWrappingFee: number }
 

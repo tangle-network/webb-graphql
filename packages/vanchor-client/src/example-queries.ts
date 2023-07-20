@@ -1,4 +1,4 @@
-import { SubgraphUrl } from '../config';
+import { SubgraphUrl } from './config';
 import { GetVAnchorTotalValueLockedByChain, GetVAnchorTotalValueLockedByChainAndByToken, GetVAnchorsTotalValueLockedByChain, GetVAnchorsTotalValueLockedByChains } from './queries/TotalValueLocked'
 import { GetVAnchorTotalValueLockedByChainHistory, GetVAnchorTotalValueLockedByChainAndByTokenHistory, GetVAnchorsTotalValueLockedByChainHistory, GetVAnchorsTotalValueLockedByChainsHistory } from './queries/TotalValueLockedHistory'
 import { DateUtil } from './utils/date';

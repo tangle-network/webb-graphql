@@ -9,7 +9,7 @@ import { GetVAnchorTotalRelayerFeeByChain, GetVAnchorTotalRelayerFeeByChainAndBy
 import { GetVAnchorRelayerFeeByChainHistory, GetVAnchorRelayerFeeByChainAndByTokenHistory, GetVAnchorsRelayerFeeByChainHistory, GetVAnchorsRelayerFeeByChainsHistory } from './queries/RelayerFeeHistory'
 import { GetVAnchorTotalWrappingFeeByChain, GetVAnchorTotalWrappingFeeByChainAndByToken, GetVAnchorsTotalWrappingFeeByChain, GetVAnchorsTotalWrappingFeeByChains } from './queries/WrappingFee'
 import { GetVAnchorWrappingFeeByChainHistory, GetVAnchorWrappingFeeByChainAndByTokenHistory, GetVAnchorsWrappingFeeByChainHistory, GetVAnchorsWrappingFeeByChainsHistory } from './queries/WrappingFeeHistory'
-import { SubgraphUrl } from '../config'
+import { SubgraphUrl } from './config'
 
 const result = {
     SubgraphUrl,

@@ -1,6 +1,6 @@
 import { execute } from "../../.graphclient"
 import { DateUtil } from "../utils/date"
-import { SubgraphUrl } from "../../config"
+import { SubgraphUrl } from "../config"
 
 export interface WithdrawalByChainHistoryItem { subgraphUrl: SubgraphUrl, withdrawal: number, startInterval: Date, endInterval: Date, vAnchorAddress: string }
 
