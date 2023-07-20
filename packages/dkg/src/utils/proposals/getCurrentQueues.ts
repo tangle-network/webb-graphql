@@ -65,7 +65,7 @@ export function dkgPayloadKeyToProposalType(
   switch (dkgKey.type) {
     case 'EvmProposal' || 'Evm':
       return ProposalType.EvmProposal;
-    case 'RefreshVote' || 'Refresh':
+    case 'RefreshProposal' || 'Refresh':
       return ProposalType.RefreshVote;
     case 'ProposerSetUpdateProposal' || 'ProposerSetUpdate':
       return ProposalType.ProposerSetUpdateProposal;
@@ -245,7 +245,7 @@ export async function ensureProposalItemStorage(input: ProposalCreateInput): Pro
   });
   await Promise.all([newProposal.save(), newStatus.save()]);
 
-  await ensureAbstainVotes(blockId, id, input.chainId, type, data);
+  // await ensureAbstainVotes(blockId, id, input.chainId, type, data);
 
   return newProposal;
 }
@@ -295,7 +295,7 @@ export async function ensureProposalItem(input: ProposalItemFindInput) {
 
   await Promise.all([newProposal.save(), newStatus.save()]);
   // create abstain proposers
-  await ensureAbstainVotes(blockId, id, input.chainId, input.proposalType, input.data);
+  // await ensureAbstainVotes(blockId, id, input.chainId, input.proposalType, input.data);
   return newProposal;
 }
 

@@ -7,6 +7,7 @@
     "packages/**"
   ],
   "scripts": {
+    "dkg:deploy-dev": "cd packages/dkg && yarn deploy:dev",
     "lint": "nx run-many --all --target=lint",
     "lint:fix": "nx run-many --all --target=lint:fix",
     "format": "prettier --write \"**/*.{ts,js}\" ",
