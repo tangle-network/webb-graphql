@@ -26,88 +26,88 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
       break;
     case DKGProposalHandlerSection.ProposalAdded:
       {
-        const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalAdded);
-        const proposalId = createProposalId(eventData.targetChain, eventData.key);
-        const nonce = createNonceWithProposalType(
-          Number(eventData.key.value.toString()),
-          Object.keys(JSON.parse(eventData.key.toString()))[0]
-        );
-        const chainId = eventData.targetChain.value.toString();
-        const blockNumber = eventDecoder.blockNumber;
-        // Create a new unsigned proposal
-        await ensureProposalItemStorage({
-          proposalId,
-          blockId: blockNumber,
-          data: eventData.data.toString(),
-          nonce,
-          type: dkgPayloadKeyToProposalType(eventData.key),
-          chainId,
-        });
-        await createProposalCounter(blockNumber);
+        // const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalAdded);
+        // const proposalId = createProposalId(eventData.targetChain, eventData.key);
+        // const nonce = createNonceWithProposalType(
+        //   Number(eventData.key.value.toString()),
+        //   Object.keys(JSON.parse(eventData.key.toString()))[0]
+        // );
+        // const chainId = eventData.targetChain.value.toString();
+        // const blockNumber = eventDecoder.blockNumber;
+        // // Create a new unsigned proposal
+        // await ensureProposalItemStorage({
+        //   proposalId,
+        //   blockId: blockNumber,
+        //   data: eventData.data.toString(),
+        //   nonce,
+        //   type: dkgPayloadKeyToProposalType(eventData.key),
+        //   chainId,
+        // });
+        // await createProposalCounter(blockNumber);
 
-        logger.info(`Unsigned Proposal Added: ${proposalId} data:${eventData.data.toString()}`);
+        // logger.info(`Unsigned Proposal Added: ${proposalId} data:${eventData.data.toString()}`);
       }
       break;
     case DKGProposalHandlerSection.ProposalRemoved:
       {
-        const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalRemoved);
-        const proposalId = createProposalId(eventData.targetChain, eventData.key);
-        const blockNumber = eventDecoder.blockNumber;
-        const nonce = createNonceWithProposalType(
-          Number(eventData.key.value.toString()),
-          Object.keys(JSON.parse(eventData.key.toString()))[0]
-        );
-        const chainId = Number(eventData.targetChain.value.toString());
-        // Create a new removed proposal
-        await removeProposal(
-          {
-            blockId: blockNumber,
-            nonce: String(nonce),
-            chainId: String(chainId),
-            proposalType: dkgPayloadKeyToProposalType(eventData.key),
-            data: '0x00',
-          },
-          blockNumber
-        );
-        await createProposalCounter(blockNumber);
+        // const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalRemoved);
+        // const proposalId = createProposalId(eventData.targetChain, eventData.key);
+        // const blockNumber = eventDecoder.blockNumber;
+        // const nonce = createNonceWithProposalType(
+        //   Number(eventData.key.value.toString()),
+        //   Object.keys(JSON.parse(eventData.key.toString()))[0]
+        // );
+        // const chainId = Number(eventData.targetChain.value.toString());
+        // // Create a new removed proposal
+        // await removeProposal(
+        //   {
+        //     blockId: blockNumber,
+        //     nonce: String(nonce),
+        //     chainId: String(chainId),
+        //     proposalType: dkgPayloadKeyToProposalType(eventData.key),
+        //     data: '0x00',
+        //   },
+        //   blockNumber
+        // );
+        // await createProposalCounter(blockNumber);
       }
       break;
     case DKGProposalHandlerSection.ProposalSigned:
       {
-        const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalSigned);
-        const proposalKey = eventData.key;
-        const signature = eventData.signature.toString();
-        const data = eventData.data.toString();
-        const targetChainId = eventData.targetChain;
-        const proposalId = createProposalId(targetChainId, proposalKey);
-        const proposalType = dkgPayloadKeyToProposalType(proposalKey);
-        const blockNumber = eventDecoder.metaData.blockNumber;
-        const nonce = createNonceWithProposalType(
-          Number(proposalKey.value.toString()),
-          Object.keys(JSON.parse(eventData.key.toString()))[0]
-        );
-        const chainId = targetChainId.value.toString();
-        await ensureProposalItemStorage({
-          proposalId,
-          signature,
-          data,
-          type: proposalType,
-          nonce,
-          blockId: blockNumber,
-          chainId,
-        });
-        await signProposal(
-          {
-            blockId: blockNumber,
-            nonce: String(nonce),
-            chainId: targetChainId.value.toString(),
-            proposalType,
-            data,
-          },
-          signature,
-          blockNumber
-        );
-        await createProposalCounter(blockNumber);
+        // const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalSigned);
+        // const proposalKey = eventData.key;
+        // const signature = eventData.signature.toString();
+        // const data = eventData.data.toString();
+        // const targetChainId = eventData.targetChain;
+        // const proposalId = createProposalId(targetChainId, proposalKey);
+        // const proposalType = dkgPayloadKeyToProposalType(proposalKey);
+        // const blockNumber = eventDecoder.metaData.blockNumber;
+        // const nonce = createNonceWithProposalType(
+        //   Number(proposalKey.value.toString()),
+        //   Object.keys(JSON.parse(eventData.key.toString()))[0]
+        // );
+        // const chainId = targetChainId.value.toString();
+        // await ensureProposalItemStorage({
+        //   proposalId,
+        //   signature,
+        //   data,
+        //   type: proposalType,
+        //   nonce,
+        //   blockId: blockNumber,
+        //   chainId,
+        // });
+        // await signProposal(
+        //   {
+        //     blockId: blockNumber,
+        //     nonce: String(nonce),
+        //     chainId: targetChainId.value.toString(),
+        //     proposalType,
+        //     data,
+        //   },
+        //   signature,
+        //   blockNumber
+        // );
+        // await createProposalCounter(blockNumber);
       }
       break;
   }
