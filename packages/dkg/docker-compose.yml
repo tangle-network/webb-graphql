@@ -35,6 +35,7 @@ services:
       - --db-schema=app
       - --force-clean # clean the existing database (use for developement)
       - --disable-historical=true
+      - --unsafe
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://subquery-node:3000/ready']
       interval: 3s
