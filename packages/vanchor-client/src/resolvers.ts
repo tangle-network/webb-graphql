@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Resolvers } from '../.graphclient'
 import { SubgraphUrl } from './config'
 

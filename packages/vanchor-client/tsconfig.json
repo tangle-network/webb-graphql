@@ -2,7 +2,9 @@
   "compilerOptions": {
     "lib": ["es5", "es6", "dom"],
     "rootDir": "./src/",
-    "outFile": "./build/build.js"
+    "module": "system",
+    "outFile": "./dist/index.js",
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",

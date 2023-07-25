@@ -1,3 +1,4 @@
+// @ts-ignore
 import { getBuiltGraphSDK } from "../.graphclient";
 import { SubgraphUrl } from "./config";
 
@@ -22,7 +23,7 @@ export const executeQuery = async (query: Function, options: {
 
 export const executeQueryOnAllChains = async (query: Function) => {
 
-    const promises = SubgraphUrl.map(async (subgraphUrl) => {
+    const promises = Object.values(SubgraphUrl).map(async (subgraphUrl) => {
 
         return executeQuery(query, {
             subgraphUrl,

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { execute } from "../../.graphclient"
 import { DateUtil } from "../utils/date"
 import { SubgraphUrl } from "../config"
