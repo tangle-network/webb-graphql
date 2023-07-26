@@ -10,15 +10,10 @@ import {
   ProposalType,
   ProposalBatch,
   ProposalBatchStatus,
-  ProposerWithVote,
   Chain,
+  ProposalProposerWithVote,
+  ProposalInABatch,
 } from '../../types';
-
-export const createProposalID = (targetChain: typeof WebbProposalsHeaderTypedChainId, data: string): string => {
-  const proposalTargetChain = targetChain.hash.toString();
-  const proposalData = data.replace('0x', '');
-  return `${proposalTargetChain.replace('0x', '')}-${proposalData.trim() || '0'}`;
-};
 
 export const getProposalType = (
   dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey | typeof WebbProposalsProposalProposalKind
@@ -26,8 +21,6 @@ export const getProposalType = (
   switch (dkgKey.type) {
     case 'RefreshProposal':
       return ProposalType.Refresh;
-    case 'ProposerSetUpdateProposal':
-      return ProposalType.ProposerSetUpdate;
     case 'EvmProposal':
       return ProposalType.Evm;
     case 'AnchorCreateProposal':
@@ -57,66 +50,99 @@ export const getProposalType = (
   }
 };
 
-type ProposalProps = {
-  id: string;
-  blockNumber: string;
-  timestamp: Date;
-  type: ProposalType;
-  data: string;
-  timeline: ProposalTimeline[];
-};
-
-export const createProposal = async (proposal: ProposalProps) => {
-  const { id, blockNumber, timestamp, type, data, timeline } = proposal;
-
-  const newProposal = new Proposal(id);
-  newProposal.blockNumber = blockNumber;
-  newProposal.timestamp = timestamp;
-  newProposal.type = type;
-  newProposal.data = data;
-  newProposal.timeline = timeline;
-
-  await newProposal.save();
-};
-
-type GetProposalIDsProps = [
-  {
-    kind: string;
-    data: string;
+export const getChain = (chain): Chain => {
+  switch (chain) {
+    case 'None':
+      return Chain.None;
+    case 'Evm':
+      return Chain.Evm;
+    case 'Substrate':
+      return Chain.Substrate;
+    case 'PolkadotParachain':
+      return Chain.PolkadotParachain;
+    case 'KusamaParachain':
+      return Chain.KusamaParachain;
+    case 'RococoParachain':
+      return Chain.RococoParachain;
+    case 'Cosmos':
+      return Chain.Cosmos;
+    case 'Solana':
+      return Chain.Solana;
+    case 'Ink':
+      return Chain.Ink;
   }
-];
-
-export const getProposalIDs = async (
-  proposals: GetProposalIDsProps,
-  targetChain: typeof WebbProposalsHeaderTypedChainId
-) => {
-  const proposalIDs = proposals.map((proposal) => {
-    const proposalID = createProposalID(targetChain, proposal.data.toString());
-
-    return proposalID;
-  });
-
-  return proposalIDs;
 };
 
-type ProposalBatchProps = {
+type UpdateProposalBatchProps = {
   id: string;
-  status: ProposalBatchStatus;
-  blockNumber: string;
-  proposals: string[];
-  proposersWithVotes: ProposerWithVote[];
-  chain: Chain;
+  blockNumber?: string;
+  timestamp?: Date;
+  status?: ProposalBatchStatus;
+  proposals?: ProposalInABatch[];
+  chain?: Chain;
 };
 
-export const createProposalBatch = async (proposalBatch: ProposalBatchProps) => {
-  const { id, status, blockNumber, proposals, proposersWithVotes, chain } = proposalBatch;
+export const updateProposalBatch = async (proposalBatchToUpdate: UpdateProposalBatchProps) => {
+  const { id, blockNumber, timestamp, status, proposals, chain } = proposalBatchToUpdate;
 
-  const newProposalBatch = new ProposalBatch(id);
-  newProposalBatch.status = status;
-  newProposalBatch.blockNumber = blockNumber;
-  newProposalBatch.proposals = proposals;
-  newProposalBatch.proposersWithVotes = proposersWithVotes;
-  newProposalBatch.chain = chain;
+  let proposalBatch = await ProposalBatch.get(id);
 
-  await newProposalBatch.save();
+  if (!proposalBatch) {
+    proposalBatch = new ProposalBatch(id);
+  }
+
+  proposalBatch.blockNumber = blockNumber ? blockNumber : '';
+  proposalBatch.timestamp = timestamp ? timestamp : new Date();
+  proposalBatch.status = status ? status : ProposalBatchStatus.Unknown;
+  proposalBatch.proposals = proposals ? proposals : [];
+  proposalBatch.chain = chain ? chain : Chain.Unknown;
+
+  await proposalBatch.save();
+};
+
+export const createProposalID = (
+  targetChain: typeof WebbProposalsHeaderTypedChainId,
+  kind: string,
+  nonce: string
+): string => {
+  const proposalTargetChain = targetChain.hash.toString();
+  return `${proposalTargetChain.replace('0x', '')}-${kind}-${nonce}`;
+};
+
+type UpdateProposalProps = {
+  id: string;
+  blockNumber?: string;
+  timestamp?: Date;
+  type: ProposalType;
+  data?: string;
+  timeline?: ProposalTimeline[];
+  proposersWithVotes?: ProposalProposerWithVote[];
+};
+
+export const updateProposal = async (proposalToUpdate: UpdateProposalProps) => {
+  const { id, blockNumber, timestamp, type, data, timeline, proposersWithVotes } = proposalToUpdate;
+
+  let proposal = await Proposal.get(id);
+
+  if (!proposal) {
+    proposal = new Proposal(id);
+    proposal.id = id;
+  }
+
+  proposal.blockNumber = blockNumber ? blockNumber : '';
+  proposal.timestamp = timestamp ? timestamp : new Date();
+  proposal.type = type;
+  proposal.timeline = timeline ? timeline : [];
+  proposal.data = data ? data : '';
+  proposal.proposersWithVotes = proposersWithVotes ? proposersWithVotes : [];
+
+  if (proposal.timeline && proposal.timeline.length > 0) {
+    proposal.timeline = [...proposal.timeline, ...timeline];
+  }
+
+  if (proposal.proposersWithVotes && proposal.proposersWithVotes.length > 0) {
+    proposal.proposersWithVotes = [...proposal.proposersWithVotes, ...proposersWithVotes];
+  }
+
+  await proposal.save();
 };

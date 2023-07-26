@@ -210,7 +210,6 @@ type ProposerThreshold @entity {
 
 enum ProposalType {
   Refresh
-  ProposerSetUpdate
   Evm
   AnchorCreate
   AnchorUpdate
@@ -227,6 +226,7 @@ enum ProposalType {
 }
 
 enum ProposalBatchStatus {
+  Unknown
   Expired
   Signed
   Removed
@@ -239,12 +239,14 @@ enum ProposalVoteType {
 }
 
 enum ProposalTimelineStatus {
-  Accepted
+  Approved
   Rejected
-  Signed
+  Succeeded
+  Failed
 }
 
 enum Chain {
+  Unknown
   None
   Evm
   Substrate
@@ -261,26 +263,31 @@ type ProposalTimeline @jsonField {
   timestamp: Date!
 }
 
-type ProposerWithVote @jsonField {
+type ProposalProposerWithVote @jsonField {
   proposer: String!
-  voteType: String! # ProposalVoteType
+  vote: String! # ProposalVoteType
+}
+
+type ProposalInABatch @jsonField {
+  kind: String!
+  data: Int!
 }
 
 type Proposal @entity {
   id: ID!
   blockNumber: String!
   timestamp: Date!
-  batch: String # This is the ProposalBatch ID
   type: ProposalType!
   data: String!
   timeline: [ProposalTimeline]
+  proposersWithVotes: [ProposalProposerWithVote]
 }
 
 type ProposalBatch @entity {
   id: ID!
-  status: ProposalBatchStatus!
   blockNumber: String!
-  proposals: [String!]! # This is the array of Proposal IDs
-  proposersWithVotes: [ProposerWithVote]
+  timestamp: Date!
+  status: ProposalBatchStatus!
+  proposals: [ProposalInABatch]! # This is the array of ProposalInABatch
   chain: Chain!
 }

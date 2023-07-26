@@ -5,11 +5,11 @@ import { DKGProposalHandlerEvent } from './types';
 import {
   createProposalID,
   getProposalType,
-  createProposal,
-  getProposalIDs,
-  createProposalBatch,
+  updateProposal,
+  getChain,
+  updateProposalBatch,
 } from '../../../utils/proposals/getCurrentQueues';
-import { Block, ProposalTimelineStatus, ProposalBatchStatus, ProposalVoteType } from '../../../types';
+import { Block, ProposalBatchStatus } from '../../../types';
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposalHandler) {
@@ -25,35 +25,74 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
 
   switch (method) {
     case DKGProposalHandlerSection.InvalidProposalBatchSignature:
+      {
+        logger.info(`Invalid Proposal Batch Signature at block: ${eventDecoder.blockNumber}`);
+      }
       break;
     case DKGProposalHandlerSection.ProposalAdded:
       {
         const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalAdded);
-        const proposalID = createProposalID(eventData.targetChain, eventData.data.toString());
+        const proposalNonce = eventData.key.value.toString();
+        const proposalID = createProposalID(
+          eventData.targetChain,
+          eventData.key.type.toString().toLowerCase().replace('proposal', ''),
+          proposalNonce
+        );
         const blockNumber = eventDecoder.blockNumber;
         const timestamp = (await Block.get(blockNumber)).timestamp;
         const proposaType = getProposalType(eventData.key);
         const data = eventData.data.toString();
-        const acceptedProposalTimeline = {
-          status: ProposalTimelineStatus.Accepted,
-          timestamp: timestamp,
-        };
 
-        await createProposal({
+        await updateProposal({
           id: proposalID,
           blockNumber: blockNumber,
           timestamp: timestamp,
           type: proposaType,
           data: data,
-          timeline: [acceptedProposalTimeline],
         });
 
         logger.info(`New Proposal Added of type: ${proposaType} at block: ${blockNumber}`);
       }
       break;
     case DKGProposalHandlerSection.ProposalBatchRemoved:
+      {
+        const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalBatchRemoved);
+        const proposalBatchId = eventData.batchId.toString();
+        const proposalBatchStatus = ProposalBatchStatus.Removed;
+        const blockNumber = eventDecoder.blockNumber;
+        const timestamp = (await Block.get(blockNumber)).timestamp;
+        const chain = getChain(Object.keys(eventData.targetChain)[0]);
+
+        await updateProposalBatch({
+          id: proposalBatchId,
+          status: proposalBatchStatus,
+          blockNumber: blockNumber,
+          timestamp: timestamp,
+          chain: chain,
+        });
+
+        logger.info(`Proposal Batch of ID: ${proposalBatchId} Removed at block: ${eventDecoder.blockNumber}`);
+      }
       break;
     case DKGProposalHandlerSection.ProposalBatchExpired:
+      {
+        const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalBatchExpired);
+        const proposalBatchId = eventData.batchId.toString();
+        const proposalBatchStatus = ProposalBatchStatus.Expired;
+        const blockNumber = eventDecoder.blockNumber;
+        const timestamp = (await Block.get(blockNumber)).timestamp;
+        const chain = getChain(Object.keys(eventData.targetChain)[0]);
+
+        await updateProposalBatch({
+          id: proposalBatchId,
+          status: proposalBatchStatus,
+          blockNumber: blockNumber,
+          timestamp: timestamp,
+          chain: chain,
+        });
+
+        logger.info(`Proposal Batch of ID: ${proposalBatchId} Expired at block: ${eventDecoder.blockNumber}`);
+      }
       break;
     case DKGProposalHandlerSection.ProposalBatchSigned:
       {
@@ -61,26 +100,20 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const proposalBatchId = eventData.batchId.toString();
         const proposalBatchStatus = ProposalBatchStatus.Signed;
         const blockNumber = eventDecoder.blockNumber;
-        const proposals = await getProposalIDs(eventData.proposals, eventData.targetChain);
-        const proposers = await api.query.dkgProposals.proposers();
-        const proposersWithVotes = proposers.map((proposer) => {
-          return {
-            proposer: proposer.toString(),
-            voteType: ProposalVoteType.For,
-          };
-        });
-        const chain = eventData.targetChain.toString();
+        const timestamp = (await Block.get(blockNumber)).timestamp;
+        const proposals = eventData.proposals;
+        const chain = getChain(eventData.targetChain.type);
 
-        await createProposalBatch({
+        await updateProposalBatch({
           id: proposalBatchId,
           status: proposalBatchStatus,
           blockNumber: blockNumber,
-          proposals: proposals,
-          proposersWithVotes: proposersWithVotes,
+          timestamp: timestamp,
+          proposals: proposals ?? [],
           chain: chain,
         });
 
-        logger.info(`New Proposal Batch Signed at block: ${blockNumber}`);
+        logger.info(`New Proposal Batch of ID: ${proposalBatchId} Signed at block: ${blockNumber}`);
       }
       break;
   }
