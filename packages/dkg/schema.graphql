@@ -266,11 +266,6 @@ type ProposerWithVote @jsonField {
   voteType: String! # ProposalVoteType
 }
 
-type ProposalBatchVote @jsonField {
-  voteType: String! # ProposalVoteType
-  percentage: BigInt!
-}
-
 type Proposal @entity {
   id: ID!
   blockNumber: String!
@@ -284,8 +279,7 @@ type Proposal @entity {
 type ProposalBatch @entity {
   id: ID!
   status: ProposalBatchStatus!
-  votes: [ProposalBatchVote]
-  blockNumber: BigInt!
+  blockNumber: String!
   proposals: [String!]! # This is the array of Proposal IDs
   proposersWithVotes: [ProposerWithVote]
   chain: Chain!

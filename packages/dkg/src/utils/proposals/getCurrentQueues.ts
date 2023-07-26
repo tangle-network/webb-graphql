@@ -4,7 +4,15 @@ const {
   DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsProposalProposalKind,
 } = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
-import { Proposal, ProposalTimeline, ProposalType } from '../../types';
+import {
+  Proposal,
+  ProposalTimeline,
+  ProposalType,
+  ProposalBatch,
+  ProposalBatchStatus,
+  ProposerWithVote,
+  Chain,
+} from '../../types';
 
 export const createProposalID = (targetChain: typeof WebbProposalsHeaderTypedChainId, data: string): string => {
   const proposalTargetChain = targetChain.hash.toString();
@@ -55,7 +63,7 @@ type ProposalProps = {
   timestamp: Date;
   type: ProposalType;
   data: string;
-  timeline: [ProposalTimeline];
+  timeline: ProposalTimeline[];
 };
 
 export const createProposal = async (proposal: ProposalProps) => {
@@ -69,4 +77,46 @@ export const createProposal = async (proposal: ProposalProps) => {
   newProposal.timeline = timeline;
 
   await newProposal.save();
+};
+
+type GetProposalIDsProps = [
+  {
+    kind: string;
+    data: string;
+  }
+];
+
+export const getProposalIDs = async (
+  proposals: GetProposalIDsProps,
+  targetChain: typeof WebbProposalsHeaderTypedChainId
+) => {
+  const proposalIDs = proposals.map((proposal) => {
+    const proposalID = createProposalID(targetChain, proposal.data.toString());
+
+    return proposalID;
+  });
+
+  return proposalIDs;
+};
+
+type ProposalBatchProps = {
+  id: string;
+  status: ProposalBatchStatus;
+  blockNumber: string;
+  proposals: string[];
+  proposersWithVotes: ProposerWithVote[];
+  chain: Chain;
+};
+
+export const createProposalBatch = async (proposalBatch: ProposalBatchProps) => {
+  const { id, status, blockNumber, proposals, proposersWithVotes, chain } = proposalBatch;
+
+  const newProposalBatch = new ProposalBatch(id);
+  newProposalBatch.status = status;
+  newProposalBatch.blockNumber = blockNumber;
+  newProposalBatch.proposals = proposals;
+  newProposalBatch.proposersWithVotes = proposersWithVotes;
+  newProposalBatch.chain = chain;
+
+  await newProposalBatch.save();
 };

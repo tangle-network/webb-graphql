@@ -2,8 +2,9 @@
 const { PalletDkgProposalHandlerEvent } = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
 
 export type DKGProposalHandlerEvent = {
-  InvalidProposalSignature: (typeof PalletDkgProposalHandlerEvent)['asInvalidProposalSignature'];
-  ProposalSigned: (typeof PalletDkgProposalHandlerEvent)['asProposalSigned'];
-  ProposalAdded: Omit<(typeof PalletDkgProposalHandlerEvent)['asProposalSigned'], 'signature'>;
-  ProposalRemoved: Omit<(typeof PalletDkgProposalHandlerEvent)['asProposalSigned'], 'signature'>;
+  InvalidProposalBatchSignature: (typeof PalletDkgProposalHandlerEvent)['asInvalidProposalBatchSignature'];
+  ProposalAdded: (typeof PalletDkgProposalHandlerEvent)['asProposalAdded'];
+  ProposalBatchRemoved: (typeof PalletDkgProposalHandlerEvent)['asProposalBatchRemoved'];
+  ProposalBatchExpired: (typeof PalletDkgProposalHandlerEvent)['asProposalBatchExpired'];
+  ProposalBatchSigned: (typeof PalletDkgProposalHandlerEvent)['asProposalBatchSigned'];
 };

@@ -2,8 +2,14 @@ import { SubstrateEvent } from '@subql/types';
 import { DKGProposalHandlerSection, DKGSections } from '../type';
 import { EventDecoder } from '../../../utils';
 import { DKGProposalHandlerEvent } from './types';
-import { createProposalID, getProposalType, createProposal } from '../../../utils/proposals/getCurrentQueues';
-import { Block, ProposalTimelineStatus } from '../../../types';
+import {
+  createProposalID,
+  getProposalType,
+  createProposal,
+  getProposalIDs,
+  createProposalBatch,
+} from '../../../utils/proposals/getCurrentQueues';
+import { Block, ProposalTimelineStatus, ProposalBatchStatus, ProposalVoteType } from '../../../types';
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposalHandler) {
@@ -50,6 +56,30 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
     case DKGProposalHandlerSection.ProposalBatchExpired:
       break;
     case DKGProposalHandlerSection.ProposalBatchSigned:
+      {
+        const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalBatchSigned);
+        const proposalBatchId = eventData.batchId.toString();
+        const proposalBatchStatus = ProposalBatchStatus.Signed;
+        const blockNumber = eventDecoder.blockNumber;
+        const proposals = await getProposalIDs(eventData.proposals, eventData.targetChain);
+        const proposers = await api.query.dkgProposals.proposers();
+        const proposersWithVotes = proposers.map((proposer) => {
+          return {
+            proposer: proposer.toString(),
+            voteType: ProposalVoteType.For,
+          };
+        });
+        const chain = eventData.targetChain.toString();
+
+        await createProposalBatch({
+          id: proposalBatchId,
+          status: proposalBatchStatus,
+          blockNumber: blockNumber,
+          proposals: proposals,
+          proposersWithVotes: proposersWithVotes,
+          chain: chain,
+        });
+      }
       break;
   }
 }
