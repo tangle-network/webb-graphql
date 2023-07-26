@@ -6313,10 +6313,10 @@
     "@webassemblyjs/ast" "1.11.5"
     "@xtuc/long" "4.2.2"
 
-"@webb-tools/tangle-substrate-types@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@webb-tools/tangle-substrate-types/-/tangle-substrate-types-0.3.2.tgz#ccb3fadff5b9bf2a0d5216824b9f12e25cea1b56"
-  integrity sha512-E0ED0kpUbStiN8GVu2zPxxcszeUFzxWz1GWtB2C3Os6+p45/pE4kZhyjzt+/XrDerxjfPTAMN7fMx9NdkjAbZg==
+"@webb-tools/tangle-substrate-types@0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@webb-tools/tangle-substrate-types/-/tangle-substrate-types-0.3.6.tgz#f6fd9169cb112c70c0d680ab8c76e7797a7d8ff5"
+  integrity sha512-jZKYca2WQE69GEkoudNnCeYxtI0Wq5Tw+vGv+DfOA6ifskg6zWDUQRN+OG24pvwKvx3iCwOEG0I6BuRkzk8U+Q==
   dependencies:
     "@babel/cli" "^7.20.7"
     "@babel/core" "^7.20.12"
@@ -11514,7 +11514,7 @@ ipfs-http-client@^52.0.3:
     stream-to-it "^0.2.2"
     uint8arrays "^3.0.0"
 
-ipfs-unixfs@^6.0.3:
+ipfs-unixfs@6.0.6, ipfs-unixfs@^6.0.3:
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/ipfs-unixfs/-/ipfs-unixfs-6.0.6.tgz#c44881c1bcd6a474c665e67108cbf31e54c63eec"
   integrity sha512-gTkjYKXuHnqIf6EFfS+ESaYEl3I3aaQQ0UX8MhpNzreMLEuMnuqpoI/uLLllTZa31WRplKixabbpRTSmTYRNwA==
