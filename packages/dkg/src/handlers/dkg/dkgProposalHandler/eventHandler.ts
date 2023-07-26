@@ -79,6 +79,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           proposersWithVotes: proposersWithVotes,
           chain: chain,
         });
+
+        logger.info(`New Proposal Batch Signed at block: ${blockNumber}`);
       }
       break;
   }
