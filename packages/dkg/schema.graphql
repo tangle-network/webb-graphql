@@ -288,6 +288,6 @@ type ProposalBatch @entity {
   blockNumber: String!
   timestamp: Date!
   status: ProposalBatchStatus!
-  proposals: [ProposalInABatch]! # This is the array of ProposalInABatch
+  proposals: [ProposalInABatch]!
   chain: Chain!
 }

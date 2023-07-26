@@ -11,6 +11,13 @@ import {
 } from '../../../utils/proposals/getCurrentQueues';
 import { Block, ProposalBatchStatus } from '../../../types';
 
+/**
+ *
+ * DKG Proposal Handler event sequence - Includes all the events related to dkgProposalHandler which are emmited when the following events occur:
+ * - Invalid proposal batch signature is submitted
+ * - A proposal is added
+ * - A proposal batch is signed, removed or expired
+ */
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposalHandler) {
     logger.error(

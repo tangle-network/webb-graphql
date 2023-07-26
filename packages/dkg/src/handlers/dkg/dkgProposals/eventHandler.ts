@@ -5,6 +5,16 @@ import { EventDecoder } from '../../../utils';
 import { createProposalID, getProposalType, updateProposal } from '../../../utils/proposals/getCurrentQueues';
 import { Block, ProposalTimelineStatus, ProposalVoteType } from '../../../types';
 
+/**
+ *
+ * DKG Proposals event sequence - Includes all the events related to dkgProposals which are emmited when the
+ * following events occur:
+ * - Proposer threshold is changed
+ * - Proposers are reset
+ * - Chain gets whitelisted
+ * - A proposal recieves a vote of type - FOR or AGAINST
+ * - A proposal is approved, rejected, succeded or failed
+ */
 export async function dkgProposalEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposals) {
     logger.error(`dkgProposalEventHandler: event.event.section(${event.event.section}) !== DKGSections.DKGProposals`);
