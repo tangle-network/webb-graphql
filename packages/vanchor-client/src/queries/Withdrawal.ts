@@ -1,5 +1,6 @@
+// @ts-ignore
 import { execute } from "../../.graphclient"
-import { SubgraphUrl } from "../../config"
+import { SubgraphUrl } from "../config"
 
 export interface WithdrawalByChain { subgraphUrl: SubgraphUrl, withdrawal: number }
 

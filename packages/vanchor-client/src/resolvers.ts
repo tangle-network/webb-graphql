@@ -1,5 +1,6 @@
+// @ts-ignore
 import { Resolvers } from '../.graphclient'
-import { SubgraphUrl } from '../config'
+import { SubgraphUrl } from './config'
 
 export const resolvers: Resolvers = {
     ShieldedTransaction: {

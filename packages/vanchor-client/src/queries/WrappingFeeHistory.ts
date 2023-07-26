@@ -1,6 +1,7 @@
+// @ts-ignore
 import { execute } from "../../.graphclient"
 import { DateUtil } from "../utils/date"
-import { SubgraphUrl } from "../../config"
+import { SubgraphUrl } from "../config"
 
 export interface WrappingFeeByChainHistoryItem { subgraphUrl: SubgraphUrl, wrappingFee: number, startInterval: Date, endInterval: Date, vAnchorAddress: string }
 

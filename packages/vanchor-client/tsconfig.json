@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es5", "es6", "dom"],
+    "rootDir": "./src/",
+    "module": "system",
+    "outFile": "./dist/index.js",
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts",
+    "../../node_modules/*"
+  ]
+}

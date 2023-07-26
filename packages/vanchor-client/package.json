@@ -1,7 +1,7 @@
 {
   "name": "@webb-tools/vanchor-client",
-  "main": "./src/index.ts",
-  "version": "0.1.5",
+  "main": "./dist/index.ts",
+  "version": "0.1.11",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "graphclient serve-dev",
     "build": "graphclient build",
+    "compile": "tsc",
     "start": "graphclient build && ts-node ./src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
@@ -16,5 +17,14 @@
   },
   "devDependencies": {
     "@graphprotocol/client-cli": "^3.0.0"
+  },
+  "dependencies": {
+    "@graphql-mesh/cross-helpers": "^0.4.0",
+    "@graphql-mesh/graphql": "^0.94.6",
+    "@graphql-mesh/http": "^0.95.3",
+    "@graphql-mesh/merger-bare": "^0.94.5",
+    "@graphql-mesh/runtime": "^0.95.3",
+    "@graphql-mesh/store": "^0.94.5",
+    "@graphql-mesh/utils": "^0.94.5"
   }
 }
