@@ -239,7 +239,6 @@ enum ProposalVoteType {
 }
 
 enum ProposalTimelineStatus {
-  Proposed
   Accepted
   Rejected
   Signed
@@ -274,9 +273,9 @@ type ProposalBatchVote @jsonField {
 
 type Proposal @entity {
   id: ID!
-  blockNumber: BigInt!
+  blockNumber: String!
   timestamp: Date!
-  batch: ProposalBatch!
+  batch: String # This is the ProposalBatch ID
   type: ProposalType!
   data: String!
   timeline: [ProposalTimeline]

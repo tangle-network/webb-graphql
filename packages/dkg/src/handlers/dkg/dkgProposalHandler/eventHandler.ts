@@ -2,7 +2,8 @@ import { SubstrateEvent } from '@subql/types';
 import { DKGProposalHandlerSection, DKGSections } from '../type';
 import { EventDecoder } from '../../../utils';
 import { DKGProposalHandlerEvent } from './types';
-
+import { createProposalID, getProposalType, createProposal } from '../../../utils/proposals/getCurrentQueues';
+import { Block, ProposalTimelineStatus } from '../../../types';
 
 export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
   if (event.event.section !== DKGSections.DKGProposalHandler) {
@@ -22,8 +23,26 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
     case DKGProposalHandlerSection.ProposalAdded:
       {
         const eventData = eventDecoder.as(DKGProposalHandlerSection.ProposalAdded);
+        const proposalID = createProposalID(eventData.targetChain, eventData.data.toString());
+        const blockNumber = eventDecoder.blockNumber;
+        const timestamp = (await Block.get(blockNumber)).timestamp;
+        const proposaType = getProposalType(eventData.key);
+        const data = eventData.data.toString();
+        const acceptedProposalTimeline = {
+          status: ProposalTimelineStatus.Accepted,
+          timestamp: timestamp,
+        };
 
-        logger.info(`Unsigned Proposal Added 🔵: data:${eventData.data.toString()}`);
+        await createProposal({
+          id: proposalID,
+          blockNumber: blockNumber,
+          timestamp: timestamp,
+          type: proposaType,
+          data: data,
+          timeline: [acceptedProposalTimeline],
+        });
+
+        logger.info(`New Proposal Added of type: ${proposaType} at block: ${blockNumber}`);
       }
       break;
     case DKGProposalHandlerSection.ProposalBatchRemoved:
