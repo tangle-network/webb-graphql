@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import type { Codec } from '@polkadot/types-codec/types';
-const { PalletDkgMetadataEvent } = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
+const { PalletDkgMetadataEvent } = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
 import { Struct, u16 } from '@polkadot/types-codec';
 
 export enum DKGMethod {

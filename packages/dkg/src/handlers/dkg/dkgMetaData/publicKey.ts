@@ -11,21 +11,14 @@ import { DKGSections } from '../type';
  *
  * */
 
-export type PublicKeyInput = {
-  blockNumber: string;
-  compressed: string;
-  uncompressed: string;
-};
-
 type PublicKeyGenerated = {
   composedPubKey: string;
-  uncompressedPubKey: string;
   blockNumber: string;
   timestamp: Date;
 };
 
 export async function ensureKey(data: PublicKeyGenerated) {
-  const key = await PublicKey.getByUncompressed(data.uncompressedPubKey);
+  const key = await PublicKey.get(data.composedPubKey);
   if (key) {
     return key;
   }
@@ -34,7 +27,7 @@ export async function ensureKey(data: PublicKeyGenerated) {
     return (
       ex.module === DKGSections.DKGMetaData &&
       ex.method === 'submitNextPublicKey' &&
-      ex.arguments.indexOf(data.uncompressedPubKey) > -1
+      ex.arguments.indexOf(data.composedPubKey) > -1
     );
   });
   let txHash = '';
@@ -43,9 +36,8 @@ export async function ensureKey(data: PublicKeyGenerated) {
   }
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
-    id: data.uncompressedPubKey,
+    id: data.composedPubKey,
     compressed: data.composedPubKey,
-    uncompressed: data.uncompressedPubKey,
     history: [
       {
         stage: SessionKeyStatus.Generated,
@@ -65,7 +57,6 @@ export async function keyGenerated(data: PublicKeyGenerated) {
 
 export type PublicKeyUpdate = {
   blockNumber: string;
-  uncompressedPubKey: string;
   composedPubKey: string;
   status: SessionKeyStatus;
   timestamp: Date;

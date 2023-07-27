@@ -8,9 +8,9 @@ export async function getCurrentAuthorities(): Promise<Omit<AuthoritiesProps, 'i
   const next = await api.query.dkg.nextAuthorities();
 
   return {
-    _name: 'Authorities',
+    // _name: 'Authorities',
     current: current.toJSON() as string[],
     next: next.toJSON() as string[],
     blockId: '0',
-  };
+  } as any;
 }

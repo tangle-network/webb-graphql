@@ -74,7 +74,7 @@ export function getCachedKeys(): Promise<Record<string, Keys>> {
     api.query.session.queuedKeys((data) => {
       data.forEach(([key, val]) => {
         queuedKeys[key.toString()] = {
-          dkg: val.dkg.toString(),
+          dkg: (val as any).dkg.toString(),
           imOnline: val.imOnline.toString(),
         };
       });

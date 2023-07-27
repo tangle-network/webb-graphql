@@ -141,7 +141,6 @@ type Proposer @entity {
   id: ID!
 
   account: Account!
-  votes: [ProposalVote]! @derivedFrom(field: "voter")
 }
 
 enum SessionKeyStatus {
@@ -158,7 +157,6 @@ type SessionKeyHistory @jsonField {
 }
 type SessionPublicKey @jsonField {
   compressedKey: String!
-  uncompressedKey: String!
   history: [SessionKeyHistory]!
 }
 
@@ -196,9 +194,6 @@ type PublicKey @entity {
   # Public key bytes 33 bytes
   compressed: String
 
-  # Public key bytes 65 bytes
-  uncompressed: String @index(unique: true)
-
   history: [SessionKeyHistory]!
 
   block: Block!
@@ -214,113 +209,85 @@ type ProposerThreshold @entity {
 }
 
 enum ProposalType {
+  Refresh
+  Evm
+  AnchorCreate
+  AnchorUpdate
+  TokenAdd
+  TokenRemove
+  WrappingFeeUpdate
+  ResourceIdUpdate
+  RescueTokens
+  MaxDepositLimitUpdate
+  MinWithdrawalLimitUpdate
+  SetVerifier
+  SetTreasuryHandler
+  FeeRecipientUpdate
+}
+
+enum ProposalBatchStatus {
   Unknown
-  EvmProposal
-  RefreshVote
-  ProposerSetUpdateProposal
-  AnchorCreateProposal
-  AnchorUpdateProposal
-  TokenAddProposal
-  TokenRemoveProposal
-  WrappingFeeUpdateProposal
-  ResourceIdUpdateProposal
-  RescueTokensProposal
-  MaxDepositLimitUpdateProposal
-  MinWithdrawalLimitUpdateProposal
-  SetVerifierProposal
-  SetTreasuryHandlerProposal
-  FeeRecipientUpdateProposal
-}
-enum ProposalStatus {
+  Expired
   Signed
-  Open
-  Rejected
-  Accepted
   Removed
-  Executed
-  FailedToExecute
 }
 
-type ProposalTimelineStatus @entity {
-  id: ID!
-  # ProposalStatus
-  status: ProposalStatus!
-  txHash: String
-  blockNumber: BigInt!
-  proposalItem: ProposalItem!
+enum ProposalVoteType {
+  For
+  Against
+  Abstain
+}
 
+enum ProposalTimelineStatus {
+  Approved
+  Rejected
+  Succeeded
+  Failed
+}
+
+enum Chain {
+  Unknown
+  None
+  Evm
+  Substrate
+  PolkadotParachain
+  KusamaParachain
+  RococoParachain
+  Cosmos
+  Solana
+  Ink
+}
+
+type ProposalTimeline @jsonField {
+  status: String! # ProposalTimelineStatus
   timestamp: Date!
 }
-enum VoteType {
-  FOR
-  AGAINST
-  ABSTAIN
+
+type ProposalProposerWithVote @jsonField {
+  proposer: String!
+  vote: String! # ProposalVoteType
 }
 
-type ProposalVote @entity {
-  id: ID!
-  voteStatus: VoteType!
-  voter: Proposer!
-  proposal: ProposalItem!
-  blockNumber: BigInt!
-  block: Block!
+type ProposalInABatch @jsonField {
+  kind: String!
+  data: Int!
 }
 
-type ProposalItem @entity {
-  # Nonce
+type Proposal @entity {
   id: ID!
-
-  nonce: Int!
-  chainId: BigInt
+  blockNumber: String!
+  timestamp: Date!
   type: ProposalType!
-
-  status: String! @index(unique: false)
-
   data: String!
-  signature: String
-  removed: Boolean
-
-  blockNumber: Int!
-
-  block: Block!
+  timeline: [ProposalTimeline]
+  proposersWithVotes: [ProposalProposerWithVote]
 }
 
-type ProposalTypeCount @jsonField {
-  # ProposalType
-  type: String!
-
-  count: String!
-  proposalId: [String!]!
-}
-type ProposalStatusCount @jsonField {
-  # Proposal status : Accepted, Rejected, Open
-  status: String!
-  count: String!
-  proposalId: [String!]!
-}
-
-type UnsignedProposalsQueueItem @entity {
+type ProposalBatch @entity {
   id: ID!
-  proposal: ProposalItem!
-  queue: UnsignedProposalsQueue!
-
-  blockNumber: Int!
-}
-
-type UnsignedProposalsQueue @entity {
-  id: ID!
-  block: Block!
-  blockNumber: Int!
-}
-
-type ProposalCounter @entity {
-  id: ID!
-
-  signedProposalsCount: Int!
-  unSignedProposalsCount: Int!
-  signedProposalsMap: [ProposalTypeCount]
-  unSignedProposalsMap: [ProposalTypeCount]
-  statusMap: [ProposalStatusCount]
-  blockNumber: Int!
-  block: Block!
+  blockNumber: String!
+  timestamp: Date!
+  status: ProposalBatchStatus!
+  proposals: [ProposalInABatch]!
+  chain: Chain!
 }

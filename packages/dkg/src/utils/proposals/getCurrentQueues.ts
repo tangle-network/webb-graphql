@@ -1,516 +1,148 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-/**
- * Get current signed and unsigned queues
- */
-import {
-  ProposalCounter,
-  ProposalItem,
-  ProposalStatus,
-  ProposalStatusCount,
-  ProposalTimelineStatus,
-  ProposalType,
-  ProposalTypeCount,
-  ProposalVote,
-  Proposer,
-  UnsignedProposalsQueue,
-  UnsignedProposalsQueueItem,
-  VoteType,
-} from '../../types';
 const {
-  DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsHeaderTypedChainId,
+  DkgRuntimePrimitivesProposalDkgPayloadKey,
   WebbProposalsProposalProposalKind,
-} = require('@webb-tools/dkg-substrate-types/interfaces/types-lookup');
-import { ensureAccount, ensureBlock } from '../../handlers';
-import { AccountId32 } from '@polkadot/types/interfaces/runtime';
-import { Vec } from '@polkadot/types-codec';
+} = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
+import {
+  Proposal,
+  ProposalTimeline,
+  ProposalType,
+  ProposalBatch,
+  ProposalBatchStatus,
+  Chain,
+  ProposalProposerWithVote,
+  ProposalInABatch,
+} from '../../types';
 
-export interface UnsignedProposalQueueItem {
-  key: Key;
-  value: Value;
-}
-
-export interface Key {
-  id: string;
-  chainId: string;
-  dkgKey: DkgKey;
-}
-
-export type DkgKey = Record<ProposalType, string>;
-
-export interface Unsigned {
-  kind: ProposalType;
-  data: string;
-}
-
-export interface Value {
-  proposal: Proposal;
-  timestamp: number;
-}
-
-export interface Signed {
-  kind: string;
-  data: string;
-  signature: string;
-}
-
-export interface Proposal {
-  unsigned: Unsigned;
-  signed: Signed;
-}
-
-export function dkgPayloadKeyToProposalType(
+export const getProposalType = (
   dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey | typeof WebbProposalsProposalProposalKind
-): ProposalType {
+): ProposalType => {
   switch (dkgKey.type) {
-    case 'EvmProposal' || 'Evm':
-      return ProposalType.EvmProposal;
-    case 'RefreshVote' || 'Refresh':
-      return ProposalType.RefreshVote;
-    case 'ProposerSetUpdateProposal' || 'ProposerSetUpdate':
-      return ProposalType.ProposerSetUpdateProposal;
-    case 'AnchorCreateProposal' || 'AnchorCreate':
-      return ProposalType.AnchorCreateProposal;
-    case 'AnchorUpdateProposal' || 'AnchorUpdate':
-      return ProposalType.AnchorUpdateProposal;
-    case 'TokenAddProposal' || 'TokenAdd':
-      return ProposalType.TokenAddProposal;
-    case 'TokenRemoveProposal' || 'TokenRemove':
-      return ProposalType.TokenRemoveProposal;
-    case 'WrappingFeeUpdateProposal' || 'WrappingFeeUpdate':
-      return ProposalType.WrappingFeeUpdateProposal;
-    case 'ResourceIdUpdateProposal' || 'ResourceIdUpdate':
-      return ProposalType.ResourceIdUpdateProposal;
-    case 'RescueTokensProposal' || 'RescueTokens':
-      return ProposalType.RescueTokensProposal;
-    case 'MaxDepositLimitUpdateProposal' || 'MaxDepositLimitUpdate':
-      return ProposalType.MaxDepositLimitUpdateProposal;
-    case 'MinWithdrawalLimitUpdateProposal' || 'MinWithdrawalLimitUpdate':
-      return ProposalType.MinWithdrawalLimitUpdateProposal;
-    case 'SetVerifierProposal' || 'SetVerifier':
-      return ProposalType.SetVerifierProposal;
-    case 'SetTreasuryHandlerProposal' || 'SetTreasuryHandler':
-      return ProposalType.SetTreasuryHandlerProposal;
-    case 'FeeRecipientUpdateProposal' || 'FeeRecipientUpdate':
-      return ProposalType.FeeRecipientUpdateProposal;
+    case 'RefreshProposal':
+      return ProposalType.Refresh;
+    case 'EvmProposal':
+      return ProposalType.Evm;
+    case 'AnchorCreateProposal':
+      return ProposalType.AnchorCreate;
+    case 'AnchorUpdateProposal':
+      return ProposalType.AnchorUpdate;
+    case 'TokenAddProposal':
+      return ProposalType.TokenAdd;
+    case 'TokenRemoveProposal':
+      return ProposalType.TokenRemove;
+    case 'WrappingFeeUpdateProposal':
+      return ProposalType.WrappingFeeUpdate;
+    case 'ResourceIdUpdateProposal':
+      return ProposalType.ResourceIdUpdate;
+    case 'RescueTokensProposal':
+      return ProposalType.RescueTokens;
+    case 'MaxDepositLimitUpdateProposal':
+      return ProposalType.MaxDepositLimitUpdate;
+    case 'MinWithdrawalLimitUpdateProposal':
+      return ProposalType.MinWithdrawalLimitUpdate;
+    case 'SetVerifierProposal':
+      return ProposalType.SetVerifier;
+    case 'SetTreasuryHandlerProposal':
+      return ProposalType.SetTreasuryHandler;
+    case 'FeeRecipientUpdateProposal':
+      return ProposalType.FeeRecipientUpdate;
   }
-}
-
-export async function ensureProposalQueue(blockId: string) {
-  const queue = await UnsignedProposalsQueue.get(blockId);
-  if (queue) {
-    return queue;
-  }
-  const newQueue = UnsignedProposalsQueue.create({
-    id: blockId,
-    blockId,
-    blockNumber: Number(blockId),
-  });
-  await newQueue.save();
-  return newQueue;
-}
-
-const ensureProposalQueueItem = async (
-  blockId: string,
-  proposalId: string,
-  chainId: string,
-  proposalType: ProposalType,
-  data: string
-) => {
-  const id = `${blockId}-${proposalId}`;
-  const item = await UnsignedProposalsQueueItem.get(id);
-  // TODO : Debug this more as the proposal isn't created while it should be
-  await ensureProposalItem({ blockId, nonce: proposalId, chainId, proposalType, data });
-  if (item) {
-    return item;
-  }
-  const newItem = UnsignedProposalsQueueItem.create({
-    id,
-    queueId: blockId,
-    proposalId,
-    blockNumber: Number(blockId),
-  });
-  await newItem.save();
-  return newItem;
 };
 
-export function createProposalId(
-  chainId: typeof WebbProposalsHeaderTypedChainId,
-  dkgKey: typeof DkgRuntimePrimitivesProposalDkgPayloadKey
-): string {
-  const dkgKeyHash = dkgKey.hash.toString();
-  const chainIdValue = chainId.value.toString();
-  return `${dkgKeyHash.replace('0x', '')}-${chainIdValue.trim() || '0'}`;
-}
-
-function stringToHash(str: string) {
-  let hash = 0;
-  if (str.length === 0) return hash;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash; // Convert to 32-bit integer
+export const getChain = (chain): Chain => {
+  switch (chain) {
+    case 'None':
+      return Chain.None;
+    case 'Evm':
+      return Chain.Evm;
+    case 'Substrate':
+      return Chain.Substrate;
+    case 'PolkadotParachain':
+      return Chain.PolkadotParachain;
+    case 'KusamaParachain':
+      return Chain.KusamaParachain;
+    case 'RococoParachain':
+      return Chain.RococoParachain;
+    case 'Cosmos':
+      return Chain.Cosmos;
+    case 'Solana':
+      return Chain.Solana;
+    case 'Ink':
+      return Chain.Ink;
   }
-  return Math.abs(hash);
-}
+};
 
-export function createNonceWithProposalType(nonce: number, proposalType: string): number {
-  const concatenatedString = `${nonce}${proposalType.toLowerCase()}`;
-  return stringToHash(concatenatedString);
-}
+type UpdateProposalBatchProps = {
+  id: string;
+  blockNumber?: string;
+  timestamp?: Date;
+  status?: ProposalBatchStatus;
+  proposals?: ProposalInABatch[];
+  chain?: Chain;
+};
 
-export type ProposalCreateInput = {
-  blockId: string;
-  proposalId: string;
+export const updateProposalBatch = async (proposalBatchToUpdate: UpdateProposalBatchProps) => {
+  const { id, blockNumber, timestamp, status, proposals, chain } = proposalBatchToUpdate;
+
+  let proposalBatch = await ProposalBatch.get(id);
+
+  if (!proposalBatch) {
+    proposalBatch = new ProposalBatch(id);
+  }
+
+  proposalBatch.blockNumber = blockNumber ? blockNumber : '';
+  proposalBatch.timestamp = timestamp ? timestamp : new Date();
+  proposalBatch.status = status ? status : ProposalBatchStatus.Unknown;
+  proposalBatch.proposals = proposals ? proposals : [];
+  proposalBatch.chain = chain ? chain : Chain.Unknown;
+
+  await proposalBatch.save();
+};
+
+export const createProposalID = (
+  targetChain: typeof WebbProposalsHeaderTypedChainId,
+  kind: string,
+  nonce: string
+): string => {
+  const proposalTargetChain = targetChain.hash.toString();
+  return `${proposalTargetChain.replace('0x', '')}-${kind}-${nonce}`;
+};
+
+type UpdateProposalProps = {
+  id: string;
+  blockNumber?: string;
+  timestamp?: Date;
   type: ProposalType;
-  data: string;
-  signature?: string;
-  nonce: number;
-  chainId: string;
+  data?: string;
+  timeline?: ProposalTimeline[];
+  proposersWithVotes?: ProposalProposerWithVote[];
 };
 
-function constructProposalItemId(
-  input: Omit<ProposalCreateInput, 'signature'> & {
-    signature?: string;
-    removed?: boolean;
+export const updateProposal = async (proposalToUpdate: UpdateProposalProps) => {
+  const { id, blockNumber, timestamp, type, data, timeline, proposersWithVotes } = proposalToUpdate;
+
+  let proposal = await Proposal.get(id);
+
+  if (!proposal) {
+    proposal = new Proposal(id);
+    proposal.id = id;
   }
-): string {
-  return `${input.blockId}-${input.proposalId}-${input.nonce}-${input.removed ? '0' : '1'}${
-    input.signature ? '1' : '0'
-  }`;
-}
-async function ensureAbstainVotes(
-  blockId: string,
-  proposalId: string,
-  proposalChainId: string,
-  proposalType: ProposalType,
-  data: string
-) {
-  const proposersAccounts: Vec<AccountId32> = (await api.query.dkgProposals.authorityProposers()) as any;
-  for (const account of proposersAccounts) {
-    await addVote(
-      {
-        blockId,
-        nonce: proposalId,
-        chainId: proposalChainId,
-        proposalType,
-        data,
-      },
-      account.toString(),
-      null,
-      blockId
-    );
+
+  proposal.blockNumber = blockNumber ? blockNumber : '';
+  proposal.timestamp = timestamp ? timestamp : new Date();
+  proposal.type = type;
+  proposal.timeline = timeline ? timeline : [];
+  proposal.data = data ? data : '';
+  proposal.proposersWithVotes = proposersWithVotes ? proposersWithVotes : [];
+
+  if (proposal.timeline && proposal.timeline.length > 0) {
+    proposal.timeline = [...proposal.timeline, ...timeline];
   }
-}
 
-/**
- *
- * Ensure a proposal item is added
- * return the proposal item if exists or creates a new unsigned empty votes proposal item
- * */
-export async function ensureProposalItemStorage(input: ProposalCreateInput): Promise<ProposalItem> {
-  const id = String(input.nonce);
-  const proposalItem = await ProposalItem.get(id);
-  if (proposalItem) {
-    return proposalItem;
+  if (proposal.proposersWithVotes && proposal.proposersWithVotes.length > 0) {
+    proposal.proposersWithVotes = [...proposal.proposersWithVotes, ...proposersWithVotes];
   }
-  const { blockId, type, data, nonce } = input;
 
-  const block = await ensureBlock(blockId);
-  const status = {
-    blockNumber: blockId,
-    status: ProposalStatus.Open.toString(),
-    txHash: '',
-    timestamp: block.timestamp ?? new Date(),
-  };
-  const newProposal = ProposalItem.create({
-    id,
-    chainId: BigInt(input.chainId),
-    blockId,
-    data,
-    removed: false,
-    nonce,
-    type,
-    status: status.status.toString(),
-    blockNumber: Number(blockId),
-  });
-  const statusId = `${id}-${status.status}`;
-
-  const newStatus = ProposalTimelineStatus.create({
-    id: statusId,
-    status: ProposalStatus.Open,
-    proposalItemId: id,
-    blockNumber: block.number,
-    timestamp: block.timestamp,
-  });
-  await Promise.all([newProposal.save(), newStatus.save()]);
-
-  await ensureAbstainVotes(blockId, id, input.chainId, type, data);
-
-  return newProposal;
-}
-
-type ProposalItemFindInput = {
-  blockId: string;
-  nonce: string;
-  chainId: string;
-  proposalType: ProposalType;
-  data: string;
+  await proposal.save();
 };
-
-export async function ensureProposalItem(input: ProposalItemFindInput) {
-  const { blockId, nonce } = input;
-  const id = String(nonce);
-  const proposal = await ProposalItem.get(id);
-  if (proposal) {
-    return proposal;
-  }
-  const block = await ensureBlock(blockId);
-  const status = {
-    blockNumber: blockId,
-    status: ProposalStatus.Open.toString(),
-    txHash: '',
-    timestamp: block.timestamp ?? new Date(),
-  };
-  const newProposal = ProposalItem.create({
-    id,
-    chainId: BigInt(input.chainId),
-    blockId: input.blockId,
-    data: input.data,
-    removed: false,
-    nonce: Number(id),
-    type: input.proposalType,
-    signature: undefined,
-    status: status.status.toString(),
-    blockNumber: Number(blockId),
-  });
-  const statusId = `${id}-${status.status}`;
-  const newStatus = ProposalTimelineStatus.create({
-    id: statusId,
-    status: ProposalStatus.Open,
-    proposalItemId: id,
-    blockNumber: block.number,
-    timestamp: block.timestamp,
-  });
-
-  await Promise.all([newProposal.save(), newStatus.save()]);
-  // create abstain proposers
-  await ensureAbstainVotes(blockId, id, input.chainId, input.proposalType, input.data);
-  return newProposal;
-}
-
-export async function ensureProposer(accountId: string) {
-  const proposer = await Proposer.get(accountId);
-  if (proposer) {
-    return proposer;
-  }
-  await ensureAccount(accountId);
-  const newProposer = Proposer.create({
-    id: accountId,
-    accountId,
-  });
-  await newProposer.save();
-  return newProposer;
-}
-
-export async function addVote(
-  input: ProposalItemFindInput,
-  voter: string,
-  isFor: boolean | null = null,
-  blockId: string
-) {
-  const proposal = await ensureProposalItem(input);
-  const block = await ensureBlock(blockId);
-  await ensureProposer(voter);
-  const voteStatus = isFor === null ? VoteType.ABSTAIN : isFor ? VoteType.FOR : VoteType.AGAINST;
-  const newVote = ProposalVote.create({
-    id: `${proposal.id}-${voter}`,
-    blockId,
-    blockNumber: block.number,
-    voteStatus,
-    proposalId: proposal.id,
-    voterId: voter,
-  });
-  await newVote.save();
-}
-
-async function updateProposalStatus(findInput: ProposalItemFindInput, status: ProposalStatus, blockId: string) {
-  const proposal = await ensureProposalItem(findInput);
-  const block = await ensureBlock(blockId);
-
-  const currentStatus = proposal.status as ProposalStatus;
-  let nextStatus = currentStatus;
-  const statusId = `${proposal.id}-${status}`;
-  switch (currentStatus) {
-    case ProposalStatus.Signed:
-      {
-        switch (status) {
-          case ProposalStatus.Rejected:
-          case ProposalStatus.Accepted:
-          case ProposalStatus.Executed:
-          case ProposalStatus.FailedToExecute:
-            nextStatus = status;
-        }
-      }
-      break;
-    case ProposalStatus.Open:
-      {
-        switch (status) {
-          case ProposalStatus.Signed:
-          case ProposalStatus.Rejected:
-          case ProposalStatus.Accepted:
-          case ProposalStatus.Executed:
-          case ProposalStatus.FailedToExecute:
-            nextStatus = status;
-        }
-      }
-      break;
-  }
-  proposal.status = nextStatus;
-  const newStatus = ProposalTimelineStatus.create({
-    id: statusId,
-    status: nextStatus,
-    proposalItemId: proposal.id,
-    blockNumber: block.number,
-    timestamp: block.timestamp,
-  });
-  await Promise.all([proposal.save(), newStatus.save()]);
-  return proposal;
-}
-
-export async function approveProposal(findInput: ProposalItemFindInput, blockId: string) {
-  await updateProposalStatus(findInput, ProposalStatus.Accepted, blockId);
-}
-
-export async function rejectProposal(findInput: ProposalItemFindInput, blockId: string) {
-  await updateProposalStatus(findInput, ProposalStatus.Rejected, blockId);
-}
-
-export async function signProposal(findInput: ProposalItemFindInput, sig: string, blockId) {
-  const proposal = await updateProposalStatus(findInput, ProposalStatus.Signed, blockId);
-  proposal.signature = sig;
-  await proposal.save();
-}
-
-export async function removeProposal(findInput: ProposalItemFindInput, blockId: string) {
-  const proposal = await updateProposalStatus(findInput, ProposalStatus.Removed, blockId);
-  proposal.removed = true;
-  await proposal.save();
-}
-
-export async function executedProposal(findInput: ProposalItemFindInput, blockId: string) {
-  const proposal = await updateProposalStatus(findInput, ProposalStatus.Executed, blockId);
-  proposal.removed = true;
-  await proposal.save();
-}
-
-export async function failedProposal(findInput: ProposalItemFindInput, blockId: string) {
-  const proposal = await updateProposalStatus(findInput, ProposalStatus.FailedToExecute, blockId);
-  proposal.removed = true;
-  await proposal.save();
-}
-
-export async function createProposalCounter(blockId: string): Promise<ProposalCounter> {
-  const signedProposalsData = await api.query.dkgProposalHandler.signedProposals.entries();
-  const unSignedProposalsData = await api.query.dkgProposalHandler.unsignedProposalQueue.entries();
-  const parsedSigProposals = signedProposalsData.map(([key]) => {
-    const [_chainId, dkgKey] = key.args as unknown as [
-      typeof WebbProposalsHeaderTypedChainId,
-      typeof DkgRuntimePrimitivesProposalDkgPayloadKey
-    ];
-    const proposalType = dkgPayloadKeyToProposalType(dkgKey as any);
-    const nonce = createNonceWithProposalType(dkgKey.value, Object.keys(JSON.parse(dkgKey.toString()))[0]);
-    return {
-      proposalId: nonce,
-      proposalType,
-    };
-  });
-  const parsedUnSigProposals = unSignedProposalsData.map(([key, data]) => {
-    const [chainId, dkgKey] = key.args as unknown as [
-      typeof WebbProposalsHeaderTypedChainId,
-      typeof DkgRuntimePrimitivesProposalDkgPayloadKey
-    ];
-    const proposalType = dkgPayloadKeyToProposalType(dkgKey as any);
-    const nonce = createNonceWithProposalType(dkgKey.value, Object.keys(JSON.parse(dkgKey.toString()))[0]);
-    return {
-      chainId: chainId.value.toString(),
-      proposalId: nonce,
-      proposalType,
-      data: JSON.parse(data.toString()).proposal.unsigned.data,
-    };
-  });
-  const signedCounter: Partial<Record<ProposalType, ProposalTypeCount>> = {};
-  const unSignedCounter: Partial<Record<ProposalType, ProposalTypeCount>> = {};
-
-  parsedSigProposals.forEach((proposal) => {
-    if (signedCounter[proposal.proposalType]) {
-      signedCounter[proposal.proposalType].count = String(Number(signedCounter[proposal.proposalType].count) + 1);
-      signedCounter[proposal.proposalType].proposalId.push(proposal.proposalId.toString());
-    } else {
-      signedCounter[proposal.proposalType] = {
-        count: '1',
-        type: proposal.proposalType.toString(),
-        proposalId: [proposal.proposalId.toString()],
-      };
-    }
-  });
-
-  parsedUnSigProposals.forEach((proposal) => {
-    if (unSignedCounter[proposal.proposalType]) {
-      unSignedCounter[proposal.proposalType].count = String(Number(unSignedCounter[proposal.proposalType].count) + 1);
-      unSignedCounter[proposal.proposalType].proposalId.push(proposal.proposalId.toString());
-    } else {
-      unSignedCounter[proposal.proposalType] = {
-        count: '1',
-        type: proposal.proposalType.toString(),
-        proposalId: [proposal.proposalId.toString()],
-      };
-    }
-  });
-  const proposalStatusMap: Partial<Record<ProposalStatus, ProposalStatusCount>> = {};
-  const proposalsStatuses = [
-    ProposalStatus.Open,
-    ProposalStatus.Signed,
-    ProposalStatus.Accepted,
-    ProposalStatus.Rejected,
-    // ProposalStatus.Removed,
-    ProposalStatus.Executed,
-    ProposalStatus.FailedToExecute,
-  ].map(async (status) => {
-    const proposals = await ProposalItem.getByStatus(String(status));
-    proposals.forEach((proposal) => {
-      if (proposalStatusMap[status]) {
-        proposalStatusMap[status].count = String(Number(proposalStatusMap[status].count) + 1);
-        proposalStatusMap[status].proposalId.push(proposal.id);
-      } else {
-        proposalStatusMap[status] = {
-          count: '1',
-          status: status.toString(),
-          proposalId: [proposal.id],
-        };
-      }
-    });
-  });
-  await Promise.all(proposalsStatuses);
-  const signedProposalsCount = signedProposalsData.length;
-  const unSignedProposalsCount = unSignedProposalsData.length;
-  const counterId = blockId;
-  const counter = ProposalCounter.create({
-    id: counterId,
-    blockNumber: Number(blockId),
-    blockId,
-    signedProposalsCount,
-    unSignedProposalsCount,
-    signedProposalsMap: Object.values(signedCounter),
-    unSignedProposalsMap: Object.values(unSignedCounter),
-    statusMap: Object.values(proposalStatusMap),
-  });
-  await ensureProposalQueue(blockId);
-  await Promise.all(
-    parsedUnSigProposals.map((p) => {
-      return ensureProposalQueueItem(blockId, p.proposalId.toString(), p.chainId, p.proposalType, p.data);
-    })
-  );
-  await counter.save();
-  return counter;
-}
