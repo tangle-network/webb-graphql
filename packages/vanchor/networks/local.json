@@ -1,0 +1,38 @@
+{
+  "sepolia": {
+    "vanchor": {
+      "address": "0x91eB86019FD8D7c5a9E31143D422850A13F670A3",
+      "startBlock": 0
+    }
+  },
+  "Athena": {
+    "vanchor": {
+      "address": "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99",
+      "startBlock": 0
+    },
+    "fungible-token-wrapper": {
+      "address": "0x915EbFAd9c4Af2F420782a5F03BD544f9a1FF1d1",
+      "startBlock": 0
+    }
+  },
+  "Hermes": {
+    "vanchor": {
+      "address": "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99",
+      "startBlock": 0
+    },
+    "fungible-token-wrapper": {
+      "address": "0x915EbFAd9c4Af2F420782a5F03BD544f9a1FF1d1",
+      "startBlock": 0
+    }
+  },
+  "Demeter": {
+    "vanchor": {
+      "address": "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99",
+      "startBlock": 0
+    },
+    "fungible-token-wrapper": {
+      "address": "0x915EbFAd9c4Af2F420782a5F03BD544f9a1FF1d1",
+      "startBlock": 0
+    }
+  }
+}
