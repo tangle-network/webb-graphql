@@ -26,7 +26,7 @@ services:
   ipfs:
     image: ipfs/go-ipfs:v0.10.0
     ports:
-      - '5001:5001'
+      - '25827:5001'
     volumes:
       - ./data/ipfs:/data/ipfs
 
