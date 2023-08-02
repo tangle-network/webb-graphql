@@ -1,8 +1,8 @@
 <div align="center">
 <a href="https://www.webb.tools/">
     
-![Webb Logo](./assets/webb_banner_light.png#gh-light-mode-only)
-![Webb Logo](./assets/webb_banner_dark.png#gh-dark-mode-only)
+![Webb Logo](../../assets/webb_banner_light.png#gh-light-mode-only)
+![Webb Logo](../..//assets/webb_banner_dark.png#gh-dark-mode-only)
   </a>
   </div>
 <h1 align="left"> 🛰️ 🕸️ Webb VAnchor 🕸️ 🛰️ </h1>
@@ -30,15 +30,72 @@
 
 <h2 style="border-bottom:none"> Quick Start ⚡ </h2>
 
-- Please edit chain RPC info in `./configs/chains.toml`. Please make sure you're using the correct RPC info for each chain.
-- Please make sure you have correct contract address for vAnchor and FungibleTokenContracts in `./networks.json` for each of those chains.
+- Please edit chain RPC info in `./configs/chains.prod.toml`. Please make sure you're using the correct RPC info for each chain.
+- Please make sure you have correct contract address for vAnchor and FungibleTokenContracts in `./networks/live.json` for each of those chains.
 
 ```bash
 yarn install
-yarn redeploy-all-local
+yarn redeploy-all-orbit
 ```
 
 Graph explorer URL for all chains will be printed on your console. You can use those URL's to explore the graph.
+
+<h2 id="contribute"> Development </h2>
+
+1. To start develop this project, run the Orbit first by following the [instruction](https://github.com/webb-tools/orbit#-quick-start--) in Orbit repo.
+
+2. Update these environment variables in `.env` file after copying from `.env.example` file.
+
+```bash
+export ATHENA_CHAIN_ID=5002
+export HERMES_CHAIN_ID=5001
+export DEMETER_CHAIN_ID=5003
+export ATHENA_CHAIN_PORT=5002
+export HERMES_CHAIN_PORT=5001
+export DEMETER_CHAIN_PORT=5003
+```
+
+3. Still on Orbit repo, change directory to `deploy` and run `yarn install` to install all dependencies.
+
+4. Make a new deployment by the following command.
+
+```bash
+yarn deploy --deployWeth --allowWrappingNativeToken
+```
+
+5. Run the deposit script to generate some transactions for testing.
+
+```bash
+yarn deposit --contractAddress <DEPLOYED_ANCHOR_ADDRESS>
+```
+
+6. Go back to this repo and make sure you have correct chain RPC info in `./configs/chains.toml` and correct contract address for vAnchor and FungibleTokenContracts in `./networks/local.json` for each of those chains.
+
+7. Run the following command to start the graph node.
+
+```bash
+yarn redeploy-all-local
+```
+
+<h2 id="useful-commands"> Useful Commands </h2>
+
+- Sometimes, when restart the graph node, you might need to clear the graph node data. You can do so by running the following command.
+
+```bash
+yarn clean
+```
+
+- To stop the graph node, run the following command.
+
+```bash
+docker compose -f <DOCKER_COMPOSE_FILE> down -v
+```
+
+- Follow the docker compose logs after starting the graph node.
+
+```bash
+docker compose -f <DOCKER_COMPOSE_FILE> logs -f
+```
 
 <h2 id="contribute"> Contributing </h2>
 
