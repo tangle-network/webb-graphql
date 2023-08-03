@@ -1,15 +1,26 @@
 {
   "compilerOptions": {
     "lib": ["es5", "es6", "dom"],
-    "rootDir": "./src/",
-    "module": "system",
-    "outFile": "./dist/index.js",
-    "skipLibCheck": true
+    "module": "esnext",
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "target": "es5",
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "declaration": true
   },
+  "include": ["src/**/*.ts", ".graphclient/**/*.ts"],
   "exclude": [
     "node_modules",
     "./node_modules",
     "./node_modules/*",
+    "./dist/*",
     "./node_modules/@types/node/index.d.ts",
     "../../node_modules/*"
   ]

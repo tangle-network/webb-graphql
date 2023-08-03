@@ -1,4 +1,3 @@
-
 name: Publish
 
 on:
@@ -43,6 +42,5 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_USERNAME: 'Webb-Bot'
-          SLACK_CHANNEL: '#webb-protocol-solidity'
+          SLACK_CHANNEL: '#webb-api'
           SLACK_MESSAGE: 'A new version of ${GITHUB_REPOSITORY} packages was published!'
-

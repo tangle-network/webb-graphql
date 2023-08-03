@@ -1,0 +1,32 @@
+{
+  "Athena": {
+    "vanchor": {
+      "address": "0x91eB86019FD8D7c5a9E31143D422850A13F670A3",
+      "startBlock": 0
+    },
+    "fungible-token-wrapper": {
+      "address": "0xbfce6B877Ebff977bB6e80B24FbBb7bC4eBcA4df",
+      "startBlock": 0
+    }
+  },
+  "Hermes": {
+    "vanchor": {
+      "address": "0x91eB86019FD8D7c5a9E31143D422850A13F670A3",
+      "startBlock": 0
+    },
+    "fungible-token-wrapper": {
+      "address": "0xbfce6B877Ebff977bB6e80B24FbBb7bC4eBcA4df",
+      "startBlock": 0
+    }
+  },
+  "Demeter": {
+    "vanchor": {
+      "address": "0x91eB86019FD8D7c5a9E31143D422850A13F670A3",
+      "startBlock": 0
+    },
+    "fungible-token-wrapper": {
+      "address": "0xbfce6B877Ebff977bB6e80B24FbBb7bC4eBcA4df",
+      "startBlock": 0
+    }
+  }
+}
