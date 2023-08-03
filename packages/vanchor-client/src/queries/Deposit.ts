@@ -1,14 +1,24 @@
-// @ts-ignore
-import { execute } from "../../.graphclient"
-import { SubgraphUrl } from "../config"
+import { execute } from '../../.graphclient';
+import { SubgraphUrl } from '../config';
 
-export interface DepositByChain { subgraphUrl: SubgraphUrl, deposit: number }
+export interface DepositByChain {
+  subgraphUrl: SubgraphUrl;
+  deposit: number;
+}
 
-export interface DepositByChainAndByToken extends DepositByChain { tokenSymbol: string }
+export interface DepositByChainAndByToken extends DepositByChain {
+  tokenSymbol: string;
+}
 
-export interface DepositByVAnchor { vAnchorAddress: string, deposit: number }
+export interface DepositByVAnchor {
+  vAnchorAddress: string;
+  deposit: number;
+}
 
-export const GetVAnchorDepositByChain = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string): Promise<DepositByChain> => {
+export const GetVAnchorDepositByChain = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string
+): Promise<DepositByChain> => {
   const query = `
   query Deposit {
   vanchorDeposit(id: "${vAnchorAddress.toLowerCase()}"){
@@ -16,64 +26,84 @@ export const GetVAnchorDepositByChain = async (subgraphUrl: SubgraphUrl, vAnchor
     deposit
   }
 }
-`
-  const result = await execute(query, {}, {
-    subgraphUrl,
-  })
+`;
+  const result = await execute(
+    query,
+    {},
+    {
+      subgraphUrl,
+    }
+  );
 
   return {
     deposit: result.data.vanchorDeposit?.deposit,
-    subgraphUrl: subgraphUrl
-  }
-}
+    subgraphUrl: subgraphUrl,
+  };
+};
 
-export const GetVAnchorDepositByChains = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string): Promise<Array<DepositByChain>> => {
+export const GetVAnchorDepositByChains = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vAnchorAddress: string
+): Promise<Array<DepositByChain>> => {
   const promises: Array<Promise<DepositByChain>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
-    promises.push(GetVAnchorDepositByChain(subgraphUrl, vAnchorAddress))
-
+    promises.push(GetVAnchorDepositByChain(subgraphUrl, vAnchorAddress));
   }
 
   return await Promise.all(promises);
-}
+};
 
-export const GetVAnchorsDepositByChain = async (subgraphUrl: SubgraphUrl, vanchorAddresses: Array<string>): Promise<Array<DepositByVAnchor>> => {
+export const GetVAnchorsDepositByChain = async (
+  subgraphUrl: SubgraphUrl,
+  vanchorAddresses: Array<string>
+): Promise<Array<DepositByVAnchor>> => {
   const query = `
   query DepositByVAnchor {
   vanchorDeposits(
-    where: {id_in: [${vanchorAddresses.map((address) => '"' + address.toLowerCase() + '"').join(",")}]}
+    where: {id_in: [${vanchorAddresses
+      .map((address) => '"' + address.toLowerCase() + '"')
+      .join(',')}]}
   ) {
     id
     deposit
   }
 }
-`
-  const result = await execute(query, {}, {
-    subgraphUrl,
-  })
+`;
+  const result = await execute(
+    query,
+    {},
+    {
+      subgraphUrl,
+    }
+  );
 
   return result.data.vanchorDeposits?.map((item: any) => {
     return {
       deposit: item?.deposit,
-      vAnchorAddress: item?.id
-    }
-  })
+      vAnchorAddress: item?.id,
+    };
+  });
+};
 
-}
-
-export const GetVAnchorsDepositByChains = async (subgraphUrls: Array<SubgraphUrl>, vanchorAddresses: Array<string>): Promise<Array<Array<DepositByVAnchor>>> => {
+export const GetVAnchorsDepositByChains = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddresses: Array<string>
+): Promise<Array<Array<DepositByVAnchor>>> => {
   const promises: Array<Promise<Array<DepositByVAnchor>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
-    promises.push(GetVAnchorsDepositByChain(subgraphUrl, vanchorAddresses))
+    promises.push(GetVAnchorsDepositByChain(subgraphUrl, vanchorAddresses));
   }
 
   return await Promise.all(promises);
+};
 
-}
-
-export const GetVAnchorDepositByChainAndByToken = async (subgraphUrl: SubgraphUrl, vAnchorAddress: string, tokenSymbol: string): Promise<DepositByChainAndByToken> => {
+export const GetVAnchorDepositByChainAndByToken = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  tokenSymbol: string
+): Promise<DepositByChainAndByToken> => {
   const query = `
   query MyQuery {
   vanchorDepositByTokens(
@@ -83,29 +113,42 @@ export const GetVAnchorDepositByChainAndByToken = async (subgraphUrl: SubgraphUr
     deposit
   }
 }
-`
-  const result = await execute(query, {}, {
-    subgraphUrl,
-  })
-
+`;
+  const result = await execute(
+    query,
+    {},
+    {
+      subgraphUrl,
+    }
+  );
 
   return {
-    deposit: result.data.vanchorDepositByTokens && result.data.vanchorDepositByTokens.length > 0 ? result.data.vanchorDepositByTokens[0].deposit : undefined,
+    deposit:
+      result.data.vanchorDepositByTokens &&
+      result.data.vanchorDepositByTokens.length > 0
+        ? result.data.vanchorDepositByTokens[0].deposit
+        : undefined,
     subgraphUrl: subgraphUrl,
-    tokenSymbol: tokenSymbol
-  }
-}
+    tokenSymbol: tokenSymbol,
+  };
+};
 
-export const GetVAnchorDepositByChainsAndByToken = async (subgraphUrls: Array<SubgraphUrl>, vAnchorAddress: string, tokenSymbol: string): Promise<Array<DepositByChainAndByToken>> => {
+export const GetVAnchorDepositByChainsAndByToken = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vAnchorAddress: string,
+  tokenSymbol: string
+): Promise<Array<DepositByChainAndByToken>> => {
   const promises: Array<Promise<DepositByChainAndByToken>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
-    promises.push(GetVAnchorDepositByChainAndByToken(subgraphUrl, vAnchorAddress, tokenSymbol))
-
+    promises.push(
+      GetVAnchorDepositByChainAndByToken(
+        subgraphUrl,
+        vAnchorAddress,
+        tokenSymbol
+      )
+    );
   }
 
   return await Promise.all(promises);
-}
-
-
-
+};

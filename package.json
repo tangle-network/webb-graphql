@@ -12,7 +12,7 @@
     "lint:fix": "nx run-many --all --target=lint:fix",
     "format": "prettier --write \"**/*.{ts,js}\" ",
     "format:check": "prettier --check \"**/*.{ts,js}\" ",
-    "compile": "cd packages/vanchor-client && yarn install && yarn compile",
+    "compile": "cd packages/vanchor-client && yarn install && yarn build",
     "publish:ci": "npm run compile && lerna run compile && lerna publish patch --yes --message 'chore: release new versions' "
   },
   "devDependencies": {
