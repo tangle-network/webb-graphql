@@ -18,10 +18,6 @@ provider = [{ label = "hermes", url = "https://hermes-testnet.webb.tools", featu
 shard = "primary"
 provider = [{ label = "demeter", url = "https://demeter-testnet.webb.tools", features= ["archive", "traces"]}]
 
-# [chains.Sepolia]
-# shard = "primary"
-# provider = [{ label = "sepolia", url = "https://sepolia.infura.io/v3/90de850aff68424ab8e7321017406586", features= []}]
-
 [deployment]
 shard = "primary"
 [[deployment.rule]]
