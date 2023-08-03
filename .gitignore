@@ -113,7 +113,6 @@ packages/**/node_modules
 packages/**/build
 packages/**/data
 packages/**/generated
-packages/**/.graphclient
 
 # DKG
 packages/dkg/node_modules
