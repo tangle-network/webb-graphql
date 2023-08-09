@@ -48,7 +48,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
         );
         const blockNumber = eventDecoder.blockNumber;
         const timestamp = (await Block.get(blockNumber)).timestamp;
-        const proposalType = getProposalType(eventData.kind + 'Proposal');
+        const proposalType = getProposalType({ type: eventData.kind + 'Proposal' });
         const proposerWithVote = {
           proposer: eventData.who.toString(),
           vote: ProposalVoteType.For,
@@ -75,7 +75,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
         );
         const blockNumber = eventDecoder.blockNumber;
         const timestamp = (await Block.get(blockNumber)).timestamp;
-        const proposalType = getProposalType(eventData.kind + 'Proposal');
+        const proposalType = getProposalType({ type: eventData.kind + 'Proposal' });
         const proposerWithVote = {
           proposer: eventData.who.toString(),
           vote: ProposalVoteType.Against,
@@ -102,7 +102,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
         );
         const blockNumber = eventDecoder.blockNumber;
         const timestamp = (await Block.get(blockNumber)).timestamp;
-        const proposalType = getProposalType(eventData.kind + 'Proposal');
+        const proposalType = getProposalType({ type: eventData.kind + 'Proposal' });
         const approvedTimeline = {
           status: ProposalTimelineStatus.Approved,
           timestamp: timestamp,
@@ -129,7 +129,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
         );
         const blockNumber = eventDecoder.blockNumber;
         const timestamp = (await Block.get(blockNumber)).timestamp;
-        const proposalType = getProposalType(eventData.kind + 'Proposal');
+        const proposalType = getProposalType({ type: eventData.kind + 'Proposal' });
         const rejectedTimeline = {
           status: ProposalTimelineStatus.Rejected,
           timestamp: timestamp,
@@ -156,7 +156,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
         );
         const blockNumber = eventDecoder.blockNumber;
         const timestamp = (await Block.get(blockNumber)).timestamp;
-        const proposalType = getProposalType(eventData.kind + 'Proposal');
+        const proposalType = getProposalType({ type: eventData.kind + 'Proposal' });
         const succeededTimeline = {
           status: ProposalTimelineStatus.Succeeded,
           timestamp: timestamp,
@@ -183,7 +183,7 @@ export async function dkgProposalEventHandler(event: SubstrateEvent) {
         );
         const blockNumber = eventDecoder.blockNumber;
         const timestamp = (await Block.get(blockNumber)).timestamp;
-        const proposalType = getProposalType(eventData.kind + 'Proposal');
+        const proposalType = getProposalType({ type: eventData.kind + 'Proposal' });
         const failedTimeline = {
           status: ProposalTimelineStatus.Failed,
           timestamp: timestamp,
