@@ -12,7 +12,7 @@ export default function recordDayIntervalTVL(
   amount: BigInt,
   time: BigInt
 ): void {
-  const date = getDate(time);
+  const date: i32 = getDate(time);
 
   const byTokenId =
     date.toString() +

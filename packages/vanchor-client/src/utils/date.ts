@@ -9,9 +9,3 @@ export class DateUtil {
     return date.getTime() / 1000;
   }
 }
-
-export function getValidDateToQuery(date: Date): Date {
-  const midnightDate = new Date(date);
-  midnightDate.setHours(0, 0, 0, 0);
-  return midnightDate;
-}

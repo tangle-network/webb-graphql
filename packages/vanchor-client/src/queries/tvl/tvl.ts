@@ -43,7 +43,7 @@ export const GetVAnchorTotalValueLockedByChain = async (
   );
 
   return {
-    totalValueLocked: result.data.vanchorTotalValueLocked?.totalValueLocked,
+    totalValueLocked: +result.data.vanchorTotalValueLocked?.totalValueLocked,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -89,7 +89,7 @@ export const GetVAnchorsTotalValueLockedByChain = async (
 
   return result.data.vanchorTotalValueLockeds?.map((item: any) => {
     return {
-      totalValueLocked: item?.totalValueLocked,
+      totalValueLocked: +item?.totalValueLocked,
       vAnchorAddress: item?.id,
     };
   });
@@ -137,8 +137,8 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
     totalValueLocked:
       result.data.vanchorTotalValueLockedByTokens &&
       result.data.vanchorTotalValueLockedByTokens.length > 0
-        ? result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked
-        : undefined,
+        ? +result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked
+        : 0,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };
