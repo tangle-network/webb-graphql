@@ -3,6 +3,7 @@
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "typings": "./src/index.ts",
+  "type": "module",
   "version": "0.1.13",
   "license": "MIT",
   "publishConfig": {
@@ -10,9 +11,9 @@
   },
   "scripts": {
     "dev": "graphclient serve-dev",
-    "build": "graphclient build",
+    "build": "graphclient build --fileType js",
     "compile": "tsc",
-    "start": "graphclient build && ts-node ./src/index.ts",
+    "start": "graphclient build --fileType js && ts-node ./src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",

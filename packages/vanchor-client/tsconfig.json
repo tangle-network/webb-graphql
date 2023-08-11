@@ -1,4 +1,8 @@
 {
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
   "compilerOptions": {
     "lib": ["es5", "es6", "dom"],
     "module": "esnext",
