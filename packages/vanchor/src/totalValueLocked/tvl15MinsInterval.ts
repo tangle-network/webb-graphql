@@ -6,7 +6,7 @@ import {
 import { getStartInterval, getEndInterval } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export function record15MinsIntervalTotalValueLocked(
+export default function record15MinsIntervalTVL(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   amount: BigInt,

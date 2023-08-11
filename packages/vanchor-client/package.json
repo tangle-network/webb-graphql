@@ -15,7 +15,8 @@
     "start": "graphclient build && ts-node ./src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "run-example": "ts-node ./src/example-queries.ts"
   },
   "dependencies": {
     "@graphprotocol/client-cli": "3.0.0",

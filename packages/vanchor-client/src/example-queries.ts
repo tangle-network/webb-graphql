@@ -4,20 +4,24 @@ import {
   GetVAnchorTotalValueLockedByChainAndByToken,
   GetVAnchorsTotalValueLockedByChain,
   GetVAnchorsTotalValueLockedByChains,
-} from './queries/TotalValueLocked';
-import {
-  GetVAnchorTotalValueLockedByChainHistory,
-  GetVAnchorTotalValueLockedByChainAndByTokenHistory,
-  GetVAnchorsTotalValueLockedByChainHistory,
-  GetVAnchorsTotalValueLockedByChainsHistory,
-} from './queries/TotalValueLockedHistory';
+  GetVAnchorTotalValueLockedByChain15MinsInterval,
+  GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval,
+  GetVAnchorsTotalValueLockedByChain15MinsInterval,
+  GetVAnchorsTotalValueLockedByChains15MinsInterval,
+  GetVAnchorTotalValueLockedByChainDayInterval,
+  GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
+  GetVAnchorsTotalValueLockedByChainDayInterval,
+  GetVAnchorsTotalValueLockedByChainsDayInterval,
+} from './queries/tvl';
 import { DateUtil } from './utils/date';
 
 async function main() {
   // Get total value locked by a vAnchor on a chain
   await runTvlQueries();
-  // // Total Value Locked History Queries.
-  await runTvlHistoryQueries();
+  // Total Value Locked Queries of 15 mins interval
+  await runTvl15MinsIntervalQueries();
+
+  await runTvlDayIntervalQueries;
 }
 
 main().catch((e) => {
@@ -29,7 +33,7 @@ async function runTvlQueries() {
   console.table(
     await GetVAnchorTotalValueLockedByChain(
       SubgraphUrl.vAnchorAthenaLocal,
-      '0xDa68464c391Da8ff60b40273F2Ef0a9971694F99'
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad'
     )
   );
 
@@ -37,7 +41,7 @@ async function runTvlQueries() {
   console.table(
     await GetVAnchorTotalValueLockedByChainAndByToken(
       SubgraphUrl.vAnchorAthenaLocal,
-      '0xDa68464c391Da8ff60b40273F2Ef0a9971694F99',
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad',
       'webbWETH'
     )
   );
@@ -45,27 +49,27 @@ async function runTvlQueries() {
   // Get total value locked by a multiple vAnchors on a chain
   console.table(
     await GetVAnchorsTotalValueLockedByChain(SubgraphUrl.vAnchorAthenaLocal, [
-      '0xDa68464c391Da8ff60b40273F2Ef0a9971694F99',
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad',
     ])
   );
 
   // Get total value locked by a multiple vAnchors on a multiple chains
   console.table(
     await GetVAnchorsTotalValueLockedByChains(Object.values(SubgraphUrl), [
-      '0xDa68464c391Da8ff60b40273F2Ef0a9971694F99',
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad',
     ])
   );
 }
 
-async function runTvlHistoryQueries() {
+async function runTvl15MinsIntervalQueries() {
   const startDate: Date = DateUtil.fromEpochToDate(1689260400);
   const endDate: Date = DateUtil.fromEpochToDate(1689260400 + 60 * 60 * 24);
 
   // Get total value locked by a vAnchor on a chain
   console.table(
-    await GetVAnchorTotalValueLockedByChainHistory(
+    await GetVAnchorTotalValueLockedByChain15MinsInterval(
       SubgraphUrl.vAnchorAthenaLocal,
-      '0xDa68464c391Da8ff60b40273F2Ef0a9971694F99',
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad',
       startDate,
       endDate
     )
@@ -73,9 +77,9 @@ async function runTvlHistoryQueries() {
 
   // Get total value locked by a vAnchor on a chain and by a token
   console.table(
-    await GetVAnchorTotalValueLockedByChainAndByTokenHistory(
+    await GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval(
       SubgraphUrl.vAnchorAthenaLocal,
-      '0xDa68464c391Da8ff60b40273F2Ef0a9971694F99',
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad',
       'webbWETH',
       startDate,
       endDate
@@ -84,9 +88,9 @@ async function runTvlHistoryQueries() {
 
   // Get total value locked by a multiple vAnchors on a chain
   console.table(
-    await GetVAnchorsTotalValueLockedByChainHistory(
+    await GetVAnchorsTotalValueLockedByChain15MinsInterval(
       SubgraphUrl.vAnchorAthenaLocal,
-      ['0xDa68464c391Da8ff60b40273F2Ef0a9971694F99'],
+      ['0x765A081120c1760d72D09d7c4e28Aa275D7D3fad'],
       startDate,
       endDate
     )
@@ -94,11 +98,51 @@ async function runTvlHistoryQueries() {
 
   // Get total value locked by a multiple vAnchors on a multiple chains
   console.table(
-    await GetVAnchorsTotalValueLockedByChainsHistory(
+    await GetVAnchorsTotalValueLockedByChains15MinsInterval(
       Object.values(SubgraphUrl),
-      ['0xDa68464c391Da8ff60b40273F2Ef0a9971694F99'],
+      ['0x765A081120c1760d72D09d7c4e28Aa275D7D3fad'],
       startDate,
       endDate
+    )
+  );
+}
+
+async function runTvlDayIntervalQueries() {
+  const date = DateUtil.fromEpochToDate(1691661600);
+  // Get total value locked by a vAnchor on a chain
+  console.table(
+    await GetVAnchorTotalValueLockedByChainDayInterval(
+      SubgraphUrl.vAnchorAthenaLocal,
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad',
+      date
+    )
+  );
+
+  // Get total value locked by a vAnchor on a chain and by a token
+  console.table(
+    await GetVAnchorTotalValueLockedByChainAndByTokenDayInterval(
+      SubgraphUrl.vAnchorAthenaLocal,
+      '0x765A081120c1760d72D09d7c4e28Aa275D7D3fad',
+      'webbWETH',
+      date
+    )
+  );
+
+  // Get total value locked by a multiple vAnchors on a chain
+  console.table(
+    await GetVAnchorsTotalValueLockedByChainDayInterval(
+      SubgraphUrl.vAnchorAthenaLocal,
+      ['0x765A081120c1760d72D09d7c4e28Aa275D7D3fad'],
+      date
+    )
+  );
+
+  // Get total value locked by a multiple vAnchors on a multiple chains
+  console.table(
+    await GetVAnchorsTotalValueLockedByChainsDayInterval(
+      Object.values(SubgraphUrl),
+      ['0x765A081120c1760d72D09d7c4e28Aa275D7D3fad'],
+      date
     )
   );
 }

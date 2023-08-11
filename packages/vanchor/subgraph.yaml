@@ -7,7 +7,7 @@ dataSources:
     network: Demeter
     source:
       abi: FungibleTokenWrapper
-      address: "0x915EbFAd9c4Af2F420782a5F03BD544f9a1FF1d1"
+      address: "0x1920d33AB0EC499b23Ca655a690164961c63A076"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -38,7 +38,7 @@ dataSources:
     network: Demeter
     source:
       abi: VAnchor
-      address: "0xDa68464c391Da8ff60b40273F2Ef0a9971694F99"
+      address: "0x765A081120c1760d72D09d7c4e28Aa275D7D3fad"
       startBlock: 0
     mapping:
       kind: ethereum/events

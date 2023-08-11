@@ -7,10 +7,13 @@ import {
   ShieldedTransaction,
 } from '../../generated/schema';
 import { ensureToken } from '../token';
-import { recordTotalValueLocked } from '../totalValueLocked';
+import {
+  recordTVL,
+  record15MinsIntervalTVL,
+  recordDayIntervalTVL,
+} from '../totalValueLocked';
 import { recordTotalFees } from '../relayerFees';
 import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
-import { record15MinsIntervalTotalValueLocked } from '../totalValueLocked/15MinsInterval';
 import { getTxnInputDataToDecode, isNativeToken } from '../utils/token';
 import { recordDeposit, recordDepositLog } from '../deposit';
 import { record15MinsIntervalDeposit } from '../deposit/15MinsInterval';
@@ -125,8 +128,14 @@ export const handleTransaction = (event: Insertion): void => {
       }
 
       // Record Total Value Locked
-      recordTotalValueLocked(newShieldedTx.vanchor, tokenAddress, value);
-      record15MinsIntervalTotalValueLocked(
+      recordTVL(newShieldedTx.vanchor, tokenAddress, value);
+      record15MinsIntervalTVL(
+        newShieldedTx.vanchor,
+        tokenAddress,
+        value,
+        event.block.timestamp
+      );
+      recordDayIntervalTVL(
         newShieldedTx.vanchor,
         tokenAddress,
         value,

@@ -1,15 +1,23 @@
 import {
   GetVAnchorTotalValueLockedByChain,
-  GetVAnchorTotalValueLockedByChainAndByToken,
+  GetVAnchorTotalValueLockedByChains,
   GetVAnchorsTotalValueLockedByChain,
   GetVAnchorsTotalValueLockedByChains,
-} from './queries/TotalValueLocked';
-import {
-  GetVAnchorTotalValueLockedByChainHistory,
-  GetVAnchorTotalValueLockedByChainAndByTokenHistory,
-  GetVAnchorsTotalValueLockedByChainHistory,
-  GetVAnchorsTotalValueLockedByChainsHistory,
-} from './queries/TotalValueLockedHistory';
+  GetVAnchorTotalValueLockedByChainAndByToken,
+  GetVAnchorTotalValueLockedByChainsAndByToken,
+  GetVAnchorTotalValueLockedByChain15MinsInterval,
+  GetVAnchorTotalValueLockedByChains15MinsInterval,
+  GetVAnchorsTotalValueLockedByChain15MinsInterval,
+  GetVAnchorsTotalValueLockedByChains15MinsInterval,
+  GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval,
+  GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval,
+  GetVAnchorTotalValueLockedByChainDayInterval,
+  GetVAnchorTotalValueLockedByChainsDayInterval,
+  GetVAnchorsTotalValueLockedByChainDayInterval,
+  GetVAnchorsTotalValueLockedByChainsDayInterval,
+  GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
+  GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
+} from './queries/tvl';
 import {
   GetVAnchorDepositByChain,
   GetVAnchorDepositByChainAndByToken,
@@ -112,15 +120,23 @@ const result = {
   },
   TotalValueLocked: {
     GetVAnchorTotalValueLockedByChain,
-    GetVAnchorTotalValueLockedByChainAndByToken,
+    GetVAnchorTotalValueLockedByChains,
     GetVAnchorsTotalValueLockedByChain,
     GetVAnchorsTotalValueLockedByChains,
-  },
-  TotalValueLockedHistory: {
-    GetVAnchorTotalValueLockedByChainHistory,
-    GetVAnchorTotalValueLockedByChainAndByTokenHistory,
-    GetVAnchorsTotalValueLockedByChainHistory,
-    GetVAnchorsTotalValueLockedByChainsHistory,
+    GetVAnchorTotalValueLockedByChainAndByToken,
+    GetVAnchorTotalValueLockedByChainsAndByToken,
+    GetVAnchorTotalValueLockedByChain15MinsInterval,
+    GetVAnchorTotalValueLockedByChains15MinsInterval,
+    GetVAnchorsTotalValueLockedByChain15MinsInterval,
+    GetVAnchorsTotalValueLockedByChains15MinsInterval,
+    GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval,
+    GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval,
+    GetVAnchorTotalValueLockedByChainDayInterval,
+    GetVAnchorTotalValueLockedByChainsDayInterval,
+    GetVAnchorsTotalValueLockedByChainDayInterval,
+    GetVAnchorsTotalValueLockedByChainsDayInterval,
+    GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
+    GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
   },
 };
 

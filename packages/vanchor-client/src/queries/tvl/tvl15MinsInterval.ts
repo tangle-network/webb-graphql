@@ -1,8 +1,8 @@
-import { execute } from '../../.graphclient';
-import { DateUtil } from '../utils/date';
-import { SubgraphUrl } from '../config';
+import { execute } from '../../../.graphclient';
+import { DateUtil } from '../../utils/date';
+import { SubgraphUrl } from '../../config';
 
-export interface TotalValueLockedByChainHistoryItem {
+export interface TotalValueLockedByChain15MinsIntervalItem {
   subgraphUrl: SubgraphUrl;
   totalValueLocked: number;
   startInterval: Date;
@@ -10,22 +10,22 @@ export interface TotalValueLockedByChainHistoryItem {
   vAnchorAddress: string;
 }
 
-export interface TotalValueLockedByChainAndByTokenHistoryItem
-  extends TotalValueLockedByChainHistoryItem {
+export interface TotalValueLockedByChainAndByToken15MinsIntervalItem
+  extends TotalValueLockedByChain15MinsIntervalItem {
   tokenSymbol: string;
 }
 
-export interface TotalValueLockedByVAnchorHistoryItem {
+export interface TotalValueLockedByVAnchor15MinsIntervalItem {
   vAnchorAddress: string;
   totalValueLocked: number;
 }
 
-export const GetVAnchorTotalValueLockedByChainHistory = async (
+export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<TotalValueLockedByChainHistoryItem> => {
+): Promise<TotalValueLockedByChain15MinsIntervalItem> => {
   const query = `
   query TotalValueLocked {
   vanchorTotalValueLockedEvery15Mins(
@@ -61,17 +61,18 @@ export const GetVAnchorTotalValueLockedByChainHistory = async (
   });
 };
 
-export const GetVAnchorTotalValueLockedByChainsHistory = async (
+export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<TotalValueLockedByChainHistoryItem>> => {
-  const promises: Array<Promise<TotalValueLockedByChainHistoryItem>> = [];
+): Promise<Array<TotalValueLockedByChain15MinsIntervalItem>> => {
+  const promises: Array<Promise<TotalValueLockedByChain15MinsIntervalItem>> =
+    [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorTotalValueLockedByChainHistory(
+      GetVAnchorTotalValueLockedByChain15MinsInterval(
         subgraphUrl,
         vAnchorAddress,
         startTimestamp,
@@ -83,12 +84,12 @@ export const GetVAnchorTotalValueLockedByChainsHistory = async (
   return await Promise.all(promises);
 };
 
-export const GetVAnchorsTotalValueLockedByChainHistory = async (
+export const GetVAnchorsTotalValueLockedByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<TotalValueLockedByVAnchorHistoryItem>> => {
+): Promise<Array<TotalValueLockedByVAnchor15MinsIntervalItem>> => {
   const query = `
   query TotalValueLockedByVAnchor {
   vanchorTotalValueLockedEvery15Mins(
@@ -126,31 +127,32 @@ export const GetVAnchorsTotalValueLockedByChainHistory = async (
     totalValueLockedMap[item?.vAnchorAddress] += item?.totalValueLocked;
   });
 
-  const totalValueLockedByVAnchorHistoryItems: Array<TotalValueLockedByVAnchorHistoryItem> =
+  const TotalValueLockedByVAnchor15MinsIntervalItems: Array<TotalValueLockedByVAnchor15MinsIntervalItem> =
     [];
 
   for (const key in totalValueLockedMap) {
-    totalValueLockedByVAnchorHistoryItems.push({
+    TotalValueLockedByVAnchor15MinsIntervalItems.push({
       vAnchorAddress: key,
       totalValueLocked: totalValueLockedMap[key],
     });
   }
 
-  return totalValueLockedByVAnchorHistoryItems;
+  return TotalValueLockedByVAnchor15MinsIntervalItems;
 };
 
-export const GetVAnchorsTotalValueLockedByChainsHistory = async (
+export const GetVAnchorsTotalValueLockedByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<Array<TotalValueLockedByVAnchorHistoryItem>>> => {
-  const promises: Array<Promise<Array<TotalValueLockedByVAnchorHistoryItem>>> =
-    [];
+): Promise<Array<Array<TotalValueLockedByVAnchor15MinsIntervalItem>>> => {
+  const promises: Array<
+    Promise<Array<TotalValueLockedByVAnchor15MinsIntervalItem>>
+  > = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorsTotalValueLockedByChainHistory(
+      GetVAnchorsTotalValueLockedByChain15MinsInterval(
         subgraphUrl,
         vanchorAddresses,
         startTimestamp,
@@ -162,13 +164,13 @@ export const GetVAnchorsTotalValueLockedByChainsHistory = async (
   return await Promise.all(promises);
 };
 
-export const GetVAnchorTotalValueLockedByChainAndByTokenHistory = async (
+export const GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<TotalValueLockedByChainAndByTokenHistoryItem>> => {
+): Promise<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>> => {
   const query = `
   query MyQuery {
   vanchorTotalValueLockedByTokenEvery15Mins(
@@ -204,28 +206,31 @@ export const GetVAnchorTotalValueLockedByChainAndByTokenHistory = async (
   );
 };
 
-export const GetVAnchorTotalValueLockedByChainsAndByTokenHistory = async (
-  subgraphUrls: Array<SubgraphUrl>,
-  vAnchorAddress: string,
-  tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
-): Promise<Array<Array<TotalValueLockedByChainAndByTokenHistoryItem>>> => {
-  const promises: Array<
-    Promise<Array<TotalValueLockedByChainAndByTokenHistoryItem>>
-  > = [];
+export const GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval =
+  async (
+    subgraphUrls: Array<SubgraphUrl>,
+    vAnchorAddress: string,
+    tokenSymbol: string,
+    startTimestamp: Date,
+    endTimestamp: Date
+  ): Promise<
+    Array<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>>
+  > => {
+    const promises: Array<
+      Promise<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>>
+    > = [];
 
-  for (const subgraphUrl of subgraphUrls) {
-    promises.push(
-      GetVAnchorTotalValueLockedByChainAndByTokenHistory(
-        subgraphUrl,
-        vAnchorAddress,
-        tokenSymbol,
-        startTimestamp,
-        endTimestamp
-      )
-    );
-  }
+    for (const subgraphUrl of subgraphUrls) {
+      promises.push(
+        GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval(
+          subgraphUrl,
+          vAnchorAddress,
+          tokenSymbol,
+          startTimestamp,
+          endTimestamp
+        )
+      );
+    }
 
-  return await Promise.all(promises);
-};
+    return await Promise.all(promises);
+  };
