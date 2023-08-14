@@ -2,8 +2,8 @@ import { execute } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
 
 export interface TotalValueLockedByChain {
+  totalValueLocked: number | undefined;
   subgraphUrl: SubgraphUrl;
-  totalValueLocked: number;
 }
 
 export interface TotalValueLockedByChainAndByToken
@@ -13,12 +13,12 @@ export interface TotalValueLockedByChainAndByToken
 
 export interface TotalValueLockedByVAnchor {
   vAnchorAddress: string;
-  totalValueLocked: number;
+  totalValueLocked: number | undefined;
 }
 
 export interface TotalValueLockedByVAnchorByChain {
   vAnchorAddress: string;
-  totalValueLocked: number;
+  totalValueLocked: number | undefined;
   subgraphUrl: SubgraphUrl;
 }
 
@@ -43,7 +43,10 @@ export const GetVAnchorTotalValueLockedByChain = async (
   );
 
   return {
-    totalValueLocked: +result.data.vanchorTotalValueLocked?.totalValueLocked,
+    totalValueLocked:
+      result.data.vanchorTotalValueLocked?.totalValueLocked == null
+        ? undefined
+        : +result.data.vanchorTotalValueLocked.totalValueLocked,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -138,7 +141,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
       result.data.vanchorTotalValueLockedByTokens &&
       result.data.vanchorTotalValueLockedByTokens.length > 0
         ? +result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked
-        : 0,
+        : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };
