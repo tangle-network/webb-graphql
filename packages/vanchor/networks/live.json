@@ -1,31 +1,31 @@
 {
   "Athena": {
     "vanchor": {
-      "address": "0x765A081120c1760d72D09d7c4e28Aa275D7D3fad",
+      "address": "0x7aA556dD0AF8bed063444E14A6A9af46C9266973",
       "startBlock": 0
     },
     "fungible-token-wrapper": {
-      "address": "0x1920d33AB0EC499b23Ca655a690164961c63A076",
+      "address": "0x58BA29259Aab901179A07899235e3CB88afE9079",
       "startBlock": 0
     }
   },
   "Hermes": {
     "vanchor": {
-      "address": "0x765A081120c1760d72D09d7c4e28Aa275D7D3fad",
+      "address": "0x7aA556dD0AF8bed063444E14A6A9af46C9266973",
       "startBlock": 0
     },
     "fungible-token-wrapper": {
-      "address": "0x1920d33AB0EC499b23Ca655a690164961c63A076",
+      "address": "0x58BA29259Aab901179A07899235e3CB88afE9079",
       "startBlock": 0
     }
   },
   "Demeter": {
     "vanchor": {
-      "address": "0x765A081120c1760d72D09d7c4e28Aa275D7D3fad",
+      "address": "0x7aA556dD0AF8bed063444E14A6A9af46C9266973",
       "startBlock": 0
     },
     "fungible-token-wrapper": {
-      "address": "0x1920d33AB0EC499b23Ca655a690164961c63A076",
+      "address": "0x58BA29259Aab901179A07899235e3CB88afE9079",
       "startBlock": 0
     }
   }
