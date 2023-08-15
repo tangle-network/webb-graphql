@@ -123,6 +123,7 @@ const result = {
     GetVAnchorsDepositByChainsDayInterval,
     GetVAnchorDepositByChainAndByTokenDayInterval,
     GetVAnchorDepositByChainsAndByTokenDayInterval,
+    GetVAnchorsDepositByChainByDateRange,
   },
   Withdrawal: {
     GetVAnchorWithdrawalByChain,
