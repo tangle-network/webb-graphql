@@ -65,7 +65,7 @@ export async function getMeshOptions() {
     name: 'vanchor',
     config: {
       endpoint:
-        '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorOrbitAthena}',
+        '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}',
     },
     baseDir,
     cache,

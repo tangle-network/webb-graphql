@@ -15,8 +15,12 @@ import {
 import { recordTotalFees } from '../relayerFees';
 import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
 import { getTxnInputDataToDecode, isNativeToken } from '../utils/token';
-import { recordDeposit, recordDepositLog } from '../deposit';
-import { record15MinsIntervalDeposit } from '../deposit/15MinsInterval';
+import {
+  recordDeposit,
+  recordDepositLog,
+  record15MinsIntervalDeposit,
+  recordDayIntervalDeposit,
+} from '../deposit';
 import { recordWithdrawal, recordWithdrawalLog } from '../withdraw';
 import { record15MinsIntervalWithdrawal } from '../withdraw/15MinsInterval';
 import { recordTransferLog } from '../transfer';
@@ -90,6 +94,12 @@ export const handleTransaction = (event: Insertion): void => {
         );
         recordDeposit(newShieldedTx.vanchor, tokenAddress, value.abs());
         record15MinsIntervalDeposit(
+          newShieldedTx.vanchor,
+          tokenAddress,
+          value.abs(),
+          event.block.timestamp
+        );
+        recordDayIntervalDeposit(
           newShieldedTx.vanchor,
           tokenAddress,
           value.abs(),

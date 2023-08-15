@@ -20,16 +20,24 @@ import {
 } from './queries/tvl';
 import {
   GetVAnchorDepositByChain,
-  GetVAnchorDepositByChainAndByToken,
+  GetVAnchorDepositByChains,
   GetVAnchorsDepositByChain,
   GetVAnchorsDepositByChains,
-} from './queries/Deposit';
-import {
-  GetVAnchorDepositByChainHistory,
-  GetVAnchorDepositByChainAndByTokenHistory,
-  GetVAnchorsDepositByChainHistory,
-  GetVAnchorsDepositByChainsHistory,
-} from './queries/DepositHistory';
+  GetVAnchorDepositByChainAndByToken,
+  GetVAnchorDepositByChainsAndByToken,
+  GetVAnchorDepositByChain15MinsInterval,
+  GetVAnchorDepositByChains15MinsInterval,
+  GetVAnchorsDepositByChain15MinsInterval,
+  GetVAnchorsDepositByChains15MinsInterval,
+  GetVAnchorDepositByChainAndByToken15MinsInterval,
+  GetVAnchorDepositByChainsAndByToken15MinsInterval,
+  GetVAnchorDepositByChainDayInterval,
+  GetVAnchorDepositByChainsDayInterval,
+  GetVAnchorsDepositByChainDayInterval,
+  GetVAnchorsDepositByChainsDayInterval,
+  GetVAnchorDepositByChainAndByTokenDayInterval,
+  GetVAnchorDepositByChainsAndByTokenDayInterval,
+} from './queries/deposit';
 import {
   GetVAnchorWithdrawalByChain,
   GetVAnchorWithdrawalByChainAndByToken,
@@ -96,15 +104,23 @@ const result = {
   },
   Deposit: {
     GetVAnchorDepositByChain,
-    GetVAnchorDepositByChainAndByToken,
+    GetVAnchorDepositByChains,
     GetVAnchorsDepositByChain,
     GetVAnchorsDepositByChains,
-  },
-  DepositHistory: {
-    GetVAnchorDepositByChainHistory,
-    GetVAnchorDepositByChainAndByTokenHistory,
-    GetVAnchorsDepositByChainHistory,
-    GetVAnchorsDepositByChainsHistory,
+    GetVAnchorDepositByChainAndByToken,
+    GetVAnchorDepositByChainsAndByToken,
+    GetVAnchorDepositByChain15MinsInterval,
+    GetVAnchorDepositByChains15MinsInterval,
+    GetVAnchorsDepositByChain15MinsInterval,
+    GetVAnchorsDepositByChains15MinsInterval,
+    GetVAnchorDepositByChainAndByToken15MinsInterval,
+    GetVAnchorDepositByChainsAndByToken15MinsInterval,
+    GetVAnchorDepositByChainDayInterval,
+    GetVAnchorDepositByChainsDayInterval,
+    GetVAnchorsDepositByChainDayInterval,
+    GetVAnchorsDepositByChainsDayInterval,
+    GetVAnchorDepositByChainAndByTokenDayInterval,
+    GetVAnchorDepositByChainsAndByTokenDayInterval,
   },
   Withdrawal: {
     GetVAnchorWithdrawalByChain,

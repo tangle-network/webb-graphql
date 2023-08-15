@@ -2,7 +2,7 @@ sources:
   - name: vanchor
     handler:
       graphql:
-        endpoint: '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorOrbitAthena}'
+        endpoint: '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}'
 
 additionalTypeDefs: |
   extend type ShieldedTransaction {
