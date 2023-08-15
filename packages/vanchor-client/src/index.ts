@@ -17,6 +17,7 @@ import {
   GetVAnchorsTotalValueLockedByChainsDayInterval,
   GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
   GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
+  GetVAnchorsTVLByChainByDateRange,
 } from './queries/tvl';
 import {
   GetVAnchorDepositByChain,
@@ -37,6 +38,7 @@ import {
   GetVAnchorsDepositByChainsDayInterval,
   GetVAnchorDepositByChainAndByTokenDayInterval,
   GetVAnchorDepositByChainsAndByTokenDayInterval,
+  GetVAnchorsDepositByChainByDateRange,
 } from './queries/deposit';
 import {
   GetVAnchorWithdrawalByChain,
@@ -153,6 +155,7 @@ const result = {
     GetVAnchorsTotalValueLockedByChainsDayInterval,
     GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
     GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
+    GetVAnchorsTVLByChainByDateRange,
   },
 };
 

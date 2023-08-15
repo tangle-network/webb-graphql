@@ -9,3 +9,13 @@ export class DateUtil {
     return date.getTime() / 1000;
   }
 }
+
+export const getEpochArray = (
+  startDate: Date,
+  numberOfDays: number
+): Array<number> => {
+  return Array.from(
+    { length: numberOfDays },
+    (_, idx) => DateUtil.fromDateToEpoch(startDate) + idx * 86400
+  );
+};

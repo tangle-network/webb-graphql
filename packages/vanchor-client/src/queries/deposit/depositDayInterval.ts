@@ -1,5 +1,5 @@
 import { execute } from '../../../.graphclient';
-import { DateUtil } from '../../utils/date';
+import { DateUtil, getEpochArray } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
 
 export interface DepositByChainDayIntervalItem {
@@ -17,6 +17,10 @@ export interface DepositByChainAndByTokenDayIntervalItem
 export interface DepositByVAnchorDayIntervalItem {
   vAnchorAddress: string;
   deposit: number;
+}
+
+export interface DepositVAnchorsDateRangeItem {
+  [epoch: number]: number;
 }
 
 export const GetVAnchorDepositByChainDayInterval = async (
@@ -204,4 +208,54 @@ export const GetVAnchorDepositByChainsAndByTokenDayInterval = async (
   }
 
   return await Promise.all(promises);
+};
+
+export const GetVAnchorsDepositByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vanchorAddresses: Array<string>,
+  dateStart: Date,
+  numberOfDays: number
+): Promise<DepositVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(dateStart, numberOfDays);
+  const query = `
+    query MyQuery {
+      vanchorDepositEveryDays(
+        where: {
+          date_in: [
+            ${dates.map((epochTime) => '"' + epochTime + '"').join(',')}
+          ],
+          vAnchorAddress_in: [
+            ${vanchorAddresses
+              .map((address) => '"' + address.toLowerCase() + '"')
+              .join(',')}
+          ]
+        }
+        orderBy: date
+      ) {
+        deposit
+        vAnchorAddress
+        date
+      }
+    }
+  `;
+
+  const result = await execute(
+    query,
+    {},
+    {
+      subgraphUrl,
+    }
+  );
+
+  const depositMapByDate: { [date: number]: number } = {};
+
+  for (const date of dates) {
+    depositMapByDate[date] = 0;
+  }
+
+  result.data.vanchorDepositEveryDays.forEach((item: any) => {
+    depositMapByDate[+item.date] += +item.deposit;
+  });
+
+  return depositMapByDate;
 };
