@@ -1,11 +1,13 @@
 name: lint 🧹
 on:
-  push:
-    branches:
-      - 'main'
-  pull_request:
-    branches:
-      - 'main'
+  # Temporay disable linting as we need to select one tool for managing mono-repo (nx or lerna)
+  # Depends on https://github.com/webb-tools/webb-graphql/issues/132
+  # push:
+  #   branches:
+  #     - 'main'
+  # pull_request:
+  #   branches:
+  #     - 'main'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

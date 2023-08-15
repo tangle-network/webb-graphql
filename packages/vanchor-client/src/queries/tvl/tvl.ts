@@ -1,9 +1,9 @@
-import { execute } from '../../.graphclient';
-import { SubgraphUrl } from '../config';
+import { execute } from '../../../.graphclient';
+import { SubgraphUrl } from '../../config';
 
 export interface TotalValueLockedByChain {
+  totalValueLocked: number | undefined;
   subgraphUrl: SubgraphUrl;
-  totalValueLocked: number;
 }
 
 export interface TotalValueLockedByChainAndByToken
@@ -13,12 +13,12 @@ export interface TotalValueLockedByChainAndByToken
 
 export interface TotalValueLockedByVAnchor {
   vAnchorAddress: string;
-  totalValueLocked: number;
+  totalValueLocked: number | undefined;
 }
 
 export interface TotalValueLockedByVAnchorByChain {
   vAnchorAddress: string;
-  totalValueLocked: number;
+  totalValueLocked: number | undefined;
   subgraphUrl: SubgraphUrl;
 }
 
@@ -43,7 +43,10 @@ export const GetVAnchorTotalValueLockedByChain = async (
   );
 
   return {
-    totalValueLocked: result.data.vanchorTotalValueLocked?.totalValueLocked,
+    totalValueLocked:
+      result.data.vanchorTotalValueLocked?.totalValueLocked == null
+        ? undefined
+        : +result.data.vanchorTotalValueLocked.totalValueLocked,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -89,7 +92,7 @@ export const GetVAnchorsTotalValueLockedByChain = async (
 
   return result.data.vanchorTotalValueLockeds?.map((item: any) => {
     return {
-      totalValueLocked: item?.totalValueLocked,
+      totalValueLocked: +item?.totalValueLocked,
       vAnchorAddress: item?.id,
     };
   });
@@ -137,7 +140,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
     totalValueLocked:
       result.data.vanchorTotalValueLockedByTokens &&
       result.data.vanchorTotalValueLockedByTokens.length > 0
-        ? result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked
+        ? +result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,

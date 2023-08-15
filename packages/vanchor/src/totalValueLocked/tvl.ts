@@ -1,47 +1,48 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
-  VAnchorTotalWrappingFee,
-  VAnchorTotalWrappingFeeByToken,
+  VAnchorTotalValueLocked,
+  VAnchorTotalValueLockedByToken,
 } from '../../generated/schema';
 import { getTokenSymbol } from '../token';
 
-export function recordTotalFees(
+export default function recordTVL(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
-  fee: BigInt
+  amount: BigInt
 ): void {
   const id = vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
   const vanchorTotalValueLockedByToken =
-    VAnchorTotalWrappingFeeByToken.load(id);
+    VAnchorTotalValueLockedByToken.load(id);
 
   if (!vanchorTotalValueLockedByToken) {
     const newVanchorTotalValueLockedByToken =
-      new VAnchorTotalWrappingFeeByToken(id);
-    newVanchorTotalValueLockedByToken.fees = fee;
-    newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
+      new VAnchorTotalValueLockedByToken(id);
+    newVanchorTotalValueLockedByToken.totalValueLocked = amount;
     newVanchorTotalValueLockedByToken.tokenSymbol =
       getTokenSymbol(tokenAddress);
+    newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
     newVanchorTotalValueLockedByToken.tokenAddress = tokenAddress;
     newVanchorTotalValueLockedByToken.save();
   } else {
-    vanchorTotalValueLockedByToken.fees =
-      vanchorTotalValueLockedByToken.fees.plus(fee);
+    vanchorTotalValueLockedByToken.totalValueLocked =
+      vanchorTotalValueLockedByToken.totalValueLocked.plus(amount);
     vanchorTotalValueLockedByToken.save();
   }
 
-  // Update the total fees for vanchor
-  const vanchorTotalValueLocked = VAnchorTotalWrappingFee.load(
+  // Update the total value locked for vanchor
+  const vanchorTotalValueLocked = VAnchorTotalValueLocked.load(
     vAnchorAddress.toHexString()
   );
 
   if (!vanchorTotalValueLocked) {
-    const newVanchorTotalValueLocked = new VAnchorTotalWrappingFee(
+    const newVanchorTotalValueLocked = new VAnchorTotalValueLocked(
       vAnchorAddress.toHexString()
     );
-    newVanchorTotalValueLocked.fees = fee;
+    newVanchorTotalValueLocked.totalValueLocked = amount;
     newVanchorTotalValueLocked.save();
   } else {
-    vanchorTotalValueLocked.fees = vanchorTotalValueLocked.fees.plus(fee);
+    vanchorTotalValueLocked.totalValueLocked =
+      vanchorTotalValueLocked.totalValueLocked.plus(amount);
     vanchorTotalValueLocked.save();
   }
 }
