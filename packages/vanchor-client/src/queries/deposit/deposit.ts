@@ -1,9 +1,9 @@
-import { execute } from '../../.graphclient';
-import { SubgraphUrl } from '../config';
+import { execute } from '../../../.graphclient';
+import { SubgraphUrl } from '../../config';
 
 export interface DepositByChain {
   subgraphUrl: SubgraphUrl;
-  deposit: number;
+  deposit: number | undefined;
 }
 
 export interface DepositByChainAndByToken extends DepositByChain {
@@ -12,21 +12,20 @@ export interface DepositByChainAndByToken extends DepositByChain {
 
 export interface DepositByVAnchor {
   vAnchorAddress: string;
-  deposit: number;
+  deposit: number | undefined;
 }
 
 export const GetVAnchorDepositByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<DepositByChain> => {
-  const query = `
-  query Deposit {
-  vanchorDeposit(id: "${vAnchorAddress.toLowerCase()}"){
-
-    deposit
-  }
-}
-`;
+  const query = /* GraphQL */ `
+    query Deposit {
+      vanchorDeposit(id: "${vAnchorAddress.toLowerCase()}") {
+        deposit
+      }
+    }
+  `;
   const result = await execute(
     query,
     {},
@@ -36,7 +35,10 @@ export const GetVAnchorDepositByChain = async (
   );
 
   return {
-    deposit: result.data.vanchorDeposit?.deposit,
+    deposit:
+      result.data.vanchorDeposit?.deposit == null
+        ? undefined
+        : +result.data.vanchorDeposit.deposit,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -58,7 +60,7 @@ export const GetVAnchorsDepositByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<DepositByVAnchor>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query DepositByVAnchor {
   vanchorDeposits(
     where: {id_in: [${vanchorAddresses
@@ -80,7 +82,7 @@ export const GetVAnchorsDepositByChain = async (
 
   return result.data.vanchorDeposits?.map((item: any) => {
     return {
-      deposit: item?.deposit,
+      deposit: +item.deposit,
       vAnchorAddress: item?.id,
     };
   });
@@ -104,7 +106,7 @@ export const GetVAnchorDepositByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<DepositByChainAndByToken> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorDepositByTokens(
     first: 1
@@ -126,7 +128,7 @@ export const GetVAnchorDepositByChainAndByToken = async (
     deposit:
       result.data.vanchorDepositByTokens &&
       result.data.vanchorDepositByTokens.length > 0
-        ? result.data.vanchorDepositByTokens[0].deposit
+        ? +result.data.vanchorDepositByTokens[0].deposit
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,

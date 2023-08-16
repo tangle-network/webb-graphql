@@ -26,7 +26,7 @@ export const GetVAnchorWithdrawalByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<WithdrawalByChainHistoryItem> => {
-  const query = `
+  const query = /* GraphQL */ `
   query Withdrawal {
   vanchorWithdrawalEvery15Mins(
     where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -89,7 +89,7 @@ export const GetVAnchorsWithdrawalByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<WithdrawalByVAnchorHistoryItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query WithdrawalByVAnchor {
   vanchorWithdrawalEvery15Mins(
     where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -168,7 +168,7 @@ export const GetVAnchorWithdrawalByChainAndByTokenHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<WithdrawalByChainAndByTokenHistoryItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorWithdrawalByTokenEvery15Mins(
     where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(

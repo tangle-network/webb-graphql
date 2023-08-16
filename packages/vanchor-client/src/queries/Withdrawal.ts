@@ -19,7 +19,7 @@ export const GetVAnchorWithdrawalByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<WithdrawalByChain> => {
-  const query = `
+  const query = /* GraphQL */ `
   query Withdrawal {
   vanchorWithdrawal(id: "${vAnchorAddress.toLowerCase()}"){
 
@@ -58,7 +58,7 @@ export const GetVAnchorsWithdrawalByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<WithdrawalByVAnchor>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query WithdrawalByVAnchor {
   vanchorWithdrawals(
     where: {id_in: [${vanchorAddresses
@@ -104,7 +104,7 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<WithdrawalByChainAndByToken> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorWithdrawalByTokens(
     first: 1

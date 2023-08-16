@@ -26,7 +26,7 @@ export const GetVAnchorTotalValueLockedByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<TotalValueLockedByChain> => {
-  const query = `
+  const query = /* GraphQL */ `
   query TotalValueLocked {
   vanchorTotalValueLocked(id: "${vAnchorAddress.toLowerCase()}"){
 
@@ -70,7 +70,7 @@ export const GetVAnchorsTotalValueLockedByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<TotalValueLockedByVAnchor>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query TotalValueLockedByVAnchor {
   vanchorTotalValueLockeds(
     where: {id_in: [${vanchorAddresses
@@ -118,7 +118,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<TotalValueLockedByChainAndByToken> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorTotalValueLockedByTokens(
     first: 1

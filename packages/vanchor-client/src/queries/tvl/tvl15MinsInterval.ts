@@ -26,7 +26,7 @@ export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<TotalValueLockedByChain15MinsIntervalItem> => {
-  const query = `
+  const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorTotalValueLockedEvery15Mins(
         where: {
@@ -91,7 +91,7 @@ export const GetVAnchorsTotalValueLockedByChain15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<TotalValueLockedByVAnchor15MinsIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
     query TotalValueLockedByVAnchor {
       vanchorTotalValueLockedEvery15Mins(
         where: {
@@ -174,7 +174,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
     query MyQuery {
       vanchorTotalValueLockedByTokenEvery15Mins(
         where: {

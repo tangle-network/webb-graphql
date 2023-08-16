@@ -1,8 +1,8 @@
-import { execute } from '../../.graphclient';
-import { DateUtil } from '../utils/date';
-import { SubgraphUrl } from '../config';
+import { execute } from '../../../.graphclient';
+import { DateUtil } from '../../utils/date';
+import { SubgraphUrl } from '../../config';
 
-export interface DepositByChainHistoryItem {
+export interface DepositByChain15MinsIntervalItem {
   subgraphUrl: SubgraphUrl;
   deposit: number;
   startInterval: Date;
@@ -10,23 +10,23 @@ export interface DepositByChainHistoryItem {
   vAnchorAddress: string;
 }
 
-export interface DepositByChainAndByTokenHistoryItem
-  extends DepositByChainHistoryItem {
+export interface DepositByChainAndByToken15MinsIntervalItem
+  extends DepositByChain15MinsIntervalItem {
   tokenSymbol: string;
 }
 
-export interface DepositByVAnchorHistoryItem {
+export interface DepositByVAnchor15MinsIntervalItem {
   vAnchorAddress: string;
   deposit: number;
 }
 
-export const GetVAnchorDepositByChainHistory = async (
+export const GetVAnchorDepositByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<DepositByChainHistoryItem> => {
-  const query = `
+): Promise<DepositByChain15MinsIntervalItem> => {
+  const query = /* GraphQL */ `
   query Deposit {
   vanchorDepositEvery15Mins(
     where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -52,7 +52,7 @@ export const GetVAnchorDepositByChainHistory = async (
 
   return result.data.vanchorDepositEvery15Mins?.map((item: any) => {
     return {
-      deposit: item?.deposit,
+      deposit: +item?.deposit,
       subgraphUrl: subgraphUrl,
       startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
       endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
@@ -61,17 +61,17 @@ export const GetVAnchorDepositByChainHistory = async (
   });
 };
 
-export const GetVAnchorDepositByChainsHistory = async (
+export const GetVAnchorDepositByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<DepositByChainHistoryItem>> => {
-  const promises: Array<Promise<DepositByChainHistoryItem>> = [];
+): Promise<Array<DepositByChain15MinsIntervalItem>> => {
+  const promises: Array<Promise<DepositByChain15MinsIntervalItem>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorDepositByChainHistory(
+      GetVAnchorDepositByChain15MinsInterval(
         subgraphUrl,
         vAnchorAddress,
         startTimestamp,
@@ -83,13 +83,13 @@ export const GetVAnchorDepositByChainsHistory = async (
   return await Promise.all(promises);
 };
 
-export const GetVAnchorsDepositByChainHistory = async (
+export const GetVAnchorsDepositByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<DepositByVAnchorHistoryItem>> => {
-  const query = `
+): Promise<Array<DepositByVAnchor15MinsIntervalItem>> => {
+  const query = /* GraphQL */ `
   query DepositByVAnchor {
   vanchorDepositEvery15Mins(
     where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -123,32 +123,34 @@ export const GetVAnchorsDepositByChainHistory = async (
       depositMap[item?.vAnchorAddress] = 0;
     }
 
-    depositMap[item?.vAnchorAddress] += item?.deposit;
+    depositMap[item?.vAnchorAddress] += +item?.deposit;
   });
 
-  const depositByVAnchorHistoryItems: Array<DepositByVAnchorHistoryItem> = [];
+  const depositByVAnchor15MinsIntervalItems: Array<DepositByVAnchor15MinsIntervalItem> =
+    [];
 
   for (const key in depositMap) {
-    depositByVAnchorHistoryItems.push({
+    depositByVAnchor15MinsIntervalItems.push({
       vAnchorAddress: key,
       deposit: depositMap[key],
     });
   }
 
-  return depositByVAnchorHistoryItems;
+  return depositByVAnchor15MinsIntervalItems;
 };
 
-export const GetVAnchorsDepositByChainsHistory = async (
+export const GetVAnchorsDepositByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<Array<DepositByVAnchorHistoryItem>>> => {
-  const promises: Array<Promise<Array<DepositByVAnchorHistoryItem>>> = [];
+): Promise<Array<Array<DepositByVAnchor15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<DepositByVAnchor15MinsIntervalItem>>> =
+    [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorsDepositByChainHistory(
+      GetVAnchorsDepositByChain15MinsInterval(
         subgraphUrl,
         vanchorAddresses,
         startTimestamp,
@@ -160,14 +162,14 @@ export const GetVAnchorsDepositByChainsHistory = async (
   return await Promise.all(promises);
 };
 
-export const GetVAnchorDepositByChainAndByTokenHistory = async (
+export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<DepositByChainAndByTokenHistoryItem>> => {
-  const query = `
+): Promise<Array<DepositByChainAndByToken15MinsIntervalItem>> => {
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorDepositByTokenEvery15Mins(
     where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -191,7 +193,7 @@ export const GetVAnchorDepositByChainAndByTokenHistory = async (
 
   return result.data.vanchorDepositByTokenEvery15Mins?.map((item: any) => {
     return {
-      deposit: item?.deposit,
+      deposit: +item?.deposit,
       subgraphUrl: subgraphUrl,
       startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
       endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
@@ -200,19 +202,20 @@ export const GetVAnchorDepositByChainAndByTokenHistory = async (
   });
 };
 
-export const GetVAnchorDepositByChainsAndByTokenHistory = async (
+export const GetVAnchorDepositByChainsAndByToken15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<Array<DepositByChainAndByTokenHistoryItem>>> => {
-  const promises: Array<Promise<Array<DepositByChainAndByTokenHistoryItem>>> =
-    [];
+): Promise<Array<Array<DepositByChainAndByToken15MinsIntervalItem>>> => {
+  const promises: Array<
+    Promise<Array<DepositByChainAndByToken15MinsIntervalItem>>
+  > = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorDepositByChainAndByTokenHistory(
+      GetVAnchorDepositByChainAndByToken15MinsInterval(
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol,

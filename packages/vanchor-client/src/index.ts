@@ -17,19 +17,29 @@ import {
   GetVAnchorsTotalValueLockedByChainsDayInterval,
   GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
   GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
+  GetVAnchorsTVLByChainByDateRange,
 } from './queries/tvl';
 import {
   GetVAnchorDepositByChain,
-  GetVAnchorDepositByChainAndByToken,
+  GetVAnchorDepositByChains,
   GetVAnchorsDepositByChain,
   GetVAnchorsDepositByChains,
-} from './queries/Deposit';
-import {
-  GetVAnchorDepositByChainHistory,
-  GetVAnchorDepositByChainAndByTokenHistory,
-  GetVAnchorsDepositByChainHistory,
-  GetVAnchorsDepositByChainsHistory,
-} from './queries/DepositHistory';
+  GetVAnchorDepositByChainAndByToken,
+  GetVAnchorDepositByChainsAndByToken,
+  GetVAnchorDepositByChain15MinsInterval,
+  GetVAnchorDepositByChains15MinsInterval,
+  GetVAnchorsDepositByChain15MinsInterval,
+  GetVAnchorsDepositByChains15MinsInterval,
+  GetVAnchorDepositByChainAndByToken15MinsInterval,
+  GetVAnchorDepositByChainsAndByToken15MinsInterval,
+  GetVAnchorDepositByChainDayInterval,
+  GetVAnchorDepositByChainsDayInterval,
+  GetVAnchorsDepositByChainDayInterval,
+  GetVAnchorsDepositByChainsDayInterval,
+  GetVAnchorDepositByChainAndByTokenDayInterval,
+  GetVAnchorDepositByChainsAndByTokenDayInterval,
+  GetVAnchorsDepositByChainByDateRange,
+} from './queries/deposit';
 import {
   GetVAnchorWithdrawalByChain,
   GetVAnchorWithdrawalByChainAndByToken,
@@ -68,7 +78,7 @@ import {
 } from './queries/WrappingFeeHistory';
 import { SubgraphUrl } from './config';
 
-const result = {
+const vAnchorClient = {
   SubgraphUrl,
   RelayerFee: {
     GetVAnchorTotalRelayerFeeByChain,
@@ -96,15 +106,24 @@ const result = {
   },
   Deposit: {
     GetVAnchorDepositByChain,
-    GetVAnchorDepositByChainAndByToken,
+    GetVAnchorDepositByChains,
     GetVAnchorsDepositByChain,
     GetVAnchorsDepositByChains,
-  },
-  DepositHistory: {
-    GetVAnchorDepositByChainHistory,
-    GetVAnchorDepositByChainAndByTokenHistory,
-    GetVAnchorsDepositByChainHistory,
-    GetVAnchorsDepositByChainsHistory,
+    GetVAnchorDepositByChainAndByToken,
+    GetVAnchorDepositByChainsAndByToken,
+    GetVAnchorDepositByChain15MinsInterval,
+    GetVAnchorDepositByChains15MinsInterval,
+    GetVAnchorsDepositByChain15MinsInterval,
+    GetVAnchorsDepositByChains15MinsInterval,
+    GetVAnchorDepositByChainAndByToken15MinsInterval,
+    GetVAnchorDepositByChainsAndByToken15MinsInterval,
+    GetVAnchorDepositByChainDayInterval,
+    GetVAnchorDepositByChainsDayInterval,
+    GetVAnchorsDepositByChainDayInterval,
+    GetVAnchorsDepositByChainsDayInterval,
+    GetVAnchorDepositByChainAndByTokenDayInterval,
+    GetVAnchorDepositByChainsAndByTokenDayInterval,
+    GetVAnchorsDepositByChainByDateRange,
   },
   Withdrawal: {
     GetVAnchorWithdrawalByChain,
@@ -137,7 +156,8 @@ const result = {
     GetVAnchorsTotalValueLockedByChainsDayInterval,
     GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
     GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
+    GetVAnchorsTVLByChainByDateRange,
   },
 };
 
-export default result;
+export default vAnchorClient;

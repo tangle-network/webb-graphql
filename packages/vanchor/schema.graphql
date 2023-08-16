@@ -287,7 +287,7 @@ type VAnchorDeposit @entity(immutable: false) {
   id: String! # vAnchor address
   deposit: BigInt! # Deposit in the vAnchor
   averageDeposit: BigInt! # average deposit in the vAnchor
-  totalCount: BigInt! # total count of withdrawal
+  totalCount: BigInt! # total count of deposit
 }
 
 type VAnchorDepositByToken @entity(immutable: false) {
@@ -297,7 +297,7 @@ type VAnchorDepositByToken @entity(immutable: false) {
   tokenSymbol: String! # token symbol
   deposit: BigInt! # Deposit in the vAnchor
   averageDeposit: BigInt! # average deposit in the vAnchor
-  totalCount: BigInt! # total count of withdrawal
+  totalCount: BigInt! # total count of deposit
 }
 
 type VAnchorDepositEvery15Min @entity(immutable: false) {
@@ -307,7 +307,7 @@ type VAnchorDepositEvery15Min @entity(immutable: false) {
   endInterval: BigInt! # end time of the interval
   deposit: BigInt! # Deposit in the vAnchor
   averageDeposit: BigInt! # average deposit in the vAnchor
-  totalCount: BigInt! # total count of withdrawal
+  totalCount: BigInt! # total count of deposit
 }
 
 type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
@@ -319,7 +319,27 @@ type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
   endInterval: BigInt! # end time of the interval
   deposit: BigInt! # Deposit in the vAnchor
   averageDeposit: BigInt! # average deposit in the vAnchor
-  totalCount: BigInt! # total count of withdrawal
+  totalCount: BigInt! # total count of deposit
+}
+
+type VAnchorDepositEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  date: BigInt! # timestamp of the date (at 00:00:00)
+  deposit: BigInt! # Deposit in the vAnchor
+  averageDeposit: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of deposit
+}
+
+type VAnchorDepositByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  date: BigInt! # timestamp of the date (at 00:00:00)
+  deposit: BigInt! # Deposit in the vAnchor
+  averageDeposit: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of deposit
 }
 
 type VAnchorDepositLog @entity(immutable: true) {

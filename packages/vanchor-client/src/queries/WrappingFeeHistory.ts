@@ -26,7 +26,7 @@ export const GetVAnchorWrappingFeeByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<WrappingFeeByChainHistoryItem> => {
-  const query = `
+  const query = /* GraphQL */ `
   query WrappingFee {
   vanchorWrappingFeeEvery15Mins(
     where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -89,7 +89,7 @@ export const GetVAnchorsWrappingFeeByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<WrappingFeeByVAnchorHistoryItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query WrappingFeeByVAnchor {
   vanchorWrappingFeeEvery15Mins(
     where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -168,7 +168,7 @@ export const GetVAnchorWrappingFeeByChainAndByTokenHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<WrappingFeeByChainAndByTokenHistoryItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorWrappingFeeByTokenEvery15Mins(
     where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(

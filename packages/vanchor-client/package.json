@@ -3,7 +3,6 @@
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "typings": "./src/index.ts",
-  "type": "module",
   "version": "0.1.14",
   "license": "MIT",
   "publishConfig": {
@@ -11,16 +10,21 @@
   },
   "scripts": {
     "dev": "graphclient serve-dev",
-    "build": "graphclient build --fileType js",
+    "build": "graphclient build",
     "compile": "tsc",
-    "start": "graphclient build --fileType js && ts-node ./src/index.ts",
+    "start": "graphclient build && ts-node --transpileOnly ./src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "run-example": "ts-node ./src/example-queries.ts"
+    "run-example": "ts-node --transpileOnly ./src/example-queries.ts",
+    "check": "tsc --pretty --noEmit"
   },
   "dependencies": {
     "@graphprotocol/client-cli": "3.0.0",
-    "graphql": "16.7.1"
+    "ts-node": "10.9.1",
+    "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "18.16.19"
   }
 }
