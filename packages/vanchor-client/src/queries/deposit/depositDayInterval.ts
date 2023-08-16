@@ -20,7 +20,7 @@ export interface DepositByVAnchorDayIntervalItem {
 }
 
 export interface DepositVAnchorsDateRangeItem {
-  [epoch: number]: number;
+  [epoch: string]: number;
 }
 
 export const GetVAnchorDepositByChainDayInterval = async (
@@ -247,10 +247,10 @@ export const GetVAnchorsDepositByChainByDateRange = async (
     }
   );
 
-  const depositMapByDate: { [date: number]: number } = {};
+  const depositMapByDate: DepositVAnchorsDateRangeItem = {};
 
   for (const date of dates) {
-    depositMapByDate[date] = 0;
+    depositMapByDate[date.toString()] = 0;
   }
 
   result.data.vanchorDepositEveryDays.forEach((item: any) => {

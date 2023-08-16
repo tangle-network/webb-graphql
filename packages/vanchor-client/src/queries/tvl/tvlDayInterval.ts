@@ -20,7 +20,7 @@ export interface TotalValueLockedByVAnchorDayIntervalItem {
 }
 
 export interface TVLVAnchorsDateRangeItem {
-  [epoch: number]: number;
+  [epoch: string]: number;
 }
 
 export const GetVAnchorTotalValueLockedByChainDayInterval = async (
@@ -259,10 +259,10 @@ export const GetVAnchorsTVLByChainByDateRange = async (
     }
   );
 
-  const tvlMapByDate: { [date: number]: number } = {};
+  const tvlMapByDate: TVLVAnchorsDateRangeItem = {};
 
   for (const date of dates) {
-    tvlMapByDate[date] = 0;
+    tvlMapByDate[date.toString()] = 0;
   }
 
   result.data.vanchorTotalValueLockedEveryDays.forEach((item: any) => {

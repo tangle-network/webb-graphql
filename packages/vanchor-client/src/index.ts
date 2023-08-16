@@ -78,7 +78,7 @@ import {
 } from './queries/WrappingFeeHistory';
 import { SubgraphUrl } from './config';
 
-const result = {
+const vAnchorClient = {
   SubgraphUrl,
   RelayerFee: {
     GetVAnchorTotalRelayerFeeByChain,
@@ -160,4 +160,4 @@ const result = {
   },
 };
 
-export default result;
+export default vAnchorClient;
