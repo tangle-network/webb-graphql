@@ -11,16 +11,15 @@
   },
   "scripts": {
     "dev": "graphclient serve-dev",
-    "build": "graphclient build --fileType js",
+    "build": "graphclient build",
     "compile": "tsc",
-    "start": "graphclient build --fileType js && ts-node ./src/index.ts",
+    "start": "graphclient build && ts-node ./src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
     "run-example": "ts-node ./src/example-queries.ts"
   },
   "dependencies": {
-    "@graphprotocol/client-cli": "3.0.0",
-    "graphql": "16.7.1"
+    "@graphprotocol/client-cli": "3.0.0"
   }
 }

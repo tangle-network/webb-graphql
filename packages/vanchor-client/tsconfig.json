@@ -1,7 +1,12 @@
 {
   "ts-node": {
     "esm": true,
-    "experimentalSpecifierResolution": "node"
+    "experimentalSpecifierResolution": "node",
+    "compilerOptions": {
+      "target": "es5",
+      "module": "es6",
+      "esModuleInterop": true
+    }
   },
   "compilerOptions": {
     "lib": ["es5", "es6", "dom"],
