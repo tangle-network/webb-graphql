@@ -6307,8 +6307,7 @@ export type DirectiveResolvers<ContextType = MeshContext & { subgraphUrl: string
 export type MeshContext = VanchorTypes.Context & BaseMeshContext;
 
 
-import { fileURLToPath } from '@graphql-mesh/utils';
-const baseDir = pathModule.join(pathModule.dirname(fileURLToPath(import.meta.url)), '..');
+const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/', '..');
 
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
@@ -6362,7 +6361,7 @@ sources[0] = {
           handler: vanchorHandler,
           transforms: vanchorTransforms
         }
-const additionalTypeDefs = [parse("extend type ShieldedTransaction {\n  subgraphUrl: String!\n}"),] as any[];
+const additionalTypeDefs = [parse("extend type ShieldedTransaction {\n  subgraphUrl: String!\n}\n"),] as any[];
 const additionalResolvers = await Promise.all([
         import("../src/resolvers.ts")
             .then(m => m.resolvers || m.default || m)

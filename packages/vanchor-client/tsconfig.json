@@ -1,36 +1,29 @@
 {
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node",
-    "compilerOptions": {
-      "target": "es5",
-      "module": "es6",
-      "esModuleInterop": true
-    }
-  },
   "compilerOptions": {
-    "lib": ["es5", "es6", "dom"],
-    "module": "esnext",
-    "skipLibCheck": true,
+    "baseUrl": ".",
     "outDir": "dist",
-    "target": "es5",
-    "allowJs": true,
-    "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "noImplicitThis": true,
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@graphprotocol/client-*": ["packages/*/src/index.ts"]
+    },
     "jsx": "preserve",
-    "incremental": true,
-    "declaration": true
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "sourceMap": true,
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*.ts", ".graphclient/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "./node_modules",
-    "./node_modules/*",
-    "./dist/*",
-    "./node_modules/@types/node/index.d.ts",
-    "../../node_modules/*"
-  ]
+  "exclude": ["**/dist", "**/temp"]
 }
