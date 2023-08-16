@@ -80,10 +80,12 @@ type UpdateProposalBatchProps = {
   status?: ProposalBatchStatus;
   proposals?: ProposalInABatch[];
   chain?: Chain;
+  timeline?: ProposalTimeline[];
+  proposers?: string[];
 };
 
 export const updateProposalBatch = async (proposalBatchToUpdate: UpdateProposalBatchProps) => {
-  const { id, blockNumber, timestamp, status, proposals, chain } = proposalBatchToUpdate;
+  const { id, blockNumber, timestamp, status, proposals, chain, timeline, proposers } = proposalBatchToUpdate;
 
   let proposalBatch = await ProposalBatch.get(id);
 
@@ -96,6 +98,8 @@ export const updateProposalBatch = async (proposalBatchToUpdate: UpdateProposalB
   proposalBatch.status = status ? status : ProposalBatchStatus.Unknown;
   proposalBatch.proposals = proposals ? proposals : [];
   proposalBatch.chain = chain ? chain : Chain.Unknown;
+  proposalBatch.timeline = timeline ? timeline : [];
+  proposalBatch.proposers = proposers ? proposers : [];
 
   await proposalBatch.save();
 };
@@ -120,7 +124,7 @@ type UpdateProposalProps = {
 };
 
 export const updateProposal = async (proposalToUpdate: UpdateProposalProps) => {
-  const { id, blockNumber, timestamp, type, data, timeline, proposersWithVotes } = proposalToUpdate;
+  const { id, blockNumber, timestamp, type, data } = proposalToUpdate;
 
   let proposal = await Proposal.get(id);
 
@@ -132,17 +136,7 @@ export const updateProposal = async (proposalToUpdate: UpdateProposalProps) => {
   proposal.blockNumber = blockNumber ? blockNumber : '';
   proposal.timestamp = timestamp ? timestamp : new Date();
   proposal.type = type;
-  proposal.timeline = timeline ? timeline : [];
   proposal.data = data ? data : '';
-  proposal.proposersWithVotes = proposersWithVotes ? proposersWithVotes : [];
-
-  if (proposal.timeline && proposal.timeline.length > 0) {
-    proposal.timeline = [...proposal.timeline, ...timeline];
-  }
-
-  if (proposal.proposersWithVotes && proposal.proposersWithVotes.length > 0) {
-    proposal.proposersWithVotes = [...proposal.proposersWithVotes, ...proposersWithVotes];
-  }
 
   await proposal.save();
 };

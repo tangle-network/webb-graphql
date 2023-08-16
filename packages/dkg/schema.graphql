@@ -239,9 +239,11 @@ enum ProposalVoteType {
 }
 
 enum ProposalTimelineStatus {
+  Added
   Approved
   Rejected
   Succeeded
+  Signed
   Failed
 }
 
@@ -290,4 +292,6 @@ type ProposalBatch @entity {
   status: ProposalBatchStatus!
   proposals: [ProposalInABatch]!
   chain: Chain!
+  timeline: [ProposalTimeline]
+  proposers: [String]
 }

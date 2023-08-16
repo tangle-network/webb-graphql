@@ -9,7 +9,7 @@ import {
   getChain,
   updateProposalBatch,
 } from '../../../utils/proposals/getCurrentQueues';
-import { Block, ProposalBatchStatus } from '../../../types';
+import { Block, ProposalBatchStatus, ProposalTimelineStatus } from '../../../types';
 
 /**
  *
@@ -49,6 +49,10 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const timestamp = (await Block.get(blockNumber)).timestamp;
         const proposaType = getProposalType(eventData.key);
         const data = eventData.data.toString();
+        const addedTimeline = {
+          status: ProposalTimelineStatus.Added,
+          timestamp: timestamp,
+        };
 
         await updateProposal({
           id: proposalID,
@@ -56,6 +60,7 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           timestamp: timestamp,
           type: proposaType,
           data: data,
+          timeline: [addedTimeline],
         });
 
         logger.info(`New Proposal Added of type: ${proposaType} at block: ${blockNumber}`);
@@ -110,6 +115,12 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const timestamp = (await Block.get(blockNumber)).timestamp;
         const proposals = eventData.proposals;
         const chain = getChain(eventData.targetChain.type);
+        const proposers = await api.query.dkgProposals.proposers();
+        const proposerArr = proposers.map((accountId) => accountId.toString());
+        const timeline = {
+          status: ProposalTimelineStatus.Signed,
+          timestamp: timestamp,
+        };
 
         await updateProposalBatch({
           id: proposalBatchId,
@@ -118,6 +129,8 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           timestamp: timestamp,
           proposals: proposals ?? [],
           chain: chain,
+          timeline: [timeline],
+          proposers: proposerArr,
         });
 
         logger.info(`New Proposal Batch of ID: ${proposalBatchId} Signed at block: ${blockNumber}`);
