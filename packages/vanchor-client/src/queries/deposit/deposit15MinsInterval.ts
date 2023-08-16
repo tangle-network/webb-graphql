@@ -26,7 +26,7 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<DepositByChain15MinsIntervalItem> => {
-  const query = `
+  const query = /* GraphQL */ `
   query Deposit {
   vanchorDepositEvery15Mins(
     where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -89,7 +89,7 @@ export const GetVAnchorsDepositByChain15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<DepositByVAnchor15MinsIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query DepositByVAnchor {
   vanchorDepositEvery15Mins(
     where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -169,7 +169,7 @@ export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<DepositByChainAndByToken15MinsIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorDepositByTokenEvery15Mins(
     where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(

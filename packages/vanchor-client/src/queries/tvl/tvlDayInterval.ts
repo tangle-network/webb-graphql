@@ -28,7 +28,7 @@ export const GetVAnchorTotalValueLockedByChainDayInterval = async (
   vAnchorAddress: string,
   date: Date
 ): Promise<TotalValueLockedByChainDayIntervalItem> => {
-  const query = `
+  const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorTotalValueLockedEveryDays(
         where: {
@@ -85,7 +85,7 @@ export const GetVAnchorsTotalValueLockedByChainDayInterval = async (
   vanchorAddresses: Array<string>,
   date: Date
 ): Promise<Array<TotalValueLockedByVAnchorDayIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
     query TotalValueLockedByVAnchor {
       vanchorTotalValueLockedEveryDays(
         where: {
@@ -163,7 +163,7 @@ export const GetVAnchorTotalValueLockedByChainAndByTokenDayInterval = async (
   tokenSymbol: string,
   date: Date
 ): Promise<Array<TotalValueLockedByChainAndByTokenDayIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
     query MyQuery {
       vanchorTotalValueLockedByTokenEveryDays(
         where: {
@@ -229,7 +229,7 @@ export const GetVAnchorsTVLByChainByDateRange = async (
   numberOfDays: number
 ): Promise<TVLVAnchorsDateRangeItem> => {
   const dates = getEpochArray(dateStart, numberOfDays);
-  const query = `
+  const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorTotalValueLockedEveryDays(
         where: {

@@ -26,22 +26,22 @@ export const GetVAnchorRelayerFeeByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<RelayerFeeByChainHistoryItem> => {
-  const query = `
-  query RelayerFee {
-  vanchorRelayerFeeEvery15Mins(
-    where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
+  const query = /* GraphQL */ `
+    query RelayerFee {
+      vanchorRelayerFeeEvery15Mins(
+        where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
+          endTimestamp
+        )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
     startTimestamp
   )}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    startInterval
-    relayerFee
-    vAnchorAddress
-    endInterval
-  }
-}
-`;
+        ) {
+          startInterval
+          relayerFee
+          vAnchorAddress
+          endInterval
+        }
+      }
+  `;
   const result = await execute(
     query,
     {},
@@ -89,7 +89,7 @@ export const GetVAnchorsRelayerFeeByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<RelayerFeeByVAnchorHistoryItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query RelayerFeeByVAnchor {
   vanchorRelayerFeeEvery15Mins(
     where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
@@ -168,7 +168,7 @@ export const GetVAnchorRelayerFeeByChainAndByTokenHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<RelayerFeeByChainAndByTokenHistoryItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorRelayerFeeByTokenEvery15Mins(
     where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(

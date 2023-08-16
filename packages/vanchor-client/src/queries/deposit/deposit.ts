@@ -19,7 +19,7 @@ export const GetVAnchorDepositByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<DepositByChain> => {
-  const query = `
+  const query = /* GraphQL */ `
     query Deposit {
       vanchorDeposit(id: "${vAnchorAddress.toLowerCase()}") {
         deposit
@@ -60,7 +60,7 @@ export const GetVAnchorsDepositByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<DepositByVAnchor>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query DepositByVAnchor {
   vanchorDeposits(
     where: {id_in: [${vanchorAddresses
@@ -106,7 +106,7 @@ export const GetVAnchorDepositByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<DepositByChainAndByToken> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorDepositByTokens(
     first: 1

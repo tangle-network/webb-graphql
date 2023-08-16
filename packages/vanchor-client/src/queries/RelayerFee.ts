@@ -20,14 +20,14 @@ export const GetVAnchorTotalRelayerFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<TotalRelayerFeeByChain> => {
-  const query = `
-  query TotalRelayerFee {
-  vanchorTotalRelayerFee(id: "${vAnchorAddress.toLowerCase()}"){
+  const query = /* GraphQL */ `
+    query TotalRelayerFee {
+      vanchorTotalRelayerFee(id: "${vAnchorAddress.toLowerCase()}"){
 
-    totalRelayerFee
-  }
-}
-`;
+        totalRelayerFee
+      }
+    }
+  `;
   const result = await execute(
     query,
     {},
@@ -61,18 +61,18 @@ export const GetVAnchorsTotalRelayerFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<TotalRelayerFeeByVAnchor>> => {
-  const query = `
-  query TotalRelayerFeeByVAnchor {
-  vanchorTotalRelayerFees(
-    where: {id_in: [${vanchorAddresses
-      .map((address) => '"' + address.toLowerCase() + '"')
-      .join(',')}]}
-  ) {
-    id
-    totalRelayerFee
-  }
-}
-`;
+  const query = /* GraphQL */ `
+    query TotalRelayerFeeByVAnchor {
+      vanchorTotalRelayerFees(
+        where: {id_in: [${vanchorAddresses
+          .map((address) => '"' + address.toLowerCase() + '"')
+          .join(',')}]}
+      ) {
+        id
+        totalRelayerFee
+      }
+    }
+  `;
   const result = await execute(
     query,
     {},
@@ -109,16 +109,16 @@ export const GetVAnchorTotalRelayerFeeByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<TotalRelayerFeeByChainAndByToken> => {
-  const query = `
-  query MyQuery {
-  vanchorTotalRelayerFeeByTokens(
-    first: 1
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    totalRelayerFee
-  }
-}
-`;
+  const query = /* GraphQL */ `
+    query MyQuery {
+      vanchorTotalRelayerFeeByTokens(
+        first: 1
+        where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
+      ) {
+        totalRelayerFee
+      }
+    }
+  `;
   const result = await execute(
     query,
     {},

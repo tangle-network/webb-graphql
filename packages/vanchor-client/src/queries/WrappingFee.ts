@@ -20,7 +20,7 @@ export const GetVAnchorTotalWrappingFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<TotalWrappingFeeByChain> => {
-  const query = `
+  const query = /* GraphQL */ `
   query TotalWrappingFee {
   vanchorTotalWrappingFee(id: "${vAnchorAddress.toLowerCase()}"){
 
@@ -61,7 +61,7 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<TotalWrappingFeeByVAnchor>> => {
-  const query = `
+  const query = /* GraphQL */ `
   query TotalWrappingFeeByVAnchor {
   vanchorTotalWrappingFees(
     where: {id_in: [${vanchorAddresses
@@ -109,7 +109,7 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<TotalWrappingFeeByChainAndByToken> => {
-  const query = `
+  const query = /* GraphQL */ `
   query MyQuery {
   vanchorTotalWrappingFeeByTokens(
     first: 1

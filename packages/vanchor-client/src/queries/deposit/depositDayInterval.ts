@@ -28,7 +28,7 @@ export const GetVAnchorDepositByChainDayInterval = async (
   vAnchorAddress: string,
   date: Date
 ): Promise<DepositByChainDayIntervalItem> => {
-  const query = `
+  const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorDepositEveryDays(
         where: {
@@ -81,7 +81,7 @@ export const GetVAnchorsDepositByChainDayInterval = async (
   vanchorAddresses: Array<string>,
   date: Date
 ): Promise<Array<DepositByVAnchorDayIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
     query TotalValueLockedByVAnchor {
       vanchorDepositEveryDays(
         where: {
@@ -153,7 +153,7 @@ export const GetVAnchorDepositByChainAndByTokenDayInterval = async (
   tokenSymbol: string,
   date: Date
 ): Promise<Array<DepositByChainAndByTokenDayIntervalItem>> => {
-  const query = `
+  const query = /* GraphQL */ `
     query MyQuery {
       vanchorDepositByTokenEveryDays(
         where: {
@@ -217,7 +217,7 @@ export const GetVAnchorsDepositByChainByDateRange = async (
   numberOfDays: number
 ): Promise<DepositVAnchorsDateRangeItem> => {
   const dates = getEpochArray(dateStart, numberOfDays);
-  const query = `
+  const query = /* GraphQL */ `
     query MyQuery {
       vanchorDepositEveryDays(
         where: {
