@@ -293,5 +293,4 @@ type ProposalBatch @entity {
   proposals: [ProposalInABatch]!
   chain: Chain!
   timeline: [ProposalTimeline]
-  proposers: [String]
 }

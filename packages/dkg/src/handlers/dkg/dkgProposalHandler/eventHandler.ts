@@ -115,8 +115,6 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
         const timestamp = (await Block.get(blockNumber)).timestamp;
         const proposals = eventData.proposals;
         const chain = getChain(eventData.targetChain.type);
-        const proposers = await api.query.dkgProposals.proposers();
-        const proposerArr = proposers.map((accountId) => accountId.toString());
         const timeline = {
           status: ProposalTimelineStatus.Signed,
           timestamp: timestamp,
@@ -130,7 +128,6 @@ export async function dkgProposalHandlerEventHandler(event: SubstrateEvent) {
           proposals: proposals ?? [],
           chain: chain,
           timeline: [timeline],
-          proposers: proposerArr,
         });
 
         logger.info(`New Proposal Batch of ID: ${proposalBatchId} Signed at block: ${blockNumber}`);

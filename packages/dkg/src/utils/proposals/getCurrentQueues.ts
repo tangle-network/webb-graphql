@@ -81,11 +81,10 @@ type UpdateProposalBatchProps = {
   proposals?: ProposalInABatch[];
   chain?: Chain;
   timeline?: ProposalTimeline[];
-  proposers?: string[];
 };
 
 export const updateProposalBatch = async (proposalBatchToUpdate: UpdateProposalBatchProps) => {
-  const { id, blockNumber, timestamp, status, proposals, chain, timeline, proposers } = proposalBatchToUpdate;
+  const { id, blockNumber, timestamp, status, proposals, chain, timeline } = proposalBatchToUpdate;
 
   let proposalBatch = await ProposalBatch.get(id);
 
@@ -99,7 +98,6 @@ export const updateProposalBatch = async (proposalBatchToUpdate: UpdateProposalB
   proposalBatch.proposals = proposals ? proposals : [];
   proposalBatch.chain = chain ? chain : Chain.Unknown;
   proposalBatch.timeline = timeline ? timeline : [];
-  proposalBatch.proposers = proposers ? proposers : [];
 
   await proposalBatch.save();
 };
