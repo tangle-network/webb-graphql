@@ -358,3 +358,50 @@ type VAnchorTransferLog @entity(immutable: true) {
   tokenSymbol: String! # token symbol
   timestamp: BigInt! # block timestamp
 }
+
+type VAnchorVolume @entity(immutable: false) {
+  id: String! # vAnchor address
+  volume: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorVolumeByToken @entity(immutable: false) {
+  id: String! # vAnchor address + token address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  volume: BigInt! 
+}
+
+type VAnchorVolumeEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  volume: BigInt! 
+}
+
+type VAnchorVolumeByTokenEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  volume: BigInt! 
+}
+
+type VAnchorVolumeEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  date: BigInt! # timestamp of the date (at 00:00:00)
+  volume: BigInt! 
+}
+
+type VAnchorVolumeByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  date: BigInt! # timestamp of the date (at 00:00:00)
+  volume: BigInt! 
+}

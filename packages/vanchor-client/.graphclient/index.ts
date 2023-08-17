@@ -1,32 +1,50 @@
 // @ts-nocheck
-import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import {
+  GraphQLResolveInfo,
+  SelectionSetNode,
+  FieldNode,
+  GraphQLScalarType,
+  GraphQLScalarTypeConfig,
+} from 'graphql';
 import type { GetMeshOptions } from '@graphql-mesh/runtime';
 import type { YamlConfig } from '@graphql-mesh/types';
 import { PubSub } from '@graphql-mesh/utils';
 import { DefaultLogger } from '@graphql-mesh/utils';
-import MeshCache from "@graphql-mesh/cache-localforage";
+import MeshCache from '@graphql-mesh/cache-localforage';
 import { fetch as fetchFn } from '@whatwg-node/fetch';
 
 import { MeshResolvedSource } from '@graphql-mesh/runtime';
 import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
-import GraphqlHandler from "@graphql-mesh/graphql"
+import GraphqlHandler from '@graphql-mesh/graphql';
 import { parse } from 'graphql';
-import BareMerger from "@graphql-mesh/merger-bare";
+import BareMerger from '@graphql-mesh/merger-bare';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
-import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
+import {
+  getMesh,
+  ExecuteMeshFn,
+  SubscribeMeshFn,
+  MeshContext as BaseMeshContext,
+  MeshInstance,
+} from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import { ImportFn } from '@graphql-mesh/types';
 import type { VanchorTypes } from './sources/vanchor/types';
-import * as importedModule$0 from "./sources/vanchor/introspectionSchema";
+import * as importedModule$0 from './sources/vanchor/introspectionSchema';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
-
-
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
+  [P in K]-?: NonNullable<T[P]>;
+};
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -119,17 +137,27 @@ export type Query = {
   vanchorDepositLogs: Array<VAnchorDepositLog>;
   vanchorTransferLog?: Maybe<VAnchorTransferLog>;
   vanchorTransferLogs: Array<VAnchorTransferLog>;
+  vanchorVolume?: Maybe<VAnchorVolume>;
+  vanchorVolumes: Array<VAnchorVolume>;
+  vanchorVolumeByToken?: Maybe<VAnchorVolumeByToken>;
+  vanchorVolumeByTokens: Array<VAnchorVolumeByToken>;
+  vanchorVolumeEvery15Min?: Maybe<VAnchorVolumeEvery15Min>;
+  vanchorVolumeEvery15Mins: Array<VAnchorVolumeEvery15Min>;
+  vanchorVolumeByTokenEvery15Min?: Maybe<VAnchorVolumeByTokenEvery15Min>;
+  vanchorVolumeByTokenEvery15Mins: Array<VAnchorVolumeByTokenEvery15Min>;
+  vanchorVolumeEveryDay?: Maybe<VAnchorVolumeEveryDay>;
+  vanchorVolumeEveryDays: Array<VAnchorVolumeEveryDay>;
+  vanchorVolumeByTokenEveryDay?: Maybe<VAnchorVolumeByTokenEveryDay>;
+  vanchorVolumeByTokenEveryDays: Array<VAnchorVolumeByTokenEveryDay>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
 };
-
 
 export type QueryedgeAdditionArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryedgeAdditionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -141,13 +169,11 @@ export type QueryedgeAdditionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryedgeUpdateArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryedgeUpdatesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -159,13 +185,11 @@ export type QueryedgeUpdatesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryinsertionArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryinsertionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -177,13 +201,11 @@ export type QueryinsertionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QuerynewCommitmentArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerynewCommitmentsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -195,13 +217,11 @@ export type QuerynewCommitmentsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QuerynewNullifierArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerynewNullifiersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -213,13 +233,11 @@ export type QuerynewNullifiersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QuerypublicKeyArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerypublicKeysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -231,13 +249,11 @@ export type QuerypublicKeysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QuerytokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerytokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -249,13 +265,11 @@ export type QuerytokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryexternalDataArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryexternalDatasArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -267,7 +281,6 @@ export type QueryexternalDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QuerypublicInputsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -277,7 +290,6 @@ export type QuerypublicInputsArgs = {
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryencryptionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -289,13 +301,11 @@ export type QueryencryptionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryshieldedTransactionArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryshieldedTransactionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -307,13 +317,11 @@ export type QueryshieldedTransactionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalValueLockedArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalValueLockedsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -325,13 +333,11 @@ export type QueryvanchorTotalValueLockedsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalValueLockedByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalValueLockedByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -343,13 +349,11 @@ export type QueryvanchorTotalValueLockedByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalValueLockedEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalValueLockedEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -361,13 +365,11 @@ export type QueryvanchorTotalValueLockedEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalValueLockedByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalValueLockedByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -379,13 +381,11 @@ export type QueryvanchorTotalValueLockedByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalValueLockedEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalValueLockedEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -397,13 +397,11 @@ export type QueryvanchorTotalValueLockedEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalValueLockedByTokenEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalValueLockedByTokenEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -415,13 +413,11 @@ export type QueryvanchorTotalValueLockedByTokenEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalRelayerFeeArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalRelayerFeesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -433,13 +429,11 @@ export type QueryvanchorTotalRelayerFeesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalRelayerFeeByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalRelayerFeeByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -451,13 +445,11 @@ export type QueryvanchorTotalRelayerFeeByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalRelayerFee15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalRelayerFee15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -469,13 +461,11 @@ export type QueryvanchorTotalRelayerFee15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalRelayerFeeByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalRelayerFeeByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -487,13 +477,11 @@ export type QueryvanchorTotalRelayerFeeByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalWrappingFeeArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalWrappingFeesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -505,13 +493,11 @@ export type QueryvanchorTotalWrappingFeesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalWrappingFeeByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalWrappingFeeByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -523,13 +509,11 @@ export type QueryvanchorTotalWrappingFeeByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalWrappingFee15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalWrappingFee15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -541,13 +525,11 @@ export type QueryvanchorTotalWrappingFee15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTotalWrappingFeeByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTotalWrappingFeeByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -559,13 +541,11 @@ export type QueryvanchorTotalWrappingFeeByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QuerywrappingEventLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerywrappingEventLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -577,13 +557,11 @@ export type QuerywrappingEventLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryunwrappingEventLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryunwrappingEventLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -595,13 +573,11 @@ export type QueryunwrappingEventLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorWithdrawalLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorWithdrawalLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -613,13 +589,11 @@ export type QueryvanchorWithdrawalLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorWithdrawalArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorWithdrawalsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -631,13 +605,11 @@ export type QueryvanchorWithdrawalsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorWithdrawalByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorWithdrawalByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -649,13 +621,11 @@ export type QueryvanchorWithdrawalByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorWithdrawalEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorWithdrawalEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -667,13 +637,11 @@ export type QueryvanchorWithdrawalEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorWithdrawalByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorWithdrawalByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -685,13 +653,11 @@ export type QueryvanchorWithdrawalByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorDepositArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorDepositsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -703,13 +669,11 @@ export type QueryvanchorDepositsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorDepositByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorDepositByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -721,13 +685,11 @@ export type QueryvanchorDepositByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorDepositEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorDepositEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -739,13 +701,11 @@ export type QueryvanchorDepositEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorDepositByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorDepositByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -757,13 +717,11 @@ export type QueryvanchorDepositByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorDepositEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorDepositEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -775,13 +733,11 @@ export type QueryvanchorDepositEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorDepositByTokenEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorDepositByTokenEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -793,13 +749,11 @@ export type QueryvanchorDepositByTokenEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorDepositLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorDepositLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -811,13 +765,11 @@ export type QueryvanchorDepositLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type QueryvanchorTransferLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryvanchorTransferLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -829,6 +781,101 @@ export type QueryvanchorTransferLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+export type QueryvanchorVolumeArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolume_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolume_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeByTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeByTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeByToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeByToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeByTokenEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeByTokenEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeByTokenEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeByTokenEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeByTokenEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type QueryvanchorVolumeByTokenEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeByTokenEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeByTokenEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
 
 export type Query_metaArgs = {
   block?: InputMaybe<Block_height>;
@@ -913,17 +960,27 @@ export type Subscription = {
   vanchorDepositLogs: Array<VAnchorDepositLog>;
   vanchorTransferLog?: Maybe<VAnchorTransferLog>;
   vanchorTransferLogs: Array<VAnchorTransferLog>;
+  vanchorVolume?: Maybe<VAnchorVolume>;
+  vanchorVolumes: Array<VAnchorVolume>;
+  vanchorVolumeByToken?: Maybe<VAnchorVolumeByToken>;
+  vanchorVolumeByTokens: Array<VAnchorVolumeByToken>;
+  vanchorVolumeEvery15Min?: Maybe<VAnchorVolumeEvery15Min>;
+  vanchorVolumeEvery15Mins: Array<VAnchorVolumeEvery15Min>;
+  vanchorVolumeByTokenEvery15Min?: Maybe<VAnchorVolumeByTokenEvery15Min>;
+  vanchorVolumeByTokenEvery15Mins: Array<VAnchorVolumeByTokenEvery15Min>;
+  vanchorVolumeEveryDay?: Maybe<VAnchorVolumeEveryDay>;
+  vanchorVolumeEveryDays: Array<VAnchorVolumeEveryDay>;
+  vanchorVolumeByTokenEveryDay?: Maybe<VAnchorVolumeByTokenEveryDay>;
+  vanchorVolumeByTokenEveryDays: Array<VAnchorVolumeByTokenEveryDay>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
 };
-
 
 export type SubscriptionedgeAdditionArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionedgeAdditionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -935,13 +992,11 @@ export type SubscriptionedgeAdditionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionedgeUpdateArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionedgeUpdatesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -953,13 +1008,11 @@ export type SubscriptionedgeUpdatesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptioninsertionArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptioninsertionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -971,13 +1024,11 @@ export type SubscriptioninsertionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionnewCommitmentArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionnewCommitmentsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -989,13 +1040,11 @@ export type SubscriptionnewCommitmentsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionnewNullifierArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionnewNullifiersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1007,13 +1056,11 @@ export type SubscriptionnewNullifiersArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionpublicKeyArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionpublicKeysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1025,13 +1072,11 @@ export type SubscriptionpublicKeysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptiontokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptiontokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1043,13 +1088,11 @@ export type SubscriptiontokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionexternalDataArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionexternalDatasArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1061,7 +1104,6 @@ export type SubscriptionexternalDatasArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionpublicInputsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -1071,7 +1113,6 @@ export type SubscriptionpublicInputsArgs = {
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionencryptionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1083,13 +1124,11 @@ export type SubscriptionencryptionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionshieldedTransactionArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionshieldedTransactionsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1101,13 +1140,11 @@ export type SubscriptionshieldedTransactionsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalValueLockedArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalValueLockedsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1119,13 +1156,11 @@ export type SubscriptionvanchorTotalValueLockedsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalValueLockedByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalValueLockedByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1137,13 +1172,11 @@ export type SubscriptionvanchorTotalValueLockedByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalValueLockedEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalValueLockedEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1155,13 +1188,11 @@ export type SubscriptionvanchorTotalValueLockedEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalValueLockedByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalValueLockedByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1173,13 +1204,11 @@ export type SubscriptionvanchorTotalValueLockedByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalValueLockedEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalValueLockedEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1191,13 +1220,11 @@ export type SubscriptionvanchorTotalValueLockedEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1209,13 +1236,11 @@ export type SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalRelayerFeeArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalRelayerFeesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1227,13 +1252,11 @@ export type SubscriptionvanchorTotalRelayerFeesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalRelayerFeeByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalRelayerFeeByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1245,13 +1268,11 @@ export type SubscriptionvanchorTotalRelayerFeeByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalRelayerFee15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalRelayerFee15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1263,13 +1284,11 @@ export type SubscriptionvanchorTotalRelayerFee15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalRelayerFeeByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalRelayerFeeByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1281,13 +1300,11 @@ export type SubscriptionvanchorTotalRelayerFeeByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalWrappingFeeArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalWrappingFeesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1299,13 +1316,11 @@ export type SubscriptionvanchorTotalWrappingFeesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalWrappingFeeByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalWrappingFeeByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1317,13 +1332,11 @@ export type SubscriptionvanchorTotalWrappingFeeByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalWrappingFee15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalWrappingFee15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1335,13 +1348,11 @@ export type SubscriptionvanchorTotalWrappingFee15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTotalWrappingFeeByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTotalWrappingFeeByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1353,13 +1364,11 @@ export type SubscriptionvanchorTotalWrappingFeeByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionwrappingEventLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionwrappingEventLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1371,13 +1380,11 @@ export type SubscriptionwrappingEventLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionunwrappingEventLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionunwrappingEventLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1389,13 +1396,11 @@ export type SubscriptionunwrappingEventLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorWithdrawalLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorWithdrawalLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1407,13 +1412,11 @@ export type SubscriptionvanchorWithdrawalLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorWithdrawalArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorWithdrawalsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1425,13 +1428,11 @@ export type SubscriptionvanchorWithdrawalsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorWithdrawalByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorWithdrawalByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1443,13 +1444,11 @@ export type SubscriptionvanchorWithdrawalByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorWithdrawalEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorWithdrawalEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1461,13 +1460,11 @@ export type SubscriptionvanchorWithdrawalEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorWithdrawalByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorWithdrawalByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1479,13 +1476,11 @@ export type SubscriptionvanchorWithdrawalByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorDepositArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorDepositsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1497,13 +1492,11 @@ export type SubscriptionvanchorDepositsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorDepositByTokenArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorDepositByTokensArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1515,13 +1508,11 @@ export type SubscriptionvanchorDepositByTokensArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorDepositEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorDepositEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1533,13 +1524,11 @@ export type SubscriptionvanchorDepositEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorDepositByTokenEvery15MinArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorDepositByTokenEvery15MinsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1551,13 +1540,11 @@ export type SubscriptionvanchorDepositByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorDepositEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorDepositEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1569,13 +1556,11 @@ export type SubscriptionvanchorDepositEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorDepositByTokenEveryDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorDepositByTokenEveryDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1587,13 +1572,11 @@ export type SubscriptionvanchorDepositByTokenEveryDaysArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorDepositLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorDepositLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1605,13 +1588,11 @@ export type SubscriptionvanchorDepositLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-
 export type SubscriptionvanchorTransferLogArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionvanchorTransferLogsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
@@ -1623,6 +1604,101 @@ export type SubscriptionvanchorTransferLogsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+export type SubscriptionvanchorVolumeArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumesArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolume_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolume_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeByTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeByTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeByToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeByToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeByTokenEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeByTokenEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeByTokenEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeByTokenEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeByTokenEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+export type SubscriptionvanchorVolumeByTokenEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorVolumeByTokenEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorVolumeByTokenEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
 
 export type Subscription_metaArgs = {
   block?: InputMaybe<Block_height>;
@@ -2219,9 +2295,7 @@ export type NewNullifier_orderBy =
   | 'transactionHash';
 
 /** Defines the order direction, either ascending or descending */
-export type OrderDirection =
-  | 'asc'
-  | 'desc';
+export type OrderDirection = 'asc' | 'desc';
 
 export type PublicInputs = {
   id: Scalars['Bytes'];
@@ -2669,12 +2743,7 @@ export type Token_filter = {
   or?: InputMaybe<Array<InputMaybe<Token_filter>>>;
 };
 
-export type Token_orderBy =
-  | 'id'
-  | 'address'
-  | 'decimals'
-  | 'name'
-  | 'symbol';
+export type Token_orderBy = 'id' | 'address' | 'decimals' | 'name' | 'symbol';
 
 export type UnwrappingEventLog = {
   id: Scalars['String'];
@@ -3658,8 +3727,12 @@ export type VAnchorTotalRelayerFeeByTokenEvery15Min_filter = {
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFeeByTokenEvery15Min_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFeeByTokenEvery15Min_filter>>>;
+  and?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalRelayerFeeByTokenEvery15Min_filter>>
+  >;
+  or?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalRelayerFeeByTokenEvery15Min_filter>>
+  >;
 };
 
 export type VAnchorTotalRelayerFeeByTokenEvery15Min_orderBy =
@@ -3788,9 +3861,7 @@ export type VAnchorTotalRelayerFee_filter = {
   or?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFee_filter>>>;
 };
 
-export type VAnchorTotalRelayerFee_orderBy =
-  | 'id'
-  | 'fees';
+export type VAnchorTotalRelayerFee_orderBy = 'id' | 'fees';
 
 export type VAnchorTotalValueLocked = {
   id: Scalars['String'];
@@ -3902,8 +3973,12 @@ export type VAnchorTotalValueLockedByTokenEvery15Min_filter = {
   totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByTokenEvery15Min_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByTokenEvery15Min_filter>>>;
+  and?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalValueLockedByTokenEvery15Min_filter>>
+  >;
+  or?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalValueLockedByTokenEvery15Min_filter>>
+  >;
 };
 
 export type VAnchorTotalValueLockedByTokenEvery15Min_orderBy =
@@ -4003,8 +4078,12 @@ export type VAnchorTotalValueLockedByTokenEveryDay_filter = {
   totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>>;
+  and?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>
+  >;
+  or?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>
+  >;
 };
 
 export type VAnchorTotalValueLockedByTokenEveryDay_orderBy =
@@ -4274,9 +4353,7 @@ export type VAnchorTotalValueLocked_filter = {
   or?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLocked_filter>>>;
 };
 
-export type VAnchorTotalValueLocked_orderBy =
-  | 'id'
-  | 'totalValueLocked';
+export type VAnchorTotalValueLocked_orderBy = 'id' | 'totalValueLocked';
 
 export type VAnchorTotalWrappingFee = {
   id: Scalars['String'];
@@ -4464,8 +4541,12 @@ export type VAnchorTotalWrappingFeeByTokenEvery15Min_filter = {
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<VAnchorTotalWrappingFeeByTokenEvery15Min_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<VAnchorTotalWrappingFeeByTokenEvery15Min_filter>>>;
+  and?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalWrappingFeeByTokenEvery15Min_filter>>
+  >;
+  or?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalWrappingFeeByTokenEvery15Min_filter>>
+  >;
 };
 
 export type VAnchorTotalWrappingFeeByTokenEvery15Min_orderBy =
@@ -4594,9 +4675,7 @@ export type VAnchorTotalWrappingFee_filter = {
   or?: InputMaybe<Array<InputMaybe<VAnchorTotalWrappingFee_filter>>>;
 };
 
-export type VAnchorTotalWrappingFee_orderBy =
-  | 'id'
-  | 'fees';
+export type VAnchorTotalWrappingFee_orderBy = 'id' | 'fees';
 
 export type VAnchorTransferLog = {
   id: Scalars['String'];
@@ -4687,6 +4766,490 @@ export type VAnchorTransferLog_orderBy =
   | 'tokenAddress'
   | 'tokenSymbol'
   | 'timestamp';
+
+export type VAnchorVolume = {
+  id: Scalars['String'];
+  volume: Scalars['BigInt'];
+};
+
+export type VAnchorVolumeByToken = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  volume: Scalars['BigInt'];
+};
+
+export type VAnchorVolumeByTokenEvery15Min = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  volume: Scalars['BigInt'];
+};
+
+export type VAnchorVolumeByTokenEvery15Min_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume?: InputMaybe<Scalars['BigInt']>;
+  volume_not?: InputMaybe<Scalars['BigInt']>;
+  volume_gt?: InputMaybe<Scalars['BigInt']>;
+  volume_lt?: InputMaybe<Scalars['BigInt']>;
+  volume_gte?: InputMaybe<Scalars['BigInt']>;
+  volume_lte?: InputMaybe<Scalars['BigInt']>;
+  volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorVolumeByTokenEvery15Min_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorVolumeByTokenEvery15Min_filter>>>;
+};
+
+export type VAnchorVolumeByTokenEvery15Min_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'startInterval'
+  | 'endInterval'
+  | 'volume';
+
+export type VAnchorVolumeByTokenEveryDay = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  date: Scalars['BigInt'];
+  volume: Scalars['BigInt'];
+};
+
+export type VAnchorVolumeByTokenEveryDay_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['BigInt']>;
+  date_not?: InputMaybe<Scalars['BigInt']>;
+  date_gt?: InputMaybe<Scalars['BigInt']>;
+  date_lt?: InputMaybe<Scalars['BigInt']>;
+  date_gte?: InputMaybe<Scalars['BigInt']>;
+  date_lte?: InputMaybe<Scalars['BigInt']>;
+  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume?: InputMaybe<Scalars['BigInt']>;
+  volume_not?: InputMaybe<Scalars['BigInt']>;
+  volume_gt?: InputMaybe<Scalars['BigInt']>;
+  volume_lt?: InputMaybe<Scalars['BigInt']>;
+  volume_gte?: InputMaybe<Scalars['BigInt']>;
+  volume_lte?: InputMaybe<Scalars['BigInt']>;
+  volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorVolumeByTokenEveryDay_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorVolumeByTokenEveryDay_filter>>>;
+};
+
+export type VAnchorVolumeByTokenEveryDay_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'date'
+  | 'volume';
+
+export type VAnchorVolumeByToken_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  volume?: InputMaybe<Scalars['BigInt']>;
+  volume_not?: InputMaybe<Scalars['BigInt']>;
+  volume_gt?: InputMaybe<Scalars['BigInt']>;
+  volume_lt?: InputMaybe<Scalars['BigInt']>;
+  volume_gte?: InputMaybe<Scalars['BigInt']>;
+  volume_lte?: InputMaybe<Scalars['BigInt']>;
+  volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorVolumeByToken_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorVolumeByToken_filter>>>;
+};
+
+export type VAnchorVolumeByToken_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'volume';
+
+export type VAnchorVolumeEvery15Min = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  volume: Scalars['BigInt'];
+};
+
+export type VAnchorVolumeEvery15Min_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume?: InputMaybe<Scalars['BigInt']>;
+  volume_not?: InputMaybe<Scalars['BigInt']>;
+  volume_gt?: InputMaybe<Scalars['BigInt']>;
+  volume_lt?: InputMaybe<Scalars['BigInt']>;
+  volume_gte?: InputMaybe<Scalars['BigInt']>;
+  volume_lte?: InputMaybe<Scalars['BigInt']>;
+  volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorVolumeEvery15Min_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorVolumeEvery15Min_filter>>>;
+};
+
+export type VAnchorVolumeEvery15Min_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'startInterval'
+  | 'endInterval'
+  | 'volume';
+
+export type VAnchorVolumeEveryDay = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  date: Scalars['BigInt'];
+  volume: Scalars['BigInt'];
+};
+
+export type VAnchorVolumeEveryDay_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  date?: InputMaybe<Scalars['BigInt']>;
+  date_not?: InputMaybe<Scalars['BigInt']>;
+  date_gt?: InputMaybe<Scalars['BigInt']>;
+  date_lt?: InputMaybe<Scalars['BigInt']>;
+  date_gte?: InputMaybe<Scalars['BigInt']>;
+  date_lte?: InputMaybe<Scalars['BigInt']>;
+  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume?: InputMaybe<Scalars['BigInt']>;
+  volume_not?: InputMaybe<Scalars['BigInt']>;
+  volume_gt?: InputMaybe<Scalars['BigInt']>;
+  volume_lt?: InputMaybe<Scalars['BigInt']>;
+  volume_gte?: InputMaybe<Scalars['BigInt']>;
+  volume_lte?: InputMaybe<Scalars['BigInt']>;
+  volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorVolumeEveryDay_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorVolumeEveryDay_filter>>>;
+};
+
+export type VAnchorVolumeEveryDay_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'date'
+  | 'volume';
+
+export type VAnchorVolume_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  volume?: InputMaybe<Scalars['BigInt']>;
+  volume_not?: InputMaybe<Scalars['BigInt']>;
+  volume_gt?: InputMaybe<Scalars['BigInt']>;
+  volume_lt?: InputMaybe<Scalars['BigInt']>;
+  volume_gte?: InputMaybe<Scalars['BigInt']>;
+  volume_lte?: InputMaybe<Scalars['BigInt']>;
+  volume_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  volume_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorVolume_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorVolume_filter>>>;
+};
+
+export type VAnchorVolume_orderBy = 'id' | 'volume';
 
 export type VAnchorWithdrawal = {
   id: Scalars['String'];
@@ -4820,7 +5383,9 @@ export type VAnchorWithdrawalByTokenEvery15Min_filter = {
   totalCount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<VAnchorWithdrawalByTokenEvery15Min_filter>>>;
+  and?: InputMaybe<
+    Array<InputMaybe<VAnchorWithdrawalByTokenEvery15Min_filter>>
+  >;
   or?: InputMaybe<Array<InputMaybe<VAnchorWithdrawalByTokenEvery15Min_filter>>>;
 };
 
@@ -5324,7 +5889,6 @@ export type ResolversObject<TObject> = WithIndex<TObject>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
-
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
@@ -5338,7 +5902,9 @@ export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
   selectionSet: string | ((fieldNode: FieldNode) => SelectionSetNode);
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
+export type StitchingResolver<TResult, TParent, TContext, TArgs> =
+  | LegacyStitchingResolver<TResult, TParent, TContext, TArgs>
+  | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
   | ResolverWithResolve<TResult, TParent, TContext, TArgs>
@@ -5365,9 +5931,25 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
-  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
-  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+export interface SubscriptionSubscriberObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> {
+  subscribe: SubscriptionSubscribeFn<
+    { [key in TKey]: TResult },
+    TParent,
+    TContext,
+    TArgs
+  >;
+  resolve?: SubscriptionResolveFn<
+    TResult,
+    { [key in TKey]: TResult },
+    TContext,
+    TArgs
+  >;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
@@ -5375,12 +5957,26 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+export type SubscriptionObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
-  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+export type SubscriptionResolver<
+  TResult,
+  TKey extends string,
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> =
+  | ((
+      ...args: any[]
+    ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -5389,19 +5985,26 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
+  obj: T,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<
+  TResult = {},
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
-
-
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
@@ -5520,6 +6123,24 @@ export type ResolversTypes = ResolversObject<{
   VAnchorTransferLog: ResolverTypeWrapper<VAnchorTransferLog>;
   VAnchorTransferLog_filter: VAnchorTransferLog_filter;
   VAnchorTransferLog_orderBy: VAnchorTransferLog_orderBy;
+  VAnchorVolume: ResolverTypeWrapper<VAnchorVolume>;
+  VAnchorVolumeByToken: ResolverTypeWrapper<VAnchorVolumeByToken>;
+  VAnchorVolumeByTokenEvery15Min: ResolverTypeWrapper<VAnchorVolumeByTokenEvery15Min>;
+  VAnchorVolumeByTokenEvery15Min_filter: VAnchorVolumeByTokenEvery15Min_filter;
+  VAnchorVolumeByTokenEvery15Min_orderBy: VAnchorVolumeByTokenEvery15Min_orderBy;
+  VAnchorVolumeByTokenEveryDay: ResolverTypeWrapper<VAnchorVolumeByTokenEveryDay>;
+  VAnchorVolumeByTokenEveryDay_filter: VAnchorVolumeByTokenEveryDay_filter;
+  VAnchorVolumeByTokenEveryDay_orderBy: VAnchorVolumeByTokenEveryDay_orderBy;
+  VAnchorVolumeByToken_filter: VAnchorVolumeByToken_filter;
+  VAnchorVolumeByToken_orderBy: VAnchorVolumeByToken_orderBy;
+  VAnchorVolumeEvery15Min: ResolverTypeWrapper<VAnchorVolumeEvery15Min>;
+  VAnchorVolumeEvery15Min_filter: VAnchorVolumeEvery15Min_filter;
+  VAnchorVolumeEvery15Min_orderBy: VAnchorVolumeEvery15Min_orderBy;
+  VAnchorVolumeEveryDay: ResolverTypeWrapper<VAnchorVolumeEveryDay>;
+  VAnchorVolumeEveryDay_filter: VAnchorVolumeEveryDay_filter;
+  VAnchorVolumeEveryDay_orderBy: VAnchorVolumeEveryDay_orderBy;
+  VAnchorVolume_filter: VAnchorVolume_filter;
+  VAnchorVolume_orderBy: VAnchorVolume_orderBy;
   VAnchorWithdrawal: ResolverTypeWrapper<VAnchorWithdrawal>;
   VAnchorWithdrawalByToken: ResolverTypeWrapper<VAnchorWithdrawalByToken>;
   VAnchorWithdrawalByTokenEvery15Min: ResolverTypeWrapper<VAnchorWithdrawalByTokenEvery15Min>;
@@ -5625,6 +6246,18 @@ export type ResolversParentTypes = ResolversObject<{
   VAnchorTotalWrappingFee_filter: VAnchorTotalWrappingFee_filter;
   VAnchorTransferLog: VAnchorTransferLog;
   VAnchorTransferLog_filter: VAnchorTransferLog_filter;
+  VAnchorVolume: VAnchorVolume;
+  VAnchorVolumeByToken: VAnchorVolumeByToken;
+  VAnchorVolumeByTokenEvery15Min: VAnchorVolumeByTokenEvery15Min;
+  VAnchorVolumeByTokenEvery15Min_filter: VAnchorVolumeByTokenEvery15Min_filter;
+  VAnchorVolumeByTokenEveryDay: VAnchorVolumeByTokenEveryDay;
+  VAnchorVolumeByTokenEveryDay_filter: VAnchorVolumeByTokenEveryDay_filter;
+  VAnchorVolumeByToken_filter: VAnchorVolumeByToken_filter;
+  VAnchorVolumeEvery15Min: VAnchorVolumeEvery15Min;
+  VAnchorVolumeEvery15Min_filter: VAnchorVolumeEvery15Min_filter;
+  VAnchorVolumeEveryDay: VAnchorVolumeEveryDay;
+  VAnchorVolumeEveryDay_filter: VAnchorVolumeEveryDay_filter;
+  VAnchorVolume_filter: VAnchorVolume_filter;
   VAnchorWithdrawal: VAnchorWithdrawal;
   VAnchorWithdrawalByToken: VAnchorWithdrawalByToken;
   VAnchorWithdrawalByTokenEvery15Min: VAnchorWithdrawalByTokenEvery15Min;
@@ -5641,199 +6274,1599 @@ export type ResolversParentTypes = ResolversObject<{
   _Meta_: _Meta_;
 }>;
 
-export type entityDirectiveArgs = { };
+export type entityDirectiveArgs = {};
 
-export type entityDirectiveResolver<Result, Parent, ContextType = MeshContext & { subgraphUrl: string }, Args = entityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type entityDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = MeshContext & { subgraphUrl: string },
+  Args = entityDirectiveArgs
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type subgraphIdDirectiveArgs = {
   id: Scalars['String'];
 };
 
-export type subgraphIdDirectiveResolver<Result, Parent, ContextType = MeshContext & { subgraphUrl: string }, Args = subgraphIdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type subgraphIdDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = MeshContext & { subgraphUrl: string },
+  Args = subgraphIdDirectiveArgs
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type derivedFromDirectiveArgs = {
   field: Scalars['String'];
 };
 
-export type derivedFromDirectiveResolver<Result, Parent, ContextType = MeshContext & { subgraphUrl: string }, Args = derivedFromDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type derivedFromDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = MeshContext & { subgraphUrl: string },
+  Args = derivedFromDirectiveArgs
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type QueryResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  edgeAddition?: Resolver<Maybe<ResolversTypes['EdgeAddition']>, ParentType, ContextType, RequireFields<QueryedgeAdditionArgs, 'id' | 'subgraphError'>>;
-  edgeAdditions?: Resolver<Array<ResolversTypes['EdgeAddition']>, ParentType, ContextType, RequireFields<QueryedgeAdditionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  edgeUpdate?: Resolver<Maybe<ResolversTypes['EdgeUpdate']>, ParentType, ContextType, RequireFields<QueryedgeUpdateArgs, 'id' | 'subgraphError'>>;
-  edgeUpdates?: Resolver<Array<ResolversTypes['EdgeUpdate']>, ParentType, ContextType, RequireFields<QueryedgeUpdatesArgs, 'skip' | 'first' | 'subgraphError'>>;
-  insertion?: Resolver<Maybe<ResolversTypes['Insertion']>, ParentType, ContextType, RequireFields<QueryinsertionArgs, 'id' | 'subgraphError'>>;
-  insertions?: Resolver<Array<ResolversTypes['Insertion']>, ParentType, ContextType, RequireFields<QueryinsertionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  newCommitment?: Resolver<Maybe<ResolversTypes['NewCommitment']>, ParentType, ContextType, RequireFields<QuerynewCommitmentArgs, 'id' | 'subgraphError'>>;
-  newCommitments?: Resolver<Array<ResolversTypes['NewCommitment']>, ParentType, ContextType, RequireFields<QuerynewCommitmentsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  newNullifier?: Resolver<Maybe<ResolversTypes['NewNullifier']>, ParentType, ContextType, RequireFields<QuerynewNullifierArgs, 'id' | 'subgraphError'>>;
-  newNullifiers?: Resolver<Array<ResolversTypes['NewNullifier']>, ParentType, ContextType, RequireFields<QuerynewNullifiersArgs, 'skip' | 'first' | 'subgraphError'>>;
-  publicKey?: Resolver<Maybe<ResolversTypes['PublicKey']>, ParentType, ContextType, RequireFields<QuerypublicKeyArgs, 'id' | 'subgraphError'>>;
-  publicKeys?: Resolver<Array<ResolversTypes['PublicKey']>, ParentType, ContextType, RequireFields<QuerypublicKeysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokenArgs, 'id' | 'subgraphError'>>;
-  tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  externalData?: Resolver<Maybe<ResolversTypes['ExternalData']>, ParentType, ContextType, RequireFields<QueryexternalDataArgs, 'id' | 'subgraphError'>>;
-  externalDatas?: Resolver<Array<ResolversTypes['ExternalData']>, ParentType, ContextType, RequireFields<QueryexternalDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
-  publicInputs?: Resolver<Array<ResolversTypes['PublicInputs']>, ParentType, ContextType, RequireFields<QuerypublicInputsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  encryptions?: Resolver<Array<ResolversTypes['Encryptions']>, ParentType, ContextType, RequireFields<QueryencryptionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  shieldedTransaction?: Resolver<Maybe<ResolversTypes['ShieldedTransaction']>, ParentType, ContextType, RequireFields<QueryshieldedTransactionArgs, 'id' | 'subgraphError'>>;
-  shieldedTransactions?: Resolver<Array<ResolversTypes['ShieldedTransaction']>, ParentType, ContextType, RequireFields<QueryshieldedTransactionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLocked?: Resolver<Maybe<ResolversTypes['VAnchorTotalValueLocked']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockeds?: Resolver<Array<ResolversTypes['VAnchorTotalValueLocked']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedByToken?: Resolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokens?: Resolver<Array<ResolversTypes['VAnchorTotalValueLockedByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedEveryDay?: Resolver<Maybe<ResolversTypes['VAnchorTotalValueLockedEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedEveryDays?: Resolver<Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEveryDay?: Resolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEveryDays?: Resolver<Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFee?: Resolver<Maybe<ResolversTypes['VAnchorTotalRelayerFee']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFeeArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFees?: Resolver<Array<ResolversTypes['VAnchorTotalRelayerFee']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFeesArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByToken?: Resolver<Maybe<ResolversTypes['VAnchorTotalRelayerFeeByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFeeByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByTokens?: Resolver<Array<ResolversTypes['VAnchorTotalRelayerFeeByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFeeByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFee15Min?: Resolver<Maybe<ResolversTypes['VAnchorTotalRelayerFee15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFee15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFee15Mins?: Resolver<Array<ResolversTypes['VAnchorTotalRelayerFee15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFee15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByTokenEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFeeByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByTokenEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalRelayerFeeByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFee?: Resolver<Maybe<ResolversTypes['VAnchorTotalWrappingFee']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFeeArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFees?: Resolver<Array<ResolversTypes['VAnchorTotalWrappingFee']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFeesArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByToken?: Resolver<Maybe<ResolversTypes['VAnchorTotalWrappingFeeByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFeeByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByTokens?: Resolver<Array<ResolversTypes['VAnchorTotalWrappingFeeByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFeeByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFee15Min?: Resolver<Maybe<ResolversTypes['VAnchorTotalWrappingFee15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFee15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFee15Mins?: Resolver<Array<ResolversTypes['VAnchorTotalWrappingFee15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFee15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByTokenEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFeeByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByTokenEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTotalWrappingFeeByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  wrappingEventLog?: Resolver<Maybe<ResolversTypes['WrappingEventLog']>, ParentType, ContextType, RequireFields<QuerywrappingEventLogArgs, 'id' | 'subgraphError'>>;
-  wrappingEventLogs?: Resolver<Array<ResolversTypes['WrappingEventLog']>, ParentType, ContextType, RequireFields<QuerywrappingEventLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  unwrappingEventLog?: Resolver<Maybe<ResolversTypes['UnwrappingEventLog']>, ParentType, ContextType, RequireFields<QueryunwrappingEventLogArgs, 'id' | 'subgraphError'>>;
-  unwrappingEventLogs?: Resolver<Array<ResolversTypes['UnwrappingEventLog']>, ParentType, ContextType, RequireFields<QueryunwrappingEventLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalLog?: Resolver<Maybe<ResolversTypes['VAnchorWithdrawalLog']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalLogArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalLogs?: Resolver<Array<ResolversTypes['VAnchorWithdrawalLog']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawal?: Resolver<Maybe<ResolversTypes['VAnchorWithdrawal']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawals?: Resolver<Array<ResolversTypes['VAnchorWithdrawal']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalByToken?: Resolver<Maybe<ResolversTypes['VAnchorWithdrawalByToken']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalByTokens?: Resolver<Array<ResolversTypes['VAnchorWithdrawalByToken']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorWithdrawalEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorWithdrawalEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalByTokenEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalByTokenEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorWithdrawalByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDeposit?: Resolver<Maybe<ResolversTypes['VAnchorDeposit']>, ParentType, ContextType, RequireFields<QueryvanchorDepositArgs, 'id' | 'subgraphError'>>;
-  vanchorDeposits?: Resolver<Array<ResolversTypes['VAnchorDeposit']>, ParentType, ContextType, RequireFields<QueryvanchorDepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositByToken?: Resolver<Maybe<ResolversTypes['VAnchorDepositByToken']>, ParentType, ContextType, RequireFields<QueryvanchorDepositByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositByTokens?: Resolver<Array<ResolversTypes['VAnchorDepositByToken']>, ParentType, ContextType, RequireFields<QueryvanchorDepositByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorDepositEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorDepositEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorDepositEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorDepositEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositByTokenEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorDepositByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorDepositByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositByTokenEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorDepositByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorDepositByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositEveryDay?: Resolver<Maybe<ResolversTypes['VAnchorDepositEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorDepositEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositEveryDays?: Resolver<Array<ResolversTypes['VAnchorDepositEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorDepositEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositByTokenEveryDay?: Resolver<Maybe<ResolversTypes['VAnchorDepositByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorDepositByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositByTokenEveryDays?: Resolver<Array<ResolversTypes['VAnchorDepositByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorDepositByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositLog?: Resolver<Maybe<ResolversTypes['VAnchorDepositLog']>, ParentType, ContextType, RequireFields<QueryvanchorDepositLogArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositLogs?: Resolver<Array<ResolversTypes['VAnchorDepositLog']>, ParentType, ContextType, RequireFields<QueryvanchorDepositLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTransferLog?: Resolver<Maybe<ResolversTypes['VAnchorTransferLog']>, ParentType, ContextType, RequireFields<QueryvanchorTransferLogArgs, 'id' | 'subgraphError'>>;
-  vanchorTransferLogs?: Resolver<Array<ResolversTypes['VAnchorTransferLog']>, ParentType, ContextType, RequireFields<QueryvanchorTransferLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  _meta?: Resolver<Maybe<ResolversTypes['_Meta_']>, ParentType, ContextType, Partial<Query_metaArgs>>;
+export type QueryResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+> = ResolversObject<{
+  edgeAddition?: Resolver<
+    Maybe<ResolversTypes['EdgeAddition']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryedgeAdditionArgs, 'id' | 'subgraphError'>
+  >;
+  edgeAdditions?: Resolver<
+    Array<ResolversTypes['EdgeAddition']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryedgeAdditionsArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  edgeUpdate?: Resolver<
+    Maybe<ResolversTypes['EdgeUpdate']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryedgeUpdateArgs, 'id' | 'subgraphError'>
+  >;
+  edgeUpdates?: Resolver<
+    Array<ResolversTypes['EdgeUpdate']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryedgeUpdatesArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  insertion?: Resolver<
+    Maybe<ResolversTypes['Insertion']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryinsertionArgs, 'id' | 'subgraphError'>
+  >;
+  insertions?: Resolver<
+    Array<ResolversTypes['Insertion']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryinsertionsArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  newCommitment?: Resolver<
+    Maybe<ResolversTypes['NewCommitment']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerynewCommitmentArgs, 'id' | 'subgraphError'>
+  >;
+  newCommitments?: Resolver<
+    Array<ResolversTypes['NewCommitment']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerynewCommitmentsArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  newNullifier?: Resolver<
+    Maybe<ResolversTypes['NewNullifier']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerynewNullifierArgs, 'id' | 'subgraphError'>
+  >;
+  newNullifiers?: Resolver<
+    Array<ResolversTypes['NewNullifier']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerynewNullifiersArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  publicKey?: Resolver<
+    Maybe<ResolversTypes['PublicKey']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerypublicKeyArgs, 'id' | 'subgraphError'>
+  >;
+  publicKeys?: Resolver<
+    Array<ResolversTypes['PublicKey']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerypublicKeysArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  token?: Resolver<
+    Maybe<ResolversTypes['Token']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerytokenArgs, 'id' | 'subgraphError'>
+  >;
+  tokens?: Resolver<
+    Array<ResolversTypes['Token']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  externalData?: Resolver<
+    Maybe<ResolversTypes['ExternalData']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryexternalDataArgs, 'id' | 'subgraphError'>
+  >;
+  externalDatas?: Resolver<
+    Array<ResolversTypes['ExternalData']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryexternalDatasArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  publicInputs?: Resolver<
+    Array<ResolversTypes['PublicInputs']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerypublicInputsArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  encryptions?: Resolver<
+    Array<ResolversTypes['Encryptions']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryencryptionsArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  shieldedTransaction?: Resolver<
+    Maybe<ResolversTypes['ShieldedTransaction']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryshieldedTransactionArgs, 'id' | 'subgraphError'>
+  >;
+  shieldedTransactions?: Resolver<
+    Array<ResolversTypes['ShieldedTransaction']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryshieldedTransactionsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLocked?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLocked']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorTotalValueLockedArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorTotalValueLockeds?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLocked']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByToken?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedByTokenArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokens?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEveryDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEveryDays?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEveryDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedByTokenEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEveryDays?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalValueLockedByTokenEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFee?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFee']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorTotalRelayerFeeArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorTotalRelayerFees?: Resolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFee']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalRelayerFeesArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByToken?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFeeByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalRelayerFeeByTokenArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByTokens?: Resolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFeeByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalRelayerFeeByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFee15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFee15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorTotalRelayerFee15MinArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorTotalRelayerFee15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFee15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalRelayerFee15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByTokenEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalRelayerFeeByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByTokenEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalRelayerFeeByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFee?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFee']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorTotalWrappingFeeArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorTotalWrappingFees?: Resolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFee']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalWrappingFeesArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByToken?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFeeByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalWrappingFeeByTokenArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByTokens?: Resolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFeeByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalWrappingFeeByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFee15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFee15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorTotalWrappingFee15MinArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorTotalWrappingFee15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFee15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalWrappingFee15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByTokenEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalWrappingFeeByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByTokenEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTotalWrappingFeeByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  wrappingEventLog?: Resolver<
+    Maybe<ResolversTypes['WrappingEventLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerywrappingEventLogArgs, 'id' | 'subgraphError'>
+  >;
+  wrappingEventLogs?: Resolver<
+    Array<ResolversTypes['WrappingEventLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QuerywrappingEventLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  unwrappingEventLog?: Resolver<
+    Maybe<ResolversTypes['UnwrappingEventLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryunwrappingEventLogArgs, 'id' | 'subgraphError'>
+  >;
+  unwrappingEventLogs?: Resolver<
+    Array<ResolversTypes['UnwrappingEventLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryunwrappingEventLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalLog?: Resolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorWithdrawalLogArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorWithdrawalLogs?: Resolver<
+    Array<ResolversTypes['VAnchorWithdrawalLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorWithdrawalLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawal?: Resolver<
+    Maybe<ResolversTypes['VAnchorWithdrawal']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorWithdrawalArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorWithdrawals?: Resolver<
+    Array<ResolversTypes['VAnchorWithdrawal']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorWithdrawalsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalByToken?: Resolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorWithdrawalByTokenArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorWithdrawalByTokens?: Resolver<
+    Array<ResolversTypes['VAnchorWithdrawalByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorWithdrawalByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorWithdrawalEvery15MinArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorWithdrawalEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorWithdrawalEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorWithdrawalEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalByTokenEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorWithdrawalByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalByTokenEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorWithdrawalByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDeposit?: Resolver<
+    Maybe<ResolversTypes['VAnchorDeposit']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorDepositArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDeposits?: Resolver<
+    Array<ResolversTypes['VAnchorDeposit']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorDepositsArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  vanchorDepositByToken?: Resolver<
+    Maybe<ResolversTypes['VAnchorDepositByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorDepositByTokenArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDepositByTokens?: Resolver<
+    Array<ResolversTypes['VAnchorDepositByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorDepositEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorDepositEvery15MinArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDepositEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorDepositEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorDepositByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorDepositByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositEveryDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorDepositEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorDepositEveryDayArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDepositEveryDays?: Resolver<
+    Array<ResolversTypes['VAnchorDepositEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEveryDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorDepositByTokenEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositByTokenEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEveryDays?: Resolver<
+    Array<ResolversTypes['VAnchorDepositByTokenEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositByTokenEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositLog?: Resolver<
+    Maybe<ResolversTypes['VAnchorDepositLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorDepositLogArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDepositLogs?: Resolver<
+    Array<ResolversTypes['VAnchorDepositLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorDepositLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTransferLog?: Resolver<
+    Maybe<ResolversTypes['VAnchorTransferLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorTransferLogArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorTransferLogs?: Resolver<
+    Array<ResolversTypes['VAnchorTransferLog']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorTransferLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolume?: Resolver<
+    Maybe<ResolversTypes['VAnchorVolume']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorVolumeArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumes?: Resolver<
+    Array<ResolversTypes['VAnchorVolume']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorVolumesArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  vanchorVolumeByToken?: Resolver<
+    Maybe<ResolversTypes['VAnchorVolumeByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorVolumeByTokenArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumeByTokens?: Resolver<
+    Array<ResolversTypes['VAnchorVolumeByToken']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorVolumeByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorVolumeEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorVolumeEvery15MinArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumeEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorVolumeEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorVolumeEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByTokenEvery15Min?: Resolver<
+    Maybe<ResolversTypes['VAnchorVolumeByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorVolumeByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByTokenEvery15Mins?: Resolver<
+    Array<ResolversTypes['VAnchorVolumeByTokenEvery15Min']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorVolumeByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeEveryDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorVolumeEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorVolumeEveryDayArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumeEveryDays?: Resolver<
+    Array<ResolversTypes['VAnchorVolumeEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorVolumeEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByTokenEveryDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorVolumeByTokenEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryvanchorVolumeByTokenEveryDayArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumeByTokenEveryDays?: Resolver<
+    Array<ResolversTypes['VAnchorVolumeByTokenEveryDay']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      QueryvanchorVolumeByTokenEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  _meta?: Resolver<
+    Maybe<ResolversTypes['_Meta_']>,
+    ParentType,
+    ContextType,
+    Partial<Query_metaArgs>
+  >;
 }>;
 
-export type SubscriptionResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
-  edgeAddition?: SubscriptionResolver<Maybe<ResolversTypes['EdgeAddition']>, "edgeAddition", ParentType, ContextType, RequireFields<SubscriptionedgeAdditionArgs, 'id' | 'subgraphError'>>;
-  edgeAdditions?: SubscriptionResolver<Array<ResolversTypes['EdgeAddition']>, "edgeAdditions", ParentType, ContextType, RequireFields<SubscriptionedgeAdditionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  edgeUpdate?: SubscriptionResolver<Maybe<ResolversTypes['EdgeUpdate']>, "edgeUpdate", ParentType, ContextType, RequireFields<SubscriptionedgeUpdateArgs, 'id' | 'subgraphError'>>;
-  edgeUpdates?: SubscriptionResolver<Array<ResolversTypes['EdgeUpdate']>, "edgeUpdates", ParentType, ContextType, RequireFields<SubscriptionedgeUpdatesArgs, 'skip' | 'first' | 'subgraphError'>>;
-  insertion?: SubscriptionResolver<Maybe<ResolversTypes['Insertion']>, "insertion", ParentType, ContextType, RequireFields<SubscriptioninsertionArgs, 'id' | 'subgraphError'>>;
-  insertions?: SubscriptionResolver<Array<ResolversTypes['Insertion']>, "insertions", ParentType, ContextType, RequireFields<SubscriptioninsertionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  newCommitment?: SubscriptionResolver<Maybe<ResolversTypes['NewCommitment']>, "newCommitment", ParentType, ContextType, RequireFields<SubscriptionnewCommitmentArgs, 'id' | 'subgraphError'>>;
-  newCommitments?: SubscriptionResolver<Array<ResolversTypes['NewCommitment']>, "newCommitments", ParentType, ContextType, RequireFields<SubscriptionnewCommitmentsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  newNullifier?: SubscriptionResolver<Maybe<ResolversTypes['NewNullifier']>, "newNullifier", ParentType, ContextType, RequireFields<SubscriptionnewNullifierArgs, 'id' | 'subgraphError'>>;
-  newNullifiers?: SubscriptionResolver<Array<ResolversTypes['NewNullifier']>, "newNullifiers", ParentType, ContextType, RequireFields<SubscriptionnewNullifiersArgs, 'skip' | 'first' | 'subgraphError'>>;
-  publicKey?: SubscriptionResolver<Maybe<ResolversTypes['PublicKey']>, "publicKey", ParentType, ContextType, RequireFields<SubscriptionpublicKeyArgs, 'id' | 'subgraphError'>>;
-  publicKeys?: SubscriptionResolver<Array<ResolversTypes['PublicKey']>, "publicKeys", ParentType, ContextType, RequireFields<SubscriptionpublicKeysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  token?: SubscriptionResolver<Maybe<ResolversTypes['Token']>, "token", ParentType, ContextType, RequireFields<SubscriptiontokenArgs, 'id' | 'subgraphError'>>;
-  tokens?: SubscriptionResolver<Array<ResolversTypes['Token']>, "tokens", ParentType, ContextType, RequireFields<SubscriptiontokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  externalData?: SubscriptionResolver<Maybe<ResolversTypes['ExternalData']>, "externalData", ParentType, ContextType, RequireFields<SubscriptionexternalDataArgs, 'id' | 'subgraphError'>>;
-  externalDatas?: SubscriptionResolver<Array<ResolversTypes['ExternalData']>, "externalDatas", ParentType, ContextType, RequireFields<SubscriptionexternalDatasArgs, 'skip' | 'first' | 'subgraphError'>>;
-  publicInputs?: SubscriptionResolver<Array<ResolversTypes['PublicInputs']>, "publicInputs", ParentType, ContextType, RequireFields<SubscriptionpublicInputsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  encryptions?: SubscriptionResolver<Array<ResolversTypes['Encryptions']>, "encryptions", ParentType, ContextType, RequireFields<SubscriptionencryptionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  shieldedTransaction?: SubscriptionResolver<Maybe<ResolversTypes['ShieldedTransaction']>, "shieldedTransaction", ParentType, ContextType, RequireFields<SubscriptionshieldedTransactionArgs, 'id' | 'subgraphError'>>;
-  shieldedTransactions?: SubscriptionResolver<Array<ResolversTypes['ShieldedTransaction']>, "shieldedTransactions", ParentType, ContextType, RequireFields<SubscriptionshieldedTransactionsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLocked?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalValueLocked']>, "vanchorTotalValueLocked", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockeds?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLocked']>, "vanchorTotalValueLockeds", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByToken']>, "vanchorTotalValueLockedByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokens?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLockedByToken']>, "vanchorTotalValueLockedByTokens", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>, "vanchorTotalValueLockedEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>, "vanchorTotalValueLockedEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>, "vanchorTotalValueLockedByTokenEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>, "vanchorTotalValueLockedByTokenEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedEveryDay?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalValueLockedEveryDay']>, "vanchorTotalValueLockedEveryDay", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>, "vanchorTotalValueLockedEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEveryDay?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, "vanchorTotalValueLockedByTokenEveryDay", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalValueLockedByTokenEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, "vanchorTotalValueLockedByTokenEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFee?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalRelayerFee']>, "vanchorTotalRelayerFee", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFeeArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFees?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalRelayerFee']>, "vanchorTotalRelayerFees", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFeesArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalRelayerFeeByToken']>, "vanchorTotalRelayerFeeByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFeeByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByTokens?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalRelayerFeeByToken']>, "vanchorTotalRelayerFeeByTokens", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFeeByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFee15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalRelayerFee15Min']>, "vanchorTotalRelayerFee15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFee15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFee15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalRelayerFee15Min']>, "vanchorTotalRelayerFee15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFee15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByTokenEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>, "vanchorTotalRelayerFeeByTokenEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFeeByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalRelayerFeeByTokenEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>, "vanchorTotalRelayerFeeByTokenEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalRelayerFeeByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFee?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalWrappingFee']>, "vanchorTotalWrappingFee", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFeeArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFees?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalWrappingFee']>, "vanchorTotalWrappingFees", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFeesArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalWrappingFeeByToken']>, "vanchorTotalWrappingFeeByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFeeByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByTokens?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalWrappingFeeByToken']>, "vanchorTotalWrappingFeeByTokens", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFeeByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFee15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalWrappingFee15Min']>, "vanchorTotalWrappingFee15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFee15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFee15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalWrappingFee15Min']>, "vanchorTotalWrappingFee15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFee15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByTokenEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>, "vanchorTotalWrappingFeeByTokenEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFeeByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorTotalWrappingFeeByTokenEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>, "vanchorTotalWrappingFeeByTokenEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalWrappingFeeByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  wrappingEventLog?: SubscriptionResolver<Maybe<ResolversTypes['WrappingEventLog']>, "wrappingEventLog", ParentType, ContextType, RequireFields<SubscriptionwrappingEventLogArgs, 'id' | 'subgraphError'>>;
-  wrappingEventLogs?: SubscriptionResolver<Array<ResolversTypes['WrappingEventLog']>, "wrappingEventLogs", ParentType, ContextType, RequireFields<SubscriptionwrappingEventLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  unwrappingEventLog?: SubscriptionResolver<Maybe<ResolversTypes['UnwrappingEventLog']>, "unwrappingEventLog", ParentType, ContextType, RequireFields<SubscriptionunwrappingEventLogArgs, 'id' | 'subgraphError'>>;
-  unwrappingEventLogs?: SubscriptionResolver<Array<ResolversTypes['UnwrappingEventLog']>, "unwrappingEventLogs", ParentType, ContextType, RequireFields<SubscriptionunwrappingEventLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalLog?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorWithdrawalLog']>, "vanchorWithdrawalLog", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalLogArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalLogs?: SubscriptionResolver<Array<ResolversTypes['VAnchorWithdrawalLog']>, "vanchorWithdrawalLogs", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawal?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorWithdrawal']>, "vanchorWithdrawal", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawals?: SubscriptionResolver<Array<ResolversTypes['VAnchorWithdrawal']>, "vanchorWithdrawals", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorWithdrawalByToken']>, "vanchorWithdrawalByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalByTokens?: SubscriptionResolver<Array<ResolversTypes['VAnchorWithdrawalByToken']>, "vanchorWithdrawalByTokens", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorWithdrawalEvery15Min']>, "vanchorWithdrawalEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorWithdrawalEvery15Min']>, "vanchorWithdrawalEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorWithdrawalByTokenEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>, "vanchorWithdrawalByTokenEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorWithdrawalByTokenEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>, "vanchorWithdrawalByTokenEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorWithdrawalByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDeposit?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorDeposit']>, "vanchorDeposit", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositArgs, 'id' | 'subgraphError'>>;
-  vanchorDeposits?: SubscriptionResolver<Array<ResolversTypes['VAnchorDeposit']>, "vanchorDeposits", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorDepositByToken']>, "vanchorDepositByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositByTokenArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositByTokens?: SubscriptionResolver<Array<ResolversTypes['VAnchorDepositByToken']>, "vanchorDepositByTokens", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorDepositEvery15Min']>, "vanchorDepositEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorDepositEvery15Min']>, "vanchorDepositEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositByTokenEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorDepositByTokenEvery15Min']>, "vanchorDepositByTokenEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositByTokenEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorDepositByTokenEvery15Min']>, "vanchorDepositByTokenEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositEveryDay?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorDepositEveryDay']>, "vanchorDepositEveryDay", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorDepositEveryDay']>, "vanchorDepositEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositByTokenEveryDay?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorDepositByTokenEveryDay']>, "vanchorDepositByTokenEveryDay", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositByTokenEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorDepositByTokenEveryDay']>, "vanchorDepositByTokenEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorDepositLog?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorDepositLog']>, "vanchorDepositLog", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositLogArgs, 'id' | 'subgraphError'>>;
-  vanchorDepositLogs?: SubscriptionResolver<Array<ResolversTypes['VAnchorDepositLog']>, "vanchorDepositLogs", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  vanchorTransferLog?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTransferLog']>, "vanchorTransferLog", ParentType, ContextType, RequireFields<SubscriptionvanchorTransferLogArgs, 'id' | 'subgraphError'>>;
-  vanchorTransferLogs?: SubscriptionResolver<Array<ResolversTypes['VAnchorTransferLog']>, "vanchorTransferLogs", ParentType, ContextType, RequireFields<SubscriptionvanchorTransferLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  _meta?: SubscriptionResolver<Maybe<ResolversTypes['_Meta_']>, "_meta", ParentType, ContextType, Partial<Subscription_metaArgs>>;
+export type SubscriptionResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']
+> = ResolversObject<{
+  edgeAddition?: SubscriptionResolver<
+    Maybe<ResolversTypes['EdgeAddition']>,
+    'edgeAddition',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionedgeAdditionArgs, 'id' | 'subgraphError'>
+  >;
+  edgeAdditions?: SubscriptionResolver<
+    Array<ResolversTypes['EdgeAddition']>,
+    'edgeAdditions',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionedgeAdditionsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  edgeUpdate?: SubscriptionResolver<
+    Maybe<ResolversTypes['EdgeUpdate']>,
+    'edgeUpdate',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionedgeUpdateArgs, 'id' | 'subgraphError'>
+  >;
+  edgeUpdates?: SubscriptionResolver<
+    Array<ResolversTypes['EdgeUpdate']>,
+    'edgeUpdates',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionedgeUpdatesArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  insertion?: SubscriptionResolver<
+    Maybe<ResolversTypes['Insertion']>,
+    'insertion',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptioninsertionArgs, 'id' | 'subgraphError'>
+  >;
+  insertions?: SubscriptionResolver<
+    Array<ResolversTypes['Insertion']>,
+    'insertions',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptioninsertionsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  newCommitment?: SubscriptionResolver<
+    Maybe<ResolversTypes['NewCommitment']>,
+    'newCommitment',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionnewCommitmentArgs, 'id' | 'subgraphError'>
+  >;
+  newCommitments?: SubscriptionResolver<
+    Array<ResolversTypes['NewCommitment']>,
+    'newCommitments',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionnewCommitmentsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  newNullifier?: SubscriptionResolver<
+    Maybe<ResolversTypes['NewNullifier']>,
+    'newNullifier',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionnewNullifierArgs, 'id' | 'subgraphError'>
+  >;
+  newNullifiers?: SubscriptionResolver<
+    Array<ResolversTypes['NewNullifier']>,
+    'newNullifiers',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionnewNullifiersArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  publicKey?: SubscriptionResolver<
+    Maybe<ResolversTypes['PublicKey']>,
+    'publicKey',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionpublicKeyArgs, 'id' | 'subgraphError'>
+  >;
+  publicKeys?: SubscriptionResolver<
+    Array<ResolversTypes['PublicKey']>,
+    'publicKeys',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionpublicKeysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  token?: SubscriptionResolver<
+    Maybe<ResolversTypes['Token']>,
+    'token',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptiontokenArgs, 'id' | 'subgraphError'>
+  >;
+  tokens?: SubscriptionResolver<
+    Array<ResolversTypes['Token']>,
+    'tokens',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptiontokensArgs, 'skip' | 'first' | 'subgraphError'>
+  >;
+  externalData?: SubscriptionResolver<
+    Maybe<ResolversTypes['ExternalData']>,
+    'externalData',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionexternalDataArgs, 'id' | 'subgraphError'>
+  >;
+  externalDatas?: SubscriptionResolver<
+    Array<ResolversTypes['ExternalData']>,
+    'externalDatas',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionexternalDatasArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  publicInputs?: SubscriptionResolver<
+    Array<ResolversTypes['PublicInputs']>,
+    'publicInputs',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionpublicInputsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  encryptions?: SubscriptionResolver<
+    Array<ResolversTypes['Encryptions']>,
+    'encryptions',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionencryptionsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  shieldedTransaction?: SubscriptionResolver<
+    Maybe<ResolversTypes['ShieldedTransaction']>,
+    'shieldedTransaction',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionshieldedTransactionArgs, 'id' | 'subgraphError'>
+  >;
+  shieldedTransactions?: SubscriptionResolver<
+    Array<ResolversTypes['ShieldedTransaction']>,
+    'shieldedTransactions',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionshieldedTransactionsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLocked?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLocked']>,
+    'vanchorTotalValueLocked',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockeds?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLocked']>,
+    'vanchorTotalValueLockeds',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByToken?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByToken']>,
+    'vanchorTotalValueLockedByToken',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedByTokenArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokens?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByToken']>,
+    'vanchorTotalValueLockedByTokens',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>,
+    'vanchorTotalValueLockedEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedEvery15Min']>,
+    'vanchorTotalValueLockedEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>,
+    'vanchorTotalValueLockedByTokenEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByTokenEvery15Min']>,
+    'vanchorTotalValueLockedByTokenEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEveryDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
+    'vanchorTotalValueLockedEveryDay',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedEveryDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
+    'vanchorTotalValueLockedEveryDays',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEveryDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
+    'vanchorTotalValueLockedByTokenEveryDay',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalValueLockedByTokenEveryDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
+    'vanchorTotalValueLockedByTokenEveryDays',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFee?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFee']>,
+    'vanchorTotalRelayerFee',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFeeArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFees?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFee']>,
+    'vanchorTotalRelayerFees',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFeesArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByToken?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFeeByToken']>,
+    'vanchorTotalRelayerFeeByToken',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFeeByTokenArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByTokens?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFeeByToken']>,
+    'vanchorTotalRelayerFeeByTokens',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFeeByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFee15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFee15Min']>,
+    'vanchorTotalRelayerFee15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFee15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFee15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFee15Min']>,
+    'vanchorTotalRelayerFee15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFee15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByTokenEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>,
+    'vanchorTotalRelayerFeeByTokenEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFeeByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalRelayerFeeByTokenEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']>,
+    'vanchorTotalRelayerFeeByTokenEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalRelayerFeeByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFee?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFee']>,
+    'vanchorTotalWrappingFee',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFeeArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFees?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFee']>,
+    'vanchorTotalWrappingFees',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFeesArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByToken?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFeeByToken']>,
+    'vanchorTotalWrappingFeeByToken',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFeeByTokenArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByTokens?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFeeByToken']>,
+    'vanchorTotalWrappingFeeByTokens',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFeeByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFee15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFee15Min']>,
+    'vanchorTotalWrappingFee15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFee15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFee15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFee15Min']>,
+    'vanchorTotalWrappingFee15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFee15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByTokenEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>,
+    'vanchorTotalWrappingFeeByTokenEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFeeByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorTotalWrappingFeeByTokenEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']>,
+    'vanchorTotalWrappingFeeByTokenEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTotalWrappingFeeByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  wrappingEventLog?: SubscriptionResolver<
+    Maybe<ResolversTypes['WrappingEventLog']>,
+    'wrappingEventLog',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionwrappingEventLogArgs, 'id' | 'subgraphError'>
+  >;
+  wrappingEventLogs?: SubscriptionResolver<
+    Array<ResolversTypes['WrappingEventLog']>,
+    'wrappingEventLogs',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionwrappingEventLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  unwrappingEventLog?: SubscriptionResolver<
+    Maybe<ResolversTypes['UnwrappingEventLog']>,
+    'unwrappingEventLog',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionunwrappingEventLogArgs, 'id' | 'subgraphError'>
+  >;
+  unwrappingEventLogs?: SubscriptionResolver<
+    Array<ResolversTypes['UnwrappingEventLog']>,
+    'unwrappingEventLogs',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionunwrappingEventLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalLog?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalLog']>,
+    'vanchorWithdrawalLog',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorWithdrawalLogArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorWithdrawalLogs?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorWithdrawalLog']>,
+    'vanchorWithdrawalLogs',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawal?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorWithdrawal']>,
+    'vanchorWithdrawal',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorWithdrawalArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorWithdrawals?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorWithdrawal']>,
+    'vanchorWithdrawals',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalByToken?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalByToken']>,
+    'vanchorWithdrawalByToken',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalByTokenArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalByTokens?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorWithdrawalByToken']>,
+    'vanchorWithdrawalByTokens',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalEvery15Min']>,
+    'vanchorWithdrawalEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorWithdrawalEvery15Min']>,
+    'vanchorWithdrawalEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalByTokenEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>,
+    'vanchorWithdrawalByTokenEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorWithdrawalByTokenEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorWithdrawalByTokenEvery15Min']>,
+    'vanchorWithdrawalByTokenEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorWithdrawalByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDeposit?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorDeposit']>,
+    'vanchorDeposit',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorDepositArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDeposits?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorDeposit']>,
+    'vanchorDeposits',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByToken?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorDepositByToken']>,
+    'vanchorDepositByToken',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorDepositByTokenArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDepositByTokens?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorDepositByToken']>,
+    'vanchorDepositByTokens',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorDepositEvery15Min']>,
+    'vanchorDepositEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorDepositEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorDepositEvery15Min']>,
+    'vanchorDepositEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorDepositByTokenEvery15Min']>,
+    'vanchorDepositByTokenEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorDepositByTokenEvery15Min']>,
+    'vanchorDepositByTokenEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositEveryDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorDepositEveryDay']>,
+    'vanchorDepositEveryDay',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorDepositEveryDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorDepositEveryDay']>,
+    'vanchorDepositEveryDays',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEveryDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorDepositByTokenEveryDay']>,
+    'vanchorDepositByTokenEveryDay',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositByTokenEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorDepositByTokenEveryDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorDepositByTokenEveryDay']>,
+    'vanchorDepositByTokenEveryDays',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositByTokenEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorDepositLog?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorDepositLog']>,
+    'vanchorDepositLog',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorDepositLogArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorDepositLogs?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorDepositLog']>,
+    'vanchorDepositLogs',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorDepositLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorTransferLog?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTransferLog']>,
+    'vanchorTransferLog',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorTransferLogArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorTransferLogs?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTransferLog']>,
+    'vanchorTransferLogs',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorTransferLogsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolume?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorVolume']>,
+    'vanchorVolume',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorVolumeArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumes?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorVolume']>,
+    'vanchorVolumes',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumesArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByToken?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorVolumeByToken']>,
+    'vanchorVolumeByToken',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorVolumeByTokenArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumeByTokens?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorVolumeByToken']>,
+    'vanchorVolumeByTokens',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeByTokensArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorVolumeEvery15Min']>,
+    'vanchorVolumeEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorVolumeEvery15Min']>,
+    'vanchorVolumeEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByTokenEvery15Min?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorVolumeByTokenEvery15Min']>,
+    'vanchorVolumeByTokenEvery15Min',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeByTokenEvery15MinArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByTokenEvery15Mins?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorVolumeByTokenEvery15Min']>,
+    'vanchorVolumeByTokenEvery15Mins',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeByTokenEvery15MinsArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeEveryDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorVolumeEveryDay']>,
+    'vanchorVolumeEveryDay',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionvanchorVolumeEveryDayArgs, 'id' | 'subgraphError'>
+  >;
+  vanchorVolumeEveryDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorVolumeEveryDay']>,
+    'vanchorVolumeEveryDays',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByTokenEveryDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorVolumeByTokenEveryDay']>,
+    'vanchorVolumeByTokenEveryDay',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeByTokenEveryDayArgs,
+      'id' | 'subgraphError'
+    >
+  >;
+  vanchorVolumeByTokenEveryDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorVolumeByTokenEveryDay']>,
+    'vanchorVolumeByTokenEveryDays',
+    ParentType,
+    ContextType,
+    RequireFields<
+      SubscriptionvanchorVolumeByTokenEveryDaysArgs,
+      'skip' | 'first' | 'subgraphError'
+    >
+  >;
+  _meta?: SubscriptionResolver<
+    Maybe<ResolversTypes['_Meta_']>,
+    '_meta',
+    ParentType,
+    ContextType,
+    Partial<Subscription_metaArgs>
+  >;
 }>;
 
-export interface BigDecimalScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['BigDecimal'], any> {
+export interface BigDecimalScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['BigDecimal'], any> {
   name: 'BigDecimal';
 }
 
-export interface BigIntScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['BigInt'], any> {
+export interface BigIntScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['BigInt'], any> {
   name: 'BigInt';
 }
 
-export interface BytesScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Bytes'], any> {
+export interface BytesScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['Bytes'], any> {
   name: 'Bytes';
 }
 
-export type EdgeAdditionResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['EdgeAddition'] = ResolversParentTypes['EdgeAddition']> = ResolversObject<{
+export type EdgeAdditionResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['EdgeAddition'] = ResolversParentTypes['EdgeAddition']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   chainID?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   latestLeafIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -5844,7 +7877,10 @@ export type EdgeAdditionResolvers<ContextType = MeshContext & { subgraphUrl: str
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type EdgeUpdateResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['EdgeUpdate'] = ResolversParentTypes['EdgeUpdate']> = ResolversObject<{
+export type EdgeUpdateResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['EdgeUpdate'] = ResolversParentTypes['EdgeUpdate']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   chainID?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   latestLeafIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -5855,14 +7891,20 @@ export type EdgeUpdateResolvers<ContextType = MeshContext & { subgraphUrl: strin
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type EncryptionsResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['Encryptions'] = ResolversParentTypes['Encryptions']> = ResolversObject<{
+export type EncryptionsResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['Encryptions'] = ResolversParentTypes['Encryptions']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   encryptedOutput1?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   encryptedOutput2?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type ExternalDataResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['ExternalData'] = ResolversParentTypes['ExternalData']> = ResolversObject<{
+export type ExternalDataResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['ExternalData'] = ResolversParentTypes['ExternalData']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   extAmount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -5873,7 +7915,10 @@ export type ExternalDataResolvers<ContextType = MeshContext & { subgraphUrl: str
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type InsertionResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['Insertion'] = ResolversParentTypes['Insertion']> = ResolversObject<{
+export type InsertionResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['Insertion'] = ResolversParentTypes['Insertion']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   commitment?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   leafIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -5885,7 +7930,10 @@ export type InsertionResolvers<ContextType = MeshContext & { subgraphUrl: string
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type NewCommitmentResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['NewCommitment'] = ResolversParentTypes['NewCommitment']> = ResolversObject<{
+export type NewCommitmentResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['NewCommitment'] = ResolversParentTypes['NewCommitment']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   commitment?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   subTreeIndex?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -5897,7 +7945,10 @@ export type NewCommitmentResolvers<ContextType = MeshContext & { subgraphUrl: st
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type NewNullifierResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['NewNullifier'] = ResolversParentTypes['NewNullifier']> = ResolversObject<{
+export type NewNullifierResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['NewNullifier'] = ResolversParentTypes['NewNullifier']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   nullifier?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   blockNumber?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -5906,18 +7957,32 @@ export type NewNullifierResolvers<ContextType = MeshContext & { subgraphUrl: str
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type PublicInputsResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['PublicInputs'] = ResolversParentTypes['PublicInputs']> = ResolversObject<{
+export type PublicInputsResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['PublicInputs'] = ResolversParentTypes['PublicInputs']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   roots?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   extensionRoots?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  inputNullifiers?: Resolver<Array<ResolversTypes['BigInt']>, ParentType, ContextType>;
-  outputCommitments?: Resolver<Array<ResolversTypes['BigInt']>, ParentType, ContextType>;
+  inputNullifiers?: Resolver<
+    Array<ResolversTypes['BigInt']>,
+    ParentType,
+    ContextType
+  >;
+  outputCommitments?: Resolver<
+    Array<ResolversTypes['BigInt']>,
+    ParentType,
+    ContextType
+  >;
   publicAmount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   extDataHash?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type PublicKeyResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['PublicKey'] = ResolversParentTypes['PublicKey']> = ResolversObject<{
+export type PublicKeyResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['PublicKey'] = ResolversParentTypes['PublicKey']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   key?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -5927,16 +7992,31 @@ export type PublicKeyResolvers<ContextType = MeshContext & { subgraphUrl: string
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type ShieldedTransactionResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['ShieldedTransaction'] = ResolversParentTypes['ShieldedTransaction']> = ResolversObject<{
+export type ShieldedTransactionResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['ShieldedTransaction'] = ResolversParentTypes['ShieldedTransaction']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   vanchor?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   proof?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   auxPublicInputs?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  externalData?: Resolver<ResolversTypes['ExternalData'], ParentType, ContextType>;
-  publicInputs?: Resolver<ResolversTypes['PublicInputs'], ParentType, ContextType>;
-  encryptions?: Resolver<ResolversTypes['Encryptions'], ParentType, ContextType>;
+  externalData?: Resolver<
+    ResolversTypes['ExternalData'],
+    ParentType,
+    ContextType
+  >;
+  publicInputs?: Resolver<
+    ResolversTypes['PublicInputs'],
+    ParentType,
+    ContextType
+  >;
+  encryptions?: Resolver<
+    ResolversTypes['Encryptions'],
+    ParentType,
+    ContextType
+  >;
   blockNumber?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   blockTimestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   transactionHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -5944,7 +8024,10 @@ export type ShieldedTransactionResolvers<ContextType = MeshContext & { subgraphU
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type TokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = ResolversObject<{
+export type TokenResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   address?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   decimals?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -5953,7 +8036,10 @@ export type TokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type UnwrappingEventLogResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['UnwrappingEventLog'] = ResolversParentTypes['UnwrappingEventLog']> = ResolversObject<{
+export type UnwrappingEventLogResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['UnwrappingEventLog'] = ResolversParentTypes['UnwrappingEventLog']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -5963,7 +8049,10 @@ export type UnwrappingEventLogResolvers<ContextType = MeshContext & { subgraphUr
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorDepositResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorDeposit'] = ResolversParentTypes['VAnchorDeposit']> = ResolversObject<{
+export type VAnchorDepositResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorDeposit'] = ResolversParentTypes['VAnchorDeposit']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   deposit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   averageDeposit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -5971,7 +8060,10 @@ export type VAnchorDepositResolvers<ContextType = MeshContext & { subgraphUrl: s
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorDepositByTokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorDepositByToken'] = ResolversParentTypes['VAnchorDepositByToken']> = ResolversObject<{
+export type VAnchorDepositByTokenResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorDepositByToken'] = ResolversParentTypes['VAnchorDepositByToken']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -5982,7 +8074,10 @@ export type VAnchorDepositByTokenResolvers<ContextType = MeshContext & { subgrap
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorDepositByTokenEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorDepositByTokenEvery15Min'] = ResolversParentTypes['VAnchorDepositByTokenEvery15Min']> = ResolversObject<{
+export type VAnchorDepositByTokenEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorDepositByTokenEvery15Min'] = ResolversParentTypes['VAnchorDepositByTokenEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -5995,7 +8090,10 @@ export type VAnchorDepositByTokenEvery15MinResolvers<ContextType = MeshContext &
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorDepositByTokenEveryDayResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorDepositByTokenEveryDay'] = ResolversParentTypes['VAnchorDepositByTokenEveryDay']> = ResolversObject<{
+export type VAnchorDepositByTokenEveryDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorDepositByTokenEveryDay'] = ResolversParentTypes['VAnchorDepositByTokenEveryDay']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6007,7 +8105,10 @@ export type VAnchorDepositByTokenEveryDayResolvers<ContextType = MeshContext & {
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorDepositEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorDepositEvery15Min'] = ResolversParentTypes['VAnchorDepositEvery15Min']> = ResolversObject<{
+export type VAnchorDepositEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorDepositEvery15Min'] = ResolversParentTypes['VAnchorDepositEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -6018,7 +8119,10 @@ export type VAnchorDepositEvery15MinResolvers<ContextType = MeshContext & { subg
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorDepositEveryDayResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorDepositEveryDay'] = ResolversParentTypes['VAnchorDepositEveryDay']> = ResolversObject<{
+export type VAnchorDepositEveryDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorDepositEveryDay'] = ResolversParentTypes['VAnchorDepositEveryDay']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -6028,7 +8132,10 @@ export type VAnchorDepositEveryDayResolvers<ContextType = MeshContext & { subgra
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorDepositLogResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorDepositLog'] = ResolversParentTypes['VAnchorDepositLog']> = ResolversObject<{
+export type VAnchorDepositLogResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorDepositLog'] = ResolversParentTypes['VAnchorDepositLog']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   deposit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6038,13 +8145,19 @@ export type VAnchorDepositLogResolvers<ContextType = MeshContext & { subgraphUrl
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalRelayerFeeResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalRelayerFee'] = ResolversParentTypes['VAnchorTotalRelayerFee']> = ResolversObject<{
+export type VAnchorTotalRelayerFeeResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalRelayerFee'] = ResolversParentTypes['VAnchorTotalRelayerFee']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   fees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalRelayerFee15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalRelayerFee15Min'] = ResolversParentTypes['VAnchorTotalRelayerFee15Min']> = ResolversObject<{
+export type VAnchorTotalRelayerFee15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalRelayerFee15Min'] = ResolversParentTypes['VAnchorTotalRelayerFee15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -6053,7 +8166,10 @@ export type VAnchorTotalRelayerFee15MinResolvers<ContextType = MeshContext & { s
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalRelayerFeeByTokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalRelayerFeeByToken'] = ResolversParentTypes['VAnchorTotalRelayerFeeByToken']> = ResolversObject<{
+export type VAnchorTotalRelayerFeeByTokenResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalRelayerFeeByToken'] = ResolversParentTypes['VAnchorTotalRelayerFeeByToken']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -6062,7 +8178,10 @@ export type VAnchorTotalRelayerFeeByTokenResolvers<ContextType = MeshContext & {
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalRelayerFeeByTokenEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalRelayerFeeByTokenEvery15Min'] = ResolversParentTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']> = ResolversObject<{
+export type VAnchorTotalRelayerFeeByTokenEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalRelayerFeeByTokenEvery15Min'] = ResolversParentTypes['VAnchorTotalRelayerFeeByTokenEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6073,66 +8192,114 @@ export type VAnchorTotalRelayerFeeByTokenEvery15MinResolvers<ContextType = MeshC
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalValueLockedResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalValueLocked'] = ResolversParentTypes['VAnchorTotalValueLocked']> = ResolversObject<{
+export type VAnchorTotalValueLockedResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLocked'] = ResolversParentTypes['VAnchorTotalValueLocked']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalValueLockedByTokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByToken'] = ResolversParentTypes['VAnchorTotalValueLockedByToken']> = ResolversObject<{
+export type VAnchorTotalValueLockedByTokenResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByToken'] = ResolversParentTypes['VAnchorTotalValueLockedByToken']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalValueLockedByTokenEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByTokenEvery15Min'] = ResolversParentTypes['VAnchorTotalValueLockedByTokenEvery15Min']> = ResolversObject<{
+export type VAnchorTotalValueLockedByTokenEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByTokenEvery15Min'] = ResolversParentTypes['VAnchorTotalValueLockedByTokenEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalValueLockedByTokenEveryDayResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByTokenEveryDay'] = ResolversParentTypes['VAnchorTotalValueLockedByTokenEveryDay']> = ResolversObject<{
+export type VAnchorTotalValueLockedByTokenEveryDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByTokenEveryDay'] = ResolversParentTypes['VAnchorTotalValueLockedByTokenEveryDay']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalValueLockedEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalValueLockedEvery15Min'] = ResolversParentTypes['VAnchorTotalValueLockedEvery15Min']> = ResolversObject<{
+export type VAnchorTotalValueLockedEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedEvery15Min'] = ResolversParentTypes['VAnchorTotalValueLockedEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalValueLockedEveryDayResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalValueLockedEveryDay'] = ResolversParentTypes['VAnchorTotalValueLockedEveryDay']> = ResolversObject<{
+export type VAnchorTotalValueLockedEveryDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedEveryDay'] = ResolversParentTypes['VAnchorTotalValueLockedEveryDay']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalWrappingFeeResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalWrappingFee'] = ResolversParentTypes['VAnchorTotalWrappingFee']> = ResolversObject<{
+export type VAnchorTotalWrappingFeeResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalWrappingFee'] = ResolversParentTypes['VAnchorTotalWrappingFee']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   fees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalWrappingFee15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalWrappingFee15Min'] = ResolversParentTypes['VAnchorTotalWrappingFee15Min']> = ResolversObject<{
+export type VAnchorTotalWrappingFee15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalWrappingFee15Min'] = ResolversParentTypes['VAnchorTotalWrappingFee15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -6141,7 +8308,10 @@ export type VAnchorTotalWrappingFee15MinResolvers<ContextType = MeshContext & { 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalWrappingFeeByTokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalWrappingFeeByToken'] = ResolversParentTypes['VAnchorTotalWrappingFeeByToken']> = ResolversObject<{
+export type VAnchorTotalWrappingFeeByTokenResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalWrappingFeeByToken'] = ResolversParentTypes['VAnchorTotalWrappingFeeByToken']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -6150,7 +8320,10 @@ export type VAnchorTotalWrappingFeeByTokenResolvers<ContextType = MeshContext & 
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalWrappingFeeByTokenEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalWrappingFeeByTokenEvery15Min'] = ResolversParentTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']> = ResolversObject<{
+export type VAnchorTotalWrappingFeeByTokenEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalWrappingFeeByTokenEvery15Min'] = ResolversParentTypes['VAnchorTotalWrappingFeeByTokenEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6161,7 +8334,10 @@ export type VAnchorTotalWrappingFeeByTokenEvery15MinResolvers<ContextType = Mesh
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTransferLogResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTransferLog'] = ResolversParentTypes['VAnchorTransferLog']> = ResolversObject<{
+export type VAnchorTransferLogResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTransferLog'] = ResolversParentTypes['VAnchorTransferLog']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6170,26 +8346,114 @@ export type VAnchorTransferLogResolvers<ContextType = MeshContext & { subgraphUr
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorWithdrawalResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorWithdrawal'] = ResolversParentTypes['VAnchorWithdrawal']> = ResolversObject<{
+export type VAnchorVolumeResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorVolume'] = ResolversParentTypes['VAnchorVolume']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorVolumeByTokenResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorVolumeByToken'] = ResolversParentTypes['VAnchorVolumeByToken']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorVolumeByTokenEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorVolumeByTokenEvery15Min'] = ResolversParentTypes['VAnchorVolumeByTokenEvery15Min']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorVolumeByTokenEveryDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorVolumeByTokenEveryDay'] = ResolversParentTypes['VAnchorVolumeByTokenEveryDay']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorVolumeEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorVolumeEvery15Min'] = ResolversParentTypes['VAnchorVolumeEvery15Min']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorVolumeEveryDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorVolumeEveryDay'] = ResolversParentTypes['VAnchorVolumeEveryDay']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorWithdrawalResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorWithdrawal'] = ResolversParentTypes['VAnchorWithdrawal']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   withdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  averageWithdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  averageWithdrawal?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   totalCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorWithdrawalByTokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorWithdrawalByToken'] = ResolversParentTypes['VAnchorWithdrawalByToken']> = ResolversObject<{
+export type VAnchorWithdrawalByTokenResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorWithdrawalByToken'] = ResolversParentTypes['VAnchorWithdrawalByToken']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   withdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  averageWithdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  averageWithdrawal?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   totalCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorWithdrawalByTokenEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorWithdrawalByTokenEvery15Min'] = ResolversParentTypes['VAnchorWithdrawalByTokenEvery15Min']> = ResolversObject<{
+export type VAnchorWithdrawalByTokenEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorWithdrawalByTokenEvery15Min'] = ResolversParentTypes['VAnchorWithdrawalByTokenEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6197,23 +8461,37 @@ export type VAnchorWithdrawalByTokenEvery15MinResolvers<ContextType = MeshContex
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   withdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  averageWithdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  averageWithdrawal?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   totalCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorWithdrawalEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorWithdrawalEvery15Min'] = ResolversParentTypes['VAnchorWithdrawalEvery15Min']> = ResolversObject<{
+export type VAnchorWithdrawalEvery15MinResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorWithdrawalEvery15Min'] = ResolversParentTypes['VAnchorWithdrawalEvery15Min']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   withdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  averageWithdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  averageWithdrawal?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
   totalCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorWithdrawalLogResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorWithdrawalLog'] = ResolversParentTypes['VAnchorWithdrawalLog']> = ResolversObject<{
+export type VAnchorWithdrawalLogResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorWithdrawalLog'] = ResolversParentTypes['VAnchorWithdrawalLog']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   withdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6223,7 +8501,10 @@ export type VAnchorWithdrawalLogResolvers<ContextType = MeshContext & { subgraph
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type WrappingEventLogResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['WrappingEventLog'] = ResolversParentTypes['WrappingEventLog']> = ResolversObject<{
+export type WrappingEventLogResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['WrappingEventLog'] = ResolversParentTypes['WrappingEventLog']
+> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6234,71 +8515,90 @@ export type WrappingEventLogResolvers<ContextType = MeshContext & { subgraphUrl:
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type _Block_Resolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['_Block_'] = ResolversParentTypes['_Block_']> = ResolversObject<{
+export type _Block_Resolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['_Block_'] = ResolversParentTypes['_Block_']
+> = ResolversObject<{
   hash?: Resolver<Maybe<ResolversTypes['Bytes']>, ParentType, ContextType>;
   number?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   timestamp?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type _Meta_Resolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['_Meta_'] = ResolversParentTypes['_Meta_']> = ResolversObject<{
+export type _Meta_Resolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['_Meta_'] = ResolversParentTypes['_Meta_']
+> = ResolversObject<{
   block?: Resolver<ResolversTypes['_Block_'], ParentType, ContextType>;
   deployment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  hasIndexingErrors?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasIndexingErrors?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> = ResolversObject<{
-  Query?: QueryResolvers<ContextType>;
-  Subscription?: SubscriptionResolvers<ContextType>;
-  BigDecimal?: GraphQLScalarType;
-  BigInt?: GraphQLScalarType;
-  Bytes?: GraphQLScalarType;
-  EdgeAddition?: EdgeAdditionResolvers<ContextType>;
-  EdgeUpdate?: EdgeUpdateResolvers<ContextType>;
-  Encryptions?: EncryptionsResolvers<ContextType>;
-  ExternalData?: ExternalDataResolvers<ContextType>;
-  Insertion?: InsertionResolvers<ContextType>;
-  NewCommitment?: NewCommitmentResolvers<ContextType>;
-  NewNullifier?: NewNullifierResolvers<ContextType>;
-  PublicInputs?: PublicInputsResolvers<ContextType>;
-  PublicKey?: PublicKeyResolvers<ContextType>;
-  ShieldedTransaction?: ShieldedTransactionResolvers<ContextType>;
-  Token?: TokenResolvers<ContextType>;
-  UnwrappingEventLog?: UnwrappingEventLogResolvers<ContextType>;
-  VAnchorDeposit?: VAnchorDepositResolvers<ContextType>;
-  VAnchorDepositByToken?: VAnchorDepositByTokenResolvers<ContextType>;
-  VAnchorDepositByTokenEvery15Min?: VAnchorDepositByTokenEvery15MinResolvers<ContextType>;
-  VAnchorDepositByTokenEveryDay?: VAnchorDepositByTokenEveryDayResolvers<ContextType>;
-  VAnchorDepositEvery15Min?: VAnchorDepositEvery15MinResolvers<ContextType>;
-  VAnchorDepositEveryDay?: VAnchorDepositEveryDayResolvers<ContextType>;
-  VAnchorDepositLog?: VAnchorDepositLogResolvers<ContextType>;
-  VAnchorTotalRelayerFee?: VAnchorTotalRelayerFeeResolvers<ContextType>;
-  VAnchorTotalRelayerFee15Min?: VAnchorTotalRelayerFee15MinResolvers<ContextType>;
-  VAnchorTotalRelayerFeeByToken?: VAnchorTotalRelayerFeeByTokenResolvers<ContextType>;
-  VAnchorTotalRelayerFeeByTokenEvery15Min?: VAnchorTotalRelayerFeeByTokenEvery15MinResolvers<ContextType>;
-  VAnchorTotalValueLocked?: VAnchorTotalValueLockedResolvers<ContextType>;
-  VAnchorTotalValueLockedByToken?: VAnchorTotalValueLockedByTokenResolvers<ContextType>;
-  VAnchorTotalValueLockedByTokenEvery15Min?: VAnchorTotalValueLockedByTokenEvery15MinResolvers<ContextType>;
-  VAnchorTotalValueLockedByTokenEveryDay?: VAnchorTotalValueLockedByTokenEveryDayResolvers<ContextType>;
-  VAnchorTotalValueLockedEvery15Min?: VAnchorTotalValueLockedEvery15MinResolvers<ContextType>;
-  VAnchorTotalValueLockedEveryDay?: VAnchorTotalValueLockedEveryDayResolvers<ContextType>;
-  VAnchorTotalWrappingFee?: VAnchorTotalWrappingFeeResolvers<ContextType>;
-  VAnchorTotalWrappingFee15Min?: VAnchorTotalWrappingFee15MinResolvers<ContextType>;
-  VAnchorTotalWrappingFeeByToken?: VAnchorTotalWrappingFeeByTokenResolvers<ContextType>;
-  VAnchorTotalWrappingFeeByTokenEvery15Min?: VAnchorTotalWrappingFeeByTokenEvery15MinResolvers<ContextType>;
-  VAnchorTransferLog?: VAnchorTransferLogResolvers<ContextType>;
-  VAnchorWithdrawal?: VAnchorWithdrawalResolvers<ContextType>;
-  VAnchorWithdrawalByToken?: VAnchorWithdrawalByTokenResolvers<ContextType>;
-  VAnchorWithdrawalByTokenEvery15Min?: VAnchorWithdrawalByTokenEvery15MinResolvers<ContextType>;
-  VAnchorWithdrawalEvery15Min?: VAnchorWithdrawalEvery15MinResolvers<ContextType>;
-  VAnchorWithdrawalLog?: VAnchorWithdrawalLogResolvers<ContextType>;
-  WrappingEventLog?: WrappingEventLogResolvers<ContextType>;
-  _Block_?: _Block_Resolvers<ContextType>;
-  _Meta_?: _Meta_Resolvers<ContextType>;
-}>;
+export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> =
+  ResolversObject<{
+    Query?: QueryResolvers<ContextType>;
+    Subscription?: SubscriptionResolvers<ContextType>;
+    BigDecimal?: GraphQLScalarType;
+    BigInt?: GraphQLScalarType;
+    Bytes?: GraphQLScalarType;
+    EdgeAddition?: EdgeAdditionResolvers<ContextType>;
+    EdgeUpdate?: EdgeUpdateResolvers<ContextType>;
+    Encryptions?: EncryptionsResolvers<ContextType>;
+    ExternalData?: ExternalDataResolvers<ContextType>;
+    Insertion?: InsertionResolvers<ContextType>;
+    NewCommitment?: NewCommitmentResolvers<ContextType>;
+    NewNullifier?: NewNullifierResolvers<ContextType>;
+    PublicInputs?: PublicInputsResolvers<ContextType>;
+    PublicKey?: PublicKeyResolvers<ContextType>;
+    ShieldedTransaction?: ShieldedTransactionResolvers<ContextType>;
+    Token?: TokenResolvers<ContextType>;
+    UnwrappingEventLog?: UnwrappingEventLogResolvers<ContextType>;
+    VAnchorDeposit?: VAnchorDepositResolvers<ContextType>;
+    VAnchorDepositByToken?: VAnchorDepositByTokenResolvers<ContextType>;
+    VAnchorDepositByTokenEvery15Min?: VAnchorDepositByTokenEvery15MinResolvers<ContextType>;
+    VAnchorDepositByTokenEveryDay?: VAnchorDepositByTokenEveryDayResolvers<ContextType>;
+    VAnchorDepositEvery15Min?: VAnchorDepositEvery15MinResolvers<ContextType>;
+    VAnchorDepositEveryDay?: VAnchorDepositEveryDayResolvers<ContextType>;
+    VAnchorDepositLog?: VAnchorDepositLogResolvers<ContextType>;
+    VAnchorTotalRelayerFee?: VAnchorTotalRelayerFeeResolvers<ContextType>;
+    VAnchorTotalRelayerFee15Min?: VAnchorTotalRelayerFee15MinResolvers<ContextType>;
+    VAnchorTotalRelayerFeeByToken?: VAnchorTotalRelayerFeeByTokenResolvers<ContextType>;
+    VAnchorTotalRelayerFeeByTokenEvery15Min?: VAnchorTotalRelayerFeeByTokenEvery15MinResolvers<ContextType>;
+    VAnchorTotalValueLocked?: VAnchorTotalValueLockedResolvers<ContextType>;
+    VAnchorTotalValueLockedByToken?: VAnchorTotalValueLockedByTokenResolvers<ContextType>;
+    VAnchorTotalValueLockedByTokenEvery15Min?: VAnchorTotalValueLockedByTokenEvery15MinResolvers<ContextType>;
+    VAnchorTotalValueLockedByTokenEveryDay?: VAnchorTotalValueLockedByTokenEveryDayResolvers<ContextType>;
+    VAnchorTotalValueLockedEvery15Min?: VAnchorTotalValueLockedEvery15MinResolvers<ContextType>;
+    VAnchorTotalValueLockedEveryDay?: VAnchorTotalValueLockedEveryDayResolvers<ContextType>;
+    VAnchorTotalWrappingFee?: VAnchorTotalWrappingFeeResolvers<ContextType>;
+    VAnchorTotalWrappingFee15Min?: VAnchorTotalWrappingFee15MinResolvers<ContextType>;
+    VAnchorTotalWrappingFeeByToken?: VAnchorTotalWrappingFeeByTokenResolvers<ContextType>;
+    VAnchorTotalWrappingFeeByTokenEvery15Min?: VAnchorTotalWrappingFeeByTokenEvery15MinResolvers<ContextType>;
+    VAnchorTransferLog?: VAnchorTransferLogResolvers<ContextType>;
+    VAnchorVolume?: VAnchorVolumeResolvers<ContextType>;
+    VAnchorVolumeByToken?: VAnchorVolumeByTokenResolvers<ContextType>;
+    VAnchorVolumeByTokenEvery15Min?: VAnchorVolumeByTokenEvery15MinResolvers<ContextType>;
+    VAnchorVolumeByTokenEveryDay?: VAnchorVolumeByTokenEveryDayResolvers<ContextType>;
+    VAnchorVolumeEvery15Min?: VAnchorVolumeEvery15MinResolvers<ContextType>;
+    VAnchorVolumeEveryDay?: VAnchorVolumeEveryDayResolvers<ContextType>;
+    VAnchorWithdrawal?: VAnchorWithdrawalResolvers<ContextType>;
+    VAnchorWithdrawalByToken?: VAnchorWithdrawalByTokenResolvers<ContextType>;
+    VAnchorWithdrawalByTokenEvery15Min?: VAnchorWithdrawalByTokenEvery15MinResolvers<ContextType>;
+    VAnchorWithdrawalEvery15Min?: VAnchorWithdrawalEvery15MinResolvers<ContextType>;
+    VAnchorWithdrawalLog?: VAnchorWithdrawalLogResolvers<ContextType>;
+    WrappingEventLog?: WrappingEventLogResolvers<ContextType>;
+    _Block_?: _Block_Resolvers<ContextType>;
+    _Meta_?: _Meta_Resolvers<ContextType>;
+  }>;
 
-export type DirectiveResolvers<ContextType = MeshContext & { subgraphUrl: string }> = ResolversObject<{
+export type DirectiveResolvers<
+  ContextType = MeshContext & { subgraphUrl: string }
+> = ResolversObject<{
   entity?: entityDirectiveResolver<any, any, ContextType>;
   subgraphId?: subgraphIdDirectiveResolver<any, any, ContextType>;
   derivedFrom?: derivedFromDirectiveResolver<any, any, ContextType>;
@@ -6306,72 +8606,91 @@ export type DirectiveResolvers<ContextType = MeshContext & { subgraphUrl: string
 
 export type MeshContext = VanchorTypes.Context & BaseMeshContext;
 
-
-const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/', '..');
+const baseDir = pathModule.join(
+  typeof __dirname === 'string' ? __dirname : '/',
+  '..'
+);
 
 const importFn: ImportFn = <T>(moduleId: string) => {
-  const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
-  switch(relativeModuleId) {
-    case ".graphclient/sources/vanchor/introspectionSchema":
+  const relativeModuleId = (
+    pathModule.isAbsolute(moduleId)
+      ? pathModule.relative(baseDir, moduleId)
+      : moduleId
+  )
+    .split('\\')
+    .join('/')
+    .replace(baseDir + '/', '');
+  switch (relativeModuleId) {
+    case '.graphclient/sources/vanchor/introspectionSchema':
       return Promise.resolve(importedModule$0) as T;
-    
+
     default:
-      return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
+      return Promise.reject(
+        new Error(`Cannot find module '${relativeModuleId}'.`)
+      );
   }
 };
 
-const rootStore = new MeshStore('.graphclient', new FsStoreStorageAdapter({
-  cwd: baseDir,
-  importFn,
-  fileType: "ts",
-}), {
-  readonly: true,
-  validate: false
-});
+const rootStore = new MeshStore(
+  '.graphclient',
+  new FsStoreStorageAdapter({
+    cwd: baseDir,
+    importFn,
+    fileType: 'ts',
+  }),
+  {
+    readonly: true,
+    validate: false,
+  }
+);
 
-export const rawServeConfig: YamlConfig.Config['serve'] = undefined as any
+export const rawServeConfig: YamlConfig.Config['serve'] = undefined as any;
 export async function getMeshOptions(): Promise<GetMeshOptions> {
-const pubsub = new PubSub();
-const sourcesStore = rootStore.child('sources');
-const logger = new DefaultLogger("GraphClient");
-const cache = new (MeshCache as any)({
-      ...({} as any),
-      importFn,
-      store: rootStore.child('cache'),
-      pubsub,
-      logger,
-    } as any)
+  const pubsub = new PubSub();
+  const sourcesStore = rootStore.child('sources');
+  const logger = new DefaultLogger('GraphClient');
+  const cache = new (MeshCache as any)({
+    ...({} as any),
+    importFn,
+    store: rootStore.child('cache'),
+    pubsub,
+    logger,
+  } as any);
 
-const sources: MeshResolvedSource[] = [];
-const transforms: MeshTransform[] = [];
-const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
-const vanchorTransforms = [];
-const vanchorHandler = new GraphqlHandler({
-              name: "vanchor",
-              config: {"endpoint":"{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}"},
-              baseDir,
-              cache,
-              pubsub,
-              store: sourcesStore.child("vanchor"),
-              logger: logger.child("vanchor"),
-              importFn,
-            });
-sources[0] = {
-          name: 'vanchor',
-          handler: vanchorHandler,
-          transforms: vanchorTransforms
-        }
-const additionalTypeDefs = [parse("extend type ShieldedTransaction {\n  subgraphUrl: String!\n}\n"),] as any[];
-const additionalResolvers = await Promise.all([
-        import("../src/resolvers.ts")
-            .then(m => m.resolvers || m.default || m)
-      ]);
-const merger = new(BareMerger as any)({
-        cache,
-        pubsub,
-        logger: logger.child('bareMerger'),
-        store: rootStore.child('bareMerger')
-      })
+  const sources: MeshResolvedSource[] = [];
+  const transforms: MeshTransform[] = [];
+  const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
+  const vanchorTransforms = [];
+  const vanchorHandler = new GraphqlHandler({
+    name: 'vanchor',
+    config: {
+      endpoint:
+        '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}',
+    },
+    baseDir,
+    cache,
+    pubsub,
+    store: sourcesStore.child('vanchor'),
+    logger: logger.child('vanchor'),
+    importFn,
+  });
+  sources[0] = {
+    name: 'vanchor',
+    handler: vanchorHandler,
+    transforms: vanchorTransforms,
+  };
+  const additionalTypeDefs = [
+    parse('extend type ShieldedTransaction {\n  subgraphUrl: String!\n}\n'),
+  ] as any[];
+  const additionalResolvers = await Promise.all([
+    import('../src/resolvers.ts').then((m) => m.resolvers || m.default || m),
+  ]);
+  const merger = new (BareMerger as any)({
+    cache,
+    pubsub,
+    logger: logger.child('bareMerger'),
+    store: rootStore.child('bareMerger'),
+  });
 
   return {
     sources,
@@ -6384,38 +8703,41 @@ const merger = new(BareMerger as any)({
     logger,
     additionalEnvelopPlugins,
     get documents() {
-      return [
-      
-    ];
+      return [];
     },
     fetchFn,
   };
 }
 
-export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandler<TServerContext> {
+export function createBuiltMeshHTTPHandler<
+  TServerContext = {}
+>(): MeshHTTPHandler<TServerContext> {
   return createMeshHTTPHandler<TServerContext>({
     baseDir,
     getBuiltMesh: getBuiltGraphClient,
     rawServeConfig: undefined,
-  })
+  });
 }
-
 
 let meshInstance$: Promise<MeshInstance> | undefined;
 
 export function getBuiltGraphClient(): Promise<MeshInstance> {
   if (meshInstance$ == null) {
-    meshInstance$ = getMeshOptions().then(meshOptions => getMesh(meshOptions)).then(mesh => {
-      const id = mesh.pubsub.subscribe('destroy', () => {
-        meshInstance$ = undefined;
-        mesh.pubsub.unsubscribe(id);
+    meshInstance$ = getMeshOptions()
+      .then((meshOptions) => getMesh(meshOptions))
+      .then((mesh) => {
+        const id = mesh.pubsub.subscribe('destroy', () => {
+          meshInstance$ = undefined;
+          mesh.pubsub.unsubscribe(id);
+        });
+        return mesh;
       });
-      return mesh;
-    });
   }
   return meshInstance$;
 }
 
-export const execute: ExecuteMeshFn = (...args) => getBuiltGraphClient().then(({ execute }) => execute(...args));
+export const execute: ExecuteMeshFn = (...args) =>
+  getBuiltGraphClient().then(({ execute }) => execute(...args));
 
-export const subscribe: SubscribeMeshFn = (...args) => getBuiltGraphClient().then(({ subscribe }) => subscribe(...args));
+export const subscribe: SubscribeMeshFn = (...args) =>
+  getBuiltGraphClient().then(({ subscribe }) => subscribe(...args));

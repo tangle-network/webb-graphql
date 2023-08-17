@@ -22,6 +22,11 @@ import {
   recordDayIntervalDeposit,
 } from '../deposit';
 import { recordWithdrawal, recordWithdrawalLog } from '../withdraw';
+import {
+  recordVolume,
+  record15MinsIntervalVolume,
+  recordDayIntervalVolume,
+} from '../volume';
 import { record15MinsIntervalWithdrawal } from '../withdraw/15MinsInterval';
 import { recordTransferLog } from '../transfer';
 
@@ -149,6 +154,21 @@ export const handleTransaction = (event: Insertion): void => {
         newShieldedTx.vanchor,
         tokenAddress,
         value,
+        event.block.timestamp
+      );
+
+      // Record Volume
+      recordVolume(newShieldedTx.vanchor, tokenAddress, value.abs());
+      record15MinsIntervalVolume(
+        newShieldedTx.vanchor,
+        tokenAddress,
+        value.abs(),
+        event.block.timestamp
+      );
+      recordDayIntervalVolume(
+        newShieldedTx.vanchor,
+        tokenAddress,
+        value.abs(),
         event.block.timestamp
       );
 

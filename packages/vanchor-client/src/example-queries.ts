@@ -22,6 +22,10 @@ import {
   GetVAnchorsDepositByChainsDayInterval,
   GetVAnchorsDepositByChainByDateRange,
 } from './queries/deposit';
+import {
+  GetVAnchorsVolumeByChainByDateRange,
+  GetVAnchorsVolumeByChainsByDateRange,
+} from './queries/volume';
 import { DateUtil } from './utils/date';
 
 const vAnchorAddress = '0x91eb86019fd8d7c5a9e31143d422850a13f670a3';
@@ -35,7 +39,7 @@ async function main() {
   // Deposit Day Interval
   // await runDepositDayIntervalQueries();
 
-  await runTvlDateRangeQueries();
+  await runTvl15MinsIntervalQueries();
   // await runDepositDateRangeQueries();
 }
 
@@ -70,39 +74,39 @@ async function runTvlQueries() {
 }
 
 async function runTvl15MinsIntervalQueries() {
-  const startDate: Date = DateUtil.fromEpochToDate(1691661600);
-  const endDate: Date = DateUtil.fromEpochToDate(1691661600 + 60 * 60 * 24);
+  const startDate: Date = DateUtil.fromEpochToDate(1692066601);
+  const endDate: Date = DateUtil.fromEpochToDate(1692066601 + 60 * 60 * 24);
 
   // Get total value locked by a vAnchor on a chain
-  console.log(
-    await GetVAnchorTotalValueLockedByChain15MinsInterval(
-      subgraphUrl,
-      vAnchorAddress,
-      startDate,
-      endDate
-    )
-  );
+  // console.log(
+  //   await GetVAnchorTotalValueLockedByChain15MinsInterval(
+  //     subgraphUrl,
+  //     vAnchorAddress,
+  //     startDate,
+  //     endDate
+  //   )
+  // );
 
-  // Get total value locked by a vAnchor on a chain and by a token
-  console.log(
-    await GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval(
-      subgraphUrl,
-      vAnchorAddress,
-      'webbtTNT',
-      startDate,
-      endDate
-    )
-  );
+  // // Get total value locked by a vAnchor on a chain and by a token
+  // console.log(
+  //   await GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval(
+  //     subgraphUrl,
+  //     vAnchorAddress,
+  //     'webbtTNT',
+  //     startDate,
+  //     endDate
+  //   )
+  // );
 
-  // Get total value locked by a multiple vAnchors on a chain
-  console.log(
-    await GetVAnchorsTotalValueLockedByChain15MinsInterval(
-      subgraphUrl,
-      [vAnchorAddress],
-      startDate,
-      endDate
-    )
-  );
+  // // Get total value locked by a multiple vAnchors on a chain
+  // console.log(
+  //   await GetVAnchorsTotalValueLockedByChain15MinsInterval(
+  //     subgraphUrl,
+  //     [vAnchorAddress],
+  //     startDate,
+  //     endDate
+  //   )
+  // );
 
   // Get total value locked by a multiple vAnchors on a multiple chains
   console.log(
@@ -169,6 +173,28 @@ async function runTvlDateRangeQueries() {
 
   console.log(
     await GetVAnchorsTVLByChainsByDateRange(
+      [subgraphUrl],
+      [vAnchorAddress],
+      startDate,
+      1
+    )
+  );
+}
+
+async function runVolumeDateRangeQueries() {
+  const startDate: Date = DateUtil.fromEpochToDate(1692057600);
+
+  console.log(
+    await GetVAnchorsVolumeByChainByDateRange(
+      subgraphUrl,
+      [vAnchorAddress],
+      startDate,
+      1
+    )
+  );
+
+  console.log(
+    await GetVAnchorsVolumeByChainsByDateRange(
       [subgraphUrl],
       [vAnchorAddress],
       startDate,
