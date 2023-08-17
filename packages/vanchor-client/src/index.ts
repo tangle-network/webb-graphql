@@ -18,6 +18,7 @@ import {
   GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
   GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
   GetVAnchorsTVLByChainByDateRange,
+  GetVAnchorsTVLByChainsByDateRange,
 } from './queries/tvl';
 import {
   GetVAnchorDepositByChain,
@@ -157,6 +158,7 @@ const vAnchorClient = {
     GetVAnchorTotalValueLockedByChainAndByTokenDayInterval,
     GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval,
     GetVAnchorsTVLByChainByDateRange,
+    GetVAnchorsTVLByChainsByDateRange,
   },
 };
 

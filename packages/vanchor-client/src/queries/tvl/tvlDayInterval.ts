@@ -271,3 +271,25 @@ export const GetVAnchorsTVLByChainByDateRange = async (
 
   return tvlMapByDate;
 };
+
+export const GetVAnchorsTVLByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddresses: Array<string>,
+  dateStart: Date,
+  numberOfDays: number
+): Promise<Array<TVLVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<TVLVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorsTVLByChainByDateRange(
+        subgraphUrl,
+        vanchorAddresses,
+        dateStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};

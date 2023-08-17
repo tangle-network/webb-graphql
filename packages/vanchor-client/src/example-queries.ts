@@ -13,6 +13,7 @@ import {
   GetVAnchorsTotalValueLockedByChainDayInterval,
   GetVAnchorsTotalValueLockedByChainsDayInterval,
   GetVAnchorsTVLByChainByDateRange,
+  GetVAnchorsTVLByChainsByDateRange,
 } from './queries/tvl';
 import {
   GetVAnchorDepositByChainDayInterval,
@@ -35,7 +36,7 @@ async function main() {
   // await runDepositDayIntervalQueries();
 
   await runTvlDateRangeQueries();
-  await runDepositDateRangeQueries();
+  // await runDepositDateRangeQueries();
 }
 
 main().catch((e) => {
@@ -157,10 +158,18 @@ async function runTvlDayIntervalQueries() {
 async function runTvlDateRangeQueries() {
   const startDate: Date = DateUtil.fromEpochToDate(1692057600);
 
-  // Get total value locked by a vAnchor on a chain
   console.log(
     await GetVAnchorsTVLByChainByDateRange(
       subgraphUrl,
+      [vAnchorAddress],
+      startDate,
+      1
+    )
+  );
+
+  console.log(
+    await GetVAnchorsTVLByChainsByDateRange(
+      [subgraphUrl],
       [vAnchorAddress],
       startDate,
       1
