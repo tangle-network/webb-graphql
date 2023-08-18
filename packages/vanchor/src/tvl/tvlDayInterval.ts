@@ -6,7 +6,7 @@ import {
 import { getDate } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export default function recordDayIntervalTVL(
+export default function recordTVLDayInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   amount: BigInt,

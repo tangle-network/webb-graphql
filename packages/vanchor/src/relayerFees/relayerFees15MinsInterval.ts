@@ -6,7 +6,7 @@ import {
 import { getStartInterval, getEndInterval } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export function recordFeeFor15MinsInterval(
+export default function recordRelayerFees15MinsInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   fees: BigInt,

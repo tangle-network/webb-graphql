@@ -6,7 +6,7 @@ import {
 import { getStartInterval, getEndInterval } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export default function record15MinsIntervalDeposit(
+export default function recordDeposit15MinsInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   amount: BigInt,

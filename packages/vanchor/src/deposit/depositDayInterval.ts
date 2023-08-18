@@ -6,7 +6,7 @@ import {
 import { getDate } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export default function recordDayIntervalDeposit(
+export default function recordDepositDayInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   amount: BigInt,

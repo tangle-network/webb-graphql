@@ -1,29 +1,40 @@
-import { Address, Bytes, BigInt, ethereum } from '@graphprotocol/graph-ts';
-import { Insertion } from '../../generated/vanchor/vanchor';
+import {
+  Address,
+  Bytes,
+  BigInt,
+  BigDecimal,
+  ethereum,
+} from '@graphprotocol/graph-ts';
+import { Insertion } from '../generated/vanchor/vanchor';
 import {
   Encryptions,
   ExternalData,
   PublicInputs,
   ShieldedTransaction,
-} from '../../generated/schema';
-import { ensureToken } from '../token';
+} from '../generated/schema';
+import { ensureToken } from './token';
 import {
   recordTVL,
-  record15MinsIntervalTVL,
-  recordDayIntervalTVL,
-} from '../tvl';
-import { recordTotalFees } from '../relayerFees';
-import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
-import { getTxnInputDataToDecode, isNativeToken } from '../utils/token';
+  recordTVL15MinsInterval,
+  recordTVLDayInterval,
+} from './tvl';
+import {
+  recordRelayerFees,
+  recordRelayerFees15MinsInterval,
+} from './relayerFees';
 import {
   recordDeposit,
   recordDepositLog,
-  record15MinsIntervalDeposit,
-  recordDayIntervalDeposit,
-} from '../deposit';
-import { recordWithdrawal, recordWithdrawalLog } from '../withdraw';
-import { record15MinsIntervalWithdrawal } from '../withdraw/15MinsInterval';
-import { recordTransferLog } from '../transfer';
+  recordDeposit15MinsInterval,
+  recordDepositDayInterval,
+} from './deposit';
+import {
+  recordWithdraw,
+  recordWithdrawLog,
+  recordWithdraw15MinsInterval,
+} from './withdraw';
+import { recordTransferLog } from './transfer';
+import { getTxnInputDataToDecode, isNativeToken } from './utils/token';
 
 export const handleTransaction = (event: Insertion): void => {
   // Check if the transaction is already handled
@@ -89,20 +100,20 @@ export const handleTransaction = (event: Insertion): void => {
           event.transaction.hash,
           newShieldedTx.vanchor,
           tokenAddress,
-          value.abs(),
+          value,
           event.block.timestamp
         );
-        recordDeposit(newShieldedTx.vanchor, tokenAddress, value.abs());
-        record15MinsIntervalDeposit(
+        recordDeposit(newShieldedTx.vanchor, tokenAddress, value);
+        recordDeposit15MinsInterval(
           newShieldedTx.vanchor,
           tokenAddress,
-          value.abs(),
+          value,
           event.block.timestamp
         );
-        recordDayIntervalDeposit(
+        recordDepositDayInterval(
           newShieldedTx.vanchor,
           tokenAddress,
-          value.abs(),
+          value,
           event.block.timestamp
         );
       }
@@ -110,15 +121,15 @@ export const handleTransaction = (event: Insertion): void => {
       // Record Withdrawal
       if (value.lt(BigInt.fromI32(0))) {
         // Record Total Value Locked
-        recordWithdrawalLog(
+        recordWithdrawLog(
           event.transaction.hash,
           newShieldedTx.vanchor,
           tokenAddress,
           value.abs(),
           event.block.timestamp
         );
-        recordWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs());
-        record15MinsIntervalWithdrawal(
+        recordWithdraw(newShieldedTx.vanchor, tokenAddress, value.abs());
+        recordWithdraw15MinsInterval(
           newShieldedTx.vanchor,
           tokenAddress,
           value.abs(),
@@ -139,13 +150,13 @@ export const handleTransaction = (event: Insertion): void => {
 
       // Record Total Value Locked
       recordTVL(newShieldedTx.vanchor, tokenAddress, value);
-      record15MinsIntervalTVL(
+      recordTVL15MinsInterval(
         newShieldedTx.vanchor,
         tokenAddress,
         value,
         event.block.timestamp
       );
-      recordDayIntervalTVL(
+      recordTVLDayInterval(
         newShieldedTx.vanchor,
         tokenAddress,
         value,
@@ -153,12 +164,12 @@ export const handleTransaction = (event: Insertion): void => {
       );
 
       // Record Relayer Fees
-      recordTotalFees(
+      recordRelayerFees(
         newShieldedTx.vanchor,
         tokenAddress,
         externalDataEntity.fee
       );
-      recordFeeFor15MinsInterval(
+      recordRelayerFees15MinsInterval(
         newShieldedTx.vanchor,
         tokenAddress,
         externalDataEntity.fee,
