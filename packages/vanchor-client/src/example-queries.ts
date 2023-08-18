@@ -20,8 +20,9 @@ import {
   GetVAnchorDepositByChainAndByTokenDayInterval,
   GetVAnchorsDepositByChainDayInterval,
   GetVAnchorsDepositByChainsDayInterval,
-  GetVAnchorsDepositByChainByDateRange,
+  GetVAnchorsDepositByChainsByDateRange,
 } from './queries/deposit';
+import { GetVAnchorsWithdrawalByChainsByDateRange } from './queries/withdrawal';
 import { DateUtil } from './utils/date';
 
 const vAnchorAddress = '0x91eb86019fd8d7c5a9e31143d422850a13f670a3';
@@ -36,7 +37,8 @@ async function main() {
   // await runDepositDayIntervalQueries();
 
   // await runTvlByDayQueries();
-  await runTvlDateRangeQueries();
+  await runDepositDateRangeQueries();
+  await runWithdrawalDateRangeQueries();
   // await runDepositDateRangeQueries();
 }
 
@@ -211,11 +213,25 @@ async function runDepositDateRangeQueries() {
 
   // Get total value locked by a vAnchor on a chain
   console.log(
-    await GetVAnchorsDepositByChainByDateRange(
-      subgraphUrl,
+    await GetVAnchorsDepositByChainsByDateRange(
+      [subgraphUrl],
       [vAnchorAddress],
       startDate,
-      1
+      3
+    )
+  );
+}
+
+async function runWithdrawalDateRangeQueries() {
+  const startDate: Date = DateUtil.fromEpochToDate(1692057600);
+
+  // Get total value locked by a vAnchor on a chain
+  console.log(
+    await GetVAnchorsWithdrawalByChainsByDateRange(
+      [subgraphUrl],
+      [vAnchorAddress],
+      startDate,
+      3
     )
   );
 }

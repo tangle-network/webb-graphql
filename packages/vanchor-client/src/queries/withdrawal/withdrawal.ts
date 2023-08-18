@@ -1,9 +1,9 @@
-import { execute } from '../../.graphclient';
-import { SubgraphUrl } from '../config';
+import { execute } from '../../../.graphclient';
+import { SubgraphUrl } from '../../config';
 
 export interface WithdrawalByChain {
   subgraphUrl: SubgraphUrl;
-  withdrawal: number;
+  withdrawal: number | undefined;
 }
 
 export interface WithdrawalByChainAndByToken extends WithdrawalByChain {
@@ -12,7 +12,7 @@ export interface WithdrawalByChainAndByToken extends WithdrawalByChain {
 
 export interface WithdrawalByVAnchor {
   vAnchorAddress: string;
-  withdrawal: number;
+  withdrawal: number | undefined;
 }
 
 export const GetVAnchorWithdrawalByChain = async (
@@ -20,13 +20,12 @@ export const GetVAnchorWithdrawalByChain = async (
   vAnchorAddress: string
 ): Promise<WithdrawalByChain> => {
   const query = /* GraphQL */ `
-  query Withdrawal {
-  vanchorWithdrawal(id: "${vAnchorAddress.toLowerCase()}"){
-
-    withdrawal
-  }
-}
-`;
+    query Withdrawal {
+      vanchorWithdrawal(id: "${vAnchorAddress.toLowerCase()}") {
+        withdrawal
+      }
+    }
+  `;
   const result = await execute(
     query,
     {},
@@ -36,7 +35,10 @@ export const GetVAnchorWithdrawalByChain = async (
   );
 
   return {
-    withdrawal: result.data.vanchorWithdrawal?.withdrawal,
+    withdrawal:
+      result.data.vanchorWithdrawal?.withdrawal == null
+        ? undefined
+        : +result.data.vanchorWithdrawal.withdrawal,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -80,7 +82,7 @@ export const GetVAnchorsWithdrawalByChain = async (
 
   return result.data.vanchorWithdrawals?.map((item: any) => {
     return {
-      withdrawal: item?.withdrawal,
+      withdrawal: +item.withdrawal,
       vAnchorAddress: item?.id,
     };
   });
@@ -126,7 +128,7 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (
     withdrawal:
       result.data.vanchorWithdrawalByTokens &&
       result.data.vanchorWithdrawalByTokens.length > 0
-        ? result.data.vanchorWithdrawalByTokens[0].withdrawal
+        ? +result.data.vanchorWithdrawalByTokens[0].withdrawal
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,

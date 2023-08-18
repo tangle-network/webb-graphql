@@ -6,7 +6,7 @@ import {
 } from '../../generated/schema';
 import { getTokenSymbol } from '../token';
 
-export function recordWithdraw(
+export function recordWithdrawal(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   amount: BigInt
@@ -60,7 +60,7 @@ export function recordWithdraw(
   }
 }
 
-export function recordWithdrawLog(
+export function recordWithdrawalLog(
   eventHash: Bytes,
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,

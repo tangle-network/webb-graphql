@@ -283,6 +283,26 @@ type VAnchorWithdrawalByTokenEvery15Min @entity(immutable: false) {
   totalCount: BigInt! # total count of withdrawal
 }
 
+type VAnchorWithdrawalEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  date: BigInt! # timestamp of the date (at 00:00:00)
+  withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of deposit
+}
+
+type VAnchorWithdrawalByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  date: BigInt! # timestamp of the date (at 00:00:00)
+  withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of deposit
+}
+
 type VAnchorDeposit @entity(immutable: false) {
   id: String! # vAnchor address
   deposit: BigInt! # Deposit in the vAnchor

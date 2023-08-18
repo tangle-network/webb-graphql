@@ -2,41 +2,41 @@ import { execute } from '../../../.graphclient';
 import { DateUtil, getEpochArray } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
 
-export interface DepositByChainDayIntervalItem {
+export interface WithdrawalByChainDayIntervalItem {
   subgraphUrl: SubgraphUrl;
-  deposit: number;
+  withdrawal: number;
   date: Date;
   vAnchorAddress: string;
 }
 
-export interface DepositByChainAndByTokenDayIntervalItem
-  extends DepositByChainDayIntervalItem {
+export interface WithdrawalByChainAndByTokenDayIntervalItem
+  extends WithdrawalByChainDayIntervalItem {
   tokenSymbol: string;
 }
 
-export interface DepositByVAnchorDayIntervalItem {
+export interface WithdrawalByVAnchorDayIntervalItem {
   vAnchorAddress: string;
-  deposit: number;
+  withdrawal: number;
 }
 
-export interface DepositVAnchorsDateRangeItem {
+export interface WithdrawalVAnchorsDateRangeItem {
   [epoch: string]: number;
 }
 
-export const GetVAnchorDepositByChainDayInterval = async (
+export const GetVAnchorWithdrawalByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   date: Date
-): Promise<DepositByChainDayIntervalItem> => {
+): Promise<WithdrawalByChainDayIntervalItem> => {
   const query = /* GraphQL */ `
     query TotalValueLocked {
-      vanchorDepositEveryDays(
+      vanchorWithdrawalEveryDays(
         where: {
           date: "${DateUtil.fromDateToEpoch(date)}",
           vAnchorAddress: "${vAnchorAddress.toLowerCase()}"
         }
       ) {
-        deposit
+        withdrawal
         vAnchorAddress
         date
       }
@@ -50,9 +50,9 @@ export const GetVAnchorDepositByChainDayInterval = async (
     }
   );
 
-  return result.data.vanchorDepositEveryDays?.map((item: any) => {
+  return result.data.vanchorWithdrawalEveryDays?.map((item: any) => {
     return {
-      deposit: +item?.deposit,
+      withdrawal: +item?.withdrawal,
       subgraphUrl: subgraphUrl,
       date: DateUtil.fromEpochToDate(parseInt(item?.date)),
       vAnchorAddress: item?.vAnchorAddress,
@@ -60,30 +60,30 @@ export const GetVAnchorDepositByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorDepositByChainsDayInterval = async (
+export const GetVAnchorWithdrawalByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<DepositByChainDayIntervalItem>> => {
-  const promises: Array<Promise<DepositByChainDayIntervalItem>> = [];
+): Promise<Array<WithdrawalByChainDayIntervalItem>> => {
+  const promises: Array<Promise<WithdrawalByChainDayIntervalItem>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorDepositByChainDayInterval(subgraphUrl, vAnchorAddress, date)
+      GetVAnchorWithdrawalByChainDayInterval(subgraphUrl, vAnchorAddress, date)
     );
   }
 
   return await Promise.all(promises);
 };
 
-export const GetVAnchorsDepositByChainDayInterval = async (
+export const GetVAnchorsWithdrawalByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
   date: Date
-): Promise<Array<DepositByVAnchorDayIntervalItem>> => {
+): Promise<Array<WithdrawalByVAnchorDayIntervalItem>> => {
   const query = /* GraphQL */ `
     query TotalValueLockedByVAnchor {
-      vanchorDepositEveryDays(
+      vanchorWithdrawalEveryDays(
         where: {
           date: "${DateUtil.fromDateToEpoch(date)}",
           vAnchorAddress_in: [
@@ -94,7 +94,7 @@ export const GetVAnchorsDepositByChainDayInterval = async (
         }
       ) {
         id
-        deposit
+        withdrawal
         vAnchorAddress
         date
       }
@@ -108,61 +108,66 @@ export const GetVAnchorsDepositByChainDayInterval = async (
     }
   );
 
-  const depositMap: { [vanchorAddress: string]: number } = {};
+  const withdrawalMap: { [vanchorAddress: string]: number } = {};
 
-  result.data.vanchorDepositEveryDays?.map((item: any) => {
-    if (!depositMap[item?.vAnchorAddress]) {
-      depositMap[item?.vAnchorAddress] = 0;
+  result.data.vanchorWithdrawalEveryDays?.map((item: any) => {
+    if (!withdrawalMap[item?.vAnchorAddress]) {
+      withdrawalMap[item?.vAnchorAddress] = 0;
     }
 
-    depositMap[item?.vAnchorAddress] += +item?.deposit;
+    withdrawalMap[item?.vAnchorAddress] += +item?.withdrawal;
   });
 
-  const depositByVAnchorDayIntervalItems: Array<DepositByVAnchorDayIntervalItem> =
+  const withdrawalByVAnchorDayIntervalItems: Array<WithdrawalByVAnchorDayIntervalItem> =
     [];
 
-  for (const key in depositMap) {
-    depositByVAnchorDayIntervalItems.push({
+  for (const key in withdrawalMap) {
+    withdrawalByVAnchorDayIntervalItems.push({
       vAnchorAddress: key,
-      deposit: depositMap[key],
+      withdrawal: withdrawalMap[key],
     });
   }
 
-  return depositByVAnchorDayIntervalItems;
+  return withdrawalByVAnchorDayIntervalItems;
 };
 
-export const GetVAnchorsDepositByChainsDayInterval = async (
+export const GetVAnchorsWithdrawalByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   date: Date
-): Promise<Array<Array<DepositByVAnchorDayIntervalItem>>> => {
-  const promises: Array<Promise<Array<DepositByVAnchorDayIntervalItem>>> = [];
+): Promise<Array<Array<WithdrawalByVAnchorDayIntervalItem>>> => {
+  const promises: Array<Promise<Array<WithdrawalByVAnchorDayIntervalItem>>> =
+    [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorsDepositByChainDayInterval(subgraphUrl, vanchorAddresses, date)
+      GetVAnchorsWithdrawalByChainDayInterval(
+        subgraphUrl,
+        vanchorAddresses,
+        date
+      )
     );
   }
 
   return await Promise.all(promises);
 };
 
-export const GetVAnchorDepositByChainAndByTokenDayInterval = async (
+export const GetVAnchorWithdrawalByChainAndByTokenDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
   date: Date
-): Promise<Array<DepositByChainAndByTokenDayIntervalItem>> => {
+): Promise<Array<WithdrawalByChainAndByTokenDayIntervalItem>> => {
   const query = /* GraphQL */ `
     query MyQuery {
-      vanchorDepositByTokenEveryDays(
+      vanchorWithdrawalByTokenEveryDays(
         where: {
           tokenSymbol: "${tokenSymbol}",
           vAnchorAddress: "${vAnchorAddress.toLowerCase()}",
           date: "${DateUtil.fromDateToEpoch(date)}",
         }
       ) {
-        deposit
+        withdrawal
         vAnchorAddress
         date
       }
@@ -176,9 +181,9 @@ export const GetVAnchorDepositByChainAndByTokenDayInterval = async (
     }
   );
 
-  return result.data.vanchorDepositByTokenEveryDays?.map((item: any) => {
+  return result.data.vanchorWithdrawalByTokenEveryDays?.map((item: any) => {
     return {
-      deposit: +item?.deposit,
+      withdrawal: +item?.withdrawal,
       subgraphUrl: subgraphUrl,
       date: DateUtil.fromEpochToDate(parseInt(item?.date)),
       vAnchorAddress: item?.vAnchorAddress,
@@ -186,19 +191,19 @@ export const GetVAnchorDepositByChainAndByTokenDayInterval = async (
   });
 };
 
-export const GetVAnchorDepositByChainsAndByTokenDayInterval = async (
+export const GetVAnchorWithdrawalByChainsAndByTokenDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
   date: Date
-): Promise<Array<Array<DepositByChainAndByTokenDayIntervalItem>>> => {
+): Promise<Array<Array<WithdrawalByChainAndByTokenDayIntervalItem>>> => {
   const promises: Array<
-    Promise<Array<DepositByChainAndByTokenDayIntervalItem>>
+    Promise<Array<WithdrawalByChainAndByTokenDayIntervalItem>>
   > = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorDepositByChainAndByTokenDayInterval(
+      GetVAnchorWithdrawalByChainAndByTokenDayInterval(
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol,
@@ -210,16 +215,16 @@ export const GetVAnchorDepositByChainsAndByTokenDayInterval = async (
   return await Promise.all(promises);
 };
 
-export const GetVAnchorsDepositByChainByDateRange = async (
+export const GetVAnchorsWithdrawalByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
   dateStart: Date,
   numberOfDays: number
-): Promise<DepositVAnchorsDateRangeItem> => {
+): Promise<WithdrawalVAnchorsDateRangeItem> => {
   const dates = getEpochArray(dateStart, numberOfDays);
   const query = /* GraphQL */ `
     query MyQuery {
-      vanchorDepositEveryDays(
+      vanchorWithdrawalEveryDays(
         where: {
           date_in: [
             ${dates.map((epochTime) => '"' + epochTime + '"').join(',')}
@@ -232,7 +237,7 @@ export const GetVAnchorsDepositByChainByDateRange = async (
         }
         orderBy: date
       ) {
-        deposit
+        withdrawal
         vAnchorAddress
         date
       }
@@ -247,30 +252,30 @@ export const GetVAnchorsDepositByChainByDateRange = async (
     }
   );
 
-  const depositMapByDate: DepositVAnchorsDateRangeItem = {};
+  const withdrawalMapByDate: WithdrawalVAnchorsDateRangeItem = {};
 
   for (const date of dates) {
-    depositMapByDate[date.toString()] = 0;
+    withdrawalMapByDate[date.toString()] = 0;
   }
 
-  result.data.vanchorDepositEveryDays.forEach((item: any) => {
-    depositMapByDate[+item.date] += +item.deposit;
+  result.data.vanchorWithdrawalEveryDays.forEach((item: any) => {
+    withdrawalMapByDate[+item.date] += +item.withdrawal;
   });
 
-  return depositMapByDate;
+  return withdrawalMapByDate;
 };
 
-export const GetVAnchorsDepositByChainsByDateRange = async (
+export const GetVAnchorsWithdrawalByChainsByDateRange = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   dateStart: Date,
   numberOfDays: number
-): Promise<Array<DepositVAnchorsDateRangeItem>> => {
-  const promises: Array<Promise<DepositVAnchorsDateRangeItem>> = [];
+): Promise<Array<WithdrawalVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<WithdrawalVAnchorsDateRangeItem>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorsDepositByChainByDateRange(
+      GetVAnchorsWithdrawalByChainByDateRange(
         subgraphUrl,
         vanchorAddresses,
         dateStart,

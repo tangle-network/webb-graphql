@@ -19,10 +19,11 @@ import {
   recordDepositDayInterval,
 } from './deposit';
 import {
-  recordWithdraw,
-  recordWithdrawLog,
-  recordWithdraw15MinsInterval,
-} from './withdraw';
+  recordWithdrawal,
+  recordWithdrawalLog,
+  recordWithdrawal15MinsInterval,
+  recordWithdrawalDayInterval,
+} from './withdrawal';
 import { recordTransferLog } from './transfer';
 import { getTxnInputDataToDecode, isNativeToken } from './utils/token';
 
@@ -111,15 +112,21 @@ export const handleTransaction = (event: Insertion): void => {
       // Record Withdrawal
       if (value.lt(BigInt.fromI32(0))) {
         // Record Total Value Locked
-        recordWithdrawLog(
+        recordWithdrawalLog(
           event.transaction.hash,
           newShieldedTx.vanchor,
           tokenAddress,
           value.abs(),
           event.block.timestamp
         );
-        recordWithdraw(newShieldedTx.vanchor, tokenAddress, value.abs());
-        recordWithdraw15MinsInterval(
+        recordWithdrawal(newShieldedTx.vanchor, tokenAddress, value.abs());
+        recordWithdrawal15MinsInterval(
+          newShieldedTx.vanchor,
+          tokenAddress,
+          value.abs(),
+          event.block.timestamp
+        );
+        recordWithdrawalDayInterval(
           newShieldedTx.vanchor,
           tokenAddress,
           value.abs(),

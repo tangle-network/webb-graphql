@@ -6,7 +6,7 @@ import {
 import { getStartInterval, getEndInterval } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export default function recordWithdraw15MinsInterval(
+export default function recordWithdrawal15MinsInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   amount: BigInt,
