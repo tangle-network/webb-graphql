@@ -87,10 +87,10 @@ export type Query = {
   vanchorTotalValueLockedEvery15Mins: Array<VAnchorTotalValueLockedEvery15Min>;
   vanchorTotalValueLockedByTokenEvery15Min?: Maybe<VAnchorTotalValueLockedByTokenEvery15Min>;
   vanchorTotalValueLockedByTokenEvery15Mins: Array<VAnchorTotalValueLockedByTokenEvery15Min>;
-  vanchorTotalValueLockedEveryDay?: Maybe<VAnchorTotalValueLockedEveryDay>;
-  vanchorTotalValueLockedEveryDays: Array<VAnchorTotalValueLockedEveryDay>;
-  vanchorTotalValueLockedByTokenEveryDay?: Maybe<VAnchorTotalValueLockedByTokenEveryDay>;
-  vanchorTotalValueLockedByTokenEveryDays: Array<VAnchorTotalValueLockedByTokenEveryDay>;
+  vanchorTotalValueLockedByDay?: Maybe<VAnchorTotalValueLockedByDay>;
+  vanchorTotalValueLockedByDays: Array<VAnchorTotalValueLockedByDay>;
+  vanchorTotalValueLockedByTokenByDay?: Maybe<VAnchorTotalValueLockedByTokenByDay>;
+  vanchorTotalValueLockedByTokenByDays: Array<VAnchorTotalValueLockedByTokenByDay>;
   vanchorTotalRelayerFee?: Maybe<VAnchorTotalRelayerFee>;
   vanchorTotalRelayerFees: Array<VAnchorTotalRelayerFee>;
   vanchorTotalRelayerFeeByToken?: Maybe<VAnchorTotalRelayerFeeByToken>;
@@ -369,34 +369,34 @@ export type QueryvanchorTotalValueLockedByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type QueryvanchorTotalValueLockedEveryDayArgs = {
+export type QueryvanchorTotalValueLockedByDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type QueryvanchorTotalValueLockedEveryDaysArgs = {
+export type QueryvanchorTotalValueLockedByDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<VAnchorTotalValueLockedEveryDay_orderBy>;
+  orderBy?: InputMaybe<VAnchorTotalValueLockedByDay_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<VAnchorTotalValueLockedEveryDay_filter>;
+  where?: InputMaybe<VAnchorTotalValueLockedByDay_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type QueryvanchorTotalValueLockedByTokenEveryDayArgs = {
+export type QueryvanchorTotalValueLockedByTokenByDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type QueryvanchorTotalValueLockedByTokenEveryDaysArgs = {
+export type QueryvanchorTotalValueLockedByTokenByDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_orderBy>;
+  orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>;
+  where?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -802,10 +802,10 @@ export type Subscription = {
   vanchorTotalValueLockedEvery15Mins: Array<VAnchorTotalValueLockedEvery15Min>;
   vanchorTotalValueLockedByTokenEvery15Min?: Maybe<VAnchorTotalValueLockedByTokenEvery15Min>;
   vanchorTotalValueLockedByTokenEvery15Mins: Array<VAnchorTotalValueLockedByTokenEvery15Min>;
-  vanchorTotalValueLockedEveryDay?: Maybe<VAnchorTotalValueLockedEveryDay>;
-  vanchorTotalValueLockedEveryDays: Array<VAnchorTotalValueLockedEveryDay>;
-  vanchorTotalValueLockedByTokenEveryDay?: Maybe<VAnchorTotalValueLockedByTokenEveryDay>;
-  vanchorTotalValueLockedByTokenEveryDays: Array<VAnchorTotalValueLockedByTokenEveryDay>;
+  vanchorTotalValueLockedByDay?: Maybe<VAnchorTotalValueLockedByDay>;
+  vanchorTotalValueLockedByDays: Array<VAnchorTotalValueLockedByDay>;
+  vanchorTotalValueLockedByTokenByDay?: Maybe<VAnchorTotalValueLockedByTokenByDay>;
+  vanchorTotalValueLockedByTokenByDays: Array<VAnchorTotalValueLockedByTokenByDay>;
   vanchorTotalRelayerFee?: Maybe<VAnchorTotalRelayerFee>;
   vanchorTotalRelayerFees: Array<VAnchorTotalRelayerFee>;
   vanchorTotalRelayerFeeByToken?: Maybe<VAnchorTotalRelayerFeeByToken>;
@@ -1084,34 +1084,34 @@ export type SubscriptionvanchorTotalValueLockedByTokenEvery15MinsArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type SubscriptionvanchorTotalValueLockedEveryDayArgs = {
+export type SubscriptionvanchorTotalValueLockedByDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type SubscriptionvanchorTotalValueLockedEveryDaysArgs = {
+export type SubscriptionvanchorTotalValueLockedByDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<VAnchorTotalValueLockedEveryDay_orderBy>;
+  orderBy?: InputMaybe<VAnchorTotalValueLockedByDay_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<VAnchorTotalValueLockedEveryDay_filter>;
+  where?: InputMaybe<VAnchorTotalValueLockedByDay_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs = {
+export type SubscriptionvanchorTotalValueLockedByTokenByDayArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
-export type SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs = {
+export type SubscriptionvanchorTotalValueLockedByTokenByDaysArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_orderBy>;
+  orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>;
+  where?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -3652,6 +3652,72 @@ export type VAnchorTotalValueLocked = {
   totalValueLocked: Scalars['BigInt'];
 };
 
+export type VAnchorTotalValueLockedByDay = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  date: Scalars['BigInt'];
+  totalValueLocked: Scalars['BigInt'];
+};
+
+export type VAnchorTotalValueLockedByDay_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  date?: InputMaybe<Scalars['BigInt']>;
+  date_not?: InputMaybe<Scalars['BigInt']>;
+  date_gt?: InputMaybe<Scalars['BigInt']>;
+  date_lt?: InputMaybe<Scalars['BigInt']>;
+  date_gte?: InputMaybe<Scalars['BigInt']>;
+  date_lte?: InputMaybe<Scalars['BigInt']>;
+  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  totalValueLocked?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByDay_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByDay_filter>>>;
+};
+
+export type VAnchorTotalValueLockedByDay_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'date'
+  | 'totalValueLocked';
+
 export type VAnchorTotalValueLockedByToken = {
   id: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
@@ -3659,6 +3725,110 @@ export type VAnchorTotalValueLockedByToken = {
   tokenSymbol: Scalars['String'];
   totalValueLocked: Scalars['BigInt'];
 };
+
+export type VAnchorTotalValueLockedByTokenByDay = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  date: Scalars['BigInt'];
+  totalValueLocked: Scalars['BigInt'];
+};
+
+export type VAnchorTotalValueLockedByTokenByDay_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['BigInt']>;
+  date_not?: InputMaybe<Scalars['BigInt']>;
+  date_gt?: InputMaybe<Scalars['BigInt']>;
+  date_lt?: InputMaybe<Scalars['BigInt']>;
+  date_gte?: InputMaybe<Scalars['BigInt']>;
+  date_lte?: InputMaybe<Scalars['BigInt']>;
+  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  totalValueLocked?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
+  totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>>
+  >;
+  or?: InputMaybe<
+    Array<InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>>
+  >;
+};
+
+export type VAnchorTotalValueLockedByTokenByDay_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'date'
+  | 'totalValueLocked';
 
 export type VAnchorTotalValueLockedByTokenEvery15Min = {
   id: Scalars['String'];
@@ -3772,110 +3942,6 @@ export type VAnchorTotalValueLockedByTokenEvery15Min_orderBy =
   | 'tokenSymbol'
   | 'startInterval'
   | 'endInterval'
-  | 'totalValueLocked';
-
-export type VAnchorTotalValueLockedByTokenEveryDay = {
-  id: Scalars['String'];
-  vAnchorAddress: Scalars['Bytes'];
-  tokenAddress: Scalars['Bytes'];
-  tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
-  totalValueLocked: Scalars['BigInt'];
-};
-
-export type VAnchorTotalValueLockedByTokenEveryDay_filter = {
-  id?: InputMaybe<Scalars['String']>;
-  id_not?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_contains_nocase?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  id_starts_with?: InputMaybe<Scalars['String']>;
-  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  id_not_starts_with?: InputMaybe<Scalars['String']>;
-  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  id_ends_with?: InputMaybe<Scalars['String']>;
-  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  id_not_ends_with?: InputMaybe<Scalars['String']>;
-  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
-  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-  tokenSymbol?: InputMaybe<Scalars['String']>;
-  tokenSymbol_not?: InputMaybe<Scalars['String']>;
-  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
-  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
-  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
-  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
-  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
-  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
-  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
-  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
-  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
-  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
-  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
-  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
-  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
-  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  totalValueLocked?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  /** Filter for the block changed event. */
-  _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<
-    Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>
-  >;
-  or?: InputMaybe<
-    Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>
-  >;
-};
-
-export type VAnchorTotalValueLockedByTokenEveryDay_orderBy =
-  | 'id'
-  | 'vAnchorAddress'
-  | 'tokenAddress'
-  | 'tokenSymbol'
-  | 'date'
   | 'totalValueLocked';
 
 export type VAnchorTotalValueLockedByToken_filter = {
@@ -4034,72 +4100,6 @@ export type VAnchorTotalValueLockedEvery15Min_orderBy =
   | 'vAnchorAddress'
   | 'startInterval'
   | 'endInterval'
-  | 'totalValueLocked';
-
-export type VAnchorTotalValueLockedEveryDay = {
-  id: Scalars['String'];
-  vAnchorAddress: Scalars['Bytes'];
-  date: Scalars['BigInt'];
-  totalValueLocked: Scalars['BigInt'];
-};
-
-export type VAnchorTotalValueLockedEveryDay_filter = {
-  id?: InputMaybe<Scalars['String']>;
-  id_not?: InputMaybe<Scalars['String']>;
-  id_gt?: InputMaybe<Scalars['String']>;
-  id_lt?: InputMaybe<Scalars['String']>;
-  id_gte?: InputMaybe<Scalars['String']>;
-  id_lte?: InputMaybe<Scalars['String']>;
-  id_in?: InputMaybe<Array<Scalars['String']>>;
-  id_not_in?: InputMaybe<Array<Scalars['String']>>;
-  id_contains?: InputMaybe<Scalars['String']>;
-  id_contains_nocase?: InputMaybe<Scalars['String']>;
-  id_not_contains?: InputMaybe<Scalars['String']>;
-  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
-  id_starts_with?: InputMaybe<Scalars['String']>;
-  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  id_not_starts_with?: InputMaybe<Scalars['String']>;
-  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-  id_ends_with?: InputMaybe<Scalars['String']>;
-  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  id_not_ends_with?: InputMaybe<Scalars['String']>;
-  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
-  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  totalValueLocked?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
-  totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  /** Filter for the block changed event. */
-  _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedEveryDay_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedEveryDay_filter>>>;
-};
-
-export type VAnchorTotalValueLockedEveryDay_orderBy =
-  | 'id'
-  | 'vAnchorAddress'
-  | 'date'
   | 'totalValueLocked';
 
 export type VAnchorTotalValueLocked_filter = {
@@ -5391,21 +5391,21 @@ export type ResolversTypes = ResolversObject<{
   VAnchorTotalRelayerFee_filter: VAnchorTotalRelayerFee_filter;
   VAnchorTotalRelayerFee_orderBy: VAnchorTotalRelayerFee_orderBy;
   VAnchorTotalValueLocked: ResolverTypeWrapper<VAnchorTotalValueLocked>;
+  VAnchorTotalValueLockedByDay: ResolverTypeWrapper<VAnchorTotalValueLockedByDay>;
+  VAnchorTotalValueLockedByDay_filter: VAnchorTotalValueLockedByDay_filter;
+  VAnchorTotalValueLockedByDay_orderBy: VAnchorTotalValueLockedByDay_orderBy;
   VAnchorTotalValueLockedByToken: ResolverTypeWrapper<VAnchorTotalValueLockedByToken>;
+  VAnchorTotalValueLockedByTokenByDay: ResolverTypeWrapper<VAnchorTotalValueLockedByTokenByDay>;
+  VAnchorTotalValueLockedByTokenByDay_filter: VAnchorTotalValueLockedByTokenByDay_filter;
+  VAnchorTotalValueLockedByTokenByDay_orderBy: VAnchorTotalValueLockedByTokenByDay_orderBy;
   VAnchorTotalValueLockedByTokenEvery15Min: ResolverTypeWrapper<VAnchorTotalValueLockedByTokenEvery15Min>;
   VAnchorTotalValueLockedByTokenEvery15Min_filter: VAnchorTotalValueLockedByTokenEvery15Min_filter;
   VAnchorTotalValueLockedByTokenEvery15Min_orderBy: VAnchorTotalValueLockedByTokenEvery15Min_orderBy;
-  VAnchorTotalValueLockedByTokenEveryDay: ResolverTypeWrapper<VAnchorTotalValueLockedByTokenEveryDay>;
-  VAnchorTotalValueLockedByTokenEveryDay_filter: VAnchorTotalValueLockedByTokenEveryDay_filter;
-  VAnchorTotalValueLockedByTokenEveryDay_orderBy: VAnchorTotalValueLockedByTokenEveryDay_orderBy;
   VAnchorTotalValueLockedByToken_filter: VAnchorTotalValueLockedByToken_filter;
   VAnchorTotalValueLockedByToken_orderBy: VAnchorTotalValueLockedByToken_orderBy;
   VAnchorTotalValueLockedEvery15Min: ResolverTypeWrapper<VAnchorTotalValueLockedEvery15Min>;
   VAnchorTotalValueLockedEvery15Min_filter: VAnchorTotalValueLockedEvery15Min_filter;
   VAnchorTotalValueLockedEvery15Min_orderBy: VAnchorTotalValueLockedEvery15Min_orderBy;
-  VAnchorTotalValueLockedEveryDay: ResolverTypeWrapper<VAnchorTotalValueLockedEveryDay>;
-  VAnchorTotalValueLockedEveryDay_filter: VAnchorTotalValueLockedEveryDay_filter;
-  VAnchorTotalValueLockedEveryDay_orderBy: VAnchorTotalValueLockedEveryDay_orderBy;
   VAnchorTotalValueLocked_filter: VAnchorTotalValueLocked_filter;
   VAnchorTotalValueLocked_orderBy: VAnchorTotalValueLocked_orderBy;
   VAnchorTotalWrappingFee: ResolverTypeWrapper<VAnchorTotalWrappingFee>;
@@ -5507,16 +5507,16 @@ export type ResolversParentTypes = ResolversObject<{
   VAnchorTotalRelayerFeeByToken_filter: VAnchorTotalRelayerFeeByToken_filter;
   VAnchorTotalRelayerFee_filter: VAnchorTotalRelayerFee_filter;
   VAnchorTotalValueLocked: VAnchorTotalValueLocked;
+  VAnchorTotalValueLockedByDay: VAnchorTotalValueLockedByDay;
+  VAnchorTotalValueLockedByDay_filter: VAnchorTotalValueLockedByDay_filter;
   VAnchorTotalValueLockedByToken: VAnchorTotalValueLockedByToken;
+  VAnchorTotalValueLockedByTokenByDay: VAnchorTotalValueLockedByTokenByDay;
+  VAnchorTotalValueLockedByTokenByDay_filter: VAnchorTotalValueLockedByTokenByDay_filter;
   VAnchorTotalValueLockedByTokenEvery15Min: VAnchorTotalValueLockedByTokenEvery15Min;
   VAnchorTotalValueLockedByTokenEvery15Min_filter: VAnchorTotalValueLockedByTokenEvery15Min_filter;
-  VAnchorTotalValueLockedByTokenEveryDay: VAnchorTotalValueLockedByTokenEveryDay;
-  VAnchorTotalValueLockedByTokenEveryDay_filter: VAnchorTotalValueLockedByTokenEveryDay_filter;
   VAnchorTotalValueLockedByToken_filter: VAnchorTotalValueLockedByToken_filter;
   VAnchorTotalValueLockedEvery15Min: VAnchorTotalValueLockedEvery15Min;
   VAnchorTotalValueLockedEvery15Min_filter: VAnchorTotalValueLockedEvery15Min_filter;
-  VAnchorTotalValueLockedEveryDay: VAnchorTotalValueLockedEveryDay;
-  VAnchorTotalValueLockedEveryDay_filter: VAnchorTotalValueLockedEveryDay_filter;
   VAnchorTotalValueLocked_filter: VAnchorTotalValueLocked_filter;
   VAnchorTotalWrappingFee: VAnchorTotalWrappingFee;
   VAnchorTotalWrappingFee15Min: VAnchorTotalWrappingFee15Min;
@@ -5771,39 +5771,36 @@ export type QueryResolvers<
       'skip' | 'first' | 'subgraphError'
     >
   >;
-  vanchorTotalValueLockedEveryDay?: Resolver<
-    Maybe<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
+  vanchorTotalValueLockedByDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByDay']>,
     ParentType,
     ContextType,
-    RequireFields<
-      QueryvanchorTotalValueLockedEveryDayArgs,
-      'id' | 'subgraphError'
-    >
+    RequireFields<QueryvanchorTotalValueLockedByDayArgs, 'id' | 'subgraphError'>
   >;
-  vanchorTotalValueLockedEveryDays?: Resolver<
-    Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
+  vanchorTotalValueLockedByDays?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByDay']>,
     ParentType,
     ContextType,
     RequireFields<
-      QueryvanchorTotalValueLockedEveryDaysArgs,
+      QueryvanchorTotalValueLockedByDaysArgs,
       'skip' | 'first' | 'subgraphError'
     >
   >;
-  vanchorTotalValueLockedByTokenEveryDay?: Resolver<
-    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
+  vanchorTotalValueLockedByTokenByDay?: Resolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenByDay']>,
     ParentType,
     ContextType,
     RequireFields<
-      QueryvanchorTotalValueLockedByTokenEveryDayArgs,
+      QueryvanchorTotalValueLockedByTokenByDayArgs,
       'id' | 'subgraphError'
     >
   >;
-  vanchorTotalValueLockedByTokenEveryDays?: Resolver<
-    Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
+  vanchorTotalValueLockedByTokenByDays?: Resolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByTokenByDay']>,
     ParentType,
     ContextType,
     RequireFields<
-      QueryvanchorTotalValueLockedByTokenEveryDaysArgs,
+      QueryvanchorTotalValueLockedByTokenByDaysArgs,
       'skip' | 'first' | 'subgraphError'
     >
   >;
@@ -6432,43 +6429,43 @@ export type SubscriptionResolvers<
       'skip' | 'first' | 'subgraphError'
     >
   >;
-  vanchorTotalValueLockedEveryDay?: SubscriptionResolver<
-    Maybe<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
-    'vanchorTotalValueLockedEveryDay',
+  vanchorTotalValueLockedByDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByDay']>,
+    'vanchorTotalValueLockedByDay',
     ParentType,
     ContextType,
     RequireFields<
-      SubscriptionvanchorTotalValueLockedEveryDayArgs,
+      SubscriptionvanchorTotalValueLockedByDayArgs,
       'id' | 'subgraphError'
     >
   >;
-  vanchorTotalValueLockedEveryDays?: SubscriptionResolver<
-    Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>,
-    'vanchorTotalValueLockedEveryDays',
+  vanchorTotalValueLockedByDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByDay']>,
+    'vanchorTotalValueLockedByDays',
     ParentType,
     ContextType,
     RequireFields<
-      SubscriptionvanchorTotalValueLockedEveryDaysArgs,
+      SubscriptionvanchorTotalValueLockedByDaysArgs,
       'skip' | 'first' | 'subgraphError'
     >
   >;
-  vanchorTotalValueLockedByTokenEveryDay?: SubscriptionResolver<
-    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
-    'vanchorTotalValueLockedByTokenEveryDay',
+  vanchorTotalValueLockedByTokenByDay?: SubscriptionResolver<
+    Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenByDay']>,
+    'vanchorTotalValueLockedByTokenByDay',
     ParentType,
     ContextType,
     RequireFields<
-      SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs,
+      SubscriptionvanchorTotalValueLockedByTokenByDayArgs,
       'id' | 'subgraphError'
     >
   >;
-  vanchorTotalValueLockedByTokenEveryDays?: SubscriptionResolver<
-    Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>,
-    'vanchorTotalValueLockedByTokenEveryDays',
+  vanchorTotalValueLockedByTokenByDays?: SubscriptionResolver<
+    Array<ResolversTypes['VAnchorTotalValueLockedByTokenByDay']>,
+    'vanchorTotalValueLockedByTokenByDays',
     ParentType,
     ContextType,
     RequireFields<
-      SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs,
+      SubscriptionvanchorTotalValueLockedByTokenByDaysArgs,
       'skip' | 'first' | 'subgraphError'
     >
   >;
@@ -7274,6 +7271,21 @@ export type VAnchorTotalValueLockedResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type VAnchorTotalValueLockedByDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByDay'] = ResolversParentTypes['VAnchorTotalValueLockedByDay']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type VAnchorTotalValueLockedByTokenResolvers<
   ContextType = MeshContext & { subgraphUrl: string },
   ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByToken'] = ResolversParentTypes['VAnchorTotalValueLockedByToken']
@@ -7282,6 +7294,23 @@ export type VAnchorTotalValueLockedByTokenResolvers<
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  totalValueLocked?: Resolver<
+    ResolversTypes['BigInt'],
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorTotalValueLockedByTokenByDayResolvers<
+  ContextType = MeshContext & { subgraphUrl: string },
+  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByTokenByDay'] = ResolversParentTypes['VAnchorTotalValueLockedByTokenByDay']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   totalValueLocked?: Resolver<
     ResolversTypes['BigInt'],
     ParentType,
@@ -7308,23 +7337,6 @@ export type VAnchorTotalValueLockedByTokenEvery15MinResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type VAnchorTotalValueLockedByTokenEveryDayResolvers<
-  ContextType = MeshContext & { subgraphUrl: string },
-  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedByTokenEveryDay'] = ResolversParentTypes['VAnchorTotalValueLockedByTokenEveryDay']
-> = ResolversObject<{
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<
-    ResolversTypes['BigInt'],
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type VAnchorTotalValueLockedEvery15MinResolvers<
   ContextType = MeshContext & { subgraphUrl: string },
   ParentType extends ResolversParentTypes['VAnchorTotalValueLockedEvery15Min'] = ResolversParentTypes['VAnchorTotalValueLockedEvery15Min']
@@ -7333,21 +7345,6 @@ export type VAnchorTotalValueLockedEvery15MinResolvers<
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
-  totalValueLocked?: Resolver<
-    ResolversTypes['BigInt'],
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type VAnchorTotalValueLockedEveryDayResolvers<
-  ContextType = MeshContext & { subgraphUrl: string },
-  ParentType extends ResolversParentTypes['VAnchorTotalValueLockedEveryDay'] = ResolversParentTypes['VAnchorTotalValueLockedEveryDay']
-> = ResolversObject<{
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   totalValueLocked?: Resolver<
     ResolversTypes['BigInt'],
     ParentType,
@@ -7568,11 +7565,11 @@ export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> =
     VAnchorTotalRelayerFeeByToken?: VAnchorTotalRelayerFeeByTokenResolvers<ContextType>;
     VAnchorTotalRelayerFeeByTokenEvery15Min?: VAnchorTotalRelayerFeeByTokenEvery15MinResolvers<ContextType>;
     VAnchorTotalValueLocked?: VAnchorTotalValueLockedResolvers<ContextType>;
+    VAnchorTotalValueLockedByDay?: VAnchorTotalValueLockedByDayResolvers<ContextType>;
     VAnchorTotalValueLockedByToken?: VAnchorTotalValueLockedByTokenResolvers<ContextType>;
+    VAnchorTotalValueLockedByTokenByDay?: VAnchorTotalValueLockedByTokenByDayResolvers<ContextType>;
     VAnchorTotalValueLockedByTokenEvery15Min?: VAnchorTotalValueLockedByTokenEvery15MinResolvers<ContextType>;
-    VAnchorTotalValueLockedByTokenEveryDay?: VAnchorTotalValueLockedByTokenEveryDayResolvers<ContextType>;
     VAnchorTotalValueLockedEvery15Min?: VAnchorTotalValueLockedEvery15MinResolvers<ContextType>;
-    VAnchorTotalValueLockedEveryDay?: VAnchorTotalValueLockedEveryDayResolvers<ContextType>;
     VAnchorTotalWrappingFee?: VAnchorTotalWrappingFeeResolvers<ContextType>;
     VAnchorTotalWrappingFee15Min?: VAnchorTotalWrappingFee15MinResolvers<ContextType>;
     VAnchorTotalWrappingFeeByToken?: VAnchorTotalWrappingFeeByTokenResolvers<ContextType>;
@@ -7657,7 +7654,7 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
     name: 'vanchor',
     config: {
       endpoint:
-        '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorOrbitAthena}',
+        '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}',
     },
     baseDir,
     cache,

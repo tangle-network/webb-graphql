@@ -1,10 +1,4 @@
-import {
-  Address,
-  Bytes,
-  BigInt,
-  BigDecimal,
-  ethereum,
-} from '@graphprotocol/graph-ts';
+import { Address, Bytes, BigInt, ethereum } from '@graphprotocol/graph-ts';
 import { Insertion } from '../generated/vanchor/vanchor';
 import {
   Encryptions,
@@ -13,11 +7,7 @@ import {
   ShieldedTransaction,
 } from '../generated/schema';
 import { ensureToken } from './token';
-import {
-  recordTVL,
-  recordTVL15MinsInterval,
-  recordTVLDayInterval,
-} from './tvl';
+import { recordTVL, recordTVL15MinsInterval, recordTVLByDay } from './tvl';
 import {
   recordRelayerFees,
   recordRelayerFees15MinsInterval,
@@ -156,7 +146,7 @@ export const handleTransaction = (event: Insertion): void => {
         value,
         event.block.timestamp
       );
-      recordTVLDayInterval(
+      recordTVLByDay(
         newShieldedTx.vanchor,
         tokenAddress,
         value,

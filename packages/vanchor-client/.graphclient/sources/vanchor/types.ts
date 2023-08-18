@@ -815,10 +815,10 @@ export namespace VanchorTypes {
     vanchorTotalValueLockedEvery15Mins: Array<VAnchorTotalValueLockedEvery15Min>;
     vanchorTotalValueLockedByTokenEvery15Min?: Maybe<VAnchorTotalValueLockedByTokenEvery15Min>;
     vanchorTotalValueLockedByTokenEvery15Mins: Array<VAnchorTotalValueLockedByTokenEvery15Min>;
-    vanchorTotalValueLockedEveryDay?: Maybe<VAnchorTotalValueLockedEveryDay>;
-    vanchorTotalValueLockedEveryDays: Array<VAnchorTotalValueLockedEveryDay>;
-    vanchorTotalValueLockedByTokenEveryDay?: Maybe<VAnchorTotalValueLockedByTokenEveryDay>;
-    vanchorTotalValueLockedByTokenEveryDays: Array<VAnchorTotalValueLockedByTokenEveryDay>;
+    vanchorTotalValueLockedByDay?: Maybe<VAnchorTotalValueLockedByDay>;
+    vanchorTotalValueLockedByDays: Array<VAnchorTotalValueLockedByDay>;
+    vanchorTotalValueLockedByTokenByDay?: Maybe<VAnchorTotalValueLockedByTokenByDay>;
+    vanchorTotalValueLockedByTokenByDays: Array<VAnchorTotalValueLockedByTokenByDay>;
     vanchorTotalRelayerFee?: Maybe<VAnchorTotalRelayerFee>;
     vanchorTotalRelayerFees: Array<VAnchorTotalRelayerFee>;
     vanchorTotalRelayerFeeByToken?: Maybe<VAnchorTotalRelayerFeeByToken>;
@@ -1097,34 +1097,34 @@ export namespace VanchorTypes {
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type QueryvanchorTotalValueLockedEveryDayArgs = {
+  export type QueryvanchorTotalValueLockedByDayArgs = {
     id: Scalars['ID'];
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type QueryvanchorTotalValueLockedEveryDaysArgs = {
+  export type QueryvanchorTotalValueLockedByDaysArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     first?: InputMaybe<Scalars['Int']>;
-    orderBy?: InputMaybe<VAnchorTotalValueLockedEveryDay_orderBy>;
+    orderBy?: InputMaybe<VAnchorTotalValueLockedByDay_orderBy>;
     orderDirection?: InputMaybe<OrderDirection>;
-    where?: InputMaybe<VAnchorTotalValueLockedEveryDay_filter>;
+    where?: InputMaybe<VAnchorTotalValueLockedByDay_filter>;
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type QueryvanchorTotalValueLockedByTokenEveryDayArgs = {
+  export type QueryvanchorTotalValueLockedByTokenByDayArgs = {
     id: Scalars['ID'];
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type QueryvanchorTotalValueLockedByTokenEveryDaysArgs = {
+  export type QueryvanchorTotalValueLockedByTokenByDaysArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     first?: InputMaybe<Scalars['Int']>;
-    orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_orderBy>;
+    orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_orderBy>;
     orderDirection?: InputMaybe<OrderDirection>;
-    where?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>;
+    where?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>;
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
@@ -1728,10 +1728,10 @@ export namespace VanchorTypes {
     vanchorTotalValueLockedEvery15Mins: Array<VAnchorTotalValueLockedEvery15Min>;
     vanchorTotalValueLockedByTokenEvery15Min?: Maybe<VAnchorTotalValueLockedByTokenEvery15Min>;
     vanchorTotalValueLockedByTokenEvery15Mins: Array<VAnchorTotalValueLockedByTokenEvery15Min>;
-    vanchorTotalValueLockedEveryDay?: Maybe<VAnchorTotalValueLockedEveryDay>;
-    vanchorTotalValueLockedEveryDays: Array<VAnchorTotalValueLockedEveryDay>;
-    vanchorTotalValueLockedByTokenEveryDay?: Maybe<VAnchorTotalValueLockedByTokenEveryDay>;
-    vanchorTotalValueLockedByTokenEveryDays: Array<VAnchorTotalValueLockedByTokenEveryDay>;
+    vanchorTotalValueLockedByDay?: Maybe<VAnchorTotalValueLockedByDay>;
+    vanchorTotalValueLockedByDays: Array<VAnchorTotalValueLockedByDay>;
+    vanchorTotalValueLockedByTokenByDay?: Maybe<VAnchorTotalValueLockedByTokenByDay>;
+    vanchorTotalValueLockedByTokenByDays: Array<VAnchorTotalValueLockedByTokenByDay>;
     vanchorTotalRelayerFee?: Maybe<VAnchorTotalRelayerFee>;
     vanchorTotalRelayerFees: Array<VAnchorTotalRelayerFee>;
     vanchorTotalRelayerFeeByToken?: Maybe<VAnchorTotalRelayerFeeByToken>;
@@ -2010,34 +2010,34 @@ export namespace VanchorTypes {
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type SubscriptionvanchorTotalValueLockedEveryDayArgs = {
+  export type SubscriptionvanchorTotalValueLockedByDayArgs = {
     id: Scalars['ID'];
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type SubscriptionvanchorTotalValueLockedEveryDaysArgs = {
+  export type SubscriptionvanchorTotalValueLockedByDaysArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     first?: InputMaybe<Scalars['Int']>;
-    orderBy?: InputMaybe<VAnchorTotalValueLockedEveryDay_orderBy>;
+    orderBy?: InputMaybe<VAnchorTotalValueLockedByDay_orderBy>;
     orderDirection?: InputMaybe<OrderDirection>;
-    where?: InputMaybe<VAnchorTotalValueLockedEveryDay_filter>;
+    where?: InputMaybe<VAnchorTotalValueLockedByDay_filter>;
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs = {
+  export type SubscriptionvanchorTotalValueLockedByTokenByDayArgs = {
     id: Scalars['ID'];
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
 
-  export type SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs = {
+  export type SubscriptionvanchorTotalValueLockedByTokenByDaysArgs = {
     skip?: InputMaybe<Scalars['Int']>;
     first?: InputMaybe<Scalars['Int']>;
-    orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_orderBy>;
+    orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_orderBy>;
     orderDirection?: InputMaybe<OrderDirection>;
-    where?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>;
+    where?: InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>;
     block?: InputMaybe<Block_height>;
     subgraphError?: _SubgraphErrorPolicy_;
   };
@@ -3622,6 +3622,72 @@ export namespace VanchorTypes {
     totalValueLocked: Scalars['BigInt'];
   };
 
+  export type VAnchorTotalValueLockedByDay = {
+    id: Scalars['String'];
+    vAnchorAddress: Scalars['Bytes'];
+    date: Scalars['BigInt'];
+    totalValueLocked: Scalars['BigInt'];
+  };
+
+  export type VAnchorTotalValueLockedByDay_filter = {
+    id?: InputMaybe<Scalars['String']>;
+    id_not?: InputMaybe<Scalars['String']>;
+    id_gt?: InputMaybe<Scalars['String']>;
+    id_lt?: InputMaybe<Scalars['String']>;
+    id_gte?: InputMaybe<Scalars['String']>;
+    id_lte?: InputMaybe<Scalars['String']>;
+    id_in?: InputMaybe<Array<Scalars['String']>>;
+    id_not_in?: InputMaybe<Array<Scalars['String']>>;
+    id_contains?: InputMaybe<Scalars['String']>;
+    id_contains_nocase?: InputMaybe<Scalars['String']>;
+    id_not_contains?: InputMaybe<Scalars['String']>;
+    id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+    id_starts_with?: InputMaybe<Scalars['String']>;
+    id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    id_not_starts_with?: InputMaybe<Scalars['String']>;
+    id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    id_ends_with?: InputMaybe<Scalars['String']>;
+    id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    id_not_ends_with?: InputMaybe<Scalars['String']>;
+    id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+    vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+    vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+    date?: InputMaybe<Scalars['BigInt']>;
+    date_not?: InputMaybe<Scalars['BigInt']>;
+    date_gt?: InputMaybe<Scalars['BigInt']>;
+    date_lt?: InputMaybe<Scalars['BigInt']>;
+    date_gte?: InputMaybe<Scalars['BigInt']>;
+    date_lte?: InputMaybe<Scalars['BigInt']>;
+    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    totalValueLocked?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    and?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByDay_filter>>>;
+    or?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedByDay_filter>>>;
+  };
+
+  export type VAnchorTotalValueLockedByDay_orderBy =
+    | 'id'
+    | 'vAnchorAddress'
+    | 'date'
+    | 'totalValueLocked';
+
   export type VAnchorTotalValueLockedByToken = {
     id: Scalars['String'];
     vAnchorAddress: Scalars['Bytes'];
@@ -3629,6 +3695,110 @@ export namespace VanchorTypes {
     tokenSymbol: Scalars['String'];
     totalValueLocked: Scalars['BigInt'];
   };
+
+  export type VAnchorTotalValueLockedByTokenByDay = {
+    id: Scalars['String'];
+    vAnchorAddress: Scalars['Bytes'];
+    tokenAddress: Scalars['Bytes'];
+    tokenSymbol: Scalars['String'];
+    date: Scalars['BigInt'];
+    totalValueLocked: Scalars['BigInt'];
+  };
+
+  export type VAnchorTotalValueLockedByTokenByDay_filter = {
+    id?: InputMaybe<Scalars['String']>;
+    id_not?: InputMaybe<Scalars['String']>;
+    id_gt?: InputMaybe<Scalars['String']>;
+    id_lt?: InputMaybe<Scalars['String']>;
+    id_gte?: InputMaybe<Scalars['String']>;
+    id_lte?: InputMaybe<Scalars['String']>;
+    id_in?: InputMaybe<Array<Scalars['String']>>;
+    id_not_in?: InputMaybe<Array<Scalars['String']>>;
+    id_contains?: InputMaybe<Scalars['String']>;
+    id_contains_nocase?: InputMaybe<Scalars['String']>;
+    id_not_contains?: InputMaybe<Scalars['String']>;
+    id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+    id_starts_with?: InputMaybe<Scalars['String']>;
+    id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    id_not_starts_with?: InputMaybe<Scalars['String']>;
+    id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    id_ends_with?: InputMaybe<Scalars['String']>;
+    id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    id_not_ends_with?: InputMaybe<Scalars['String']>;
+    id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+    vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+    vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+    vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+    tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+    tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+    tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+    tokenSymbol?: InputMaybe<Scalars['String']>;
+    tokenSymbol_not?: InputMaybe<Scalars['String']>;
+    tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+    tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+    tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+    tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+    tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+    tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+    tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+    tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+    tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+    tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+    tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+    tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+    tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+    tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+    tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+    tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+    date?: InputMaybe<Scalars['BigInt']>;
+    date_not?: InputMaybe<Scalars['BigInt']>;
+    date_gt?: InputMaybe<Scalars['BigInt']>;
+    date_lt?: InputMaybe<Scalars['BigInt']>;
+    date_gte?: InputMaybe<Scalars['BigInt']>;
+    date_lte?: InputMaybe<Scalars['BigInt']>;
+    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    totalValueLocked?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
+    totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    /** Filter for the block changed event. */
+    _change_block?: InputMaybe<BlockChangedFilter>;
+    and?: InputMaybe<
+      Array<InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>>
+    >;
+    or?: InputMaybe<
+      Array<InputMaybe<VAnchorTotalValueLockedByTokenByDay_filter>>
+    >;
+  };
+
+  export type VAnchorTotalValueLockedByTokenByDay_orderBy =
+    | 'id'
+    | 'vAnchorAddress'
+    | 'tokenAddress'
+    | 'tokenSymbol'
+    | 'date'
+    | 'totalValueLocked';
 
   export type VAnchorTotalValueLockedByTokenEvery15Min = {
     id: Scalars['String'];
@@ -3742,110 +3912,6 @@ export namespace VanchorTypes {
     | 'tokenSymbol'
     | 'startInterval'
     | 'endInterval'
-    | 'totalValueLocked';
-
-  export type VAnchorTotalValueLockedByTokenEveryDay = {
-    id: Scalars['String'];
-    vAnchorAddress: Scalars['Bytes'];
-    tokenAddress: Scalars['Bytes'];
-    tokenSymbol: Scalars['String'];
-    date: Scalars['BigInt'];
-    totalValueLocked: Scalars['BigInt'];
-  };
-
-  export type VAnchorTotalValueLockedByTokenEveryDay_filter = {
-    id?: InputMaybe<Scalars['String']>;
-    id_not?: InputMaybe<Scalars['String']>;
-    id_gt?: InputMaybe<Scalars['String']>;
-    id_lt?: InputMaybe<Scalars['String']>;
-    id_gte?: InputMaybe<Scalars['String']>;
-    id_lte?: InputMaybe<Scalars['String']>;
-    id_in?: InputMaybe<Array<Scalars['String']>>;
-    id_not_in?: InputMaybe<Array<Scalars['String']>>;
-    id_contains?: InputMaybe<Scalars['String']>;
-    id_contains_nocase?: InputMaybe<Scalars['String']>;
-    id_not_contains?: InputMaybe<Scalars['String']>;
-    id_not_contains_nocase?: InputMaybe<Scalars['String']>;
-    id_starts_with?: InputMaybe<Scalars['String']>;
-    id_starts_with_nocase?: InputMaybe<Scalars['String']>;
-    id_not_starts_with?: InputMaybe<Scalars['String']>;
-    id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-    id_ends_with?: InputMaybe<Scalars['String']>;
-    id_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    id_not_ends_with?: InputMaybe<Scalars['String']>;
-    id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
-    vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-    vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
-    tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-    tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
-    tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-    tokenSymbol?: InputMaybe<Scalars['String']>;
-    tokenSymbol_not?: InputMaybe<Scalars['String']>;
-    tokenSymbol_gt?: InputMaybe<Scalars['String']>;
-    tokenSymbol_lt?: InputMaybe<Scalars['String']>;
-    tokenSymbol_gte?: InputMaybe<Scalars['String']>;
-    tokenSymbol_lte?: InputMaybe<Scalars['String']>;
-    tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
-    tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
-    tokenSymbol_contains?: InputMaybe<Scalars['String']>;
-    tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
-    tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
-    tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
-    tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
-    tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
-    tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
-    tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-    tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
-    tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
-    tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    totalValueLocked?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    /** Filter for the block changed event. */
-    _change_block?: InputMaybe<BlockChangedFilter>;
-    and?: InputMaybe<
-      Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>
-    >;
-    or?: InputMaybe<
-      Array<InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>>
-    >;
-  };
-
-  export type VAnchorTotalValueLockedByTokenEveryDay_orderBy =
-    | 'id'
-    | 'vAnchorAddress'
-    | 'tokenAddress'
-    | 'tokenSymbol'
-    | 'date'
     | 'totalValueLocked';
 
   export type VAnchorTotalValueLockedByToken_filter = {
@@ -4008,72 +4074,6 @@ export namespace VanchorTypes {
     | 'vAnchorAddress'
     | 'startInterval'
     | 'endInterval'
-    | 'totalValueLocked';
-
-  export type VAnchorTotalValueLockedEveryDay = {
-    id: Scalars['String'];
-    vAnchorAddress: Scalars['Bytes'];
-    date: Scalars['BigInt'];
-    totalValueLocked: Scalars['BigInt'];
-  };
-
-  export type VAnchorTotalValueLockedEveryDay_filter = {
-    id?: InputMaybe<Scalars['String']>;
-    id_not?: InputMaybe<Scalars['String']>;
-    id_gt?: InputMaybe<Scalars['String']>;
-    id_lt?: InputMaybe<Scalars['String']>;
-    id_gte?: InputMaybe<Scalars['String']>;
-    id_lte?: InputMaybe<Scalars['String']>;
-    id_in?: InputMaybe<Array<Scalars['String']>>;
-    id_not_in?: InputMaybe<Array<Scalars['String']>>;
-    id_contains?: InputMaybe<Scalars['String']>;
-    id_contains_nocase?: InputMaybe<Scalars['String']>;
-    id_not_contains?: InputMaybe<Scalars['String']>;
-    id_not_contains_nocase?: InputMaybe<Scalars['String']>;
-    id_starts_with?: InputMaybe<Scalars['String']>;
-    id_starts_with_nocase?: InputMaybe<Scalars['String']>;
-    id_not_starts_with?: InputMaybe<Scalars['String']>;
-    id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
-    id_ends_with?: InputMaybe<Scalars['String']>;
-    id_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    id_not_ends_with?: InputMaybe<Scalars['String']>;
-    id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
-    vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-    vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
-    vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    totalValueLocked?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_lt?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_gte?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_lte?: InputMaybe<Scalars['BigInt']>;
-    totalValueLocked_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    totalValueLocked_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    /** Filter for the block changed event. */
-    _change_block?: InputMaybe<BlockChangedFilter>;
-    and?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedEveryDay_filter>>>;
-    or?: InputMaybe<Array<InputMaybe<VAnchorTotalValueLockedEveryDay_filter>>>;
-  };
-
-  export type VAnchorTotalValueLockedEveryDay_orderBy =
-    | 'id'
-    | 'vAnchorAddress'
-    | 'date'
     | 'totalValueLocked';
 
   export type VAnchorTotalValueLocked_filter = {
@@ -5322,27 +5322,27 @@ export namespace VanchorTypes {
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedEveryDay: InContextSdkMethod<
-      Query['vanchorTotalValueLockedEveryDay'],
-      QueryvanchorTotalValueLockedEveryDayArgs,
+    vanchorTotalValueLockedByDay: InContextSdkMethod<
+      Query['vanchorTotalValueLockedByDay'],
+      QueryvanchorTotalValueLockedByDayArgs,
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedEveryDays: InContextSdkMethod<
-      Query['vanchorTotalValueLockedEveryDays'],
-      QueryvanchorTotalValueLockedEveryDaysArgs,
+    vanchorTotalValueLockedByDays: InContextSdkMethod<
+      Query['vanchorTotalValueLockedByDays'],
+      QueryvanchorTotalValueLockedByDaysArgs,
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedByTokenEveryDay: InContextSdkMethod<
-      Query['vanchorTotalValueLockedByTokenEveryDay'],
-      QueryvanchorTotalValueLockedByTokenEveryDayArgs,
+    vanchorTotalValueLockedByTokenByDay: InContextSdkMethod<
+      Query['vanchorTotalValueLockedByTokenByDay'],
+      QueryvanchorTotalValueLockedByTokenByDayArgs,
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedByTokenEveryDays: InContextSdkMethod<
-      Query['vanchorTotalValueLockedByTokenEveryDays'],
-      QueryvanchorTotalValueLockedByTokenEveryDaysArgs,
+    vanchorTotalValueLockedByTokenByDays: InContextSdkMethod<
+      Query['vanchorTotalValueLockedByTokenByDays'],
+      QueryvanchorTotalValueLockedByTokenByDaysArgs,
       MeshContext
     >;
     /** null **/
@@ -5797,27 +5797,27 @@ export namespace VanchorTypes {
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedEveryDay: InContextSdkMethod<
-      Subscription['vanchorTotalValueLockedEveryDay'],
-      SubscriptionvanchorTotalValueLockedEveryDayArgs,
+    vanchorTotalValueLockedByDay: InContextSdkMethod<
+      Subscription['vanchorTotalValueLockedByDay'],
+      SubscriptionvanchorTotalValueLockedByDayArgs,
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedEveryDays: InContextSdkMethod<
-      Subscription['vanchorTotalValueLockedEveryDays'],
-      SubscriptionvanchorTotalValueLockedEveryDaysArgs,
+    vanchorTotalValueLockedByDays: InContextSdkMethod<
+      Subscription['vanchorTotalValueLockedByDays'],
+      SubscriptionvanchorTotalValueLockedByDaysArgs,
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedByTokenEveryDay: InContextSdkMethod<
-      Subscription['vanchorTotalValueLockedByTokenEveryDay'],
-      SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs,
+    vanchorTotalValueLockedByTokenByDay: InContextSdkMethod<
+      Subscription['vanchorTotalValueLockedByTokenByDay'],
+      SubscriptionvanchorTotalValueLockedByTokenByDayArgs,
       MeshContext
     >;
     /** null **/
-    vanchorTotalValueLockedByTokenEveryDays: InContextSdkMethod<
-      Subscription['vanchorTotalValueLockedByTokenEveryDays'],
-      SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs,
+    vanchorTotalValueLockedByTokenByDays: InContextSdkMethod<
+      Subscription['vanchorTotalValueLockedByTokenByDays'],
+      SubscriptionvanchorTotalValueLockedByTokenByDaysArgs,
       MeshContext
     >;
     /** null **/

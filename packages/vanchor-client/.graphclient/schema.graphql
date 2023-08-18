@@ -269,42 +269,42 @@ type Query {
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [VAnchorTotalValueLockedByTokenEvery15Min!]!
-  vanchorTotalValueLockedEveryDay(
+  vanchorTotalValueLockedByDay(
     id: ID!
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): VAnchorTotalValueLockedEveryDay
-  vanchorTotalValueLockedEveryDays(
+  ): VAnchorTotalValueLockedByDay
+  vanchorTotalValueLockedByDays(
     skip: Int = 0
     first: Int = 100
-    orderBy: VAnchorTotalValueLockedEveryDay_orderBy
+    orderBy: VAnchorTotalValueLockedByDay_orderBy
     orderDirection: OrderDirection
-    where: VAnchorTotalValueLockedEveryDay_filter
+    where: VAnchorTotalValueLockedByDay_filter
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): [VAnchorTotalValueLockedEveryDay!]!
-  vanchorTotalValueLockedByTokenEveryDay(
+  ): [VAnchorTotalValueLockedByDay!]!
+  vanchorTotalValueLockedByTokenByDay(
     id: ID!
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): VAnchorTotalValueLockedByTokenEveryDay
-  vanchorTotalValueLockedByTokenEveryDays(
+  ): VAnchorTotalValueLockedByTokenByDay
+  vanchorTotalValueLockedByTokenByDays(
     skip: Int = 0
     first: Int = 100
-    orderBy: VAnchorTotalValueLockedByTokenEveryDay_orderBy
+    orderBy: VAnchorTotalValueLockedByTokenByDay_orderBy
     orderDirection: OrderDirection
-    where: VAnchorTotalValueLockedByTokenEveryDay_filter
+    where: VAnchorTotalValueLockedByTokenByDay_filter
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): [VAnchorTotalValueLockedByTokenEveryDay!]!
+  ): [VAnchorTotalValueLockedByTokenByDay!]!
   vanchorTotalRelayerFee(
     id: ID!
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
@@ -980,42 +980,42 @@ type Subscription {
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [VAnchorTotalValueLockedByTokenEvery15Min!]!
-  vanchorTotalValueLockedEveryDay(
+  vanchorTotalValueLockedByDay(
     id: ID!
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): VAnchorTotalValueLockedEveryDay
-  vanchorTotalValueLockedEveryDays(
+  ): VAnchorTotalValueLockedByDay
+  vanchorTotalValueLockedByDays(
     skip: Int = 0
     first: Int = 100
-    orderBy: VAnchorTotalValueLockedEveryDay_orderBy
+    orderBy: VAnchorTotalValueLockedByDay_orderBy
     orderDirection: OrderDirection
-    where: VAnchorTotalValueLockedEveryDay_filter
+    where: VAnchorTotalValueLockedByDay_filter
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): [VAnchorTotalValueLockedEveryDay!]!
-  vanchorTotalValueLockedByTokenEveryDay(
+  ): [VAnchorTotalValueLockedByDay!]!
+  vanchorTotalValueLockedByTokenByDay(
     id: ID!
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): VAnchorTotalValueLockedByTokenEveryDay
-  vanchorTotalValueLockedByTokenEveryDays(
+  ): VAnchorTotalValueLockedByTokenByDay
+  vanchorTotalValueLockedByTokenByDays(
     skip: Int = 0
     first: Int = 100
-    orderBy: VAnchorTotalValueLockedByTokenEveryDay_orderBy
+    orderBy: VAnchorTotalValueLockedByTokenByDay_orderBy
     orderDirection: OrderDirection
-    where: VAnchorTotalValueLockedByTokenEveryDay_filter
+    where: VAnchorTotalValueLockedByTokenByDay_filter
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
     block: Block_height
     """Set to `allow` to receive data even if the subgraph has skipped over errors while syncing."""
     subgraphError: _SubgraphErrorPolicy_! = deny
-  ): [VAnchorTotalValueLockedByTokenEveryDay!]!
+  ): [VAnchorTotalValueLockedByTokenByDay!]!
   vanchorTotalRelayerFee(
     id: ID!
     """The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted."""
@@ -3633,12 +3633,180 @@ type VAnchorTotalValueLocked {
   totalValueLocked: BigInt!
 }
 
+type VAnchorTotalValueLockedByDay {
+  id: String!
+  vAnchorAddress: Bytes!
+  date: BigInt!
+  totalValueLocked: BigInt!
+}
+
+input VAnchorTotalValueLockedByDay_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  vAnchorAddress: Bytes
+  vAnchorAddress_not: Bytes
+  vAnchorAddress_gt: Bytes
+  vAnchorAddress_lt: Bytes
+  vAnchorAddress_gte: Bytes
+  vAnchorAddress_lte: Bytes
+  vAnchorAddress_in: [Bytes!]
+  vAnchorAddress_not_in: [Bytes!]
+  vAnchorAddress_contains: Bytes
+  vAnchorAddress_not_contains: Bytes
+  date: BigInt
+  date_not: BigInt
+  date_gt: BigInt
+  date_lt: BigInt
+  date_gte: BigInt
+  date_lte: BigInt
+  date_in: [BigInt!]
+  date_not_in: [BigInt!]
+  totalValueLocked: BigInt
+  totalValueLocked_not: BigInt
+  totalValueLocked_gt: BigInt
+  totalValueLocked_lt: BigInt
+  totalValueLocked_gte: BigInt
+  totalValueLocked_lte: BigInt
+  totalValueLocked_in: [BigInt!]
+  totalValueLocked_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTotalValueLockedByDay_filter]
+  or: [VAnchorTotalValueLockedByDay_filter]
+}
+
+enum VAnchorTotalValueLockedByDay_orderBy {
+  id
+  vAnchorAddress
+  date
+  totalValueLocked
+}
+
 type VAnchorTotalValueLockedByToken {
   id: String!
   vAnchorAddress: Bytes!
   tokenAddress: Bytes!
   tokenSymbol: String!
   totalValueLocked: BigInt!
+}
+
+type VAnchorTotalValueLockedByTokenByDay {
+  id: String!
+  vAnchorAddress: Bytes!
+  tokenAddress: Bytes!
+  tokenSymbol: String!
+  date: BigInt!
+  totalValueLocked: BigInt!
+}
+
+input VAnchorTotalValueLockedByTokenByDay_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  vAnchorAddress: Bytes
+  vAnchorAddress_not: Bytes
+  vAnchorAddress_gt: Bytes
+  vAnchorAddress_lt: Bytes
+  vAnchorAddress_gte: Bytes
+  vAnchorAddress_lte: Bytes
+  vAnchorAddress_in: [Bytes!]
+  vAnchorAddress_not_in: [Bytes!]
+  vAnchorAddress_contains: Bytes
+  vAnchorAddress_not_contains: Bytes
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_gt: Bytes
+  tokenAddress_lt: Bytes
+  tokenAddress_gte: Bytes
+  tokenAddress_lte: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  tokenSymbol: String
+  tokenSymbol_not: String
+  tokenSymbol_gt: String
+  tokenSymbol_lt: String
+  tokenSymbol_gte: String
+  tokenSymbol_lte: String
+  tokenSymbol_in: [String!]
+  tokenSymbol_not_in: [String!]
+  tokenSymbol_contains: String
+  tokenSymbol_contains_nocase: String
+  tokenSymbol_not_contains: String
+  tokenSymbol_not_contains_nocase: String
+  tokenSymbol_starts_with: String
+  tokenSymbol_starts_with_nocase: String
+  tokenSymbol_not_starts_with: String
+  tokenSymbol_not_starts_with_nocase: String
+  tokenSymbol_ends_with: String
+  tokenSymbol_ends_with_nocase: String
+  tokenSymbol_not_ends_with: String
+  tokenSymbol_not_ends_with_nocase: String
+  date: BigInt
+  date_not: BigInt
+  date_gt: BigInt
+  date_lt: BigInt
+  date_gte: BigInt
+  date_lte: BigInt
+  date_in: [BigInt!]
+  date_not_in: [BigInt!]
+  totalValueLocked: BigInt
+  totalValueLocked_not: BigInt
+  totalValueLocked_gt: BigInt
+  totalValueLocked_lt: BigInt
+  totalValueLocked_gte: BigInt
+  totalValueLocked_lte: BigInt
+  totalValueLocked_in: [BigInt!]
+  totalValueLocked_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTotalValueLockedByTokenByDay_filter]
+  or: [VAnchorTotalValueLockedByTokenByDay_filter]
+}
+
+enum VAnchorTotalValueLockedByTokenByDay_orderBy {
+  id
+  vAnchorAddress
+  tokenAddress
+  tokenSymbol
+  date
+  totalValueLocked
 }
 
 type VAnchorTotalValueLockedByTokenEvery15Min {
@@ -3749,107 +3917,6 @@ enum VAnchorTotalValueLockedByTokenEvery15Min_orderBy {
   tokenSymbol
   startInterval
   endInterval
-  totalValueLocked
-}
-
-type VAnchorTotalValueLockedByTokenEveryDay {
-  id: String!
-  vAnchorAddress: Bytes!
-  tokenAddress: Bytes!
-  tokenSymbol: String!
-  date: BigInt!
-  totalValueLocked: BigInt!
-}
-
-input VAnchorTotalValueLockedByTokenEveryDay_filter {
-  id: String
-  id_not: String
-  id_gt: String
-  id_lt: String
-  id_gte: String
-  id_lte: String
-  id_in: [String!]
-  id_not_in: [String!]
-  id_contains: String
-  id_contains_nocase: String
-  id_not_contains: String
-  id_not_contains_nocase: String
-  id_starts_with: String
-  id_starts_with_nocase: String
-  id_not_starts_with: String
-  id_not_starts_with_nocase: String
-  id_ends_with: String
-  id_ends_with_nocase: String
-  id_not_ends_with: String
-  id_not_ends_with_nocase: String
-  vAnchorAddress: Bytes
-  vAnchorAddress_not: Bytes
-  vAnchorAddress_gt: Bytes
-  vAnchorAddress_lt: Bytes
-  vAnchorAddress_gte: Bytes
-  vAnchorAddress_lte: Bytes
-  vAnchorAddress_in: [Bytes!]
-  vAnchorAddress_not_in: [Bytes!]
-  vAnchorAddress_contains: Bytes
-  vAnchorAddress_not_contains: Bytes
-  tokenAddress: Bytes
-  tokenAddress_not: Bytes
-  tokenAddress_gt: Bytes
-  tokenAddress_lt: Bytes
-  tokenAddress_gte: Bytes
-  tokenAddress_lte: Bytes
-  tokenAddress_in: [Bytes!]
-  tokenAddress_not_in: [Bytes!]
-  tokenAddress_contains: Bytes
-  tokenAddress_not_contains: Bytes
-  tokenSymbol: String
-  tokenSymbol_not: String
-  tokenSymbol_gt: String
-  tokenSymbol_lt: String
-  tokenSymbol_gte: String
-  tokenSymbol_lte: String
-  tokenSymbol_in: [String!]
-  tokenSymbol_not_in: [String!]
-  tokenSymbol_contains: String
-  tokenSymbol_contains_nocase: String
-  tokenSymbol_not_contains: String
-  tokenSymbol_not_contains_nocase: String
-  tokenSymbol_starts_with: String
-  tokenSymbol_starts_with_nocase: String
-  tokenSymbol_not_starts_with: String
-  tokenSymbol_not_starts_with_nocase: String
-  tokenSymbol_ends_with: String
-  tokenSymbol_ends_with_nocase: String
-  tokenSymbol_not_ends_with: String
-  tokenSymbol_not_ends_with_nocase: String
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
-  totalValueLocked: BigInt
-  totalValueLocked_not: BigInt
-  totalValueLocked_gt: BigInt
-  totalValueLocked_lt: BigInt
-  totalValueLocked_gte: BigInt
-  totalValueLocked_lte: BigInt
-  totalValueLocked_in: [BigInt!]
-  totalValueLocked_not_in: [BigInt!]
-  """Filter for the block changed event."""
-  _change_block: BlockChangedFilter
-  and: [VAnchorTotalValueLockedByTokenEveryDay_filter]
-  or: [VAnchorTotalValueLockedByTokenEveryDay_filter]
-}
-
-enum VAnchorTotalValueLockedByTokenEveryDay_orderBy {
-  id
-  vAnchorAddress
-  tokenAddress
-  tokenSymbol
-  date
   totalValueLocked
 }
 
@@ -4010,73 +4077,6 @@ enum VAnchorTotalValueLockedEvery15Min_orderBy {
   vAnchorAddress
   startInterval
   endInterval
-  totalValueLocked
-}
-
-type VAnchorTotalValueLockedEveryDay {
-  id: String!
-  vAnchorAddress: Bytes!
-  date: BigInt!
-  totalValueLocked: BigInt!
-}
-
-input VAnchorTotalValueLockedEveryDay_filter {
-  id: String
-  id_not: String
-  id_gt: String
-  id_lt: String
-  id_gte: String
-  id_lte: String
-  id_in: [String!]
-  id_not_in: [String!]
-  id_contains: String
-  id_contains_nocase: String
-  id_not_contains: String
-  id_not_contains_nocase: String
-  id_starts_with: String
-  id_starts_with_nocase: String
-  id_not_starts_with: String
-  id_not_starts_with_nocase: String
-  id_ends_with: String
-  id_ends_with_nocase: String
-  id_not_ends_with: String
-  id_not_ends_with_nocase: String
-  vAnchorAddress: Bytes
-  vAnchorAddress_not: Bytes
-  vAnchorAddress_gt: Bytes
-  vAnchorAddress_lt: Bytes
-  vAnchorAddress_gte: Bytes
-  vAnchorAddress_lte: Bytes
-  vAnchorAddress_in: [Bytes!]
-  vAnchorAddress_not_in: [Bytes!]
-  vAnchorAddress_contains: Bytes
-  vAnchorAddress_not_contains: Bytes
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
-  totalValueLocked: BigInt
-  totalValueLocked_not: BigInt
-  totalValueLocked_gt: BigInt
-  totalValueLocked_lt: BigInt
-  totalValueLocked_gte: BigInt
-  totalValueLocked_lte: BigInt
-  totalValueLocked_in: [BigInt!]
-  totalValueLocked_not_in: [BigInt!]
-  """Filter for the block changed event."""
-  _change_block: BlockChangedFilter
-  and: [VAnchorTotalValueLockedEveryDay_filter]
-  or: [VAnchorTotalValueLockedEveryDay_filter]
-}
-
-enum VAnchorTotalValueLockedEveryDay_orderBy {
-  id
-  vAnchorAddress
-  date
   totalValueLocked
 }
 

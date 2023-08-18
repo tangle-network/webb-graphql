@@ -2,19 +2,19 @@ import { execute } from '../../../.graphclient';
 import { DateUtil, getEpochArray } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
 
-export interface TotalValueLockedByChainDayIntervalItem {
+export interface TotalValueLockedByChainByDayItem {
   subgraphUrl: SubgraphUrl;
   totalValueLocked: number;
   date: Date;
   vAnchorAddress: string;
 }
 
-export interface TotalValueLockedByChainAndByTokenDayIntervalItem
-  extends TotalValueLockedByChainDayIntervalItem {
+export interface TotalValueLockedByChainAndByTokenByDayItem
+  extends TotalValueLockedByChainByDayItem {
   tokenSymbol: string;
 }
 
-export interface TotalValueLockedByVAnchorDayIntervalItem {
+export interface TotalValueLockedByVAnchorByDayItem {
   vAnchorAddress: string;
   totalValueLocked: number;
 }
@@ -23,14 +23,14 @@ export interface TVLVAnchorsDateRangeItem {
   [epoch: string]: number;
 }
 
-export const GetVAnchorTotalValueLockedByChainDayInterval = async (
+export const GetVAnchorTotalValueLockedByChainByDay = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   date: Date
-): Promise<TotalValueLockedByChainDayIntervalItem> => {
+): Promise<TotalValueLockedByChainByDayItem> => {
   const query = /* GraphQL */ `
     query TotalValueLocked {
-      vanchorTotalValueLockedEveryDays(
+      vanchorTotalValueLockedByDays(
         where: {
           date: "${DateUtil.fromDateToEpoch(date)}",
           vAnchorAddress: "${vAnchorAddress.toLowerCase()}"
@@ -50,7 +50,7 @@ export const GetVAnchorTotalValueLockedByChainDayInterval = async (
     }
   );
 
-  return result.data.vanchorTotalValueLockedEveryDays?.map((item: any) => {
+  return result.data.vanchorTotalValueLockedByDays?.map((item: any) => {
     return {
       totalValueLocked: +item?.totalValueLocked,
       subgraphUrl: subgraphUrl,
@@ -60,34 +60,30 @@ export const GetVAnchorTotalValueLockedByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorTotalValueLockedByChainsDayInterval = async (
+export const GetVAnchorTotalValueLockedByChainsByDay = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<TotalValueLockedByChainDayIntervalItem>> => {
-  const promises: Array<Promise<TotalValueLockedByChainDayIntervalItem>> = [];
+): Promise<Array<TotalValueLockedByChainByDayItem>> => {
+  const promises: Array<Promise<TotalValueLockedByChainByDayItem>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorTotalValueLockedByChainDayInterval(
-        subgraphUrl,
-        vAnchorAddress,
-        date
-      )
+      GetVAnchorTotalValueLockedByChainByDay(subgraphUrl, vAnchorAddress, date)
     );
   }
 
   return await Promise.all(promises);
 };
 
-export const GetVAnchorsTotalValueLockedByChainDayInterval = async (
+export const GetVAnchorsTotalValueLockedByChainByDay = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
   date: Date
-): Promise<Array<TotalValueLockedByVAnchorDayIntervalItem>> => {
+): Promise<Array<TotalValueLockedByVAnchorByDayItem>> => {
   const query = /* GraphQL */ `
     query TotalValueLockedByVAnchor {
-      vanchorTotalValueLockedEveryDays(
+      vanchorTotalValueLockedByDays(
         where: {
           date: "${DateUtil.fromDateToEpoch(date)}",
           vAnchorAddress_in: [
@@ -114,7 +110,7 @@ export const GetVAnchorsTotalValueLockedByChainDayInterval = async (
 
   const totalValueLockedMap: { [vanchorAddress: string]: number } = {};
 
-  result.data.vanchorTotalValueLockedEveryDays?.map((item: any) => {
+  result.data.vanchorTotalValueLockedByDays?.map((item: any) => {
     if (!totalValueLockedMap[item?.vAnchorAddress]) {
       totalValueLockedMap[item?.vAnchorAddress] = 0;
     }
@@ -122,31 +118,30 @@ export const GetVAnchorsTotalValueLockedByChainDayInterval = async (
     totalValueLockedMap[item?.vAnchorAddress] += +item?.totalValueLocked;
   });
 
-  const TotalValueLockedByVAnchorDayIntervalItems: Array<TotalValueLockedByVAnchorDayIntervalItem> =
+  const TotalValueLockedByVAnchorByDayItems: Array<TotalValueLockedByVAnchorByDayItem> =
     [];
 
   for (const key in totalValueLockedMap) {
-    TotalValueLockedByVAnchorDayIntervalItems.push({
+    TotalValueLockedByVAnchorByDayItems.push({
       vAnchorAddress: key,
       totalValueLocked: totalValueLockedMap[key],
     });
   }
 
-  return TotalValueLockedByVAnchorDayIntervalItems;
+  return TotalValueLockedByVAnchorByDayItems;
 };
 
-export const GetVAnchorsTotalValueLockedByChainsDayInterval = async (
+export const GetVAnchorsTotalValueLockedByChainsByDay = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   date: Date
-): Promise<Array<Array<TotalValueLockedByVAnchorDayIntervalItem>>> => {
-  const promises: Array<
-    Promise<Array<TotalValueLockedByVAnchorDayIntervalItem>>
-  > = [];
+): Promise<Array<Array<TotalValueLockedByVAnchorByDayItem>>> => {
+  const promises: Array<Promise<Array<TotalValueLockedByVAnchorByDayItem>>> =
+    [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorsTotalValueLockedByChainDayInterval(
+      GetVAnchorsTotalValueLockedByChainByDay(
         subgraphUrl,
         vanchorAddresses,
         date
@@ -157,15 +152,15 @@ export const GetVAnchorsTotalValueLockedByChainsDayInterval = async (
   return await Promise.all(promises);
 };
 
-export const GetVAnchorTotalValueLockedByChainAndByTokenDayInterval = async (
+export const GetVAnchorTotalValueLockedByChainAndByTokenByDay = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
   date: Date
-): Promise<Array<TotalValueLockedByChainAndByTokenDayIntervalItem>> => {
+): Promise<Array<TotalValueLockedByChainAndByTokenByDayItem>> => {
   const query = /* GraphQL */ `
     query MyQuery {
-      vanchorTotalValueLockedByTokenEveryDays(
+      vanchorTotalValueLockedByTokenByDays(
         where: {
           tokenSymbol: "${tokenSymbol}",
           vAnchorAddress: "${vAnchorAddress.toLowerCase()}",
@@ -186,31 +181,29 @@ export const GetVAnchorTotalValueLockedByChainAndByTokenDayInterval = async (
     }
   );
 
-  return result.data.vanchorTotalValueLockedByTokenEveryDays?.map(
-    (item: any) => {
-      return {
-        totalValueLocked: +item?.totalValueLocked,
-        subgraphUrl: subgraphUrl,
-        date: DateUtil.fromEpochToDate(parseInt(item?.date)),
-        vAnchorAddress: item?.vAnchorAddress,
-      };
-    }
-  );
+  return result.data.vanchorTotalValueLockedByTokenByDays?.map((item: any) => {
+    return {
+      totalValueLocked: +item?.totalValueLocked,
+      subgraphUrl: subgraphUrl,
+      date: DateUtil.fromEpochToDate(parseInt(item?.date)),
+      vAnchorAddress: item?.vAnchorAddress,
+    };
+  });
 };
 
-export const GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval = async (
+export const GetVAnchorTotalValueLockedByChainsAndByTokenByDay = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
   date: Date
-): Promise<Array<Array<TotalValueLockedByChainAndByTokenDayIntervalItem>>> => {
+): Promise<Array<Array<TotalValueLockedByChainAndByTokenByDayItem>>> => {
   const promises: Array<
-    Promise<Array<TotalValueLockedByChainAndByTokenDayIntervalItem>>
+    Promise<Array<TotalValueLockedByChainAndByTokenByDayItem>>
   > = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorTotalValueLockedByChainAndByTokenDayInterval(
+      GetVAnchorTotalValueLockedByChainAndByTokenByDay(
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol,
@@ -231,7 +224,7 @@ export const GetVAnchorsTVLByChainByDateRange = async (
   const dates = getEpochArray(dateStart, numberOfDays);
   const query = /* GraphQL */ `
     query TotalValueLocked {
-      vanchorTotalValueLockedEveryDays(
+      vanchorTotalValueLockedByDays(
         where: {
           date_in: [
             ${dates.map((epochTime) => '"' + epochTime + '"').join(',')}
@@ -265,9 +258,31 @@ export const GetVAnchorsTVLByChainByDateRange = async (
     tvlMapByDate[date.toString()] = 0;
   }
 
-  result.data.vanchorTotalValueLockedEveryDays.forEach((item: any) => {
+  result.data.vanchorTotalValueLockedByDays.forEach((item: any) => {
     tvlMapByDate[+item.date] += +item.totalValueLocked;
   });
 
   return tvlMapByDate;
+};
+
+export const GetVAnchorsTVLByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddresses: Array<string>,
+  dateStart: Date,
+  numberOfDays: number
+): Promise<Array<TVLVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<TVLVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorsTVLByChainByDateRange(
+        subgraphUrl,
+        vanchorAddresses,
+        dateStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
 };

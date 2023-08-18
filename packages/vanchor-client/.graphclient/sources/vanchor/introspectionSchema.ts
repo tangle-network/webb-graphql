@@ -14645,7 +14645,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedEveryDay',
+            value: 'vanchorTotalValueLockedByDay',
           },
           arguments: [
             {
@@ -14720,7 +14720,7 @@ const schemaAST = {
             kind: 'NamedType',
             name: {
               kind: 'Name',
-              value: 'VAnchorTotalValueLockedEveryDay',
+              value: 'VAnchorTotalValueLockedByDay',
             },
           },
           directives: [],
@@ -14729,7 +14729,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedEveryDays',
+            value: 'vanchorTotalValueLockedByDays',
           },
           arguments: [
             {
@@ -14780,7 +14780,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedEveryDay_orderBy',
+                  value: 'VAnchorTotalValueLockedByDay_orderBy',
                 },
               },
               directives: [],
@@ -14810,7 +14810,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedEveryDay_filter',
+                  value: 'VAnchorTotalValueLockedByDay_filter',
                 },
               },
               directives: [],
@@ -14875,7 +14875,7 @@ const schemaAST = {
                   kind: 'NamedType',
                   name: {
                     kind: 'Name',
-                    value: 'VAnchorTotalValueLockedEveryDay',
+                    value: 'VAnchorTotalValueLockedByDay',
                   },
                 },
               },
@@ -14887,7 +14887,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedByTokenEveryDay',
+            value: 'vanchorTotalValueLockedByTokenByDay',
           },
           arguments: [
             {
@@ -14962,7 +14962,7 @@ const schemaAST = {
             kind: 'NamedType',
             name: {
               kind: 'Name',
-              value: 'VAnchorTotalValueLockedByTokenEveryDay',
+              value: 'VAnchorTotalValueLockedByTokenByDay',
             },
           },
           directives: [],
@@ -14971,7 +14971,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedByTokenEveryDays',
+            value: 'vanchorTotalValueLockedByTokenByDays',
           },
           arguments: [
             {
@@ -15022,7 +15022,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedByTokenEveryDay_orderBy',
+                  value: 'VAnchorTotalValueLockedByTokenByDay_orderBy',
                 },
               },
               directives: [],
@@ -15052,7 +15052,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedByTokenEveryDay_filter',
+                  value: 'VAnchorTotalValueLockedByTokenByDay_filter',
                 },
               },
               directives: [],
@@ -15117,7 +15117,7 @@ const schemaAST = {
                   kind: 'NamedType',
                   name: {
                     kind: 'Name',
-                    value: 'VAnchorTotalValueLockedByTokenEveryDay',
+                    value: 'VAnchorTotalValueLockedByTokenByDay',
                   },
                 },
               },
@@ -27085,7 +27085,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedEveryDay',
+            value: 'vanchorTotalValueLockedByDay',
           },
           arguments: [
             {
@@ -27160,7 +27160,7 @@ const schemaAST = {
             kind: 'NamedType',
             name: {
               kind: 'Name',
-              value: 'VAnchorTotalValueLockedEveryDay',
+              value: 'VAnchorTotalValueLockedByDay',
             },
           },
           directives: [],
@@ -27169,7 +27169,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedEveryDays',
+            value: 'vanchorTotalValueLockedByDays',
           },
           arguments: [
             {
@@ -27220,7 +27220,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedEveryDay_orderBy',
+                  value: 'VAnchorTotalValueLockedByDay_orderBy',
                 },
               },
               directives: [],
@@ -27250,7 +27250,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedEveryDay_filter',
+                  value: 'VAnchorTotalValueLockedByDay_filter',
                 },
               },
               directives: [],
@@ -27315,7 +27315,7 @@ const schemaAST = {
                   kind: 'NamedType',
                   name: {
                     kind: 'Name',
-                    value: 'VAnchorTotalValueLockedEveryDay',
+                    value: 'VAnchorTotalValueLockedByDay',
                   },
                 },
               },
@@ -27327,7 +27327,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedByTokenEveryDay',
+            value: 'vanchorTotalValueLockedByTokenByDay',
           },
           arguments: [
             {
@@ -27402,7 +27402,7 @@ const schemaAST = {
             kind: 'NamedType',
             name: {
               kind: 'Name',
-              value: 'VAnchorTotalValueLockedByTokenEveryDay',
+              value: 'VAnchorTotalValueLockedByTokenByDay',
             },
           },
           directives: [],
@@ -27411,7 +27411,7 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'vanchorTotalValueLockedByTokenEveryDays',
+            value: 'vanchorTotalValueLockedByTokenByDays',
           },
           arguments: [
             {
@@ -27462,7 +27462,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedByTokenEveryDay_orderBy',
+                  value: 'VAnchorTotalValueLockedByTokenByDay_orderBy',
                 },
               },
               directives: [],
@@ -27492,7 +27492,7 @@ const schemaAST = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'VAnchorTotalValueLockedByTokenEveryDay_filter',
+                  value: 'VAnchorTotalValueLockedByTokenByDay_filter',
                 },
               },
               directives: [],
@@ -27557,7 +27557,7 @@ const schemaAST = {
                   kind: 'NamedType',
                   name: {
                     kind: 'Name',
-                    value: 'VAnchorTotalValueLockedByTokenEveryDay',
+                    value: 'VAnchorTotalValueLockedByTokenByDay',
                   },
                 },
               },
@@ -50799,6 +50799,939 @@ const schemaAST = {
       kind: 'ObjectTypeDefinition',
       name: {
         kind: 'Name',
+        value: 'VAnchorTotalValueLockedByDay',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorTotalValueLockedByDay_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorTotalValueLockedByDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorTotalValueLockedByDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorTotalValueLockedByDay_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
         value: 'VAnchorTotalValueLockedByToken',
       },
       fields: [
@@ -50899,6 +51832,1467 @@ const schemaAST = {
         },
       ],
       interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorTotalValueLockedByTokenByDay',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorTotalValueLockedByTokenByDay_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorTotalValueLockedByTokenByDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorTotalValueLockedByTokenByDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorTotalValueLockedByTokenByDay_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalValueLocked',
+          },
+          directives: [],
+        },
+      ],
       directives: [],
     },
     {
@@ -52507,1467 +54901,6 @@ const schemaAST = {
           name: {
             kind: 'Name',
             value: 'endInterval',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked',
-          },
-          directives: [],
-        },
-      ],
-      directives: [],
-    },
-    {
-      kind: 'ObjectTypeDefinition',
-      name: {
-        kind: 'Name',
-        value: 'VAnchorTotalValueLockedByTokenEveryDay',
-      },
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'String',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'Bytes',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'Bytes',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'String',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'BigInt',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'BigInt',
-              },
-            },
-          },
-          directives: [],
-        },
-      ],
-      interfaces: [],
-      directives: [],
-    },
-    {
-      kind: 'InputObjectTypeDefinition',
-      name: {
-        kind: 'Name',
-        value: 'VAnchorTotalValueLockedByTokenEveryDay_filter',
-      },
-      fields: [
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'String',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'String',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_contains_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_contains_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_starts_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_starts_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_starts_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_starts_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_ends_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_ends_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_ends_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_ends_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'Bytes',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'Bytes',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_not_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'Bytes',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'Bytes',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress_not_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'String',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'String',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_contains_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not_contains_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_starts_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_starts_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not_starts_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not_starts_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_ends_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_ends_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not_ends_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol_not_ends_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          description: {
-            kind: 'StringValue',
-            value: 'Filter for the block changed event.',
-            block: true,
-          },
-          name: {
-            kind: 'Name',
-            value: '_change_block',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BlockChangedFilter',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'and',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'VAnchorTotalValueLockedByTokenEveryDay_filter',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'or',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'VAnchorTotalValueLockedByTokenEveryDay_filter',
-              },
-            },
-          },
-          directives: [],
-        },
-      ],
-      directives: [],
-    },
-    {
-      kind: 'EnumTypeDefinition',
-      name: {
-        kind: 'Name',
-        value: 'VAnchorTotalValueLockedByTokenEveryDay_orderBy',
-      },
-      values: [
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenAddress',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'tokenSymbol',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date',
           },
           directives: [],
         },
@@ -56256,939 +57189,6 @@ const schemaAST = {
           name: {
             kind: 'Name',
             value: 'endInterval',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked',
-          },
-          directives: [],
-        },
-      ],
-      directives: [],
-    },
-    {
-      kind: 'ObjectTypeDefinition',
-      name: {
-        kind: 'Name',
-        value: 'VAnchorTotalValueLockedEveryDay',
-      },
-      fields: [
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'String',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'Bytes',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'BigInt',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked',
-          },
-          arguments: [],
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'BigInt',
-              },
-            },
-          },
-          directives: [],
-        },
-      ],
-      interfaces: [],
-      directives: [],
-    },
-    {
-      kind: 'InputObjectTypeDefinition',
-      name: {
-        kind: 'Name',
-        value: 'VAnchorTotalValueLockedEveryDay_filter',
-      },
-      fields: [
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'String',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'String',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_contains_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_contains_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_starts_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_starts_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_starts_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_starts_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_ends_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_ends_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_ends_with',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id_not_ends_with_nocase',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'String',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'Bytes',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'Bytes',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress_not_contains',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'Bytes',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_not',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_gt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_lt',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_gte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_lte',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BigInt',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'totalValueLocked_not_in',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NonNullType',
-              type: {
-                kind: 'NamedType',
-                name: {
-                  kind: 'Name',
-                  value: 'BigInt',
-                },
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          description: {
-            kind: 'StringValue',
-            value: 'Filter for the block changed event.',
-            block: true,
-          },
-          name: {
-            kind: 'Name',
-            value: '_change_block',
-          },
-          type: {
-            kind: 'NamedType',
-            name: {
-              kind: 'Name',
-              value: 'BlockChangedFilter',
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'and',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'VAnchorTotalValueLockedEveryDay_filter',
-              },
-            },
-          },
-          directives: [],
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'or',
-          },
-          type: {
-            kind: 'ListType',
-            type: {
-              kind: 'NamedType',
-              name: {
-                kind: 'Name',
-                value: 'VAnchorTotalValueLockedEveryDay_filter',
-              },
-            },
-          },
-          directives: [],
-        },
-      ],
-      directives: [],
-    },
-    {
-      kind: 'EnumTypeDefinition',
-      name: {
-        kind: 'Name',
-        value: 'VAnchorTotalValueLockedEveryDay_orderBy',
-      },
-      values: [
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'id',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'vAnchorAddress',
-          },
-          directives: [],
-        },
-        {
-          kind: 'EnumValueDefinition',
-          name: {
-            kind: 'Name',
-            value: 'date',
           },
           directives: [],
         },

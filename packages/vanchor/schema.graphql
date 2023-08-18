@@ -138,14 +138,14 @@ type VAnchorTotalValueLockedByTokenEvery15Min @entity(immutable: false) {
   totalValueLocked: BigInt! # total value locked in the vAnchor
 }
 
-type VAnchorTotalValueLockedEveryDay @entity(immutable: false) {
+type VAnchorTotalValueLockedByDay @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
   date: BigInt! # timestamp of the date (at 00:00:00)
   totalValueLocked: BigInt! # total value locked in the vAnchor
 }
 
-type VAnchorTotalValueLockedByTokenEveryDay @entity(immutable: false) {
+type VAnchorTotalValueLockedByTokenByDay @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
