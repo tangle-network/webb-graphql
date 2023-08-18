@@ -11,7 +11,7 @@ import {
   recordTVL,
   record15MinsIntervalTVL,
   recordDayIntervalTVL,
-} from '../totalValueLocked';
+} from '../tvl';
 import { recordTotalFees } from '../relayerFees';
 import { recordFeeFor15MinsInterval } from '../relayerFees/15MinsInterval';
 import { getTxnInputDataToDecode, isNativeToken } from '../utils/token';
