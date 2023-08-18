@@ -15,6 +15,7 @@ import {
 import {
   recordDeposit,
   recordDepositLog,
+
   recordDeposit15MinsInterval,
   recordDepositDayInterval,
 } from './deposit';
@@ -26,6 +27,11 @@ import {
 } from './withdrawal';
 import { recordTransferLog } from './transfer';
 import { getTxnInputDataToDecode, isNativeToken } from './utils/token';
+import {
+  recordVolume,
+  record15MinsIntervalVolume,
+  recordDayIntervalVolume,
+} from './volume';
 
 export const handleTransaction = (event: Insertion): void => {
   // Check if the transaction is already handled
@@ -157,6 +163,21 @@ export const handleTransaction = (event: Insertion): void => {
         newShieldedTx.vanchor,
         tokenAddress,
         value,
+        event.block.timestamp
+      );
+
+      // Record Volume
+      recordVolume(newShieldedTx.vanchor, tokenAddress, value.abs());
+      record15MinsIntervalVolume(
+        newShieldedTx.vanchor,
+        tokenAddress,
+        value.abs(),
+        event.block.timestamp
+      );
+      recordDayIntervalVolume(
+        newShieldedTx.vanchor,
+        tokenAddress,
+        value.abs(),
         event.block.timestamp
       );
 
