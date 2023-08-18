@@ -16,25 +16,25 @@ const subgraphUrl = SubgraphUrl.vAnchorAthenaLocal;
 
 async function main() {
   // query for Overview Chips
-  // console.log(
-  //   await GetVAnchorsTotalValueLockedByChains([subgraphUrl], [vAnchorAddress])
-  // );
-  // console.log(await GetVAnchorsVolumeByChains([subgraphUrl], [vAnchorAddress]));
+  console.log(
+    await GetVAnchorsTotalValueLockedByChains([subgraphUrl], [vAnchorAddress])
+  );
+  console.log(await GetVAnchorsVolumeByChains([subgraphUrl], [vAnchorAddress]));
 
   // query for Overview Charts
-  console.log(await GetVAnchorsVolumeByChains15MinsInterval(
-    [subgraphUrl],
-    [vAnchorAddress],
-    DateUtil.fromEpochToDate(
-      DateUtil.fromDateToEpoch(new Date()) - 2 * 24 * 60 * 60
-    ),
-    DateUtil.fromEpochToDate(
-      DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
+  console.log(
+    await GetVAnchorsVolumeByChains15MinsInterval(
+      [subgraphUrl],
+      [vAnchorAddress],
+      DateUtil.fromEpochToDate(
+        DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
+      ),
+      new Date()
     )
-  ));
-  // await runTvlDateRangeQueries();
-  // await runDepositDateRangeQueries();
-  // await runWithdrawalDateRangeQueries();
+  );
+  await runTvlDateRangeQueries();
+  await runDepositDateRangeQueries();
+  await runWithdrawalDateRangeQueries();
 }
 
 main().catch((e) => {

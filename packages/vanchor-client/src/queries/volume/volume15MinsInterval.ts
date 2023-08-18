@@ -119,6 +119,10 @@ export const GetVAnchorsVolumeByChain15MinsInterval = async (
     }
   );
 
+  if (result?.data?.vanchorVolumeEvery15Mins == null) {
+    return [] as Array<VolumeByVAnchor15MinsIntervalItem>;
+  }
+
   const volumeMap: { [vanchorAddress: string]: number } = {};
 
   result.data.vanchorVolumeEvery15Mins?.map((item: any) => {

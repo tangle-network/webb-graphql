@@ -15,7 +15,6 @@ import {
 import {
   recordDeposit,
   recordDepositLog,
-
   recordDeposit15MinsInterval,
   recordDepositDayInterval,
 } from './deposit';
