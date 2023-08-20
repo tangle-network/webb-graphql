@@ -83,6 +83,10 @@ export const GetVAnchorsTotalRelayerFeeByChain = async (
     }
   );
 
+  if (result.data.vanchorTotalRelayerFees == null) {
+    return [] as Array<TotalRelayerFeeByVAnchor>;
+  }
+
   return result.data.vanchorTotalRelayerFees?.map((item: any) => {
     return {
       totalRelayerFee: +item?.fees,

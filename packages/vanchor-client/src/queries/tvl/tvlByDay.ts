@@ -27,7 +27,7 @@ export const GetVAnchorTotalValueLockedByChainByDay = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   date: Date
-): Promise<TotalValueLockedByChainByDayItem> => {
+): Promise<Array<TotalValueLockedByChainByDayItem>> => {
   const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorTotalValueLockedByDays(
@@ -50,6 +50,10 @@ export const GetVAnchorTotalValueLockedByChainByDay = async (
     }
   );
 
+  if (result?.data?.vanchorTotalValueLockedByDays == null) {
+    return [] as Array<TotalValueLockedByChainByDayItem>;
+  }
+
   return result.data.vanchorTotalValueLockedByDays?.map((item: any) => {
     return {
       totalValueLocked: +item?.totalValueLocked,
@@ -64,8 +68,8 @@ export const GetVAnchorTotalValueLockedByChainsByDay = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<TotalValueLockedByChainByDayItem>> => {
-  const promises: Array<Promise<TotalValueLockedByChainByDayItem>> = [];
+): Promise<Array<Array<TotalValueLockedByChainByDayItem>>> => {
+  const promises: Array<Promise<Array<TotalValueLockedByChainByDayItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -107,6 +111,10 @@ export const GetVAnchorsTotalValueLockedByChainByDay = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorTotalValueLockedByDays == null) {
+    return [] as Array<TotalValueLockedByVAnchorByDayItem>;
+  }
 
   const totalValueLockedMap: { [vanchorAddress: string]: number } = {};
 
@@ -181,6 +189,10 @@ export const GetVAnchorTotalValueLockedByChainAndByTokenByDay = async (
     }
   );
 
+  if (result?.data?.vanchorTotalValueLockedByTokenByDays == null) {
+    return [] as Array<TotalValueLockedByChainAndByTokenByDayItem>;
+  }
+
   return result.data.vanchorTotalValueLockedByTokenByDays?.map((item: any) => {
     return {
       totalValueLocked: +item?.totalValueLocked,
@@ -251,6 +263,10 @@ export const GetVAnchorsTVLByChainByDateRange = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorTotalValueLockedByDays == null) {
+    return {} as TVLVAnchorsDateRangeItem;
+  }
 
   const tvlMapByDate: TVLVAnchorsDateRangeItem = {};
 

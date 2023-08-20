@@ -83,6 +83,10 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (
     }
   );
 
+  if (result.data.vanchorTotalWrappingFees == null) {
+    return [] as Array<TotalWrappingFeeByVAnchor>;
+  }
+
   return result.data.vanchorTotalWrappingFees?.map((item: any) => {
     return {
       totalWrappingFee: +item?.fees,
@@ -131,7 +135,7 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
 
   return {
     totalWrappingFee:
-      result.data.vanchorTotalWrappingFeeByTokens &&
+      result?.data?.vanchorTotalWrappingFeeByTokens != null &&
       result.data.vanchorTotalWrappingFeeByTokens.length > 0
         ? +result.data.vanchorTotalWrappingFeeByTokens[0].fees
         : undefined,

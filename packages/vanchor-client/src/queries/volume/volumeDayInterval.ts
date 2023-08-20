@@ -27,7 +27,7 @@ export const GetVAnchorVolumeByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   date: Date
-): Promise<VolumeByChainDayIntervalItem> => {
+): Promise<Array<VolumeByChainDayIntervalItem>> => {
   const query = /* GraphQL */ `
     query Volume {
       vanchorVolumeEveryDays(
@@ -50,6 +50,10 @@ export const GetVAnchorVolumeByChainDayInterval = async (
     }
   );
 
+  if (result?.data?.vanchorVolumeEveryDays == null) {
+    return [] as Array<VolumeByChainDayIntervalItem>;
+  }
+
   return result.data.vanchorVolumeEveryDays?.map((item: any) => {
     return {
       volume: +item?.volume,
@@ -64,8 +68,8 @@ export const GetVAnchorVolumeByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<VolumeByChainDayIntervalItem>> => {
-  const promises: Array<Promise<VolumeByChainDayIntervalItem>> = [];
+): Promise<Array<Array<VolumeByChainDayIntervalItem>>> => {
+  const promises: Array<Promise<Array<VolumeByChainDayIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -107,6 +111,10 @@ export const GetVAnchorsVolumeByChainDayInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorVolumeEveryDays == null) {
+    return [] as Array<VolumeByVAnchorDayIntervalItem>;
+  }
 
   const volumeMap: { [vanchorAddress: string]: number } = {};
 
@@ -175,6 +183,10 @@ export const GetVAnchorVolumeByChainAndByTokenDayInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorVolumeByTokenEveryDays == null) {
+    return [] as Array<VolumeByChainAndByTokenDayIntervalItem>;
+  }
 
   return result.data.vanchorVolumeByTokenEveryDays?.map((item: any) => {
     return {
@@ -246,6 +258,10 @@ export const GetVAnchorsVolumeByChainByDateRange = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorVolumeEveryDays == null) {
+    return {} as VolumeVAnchorsDateRangeItem;
+  }
 
   const tvlMapByDate: VolumeVAnchorsDateRangeItem = {};
 

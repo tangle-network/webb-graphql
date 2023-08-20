@@ -36,7 +36,7 @@ export const GetVAnchorWithdrawalByChain = async (
 
   return {
     withdrawal:
-      result.data.vanchorWithdrawal?.withdrawal == null
+      result?.data?.vanchorWithdrawal?.withdrawal == null
         ? undefined
         : +result.data.vanchorWithdrawal.withdrawal,
     subgraphUrl: subgraphUrl,
@@ -79,6 +79,10 @@ export const GetVAnchorsWithdrawalByChain = async (
       subgraphUrl,
     }
   );
+
+  if (result.data.vanchorWithdrawals == null) {
+    return [] as Array<WithdrawalByVAnchor>;
+  }
 
   return result.data.vanchorWithdrawals?.map((item: any) => {
     return {
@@ -126,7 +130,7 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (
 
   return {
     withdrawal:
-      result.data.vanchorWithdrawalByTokens &&
+      result?.data?.vanchorWithdrawalByTokens != null &&
       result.data.vanchorWithdrawalByTokens.length > 0
         ? +result.data.vanchorWithdrawalByTokens[0].withdrawal
         : undefined,

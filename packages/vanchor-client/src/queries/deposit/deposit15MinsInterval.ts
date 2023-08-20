@@ -25,7 +25,7 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<DepositByChain15MinsIntervalItem> => {
+): Promise<Array<DepositByChain15MinsIntervalItem>> => {
   const query = /* GraphQL */ `
   query Deposit {
   vanchorDepositEvery15Mins(
@@ -50,7 +50,11 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
     }
   );
 
-  return result.data.vanchorDepositEvery15Mins?.map((item: any) => {
+  if (result?.data?.vanchorDepositEvery15Mins == null) {
+    return [] as Array<DepositByChain15MinsIntervalItem>;
+  }
+
+  return result.data.vanchorDepositEvery15Mins.map((item: any) => {
     return {
       deposit: +item?.deposit,
       subgraphUrl: subgraphUrl,
@@ -66,8 +70,8 @@ export const GetVAnchorDepositByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<DepositByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<DepositByChain15MinsIntervalItem>> = [];
+): Promise<Array<Array<DepositByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<DepositByChain15MinsIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -116,9 +120,13 @@ export const GetVAnchorsDepositByChain15MinsInterval = async (
     }
   );
 
+  if (result?.data?.vanchorDepositEvery15Mins) {
+    return [] as Array<DepositByVAnchor15MinsIntervalItem>;
+  }
+
   const depositMap: { [vanchorAddress: string]: number } = {};
 
-  result.data.vanchorDepositEvery15Mins?.map((item: any) => {
+  result.data.vanchorDepositEvery15Mins.map((item: any) => {
     if (!depositMap[item?.vAnchorAddress]) {
       depositMap[item?.vAnchorAddress] = 0;
     }
@@ -190,6 +198,10 @@ export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorDepositByTokenEvery15Mins == null) {
+    return [] as Array<DepositByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.data.vanchorDepositByTokenEvery15Mins?.map((item: any) => {
     return {

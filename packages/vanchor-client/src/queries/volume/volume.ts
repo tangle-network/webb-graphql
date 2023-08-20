@@ -43,7 +43,7 @@ export const GetVAnchorVolumeByChain = async (
 
   return {
     volume:
-      result.data.vanchorVolume?.volume == null
+      result?.data?.vanchorVolume?.volume == null
         ? undefined
         : +result.data.vanchorVolume.volume,
     subgraphUrl: subgraphUrl,
@@ -86,6 +86,10 @@ export const GetVAnchorsVolumeByChain = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorVolumes == null) {
+    return [] as Array<VolumeByVAnchor>;
+  }
 
   return result.data.vanchorVolumes?.map((item: any) => {
     return {
@@ -133,7 +137,7 @@ export const GetVAnchorVolumeByChainAndByToken = async (
 
   return {
     volume:
-      result.data.vanchorVolumeByTokens &&
+      result?.data?.vanchorVolumeByTokens != null &&
       result.data.vanchorVolumeByTokens.length > 0
         ? +result.data.vanchorVolumeByTokens[0].volume
         : undefined,

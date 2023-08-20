@@ -19,25 +19,25 @@ const subgraphUrl = SubgraphUrl.vAnchorAthenaLocal;
 
 async function main() {
   // query for Overview Chips
-  // console.log(
-  //   await GetVAnchorsTotalValueLockedByChains([subgraphUrl], [vAnchorAddress])
-  // );
-  // console.log(await GetVAnchorsVolumeByChains([subgraphUrl], [vAnchorAddress]));
+  console.log(
+    await GetVAnchorsTotalValueLockedByChains([subgraphUrl], [vAnchorAddress])
+  );
+  console.log(await GetVAnchorsVolumeByChains([subgraphUrl], [vAnchorAddress]));
 
-  // // query for Overview Charts
-  // console.log(
-  //   await GetVAnchorsVolumeByChains15MinsInterval(
-  //     [subgraphUrl],
-  //     [vAnchorAddress],
-  //     DateUtil.fromEpochToDate(
-  //       DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
-  //     ),
-  //     DateUtil.fromEpochToDate(DateUtil.fromDateToEpoch(new Date()))
-  //   )
-  // );
-  // await runTvlDateRangeQueries();
-  // await runDepositDateRangeQueries();
-  // await runWithdrawalDateRangeQueries();
+  // query for Overview Charts
+  console.log(
+    await GetVAnchorsVolumeByChains15MinsInterval(
+      [subgraphUrl],
+      [vAnchorAddress],
+      DateUtil.fromEpochToDate(
+        DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
+      ),
+      DateUtil.fromEpochToDate(DateUtil.fromDateToEpoch(new Date()))
+    )
+  );
+  await runTvlDateRangeQueries();
+  await runDepositDateRangeQueries();
+  await runWithdrawalDateRangeQueries();
 
   // query for Key Metric Table
   console.log(

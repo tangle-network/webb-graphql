@@ -25,7 +25,7 @@ export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<RelayerFeeByChain15MinsIntervalItem> => {
+): Promise<Array<RelayerFeeByChain15MinsIntervalItem>> => {
   const query = /* GraphQL */ `
     query RelayerFee {
       vanchorRelayerFeeEvery15Mins(
@@ -50,6 +50,10 @@ export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
     }
   );
 
+  if (result?.data?.vanchorRelayerFeeEvery15Mins == null) {
+    return [] as Array<RelayerFeeByChain15MinsIntervalItem>;
+  }
+
   return result.data.vanchorRelayerFeeEvery15Mins?.map((item: any) => {
     return {
       relayerFee: +item?.fees,
@@ -66,8 +70,9 @@ export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<RelayerFeeByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<RelayerFeeByChain15MinsIntervalItem>> = [];
+): Promise<Array<Array<RelayerFeeByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<RelayerFeeByChain15MinsIntervalItem>>> =
+    [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -117,6 +122,10 @@ export const GetVAnchorsRelayerFeeByChain15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorRelayerFeeEvery15Mins == null) {
+    return [] as Array<RelayerFeeByVAnchor15MinsIntervalItem>;
+  }
 
   const relayerFeeMap: { [vanchorAddress: string]: number } = {};
 
@@ -195,6 +204,10 @@ export const GetVAnchorRelayerFeeByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorRelayerFeeByTokenEvery15Mins == null) {
+    return [] as Array<RelayerFeeByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.data.vanchorRelayerFeeByTokenEvery15Mins?.map((item: any) => {
     return {

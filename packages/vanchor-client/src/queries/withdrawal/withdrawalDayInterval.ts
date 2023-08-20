@@ -27,7 +27,7 @@ export const GetVAnchorWithdrawalByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   date: Date
-): Promise<WithdrawalByChainDayIntervalItem> => {
+): Promise<Array<WithdrawalByChainDayIntervalItem>> => {
   const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorWithdrawalEveryDays(
@@ -50,6 +50,10 @@ export const GetVAnchorWithdrawalByChainDayInterval = async (
     }
   );
 
+  if (result?.data?.vanchorWithdrawalEveryDays == null) {
+    return [] as Array<WithdrawalByChainDayIntervalItem>;
+  }
+
   return result.data.vanchorWithdrawalEveryDays?.map((item: any) => {
     return {
       withdrawal: +item?.withdrawal,
@@ -64,8 +68,8 @@ export const GetVAnchorWithdrawalByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<WithdrawalByChainDayIntervalItem>> => {
-  const promises: Array<Promise<WithdrawalByChainDayIntervalItem>> = [];
+): Promise<Array<Array<WithdrawalByChainDayIntervalItem>>> => {
+  const promises: Array<Promise<Array<WithdrawalByChainDayIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -107,6 +111,10 @@ export const GetVAnchorsWithdrawalByChainDayInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorWithdrawalEveryDays == null) {
+    return [] as Array<WithdrawalByVAnchorDayIntervalItem>;
+  }
 
   const withdrawalMap: { [vanchorAddress: string]: number } = {};
 
@@ -181,6 +189,10 @@ export const GetVAnchorWithdrawalByChainAndByTokenDayInterval = async (
     }
   );
 
+  if (result?.data?.vanchorWithdrawalByTokenEveryDays == null) {
+    return [] as Array<WithdrawalByChainAndByTokenDayIntervalItem>;
+  }
+
   return result.data.vanchorWithdrawalByTokenEveryDays?.map((item: any) => {
     return {
       withdrawal: +item?.withdrawal,
@@ -251,6 +263,10 @@ export const GetVAnchorsWithdrawalByChainByDateRange = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorWithdrawalEveryDays == null) {
+    return {} as WithdrawalVAnchorsDateRangeItem;
+  }
 
   const withdrawalMapByDate: WithdrawalVAnchorsDateRangeItem = {};
 

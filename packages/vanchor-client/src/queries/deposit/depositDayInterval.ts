@@ -27,7 +27,7 @@ export const GetVAnchorDepositByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   date: Date
-): Promise<DepositByChainDayIntervalItem> => {
+): Promise<Array<DepositByChainDayIntervalItem>> => {
   const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorDepositEveryDays(
@@ -50,6 +50,10 @@ export const GetVAnchorDepositByChainDayInterval = async (
     }
   );
 
+  if (result?.data?.vanchorDepositEveryDays == null) {
+    return [] as Array<DepositByChainDayIntervalItem>;
+  }
+
   return result.data.vanchorDepositEveryDays?.map((item: any) => {
     return {
       deposit: +item?.deposit,
@@ -64,8 +68,8 @@ export const GetVAnchorDepositByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<DepositByChainDayIntervalItem>> => {
-  const promises: Array<Promise<DepositByChainDayIntervalItem>> = [];
+): Promise<Array<Array<DepositByChainDayIntervalItem>>> => {
+  const promises: Array<Promise<Array<DepositByChainDayIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -107,6 +111,10 @@ export const GetVAnchorsDepositByChainDayInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorDepositEveryDays == null) {
+    return [] as Array<DepositByVAnchorDayIntervalItem>;
+  }
 
   const depositMap: { [vanchorAddress: string]: number } = {};
 
@@ -175,6 +183,10 @@ export const GetVAnchorDepositByChainAndByTokenDayInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorDepositByTokenEveryDays == null) {
+    return [] as Array<DepositByChainAndByTokenDayIntervalItem>;
+  }
 
   return result.data.vanchorDepositByTokenEveryDays?.map((item: any) => {
     return {
@@ -246,6 +258,10 @@ export const GetVAnchorsDepositByChainByDateRange = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorDepositEveryDays == null) {
+    return {} as DepositVAnchorsDateRangeItem;
+  }
 
   const depositMapByDate: DepositVAnchorsDateRangeItem = {};
 

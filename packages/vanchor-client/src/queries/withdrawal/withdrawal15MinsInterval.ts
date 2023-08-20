@@ -25,7 +25,7 @@ export const GetVAnchorWithdrawalByChain15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<WithdrawalByChain15MinsIntervalItem> => {
+): Promise<Array<WithdrawalByChain15MinsIntervalItem>> => {
   const query = /* GraphQL */ `
   query Withdrawal {
   vanchorWithdrawalEvery15Mins(
@@ -50,6 +50,10 @@ export const GetVAnchorWithdrawalByChain15MinsInterval = async (
     }
   );
 
+  if (result?.data?.vanchorWithdrawalEvery15Mins == null) {
+    return [] as Array<WithdrawalByChain15MinsIntervalItem>;
+  }
+
   return result.data.vanchorWithdrawalEvery15Mins?.map((item: any) => {
     return {
       withdrawal: +item?.withdrawal,
@@ -66,8 +70,9 @@ export const GetVAnchorWithdrawalByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WithdrawalByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<WithdrawalByChain15MinsIntervalItem>> = [];
+): Promise<Array<Array<WithdrawalByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<WithdrawalByChain15MinsIntervalItem>>> =
+    [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -115,6 +120,10 @@ export const GetVAnchorsWithdrawalByChain15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorWithdrawalEvery15Mins == null) {
+    return [] as Array<WithdrawalByVAnchor15MinsIntervalItem>;
+  }
 
   const withdrawalMap: { [vanchorAddress: string]: number } = {};
 
@@ -190,6 +199,10 @@ export const GetVAnchorWithdrawalByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorWithdrawalByTokenEvery15Mins == null) {
+    return [] as Array<WithdrawalByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.data.vanchorWithdrawalByTokenEvery15Mins?.map((item: any) => {
     return {

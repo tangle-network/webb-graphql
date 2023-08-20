@@ -25,7 +25,7 @@ export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<TotalValueLockedByChain15MinsIntervalItem> => {
+): Promise<Array<TotalValueLockedByChain15MinsIntervalItem>> => {
   const query = /* GraphQL */ `
     query TotalValueLocked {
       vanchorTotalValueLockedEvery15Mins(
@@ -51,6 +51,10 @@ export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
     }
   );
 
+  if (result?.data?.vanchorTotalValueLockedEvery15Mins == null) {
+    return [] as Array<TotalValueLockedByChain15MinsIntervalItem>;
+  }
+
   return result.data.vanchorTotalValueLockedEvery15Mins?.map((item: any) => {
     return {
       totalValueLocked: +item?.totalValueLocked,
@@ -67,9 +71,10 @@ export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<TotalValueLockedByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<TotalValueLockedByChain15MinsIntervalItem>> =
-    [];
+): Promise<Array<Array<TotalValueLockedByChain15MinsIntervalItem>>> => {
+  const promises: Array<
+    Promise<Array<TotalValueLockedByChain15MinsIntervalItem>>
+  > = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -119,6 +124,10 @@ export const GetVAnchorsTotalValueLockedByChain15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorTotalValueLockedEvery15Mins == null) {
+    return [] as Array<TotalValueLockedByVAnchor15MinsIntervalItem>;
+  }
 
   const totalValueLockedMap: { [vanchorAddress: string]: number } = {};
 
@@ -198,6 +207,10 @@ export const GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorTotalValueLockedByTokenEvery15Mins == null) {
+    return [] as Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.data.vanchorTotalValueLockedByTokenEvery15Mins?.map(
     (item: any) => {

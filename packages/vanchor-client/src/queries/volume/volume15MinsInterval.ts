@@ -25,7 +25,7 @@ export const GetVAnchorVolumeByChain15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<VolumeByChain15MinsIntervalItem> => {
+): Promise<Array<VolumeByChain15MinsIntervalItem>> => {
   const query = /* GraphQL */ `
     query Volume {
       vanchorVolumeEvery15Mins(
@@ -51,6 +51,10 @@ export const GetVAnchorVolumeByChain15MinsInterval = async (
     }
   );
 
+  if (result?.data?.vanchorVolumeEvery15Mins == null) {
+    return [] as Array<VolumeByChain15MinsIntervalItem>;
+  }
+
   return result.data.vanchorVolumeEvery15Mins?.map((item: any) => {
     return {
       volume: +item?.volume,
@@ -67,8 +71,8 @@ export const GetVAnchorVolumeByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<VolumeByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<VolumeByChain15MinsIntervalItem>> = [];
+): Promise<Array<Array<VolumeByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<VolumeByChain15MinsIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -118,6 +122,10 @@ export const GetVAnchorsVolumeByChain15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorVolumeEvery15Mins == null) {
+    return [] as Array<VolumeByVAnchor15MinsIntervalItem>;
+  }
 
   if (result?.data?.vanchorVolumeEvery15Mins == null) {
     return [] as Array<VolumeByVAnchor15MinsIntervalItem>;
@@ -199,6 +207,10 @@ export const GetVAnchorVolumeByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorVolumeByTokenEvery15Mins == null) {
+    return [] as Array<VolumeByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.data.vanchorVolumeByTokenEvery15Mins?.map((item: any) => {
     return {

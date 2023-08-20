@@ -36,7 +36,7 @@ export const GetVAnchorDepositByChain = async (
 
   return {
     deposit:
-      result.data.vanchorDeposit?.deposit == null
+      result?.data?.vanchorDeposit?.deposit == null
         ? undefined
         : +result.data.vanchorDeposit.deposit,
     subgraphUrl: subgraphUrl,
@@ -79,6 +79,10 @@ export const GetVAnchorsDepositByChain = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorDeposits == null) {
+    return [] as Array<DepositByVAnchor>;
+  }
 
   return result.data.vanchorDeposits?.map((item: any) => {
     return {
@@ -126,7 +130,7 @@ export const GetVAnchorDepositByChainAndByToken = async (
 
   return {
     deposit:
-      result.data.vanchorDepositByTokens &&
+      result?.data?.vanchorDepositByTokens != null &&
       result.data.vanchorDepositByTokens.length > 0
         ? +result.data.vanchorDepositByTokens[0].deposit
         : undefined,

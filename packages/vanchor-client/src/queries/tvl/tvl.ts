@@ -44,7 +44,7 @@ export const GetVAnchorTotalValueLockedByChain = async (
 
   return {
     totalValueLocked:
-      result.data.vanchorTotalValueLocked?.totalValueLocked == null
+      result?.data?.vanchorTotalValueLocked?.totalValueLocked == null
         ? undefined
         : +result.data.vanchorTotalValueLocked.totalValueLocked,
     subgraphUrl: subgraphUrl,
@@ -89,6 +89,10 @@ export const GetVAnchorsTotalValueLockedByChain = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorTotalValueLockeds == null) {
+    return [] as Array<TotalValueLockedByVAnchor>;
+  }
 
   return result.data.vanchorTotalValueLockeds?.map((item: any) => {
     return {
@@ -138,7 +142,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
 
   return {
     totalValueLocked:
-      result.data.vanchorTotalValueLockedByTokens &&
+      result?.data?.vanchorTotalValueLockedByTokens != null &&
       result.data.vanchorTotalValueLockedByTokens.length > 0
         ? +result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked
         : undefined,

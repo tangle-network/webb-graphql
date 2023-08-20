@@ -25,7 +25,7 @@ export const GetVAnchorWrappingFeeByChain15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<WrappingFeeByChain15MinsIntervalItem> => {
+): Promise<Array<WrappingFeeByChain15MinsIntervalItem>> => {
   const query = /* GraphQL */ `
   query WrappingFee {
   vanchorWrappingFeeEvery15Mins(
@@ -50,6 +50,10 @@ export const GetVAnchorWrappingFeeByChain15MinsInterval = async (
     }
   );
 
+  if (result?.data?.vanchorWrappingFeeEvery15Mins == null) {
+    return [] as Array<WrappingFeeByChain15MinsIntervalItem>;
+  }
+
   return result.data.vanchorWrappingFeeEvery15Mins?.map((item: any) => {
     return {
       wrappingFee: +item?.fees,
@@ -66,8 +70,9 @@ export const GetVAnchorWrappingFeeByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WrappingFeeByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<WrappingFeeByChain15MinsIntervalItem>> = [];
+): Promise<Array<Array<WrappingFeeByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<WrappingFeeByChain15MinsIntervalItem>>> =
+    [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -115,6 +120,10 @@ export const GetVAnchorsWrappingFeeByChain15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorWrappingFeeEvery15Mins == null) {
+    return [] as Array<WrappingFeeByVAnchor15MinsIntervalItem>;
+  }
 
   const wrappingFeeMap: { [vanchorAddress: string]: number } = {};
 
@@ -191,6 +200,10 @@ export const GetVAnchorWrappingFeeByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (result?.data?.vanchorWrappingFeeByTokenEvery15Mins == null) {
+    return [] as Array<WrappingFeeByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.data.vanchorWrappingFeeByTokenEvery15Mins?.map((item: any) => {
     return {
