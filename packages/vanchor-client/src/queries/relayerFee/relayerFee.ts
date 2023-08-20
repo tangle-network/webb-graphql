@@ -1,9 +1,9 @@
-import { execute } from '../../.graphclient';
-import { SubgraphUrl } from '../config';
+import { execute } from '../../../.graphclient';
+import { SubgraphUrl } from '../../config';
 
 export interface TotalRelayerFeeByChain {
   subgraphUrl: SubgraphUrl;
-  totalRelayerFee: number;
+  totalRelayerFee: number | undefined;
 }
 
 export interface TotalRelayerFeeByChainAndByToken
@@ -23,8 +23,7 @@ export const GetVAnchorTotalRelayerFeeByChain = async (
   const query = /* GraphQL */ `
     query TotalRelayerFee {
       vanchorTotalRelayerFee(id: "${vAnchorAddress.toLowerCase()}"){
-
-        totalRelayerFee
+        fees
       }
     }
   `;
@@ -37,7 +36,10 @@ export const GetVAnchorTotalRelayerFeeByChain = async (
   );
 
   return {
-    totalRelayerFee: result.data.vanchorTotalRelayerFee?.totalRelayerFee,
+    totalRelayerFee:
+      result.data.vanchorTotalRelayerFee?.fees == null
+        ? undefined
+        : +result.data.vanchorTotalRelayerFee?.fees,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -69,7 +71,7 @@ export const GetVAnchorsTotalRelayerFeeByChain = async (
           .join(',')}]}
       ) {
         id
-        totalRelayerFee
+        fees
       }
     }
   `;
@@ -83,7 +85,7 @@ export const GetVAnchorsTotalRelayerFeeByChain = async (
 
   return result.data.vanchorTotalRelayerFees?.map((item: any) => {
     return {
-      totalRelayerFee: item?.totalRelayerFee,
+      totalRelayerFee: +item?.fees,
       vAnchorAddress: item?.id,
     };
   });
@@ -115,7 +117,7 @@ export const GetVAnchorTotalRelayerFeeByChainAndByToken = async (
         first: 1
         where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
       ) {
-        totalRelayerFee
+        fees
       }
     }
   `;
@@ -131,7 +133,7 @@ export const GetVAnchorTotalRelayerFeeByChainAndByToken = async (
     totalRelayerFee:
       result.data.vanchorTotalRelayerFeeByTokens &&
       result.data.vanchorTotalRelayerFeeByTokens.length > 0
-        ? result.data.vanchorTotalRelayerFeeByTokens[0].totalRelayerFee
+        ? +result.data.vanchorTotalRelayerFeeByTokens[0].fees
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,

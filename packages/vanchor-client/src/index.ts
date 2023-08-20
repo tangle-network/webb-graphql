@@ -91,25 +91,21 @@ import {
   GetVAnchorTotalRelayerFeeByChainAndByToken,
   GetVAnchorsTotalRelayerFeeByChain,
   GetVAnchorsTotalRelayerFeeByChains,
-} from './queries/RelayerFee';
-import {
-  GetVAnchorRelayerFeeByChainHistory,
-  GetVAnchorRelayerFeeByChainAndByTokenHistory,
-  GetVAnchorsRelayerFeeByChainHistory,
-  GetVAnchorsRelayerFeeByChainsHistory,
-} from './queries/RelayerFeeHistory';
+  GetVAnchorRelayerFeeByChain15MinsInterval,
+  GetVAnchorRelayerFeeByChainAndByToken15MinsInterval,
+  GetVAnchorsRelayerFeeByChain15MinsInterval,
+  GetVAnchorsRelayerFeeByChains15MinsInterval,
+} from './queries/relayerFee';
 import {
   GetVAnchorTotalWrappingFeeByChain,
   GetVAnchorTotalWrappingFeeByChainAndByToken,
   GetVAnchorsTotalWrappingFeeByChain,
   GetVAnchorsTotalWrappingFeeByChains,
-} from './queries/WrappingFee';
-import {
-  GetVAnchorWrappingFeeByChainHistory,
-  GetVAnchorWrappingFeeByChainAndByTokenHistory,
-  GetVAnchorsWrappingFeeByChainHistory,
-  GetVAnchorsWrappingFeeByChainsHistory,
-} from './queries/WrappingFeeHistory';
+  GetVAnchorWrappingFeeByChain15MinsInterval,
+  GetVAnchorWrappingFeeByChainAndByToken15MinsInterval,
+  GetVAnchorsWrappingFeeByChain15MinsInterval,
+  GetVAnchorsWrappingFeeByChains15MinsInterval,
+} from './queries/wrappingFee';
 import { SubgraphUrl } from './config';
 
 const vAnchorClient = {
@@ -119,24 +115,20 @@ const vAnchorClient = {
     GetVAnchorTotalRelayerFeeByChainAndByToken,
     GetVAnchorsTotalRelayerFeeByChain,
     GetVAnchorsTotalRelayerFeeByChains,
-  },
-  RelayerFeeHistory: {
-    GetVAnchorRelayerFeeByChainHistory,
-    GetVAnchorRelayerFeeByChainAndByTokenHistory,
-    GetVAnchorsRelayerFeeByChainHistory,
-    GetVAnchorsRelayerFeeByChainsHistory,
+    GetVAnchorRelayerFeeByChain15MinsInterval,
+    GetVAnchorRelayerFeeByChainAndByToken15MinsInterval,
+    GetVAnchorsRelayerFeeByChain15MinsInterval,
+    GetVAnchorsRelayerFeeByChains15MinsInterval,
   },
   WrappingFee: {
     GetVAnchorTotalWrappingFeeByChain,
     GetVAnchorTotalWrappingFeeByChainAndByToken,
     GetVAnchorsTotalWrappingFeeByChain,
     GetVAnchorsTotalWrappingFeeByChains,
-  },
-  WrappingFeeHistory: {
-    GetVAnchorWrappingFeeByChainHistory,
-    GetVAnchorWrappingFeeByChainAndByTokenHistory,
-    GetVAnchorsWrappingFeeByChainHistory,
-    GetVAnchorsWrappingFeeByChainsHistory,
+    GetVAnchorWrappingFeeByChain15MinsInterval,
+    GetVAnchorWrappingFeeByChainAndByToken15MinsInterval,
+    GetVAnchorsWrappingFeeByChain15MinsInterval,
+    GetVAnchorsWrappingFeeByChains15MinsInterval,
   },
   Deposit: {
     GetVAnchorDepositByChain,

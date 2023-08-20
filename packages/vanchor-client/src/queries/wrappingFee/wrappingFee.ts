@@ -1,9 +1,9 @@
-import { execute } from '../../.graphclient';
-import { SubgraphUrl } from '../config';
+import { execute } from '../../../.graphclient';
+import { SubgraphUrl } from '../../config';
 
 export interface TotalWrappingFeeByChain {
   subgraphUrl: SubgraphUrl;
-  totalWrappingFee: number;
+  totalWrappingFee: number | undefined;
 }
 
 export interface TotalWrappingFeeByChainAndByToken
@@ -22,12 +22,11 @@ export const GetVAnchorTotalWrappingFeeByChain = async (
 ): Promise<TotalWrappingFeeByChain> => {
   const query = /* GraphQL */ `
   query TotalWrappingFee {
-  vanchorTotalWrappingFee(id: "${vAnchorAddress.toLowerCase()}"){
-
-    totalWrappingFee
+    vanchorTotalWrappingFee(id: "${vAnchorAddress.toLowerCase()}"){
+      fees
+    }
   }
-}
-`;
+  `;
   const result = await execute(
     query,
     {},
@@ -37,7 +36,10 @@ export const GetVAnchorTotalWrappingFeeByChain = async (
   );
 
   return {
-    totalWrappingFee: result.data.vanchorTotalWrappingFee?.totalWrappingFee,
+    totalWrappingFee:
+      result.data.vanchorTotalWrappingFee?.fees == null
+        ? undefined
+        : +result.data.vanchorTotalWrappingFee?.fees,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -69,7 +71,7 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (
       .join(',')}]}
   ) {
     id
-    totalWrappingFee
+    fees
   }
 }
 `;
@@ -83,7 +85,7 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (
 
   return result.data.vanchorTotalWrappingFees?.map((item: any) => {
     return {
-      totalWrappingFee: item?.totalWrappingFee,
+      totalWrappingFee: +item?.fees,
       vAnchorAddress: item?.id,
     };
   });
@@ -115,7 +117,7 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
     first: 1
     where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
   ) {
-    totalWrappingFee
+    fees
   }
 }
 `;
@@ -131,7 +133,7 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
     totalWrappingFee:
       result.data.vanchorTotalWrappingFeeByTokens &&
       result.data.vanchorTotalWrappingFeeByTokens.length > 0
-        ? result.data.vanchorTotalWrappingFeeByTokens[0].totalWrappingFee
+        ? +result.data.vanchorTotalWrappingFeeByTokens[0].fees
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
