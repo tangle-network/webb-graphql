@@ -262,6 +262,13 @@ export const GetVAnchorsTVLByChainByDateRange = async (
     tvlMapByDate[+item.date] += +item.totalValueLocked;
   });
 
+  // if no tvl update in a day, it will be equal to the previous day
+  for (let i = 1; i < dates.length; i++) {
+    if (tvlMapByDate[dates[i]] === 0) {
+      tvlMapByDate[dates[i]] = tvlMapByDate[dates[i - 1]];
+    }
+  }
+
   return tvlMapByDate;
 };
 
