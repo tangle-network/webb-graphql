@@ -4,7 +4,6 @@ import {
   VAnchorWithdrawalByToken,
   VAnchorWithdrawalLog,
 } from '../../generated/schema';
-import { ERC20 } from '../../generated/VAnchor/erc20';
 import { getTokenSymbol } from '../token';
 
 export function recordWithdrawal(
