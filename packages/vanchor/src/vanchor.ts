@@ -5,7 +5,7 @@ import {
   NewCommitment as NewCommitmentEvent,
   NewNullifier as NewNullifierEvent,
   PublicKey as PublicKeyEvent,
-} from '../generated/vanchor/vanchor';
+} from '../generated/vanchor/VAnchor';
 import {
   EdgeAddition,
   EdgeUpdate,

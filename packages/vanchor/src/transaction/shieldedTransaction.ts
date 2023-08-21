@@ -1,5 +1,5 @@
 import { Address, Bytes, BigInt, ethereum } from '@graphprotocol/graph-ts';
-import { Insertion } from '../../generated/vanchor/vanchor';
+import { Insertion } from '../../generated/vanchor/VAnchor';
 import {
   Encryptions,
   ExternalData,
