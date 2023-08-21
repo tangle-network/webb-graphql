@@ -119,3 +119,6 @@ packages/dkg/node_modules
 packages/dkg/.data
 packages/dkg/dist
 packages/dkg/src/types
+
+# Nix flakes and direnv
+.direnv
