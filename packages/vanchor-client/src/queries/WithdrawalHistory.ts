@@ -1,6 +1,6 @@
-import { execute, getBuiltGraphSDK } from '../../.graphclient';
-import { DateUtil } from '../utils/date';
+import { getBuiltGraphSDK } from '../../.graphclient';
 import { SubgraphUrl } from '../config';
+import { DateUtil } from '../utils/date';
 
 export interface WithdrawalByChainHistoryItem {
   subgraphUrl: SubgraphUrl;
