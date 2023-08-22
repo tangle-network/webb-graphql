@@ -6589,6 +6589,42 @@ const merger = new(BareMerger as any)({
           return printWithCache(GetVAnchorWithdrawalByTokenEvery15MinsDocument);
         },
         location: 'GetVAnchorWithdrawalByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorTotalWrappingFeeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalWrappingFeeDocument);
+        },
+        location: 'GetVAnchorTotalWrappingFeeDocument.graphql'
+      },{
+        document: GetVAnchorsTotalWrappingFeesDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTotalWrappingFeesDocument);
+        },
+        location: 'GetVAnchorsTotalWrappingFeesDocument.graphql'
+      },{
+        document: GetVAnchorTotalWrappingFeeByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalWrappingFeeByTokensDocument);
+        },
+        location: 'GetVAnchorTotalWrappingFeeByTokensDocument.graphql'
+      },{
+        document: GetVAnchorWrappingFeeEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWrappingFeeEvery15MinsDocument);
+        },
+        location: 'GetVAnchorWrappingFeeEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsWrappingFeeEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsWrappingFeeEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsWrappingFeeEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorWrappingFeeByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWrappingFeeByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorWrappingFeeByTokenEvery15MinsDocument.graphql'
       }
     ];
     },
@@ -6892,6 +6928,56 @@ export type GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables = Exact<{
 
 
 export type GetVAnchorWithdrawalByTokenEvery15MinsQuery = { vanchorWithdrawalByTokenEvery15Mins: Array<Pick<VAnchorWithdrawalByTokenEvery15Min, 'withdrawal' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTotalWrappingFeeQueryVariables = Exact<{
+  vAnchorAddress: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorTotalWrappingFeeQuery = { vanchorTotalWrappingFee?: Maybe<Pick<VAnchorTotalWrappingFee, 'fees'>> };
+
+export type GetVAnchorsTotalWrappingFeesQueryVariables = Exact<{
+  vAnchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorsTotalWrappingFeesQuery = { vanchorTotalWrappingFees: Array<Pick<VAnchorTotalWrappingFee, 'id' | 'fees'>> };
+
+export type GetVAnchorTotalWrappingFeeByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTotalWrappingFeeByTokensQuery = { vanchorTotalWrappingFeeByTokens: Array<Pick<VAnchorTotalWrappingFeeByToken, 'fees'>> };
+
+export type GetVAnchorWrappingFeeEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorWrappingFeeEvery15MinsQuery = { vanchorTotalWrappingFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalWrappingFeeByTokenEvery15Min, 'startInterval' | 'fees' | 'vAnchorAddress' | 'endInterval'>> };
+
+export type GetVAnchorsWrappingFeeEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsWrappingFeeEvery15MinsQuery = { vanchorTotalWrappingFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalWrappingFeeByTokenEvery15Min, 'id' | 'startInterval' | 'fees' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+}>;
+
+
+export type GetVAnchorWrappingFeeByTokenEvery15MinsQuery = { vanchorTotalWrappingFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalWrappingFeeByTokenEvery15Min, 'fees' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
 
 export const GetVAnchorDepositByChainDocument = gql`
@@ -7230,6 +7316,74 @@ export const GetVAnchorWithdrawalByTokenEvery15MinsDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorWithdrawalByTokenEvery15MinsQuery, GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables>;
+export const GetVAnchorTotalWrappingFeeDocument = gql`
+    query GetVAnchorTotalWrappingFee($vAnchorAddress: ID!) {
+  vanchorTotalWrappingFee(id: $vAnchorAddress) {
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalWrappingFeeQuery, GetVAnchorTotalWrappingFeeQueryVariables>;
+export const GetVAnchorsTotalWrappingFeesDocument = gql`
+    query GetVAnchorsTotalWrappingFees($vAnchorAddresses: [String!]!) {
+  vanchorTotalWrappingFees(where: {id_in: $vAnchorAddresses}) {
+    id
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTotalWrappingFeesQuery, GetVAnchorsTotalWrappingFeesQueryVariables>;
+export const GetVAnchorTotalWrappingFeeByTokensDocument = gql`
+    query GetVAnchorTotalWrappingFeeByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorTotalWrappingFeeByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalWrappingFeeByTokensQuery, GetVAnchorTotalWrappingFeeByTokensQueryVariables>;
+export const GetVAnchorWrappingFeeEvery15MinsDocument = gql`
+    query GetVAnchorWrappingFeeEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTotalWrappingFeeByTokenEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    fees
+    vAnchorAddress
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWrappingFeeEvery15MinsQuery, GetVAnchorWrappingFeeEvery15MinsQueryVariables>;
+export const GetVAnchorsWrappingFeeEvery15MinsDocument = gql`
+    query GetVAnchorsWrappingFeeEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTotalWrappingFeeByTokenEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    fees
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsWrappingFeeEvery15MinsQuery, GetVAnchorsWrappingFeeEvery15MinsQueryVariables>;
+export const GetVAnchorWrappingFeeByTokenEvery15MinsDocument = gql`
+    query GetVAnchorWrappingFeeByTokenEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
+  vanchorTotalWrappingFeeByTokenEvery15Mins(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp}
+  ) {
+    fees
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWrappingFeeByTokenEvery15MinsQuery, GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables>;
+
+
+
+
+
+
 
 
 
@@ -7361,6 +7515,24 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     GetVAnchorWithdrawalByTokenEvery15Mins(variables: GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorWithdrawalByTokenEvery15MinsQuery> {
       return requester<GetVAnchorWithdrawalByTokenEvery15MinsQuery, GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables>(GetVAnchorWithdrawalByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorWithdrawalByTokenEvery15MinsQuery>;
+    },
+    GetVAnchorTotalWrappingFee(variables: GetVAnchorTotalWrappingFeeQueryVariables, options?: C): Promise<GetVAnchorTotalWrappingFeeQuery> {
+      return requester<GetVAnchorTotalWrappingFeeQuery, GetVAnchorTotalWrappingFeeQueryVariables>(GetVAnchorTotalWrappingFeeDocument, variables, options) as Promise<GetVAnchorTotalWrappingFeeQuery>;
+    },
+    GetVAnchorsTotalWrappingFees(variables: GetVAnchorsTotalWrappingFeesQueryVariables, options?: C): Promise<GetVAnchorsTotalWrappingFeesQuery> {
+      return requester<GetVAnchorsTotalWrappingFeesQuery, GetVAnchorsTotalWrappingFeesQueryVariables>(GetVAnchorsTotalWrappingFeesDocument, variables, options) as Promise<GetVAnchorsTotalWrappingFeesQuery>;
+    },
+    GetVAnchorTotalWrappingFeeByTokens(variables: GetVAnchorTotalWrappingFeeByTokensQueryVariables, options?: C): Promise<GetVAnchorTotalWrappingFeeByTokensQuery> {
+      return requester<GetVAnchorTotalWrappingFeeByTokensQuery, GetVAnchorTotalWrappingFeeByTokensQueryVariables>(GetVAnchorTotalWrappingFeeByTokensDocument, variables, options) as Promise<GetVAnchorTotalWrappingFeeByTokensQuery>;
+    },
+    GetVAnchorWrappingFeeEvery15Mins(variables: GetVAnchorWrappingFeeEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorWrappingFeeEvery15MinsQuery> {
+      return requester<GetVAnchorWrappingFeeEvery15MinsQuery, GetVAnchorWrappingFeeEvery15MinsQueryVariables>(GetVAnchorWrappingFeeEvery15MinsDocument, variables, options) as Promise<GetVAnchorWrappingFeeEvery15MinsQuery>;
+    },
+    GetVAnchorsWrappingFeeEvery15Mins(variables: GetVAnchorsWrappingFeeEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsWrappingFeeEvery15MinsQuery> {
+      return requester<GetVAnchorsWrappingFeeEvery15MinsQuery, GetVAnchorsWrappingFeeEvery15MinsQueryVariables>(GetVAnchorsWrappingFeeEvery15MinsDocument, variables, options) as Promise<GetVAnchorsWrappingFeeEvery15MinsQuery>;
+    },
+    GetVAnchorWrappingFeeByTokenEvery15Mins(variables: GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorWrappingFeeByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorWrappingFeeByTokenEvery15MinsQuery, GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables>(GetVAnchorWrappingFeeByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorWrappingFeeByTokenEvery15MinsQuery>;
     }
   };
 }

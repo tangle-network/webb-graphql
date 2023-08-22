@@ -1,9 +1,9 @@
-import { execute } from '../../.graphclient';
+import { getBuiltGraphSDK } from '../../.graphclient';
 import { SubgraphUrl } from '../config';
 
 export interface TotalWrappingFeeByChain {
   subgraphUrl: SubgraphUrl;
-  totalWrappingFee: number;
+  totalWrappingFee: bigint | null;
 }
 
 export interface TotalWrappingFeeByChainAndByToken
@@ -13,31 +13,28 @@ export interface TotalWrappingFeeByChainAndByToken
 
 export interface TotalWrappingFeeByVAnchor {
   vAnchorAddress: string;
-  totalWrappingFee: number;
+  totalWrappingFee: bigint | null;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorTotalWrappingFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<TotalWrappingFeeByChain> => {
-  const query = /* GraphQL */ `
-  query TotalWrappingFee {
-  vanchorTotalWrappingFee(id: "${vAnchorAddress.toLowerCase()}"){
-
-    totalWrappingFee
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorTotalWrappingFee(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
   return {
-    totalWrappingFee: result.data.vanchorTotalWrappingFee?.totalWrappingFee,
+    totalWrappingFee: result.vanchorTotalWrappingFee
+      ? BigInt(result.vanchorTotalWrappingFee.fees)
+      : null,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -61,29 +58,20 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<TotalWrappingFeeByVAnchor>> => {
-  const query = /* GraphQL */ `
-  query TotalWrappingFeeByVAnchor {
-  vanchorTotalWrappingFees(
-    where: {id_in: [${vanchorAddresses
-      .map((address) => '"' + address.toLowerCase() + '"')
-      .join(',')}]}
-  ) {
-    id
-    totalWrappingFee
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsTotalWrappingFees(
+    {
+      vAnchorAddresses: vanchorAddresses.map((vanchorAddress) =>
+        vanchorAddress.toLowerCase()
+      ),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorTotalWrappingFees?.map((item: any) => {
+  return result.vanchorTotalWrappingFees.map((item) => {
     return {
-      totalWrappingFee: item?.totalWrappingFee,
+      totalWrappingFee: item.fees,
       vAnchorAddress: item?.id,
     };
   });
@@ -109,19 +97,11 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<TotalWrappingFeeByChainAndByToken> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorTotalWrappingFeeByTokens(
-    first: 1
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    totalWrappingFee
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorTotalWrappingFeeByTokens(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      tokenSymbol: tokenSymbol.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
@@ -129,9 +109,9 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
 
   return {
     totalWrappingFee:
-      result.data.vanchorTotalWrappingFeeByTokens &&
-      result.data.vanchorTotalWrappingFeeByTokens.length > 0
-        ? result.data.vanchorTotalWrappingFeeByTokens[0].totalWrappingFee
+      result.vanchorTotalWrappingFeeByTokens &&
+      result.vanchorTotalWrappingFeeByTokens.length > 0
+        ? result.vanchorTotalWrappingFeeByTokens[0].fees
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
