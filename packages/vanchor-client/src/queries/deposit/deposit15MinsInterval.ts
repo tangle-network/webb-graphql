@@ -1,10 +1,10 @@
-import { execute } from '../../../.graphclient';
-import { DateUtil } from '../../utils/date';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
+import { DateUtil } from '../../utils/date';
 
 export interface DepositByChain15MinsIntervalItem {
   subgraphUrl: SubgraphUrl;
-  deposit: number;
+  deposit: bigint;
   startInterval: Date;
   endInterval: Date;
   vAnchorAddress: string;
@@ -17,8 +17,10 @@ export interface DepositByChainAndByToken15MinsIntervalItem
 
 export interface DepositByVAnchor15MinsIntervalItem {
   vAnchorAddress: string;
-  deposit: number;
+  deposit: bigint;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorDepositByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
@@ -26,39 +28,26 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<DepositByChain15MinsIntervalItem> => {
-  const query = /* GraphQL */ `
-  query Deposit {
-  vanchorDepositEvery15Mins(
-    where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    startInterval
-    deposit
-    vAnchorAddress
-    endInterval
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorDepositEvery15Mins(
+    {
+      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorDepositEvery15Mins?.map((item: any) => {
+  return result.vanchorDepositEvery15Mins?.map((item) => {
     return {
-      deposit: +item?.deposit,
+      deposit: BigInt(item.deposit),
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      vAnchorAddress: String(item.vAnchorAddress),
     };
-  });
+  })?.[0];
 };
 
 export const GetVAnchorDepositByChains15MinsInterval = async (
@@ -89,41 +78,27 @@ export const GetVAnchorsDepositByChain15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<DepositByVAnchor15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-  query DepositByVAnchor {
-  vanchorDepositEvery15Mins(
-    where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress_in: [${vanchorAddresses
-    .map((address) => '"' + address.toLowerCase() + '"')
-    .join(',')}]}
-  ) {
-    id
-    startInterval
-    deposit
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsDepositEvery15Mins(
+    {
+      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  const depositMap: { [vanchorAddress: string]: number } = {};
+  const depositMap: { [vanchorAddress: string]: bigint } = {};
 
-  result.data.vanchorDepositEvery15Mins?.map((item: any) => {
-    if (!depositMap[item?.vAnchorAddress]) {
-      depositMap[item?.vAnchorAddress] = 0;
+  result.vanchorDepositEvery15Mins?.map((item) => {
+    const vAnchorAddr = String(item.vAnchorAddress);
+
+    if (!depositMap[vAnchorAddr]) {
+      depositMap[vAnchorAddr] = BigInt(0);
     }
 
-    depositMap[item?.vAnchorAddress] += +item?.deposit;
+    depositMap[vAnchorAddr] += BigInt(item.deposit);
   });
 
   const depositByVAnchor15MinsIntervalItems: Array<DepositByVAnchor15MinsIntervalItem> =
@@ -169,35 +144,26 @@ export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<DepositByChainAndByToken15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorDepositByTokenEvery15Mins(
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(
-    endTimestamp
-  )}", startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}"}
-  ) {
-    deposit,
-    startInterval,
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorDepositByTokenEvery15Mins(
+    {
+      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      tokenSymbol,
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorDepositByTokenEvery15Mins?.map((item: any) => {
+  return result.vanchorDepositByTokenEvery15Mins.map((item) => {
     return {
-      deposit: +item?.deposit,
+      deposit: BigInt(item.deposit),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      tokenSymbol,
+      vAnchorAddress: String(item.vAnchorAddress),
     };
   });
 };

@@ -1,53 +1,29 @@
-import { execute } from '../../../.graphclient';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
 
-export interface DepositByChain {
-  subgraphUrl: SubgraphUrl;
-  deposit: number | undefined;
-}
-
-export interface DepositByChainAndByToken extends DepositByChain {
-  tokenSymbol: string;
-}
-
-export interface DepositByVAnchor {
-  vAnchorAddress: string;
-  deposit: number | undefined;
-}
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorDepositByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
-): Promise<DepositByChain> => {
-  const query = /* GraphQL */ `
-    query Deposit {
-      vanchorDeposit(id: "${vAnchorAddress.toLowerCase()}") {
-        deposit
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
-    {
-      subgraphUrl,
-    }
+): Promise<bigint | null> => {
+  const result = await sdk.GetVAnchorDepositByChain(
+    { id: vAnchorAddress.toLowerCase() },
+    { subgraphUrl }
   );
 
-  return {
-    deposit:
-      result.data.vanchorDeposit?.deposit == null
-        ? undefined
-        : +result.data.vanchorDeposit.deposit,
-    subgraphUrl: subgraphUrl,
-  };
+  if (!result.vanchorDeposit?.deposit) {
+    return null;
+  }
+
+  return BigInt(result.vanchorDeposit.deposit);
 };
 
 export const GetVAnchorDepositByChains = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
-): Promise<Array<DepositByChain>> => {
-  const promises: Array<Promise<DepositByChain>> = [];
+): Promise<Array<bigint | null>> => {
+  const promises: Array<Promise<bigint | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(GetVAnchorDepositByChain(subgraphUrl, vAnchorAddress));
@@ -59,40 +35,26 @@ export const GetVAnchorDepositByChains = async (
 export const GetVAnchorsDepositByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
-): Promise<Array<DepositByVAnchor>> => {
-  const query = /* GraphQL */ `
-  query DepositByVAnchor {
-  vanchorDeposits(
-    where: {id_in: [${vanchorAddresses
-      .map((address) => '"' + address.toLowerCase() + '"')
-      .join(',')}]}
-  ) {
-    id
-    deposit
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+): Promise<Array<bigint | null>> => {
+  const result = await sdk.GetVAnchorsDepositByChain(
+    {
+      vanchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorDeposits?.map((item: any) => {
-    return {
-      deposit: +item.deposit,
-      vAnchorAddress: item?.id,
-    };
-  });
+  return result.vanchorDeposits.map((item) =>
+    item.deposit ? BigInt(item.deposit) : null
+  );
 };
 
 export const GetVAnchorsDepositByChains = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
-): Promise<Array<Array<DepositByVAnchor>>> => {
-  const promises: Array<Promise<Array<DepositByVAnchor>>> = [];
+): Promise<Array<Array<bigint | null>>> => {
+  const promises: Array<Promise<Array<bigint | null>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(GetVAnchorsDepositByChain(subgraphUrl, vanchorAddresses));
@@ -105,42 +67,33 @@ export const GetVAnchorDepositByChainAndByToken = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string
-): Promise<DepositByChainAndByToken> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorDepositByTokens(
-    first: 1
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    deposit
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+): Promise<bigint | null> => {
+  const result = await sdk.GetVAnchorDepositByTokens(
+    {
+      tokenSymbol,
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return {
-    deposit:
-      result.data.vanchorDepositByTokens &&
-      result.data.vanchorDepositByTokens.length > 0
-        ? +result.data.vanchorDepositByTokens[0].deposit
-        : undefined,
-    subgraphUrl: subgraphUrl,
-    tokenSymbol: tokenSymbol,
-  };
+  if (
+    !result.vanchorDepositByTokens.length ||
+    !result.vanchorDepositByTokens[0].deposit
+  ) {
+    return null;
+  }
+
+  return BigInt(result.vanchorDepositByTokens[0].deposit);
 };
 
 export const GetVAnchorDepositByChainsAndByToken = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
-): Promise<Array<DepositByChainAndByToken>> => {
-  const promises: Array<Promise<DepositByChainAndByToken>> = [];
+): Promise<Array<bigint | null>> => {
+  const promises: Array<Promise<bigint | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(

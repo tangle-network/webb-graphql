@@ -1871,6 +1871,12 @@ enum Insertion_orderBy {
   transactionHash
 }
 
+"""
+8 bytes signed integer
+
+"""
+scalar Int8
+
 type NewCommitment {
   id: Bytes!
   commitment: BigInt!

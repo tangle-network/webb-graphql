@@ -1,5 +1,8 @@
 // @ts-nocheck
 import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { gql } from '@graphql-mesh/utils';
+
 import type { GetMeshOptions } from '@graphql-mesh/runtime';
 import type { YamlConfig } from '@graphql-mesh/types';
 import { PubSub } from '@graphql-mesh/utils';
@@ -12,6 +15,7 @@ import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
 import GraphqlHandler from "@graphql-mesh/graphql"
 import { parse } from 'graphql';
 import BareMerger from "@graphql-mesh/merger-bare";
+import { printWithCache } from '@graphql-mesh/utils';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
 import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
@@ -38,6 +42,7 @@ export type Scalars = {
   BigDecimal: any;
   BigInt: any;
   Bytes: any;
+  Int8: any;
 };
 
 export type Query = {
@@ -5431,6 +5436,7 @@ export type ResolversTypes = ResolversObject<{
   Insertion_filter: Insertion_filter;
   Insertion_orderBy: Insertion_orderBy;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Int8: ResolverTypeWrapper<Scalars['Int8']>;
   NewCommitment: ResolverTypeWrapper<NewCommitment>;
   NewCommitment_filter: NewCommitment_filter;
   NewCommitment_orderBy: NewCommitment_orderBy;
@@ -5566,6 +5572,7 @@ export type ResolversParentTypes = ResolversObject<{
   Insertion: Insertion;
   Insertion_filter: Insertion_filter;
   Int: Scalars['Int'];
+  Int8: Scalars['Int8'];
   NewCommitment: NewCommitment;
   NewCommitment_filter: NewCommitment_filter;
   NewNullifier: NewNullifier;
@@ -5884,6 +5891,10 @@ export type InsertionResolvers<ContextType = MeshContext & { subgraphUrl: string
   transactionHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
+
+export interface Int8ScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Int8'], any> {
+  name: 'Int8';
+}
 
 export type NewCommitmentResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['NewCommitment'] = ResolversParentTypes['NewCommitment']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6259,6 +6270,7 @@ export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> = Res
   Encryptions?: EncryptionsResolvers<ContextType>;
   ExternalData?: ExternalDataResolvers<ContextType>;
   Insertion?: InsertionResolvers<ContextType>;
+  Int8?: GraphQLScalarType;
   NewCommitment?: NewCommitmentResolvers<ContextType>;
   NewNullifier?: NewNullifierResolvers<ContextType>;
   PublicInputs?: PublicInputsResolvers<ContextType>;
@@ -6348,7 +6360,7 @@ const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
 const vanchorTransforms = [];
 const vanchorHandler = new GraphqlHandler({
               name: "vanchor",
-              config: {"endpoint":"{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorOrbitAthena}"},
+              config: {"endpoint":"{context.subgraphUrl:https://thegraph-backend.webb.tools/subgraphs/name/VAnchorOrbitAthena}"},
               baseDir,
               cache,
               pubsub,
@@ -6385,7 +6397,67 @@ const merger = new(BareMerger as any)({
     additionalEnvelopPlugins,
     get documents() {
       return [
-      
+      {
+        document: GetVAnchorDepositByChainDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositByChainDocument);
+        },
+        location: 'GetVAnchorDepositByChainDocument.graphql'
+      },{
+        document: GetVAnchorsDepositByChainDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsDepositByChainDocument);
+        },
+        location: 'GetVAnchorsDepositByChainDocument.graphql'
+      },{
+        document: GetVAnchorDepositByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositByTokensDocument);
+        },
+        location: 'GetVAnchorDepositByTokensDocument.graphql'
+      },{
+        document: GetVAnchorDepositEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositEvery15MinsDocument);
+        },
+        location: 'GetVAnchorDepositEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsDepositEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsDepositEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsDepositEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorDepositByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorDepositByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorDepositEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositEveryDaysDocument);
+        },
+        location: 'GetVAnchorDepositEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorsDepositEveryDayDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsDepositEveryDayDocument);
+        },
+        location: 'GetVAnchorsDepositEveryDayDocument.graphql'
+      },{
+        document: GetVanchorDepositByTokenEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVanchorDepositByTokenEveryDaysDocument);
+        },
+        location: 'GetVanchorDepositByTokenEveryDaysDocument.graphql'
+      },{
+        document: GetVanchorsDepositByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVanchorsDepositByDateRangeDocument);
+        },
+        location: 'GetVanchorsDepositByDateRangeDocument.graphql'
+      }
     ];
     },
     fetchFn,
@@ -6419,3 +6491,242 @@ export function getBuiltGraphClient(): Promise<MeshInstance> {
 export const execute: ExecuteMeshFn = (...args) => getBuiltGraphClient().then(({ execute }) => execute(...args));
 
 export const subscribe: SubscribeMeshFn = (...args) => getBuiltGraphClient().then(({ subscribe }) => subscribe(...args));
+export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(globalContext?: TGlobalContext) {
+  const sdkRequester$ = getBuiltGraphClient().then(({ sdkRequesterFactory }) => sdkRequesterFactory(globalContext));
+  return getSdk<TOperationContext, TGlobalContext>((...args) => sdkRequester$.then(sdkRequester => sdkRequester(...args)));
+}
+export type GetVAnchorDepositByChainQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorDepositByChainQuery = { vanchorDeposit?: Maybe<Pick<VAnchorDeposit, 'deposit'>> };
+
+export type GetVAnchorsDepositByChainQueryVariables = Exact<{
+  vanchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorsDepositByChainQuery = { vanchorDeposits: Array<Pick<VAnchorDeposit, 'id' | 'deposit'>> };
+
+export type GetVAnchorDepositByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorDepositByTokensQuery = { vanchorDepositByTokens: Array<Pick<VAnchorDepositByToken, 'deposit'>> };
+
+export type GetVAnchorDepositEvery15MinsQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorDepositEvery15MinsQuery = { vanchorDepositEvery15Mins: Array<Pick<VAnchorDepositEvery15Min, 'startInterval' | 'endInterval' | 'deposit' | 'vAnchorAddress'>> };
+
+export type GetVAnchorsDepositEvery15MinsQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsDepositEvery15MinsQuery = { vanchorDepositEvery15Mins: Array<Pick<VAnchorDepositEvery15Min, 'id' | 'startInterval' | 'deposit' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorDepositByTokenEvery15MinsQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+}>;
+
+
+export type GetVAnchorDepositByTokenEvery15MinsQuery = { vanchorDepositByTokenEvery15Mins: Array<Pick<VAnchorDepositByTokenEvery15Min, 'deposit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorDepositEveryDaysQueryVariables = Exact<{
+  date: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorDepositEveryDaysQuery = { vanchorDepositEveryDays: Array<Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVAnchorsDepositEveryDayQueryVariables = Exact<{
+  date: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsDepositEveryDayQuery = { vanchorDepositEveryDays: Array<Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVanchorDepositByTokenEveryDaysQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  date: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVanchorDepositByTokenEveryDaysQuery = { vanchorDepositByTokenEveryDays: Array<Pick<VAnchorDepositByTokenEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVanchorsDepositByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVanchorsDepositByDateRangeQuery = { vanchorDepositEveryDays: Array<Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+
+export const GetVAnchorDepositByChainDocument = gql`
+    query GetVAnchorDepositByChain($id: ID!) {
+  vanchorDeposit(id: $id) {
+    deposit
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositByChainQuery, GetVAnchorDepositByChainQueryVariables>;
+export const GetVAnchorsDepositByChainDocument = gql`
+    query GetVAnchorsDepositByChain($vanchorAddresses: [String!]!) {
+  vanchorDeposits(where: {id_in: $vanchorAddresses}) {
+    id
+    deposit
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsDepositByChainQuery, GetVAnchorsDepositByChainQueryVariables>;
+export const GetVAnchorDepositByTokensDocument = gql`
+    query GetVAnchorDepositByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorDepositByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    deposit
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositByTokensQuery, GetVAnchorDepositByTokensQueryVariables>;
+export const GetVAnchorDepositEvery15MinsDocument = gql`
+    query GetVAnchorDepositEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorDepositEvery15Mins(
+    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    endInterval
+    deposit
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositEvery15MinsQuery, GetVAnchorDepositEvery15MinsQueryVariables>;
+export const GetVAnchorsDepositEvery15MinsDocument = gql`
+    query GetVAnchorsDepositEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorDepositEvery15Mins(
+    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    deposit
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsDepositEvery15MinsQuery, GetVAnchorsDepositEvery15MinsQueryVariables>;
+export const GetVAnchorDepositByTokenEvery15MinsDocument = gql`
+    query GetVAnchorDepositByTokenEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
+  vanchorDepositByTokenEvery15Mins(
+    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
+  ) {
+    deposit
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositByTokenEvery15MinsQuery, GetVAnchorDepositByTokenEvery15MinsQueryVariables>;
+export const GetVAnchorDepositEveryDaysDocument = gql`
+    query GetVAnchorDepositEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorDepositEveryDays(where: {date: $date, vAnchorAddress: $vAnchorAddress}) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositEveryDaysQuery, GetVAnchorDepositEveryDaysQueryVariables>;
+export const GetVAnchorsDepositEveryDayDocument = gql`
+    query GetVAnchorsDepositEveryDay($date: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorDepositEveryDays(
+    where: {date: $date, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsDepositEveryDayQuery, GetVAnchorsDepositEveryDayQueryVariables>;
+export const GetVanchorDepositByTokenEveryDaysDocument = gql`
+    query GetVanchorDepositByTokenEveryDays($tokenSymbol: String!, $date: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorDepositByTokenEveryDays(
+    where: {tokenSymbol: $tokenSymbol, date: $date, vAnchorAddress: $vAnchorAddress}
+  ) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVanchorDepositByTokenEveryDaysQuery, GetVanchorDepositByTokenEveryDaysQueryVariables>;
+export const GetVanchorsDepositByDateRangeDocument = gql`
+    query GetVanchorsDepositByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorDepositEveryDays(
+    where: {date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVanchorsDepositByDateRangeQuery, GetVanchorsDepositByDateRangeQueryVariables>;
+
+
+
+
+
+
+
+
+
+
+
+export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
+export function getSdk<C, E>(requester: Requester<C, E>) {
+  return {
+    GetVAnchorDepositByChain(variables: GetVAnchorDepositByChainQueryVariables, options?: C): Promise<GetVAnchorDepositByChainQuery> {
+      return requester<GetVAnchorDepositByChainQuery, GetVAnchorDepositByChainQueryVariables>(GetVAnchorDepositByChainDocument, variables, options) as Promise<GetVAnchorDepositByChainQuery>;
+    },
+    GetVAnchorsDepositByChain(variables: GetVAnchorsDepositByChainQueryVariables, options?: C): Promise<GetVAnchorsDepositByChainQuery> {
+      return requester<GetVAnchorsDepositByChainQuery, GetVAnchorsDepositByChainQueryVariables>(GetVAnchorsDepositByChainDocument, variables, options) as Promise<GetVAnchorsDepositByChainQuery>;
+    },
+    GetVAnchorDepositByTokens(variables: GetVAnchorDepositByTokensQueryVariables, options?: C): Promise<GetVAnchorDepositByTokensQuery> {
+      return requester<GetVAnchorDepositByTokensQuery, GetVAnchorDepositByTokensQueryVariables>(GetVAnchorDepositByTokensDocument, variables, options) as Promise<GetVAnchorDepositByTokensQuery>;
+    },
+    GetVAnchorDepositEvery15Mins(variables: GetVAnchorDepositEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorDepositEvery15MinsQuery> {
+      return requester<GetVAnchorDepositEvery15MinsQuery, GetVAnchorDepositEvery15MinsQueryVariables>(GetVAnchorDepositEvery15MinsDocument, variables, options) as Promise<GetVAnchorDepositEvery15MinsQuery>;
+    },
+    GetVAnchorsDepositEvery15Mins(variables: GetVAnchorsDepositEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsDepositEvery15MinsQuery> {
+      return requester<GetVAnchorsDepositEvery15MinsQuery, GetVAnchorsDepositEvery15MinsQueryVariables>(GetVAnchorsDepositEvery15MinsDocument, variables, options) as Promise<GetVAnchorsDepositEvery15MinsQuery>;
+    },
+    GetVAnchorDepositByTokenEvery15Mins(variables: GetVAnchorDepositByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorDepositByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorDepositByTokenEvery15MinsQuery, GetVAnchorDepositByTokenEvery15MinsQueryVariables>(GetVAnchorDepositByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorDepositByTokenEvery15MinsQuery>;
+    },
+    GetVAnchorDepositEveryDays(variables: GetVAnchorDepositEveryDaysQueryVariables, options?: C): Promise<GetVAnchorDepositEveryDaysQuery> {
+      return requester<GetVAnchorDepositEveryDaysQuery, GetVAnchorDepositEveryDaysQueryVariables>(GetVAnchorDepositEveryDaysDocument, variables, options) as Promise<GetVAnchorDepositEveryDaysQuery>;
+    },
+    GetVAnchorsDepositEveryDay(variables: GetVAnchorsDepositEveryDayQueryVariables, options?: C): Promise<GetVAnchorsDepositEveryDayQuery> {
+      return requester<GetVAnchorsDepositEveryDayQuery, GetVAnchorsDepositEveryDayQueryVariables>(GetVAnchorsDepositEveryDayDocument, variables, options) as Promise<GetVAnchorsDepositEveryDayQuery>;
+    },
+    GetVanchorDepositByTokenEveryDays(variables: GetVanchorDepositByTokenEveryDaysQueryVariables, options?: C): Promise<GetVanchorDepositByTokenEveryDaysQuery> {
+      return requester<GetVanchorDepositByTokenEveryDaysQuery, GetVanchorDepositByTokenEveryDaysQueryVariables>(GetVanchorDepositByTokenEveryDaysDocument, variables, options) as Promise<GetVanchorDepositByTokenEveryDaysQuery>;
+    },
+    GetVanchorsDepositByDateRange(variables: GetVanchorsDepositByDateRangeQueryVariables, options?: C): Promise<GetVanchorsDepositByDateRangeQuery> {
+      return requester<GetVanchorsDepositByDateRangeQuery, GetVanchorsDepositByDateRangeQueryVariables>(GetVanchorsDepositByDateRangeDocument, variables, options) as Promise<GetVanchorsDepositByDateRangeQuery>;
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;
