@@ -2,7 +2,7 @@ sources:
   - name: vanchor
     handler:
       graphql:
-        endpoint: '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}'
+        endpoint: '{context.subgraphUrl:https://thegraph-backend.webb.tools/subgraphs/name/VAnchorOrbitAthena}'
 
 additionalTypeDefs: |
   extend type ShieldedTransaction {
@@ -14,3 +14,6 @@ additionalResolvers:
 
 codegen:
   contextType: 'MeshContext & { subgraphUrl: string }'
+
+documents:
+  - ./src/**/*.graphql

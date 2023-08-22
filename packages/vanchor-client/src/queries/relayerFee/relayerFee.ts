@@ -1,9 +1,9 @@
-import { execute } from '../../../.graphclient';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
 
 export interface TotalRelayerFeeByChain {
   subgraphUrl: SubgraphUrl;
-  totalRelayerFee: number | undefined;
+  totalRelayerFee: bigint | null;
 }
 
 export interface TotalRelayerFeeByChainAndByToken
@@ -13,23 +13,19 @@ export interface TotalRelayerFeeByChainAndByToken
 
 export interface TotalRelayerFeeByVAnchor {
   vAnchorAddress: string;
-  totalRelayerFee: number;
+  totalRelayerFee: bigint | null;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorTotalRelayerFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<TotalRelayerFeeByChain> => {
-  const query = /* GraphQL */ `
-    query TotalRelayerFee {
-      vanchorTotalRelayerFee(id: "${vAnchorAddress.toLowerCase()}"){
-        fees
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorTotalRelayerFee(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
@@ -37,9 +33,9 @@ export const GetVAnchorTotalRelayerFeeByChain = async (
 
   return {
     totalRelayerFee:
-      result.data.vanchorTotalRelayerFee?.fees == null
-        ? undefined
-        : +result.data.vanchorTotalRelayerFee?.fees,
+      result.vanchorTotalRelayerFee == null
+        ? null
+        : BigInt(result.vanchorTotalRelayerFee.fees),
     subgraphUrl: subgraphUrl,
   };
 };
@@ -63,34 +59,19 @@ export const GetVAnchorsTotalRelayerFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<TotalRelayerFeeByVAnchor>> => {
-  const query = /* GraphQL */ `
-    query TotalRelayerFeeByVAnchor {
-      vanchorTotalRelayerFees(
-        where: {id_in: [${vanchorAddresses
-          .map((address) => '"' + address.toLowerCase() + '"')
-          .join(',')}]}
-      ) {
-        id
-        fees
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsTotalRelayerFees(
+    {
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result.data.vanchorTotalRelayerFees == null) {
-    return [] as Array<TotalRelayerFeeByVAnchor>;
-  }
-
-  return result.data.vanchorTotalRelayerFees?.map((item: any) => {
+  return result.vanchorTotalRelayerFees.map((item) => {
     return {
-      totalRelayerFee: +item?.fees,
-      vAnchorAddress: item?.id,
+      totalRelayerFee: item.fees,
+      vAnchorAddress: item.id,
     };
   });
 };
@@ -115,19 +96,11 @@ export const GetVAnchorTotalRelayerFeeByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<TotalRelayerFeeByChainAndByToken> => {
-  const query = /* GraphQL */ `
-    query MyQuery {
-      vanchorTotalRelayerFeeByTokens(
-        first: 1
-        where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-      ) {
-        fees
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorTotalRelayerFeeByTokens(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      tokenSymbol: tokenSymbol,
+    },
     {
       subgraphUrl,
     }
@@ -135,9 +108,9 @@ export const GetVAnchorTotalRelayerFeeByChainAndByToken = async (
 
   return {
     totalRelayerFee:
-      result.data.vanchorTotalRelayerFeeByTokens &&
-      result.data.vanchorTotalRelayerFeeByTokens.length > 0
-        ? +result.data.vanchorTotalRelayerFeeByTokens[0].fees
+      result.vanchorTotalRelayerFeeByTokens &&
+      result.vanchorTotalRelayerFeeByTokens.length > 0
+        ? result.vanchorTotalRelayerFeeByTokens[0].fees
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,

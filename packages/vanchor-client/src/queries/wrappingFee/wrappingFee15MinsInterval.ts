@@ -1,10 +1,10 @@
-import { execute } from '../../../.graphclient';
 import { DateUtil } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 
 export interface WrappingFeeByChain15MinsIntervalItem {
   subgraphUrl: SubgraphUrl;
-  wrappingFee: number;
+  wrappingFee: bigint | null;
   startInterval: Date;
   endInterval: Date;
   vAnchorAddress: string;
@@ -17,52 +17,37 @@ export interface WrappingFeeByChainAndByToken15MinsIntervalItem
 
 export interface WrappingFeeByVAnchor15MinsIntervalItem {
   vAnchorAddress: string;
-  wrappingFee: number;
+  wrappingFee: bigint | null;
 }
 
-export const GetVAnchorWrappingFeeByChain15MinsInterval = async (
+const sdk = getBuiltGraphSDK();
+
+export const GetVAnchorWrappingFeeByChainHistory = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WrappingFeeByChain15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-  query WrappingFee {
-  vanchorWrappingFeeEvery15Mins(
-    where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    startInterval
-    fees
-    vAnchorAddress
-    endInterval
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+): Promise<WrappingFeeByChainHistoryItem> => {
+  const result = await sdk.GetVAnchorWrappingFeeEvery15Mins(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorWrappingFeeEvery15Mins == null) {
-    return [] as Array<WrappingFeeByChain15MinsIntervalItem>;
-  }
-
-  return result.data.vanchorWrappingFeeEvery15Mins?.map((item: any) => {
+  return result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
     return {
-      wrappingFee: +item?.fees,
+      wrappingFee: item.fees,
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      vAnchorAddress: item.vAnchorAddress,
     };
-  });
+  })?.[0];
 };
 
 export const GetVAnchorWrappingFeeByChains15MinsInterval = async (
@@ -93,46 +78,26 @@ export const GetVAnchorsWrappingFeeByChain15MinsInterval = async (
   vanchorAddresses: Array<string>,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WrappingFeeByVAnchor15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-  query WrappingFeeByVAnchor {
-  vanchorWrappingFeeEvery15Mins(
-    where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress_in: [${vanchorAddresses
-    .map((address) => '"' + address.toLowerCase() + '"')
-    .join(',')}]}
-  ) {
-    id
-    startInterval
-    fees
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+): Promise<Array<WrappingFeeByVAnchorHistoryItem>> => {
+  const result = await sdk.GetVAnchorsWrappingFeeEvery15Mins(
+    {
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorWrappingFeeEvery15Mins == null) {
-    return [] as Array<WrappingFeeByVAnchor15MinsIntervalItem>;
-  }
+  const wrappingFeeMap: { [vanchorAddress: string]: bigint } = {};
 
-  const wrappingFeeMap: { [vanchorAddress: string]: number } = {};
-
-  result.data.vanchorWrappingFeeEvery15Mins?.map((item: any) => {
-    if (!wrappingFeeMap[item?.vAnchorAddress]) {
-      wrappingFeeMap[item?.vAnchorAddress] = 0;
+  result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
+    if (!wrappingFeeMap[item.vAnchorAddress]) {
+      wrappingFeeMap[item.vAnchorAddress] = BigInt(0);
     }
 
-    wrappingFeeMap[item?.vAnchorAddress] += +item?.fees;
+    wrappingFeeMap[item.vAnchorAddress] += item.fees;
   });
 
   const wrappingFeeByVAnchor15MinsIntervalItems: Array<WrappingFeeByVAnchor15MinsIntervalItem> =
@@ -178,40 +143,27 @@ export const GetVAnchorWrappingFeeByChainAndByToken15MinsInterval = async (
   tokenSymbol: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WrappingFeeByChainAndByToken15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorWrappingFeeByTokenEvery15Mins(
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(
-    endTimestamp
-  )}", startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}"}
-  ) {
-    fees,
-    startInterval,
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+): Promise<Array<WrappingFeeByChainAndByTokenHistoryItem>> => {
+  const result = await sdk.GetVAnchorWrappingFeeByTokenEvery15Mins(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      tokenSymbol: tokenSymbol,
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorWrappingFeeByTokenEvery15Mins == null) {
-    return [] as Array<WrappingFeeByChainAndByToken15MinsIntervalItem>;
-  }
-
-  return result.data.vanchorWrappingFeeByTokenEvery15Mins?.map((item: any) => {
+  return result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
     return {
-      wrappingFee: +item?.fees,
+      wrappingFee: item.fees,
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      tokenSymbol,
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      vAnchorAddress: item.vAnchorAddress,
     };
   });
 };
