@@ -1,5 +1,7 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
+  VAnchorTotalValueLocked,
+  VAnchorTotalValueLockedByToken,
   VAnchorTotalValueLockedByTokenEvery15Min,
   VAnchorTotalValueLockedEvery15Min,
 } from '../../generated/schema';
@@ -15,19 +17,31 @@ export default function recordTVL15MinsInterval(
   const startInterval: i32 = getStartInterval(time, 15);
   const endInterval: i32 = getEndInterval(time, 15);
 
-  const id =
+  const idByTokenBy15Mins =
     startInterval.toString() +
     '-' +
     vAnchorAddress.toHexString() +
     '-' +
     tokenAddress.toHexString();
+
   const vanchorTotalValueLockedByToken =
-    VAnchorTotalValueLockedByTokenEvery15Min.load(id);
+    VAnchorTotalValueLockedByTokenEvery15Min.load(idByTokenBy15Mins);
 
   if (!vanchorTotalValueLockedByToken) {
     const newVanchorTotalValueLockedByToken =
-      new VAnchorTotalValueLockedByTokenEvery15Min(id);
-    newVanchorTotalValueLockedByToken.totalValueLocked = amount;
+      new VAnchorTotalValueLockedByTokenEvery15Min(idByTokenBy15Mins);
+
+    // getting current tvl by token
+    const idByToken =
+      vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
+    const vanchorTotalValueLockedByToken =
+      VAnchorTotalValueLockedByToken.load(idByToken);
+    const currentTVLByToken =
+      vanchorTotalValueLockedByToken === null
+        ? BigInt.fromI32(0)
+        : vanchorTotalValueLockedByToken.totalValueLocked;
+
+    newVanchorTotalValueLockedByToken.totalValueLocked = currentTVLByToken;
     newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
     newVanchorTotalValueLockedByToken.tokenSymbol =
       getTokenSymbol(tokenAddress);
@@ -46,14 +60,14 @@ export default function recordTVL15MinsInterval(
   }
 
   // Update the total value locked for vanchor
-  const recordId =
+  const idBy15Mins =
     startInterval.toString() + '-' + vAnchorAddress.toHexString();
   const vanchorTotalValueLocked =
-    VAnchorTotalValueLockedEvery15Min.load(recordId);
+    VAnchorTotalValueLockedEvery15Min.load(idBy15Mins);
 
   if (!vanchorTotalValueLocked) {
     const newVanchorTotalValueLocked = new VAnchorTotalValueLockedEvery15Min(
-      recordId
+      idBy15Mins
     );
     newVanchorTotalValueLocked.startInterval = BigInt.fromString(
       startInterval.toString()
@@ -62,7 +76,17 @@ export default function recordTVL15MinsInterval(
       endInterval.toString()
     );
     newVanchorTotalValueLocked.vAnchorAddress = vAnchorAddress;
-    newVanchorTotalValueLocked.totalValueLocked = amount;
+
+    // getting current tvl
+    const vanchorTotalValueLocked = VAnchorTotalValueLocked.load(
+      vAnchorAddress.toHexString()
+    );
+    const currentTVL =
+      vanchorTotalValueLocked === null
+        ? BigInt.fromI32(0)
+        : vanchorTotalValueLocked.totalValueLocked;
+
+    newVanchorTotalValueLocked.totalValueLocked = currentTVL;
     newVanchorTotalValueLocked.save();
   } else {
     vanchorTotalValueLocked.totalValueLocked =
