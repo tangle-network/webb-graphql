@@ -1,10 +1,10 @@
-import { execute } from '../../.graphclient';
+import { execute, getBuiltGraphSDK } from '../../.graphclient';
 import { DateUtil } from '../utils/date';
 import { SubgraphUrl } from '../config';
 
 export interface RelayerFeeByChainHistoryItem {
   subgraphUrl: SubgraphUrl;
-  relayerFee: number;
+  relayerFee: bigint;
   startInterval: Date;
   endInterval: Date;
   vAnchorAddress: string;
@@ -17,8 +17,10 @@ export interface RelayerFeeByChainAndByTokenHistoryItem
 
 export interface RelayerFeeByVAnchorHistoryItem {
   vAnchorAddress: string;
-  relayerFee: number;
+  relayerFee: bigint;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorRelayerFeeByChainHistory = async (
   subgraphUrl: SubgraphUrl,
@@ -26,39 +28,26 @@ export const GetVAnchorRelayerFeeByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<RelayerFeeByChainHistoryItem> => {
-  const query = /* GraphQL */ `
-    query RelayerFee {
-      vanchorRelayerFeeEvery15Mins(
-        where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
-          endTimestamp
-        )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-        ) {
-          startInterval
-          relayerFee
-          vAnchorAddress
-          endInterval
-        }
-      }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorRelayerFeeEvery15Mins(
+    {
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorRelayerFeeEvery15Mins?.map((item: any) => {
+  return result.vanchorTotalRelayerFee15Mins.map((item) => {
     return {
-      relayerFee: item?.relayerFee,
+      relayerFee: item.fees,
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      vAnchorAddress: item.vAnchorAddress,
     };
-  });
+  })?.[0];
 };
 
 export const GetVAnchorRelayerFeeByChainsHistory = async (
@@ -89,41 +78,25 @@ export const GetVAnchorsRelayerFeeByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<RelayerFeeByVAnchorHistoryItem>> => {
-  const query = /* GraphQL */ `
-  query RelayerFeeByVAnchor {
-  vanchorRelayerFeeEvery15Mins(
-    where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress_in: [${vanchorAddresses
-    .map((address) => '"' + address.toLowerCase() + '"')
-    .join(',')}]}
-  ) {
-    id
-    startInterval
-    relayerFee
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsRelayerFeeEvery15Mins(
+    {
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  const relayerFeeMap: { [vanchorAddress: string]: number } = {};
+  const relayerFeeMap: { [vanchorAddress: string]: bigint } = {};
 
-  result.data.vanchorRelayerFeeEvery15Mins?.map((item: any) => {
-    if (!relayerFeeMap[item?.vAnchorAddress]) {
-      relayerFeeMap[item?.vAnchorAddress] = 0;
+  result.vanchorTotalRelayerFeeByTokenEvery15Mins.map((item) => {
+    if (!relayerFeeMap[item.vAnchorAddress]) {
+      relayerFeeMap[item?.vAnchorAddress] = BigInt(0);
     }
 
-    relayerFeeMap[item?.vAnchorAddress] += item?.relayerFee;
+    relayerFeeMap[item.vAnchorAddress] += BigInt(item.fees);
   });
 
   const relayerFeeByVAnchorHistoryItems: Array<RelayerFeeByVAnchorHistoryItem> =
@@ -168,35 +141,26 @@ export const GetVAnchorRelayerFeeByChainAndByTokenHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<RelayerFeeByChainAndByTokenHistoryItem>> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorRelayerFeeByTokenEvery15Mins(
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(
-    endTimestamp
-  )}", startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}"}
-  ) {
-    relayerFee,
-    startInterval,
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorRelayerFeeByTokenEvery15Mins(
+    {
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      tokenSymbol: tokenSymbol,
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorRelayerFeeByTokenEvery15Mins?.map((item: any) => {
+  return result.vanchorTotalRelayerFeeByTokenEvery15Mins.map((item) => {
     return {
-      relayerFee: item?.relayerFee,
+      relayerFee: BigInt(item.fees),
+      tokenSymbol,
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      vAnchorAddress: item.vAnchorAddress,
     };
   });
 };
