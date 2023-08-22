@@ -1,8 +1,8 @@
-import { execute } from '../../../.graphclient';
+import { execute, getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
 
 export interface TotalValueLockedByChain {
-  totalValueLocked: number | undefined;
+  totalValueLocked: bigint | undefined;
   subgraphUrl: SubgraphUrl;
 }
 
@@ -13,30 +13,25 @@ export interface TotalValueLockedByChainAndByToken
 
 export interface TotalValueLockedByVAnchor {
   vAnchorAddress: string;
-  totalValueLocked: number | undefined;
+  totalValueLocked: bigint | undefined;
 }
 
 export interface TotalValueLockedByVAnchorByChain {
   vAnchorAddress: string;
-  totalValueLocked: number | undefined;
+  totalValueLocked: bigint | undefined;
   subgraphUrl: SubgraphUrl;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorTotalValueLockedByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<TotalValueLockedByChain> => {
-  const query = /* GraphQL */ `
-  query TotalValueLocked {
-  vanchorTotalValueLocked(id: "${vAnchorAddress.toLowerCase()}"){
-
-    totalValueLocked
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorTotalValueLocked(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
@@ -44,9 +39,9 @@ export const GetVAnchorTotalValueLockedByChain = async (
 
   return {
     totalValueLocked:
-      result.data.vanchorTotalValueLocked?.totalValueLocked == null
+      result.vanchorTotalValueLocked?.totalValueLocked == null
         ? undefined
-        : +result.data.vanchorTotalValueLocked.totalValueLocked,
+        : BigInt(result.vanchorTotalValueLocked.totalValueLocked),
     subgraphUrl: subgraphUrl,
   };
 };
@@ -70,30 +65,19 @@ export const GetVAnchorsTotalValueLockedByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<TotalValueLockedByVAnchor>> => {
-  const query = /* GraphQL */ `
-  query TotalValueLockedByVAnchor {
-  vanchorTotalValueLockeds(
-    where: {id_in: [${vanchorAddresses
-      .map((address) => '"' + address.toLowerCase() + '"')
-      .join(',')}]}
-  ) {
-    id
-    totalValueLocked
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorTotalValueLockeds(
+    {
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorTotalValueLockeds?.map((item: any) => {
+  return result.vanchorTotalValueLockeds.map((item) => {
     return {
-      totalValueLocked: +item?.totalValueLocked,
-      vAnchorAddress: item?.id,
+      totalValueLocked: BigInt(item.totalValueLocked),
+      vAnchorAddress: item.id,
     };
   });
 };
@@ -118,19 +102,11 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<TotalValueLockedByChainAndByToken> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorTotalValueLockedByTokens(
-    first: 1
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    totalValueLocked
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorTotalValueLockedByTokens(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      tokenSymbol: tokenSymbol.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
@@ -138,9 +114,9 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
 
   return {
     totalValueLocked:
-      result.data.vanchorTotalValueLockedByTokens &&
-      result.data.vanchorTotalValueLockedByTokens.length > 0
-        ? +result.data.vanchorTotalValueLockedByTokens[0].totalValueLocked
+      result.vanchorTotalValueLockedByTokens &&
+      result.vanchorTotalValueLockedByTokens.length > 0
+        ? BigInt(result.vanchorTotalValueLockedByTokens[0].totalValueLocked)
         : undefined,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,

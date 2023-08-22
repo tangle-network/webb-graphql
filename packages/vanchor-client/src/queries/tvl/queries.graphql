@@ -1,0 +1,143 @@
+query GetVAnchorTotalValueLocked($vAnchorAddress: ID!) {
+  vanchorTotalValueLocked(id: $vAnchorAddress) {
+    totalValueLocked
+  }
+}
+
+query GetVAnchorTotalValueLockeds($vAnchorAddresses: [String!]!) {
+  vanchorTotalValueLockeds(where: { id_in: $vAnchorAddresses }) {
+    id
+    totalValueLocked
+  }
+}
+
+query GetVAnchorTotalValueLockedByTokens(
+  $tokenSymbol: String!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTotalValueLockedByTokens(
+    first: 1
+    where: { tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress }
+  ) {
+    totalValueLocked
+  }
+}
+
+query GetVAnchorTotalValueLockedEvery15Mins(
+  $endTimestamp: BigInt!
+  $startTimestamp: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTotalValueLockedEvery15Mins(
+    where: {
+      endInterval_lte: $endTimestamp
+      startInterval_gte: $startTimestamp
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    startInterval
+    totalValueLocked
+    vAnchorAddress
+    endInterval
+  }
+}
+
+query GetVAnchorsTotalValueLockedEvery15Mins(
+  $endTimestamp: BigInt!
+  $startTimestamp: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorTotalValueLockedEvery15Mins(
+    where: {
+      endInterval_lte: $endTimestamp
+      startInterval_gte: $startTimestamp
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    totalValueLocked
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorTotalValueLockedByTokenEvery15Mins(
+  $tokenSymbol: String!
+  $vAnchorAddress: Bytes!
+  $endTimestamp: BigInt!
+  $startTimestamp: BigInt!
+) {
+  vanchorTotalValueLockedByTokenEvery15Mins(
+    where: {
+      tokenSymbol: $tokenSymbol
+      vAnchorAddress: $vAnchorAddress
+      endInterval_lte: $endTimestamp
+      startInterval_gte: $startTimestamp
+    }
+  ) {
+    totalValueLocked
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorTotalValueLockedEveryDays(
+  $date: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTotalValueLockedEveryDays(
+    where: { date: $date, vAnchorAddress: $vAnchorAddress }
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}
+
+query GetVAnchorsTotalValueLockedEveryDays(
+  $date: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorTotalValueLockedEveryDays(
+    where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
+  ) {
+    id
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}
+
+query GetVAnchorTotalValueLockedByTokenEveryDays(
+  $tokenSymbol: String!
+  $vAnchorAddress: Bytes!
+  $date: BigInt!
+) {
+  vanchorTotalValueLockedByTokenEveryDays(
+    where: {
+      tokenSymbol: $tokenSymbol
+      vAnchorAddress: $vAnchorAddress
+      date: $date
+    }
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}
+
+query GetVAnchorsTotalValueLockedByDateRangeEveryDays(
+  $dateRange: [BigInt!]!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorTotalValueLockedEveryDays(
+    where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
+    orderBy: date
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}

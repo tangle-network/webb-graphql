@@ -1,10 +1,10 @@
-import { execute } from '../../.graphclient';
-import { DateUtil } from '../utils/date';
+import { getBuiltGraphSDK } from '../../.graphclient';
 import { SubgraphUrl } from '../config';
+import { DateUtil } from '../utils/date';
 
 export interface WithdrawalByChainHistoryItem {
   subgraphUrl: SubgraphUrl;
-  withdrawal: number;
+  withdrawal: bigint | null;
   startInterval: Date;
   endInterval: Date;
   vAnchorAddress: string;
@@ -17,8 +17,10 @@ export interface WithdrawalByChainAndByTokenHistoryItem
 
 export interface WithdrawalByVAnchorHistoryItem {
   vAnchorAddress: string;
-  withdrawal: number;
+  withdrawal: bigint | null;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorWithdrawalByChainHistory = async (
   subgraphUrl: SubgraphUrl,
@@ -26,39 +28,26 @@ export const GetVAnchorWithdrawalByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<WithdrawalByChainHistoryItem> => {
-  const query = /* GraphQL */ `
-  query Withdrawal {
-  vanchorWithdrawalEvery15Mins(
-    where: {endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    startInterval
-    ithdrawal
-    vAnchorAddress
-    endInterval
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorWithdrawalEvery15Mins(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorWithdrawalEvery15Mins?.map((item: any) => {
+  return result.vanchorWithdrawalEvery15Mins.map((item) => {
     return {
-      withdrawal: item?.withdrawal,
+      withdrawal: BigInt(item.withdrawal),
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      vAnchorAddress: item.vAnchorAddress,
     };
-  });
+  })?.[0];
 };
 
 export const GetVAnchorWithdrawalByChainsHistory = async (
@@ -89,41 +78,25 @@ export const GetVAnchorsWithdrawalByChainHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<WithdrawalByVAnchorHistoryItem>> => {
-  const query = /* GraphQL */ `
-  query WithdrawalByVAnchor {
-  vanchorWithdrawalEvery15Mins(
-    where: { endInterval_lte: "${DateUtil.fromDateToEpoch(
-      endTimestamp
-    )}", startInterval_gte: "${DateUtil.fromDateToEpoch(
-    startTimestamp
-  )}", vAnchorAddress_in: [${vanchorAddresses
-    .map((address) => '"' + address.toLowerCase() + '"')
-    .join(',')}]}
-  ) {
-    id
-    startInterval
-    withdrawal
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsWithdrawalEvery15Mins(
+    {
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+    },
     {
       subgraphUrl,
     }
   );
 
-  const withdrawalMap: { [vanchorAddress: string]: number } = {};
+  const withdrawalMap: { [vanchorAddress: string]: bigint } = {};
 
-  result.data.vanchorWithdrawalEvery15Mins?.map((item: any) => {
+  result.vanchorWithdrawalEvery15Mins.map((item) => {
     if (!withdrawalMap[item?.vAnchorAddress]) {
-      withdrawalMap[item?.vAnchorAddress] = 0;
+      withdrawalMap[item.vAnchorAddress] = BigInt(0);
     }
 
-    withdrawalMap[item?.vAnchorAddress] += item?.withdrawal;
+    withdrawalMap[item?.vAnchorAddress] += BigInt(item.withdrawal);
   });
 
   const withdrawalByVAnchorHistoryItems: Array<WithdrawalByVAnchorHistoryItem> =
@@ -168,35 +141,26 @@ export const GetVAnchorWithdrawalByChainAndByTokenHistory = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<WithdrawalByChainAndByTokenHistoryItem>> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorWithdrawalByTokenEvery15Mins(
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}", endInterval_lte: "${DateUtil.fromDateToEpoch(
-    endTimestamp
-  )}", startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}"}
-  ) {
-    withdrawal,
-    startInterval,
-    endInterval,
-    vAnchorAddress
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorWithdrawalByTokenEvery15Mins(
+    {
+      tokenSymbol,
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorWithdrawalByTokenEvery15Mins?.map((item: any) => {
+  return result.vanchorWithdrawalByTokenEvery15Mins.map((item) => {
     return {
-      withdrawal: item?.withdrawal,
+      withdrawal: item.withdrawal,
+      tokenSymbol,
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      vAnchorAddress: item.vAnchorAddress,
     };
   });
 };

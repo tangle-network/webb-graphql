@@ -1,5 +1,8 @@
 // @ts-nocheck
 import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { gql } from '@graphql-mesh/utils';
+
 import type { GetMeshOptions } from '@graphql-mesh/runtime';
 import type { YamlConfig } from '@graphql-mesh/types';
 import { PubSub } from '@graphql-mesh/utils';
@@ -12,6 +15,7 @@ import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
 import GraphqlHandler from "@graphql-mesh/graphql"
 import { parse } from 'graphql';
 import BareMerger from "@graphql-mesh/merger-bare";
+import { printWithCache } from '@graphql-mesh/utils';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
 import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
@@ -38,6 +42,7 @@ export type Scalars = {
   BigDecimal: any;
   BigInt: any;
   Bytes: any;
+  Int8: any;
 };
 
 export type Query = {
@@ -5431,6 +5436,7 @@ export type ResolversTypes = ResolversObject<{
   Insertion_filter: Insertion_filter;
   Insertion_orderBy: Insertion_orderBy;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Int8: ResolverTypeWrapper<Scalars['Int8']>;
   NewCommitment: ResolverTypeWrapper<NewCommitment>;
   NewCommitment_filter: NewCommitment_filter;
   NewCommitment_orderBy: NewCommitment_orderBy;
@@ -5566,6 +5572,7 @@ export type ResolversParentTypes = ResolversObject<{
   Insertion: Insertion;
   Insertion_filter: Insertion_filter;
   Int: Scalars['Int'];
+  Int8: Scalars['Int8'];
   NewCommitment: NewCommitment;
   NewCommitment_filter: NewCommitment_filter;
   NewNullifier: NewNullifier;
@@ -5884,6 +5891,10 @@ export type InsertionResolvers<ContextType = MeshContext & { subgraphUrl: string
   transactionHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
+
+export interface Int8ScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Int8'], any> {
+  name: 'Int8';
+}
 
 export type NewCommitmentResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['NewCommitment'] = ResolversParentTypes['NewCommitment']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -6259,6 +6270,7 @@ export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> = Res
   Encryptions?: EncryptionsResolvers<ContextType>;
   ExternalData?: ExternalDataResolvers<ContextType>;
   Insertion?: InsertionResolvers<ContextType>;
+  Int8?: GraphQLScalarType;
   NewCommitment?: NewCommitmentResolvers<ContextType>;
   NewNullifier?: NewNullifierResolvers<ContextType>;
   PublicInputs?: PublicInputsResolvers<ContextType>;
@@ -6348,7 +6360,7 @@ const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
 const vanchorTransforms = [];
 const vanchorHandler = new GraphqlHandler({
               name: "vanchor",
-              config: {"endpoint":"{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorOrbitAthena}"},
+              config: {"endpoint":"{context.subgraphUrl:https://thegraph-backend.webb.tools/subgraphs/name/VAnchorOrbitAthena}"},
               baseDir,
               cache,
               pubsub,
@@ -6385,7 +6397,235 @@ const merger = new(BareMerger as any)({
     additionalEnvelopPlugins,
     get documents() {
       return [
-      
+      {
+        document: GetVAnchorDepositByChainDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositByChainDocument);
+        },
+        location: 'GetVAnchorDepositByChainDocument.graphql'
+      },{
+        document: GetVAnchorsDepositByChainDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsDepositByChainDocument);
+        },
+        location: 'GetVAnchorsDepositByChainDocument.graphql'
+      },{
+        document: GetVAnchorDepositByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositByTokensDocument);
+        },
+        location: 'GetVAnchorDepositByTokensDocument.graphql'
+      },{
+        document: GetVAnchorDepositEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositEvery15MinsDocument);
+        },
+        location: 'GetVAnchorDepositEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsDepositEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsDepositEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsDepositEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorDepositByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorDepositByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorDepositEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositEveryDaysDocument);
+        },
+        location: 'GetVAnchorDepositEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorsDepositEveryDayDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsDepositEveryDayDocument);
+        },
+        location: 'GetVAnchorsDepositEveryDayDocument.graphql'
+      },{
+        document: GetVanchorDepositByTokenEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVanchorDepositByTokenEveryDaysDocument);
+        },
+        location: 'GetVanchorDepositByTokenEveryDaysDocument.graphql'
+      },{
+        document: GetVanchorsDepositByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVanchorsDepositByDateRangeDocument);
+        },
+        location: 'GetVanchorsDepositByDateRangeDocument.graphql'
+      },{
+        document: GetVAnchorTotalRelayerFeeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalRelayerFeeDocument);
+        },
+        location: 'GetVAnchorTotalRelayerFeeDocument.graphql'
+      },{
+        document: GetVAnchorsTotalRelayerFeesDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTotalRelayerFeesDocument);
+        },
+        location: 'GetVAnchorsTotalRelayerFeesDocument.graphql'
+      },{
+        document: GetVAnchorTotalRelayerFeeByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalRelayerFeeByTokensDocument);
+        },
+        location: 'GetVAnchorTotalRelayerFeeByTokensDocument.graphql'
+      },{
+        document: GetVAnchorRelayerFeeEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorRelayerFeeEvery15MinsDocument);
+        },
+        location: 'GetVAnchorRelayerFeeEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsRelayerFeeEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsRelayerFeeEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsRelayerFeeEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorRelayerFeeByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorRelayerFeeByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorRelayerFeeByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorTotalValueLockedDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalValueLockedDocument);
+        },
+        location: 'GetVAnchorTotalValueLockedDocument.graphql'
+      },{
+        document: GetVAnchorTotalValueLockedsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalValueLockedsDocument);
+        },
+        location: 'GetVAnchorTotalValueLockedsDocument.graphql'
+      },{
+        document: GetVAnchorTotalValueLockedByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalValueLockedByTokensDocument);
+        },
+        location: 'GetVAnchorTotalValueLockedByTokensDocument.graphql'
+      },{
+        document: GetVAnchorTotalValueLockedEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalValueLockedEvery15MinsDocument);
+        },
+        location: 'GetVAnchorTotalValueLockedEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsTotalValueLockedEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTotalValueLockedEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsTotalValueLockedEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorTotalValueLockedByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalValueLockedByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorTotalValueLockedByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorTotalValueLockedEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalValueLockedEveryDaysDocument);
+        },
+        location: 'GetVAnchorTotalValueLockedEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorsTotalValueLockedEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTotalValueLockedEveryDaysDocument);
+        },
+        location: 'GetVAnchorsTotalValueLockedEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorTotalValueLockedByTokenEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalValueLockedByTokenEveryDaysDocument);
+        },
+        location: 'GetVAnchorTotalValueLockedByTokenEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument);
+        },
+        location: 'GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorWithdrawalDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWithdrawalDocument);
+        },
+        location: 'GetVAnchorWithdrawalDocument.graphql'
+      },{
+        document: GetVAnchorsWithdrawalsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsWithdrawalsDocument);
+        },
+        location: 'GetVAnchorsWithdrawalsDocument.graphql'
+      },{
+        document: GetVAnchorWithdrawalByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWithdrawalByTokensDocument);
+        },
+        location: 'GetVAnchorWithdrawalByTokensDocument.graphql'
+      },{
+        document: GetVAnchorWithdrawalEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWithdrawalEvery15MinsDocument);
+        },
+        location: 'GetVAnchorWithdrawalEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsWithdrawalEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsWithdrawalEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsWithdrawalEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorWithdrawalByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWithdrawalByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorWithdrawalByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorTotalWrappingFeeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalWrappingFeeDocument);
+        },
+        location: 'GetVAnchorTotalWrappingFeeDocument.graphql'
+      },{
+        document: GetVAnchorsTotalWrappingFeesDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTotalWrappingFeesDocument);
+        },
+        location: 'GetVAnchorsTotalWrappingFeesDocument.graphql'
+      },{
+        document: GetVAnchorTotalWrappingFeeByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTotalWrappingFeeByTokensDocument);
+        },
+        location: 'GetVAnchorTotalWrappingFeeByTokensDocument.graphql'
+      },{
+        document: GetVAnchorWrappingFeeEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWrappingFeeEvery15MinsDocument);
+        },
+        location: 'GetVAnchorWrappingFeeEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsWrappingFeeEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsWrappingFeeEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsWrappingFeeEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorWrappingFeeByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorWrappingFeeByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorWrappingFeeByTokenEvery15MinsDocument.graphql'
+      }
     ];
     },
     fetchFn,
@@ -6419,3 +6659,881 @@ export function getBuiltGraphClient(): Promise<MeshInstance> {
 export const execute: ExecuteMeshFn = (...args) => getBuiltGraphClient().then(({ execute }) => execute(...args));
 
 export const subscribe: SubscribeMeshFn = (...args) => getBuiltGraphClient().then(({ subscribe }) => subscribe(...args));
+export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(globalContext?: TGlobalContext) {
+  const sdkRequester$ = getBuiltGraphClient().then(({ sdkRequesterFactory }) => sdkRequesterFactory(globalContext));
+  return getSdk<TOperationContext, TGlobalContext>((...args) => sdkRequester$.then(sdkRequester => sdkRequester(...args)));
+}
+export type GetVAnchorDepositByChainQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorDepositByChainQuery = { vanchorDeposit?: Maybe<Pick<VAnchorDeposit, 'deposit'>> };
+
+export type GetVAnchorsDepositByChainQueryVariables = Exact<{
+  vanchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorsDepositByChainQuery = { vanchorDeposits: Array<Pick<VAnchorDeposit, 'id' | 'deposit'>> };
+
+export type GetVAnchorDepositByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorDepositByTokensQuery = { vanchorDepositByTokens: Array<Pick<VAnchorDepositByToken, 'deposit'>> };
+
+export type GetVAnchorDepositEvery15MinsQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorDepositEvery15MinsQuery = { vanchorDepositEvery15Mins: Array<Pick<VAnchorDepositEvery15Min, 'startInterval' | 'endInterval' | 'deposit' | 'vAnchorAddress'>> };
+
+export type GetVAnchorsDepositEvery15MinsQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsDepositEvery15MinsQuery = { vanchorDepositEvery15Mins: Array<Pick<VAnchorDepositEvery15Min, 'id' | 'startInterval' | 'deposit' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorDepositByTokenEvery15MinsQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+}>;
+
+
+export type GetVAnchorDepositByTokenEvery15MinsQuery = { vanchorDepositByTokenEvery15Mins: Array<Pick<VAnchorDepositByTokenEvery15Min, 'deposit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorDepositEveryDaysQueryVariables = Exact<{
+  date: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorDepositEveryDaysQuery = { vanchorDepositEveryDays: Array<Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVAnchorsDepositEveryDayQueryVariables = Exact<{
+  date: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsDepositEveryDayQuery = { vanchorDepositEveryDays: Array<Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVanchorDepositByTokenEveryDaysQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  date: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVanchorDepositByTokenEveryDaysQuery = { vanchorDepositByTokenEveryDays: Array<Pick<VAnchorDepositByTokenEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVanchorsDepositByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVanchorsDepositByDateRangeQuery = { vanchorDepositEveryDays: Array<Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVAnchorTotalRelayerFeeQueryVariables = Exact<{
+  vAnchorAddress: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorTotalRelayerFeeQuery = { vanchorTotalRelayerFee?: Maybe<Pick<VAnchorTotalRelayerFee, 'fees'>> };
+
+export type GetVAnchorsTotalRelayerFeesQueryVariables = Exact<{
+  vAnchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorsTotalRelayerFeesQuery = { vanchorTotalRelayerFees: Array<Pick<VAnchorTotalRelayerFee, 'id' | 'fees'>> };
+
+export type GetVAnchorTotalRelayerFeeByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTotalRelayerFeeByTokensQuery = { vanchorTotalRelayerFeeByTokens: Array<Pick<VAnchorTotalRelayerFeeByToken, 'fees'>> };
+
+export type GetVAnchorRelayerFeeEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorRelayerFeeEvery15MinsQuery = { vanchorTotalRelayerFee15Mins: Array<Pick<VAnchorTotalRelayerFee15Min, 'startInterval' | 'fees' | 'vAnchorAddress' | 'endInterval'>> };
+
+export type GetVAnchorsRelayerFeeEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsRelayerFeeEvery15MinsQuery = { vanchorTotalRelayerFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalRelayerFeeByTokenEvery15Min, 'id' | 'startInterval' | 'fees' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorRelayerFeeByTokenEvery15MinsQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  endTimestamp?: InputMaybe<Scalars['BigInt']>;
+  startTimestamp?: InputMaybe<Scalars['BigInt']>;
+}>;
+
+
+export type GetVAnchorRelayerFeeByTokenEvery15MinsQuery = { vanchorTotalRelayerFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalRelayerFeeByTokenEvery15Min, 'fees' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTotalValueLockedQueryVariables = Exact<{
+  vAnchorAddress: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedQuery = { vanchorTotalValueLocked?: Maybe<Pick<VAnchorTotalValueLocked, 'totalValueLocked'>> };
+
+export type GetVAnchorTotalValueLockedsQueryVariables = Exact<{
+  vAnchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedsQuery = { vanchorTotalValueLockeds: Array<Pick<VAnchorTotalValueLocked, 'id' | 'totalValueLocked'>> };
+
+export type GetVAnchorTotalValueLockedByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedByTokensQuery = { vanchorTotalValueLockedByTokens: Array<Pick<VAnchorTotalValueLockedByToken, 'totalValueLocked'>> };
+
+export type GetVAnchorTotalValueLockedEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedEvery15MinsQuery = { vanchorTotalValueLockedEvery15Mins: Array<Pick<VAnchorTotalValueLockedEvery15Min, 'startInterval' | 'totalValueLocked' | 'vAnchorAddress' | 'endInterval'>> };
+
+export type GetVAnchorsTotalValueLockedEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsTotalValueLockedEvery15MinsQuery = { vanchorTotalValueLockedEvery15Mins: Array<Pick<VAnchorTotalValueLockedEvery15Min, 'id' | 'startInterval' | 'totalValueLocked' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTotalValueLockedByTokenEvery15MinsQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedByTokenEvery15MinsQuery = { vanchorTotalValueLockedByTokenEvery15Mins: Array<Pick<VAnchorTotalValueLockedByTokenEvery15Min, 'totalValueLocked' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTotalValueLockedEveryDaysQueryVariables = Exact<{
+  date: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedEveryDaysQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVAnchorsTotalValueLockedEveryDaysQueryVariables = Exact<{
+  date: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsTotalValueLockedEveryDaysQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'id' | 'totalValueLocked' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  date: Scalars['BigInt'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedByTokenEveryDaysQuery = { vanchorTotalValueLockedByTokenEveryDays: Array<Pick<VAnchorTotalValueLockedByTokenEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'date'>> };
+
+export type GetVAnchorWithdrawalQueryVariables = Exact<{
+  vAnchorAddress: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorWithdrawalQuery = { vanchorWithdrawal?: Maybe<Pick<VAnchorWithdrawal, 'withdrawal'>> };
+
+export type GetVAnchorsWithdrawalsQueryVariables = Exact<{
+  vAnchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorsWithdrawalsQuery = { vanchorWithdrawals: Array<Pick<VAnchorWithdrawal, 'id' | 'withdrawal'>> };
+
+export type GetVAnchorWithdrawalByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorWithdrawalByTokensQuery = { vanchorWithdrawalByTokens: Array<Pick<VAnchorWithdrawalByToken, 'withdrawal'>> };
+
+export type GetVAnchorWithdrawalEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorWithdrawalEvery15MinsQuery = { vanchorWithdrawalEvery15Mins: Array<Pick<VAnchorWithdrawalEvery15Min, 'startInterval' | 'withdrawal' | 'vAnchorAddress' | 'endInterval'>> };
+
+export type GetVAnchorsWithdrawalEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsWithdrawalEvery15MinsQuery = { vanchorWithdrawalEvery15Mins: Array<Pick<VAnchorWithdrawalEvery15Min, 'id' | 'startInterval' | 'withdrawal' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+}>;
+
+
+export type GetVAnchorWithdrawalByTokenEvery15MinsQuery = { vanchorWithdrawalByTokenEvery15Mins: Array<Pick<VAnchorWithdrawalByTokenEvery15Min, 'withdrawal' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTotalWrappingFeeQueryVariables = Exact<{
+  vAnchorAddress: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorTotalWrappingFeeQuery = { vanchorTotalWrappingFee?: Maybe<Pick<VAnchorTotalWrappingFee, 'fees'>> };
+
+export type GetVAnchorsTotalWrappingFeesQueryVariables = Exact<{
+  vAnchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorsTotalWrappingFeesQuery = { vanchorTotalWrappingFees: Array<Pick<VAnchorTotalWrappingFee, 'id' | 'fees'>> };
+
+export type GetVAnchorTotalWrappingFeeByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTotalWrappingFeeByTokensQuery = { vanchorTotalWrappingFeeByTokens: Array<Pick<VAnchorTotalWrappingFeeByToken, 'fees'>> };
+
+export type GetVAnchorWrappingFeeEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorWrappingFeeEvery15MinsQuery = { vanchorTotalWrappingFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalWrappingFeeByTokenEvery15Min, 'startInterval' | 'fees' | 'vAnchorAddress' | 'endInterval'>> };
+
+export type GetVAnchorsWrappingFeeEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsWrappingFeeEvery15MinsQuery = { vanchorTotalWrappingFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalWrappingFeeByTokenEvery15Min, 'id' | 'startInterval' | 'fees' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables = Exact<{
+  endTimestamp: Scalars['BigInt'];
+  startTimestamp: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+}>;
+
+
+export type GetVAnchorWrappingFeeByTokenEvery15MinsQuery = { vanchorTotalWrappingFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalWrappingFeeByTokenEvery15Min, 'fees' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+
+export const GetVAnchorDepositByChainDocument = gql`
+    query GetVAnchorDepositByChain($id: ID!) {
+  vanchorDeposit(id: $id) {
+    deposit
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositByChainQuery, GetVAnchorDepositByChainQueryVariables>;
+export const GetVAnchorsDepositByChainDocument = gql`
+    query GetVAnchorsDepositByChain($vanchorAddresses: [String!]!) {
+  vanchorDeposits(where: {id_in: $vanchorAddresses}) {
+    id
+    deposit
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsDepositByChainQuery, GetVAnchorsDepositByChainQueryVariables>;
+export const GetVAnchorDepositByTokensDocument = gql`
+    query GetVAnchorDepositByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorDepositByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    deposit
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositByTokensQuery, GetVAnchorDepositByTokensQueryVariables>;
+export const GetVAnchorDepositEvery15MinsDocument = gql`
+    query GetVAnchorDepositEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorDepositEvery15Mins(
+    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    endInterval
+    deposit
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositEvery15MinsQuery, GetVAnchorDepositEvery15MinsQueryVariables>;
+export const GetVAnchorsDepositEvery15MinsDocument = gql`
+    query GetVAnchorsDepositEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorDepositEvery15Mins(
+    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    deposit
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsDepositEvery15MinsQuery, GetVAnchorsDepositEvery15MinsQueryVariables>;
+export const GetVAnchorDepositByTokenEvery15MinsDocument = gql`
+    query GetVAnchorDepositByTokenEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
+  vanchorDepositByTokenEvery15Mins(
+    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
+  ) {
+    deposit
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositByTokenEvery15MinsQuery, GetVAnchorDepositByTokenEvery15MinsQueryVariables>;
+export const GetVAnchorDepositEveryDaysDocument = gql`
+    query GetVAnchorDepositEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorDepositEveryDays(where: {date: $date, vAnchorAddress: $vAnchorAddress}) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositEveryDaysQuery, GetVAnchorDepositEveryDaysQueryVariables>;
+export const GetVAnchorsDepositEveryDayDocument = gql`
+    query GetVAnchorsDepositEveryDay($date: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorDepositEveryDays(
+    where: {date: $date, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsDepositEveryDayQuery, GetVAnchorsDepositEveryDayQueryVariables>;
+export const GetVanchorDepositByTokenEveryDaysDocument = gql`
+    query GetVanchorDepositByTokenEveryDays($tokenSymbol: String!, $date: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorDepositByTokenEveryDays(
+    where: {tokenSymbol: $tokenSymbol, date: $date, vAnchorAddress: $vAnchorAddress}
+  ) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVanchorDepositByTokenEveryDaysQuery, GetVanchorDepositByTokenEveryDaysQueryVariables>;
+export const GetVanchorsDepositByDateRangeDocument = gql`
+    query GetVanchorsDepositByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorDepositEveryDays(
+    where: {date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    deposit
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVanchorsDepositByDateRangeQuery, GetVanchorsDepositByDateRangeQueryVariables>;
+export const GetVAnchorTotalRelayerFeeDocument = gql`
+    query GetVAnchorTotalRelayerFee($vAnchorAddress: ID!) {
+  vanchorTotalRelayerFee(id: $vAnchorAddress) {
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalRelayerFeeQuery, GetVAnchorTotalRelayerFeeQueryVariables>;
+export const GetVAnchorsTotalRelayerFeesDocument = gql`
+    query GetVAnchorsTotalRelayerFees($vAnchorAddresses: [String!]!) {
+  vanchorTotalRelayerFees(where: {id_in: $vAnchorAddresses}) {
+    id
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTotalRelayerFeesQuery, GetVAnchorsTotalRelayerFeesQueryVariables>;
+export const GetVAnchorTotalRelayerFeeByTokensDocument = gql`
+    query GetVAnchorTotalRelayerFeeByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorTotalRelayerFeeByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalRelayerFeeByTokensQuery, GetVAnchorTotalRelayerFeeByTokensQueryVariables>;
+export const GetVAnchorRelayerFeeEvery15MinsDocument = gql`
+    query GetVAnchorRelayerFeeEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTotalRelayerFee15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    fees
+    vAnchorAddress
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorRelayerFeeEvery15MinsQuery, GetVAnchorRelayerFeeEvery15MinsQueryVariables>;
+export const GetVAnchorsRelayerFeeEvery15MinsDocument = gql`
+    query GetVAnchorsRelayerFeeEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTotalRelayerFeeByTokenEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    fees
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsRelayerFeeEvery15MinsQuery, GetVAnchorsRelayerFeeEvery15MinsQueryVariables>;
+export const GetVAnchorRelayerFeeByTokenEvery15MinsDocument = gql`
+    query GetVAnchorRelayerFeeByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endTimestamp: BigInt, $startTimestamp: BigInt) {
+  vanchorTotalRelayerFeeByTokenEvery15Mins(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp}
+  ) {
+    fees
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorRelayerFeeByTokenEvery15MinsQuery, GetVAnchorRelayerFeeByTokenEvery15MinsQueryVariables>;
+export const GetVAnchorTotalValueLockedDocument = gql`
+    query GetVAnchorTotalValueLocked($vAnchorAddress: ID!) {
+  vanchorTotalValueLocked(id: $vAnchorAddress) {
+    totalValueLocked
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedQuery, GetVAnchorTotalValueLockedQueryVariables>;
+export const GetVAnchorTotalValueLockedsDocument = gql`
+    query GetVAnchorTotalValueLockeds($vAnchorAddresses: [String!]!) {
+  vanchorTotalValueLockeds(where: {id_in: $vAnchorAddresses}) {
+    id
+    totalValueLocked
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedsQuery, GetVAnchorTotalValueLockedsQueryVariables>;
+export const GetVAnchorTotalValueLockedByTokensDocument = gql`
+    query GetVAnchorTotalValueLockedByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorTotalValueLockedByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    totalValueLocked
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedByTokensQuery, GetVAnchorTotalValueLockedByTokensQueryVariables>;
+export const GetVAnchorTotalValueLockedEvery15MinsDocument = gql`
+    query GetVAnchorTotalValueLockedEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTotalValueLockedEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    totalValueLocked
+    vAnchorAddress
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedEvery15MinsQuery, GetVAnchorTotalValueLockedEvery15MinsQueryVariables>;
+export const GetVAnchorsTotalValueLockedEvery15MinsDocument = gql`
+    query GetVAnchorsTotalValueLockedEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTotalValueLockedEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    totalValueLocked
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedEvery15MinsQuery, GetVAnchorsTotalValueLockedEvery15MinsQueryVariables>;
+export const GetVAnchorTotalValueLockedByTokenEvery15MinsDocument = gql`
+    query GetVAnchorTotalValueLockedByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endTimestamp: BigInt!, $startTimestamp: BigInt!) {
+  vanchorTotalValueLockedByTokenEvery15Mins(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp}
+  ) {
+    totalValueLocked
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedByTokenEvery15MinsQuery, GetVAnchorTotalValueLockedByTokenEvery15MinsQueryVariables>;
+export const GetVAnchorTotalValueLockedEveryDaysDocument = gql`
+    query GetVAnchorTotalValueLockedEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTotalValueLockedEveryDays(
+    where: {date: $date, vAnchorAddress: $vAnchorAddress}
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedEveryDaysQuery, GetVAnchorTotalValueLockedEveryDaysQueryVariables>;
+export const GetVAnchorsTotalValueLockedEveryDaysDocument = gql`
+    query GetVAnchorsTotalValueLockedEveryDays($date: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTotalValueLockedEveryDays(
+    where: {date: $date, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedEveryDaysQuery, GetVAnchorsTotalValueLockedEveryDaysQueryVariables>;
+export const GetVAnchorTotalValueLockedByTokenEveryDaysDocument = gql`
+    query GetVAnchorTotalValueLockedByTokenEveryDays($tokenSymbol: String!, $vAnchorAddress: Bytes!, $date: BigInt!) {
+  vanchorTotalValueLockedByTokenEveryDays(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, date: $date}
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedByTokenEveryDaysQuery, GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables>;
+export const GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument = gql`
+    query GetVAnchorsTotalValueLockedByDateRangeEveryDays($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTotalValueLockedEveryDays(
+    where: {date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses}
+    orderBy: date
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    date
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery, GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables>;
+export const GetVAnchorWithdrawalDocument = gql`
+    query GetVAnchorWithdrawal($vAnchorAddress: ID!) {
+  vanchorWithdrawal(id: $vAnchorAddress) {
+    withdrawal
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWithdrawalQuery, GetVAnchorWithdrawalQueryVariables>;
+export const GetVAnchorsWithdrawalsDocument = gql`
+    query GetVAnchorsWithdrawals($vAnchorAddresses: [String!]!) {
+  vanchorWithdrawals(where: {id_in: $vAnchorAddresses}) {
+    id
+    withdrawal
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsWithdrawalsQuery, GetVAnchorsWithdrawalsQueryVariables>;
+export const GetVAnchorWithdrawalByTokensDocument = gql`
+    query GetVAnchorWithdrawalByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorWithdrawalByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    withdrawal
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWithdrawalByTokensQuery, GetVAnchorWithdrawalByTokensQueryVariables>;
+export const GetVAnchorWithdrawalEvery15MinsDocument = gql`
+    query GetVAnchorWithdrawalEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorWithdrawalEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    withdrawal
+    vAnchorAddress
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWithdrawalEvery15MinsQuery, GetVAnchorWithdrawalEvery15MinsQueryVariables>;
+export const GetVAnchorsWithdrawalEvery15MinsDocument = gql`
+    query GetVAnchorsWithdrawalEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorWithdrawalEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    withdrawal
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsWithdrawalEvery15MinsQuery, GetVAnchorsWithdrawalEvery15MinsQueryVariables>;
+export const GetVAnchorWithdrawalByTokenEvery15MinsDocument = gql`
+    query GetVAnchorWithdrawalByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endTimestamp: BigInt!, $startTimestamp: BigInt!) {
+  vanchorWithdrawalByTokenEvery15Mins(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp}
+  ) {
+    withdrawal
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWithdrawalByTokenEvery15MinsQuery, GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables>;
+export const GetVAnchorTotalWrappingFeeDocument = gql`
+    query GetVAnchorTotalWrappingFee($vAnchorAddress: ID!) {
+  vanchorTotalWrappingFee(id: $vAnchorAddress) {
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalWrappingFeeQuery, GetVAnchorTotalWrappingFeeQueryVariables>;
+export const GetVAnchorsTotalWrappingFeesDocument = gql`
+    query GetVAnchorsTotalWrappingFees($vAnchorAddresses: [String!]!) {
+  vanchorTotalWrappingFees(where: {id_in: $vAnchorAddresses}) {
+    id
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTotalWrappingFeesQuery, GetVAnchorsTotalWrappingFeesQueryVariables>;
+export const GetVAnchorTotalWrappingFeeByTokensDocument = gql`
+    query GetVAnchorTotalWrappingFeeByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorTotalWrappingFeeByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    fees
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalWrappingFeeByTokensQuery, GetVAnchorTotalWrappingFeeByTokensQueryVariables>;
+export const GetVAnchorWrappingFeeEvery15MinsDocument = gql`
+    query GetVAnchorWrappingFeeEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTotalWrappingFeeByTokenEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    fees
+    vAnchorAddress
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWrappingFeeEvery15MinsQuery, GetVAnchorWrappingFeeEvery15MinsQueryVariables>;
+export const GetVAnchorsWrappingFeeEvery15MinsDocument = gql`
+    query GetVAnchorsWrappingFeeEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTotalWrappingFeeByTokenEvery15Mins(
+    where: {endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    fees
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsWrappingFeeEvery15MinsQuery, GetVAnchorsWrappingFeeEvery15MinsQueryVariables>;
+export const GetVAnchorWrappingFeeByTokenEvery15MinsDocument = gql`
+    query GetVAnchorWrappingFeeByTokenEvery15Mins($endTimestamp: BigInt!, $startTimestamp: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
+  vanchorTotalWrappingFeeByTokenEvery15Mins(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endTimestamp, startInterval_gte: $startTimestamp}
+  ) {
+    fees
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorWrappingFeeByTokenEvery15MinsQuery, GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables>;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
+export function getSdk<C, E>(requester: Requester<C, E>) {
+  return {
+    GetVAnchorDepositByChain(variables: GetVAnchorDepositByChainQueryVariables, options?: C): Promise<GetVAnchorDepositByChainQuery> {
+      return requester<GetVAnchorDepositByChainQuery, GetVAnchorDepositByChainQueryVariables>(GetVAnchorDepositByChainDocument, variables, options) as Promise<GetVAnchorDepositByChainQuery>;
+    },
+    GetVAnchorsDepositByChain(variables: GetVAnchorsDepositByChainQueryVariables, options?: C): Promise<GetVAnchorsDepositByChainQuery> {
+      return requester<GetVAnchorsDepositByChainQuery, GetVAnchorsDepositByChainQueryVariables>(GetVAnchorsDepositByChainDocument, variables, options) as Promise<GetVAnchorsDepositByChainQuery>;
+    },
+    GetVAnchorDepositByTokens(variables: GetVAnchorDepositByTokensQueryVariables, options?: C): Promise<GetVAnchorDepositByTokensQuery> {
+      return requester<GetVAnchorDepositByTokensQuery, GetVAnchorDepositByTokensQueryVariables>(GetVAnchorDepositByTokensDocument, variables, options) as Promise<GetVAnchorDepositByTokensQuery>;
+    },
+    GetVAnchorDepositEvery15Mins(variables: GetVAnchorDepositEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorDepositEvery15MinsQuery> {
+      return requester<GetVAnchorDepositEvery15MinsQuery, GetVAnchorDepositEvery15MinsQueryVariables>(GetVAnchorDepositEvery15MinsDocument, variables, options) as Promise<GetVAnchorDepositEvery15MinsQuery>;
+    },
+    GetVAnchorsDepositEvery15Mins(variables: GetVAnchorsDepositEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsDepositEvery15MinsQuery> {
+      return requester<GetVAnchorsDepositEvery15MinsQuery, GetVAnchorsDepositEvery15MinsQueryVariables>(GetVAnchorsDepositEvery15MinsDocument, variables, options) as Promise<GetVAnchorsDepositEvery15MinsQuery>;
+    },
+    GetVAnchorDepositByTokenEvery15Mins(variables: GetVAnchorDepositByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorDepositByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorDepositByTokenEvery15MinsQuery, GetVAnchorDepositByTokenEvery15MinsQueryVariables>(GetVAnchorDepositByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorDepositByTokenEvery15MinsQuery>;
+    },
+    GetVAnchorDepositEveryDays(variables: GetVAnchorDepositEveryDaysQueryVariables, options?: C): Promise<GetVAnchorDepositEveryDaysQuery> {
+      return requester<GetVAnchorDepositEveryDaysQuery, GetVAnchorDepositEveryDaysQueryVariables>(GetVAnchorDepositEveryDaysDocument, variables, options) as Promise<GetVAnchorDepositEveryDaysQuery>;
+    },
+    GetVAnchorsDepositEveryDay(variables: GetVAnchorsDepositEveryDayQueryVariables, options?: C): Promise<GetVAnchorsDepositEveryDayQuery> {
+      return requester<GetVAnchorsDepositEveryDayQuery, GetVAnchorsDepositEveryDayQueryVariables>(GetVAnchorsDepositEveryDayDocument, variables, options) as Promise<GetVAnchorsDepositEveryDayQuery>;
+    },
+    GetVanchorDepositByTokenEveryDays(variables: GetVanchorDepositByTokenEveryDaysQueryVariables, options?: C): Promise<GetVanchorDepositByTokenEveryDaysQuery> {
+      return requester<GetVanchorDepositByTokenEveryDaysQuery, GetVanchorDepositByTokenEveryDaysQueryVariables>(GetVanchorDepositByTokenEveryDaysDocument, variables, options) as Promise<GetVanchorDepositByTokenEveryDaysQuery>;
+    },
+    GetVanchorsDepositByDateRange(variables: GetVanchorsDepositByDateRangeQueryVariables, options?: C): Promise<GetVanchorsDepositByDateRangeQuery> {
+      return requester<GetVanchorsDepositByDateRangeQuery, GetVanchorsDepositByDateRangeQueryVariables>(GetVanchorsDepositByDateRangeDocument, variables, options) as Promise<GetVanchorsDepositByDateRangeQuery>;
+    },
+    GetVAnchorTotalRelayerFee(variables: GetVAnchorTotalRelayerFeeQueryVariables, options?: C): Promise<GetVAnchorTotalRelayerFeeQuery> {
+      return requester<GetVAnchorTotalRelayerFeeQuery, GetVAnchorTotalRelayerFeeQueryVariables>(GetVAnchorTotalRelayerFeeDocument, variables, options) as Promise<GetVAnchorTotalRelayerFeeQuery>;
+    },
+    GetVAnchorsTotalRelayerFees(variables: GetVAnchorsTotalRelayerFeesQueryVariables, options?: C): Promise<GetVAnchorsTotalRelayerFeesQuery> {
+      return requester<GetVAnchorsTotalRelayerFeesQuery, GetVAnchorsTotalRelayerFeesQueryVariables>(GetVAnchorsTotalRelayerFeesDocument, variables, options) as Promise<GetVAnchorsTotalRelayerFeesQuery>;
+    },
+    GetVAnchorTotalRelayerFeeByTokens(variables: GetVAnchorTotalRelayerFeeByTokensQueryVariables, options?: C): Promise<GetVAnchorTotalRelayerFeeByTokensQuery> {
+      return requester<GetVAnchorTotalRelayerFeeByTokensQuery, GetVAnchorTotalRelayerFeeByTokensQueryVariables>(GetVAnchorTotalRelayerFeeByTokensDocument, variables, options) as Promise<GetVAnchorTotalRelayerFeeByTokensQuery>;
+    },
+    GetVAnchorRelayerFeeEvery15Mins(variables: GetVAnchorRelayerFeeEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorRelayerFeeEvery15MinsQuery> {
+      return requester<GetVAnchorRelayerFeeEvery15MinsQuery, GetVAnchorRelayerFeeEvery15MinsQueryVariables>(GetVAnchorRelayerFeeEvery15MinsDocument, variables, options) as Promise<GetVAnchorRelayerFeeEvery15MinsQuery>;
+    },
+    GetVAnchorsRelayerFeeEvery15Mins(variables: GetVAnchorsRelayerFeeEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsRelayerFeeEvery15MinsQuery> {
+      return requester<GetVAnchorsRelayerFeeEvery15MinsQuery, GetVAnchorsRelayerFeeEvery15MinsQueryVariables>(GetVAnchorsRelayerFeeEvery15MinsDocument, variables, options) as Promise<GetVAnchorsRelayerFeeEvery15MinsQuery>;
+    },
+    GetVAnchorRelayerFeeByTokenEvery15Mins(variables: GetVAnchorRelayerFeeByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorRelayerFeeByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorRelayerFeeByTokenEvery15MinsQuery, GetVAnchorRelayerFeeByTokenEvery15MinsQueryVariables>(GetVAnchorRelayerFeeByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorRelayerFeeByTokenEvery15MinsQuery>;
+    },
+    GetVAnchorTotalValueLocked(variables: GetVAnchorTotalValueLockedQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedQuery> {
+      return requester<GetVAnchorTotalValueLockedQuery, GetVAnchorTotalValueLockedQueryVariables>(GetVAnchorTotalValueLockedDocument, variables, options) as Promise<GetVAnchorTotalValueLockedQuery>;
+    },
+    GetVAnchorTotalValueLockeds(variables: GetVAnchorTotalValueLockedsQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedsQuery> {
+      return requester<GetVAnchorTotalValueLockedsQuery, GetVAnchorTotalValueLockedsQueryVariables>(GetVAnchorTotalValueLockedsDocument, variables, options) as Promise<GetVAnchorTotalValueLockedsQuery>;
+    },
+    GetVAnchorTotalValueLockedByTokens(variables: GetVAnchorTotalValueLockedByTokensQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedByTokensQuery> {
+      return requester<GetVAnchorTotalValueLockedByTokensQuery, GetVAnchorTotalValueLockedByTokensQueryVariables>(GetVAnchorTotalValueLockedByTokensDocument, variables, options) as Promise<GetVAnchorTotalValueLockedByTokensQuery>;
+    },
+    GetVAnchorTotalValueLockedEvery15Mins(variables: GetVAnchorTotalValueLockedEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedEvery15MinsQuery> {
+      return requester<GetVAnchorTotalValueLockedEvery15MinsQuery, GetVAnchorTotalValueLockedEvery15MinsQueryVariables>(GetVAnchorTotalValueLockedEvery15MinsDocument, variables, options) as Promise<GetVAnchorTotalValueLockedEvery15MinsQuery>;
+    },
+    GetVAnchorsTotalValueLockedEvery15Mins(variables: GetVAnchorsTotalValueLockedEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedEvery15MinsQuery> {
+      return requester<GetVAnchorsTotalValueLockedEvery15MinsQuery, GetVAnchorsTotalValueLockedEvery15MinsQueryVariables>(GetVAnchorsTotalValueLockedEvery15MinsDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedEvery15MinsQuery>;
+    },
+    GetVAnchorTotalValueLockedByTokenEvery15Mins(variables: GetVAnchorTotalValueLockedByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorTotalValueLockedByTokenEvery15MinsQuery, GetVAnchorTotalValueLockedByTokenEvery15MinsQueryVariables>(GetVAnchorTotalValueLockedByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorTotalValueLockedByTokenEvery15MinsQuery>;
+    },
+    GetVAnchorTotalValueLockedEveryDays(variables: GetVAnchorTotalValueLockedEveryDaysQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedEveryDaysQuery> {
+      return requester<GetVAnchorTotalValueLockedEveryDaysQuery, GetVAnchorTotalValueLockedEveryDaysQueryVariables>(GetVAnchorTotalValueLockedEveryDaysDocument, variables, options) as Promise<GetVAnchorTotalValueLockedEveryDaysQuery>;
+    },
+    GetVAnchorsTotalValueLockedEveryDays(variables: GetVAnchorsTotalValueLockedEveryDaysQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedEveryDaysQuery> {
+      return requester<GetVAnchorsTotalValueLockedEveryDaysQuery, GetVAnchorsTotalValueLockedEveryDaysQueryVariables>(GetVAnchorsTotalValueLockedEveryDaysDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedEveryDaysQuery>;
+    },
+    GetVAnchorTotalValueLockedByTokenEveryDays(variables: GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedByTokenEveryDaysQuery> {
+      return requester<GetVAnchorTotalValueLockedByTokenEveryDaysQuery, GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables>(GetVAnchorTotalValueLockedByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorTotalValueLockedByTokenEveryDaysQuery>;
+    },
+    GetVAnchorsTotalValueLockedByDateRangeEveryDays(variables: GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery> {
+      return requester<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery, GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables>(GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery>;
+    },
+    GetVAnchorWithdrawal(variables: GetVAnchorWithdrawalQueryVariables, options?: C): Promise<GetVAnchorWithdrawalQuery> {
+      return requester<GetVAnchorWithdrawalQuery, GetVAnchorWithdrawalQueryVariables>(GetVAnchorWithdrawalDocument, variables, options) as Promise<GetVAnchorWithdrawalQuery>;
+    },
+    GetVAnchorsWithdrawals(variables: GetVAnchorsWithdrawalsQueryVariables, options?: C): Promise<GetVAnchorsWithdrawalsQuery> {
+      return requester<GetVAnchorsWithdrawalsQuery, GetVAnchorsWithdrawalsQueryVariables>(GetVAnchorsWithdrawalsDocument, variables, options) as Promise<GetVAnchorsWithdrawalsQuery>;
+    },
+    GetVAnchorWithdrawalByTokens(variables: GetVAnchorWithdrawalByTokensQueryVariables, options?: C): Promise<GetVAnchorWithdrawalByTokensQuery> {
+      return requester<GetVAnchorWithdrawalByTokensQuery, GetVAnchorWithdrawalByTokensQueryVariables>(GetVAnchorWithdrawalByTokensDocument, variables, options) as Promise<GetVAnchorWithdrawalByTokensQuery>;
+    },
+    GetVAnchorWithdrawalEvery15Mins(variables: GetVAnchorWithdrawalEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorWithdrawalEvery15MinsQuery> {
+      return requester<GetVAnchorWithdrawalEvery15MinsQuery, GetVAnchorWithdrawalEvery15MinsQueryVariables>(GetVAnchorWithdrawalEvery15MinsDocument, variables, options) as Promise<GetVAnchorWithdrawalEvery15MinsQuery>;
+    },
+    GetVAnchorsWithdrawalEvery15Mins(variables: GetVAnchorsWithdrawalEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsWithdrawalEvery15MinsQuery> {
+      return requester<GetVAnchorsWithdrawalEvery15MinsQuery, GetVAnchorsWithdrawalEvery15MinsQueryVariables>(GetVAnchorsWithdrawalEvery15MinsDocument, variables, options) as Promise<GetVAnchorsWithdrawalEvery15MinsQuery>;
+    },
+    GetVAnchorWithdrawalByTokenEvery15Mins(variables: GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorWithdrawalByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorWithdrawalByTokenEvery15MinsQuery, GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables>(GetVAnchorWithdrawalByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorWithdrawalByTokenEvery15MinsQuery>;
+    },
+    GetVAnchorTotalWrappingFee(variables: GetVAnchorTotalWrappingFeeQueryVariables, options?: C): Promise<GetVAnchorTotalWrappingFeeQuery> {
+      return requester<GetVAnchorTotalWrappingFeeQuery, GetVAnchorTotalWrappingFeeQueryVariables>(GetVAnchorTotalWrappingFeeDocument, variables, options) as Promise<GetVAnchorTotalWrappingFeeQuery>;
+    },
+    GetVAnchorsTotalWrappingFees(variables: GetVAnchorsTotalWrappingFeesQueryVariables, options?: C): Promise<GetVAnchorsTotalWrappingFeesQuery> {
+      return requester<GetVAnchorsTotalWrappingFeesQuery, GetVAnchorsTotalWrappingFeesQueryVariables>(GetVAnchorsTotalWrappingFeesDocument, variables, options) as Promise<GetVAnchorsTotalWrappingFeesQuery>;
+    },
+    GetVAnchorTotalWrappingFeeByTokens(variables: GetVAnchorTotalWrappingFeeByTokensQueryVariables, options?: C): Promise<GetVAnchorTotalWrappingFeeByTokensQuery> {
+      return requester<GetVAnchorTotalWrappingFeeByTokensQuery, GetVAnchorTotalWrappingFeeByTokensQueryVariables>(GetVAnchorTotalWrappingFeeByTokensDocument, variables, options) as Promise<GetVAnchorTotalWrappingFeeByTokensQuery>;
+    },
+    GetVAnchorWrappingFeeEvery15Mins(variables: GetVAnchorWrappingFeeEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorWrappingFeeEvery15MinsQuery> {
+      return requester<GetVAnchorWrappingFeeEvery15MinsQuery, GetVAnchorWrappingFeeEvery15MinsQueryVariables>(GetVAnchorWrappingFeeEvery15MinsDocument, variables, options) as Promise<GetVAnchorWrappingFeeEvery15MinsQuery>;
+    },
+    GetVAnchorsWrappingFeeEvery15Mins(variables: GetVAnchorsWrappingFeeEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsWrappingFeeEvery15MinsQuery> {
+      return requester<GetVAnchorsWrappingFeeEvery15MinsQuery, GetVAnchorsWrappingFeeEvery15MinsQueryVariables>(GetVAnchorsWrappingFeeEvery15MinsDocument, variables, options) as Promise<GetVAnchorsWrappingFeeEvery15MinsQuery>;
+    },
+    GetVAnchorWrappingFeeByTokenEvery15Mins(variables: GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorWrappingFeeByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorWrappingFeeByTokenEvery15MinsQuery, GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables>(GetVAnchorWrappingFeeByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorWrappingFeeByTokenEvery15MinsQuery>;
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;

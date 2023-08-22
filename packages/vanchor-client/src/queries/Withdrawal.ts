@@ -1,9 +1,9 @@
-import { execute } from '../../.graphclient';
+import { getBuiltGraphSDK } from '../../.graphclient';
 import { SubgraphUrl } from '../config';
 
 export interface WithdrawalByChain {
   subgraphUrl: SubgraphUrl;
-  withdrawal: number;
+  withdrawal: bigint | null;
 }
 
 export interface WithdrawalByChainAndByToken extends WithdrawalByChain {
@@ -12,31 +12,29 @@ export interface WithdrawalByChainAndByToken extends WithdrawalByChain {
 
 export interface WithdrawalByVAnchor {
   vAnchorAddress: string;
-  withdrawal: number;
+  withdrawal: bigint | null;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorWithdrawalByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
 ): Promise<WithdrawalByChain> => {
-  const query = /* GraphQL */ `
-  query Withdrawal {
-  vanchorWithdrawal(id: "${vAnchorAddress.toLowerCase()}"){
-
-    withdrawal
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorWithdrawal(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
   return {
-    withdrawal: result.data.vanchorWithdrawal?.withdrawal,
+    withdrawal:
+      result.vanchorWithdrawal == null
+        ? null
+        : BigInt(result.vanchorWithdrawal.withdrawal),
     subgraphUrl: subgraphUrl,
   };
 };
@@ -58,30 +56,19 @@ export const GetVAnchorsWithdrawalByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
 ): Promise<Array<WithdrawalByVAnchor>> => {
-  const query = /* GraphQL */ `
-  query WithdrawalByVAnchor {
-  vanchorWithdrawals(
-    where: {id_in: [${vanchorAddresses
-      .map((address) => '"' + address.toLowerCase() + '"')
-      .join(',')}]}
-  ) {
-    id
-    withdrawal
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsWithdrawals(
+    {
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return result.data.vanchorWithdrawals?.map((item: any) => {
+  return result.vanchorWithdrawals.map((item) => {
     return {
-      withdrawal: item?.withdrawal,
-      vAnchorAddress: item?.id,
+      withdrawal: BigInt(item.withdrawal),
+      vAnchorAddress: item.id,
     };
   });
 };
@@ -104,19 +91,11 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (
   vAnchorAddress: string,
   tokenSymbol: string
 ): Promise<WithdrawalByChainAndByToken> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorWithdrawalByTokens(
-    first: 1
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    withdrawal
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorWithdrawalByTokens(
+    {
+      tokenSymbol,
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
@@ -124,10 +103,10 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (
 
   return {
     withdrawal:
-      result.data.vanchorWithdrawalByTokens &&
-      result.data.vanchorWithdrawalByTokens.length > 0
-        ? result.data.vanchorWithdrawalByTokens[0].withdrawal
-        : undefined,
+      result.vanchorWithdrawalByTokens &&
+      result.vanchorWithdrawalByTokens.length > 0
+        ? BigInt(result.vanchorWithdrawalByTokens[0].withdrawal)
+        : null,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };
