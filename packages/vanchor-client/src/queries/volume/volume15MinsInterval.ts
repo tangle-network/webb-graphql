@@ -1,10 +1,10 @@
-import { execute } from '../../../.graphclient';
-import { DateUtil } from '../../utils/date';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
+import { DateUtil } from '../../utils/date';
 
 export interface VolumeByChain15MinsIntervalItem {
   subgraphUrl: SubgraphUrl;
-  volume: number;
+  volume: bigint;
   startInterval: Date;
   endInterval: Date;
   vAnchorAddress: string;
@@ -17,53 +17,41 @@ export interface VolumeByChainAndByToken15MinsIntervalItem
 
 export interface VolumeByVAnchor15MinsIntervalItem {
   vAnchorAddress: string;
-  volume: number;
+  volume: bigint;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorVolumeByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<VolumeByChain15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-    query Volume {
-      vanchorVolumeEvery15Mins(
-        where: {
-          endInterval_lte: "${DateUtil.fromDateToEpoch(endTimestamp)}",
-          startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}",
-          vAnchorAddress: "${vAnchorAddress.toLowerCase()}"
-        }
-      ) {
-        startInterval
-        volume
-        vAnchorAddress
-        endInterval
-      }
-    }
-  `;
-
-  const result = await execute(
-    query,
-    {},
+): Promise<VolumeByChain15MinsIntervalItem | null> => {
+  const result = await sdk.GetVAnchorVolumeEvery15Mins(
+    {
+      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumeEvery15Mins == null) {
-    return [] as Array<VolumeByChain15MinsIntervalItem>;
+  if (result.vanchorVolumeEvery15Mins?.[0]?.volume === undefined) {
+    return null;
   }
 
-  return result.data.vanchorVolumeEvery15Mins?.map((item: any) => {
-    return {
-      volume: +item?.volume,
-      subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
-    };
-  });
+  const item = result.vanchorVolumeEvery15Mins[0];
+
+  return {
+    volume: BigInt(item.volume),
+    subgraphUrl: subgraphUrl,
+    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+    vAnchorAddress: String(item.vAnchorAddress),
+  };
 };
 
 export const GetVAnchorVolumeByChains15MinsInterval = async (
@@ -71,8 +59,8 @@ export const GetVAnchorVolumeByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<Array<VolumeByChain15MinsIntervalItem>>> => {
-  const promises: Array<Promise<Array<VolumeByChain15MinsIntervalItem>>> = [];
+): Promise<Array<VolumeByChain15MinsIntervalItem | null>> => {
+  const promises: Array<Promise<VolumeByChain15MinsIntervalItem | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -94,64 +82,44 @@ export const GetVAnchorsVolumeByChain15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<VolumeByVAnchor15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-    query VolumeByVAnchor {
-      vanchorVolumeEvery15Mins(
-        where: {
-          endInterval_lte: "${DateUtil.fromDateToEpoch(endTimestamp)}",
-          startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}",
-          vAnchorAddress_in: [
-            ${vanchorAddresses
-              .map((address) => '"' + address.toLowerCase() + '"')
-              .join(',')}
-          ]
-        }
-      ) {
-        id
-        startInterval
-        volume
-        endInterval
-        vAnchorAddress
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsVolumeEvery15Mins(
+    {
+      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumeEvery15Mins == null) {
+  if (!result.vanchorVolumeEvery15Mins?.length) {
     return [] as Array<VolumeByVAnchor15MinsIntervalItem>;
   }
 
-  if (result?.data?.vanchorVolumeEvery15Mins == null) {
-    return [] as Array<VolumeByVAnchor15MinsIntervalItem>;
-  }
+  const volumeMap: { [vanchorAddress: string]: bigint } = {};
 
-  const volumeMap: { [vanchorAddress: string]: number } = {};
+  result.vanchorVolumeEvery15Mins.map((item) => {
+    const vAnchorAddr = String(item.vAnchorAddress);
 
-  result.data.vanchorVolumeEvery15Mins?.map((item: any) => {
-    if (!volumeMap[item?.vAnchorAddress]) {
-      volumeMap[item?.vAnchorAddress] = 0;
+    if (!volumeMap[vAnchorAddr]) {
+      volumeMap[vAnchorAddr] = BigInt(0);
     }
 
-    volumeMap[item?.vAnchorAddress] += +item?.volume;
+    volumeMap[vAnchorAddr] += BigInt(item.volume);
   });
 
-  const VolumeByVAnchor15MinsIntervalItems: Array<VolumeByVAnchor15MinsIntervalItem> =
+  const volumeByVAnchor15MinsIntervalItems: Array<VolumeByVAnchor15MinsIntervalItem> =
     [];
 
   for (const key in volumeMap) {
-    VolumeByVAnchor15MinsIntervalItems.push({
+    volumeByVAnchor15MinsIntervalItems.push({
       vAnchorAddress: key,
       volume: volumeMap[key],
     });
   }
 
-  return VolumeByVAnchor15MinsIntervalItems;
+  return volumeByVAnchor15MinsIntervalItems;
 };
 
 export const GetVAnchorsVolumeByChains15MinsInterval = async (
@@ -183,42 +151,30 @@ export const GetVAnchorVolumeByChainAndByToken15MinsInterval = async (
   startTimestamp: Date,
   endTimestamp: Date
 ): Promise<Array<VolumeByChainAndByToken15MinsIntervalItem>> => {
-  const query = /* GraphQL */ `
-    query MyQuery {
-      vanchorVolumeByTokenEvery15Mins(
-        where: {
-          tokenSymbol: "${tokenSymbol}",
-          vAnchorAddress: "${vAnchorAddress.toLowerCase()}",
-          endInterval_lte: "${DateUtil.fromDateToEpoch(endTimestamp)}",
-          startInterval_gte: "${DateUtil.fromDateToEpoch(startTimestamp)}"
-        }
-      ) {
-        volume
-        startInterval
-        endInterval
-        vAnchorAddress
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorVolumeByTokenEvery15Mins(
+    {
+      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      tokenSymbol,
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumeByTokenEvery15Mins == null) {
+  if (!result.vanchorVolumeByTokenEvery15Mins?.length) {
     return [] as Array<VolumeByChainAndByToken15MinsIntervalItem>;
   }
 
-  return result.data.vanchorVolumeByTokenEvery15Mins?.map((item: any) => {
+  return result.vanchorVolumeByTokenEvery15Mins.map((item) => {
     return {
-      volume: +item?.volume,
+      volume: BigInt(item.volume),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
       subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
+      tokenSymbol,
+      vAnchorAddress: String(item.vAnchorAddress),
     };
   });
 };

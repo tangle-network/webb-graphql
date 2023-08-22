@@ -33,7 +33,7 @@ export const GetVAnchorTotalRelayerFeeByChain = async (
 
   return {
     totalRelayerFee:
-      result.vanchorTotalRelayerFee == null
+      result.vanchorTotalRelayerFee?.fees === undefined
         ? null
         : BigInt(result.vanchorTotalRelayerFee.fees),
     subgraphUrl: subgraphUrl,
@@ -68,9 +68,13 @@ export const GetVAnchorsTotalRelayerFeeByChain = async (
     }
   );
 
+  if (!result.vanchorTotalRelayerFees?.length) {
+    return [] as Array<TotalRelayerFeeByVAnchor>;
+  }
+
   return result.vanchorTotalRelayerFees.map((item) => {
     return {
-      totalRelayerFee: item.fees,
+      totalRelayerFee: BigInt(item.fees),
       vAnchorAddress: item.id,
     };
   });
@@ -107,11 +111,9 @@ export const GetVAnchorTotalRelayerFeeByChainAndByToken = async (
   );
 
   return {
-    totalRelayerFee:
-      result.vanchorTotalRelayerFeeByTokens &&
-      result.vanchorTotalRelayerFeeByTokens.length > 0
-        ? result.vanchorTotalRelayerFeeByTokens[0].fees
-        : undefined,
+    totalRelayerFee: !result.vanchorTotalRelayerFeeByTokens?.length
+      ? BigInt(result.vanchorTotalRelayerFeeByTokens[0].fees)
+      : null,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };

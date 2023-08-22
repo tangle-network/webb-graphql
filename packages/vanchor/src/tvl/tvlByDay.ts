@@ -2,13 +2,13 @@ import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   VAnchorTotalValueLocked,
   VAnchorTotalValueLockedByToken,
-  VAnchorTotalValueLockedByTokenByDay,
-  VAnchorTotalValueLockedByDay,
+  VAnchorTotalValueLockedByTokenEveryDay,
+  VAnchorTotalValueLockedEveryDay,
 } from '../../generated/schema';
 import { getDate } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export default function recordTVLByDay(
+export default function recordTVLEveryDay(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   amount: BigInt,
@@ -17,19 +17,19 @@ export default function recordTVLByDay(
   const date: i32 = getDate(time);
 
   // generate id
-  const idByTokenByDay =
+  const idByTokenEveryDay =
     date.toString() +
     '-' +
     vAnchorAddress.toHexString() +
     '-' +
     tokenAddress.toHexString();
 
-  const vanchorTotalValueLockedByTokenByDay =
-    VAnchorTotalValueLockedByTokenByDay.load(idByTokenByDay);
+  const vanchorTotalValueLockedByTokenEveryDay =
+    VAnchorTotalValueLockedByTokenEveryDay.load(idByTokenEveryDay);
 
-  if (!vanchorTotalValueLockedByTokenByDay) {
+  if (!vanchorTotalValueLockedByTokenEveryDay) {
     const newVanchorTotalValueLockedByToken =
-      new VAnchorTotalValueLockedByTokenByDay(idByTokenByDay);
+      new VAnchorTotalValueLockedByTokenEveryDay(idByTokenEveryDay);
 
     // getting current tvl by token
     const idByToken =
@@ -49,18 +49,19 @@ export default function recordTVLByDay(
     newVanchorTotalValueLockedByToken.date = BigInt.fromString(date.toString());
     newVanchorTotalValueLockedByToken.save();
   } else {
-    vanchorTotalValueLockedByTokenByDay.totalValueLocked =
-      vanchorTotalValueLockedByTokenByDay.totalValueLocked.plus(amount);
-    vanchorTotalValueLockedByTokenByDay.save();
+    vanchorTotalValueLockedByTokenEveryDay.totalValueLocked =
+      vanchorTotalValueLockedByTokenEveryDay.totalValueLocked.plus(amount);
+    vanchorTotalValueLockedByTokenEveryDay.save();
   }
 
   // Update the total value locked for vanchor
-  const idByDay = date.toString() + '-' + vAnchorAddress.toHexString();
-  const vanchorTotalValueLocked = VAnchorTotalValueLockedByDay.load(idByDay);
+  const idEveryDay = date.toString() + '-' + vAnchorAddress.toHexString();
+  const vanchorTotalValueLocked =
+    VAnchorTotalValueLockedEveryDay.load(idEveryDay);
 
   if (!vanchorTotalValueLocked) {
-    const newVanchorTotalValueLocked = new VAnchorTotalValueLockedByDay(
-      idByDay
+    const newVanchorTotalValueLocked = new VAnchorTotalValueLockedEveryDay(
+      idEveryDay
     );
 
     // getting current tvl

@@ -1,5 +1,5 @@
-import { getBuiltGraphSDK } from '../../.graphclient';
-import { SubgraphUrl } from '../config';
+import { getBuiltGraphSDK } from '../../../.graphclient';
+import { SubgraphUrl } from '../../config';
 
 export interface WithdrawalByChain {
   subgraphUrl: SubgraphUrl;
@@ -65,6 +65,9 @@ export const GetVAnchorsWithdrawalByChain = async (
     }
   );
 
+  if (!result.vanchorWithdrawals?.length) {
+    return [] as Array<WithdrawalByVAnchor>;
+  }
   return result.vanchorWithdrawals.map((item: any) => {
     return {
       withdrawal: BigInt(item.withdrawal),
@@ -103,8 +106,7 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (
 
   return {
     withdrawal:
-      result.vanchorWithdrawalByTokens &&
-      result.vanchorWithdrawalByTokens.length > 0
+      result.vanchorWithdrawalByTokens?.[0]?.withdrawal !== undefined
         ? BigInt(result.vanchorWithdrawalByTokens[0].withdrawal)
         : null,
     subgraphUrl: subgraphUrl,

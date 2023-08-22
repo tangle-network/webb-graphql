@@ -1,60 +1,29 @@
-import { execute } from '../../../.graphclient';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
 
-export interface VolumeByChain {
-  volume: number | undefined;
-  subgraphUrl: SubgraphUrl;
-}
-
-export interface VolumeByChainAndByToken extends VolumeByChain {
-  tokenSymbol: string;
-}
-
-export interface VolumeByVAnchor {
-  vAnchorAddress: string;
-  volume: number | undefined;
-}
-
-export interface VolumeByVAnchorByChain {
-  vAnchorAddress: string;
-  volume: number | undefined;
-  subgraphUrl: SubgraphUrl;
-}
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorVolumeByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
-): Promise<VolumeByChain> => {
-  const query = /* GraphQL */ `
-  query Volume {
-  vanchorVolume(id: "${vAnchorAddress.toLowerCase()}"){
-
-    volume
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
-    {
-      subgraphUrl,
-    }
+): Promise<bigint | null> => {
+  const result = await sdk.GetVAnchorVolumeByChain(
+    { id: vAnchorAddress.toLowerCase() },
+    { subgraphUrl }
   );
 
-  return {
-    volume:
-      result?.data?.vanchorVolume?.volume == null
-        ? undefined
-        : +result.data.vanchorVolume.volume,
-    subgraphUrl: subgraphUrl,
-  };
+  if (result.vanchorVolume?.volume === undefined) {
+    return null;
+  }
+
+  return BigInt(result.vanchorVolume.volume);
 };
 
 export const GetVAnchorVolumeByChains = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
-): Promise<Array<VolumeByChain>> => {
-  const promises: Array<Promise<VolumeByChain>> = [];
+): Promise<Array<bigint | null>> => {
+  const promises: Array<Promise<bigint | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(GetVAnchorVolumeByChain(subgraphUrl, vAnchorAddress));
@@ -66,44 +35,26 @@ export const GetVAnchorVolumeByChains = async (
 export const GetVAnchorsVolumeByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
-): Promise<Array<VolumeByVAnchor>> => {
-  const query = /* GraphQL */ `
-  query VolumeByVAnchor {
-  vanchorVolumes(
-    where: {id_in: [${vanchorAddresses
-      .map((address) => '"' + address.toLowerCase() + '"')
-      .join(',')}]}
-  ) {
-    id
-    volume
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+): Promise<Array<bigint | null>> => {
+  const result = await sdk.GetVAnchorsVolumeByChain(
+    {
+      vanchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumes == null) {
-    return [] as Array<VolumeByVAnchor>;
-  }
-
-  return result.data.vanchorVolumes?.map((item: any) => {
-    return {
-      volume: +item?.volume,
-      vAnchorAddress: item?.id,
-    };
-  });
+  return result.vanchorVolumes.map((item) =>
+    item?.volume !== undefined ? BigInt(item.volume) : null
+  );
 };
 
 export const GetVAnchorsVolumeByChains = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
-): Promise<Array<Array<VolumeByVAnchor>>> => {
-  const promises: Array<Promise<Array<VolumeByVAnchor>>> = [];
+): Promise<Array<Array<bigint | null>>> => {
+  const promises: Array<Promise<Array<bigint | null>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(GetVAnchorsVolumeByChain(subgraphUrl, vanchorAddresses));
@@ -116,42 +67,33 @@ export const GetVAnchorVolumeByChainAndByToken = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string
-): Promise<VolumeByChainAndByToken> => {
-  const query = /* GraphQL */ `
-  query MyQuery {
-  vanchorVolumeByTokens(
-    first: 1
-    where: {tokenSymbol: "${tokenSymbol}", vAnchorAddress: "${vAnchorAddress.toLowerCase()}"}
-  ) {
-    volume
-  }
-}
-`;
-  const result = await execute(
-    query,
-    {},
+): Promise<bigint | null> => {
+  const result = await sdk.GetVAnchorVolumeByTokens(
+    {
+      tokenSymbol,
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  return {
-    volume:
-      result?.data?.vanchorVolumeByTokens != null &&
-      result.data.vanchorVolumeByTokens.length > 0
-        ? +result.data.vanchorVolumeByTokens[0].volume
-        : undefined,
-    subgraphUrl: subgraphUrl,
-    tokenSymbol: tokenSymbol,
-  };
+  if (
+    !result.vanchorVolumeByTokens?.length ||
+    result.vanchorVolumeByTokens[0]?.volume === undefined
+  ) {
+    return null;
+  }
+
+  return BigInt(result.vanchorVolumeByTokens[0].volume);
 };
 
 export const GetVAnchorVolumeByChainsAndByToken = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
-): Promise<Array<VolumeByChainAndByToken>> => {
-  const promises: Array<Promise<VolumeByChainAndByToken>> = [];
+): Promise<Array<bigint | null>> => {
+  const promises: Array<Promise<bigint | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(

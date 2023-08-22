@@ -22,12 +22,12 @@ export interface WithdrawalByVAnchor15MinsIntervalItem {
 
 const sdk = getBuiltGraphSDK();
 
-export const GetVAnchorWithdrawalByChainHistory = async (
+export const GetVAnchorWithdrawalByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<WithdrawalByChainHistoryItem> => {
+): Promise<WithdrawalByChain15MinsIntervalItem | null> => {
   const result = await sdk.GetVAnchorWithdrawalEvery15Mins(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
@@ -39,15 +39,19 @@ export const GetVAnchorWithdrawalByChainHistory = async (
     }
   );
 
-  return result.vanchorWithdrawalEvery15Mins.map((item) => {
-    return {
-      withdrawal: BigInt(item.withdrawal),
-      subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-      vAnchorAddress: item.vAnchorAddress,
-    };
-  })?.[0];
+  if (result.vanchorWithdrawalEvery15Mins?.[0]?.withdrawal === undefined) {
+    return null;
+  }
+
+  const item = result.vanchorWithdrawalEvery15Mins[0];
+
+  return {
+    withdrawal: BigInt(item.withdrawal),
+    subgraphUrl: subgraphUrl,
+    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+    vAnchorAddress: String(item.vAnchorAddress),
+  };
 };
 
 export const GetVAnchorWithdrawalByChains15MinsInterval = async (
@@ -55,8 +59,8 @@ export const GetVAnchorWithdrawalByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<Array<WithdrawalByChain15MinsIntervalItem>>> => {
-  const promises: Array<Promise<Array<WithdrawalByChain15MinsIntervalItem>>> =
+): Promise<Array<WithdrawalByChain15MinsIntervalItem | null>> => {
+  const promises: Array<Promise<WithdrawalByChain15MinsIntervalItem | null>> =
     [];
 
   for (const subgraphUrl of subgraphUrls) {
@@ -78,7 +82,7 @@ export const GetVAnchorsWithdrawalByChain15MinsInterval = async (
   vanchorAddresses: Array<string>,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WithdrawalByVAnchorHistoryItem>> => {
+): Promise<Array<WithdrawalByVAnchor15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorsWithdrawalEvery15Mins(
     {
       vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
@@ -89,6 +93,10 @@ export const GetVAnchorsWithdrawalByChain15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (!result.vanchorWithdrawalEvery15Mins?.length) {
+    return [] as Array<WithdrawalByVAnchor15MinsIntervalItem>;
+  }
 
   const withdrawalMap: { [vanchorAddress: string]: bigint } = {};
 
@@ -142,7 +150,7 @@ export const GetVAnchorWithdrawalByChainAndByToken15MinsInterval = async (
   tokenSymbol: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WithdrawalByChainAndByTokenHistoryItem>> => {
+): Promise<Array<WithdrawalByChainAndByToken15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorWithdrawalByTokenEvery15Mins(
     {
       tokenSymbol,
@@ -154,6 +162,10 @@ export const GetVAnchorWithdrawalByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (!result.vanchorWithdrawalByTokenEvery15Mins?.length) {
+    return [] as Array<WithdrawalByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.vanchorWithdrawalByTokenEvery15Mins.map((item) => {
     return {

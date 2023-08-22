@@ -6300,19 +6300,6 @@ const schemaAST = {
       directives: [],
     },
     {
-      kind: 'ScalarTypeDefinition',
-      description: {
-        kind: 'StringValue',
-        value: '8 bytes signed integer\n',
-        block: true,
-      },
-      name: {
-        kind: 'Name',
-        value: 'Int8',
-      },
-      directives: [],
-    },
-    {
       kind: 'ObjectTypeDefinition',
       name: {
         kind: 'Name',
@@ -18772,6 +18759,490 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
+            value: 'vanchorWithdrawalEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorWithdrawalEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorWithdrawalEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorWithdrawalEveryDay',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorWithdrawalByTokenEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorWithdrawalByTokenEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorWithdrawalByTokenEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalByTokenEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalByTokenEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorWithdrawalByTokenEveryDay',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
             value: 'vanchorDeposit',
           },
           arguments: [
@@ -20697,6 +21168,1458 @@ const schemaAST = {
                   name: {
                     kind: 'Name',
                     value: 'VAnchorTransferLog',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolume',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolume',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumes',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolume_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolume_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolume',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByToken',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeByToken',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokens',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByToken_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByToken_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeByToken',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEvery15Min',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeEvery15Min',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEvery15Mins',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEvery15Min_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEvery15Min_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeEvery15Min',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEvery15Min',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeByTokenEvery15Min',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEvery15Mins',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEvery15Min_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEvery15Min_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeByTokenEvery15Min',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeEveryDay',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeByTokenEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeByTokenEveryDay',
                   },
                 },
               },
@@ -31212,6 +33135,490 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
+            value: 'vanchorWithdrawalEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorWithdrawalEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorWithdrawalEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorWithdrawalEveryDay',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorWithdrawalByTokenEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorWithdrawalByTokenEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorWithdrawalByTokenEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalByTokenEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorWithdrawalByTokenEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorWithdrawalByTokenEveryDay',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
             value: 'vanchorDeposit',
           },
           arguments: [
@@ -33137,6 +35544,1458 @@ const schemaAST = {
                   name: {
                     kind: 'Name',
                     value: 'VAnchorTransferLog',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolume',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolume',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumes',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolume_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolume_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolume',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByToken',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeByToken',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokens',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByToken_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByToken_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeByToken',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEvery15Min',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeEvery15Min',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEvery15Mins',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEvery15Min_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEvery15Min_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeEvery15Min',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEvery15Min',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeByTokenEvery15Min',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEvery15Mins',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEvery15Min_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEvery15Min_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeByTokenEvery15Min',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeEveryDay',
+                  },
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEveryDay',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'id',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'ID',
+                  },
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'VAnchorVolumeByTokenEveryDay',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vanchorVolumeByTokenEveryDays',
+          },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'skip',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '0',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'first',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Int',
+                },
+              },
+              defaultValue: {
+                kind: 'IntValue',
+                value: '100',
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderBy',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEveryDay_orderBy',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'orderDirection',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'OrderDirection',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: {
+                kind: 'Name',
+                value: 'where',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'VAnchorVolumeByTokenEveryDay_filter',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'block',
+              },
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Block_height',
+                },
+              },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              description: {
+                kind: 'StringValue',
+                value:
+                  'Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.',
+                block: true,
+              },
+              name: {
+                kind: 'Name',
+                value: 'subgraphError',
+              },
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: '_SubgraphErrorPolicy_',
+                  },
+                },
+              },
+              defaultValue: {
+                kind: 'EnumValue',
+                value: 'deny',
+              },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: {
+                    kind: 'Name',
+                    value: 'VAnchorVolumeByTokenEveryDay',
                   },
                 },
               },
@@ -63657,6 +67516,6999 @@ const schemaAST = {
       kind: 'ObjectTypeDefinition',
       name: {
         kind: 'Name',
+        value: 'VAnchorVolume',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByToken',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByTokenEvery15Min',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByTokenEvery15Min_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeByTokenEvery15Min_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeByTokenEvery15Min_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByTokenEvery15Min_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByTokenEveryDay',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByTokenEveryDay_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeByTokenEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeByTokenEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByTokenEveryDay_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByToken_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeByToken_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeByToken_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeByToken_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeEvery15Min',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeEvery15Min_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeEvery15Min_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeEvery15Min_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeEvery15Min_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeEveryDay',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeEveryDay_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolumeEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolumeEveryDay_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolume_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolume_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorVolume_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorVolume_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'volume',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
         value: 'VAnchorWithdrawal',
       },
       fields: [
@@ -65792,6 +76644,1785 @@ const schemaAST = {
           name: {
             kind: 'Name',
             value: 'endInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorWithdrawalByTokenEveryDay',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorWithdrawalByTokenEveryDay_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorWithdrawalByTokenEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorWithdrawalByTokenEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorWithdrawalByTokenEveryDay_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'tokenSymbol',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
           },
           directives: [],
         },
@@ -68678,6 +81309,1257 @@ const schemaAST = {
           name: {
             kind: 'Name',
             value: 'endInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount',
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'ObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorWithdrawalEveryDay',
+      },
+      fields: [
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'String',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'Bytes',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: 'InputObjectTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorWithdrawalEveryDay_filter',
+      },
+      fields: [
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'String',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_contains_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_starts_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id_not_ends_with_nocase',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'String',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'Bytes',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress_not_contains',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'Bytes',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'withdrawal_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'averageWithdrawal_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'totalCount_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          description: {
+            kind: 'StringValue',
+            value: 'Filter for the block changed event.',
+            block: true,
+          },
+          name: {
+            kind: 'Name',
+            value: '_change_block',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BlockChangedFilter',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'and',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorWithdrawalEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'or',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'VAnchorWithdrawalEveryDay_filter',
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      directives: [],
+    },
+    {
+      kind: 'EnumTypeDefinition',
+      name: {
+        kind: 'Name',
+        value: 'VAnchorWithdrawalEveryDay_orderBy',
+      },
+      values: [
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'id',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'vAnchorAddress',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'date',
           },
           directives: [],
         },

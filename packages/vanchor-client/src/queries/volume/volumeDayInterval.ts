@@ -1,10 +1,10 @@
-import { execute } from '../../../.graphclient';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { DateUtil, getEpochArray } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
 
 export interface VolumeByChainDayIntervalItem {
   subgraphUrl: SubgraphUrl;
-  volume: number;
+  volume: bigint;
   date: Date;
   vAnchorAddress: string;
 }
@@ -16,60 +16,50 @@ export interface VolumeByChainAndByTokenDayIntervalItem
 
 export interface VolumeByVAnchorDayIntervalItem {
   vAnchorAddress: string;
-  volume: number;
+  volume: bigint;
 }
 
 export interface VolumeVAnchorsDateRangeItem {
-  [epoch: string]: number;
+  [epoch: string]: bigint;
 }
+
+const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorVolumeByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<VolumeByChainDayIntervalItem>> => {
-  const query = /* GraphQL */ `
-    query Volume {
-      vanchorVolumeEveryDays(
-        where: {
-          date: "${DateUtil.fromDateToEpoch(date)}",
-          vAnchorAddress: "${vAnchorAddress.toLowerCase()}"
-        }
-      ) {
-        volume
-        vAnchorAddress
-        date
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+): Promise<VolumeByChainDayIntervalItem | null> => {
+  const result = await sdk.GetVAnchorVolumeEveryDays(
+    {
+      date: DateUtil.fromDateToEpoch(date),
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumeEveryDays == null) {
-    return [] as Array<VolumeByChainDayIntervalItem>;
+  if (result.vanchorVolumeEveryDays?.[0]?.volume === undefined) {
+    return null;
   }
 
-  return result.data.vanchorVolumeEveryDays?.map((item: any) => {
-    return {
-      volume: +item?.volume,
-      subgraphUrl: subgraphUrl,
-      date: DateUtil.fromEpochToDate(parseInt(item?.date)),
-      vAnchorAddress: item?.vAnchorAddress,
-    };
-  });
+  const item = result.vanchorVolumeEveryDays[0];
+
+  return {
+    volume: BigInt(item.volume),
+    subgraphUrl: subgraphUrl,
+    date: DateUtil.fromEpochToDate(parseInt(item?.date)),
+    vAnchorAddress: String(item.vAnchorAddress),
+  };
 };
 
 export const GetVAnchorVolumeByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   date: Date
-): Promise<Array<Array<VolumeByChainDayIntervalItem>>> => {
-  const promises: Array<Promise<Array<VolumeByChainDayIntervalItem>>> = [];
+): Promise<Array<VolumeByChainDayIntervalItem | null>> => {
+  const promises: Array<Promise<VolumeByChainDayIntervalItem | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -85,58 +75,43 @@ export const GetVAnchorsVolumeByChainDayInterval = async (
   vanchorAddresses: Array<string>,
   date: Date
 ): Promise<Array<VolumeByVAnchorDayIntervalItem>> => {
-  const query = /* GraphQL */ `
-    query VolumeByVAnchor {
-      vanchorVolumeEveryDays(
-        where: {
-          date: "${DateUtil.fromDateToEpoch(date)}",
-          vAnchorAddress_in: [
-            ${vanchorAddresses
-              .map((address) => '"' + address.toLowerCase() + '"')
-              .join(',')}
-          ]
-        }
-      ) {
-        id
-        volume
-        vAnchorAddress
-        date
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVAnchorsVolumeEveryDay(
+    {
+      date: DateUtil.fromDateToEpoch(date),
+      vAnchorAddresses: vanchorAddresses.map((address) =>
+        address.toLowerCase()
+      ),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumeEveryDays == null) {
+  if (!result.vanchorVolumeEveryDays?.length) {
     return [] as Array<VolumeByVAnchorDayIntervalItem>;
   }
 
-  const volumeMap: { [vanchorAddress: string]: number } = {};
+  const volumeMap: { [vanchorAddress: string]: bigint } = {};
 
-  result.data.vanchorVolumeEveryDays?.map((item: any) => {
+  result.vanchorVolumeEveryDays?.map((item) => {
     if (!volumeMap[item?.vAnchorAddress]) {
-      volumeMap[item?.vAnchorAddress] = 0;
+      volumeMap[item?.vAnchorAddress] = BigInt(0);
     }
 
-    volumeMap[item?.vAnchorAddress] += +item?.volume;
+    volumeMap[item?.vAnchorAddress] += BigInt(item.volume);
   });
 
-  const VolumeByVAnchorDayIntervalItems: Array<VolumeByVAnchorDayIntervalItem> =
+  const volumeByVAnchorDayIntervalItems: Array<VolumeByVAnchorDayIntervalItem> =
     [];
 
   for (const key in volumeMap) {
-    VolumeByVAnchorDayIntervalItems.push({
+    volumeByVAnchorDayIntervalItems.push({
       vAnchorAddress: key,
       volume: volumeMap[key],
     });
   }
 
-  return VolumeByVAnchorDayIntervalItems;
+  return volumeByVAnchorDayIntervalItems;
 };
 
 export const GetVAnchorsVolumeByChainsDayInterval = async (
@@ -161,36 +136,25 @@ export const GetVAnchorVolumeByChainAndByTokenDayInterval = async (
   tokenSymbol: string,
   date: Date
 ): Promise<Array<VolumeByChainAndByTokenDayIntervalItem>> => {
-  const query = /* GraphQL */ `
-    query MyQuery {
-      vanchorVolumeByTokenEveryDays(
-        where: {
-          tokenSymbol: "${tokenSymbol}",
-          vAnchorAddress: "${vAnchorAddress.toLowerCase()}",
-          date: "${DateUtil.fromDateToEpoch(date)}",
-        }
-      ) {
-        volume
-        vAnchorAddress
-        date
-      }
-    }
-  `;
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVanchorVolumeByTokenEveryDays(
+    {
+      date: DateUtil.fromDateToEpoch(date),
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      tokenSymbol: tokenSymbol,
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumeByTokenEveryDays == null) {
+  if (!result.vanchorVolumeByTokenEveryDays?.length) {
     return [] as Array<VolumeByChainAndByTokenDayIntervalItem>;
   }
 
-  return result.data.vanchorVolumeByTokenEveryDays?.map((item: any) => {
+  return result.vanchorVolumeByTokenEveryDays?.map((item) => {
     return {
-      volume: +item?.volume,
+      volume: BigInt(item.volume),
+      tokenSymbol,
       subgraphUrl: subgraphUrl,
       date: DateUtil.fromEpochToDate(parseInt(item?.date)),
       vAnchorAddress: item?.vAnchorAddress,
@@ -229,51 +193,33 @@ export const GetVAnchorsVolumeByChainByDateRange = async (
   numberOfDays: number
 ): Promise<VolumeVAnchorsDateRangeItem> => {
   const dates = getEpochArray(dateStart, numberOfDays);
-  const query = /* GraphQL */ `
-    query Volume {
-      vanchorVolumeEveryDays(
-        where: {
-          date_in: [
-            ${dates.map((epochTime) => '"' + epochTime + '"').join(',')}
-          ],
-          vAnchorAddress_in: [
-            ${vanchorAddresses
-              .map((address) => '"' + address.toLowerCase() + '"')
-              .join(',')}
-          ]
-        }
-        orderBy: date
-      ) {
-        volume
-        vAnchorAddress
-        date
-      }
-    }
-  `;
-
-  const result = await execute(
-    query,
-    {},
+  const result = await sdk.GetVanchorsVolumeByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddresses: vanchorAddresses.map((address) =>
+        address.toLowerCase()
+      ),
+    },
     {
       subgraphUrl,
     }
   );
 
-  if (result?.data?.vanchorVolumeEveryDays == null) {
+  if (!result.vanchorVolumeEveryDays?.length) {
     return {} as VolumeVAnchorsDateRangeItem;
   }
 
-  const tvlMapByDate: VolumeVAnchorsDateRangeItem = {};
+  const volumeMapByDate: VolumeVAnchorsDateRangeItem = {};
 
   for (const date of dates) {
-    tvlMapByDate[date.toString()] = 0;
+    volumeMapByDate[date.toString()] = BigInt(0);
   }
 
-  result.data.vanchorVolumeEveryDays.forEach((item: any) => {
-    tvlMapByDate[+item.date] += +item.volume;
+  result.vanchorVolumeEveryDays.forEach((item) => {
+    volumeMapByDate[+item.date] += BigInt(item.volume);
   });
 
-  return tvlMapByDate;
+  return volumeMapByDate;
 };
 
 export const GetVAnchorsVolumeByChainsByDateRange = async (

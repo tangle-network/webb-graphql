@@ -2,10 +2,8 @@ import { SubgraphUrl } from './config';
 import {
   GetVAnchorsTotalValueLockedByChains,
   GetVAnchorsTVLByChainsByDateRange,
-  GetVAnchorsTotalValueLockedByChains15MinsInterval,
 } from './queries/tvl';
 import { GetVAnchorsDepositByChainsByDateRange } from './queries/deposit';
-import { GetVAnchorsWithdrawalByChainsByDateRange } from './queries/withdrawal';
 import {
   GetVAnchorsVolumeByChains,
   GetVAnchorsVolumeByChains15MinsInterval,
@@ -37,7 +35,6 @@ async function main() {
   );
   await runTvlDateRangeQueries();
   await runDepositDateRangeQueries();
-  await runWithdrawalDateRangeQueries();
 
   // query for Key Metric Table
   console.log(
@@ -72,20 +69,6 @@ async function runDepositDateRangeQueries() {
   // Get total value locked by a vAnchor on a chain
   console.log(
     await GetVAnchorsDepositByChainsByDateRange(
-      [subgraphUrl],
-      [vAnchorAddress],
-      startDate,
-      3
-    )
-  );
-}
-
-async function runWithdrawalDateRangeQueries() {
-  const startDate: Date = DateUtil.fromEpochToDate(1692057600);
-
-  // Get total value locked by a vAnchor on a chain
-  console.log(
-    await GetVAnchorsWithdrawalByChainsByDateRange(
       [subgraphUrl],
       [vAnchorAddress],
       startDate,

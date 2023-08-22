@@ -82,3 +82,54 @@ query GetVAnchorWithdrawalByTokenEvery15Mins(
     vAnchorAddress
   }
 }
+
+query GetVAnchorWithdrawalEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorWithdrawalEveryDays(
+    where: { date: $date, vAnchorAddress: $vAnchorAddress }
+  ) {
+    withdrawal
+    vAnchorAddress
+    date
+  }
+}
+
+query GetVAnchorsWithdrawalEveryDay($date: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorWithdrawalEveryDays(
+    where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
+  ) {
+    withdrawal
+    vAnchorAddress
+    date
+  }
+}
+
+query GetVanchorWithdrawalByTokenEveryDays(
+  $tokenSymbol: String!
+  $date: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorWithdrawalByTokenEveryDays(
+    where: {
+      tokenSymbol: $tokenSymbol
+      date: $date
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    withdrawal
+    vAnchorAddress
+    date
+  }
+}
+
+query GetVanchorsWithdrawalByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorWithdrawalEveryDays(
+    where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
+  ) {
+    withdrawal
+    vAnchorAddress
+    date
+  }
+}

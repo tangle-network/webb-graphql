@@ -32,9 +32,10 @@ export const GetVAnchorTotalWrappingFeeByChain = async (
   );
 
   return {
-    totalWrappingFee: result.vanchorTotalWrappingFee
-      ? BigInt(result.vanchorTotalWrappingFee.fees)
-      : null,
+    totalWrappingFee:
+      result.vanchorTotalWrappingFee?.fees !== undefined
+        ? BigInt(result.vanchorTotalWrappingFee.fees)
+        : null,
     subgraphUrl: subgraphUrl,
   };
 };
@@ -69,9 +70,13 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (
     }
   );
 
+  if (!result.vanchorTotalWrappingFees?.length) {
+    return [] as Array<TotalWrappingFeeByVAnchor>;
+  }
+
   return result.vanchorTotalWrappingFees.map((item) => {
     return {
-      totalWrappingFee: item.fees,
+      totalWrappingFee: BigInt(item.fees),
       vAnchorAddress: item?.id,
     };
   });
@@ -109,10 +114,9 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
 
   return {
     totalWrappingFee:
-      result.vanchorTotalWrappingFeeByTokens &&
-      result.vanchorTotalWrappingFeeByTokens.length > 0
-        ? result.vanchorTotalWrappingFeeByTokens[0].fees
-        : undefined,
+      result.vanchorTotalWrappingFeeByTokens?.[0]?.fees !== undefined
+        ? BigInt(result.vanchorTotalWrappingFeeByTokens[0].fees)
+        : null,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };

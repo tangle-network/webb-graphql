@@ -6,7 +6,7 @@ export class DateUtil {
   }
 
   public static fromDateToEpoch(date: Date): number {
-    return date.getTime() / 1000;
+    return Math.round(date.getTime() / 1000);
   }
 }
 

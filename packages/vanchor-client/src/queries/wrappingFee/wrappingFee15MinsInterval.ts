@@ -1,6 +1,6 @@
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { DateUtil } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
-import { getBuiltGraphSDK } from '../../../.graphclient';
 
 export interface WrappingFeeByChain15MinsIntervalItem {
   subgraphUrl: SubgraphUrl;
@@ -22,12 +22,12 @@ export interface WrappingFeeByVAnchor15MinsIntervalItem {
 
 const sdk = getBuiltGraphSDK();
 
-export const GetVAnchorWrappingFeeByChainHistory = async (
+export const GetVAnchorWrappingFeeByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<WrappingFeeByChainHistoryItem> => {
+): Promise<WrappingFeeByChain15MinsIntervalItem | null> => {
   const result = await sdk.GetVAnchorWrappingFeeEvery15Mins(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
@@ -39,15 +39,21 @@ export const GetVAnchorWrappingFeeByChainHistory = async (
     }
   );
 
-  return result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
-    return {
-      wrappingFee: item.fees,
-      subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-      vAnchorAddress: item.vAnchorAddress,
-    };
-  })?.[0];
+  if (
+    result.vanchorTotalWrappingFeeByTokenEvery15Mins?.[0]?.fees === undefined
+  ) {
+    return null;
+  }
+
+  const item = result.vanchorTotalWrappingFeeByTokenEvery15Mins[0];
+
+  return {
+    wrappingFee: BigInt(item.fees),
+    subgraphUrl: subgraphUrl,
+    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+    vAnchorAddress: String(item.vAnchorAddress),
+  };
 };
 
 export const GetVAnchorWrappingFeeByChains15MinsInterval = async (
@@ -55,8 +61,8 @@ export const GetVAnchorWrappingFeeByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<Array<WrappingFeeByChain15MinsIntervalItem>>> => {
-  const promises: Array<Promise<Array<WrappingFeeByChain15MinsIntervalItem>>> =
+): Promise<Array<WrappingFeeByChain15MinsIntervalItem | null>> => {
+  const promises: Array<Promise<WrappingFeeByChain15MinsIntervalItem | null>> =
     [];
 
   for (const subgraphUrl of subgraphUrls) {
@@ -78,7 +84,7 @@ export const GetVAnchorsWrappingFeeByChain15MinsInterval = async (
   vanchorAddresses: Array<string>,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WrappingFeeByVAnchorHistoryItem>> => {
+): Promise<Array<WrappingFeeByVAnchor15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorsWrappingFeeEvery15Mins(
     {
       vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
@@ -90,6 +96,10 @@ export const GetVAnchorsWrappingFeeByChain15MinsInterval = async (
     }
   );
 
+  if (!result.vanchorTotalWrappingFeeByTokenEvery15Mins?.length) {
+    return [] as Array<WrappingFeeByVAnchor15MinsIntervalItem>;
+  }
+
   const wrappingFeeMap: { [vanchorAddress: string]: bigint } = {};
 
   result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
@@ -97,7 +107,7 @@ export const GetVAnchorsWrappingFeeByChain15MinsInterval = async (
       wrappingFeeMap[item.vAnchorAddress] = BigInt(0);
     }
 
-    wrappingFeeMap[item.vAnchorAddress] += item.fees;
+    wrappingFeeMap[item.vAnchorAddress] += BigInt(item.fees);
   });
 
   const wrappingFeeByVAnchor15MinsIntervalItems: Array<WrappingFeeByVAnchor15MinsIntervalItem> =
@@ -143,7 +153,7 @@ export const GetVAnchorWrappingFeeByChainAndByToken15MinsInterval = async (
   tokenSymbol: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<WrappingFeeByChainAndByTokenHistoryItem>> => {
+): Promise<Array<WrappingFeeByChainAndByToken15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorWrappingFeeByTokenEvery15Mins(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
@@ -158,7 +168,7 @@ export const GetVAnchorWrappingFeeByChainAndByToken15MinsInterval = async (
 
   return result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
     return {
-      wrappingFee: item.fees,
+      wrappingFee: BigInt(item.fees),
       subgraphUrl: subgraphUrl,
       tokenSymbol,
       startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),

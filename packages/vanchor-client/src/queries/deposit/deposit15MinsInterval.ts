@@ -27,7 +27,7 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<DepositByChain15MinsIntervalItem> => {
+): Promise<DepositByChain15MinsIntervalItem | null> => {
   const result = await sdk.GetVAnchorDepositEvery15Mins(
     {
       startInterval: DateUtil.fromDateToEpoch(startTimestamp),
@@ -39,15 +39,19 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
     }
   );
 
-  return result.vanchorDepositEvery15Mins?.map((item) => {
-    return {
-      deposit: BigInt(item.deposit),
-      subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-      vAnchorAddress: String(item.vAnchorAddress),
-    };
-  })?.[0];
+  if (result.vanchorDepositEvery15Mins?.[0]?.deposit === undefined) {
+    return null;
+  }
+
+  const item = result.vanchorDepositEvery15Mins[0];
+
+  return {
+    deposit: BigInt(item.deposit),
+    subgraphUrl: subgraphUrl,
+    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+    vAnchorAddress: String(item.vAnchorAddress),
+  };
 };
 
 export const GetVAnchorDepositByChains15MinsInterval = async (
@@ -55,8 +59,8 @@ export const GetVAnchorDepositByChains15MinsInterval = async (
   vAnchorAddress: string,
   startTimestamp: Date,
   endTimestamp: Date
-): Promise<Array<DepositByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<DepositByChain15MinsIntervalItem>> = [];
+): Promise<Array<DepositByChain15MinsIntervalItem | null>> => {
+  const promises: Array<Promise<DepositByChain15MinsIntervalItem | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -89,9 +93,13 @@ export const GetVAnchorsDepositByChain15MinsInterval = async (
     }
   );
 
+  if (!result.vanchorDepositEvery15Mins?.length) {
+    return [] as Array<DepositByVAnchor15MinsIntervalItem>;
+  }
+
   const depositMap: { [vanchorAddress: string]: bigint } = {};
 
-  result.vanchorDepositEvery15Mins?.map((item) => {
+  result.vanchorDepositEvery15Mins.map((item) => {
     const vAnchorAddr = String(item.vAnchorAddress);
 
     if (!depositMap[vAnchorAddr]) {
@@ -155,6 +163,10 @@ export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
       subgraphUrl,
     }
   );
+
+  if (!result.vanchorDepositByTokenEvery15Mins?.length) {
+    return [] as Array<DepositByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.vanchorDepositByTokenEvery15Mins.map((item) => {
     return {
