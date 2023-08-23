@@ -12,6 +12,8 @@
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:25827 vanchor",
     "test": "graph test",
     "clean": "rm -rf {build,data,generated}",
+    "lint": "yarn run codegen && eslint ./src --ext .ts",
+    "lint:fix": "yarn run codegen && eslint ./src --ext .ts --fix",
     "####################": "####################",
     "## DEVELOPMENT SCRIPTS ###": "",
     "create-athena-local": "graph create --node http://localhost:8020/ VAnchorAthenaLocal",

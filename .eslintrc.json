@@ -47,6 +47,20 @@
       "rules": {}
     }
   ],
-  "extends": [],
-  "rules": {}
+  "extends": ["eslint:recommended", "plugin:import/recommended"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts"]
+      }
+    }
+  },
+  "rules": {
+    "import/no-unresolved": [
+      2,
+      {
+        "caseSensitive": true
+      }
+    ]
+  }
 }

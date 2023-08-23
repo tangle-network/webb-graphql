@@ -1,5 +1,5 @@
 import { Address, Bytes } from '@graphprotocol/graph-ts';
-import { ERC20 } from '../../generated/VAnchor/erc20';
+import { ERC20 } from '../../generated/vanchor/ERC20';
 import { Token } from '../../generated/schema';
 
 export function getTokenSymbol(tokenAddress: Bytes): string {
