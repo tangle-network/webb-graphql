@@ -7,7 +7,7 @@ dataSources:
     network: Demeter
     source:
       abi: FungibleTokenWrapper
-      address: "0x58BA29259Aab901179A07899235e3CB88afE9079"
+      address: "0xbfce6B877Ebff977bB6e80B24FbBb7bC4eBcA4df"
       startBlock: 0
     mapping:
       kind: ethereum/events
@@ -32,13 +32,13 @@ dataSources:
           handler: handleWrapping
         - event: Unwrapping(indexed address,indexed address,indexed address,uint256)
           handler: handleUnwrapping
-      file: ./src/fungible-token-wrapper.ts
+      file: ./src/fungibleTokenWrapper.ts
   - kind: ethereum
     name: vanchor
     network: Demeter
     source:
       abi: VAnchor
-      address: "0x7aA556dD0AF8bed063444E14A6A9af46C9266973"
+      address: "0x91eB86019FD8D7c5a9E31143D422850A13F670A3"
       startBlock: 0
     mapping:
       kind: ethereum/events

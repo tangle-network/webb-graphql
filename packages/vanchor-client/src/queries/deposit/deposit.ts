@@ -12,7 +12,7 @@ export const GetVAnchorDepositByChain = async (
     { subgraphUrl }
   );
 
-  if (!result.vanchorDeposit?.deposit) {
+  if (result.vanchorDeposit?.deposit === undefined) {
     return null;
   }
 
@@ -46,7 +46,7 @@ export const GetVAnchorsDepositByChain = async (
   );
 
   return result.vanchorDeposits.map((item) =>
-    item.deposit ? BigInt(item.deposit) : null
+    item?.deposit !== undefined ? BigInt(item.deposit) : null
   );
 };
 
@@ -79,8 +79,8 @@ export const GetVAnchorDepositByChainAndByToken = async (
   );
 
   if (
-    !result.vanchorDepositByTokens.length ||
-    !result.vanchorDepositByTokens[0].deposit
+    !result.vanchorDepositByTokens?.length ||
+    result.vanchorDepositByTokens[0]?.deposit === undefined
   ) {
     return null;
   }

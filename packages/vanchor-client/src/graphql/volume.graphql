@@ -1,0 +1,159 @@
+query GetVAnchorVolumeByChain($id: ID!) {
+  vanchorVolume(id: $id) {
+    volume
+  }
+}
+
+query GetVAnchorsVolumeByChain($vanchorAddresses: [String!]!) {
+  vanchorVolumes(where: { id_in: $vanchorAddresses }) {
+    id
+    volume
+  }
+}
+
+query GetVAnchorVolumeByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorVolumeByTokens(
+    first: 1
+    where: { tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress }
+  ) {
+    volume
+  }
+}
+
+query GetVAnchorVolumeEvery15Mins(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorVolumeEvery15Mins(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    startInterval
+    endInterval
+    volume
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorsVolumeEvery15Mins(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorVolumeEvery15Mins(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    volume
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorVolumeByTokenEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddress: Bytes!
+  $tokenSymbol: String!
+) {
+  vanchorVolumeByTokenEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress: $vAnchorAddress
+      tokenSymbol: $tokenSymbol
+    }
+  ) {
+    volume
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorVolumeEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorVolumeEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    startInterval
+    endInterval
+    volume
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorsVolumeEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorVolumeEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    volume
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorVolumeByTokenEvery15Mins(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddress: Bytes!
+  $tokenSymbol: String!
+) {
+  vanchorVolumeByTokenEvery15Mins(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress: $vAnchorAddress
+      tokenSymbol: $tokenSymbol
+    }
+  ) {
+    volume
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVanchorsVolumeByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorVolumeEveryDays(
+    where: {
+      startInterval_in: $dateRange
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+    orderBy: startInterval
+  ) {
+    volume
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}

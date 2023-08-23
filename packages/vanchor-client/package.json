@@ -3,7 +3,8 @@
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "typings": "./src/index.ts",
-  "version": "0.1.16",
+  "type": "module",
+  "version": "0.1.15",
   "license": "MIT",
   "publishConfig": {
     "access": "public"

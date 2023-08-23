@@ -1,8 +1,8 @@
-import { execute, getBuiltGraphSDK } from '../../../.graphclient';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
 
 export interface TotalValueLockedByChain {
-  totalValueLocked: bigint | undefined;
+  totalValueLocked: bigint | null;
   subgraphUrl: SubgraphUrl;
 }
 
@@ -39,8 +39,8 @@ export const GetVAnchorTotalValueLockedByChain = async (
 
   return {
     totalValueLocked:
-      result.vanchorTotalValueLocked?.totalValueLocked == null
-        ? undefined
+      result.vanchorTotalValueLocked?.totalValueLocked === undefined
+        ? null
         : BigInt(result.vanchorTotalValueLocked.totalValueLocked),
     subgraphUrl: subgraphUrl,
   };
@@ -73,6 +73,10 @@ export const GetVAnchorsTotalValueLockedByChain = async (
       subgraphUrl,
     }
   );
+
+  if (result.vanchorTotalValueLockeds?.length === undefined) {
+    return [] as Array<TotalValueLockedByVAnchor>;
+  }
 
   return result.vanchorTotalValueLockeds.map((item) => {
     return {
@@ -114,10 +118,10 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
 
   return {
     totalValueLocked:
-      result.vanchorTotalValueLockedByTokens &&
-      result.vanchorTotalValueLockedByTokens.length > 0
+      result.vanchorTotalValueLockedByTokens?.[0]?.totalValueLocked !==
+      undefined
         ? BigInt(result.vanchorTotalValueLockedByTokens[0].totalValueLocked)
-        : undefined,
+        : null,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };

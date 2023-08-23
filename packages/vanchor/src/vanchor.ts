@@ -5,7 +5,7 @@ import {
   NewCommitment as NewCommitmentEvent,
   NewNullifier as NewNullifierEvent,
   PublicKey as PublicKeyEvent,
-} from '../generated/vanchor/VAnchor';
+} from '../generated/vanchor/vanchor';
 import {
   EdgeAddition,
   EdgeUpdate,
@@ -15,10 +15,10 @@ import {
   PublicKey,
 } from '../generated/schema';
 
-import { handleTransaction } from './transaction/shieldedTransaction';
+import { handleTransaction } from './shieldedTransaction';
 
 export function handleEdgeAddition(event: EdgeAdditionEvent): void {
-  let entity = new EdgeAddition(
+  const entity = new EdgeAddition(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
   entity.chainID = event.params.chainID;
@@ -33,7 +33,7 @@ export function handleEdgeAddition(event: EdgeAdditionEvent): void {
 }
 
 export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
-  let entity = new EdgeUpdate(
+  const entity = new EdgeUpdate(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
   entity.chainID = event.params.chainID;
@@ -48,7 +48,7 @@ export function handleEdgeUpdate(event: EdgeUpdateEvent): void {
 }
 
 export function handleInsertion(event: InsertionEvent): void {
-  let entity = new Insertion(
+  const entity = new Insertion(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
   entity.commitment = event.params.commitment;
@@ -66,7 +66,7 @@ export function handleInsertion(event: InsertionEvent): void {
 }
 
 export function handleNewCommitment(event: NewCommitmentEvent): void {
-  let entity = new NewCommitment(
+  const entity = new NewCommitment(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
   entity.commitment = event.params.commitment;
@@ -82,7 +82,7 @@ export function handleNewCommitment(event: NewCommitmentEvent): void {
 }
 
 export function handleNewNullifier(event: NewNullifierEvent): void {
-  let entity = new NewNullifier(
+  const entity = new NewNullifier(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
   entity.nullifier = event.params.nullifier;
@@ -95,7 +95,7 @@ export function handleNewNullifier(event: NewNullifierEvent): void {
 }
 
 export function handlePublicKey(event: PublicKeyEvent): void {
-  let entity = new PublicKey(
+  const entity = new PublicKey(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   );
   entity.owner = event.params.owner;

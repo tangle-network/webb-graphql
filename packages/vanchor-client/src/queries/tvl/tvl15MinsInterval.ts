@@ -1,10 +1,10 @@
-import { execute, getBuiltGraphSDK } from '../../../.graphclient';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { DateUtil } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
 
 export interface TotalValueLockedByChain15MinsIntervalItem {
   subgraphUrl: SubgraphUrl;
-  totalValueLocked: bigint;
+  totalValueLocked: bigint | null;
   startInterval: Date;
   endInterval: Date;
   vAnchorAddress: string;
@@ -25,47 +25,55 @@ const sdk = getBuiltGraphSDK();
 export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
-): Promise<TotalValueLockedByChain15MinsIntervalItem> => {
+  startInterval: Date,
+  endInterval: Date
+): Promise<TotalValueLockedByChain15MinsIntervalItem | null> => {
   const result = await sdk.GetVAnchorTotalValueLockedEvery15Mins(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
-      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
-      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
     },
     {
       subgraphUrl,
     }
   );
 
-  return result.vanchorTotalValueLockedEvery15Mins.map((item) => {
-    return {
-      totalValueLocked: BigInt(item.totalValueLocked),
-      subgraphUrl: subgraphUrl,
-      startInterval: DateUtil.fromEpochToDate(parseInt(item?.startInterval)),
-      endInterval: DateUtil.fromEpochToDate(parseInt(item?.endInterval)),
-      vAnchorAddress: item?.vAnchorAddress,
-    };
-  })?.[0];
+  if (
+    result.vanchorTotalValueLockedEvery15Mins?.[0]?.totalValueLocked ===
+    undefined
+  ) {
+    return null;
+  }
+
+  const item = result.vanchorTotalValueLockedEvery15Mins[0];
+
+  return {
+    totalValueLocked: BigInt(item.totalValueLocked),
+    subgraphUrl: subgraphUrl,
+    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+    vAnchorAddress: String(item.vAnchorAddress),
+  };
 };
 
 export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
-): Promise<Array<TotalValueLockedByChain15MinsIntervalItem>> => {
-  const promises: Array<Promise<TotalValueLockedByChain15MinsIntervalItem>> =
-    [];
+  startInterval: Date,
+  endInterval: Date
+): Promise<Array<TotalValueLockedByChain15MinsIntervalItem | null>> => {
+  const promises: Array<
+    Promise<TotalValueLockedByChain15MinsIntervalItem | null>
+  > = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
       GetVAnchorTotalValueLockedByChain15MinsInterval(
         subgraphUrl,
         vAnchorAddress,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -76,20 +84,23 @@ export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
 export const GetVAnchorsTotalValueLockedByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<TotalValueLockedByVAnchor15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorsTotalValueLockedEvery15Mins(
     {
       vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
-      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
-      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
     },
     {
       subgraphUrl,
     }
   );
 
+  if (!result.vanchorTotalValueLockedEvery15Mins?.length) {
+    return [] as Array<TotalValueLockedByVAnchor15MinsIntervalItem>;
+  }
   const totalValueLockedMap: { [vanchorAddress: string]: bigint } = {};
 
   result.vanchorTotalValueLockedEvery15Mins.map((item: any) => {
@@ -116,8 +127,8 @@ export const GetVAnchorsTotalValueLockedByChain15MinsInterval = async (
 export const GetVAnchorsTotalValueLockedByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<TotalValueLockedByVAnchor15MinsIntervalItem>>> => {
   const promises: Array<
     Promise<Array<TotalValueLockedByVAnchor15MinsIntervalItem>>
@@ -128,8 +139,8 @@ export const GetVAnchorsTotalValueLockedByChains15MinsInterval = async (
       GetVAnchorsTotalValueLockedByChain15MinsInterval(
         subgraphUrl,
         vanchorAddresses,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -141,20 +152,24 @@ export const GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorTotalValueLockedByTokenEvery15Mins(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
       tokenSymbol: tokenSymbol,
-      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
-      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
     },
     {
       subgraphUrl,
     }
   );
+
+  if (!result.vanchorTotalValueLockedByTokenEvery15Mins?.length) {
+    return [] as Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>;
+  }
 
   return result.vanchorTotalValueLockedByTokenEvery15Mins.map((item) => {
     return {
@@ -173,8 +188,8 @@ export const GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval =
     subgraphUrls: Array<SubgraphUrl>,
     vAnchorAddress: string,
     tokenSymbol: string,
-    startTimestamp: Date,
-    endTimestamp: Date
+    startInterval: Date,
+    endInterval: Date
   ): Promise<
     Array<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>>
   > => {
@@ -188,8 +203,8 @@ export const GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval =
           subgraphUrl,
           vAnchorAddress,
           tokenSymbol,
-          startTimestamp,
-          endTimestamp
+          startInterval,
+          endInterval
         )
       );
     }

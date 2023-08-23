@@ -1,5 +1,14 @@
 import { BigInt } from '@graphprotocol/graph-ts';
 
+export interface IntervalType {
+  startInterval: i32;
+  endInterval: i32;
+}
+
+const MINUTES_15 = 15;
+const MINUTES_IN_HOUR: i32 = 60;
+const HOURS_IN_DAY: i32 = 24;
+
 export const getStartInterval = (time: BigInt, slidingWindow: i32): i32 => {
   const timeInSec: i32 = time.toI32();
   const interval: i32 = slidingWindow * 60;
@@ -15,8 +24,18 @@ export const getEndInterval = (time: BigInt, slidingWindow: i32): i32 => {
   return endInterval;
 };
 
-export const getDate = (time: BigInt): i32 => {
-  const timeInSec: i32 = time.toI32();
-  const date: i32 = (Math.floor(timeInSec / 86400) * 86400) as i32;
-  return date;
+export const getStartInterval15Mins = (time: BigInt): i32 => {
+  return getStartInterval(time, MINUTES_15);
+};
+
+export const getEndInterval15Mins = (time: BigInt): i32 => {
+  return getEndInterval(time, MINUTES_15);
+};
+
+export const getStartIntervalDay = (time: BigInt): i32 => {
+  return getStartInterval(time, MINUTES_IN_HOUR * HOURS_IN_DAY);
+};
+
+export const getEndIntervalDay = (time: BigInt): i32 => {
+  return getEndInterval(time, MINUTES_IN_HOUR * HOURS_IN_DAY);
 };

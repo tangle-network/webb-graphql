@@ -141,7 +141,8 @@ type VAnchorTotalValueLockedByTokenEvery15Min @entity(immutable: false) {
 type VAnchorTotalValueLockedEveryDay @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
-  date: BigInt! # timestamp of the date (at 00:00:00)
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
   totalValueLocked: BigInt! # total value locked in the vAnchor
 }
 
@@ -150,7 +151,8 @@ type VAnchorTotalValueLockedByTokenEveryDay @entity(immutable: false) {
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
-  date: BigInt! # timestamp of the date (at 00:00:00)
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
   totalValueLocked: BigInt! # total value locked in the vAnchor
 }
 
@@ -283,6 +285,28 @@ type VAnchorWithdrawalByTokenEvery15Min @entity(immutable: false) {
   totalCount: BigInt! # total count of withdrawal
 }
 
+type VAnchorWithdrawalEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of deposit
+}
+
+type VAnchorWithdrawalByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  withdrawal: BigInt! # withdrawal in the vAnchor
+  averageWithdrawal: BigInt! # average deposit in the vAnchor
+  totalCount: BigInt! # total count of deposit
+}
+
 type VAnchorDeposit @entity(immutable: false) {
   id: String! # vAnchor address
   deposit: BigInt! # Deposit in the vAnchor
@@ -325,7 +349,8 @@ type VAnchorDepositByTokenEvery15Min @entity(immutable: false) {
 type VAnchorDepositEveryDay @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
-  date: BigInt! # timestamp of the date (at 00:00:00)
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
   deposit: BigInt! # Deposit in the vAnchor
   averageDeposit: BigInt! # average deposit in the vAnchor
   totalCount: BigInt! # total count of deposit
@@ -336,7 +361,8 @@ type VAnchorDepositByTokenEveryDay @entity(immutable: false) {
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
-  date: BigInt! # timestamp of the date (at 00:00:00)
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
   deposit: BigInt! # Deposit in the vAnchor
   averageDeposit: BigInt! # average deposit in the vAnchor
   totalCount: BigInt! # total count of deposit
@@ -357,4 +383,53 @@ type VAnchorTransferLog @entity(immutable: true) {
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   timestamp: BigInt! # block timestamp
+}
+
+type VAnchorVolume @entity(immutable: false) {
+  id: String! # vAnchor address
+  volume: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorVolumeByToken @entity(immutable: false) {
+  id: String! # vAnchor address + token address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  volume: BigInt! 
+}
+
+type VAnchorVolumeEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  volume: BigInt! 
+}
+
+type VAnchorVolumeByTokenEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  volume: BigInt! 
+}
+
+type VAnchorVolumeEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  volume: BigInt!
+}
+
+type VAnchorVolumeByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  volume: BigInt!
 }
