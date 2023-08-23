@@ -14,8 +14,8 @@
     "build": "graphclient build",
     "compile": "tsc",
     "start": "graphclient build && ts-node --transpileOnly ./src/index.ts",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
+    "lint": "eslint ./src --ext .ts",
+    "lint:fix": "eslint ./src --ext .ts --fix",
     "format": "prettier --write .",
     "run-example": "ts-node --transpileOnly ./src/example-queries.ts",
     "check": "tsc --pretty --noEmit"
