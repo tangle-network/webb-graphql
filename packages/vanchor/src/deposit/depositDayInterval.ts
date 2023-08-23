@@ -3,7 +3,7 @@ import {
   VAnchorDepositByTokenEveryDay,
   VAnchorDepositEveryDay,
 } from '../../generated/schema';
-import { getDate } from '../utils/time';
+import { getStartIntervalDay } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
 export default function recordDepositDayInterval(
@@ -12,10 +12,11 @@ export default function recordDepositDayInterval(
   amount: BigInt,
   time: BigInt
 ): void {
-  const date: i32 = getDate(time);
+  const startInterval = getStartIntervalDay(time);
+  const endInterval = getStartIntervalDay(time);
 
   const id =
-    date.toString() +
+    startInterval.toString() +
     '-' +
     vAnchorAddress.toHexString() +
     '-' +
@@ -28,7 +29,12 @@ export default function recordDepositDayInterval(
     newVanchorDepositByToken.vAnchorAddress = vAnchorAddress;
     newVanchorDepositByToken.tokenSymbol = getTokenSymbol(tokenAddress);
     newVanchorDepositByToken.tokenAddress = tokenAddress;
-    newVanchorDepositByToken.date = BigInt.fromString(date.toString());
+    newVanchorDepositByToken.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorDepositByToken.endInterval = BigInt.fromString(
+      endInterval.toString()
+    );
     newVanchorDepositByToken.averageDeposit = amount;
     newVanchorDepositByToken.totalCount = BigInt.fromI32(1);
     newVanchorDepositByToken.save();
@@ -44,12 +50,16 @@ export default function recordDepositDayInterval(
   }
 
   // Update the total value locked for vanchor
-  const recordId = date.toString() + '-' + vAnchorAddress.toHexString();
+  const recordId =
+    startInterval.toString() + '-' + vAnchorAddress.toHexString();
   const vanchorDeposit = VAnchorDepositEveryDay.load(recordId);
 
   if (!vanchorDeposit) {
     const newVanchorDeposit = new VAnchorDepositEveryDay(recordId);
-    newVanchorDeposit.date = BigInt.fromString(date.toString());
+    newVanchorDeposit.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorDeposit.endInterval = BigInt.fromString(endInterval.toString());
     newVanchorDeposit.vAnchorAddress = vAnchorAddress;
     newVanchorDeposit.deposit = amount;
     newVanchorDeposit.averageDeposit = amount;

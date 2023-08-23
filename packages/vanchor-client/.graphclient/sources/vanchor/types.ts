@@ -3029,7 +3029,8 @@ export namespace VanchorTypes {
     vAnchorAddress: Scalars['Bytes'];
     tokenAddress: Scalars['Bytes'];
     tokenSymbol: Scalars['String'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     deposit: Scalars['BigInt'];
     averageDeposit: Scalars['BigInt'];
     totalCount: Scalars['BigInt'];
@@ -3096,14 +3097,22 @@ export namespace VanchorTypes {
     tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     deposit?: InputMaybe<Scalars['BigInt']>;
     deposit_not?: InputMaybe<Scalars['BigInt']>;
     deposit_gt?: InputMaybe<Scalars['BigInt']>;
@@ -3139,7 +3148,8 @@ export namespace VanchorTypes {
     | 'vAnchorAddress'
     | 'tokenAddress'
     | 'tokenSymbol'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'deposit'
     | 'averageDeposit'
     | 'totalCount';
@@ -3343,7 +3353,8 @@ export namespace VanchorTypes {
   export type VAnchorDepositEveryDay = {
     id: Scalars['String'];
     vAnchorAddress: Scalars['Bytes'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     deposit: Scalars['BigInt'];
     averageDeposit: Scalars['BigInt'];
     totalCount: Scalars['BigInt'];
@@ -3380,14 +3391,22 @@ export namespace VanchorTypes {
     vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
     vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
     vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     deposit?: InputMaybe<Scalars['BigInt']>;
     deposit_not?: InputMaybe<Scalars['BigInt']>;
     deposit_gt?: InputMaybe<Scalars['BigInt']>;
@@ -3421,7 +3440,8 @@ export namespace VanchorTypes {
   export type VAnchorDepositEveryDay_orderBy =
     | 'id'
     | 'vAnchorAddress'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'deposit'
     | 'averageDeposit'
     | 'totalCount';
@@ -4037,7 +4057,8 @@ export namespace VanchorTypes {
     vAnchorAddress: Scalars['Bytes'];
     tokenAddress: Scalars['Bytes'];
     tokenSymbol: Scalars['String'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     totalValueLocked: Scalars['BigInt'];
   };
 
@@ -4102,14 +4123,22 @@ export namespace VanchorTypes {
     tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     totalValueLocked?: InputMaybe<Scalars['BigInt']>;
     totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
     totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
@@ -4133,7 +4162,8 @@ export namespace VanchorTypes {
     | 'vAnchorAddress'
     | 'tokenAddress'
     | 'tokenSymbol'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'totalValueLocked';
 
   export type VAnchorTotalValueLockedByToken_filter = {
@@ -4301,7 +4331,8 @@ export namespace VanchorTypes {
   export type VAnchorTotalValueLockedEveryDay = {
     id: Scalars['String'];
     vAnchorAddress: Scalars['Bytes'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     totalValueLocked: Scalars['BigInt'];
   };
 
@@ -4336,14 +4367,22 @@ export namespace VanchorTypes {
     vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
     vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
     vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     totalValueLocked?: InputMaybe<Scalars['BigInt']>;
     totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
     totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
@@ -4361,7 +4400,8 @@ export namespace VanchorTypes {
   export type VAnchorTotalValueLockedEveryDay_orderBy =
     | 'id'
     | 'vAnchorAddress'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'totalValueLocked';
 
   export type VAnchorTotalValueLocked_filter = {
@@ -4941,7 +4981,8 @@ export namespace VanchorTypes {
     vAnchorAddress: Scalars['Bytes'];
     tokenAddress: Scalars['Bytes'];
     tokenSymbol: Scalars['String'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     volume: Scalars['BigInt'];
   };
 
@@ -5006,14 +5047,22 @@ export namespace VanchorTypes {
     tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     volume?: InputMaybe<Scalars['BigInt']>;
     volume_not?: InputMaybe<Scalars['BigInt']>;
     volume_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5033,7 +5082,8 @@ export namespace VanchorTypes {
     | 'vAnchorAddress'
     | 'tokenAddress'
     | 'tokenSymbol'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'volume';
 
   export type VAnchorVolumeByToken_filter = {
@@ -5197,7 +5247,8 @@ export namespace VanchorTypes {
   export type VAnchorVolumeEveryDay = {
     id: Scalars['String'];
     vAnchorAddress: Scalars['Bytes'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     volume: Scalars['BigInt'];
   };
 
@@ -5232,14 +5283,22 @@ export namespace VanchorTypes {
     vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
     vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
     vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     volume?: InputMaybe<Scalars['BigInt']>;
     volume_not?: InputMaybe<Scalars['BigInt']>;
     volume_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5257,7 +5316,8 @@ export namespace VanchorTypes {
   export type VAnchorVolumeEveryDay_orderBy =
     | 'id'
     | 'vAnchorAddress'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'volume';
 
   export type VAnchorVolume_filter = {
@@ -5453,7 +5513,8 @@ export namespace VanchorTypes {
     vAnchorAddress: Scalars['Bytes'];
     tokenAddress: Scalars['Bytes'];
     tokenSymbol: Scalars['String'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     withdrawal: Scalars['BigInt'];
     averageWithdrawal: Scalars['BigInt'];
     totalCount: Scalars['BigInt'];
@@ -5520,14 +5581,22 @@ export namespace VanchorTypes {
     tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
     tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     withdrawal?: InputMaybe<Scalars['BigInt']>;
     withdrawal_not?: InputMaybe<Scalars['BigInt']>;
     withdrawal_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5565,7 +5634,8 @@ export namespace VanchorTypes {
     | 'vAnchorAddress'
     | 'tokenAddress'
     | 'tokenSymbol'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'withdrawal'
     | 'averageWithdrawal'
     | 'totalCount';
@@ -5769,7 +5839,8 @@ export namespace VanchorTypes {
   export type VAnchorWithdrawalEveryDay = {
     id: Scalars['String'];
     vAnchorAddress: Scalars['Bytes'];
-    date: Scalars['BigInt'];
+    startInterval: Scalars['BigInt'];
+    endInterval: Scalars['BigInt'];
     withdrawal: Scalars['BigInt'];
     averageWithdrawal: Scalars['BigInt'];
     totalCount: Scalars['BigInt'];
@@ -5806,14 +5877,22 @@ export namespace VanchorTypes {
     vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
     vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
     vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-    date?: InputMaybe<Scalars['BigInt']>;
-    date_not?: InputMaybe<Scalars['BigInt']>;
-    date_gt?: InputMaybe<Scalars['BigInt']>;
-    date_lt?: InputMaybe<Scalars['BigInt']>;
-    date_gte?: InputMaybe<Scalars['BigInt']>;
-    date_lte?: InputMaybe<Scalars['BigInt']>;
-    date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-    date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval?: InputMaybe<Scalars['BigInt']>;
+    startInterval_not?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval?: InputMaybe<Scalars['BigInt']>;
+    endInterval_not?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+    endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+    endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+    endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
     withdrawal?: InputMaybe<Scalars['BigInt']>;
     withdrawal_not?: InputMaybe<Scalars['BigInt']>;
     withdrawal_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5847,7 +5926,8 @@ export namespace VanchorTypes {
   export type VAnchorWithdrawalEveryDay_orderBy =
     | 'id'
     | 'vAnchorAddress'
-    | 'date'
+    | 'startInterval'
+    | 'endInterval'
     | 'withdrawal'
     | 'averageWithdrawal'
     | 'totalCount';

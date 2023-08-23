@@ -3,7 +3,7 @@ import {
   VAnchorVolumeByTokenEveryDay,
   VAnchorVolumeEveryDay,
 } from '../../generated/schema';
-import { getDate } from '../utils/time';
+import { getStartIntervalDay, getEndIntervalDay } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
 export default function recordDayIntervalVolume(
@@ -12,10 +12,11 @@ export default function recordDayIntervalVolume(
   amount: BigInt,
   time: BigInt
 ): void {
-  const date: i32 = getDate(time);
+  const startInterval = getStartIntervalDay(time);
+  const endInterval = getEndIntervalDay(time);
 
   const byTokenId =
-    date.toString() +
+    startInterval.toString() +
     '-' +
     vAnchorAddress.toHexString() +
     '-' +
@@ -28,7 +29,12 @@ export default function recordDayIntervalVolume(
     newVanchorVolumeByToken.vAnchorAddress = vAnchorAddress;
     newVanchorVolumeByToken.tokenSymbol = getTokenSymbol(tokenAddress);
     newVanchorVolumeByToken.tokenAddress = tokenAddress;
-    newVanchorVolumeByToken.date = BigInt.fromString(date.toString());
+    newVanchorVolumeByToken.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorVolumeByToken.endInterval = BigInt.fromString(
+      endInterval.toString()
+    );
     newVanchorVolumeByToken.save();
   } else {
     vanchorVolumeByToken.volume = vanchorVolumeByToken.volume.plus(amount);
@@ -36,12 +42,15 @@ export default function recordDayIntervalVolume(
   }
 
   // Update the total value locked for vanchor
-  const id = date.toString() + '-' + vAnchorAddress.toHexString();
+  const id = startInterval.toString() + '-' + vAnchorAddress.toHexString();
   const vanchorVolume = VAnchorVolumeEveryDay.load(id);
 
   if (!vanchorVolume) {
     const newVanchorVolume = new VAnchorVolumeEveryDay(id);
-    newVanchorVolume.date = BigInt.fromString(date.toString());
+    newVanchorVolume.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorVolume.endInterval = BigInt.fromString(endInterval.toString());
     newVanchorVolume.vAnchorAddress = vAnchorAddress;
     newVanchorVolume.volume = amount;
     newVanchorVolume.save();

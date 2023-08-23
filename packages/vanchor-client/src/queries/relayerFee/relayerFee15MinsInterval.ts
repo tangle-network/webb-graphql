@@ -25,13 +25,13 @@ const sdk = getBuiltGraphSDK();
 export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<RelayerFeeByChain15MinsIntervalItem | null> => {
   const result = await sdk.GetVAnchorRelayerFeeEvery15Mins(
     {
-      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
-      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
     {
@@ -57,8 +57,8 @@ export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
 export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<RelayerFeeByChain15MinsIntervalItem | null>> => {
   const promises: Array<Promise<RelayerFeeByChain15MinsIntervalItem | null>> =
     [];
@@ -68,8 +68,8 @@ export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
       GetVAnchorRelayerFeeByChain15MinsInterval(
         subgraphUrl,
         vAnchorAddress,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -80,13 +80,13 @@ export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
 export const GetVAnchorsRelayerFeeByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<RelayerFeeByVAnchor15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorsRelayerFeeEvery15Mins(
     {
-      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
-      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
     },
     {
@@ -124,8 +124,8 @@ export const GetVAnchorsRelayerFeeByChain15MinsInterval = async (
 export const GetVAnchorsRelayerFeeByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<RelayerFeeByVAnchor15MinsIntervalItem>>> => {
   const promises: Array<Promise<Array<RelayerFeeByVAnchor15MinsIntervalItem>>> =
     [];
@@ -135,8 +135,8 @@ export const GetVAnchorsRelayerFeeByChains15MinsInterval = async (
       GetVAnchorsRelayerFeeByChain15MinsInterval(
         subgraphUrl,
         vanchorAddresses,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -148,13 +148,13 @@ export const GetVAnchorRelayerFeeByChainAndByToken15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<RelayerFeeByChainAndByToken15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorRelayerFeeByTokenEvery15Mins(
     {
-      endTimestamp: DateUtil.fromDateToEpoch(endTimestamp),
-      startTimestamp: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       tokenSymbol: tokenSymbol,
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
@@ -183,8 +183,8 @@ export const GetVAnchorRelayerFeeByChainsAndByToken15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<RelayerFeeByChainAndByToken15MinsIntervalItem>>> => {
   const promises: Array<
     Promise<Array<RelayerFeeByChainAndByToken15MinsIntervalItem>>
@@ -196,8 +196,8 @@ export const GetVAnchorRelayerFeeByChainsAndByToken15MinsInterval = async (
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }

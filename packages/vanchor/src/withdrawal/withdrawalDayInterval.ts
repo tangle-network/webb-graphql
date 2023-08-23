@@ -3,7 +3,7 @@ import {
   VAnchorWithdrawalByTokenEveryDay,
   VAnchorWithdrawalEveryDay,
 } from '../../generated/schema';
-import { getDate } from '../utils/time';
+import { getStartIntervalDay, getEndIntervalDay } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
 export default function recordWithdrawalDayInterval(
@@ -12,57 +12,72 @@ export default function recordWithdrawalDayInterval(
   amount: BigInt,
   time: BigInt
 ): void {
-  const date: i32 = getDate(time);
+  const startInterval = getStartIntervalDay(time);
+  const endInterval = getEndIntervalDay(time);
 
   const id =
-    date.toString() +
+    startInterval.toString() +
     '-' +
     vAnchorAddress.toHexString() +
     '-' +
     tokenAddress.toHexString();
-  const vanchorWithdrawByToken = VAnchorWithdrawalByTokenEveryDay.load(id);
+  const vanchorWithdrawalByToken = VAnchorWithdrawalByTokenEveryDay.load(id);
 
-  if (!vanchorWithdrawByToken) {
-    const newVanchorWithdrawByToken = new VAnchorWithdrawalByTokenEveryDay(id);
-    newVanchorWithdrawByToken.withdrawal = amount;
-    newVanchorWithdrawByToken.vAnchorAddress = vAnchorAddress;
-    newVanchorWithdrawByToken.tokenSymbol = getTokenSymbol(tokenAddress);
-    newVanchorWithdrawByToken.tokenAddress = tokenAddress;
-    newVanchorWithdrawByToken.date = BigInt.fromString(date.toString());
-    newVanchorWithdrawByToken.averageWithdrawal = amount;
-    newVanchorWithdrawByToken.totalCount = BigInt.fromI32(1);
-    newVanchorWithdrawByToken.save();
-  } else {
-    vanchorWithdrawByToken.withdrawal =
-      vanchorWithdrawByToken.withdrawal.plus(amount);
-    vanchorWithdrawByToken.totalCount = vanchorWithdrawByToken.totalCount.plus(
-      BigInt.fromI32(1)
+  if (!vanchorWithdrawalByToken) {
+    const newVanchorWithdrawalByToken = new VAnchorWithdrawalByTokenEveryDay(
+      id
     );
-    vanchorWithdrawByToken.averageWithdrawal =
-      vanchorWithdrawByToken.withdrawal.div(vanchorWithdrawByToken.totalCount);
-    vanchorWithdrawByToken.save();
+    newVanchorWithdrawalByToken.withdrawal = amount;
+    newVanchorWithdrawalByToken.vAnchorAddress = vAnchorAddress;
+    newVanchorWithdrawalByToken.tokenSymbol = getTokenSymbol(tokenAddress);
+    newVanchorWithdrawalByToken.tokenAddress = tokenAddress;
+    newVanchorWithdrawalByToken.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorWithdrawalByToken.endInterval = BigInt.fromString(
+      endInterval.toString()
+    );
+    newVanchorWithdrawalByToken.averageWithdrawal = amount;
+    newVanchorWithdrawalByToken.totalCount = BigInt.fromI32(1);
+    newVanchorWithdrawalByToken.save();
+  } else {
+    vanchorWithdrawalByToken.withdrawal =
+      vanchorWithdrawalByToken.withdrawal.plus(amount);
+    vanchorWithdrawalByToken.totalCount =
+      vanchorWithdrawalByToken.totalCount.plus(BigInt.fromI32(1));
+    vanchorWithdrawalByToken.averageWithdrawal =
+      vanchorWithdrawalByToken.withdrawal.div(
+        vanchorWithdrawalByToken.totalCount
+      );
+    vanchorWithdrawalByToken.save();
   }
 
   // Update the total value locked for vanchor
-  const recordId = date.toString() + '-' + vAnchorAddress.toHexString();
-  const vanchorWithdraw = VAnchorWithdrawalEveryDay.load(recordId);
+  const recordId =
+    startInterval.toString() + '-' + vAnchorAddress.toHexString();
+  const vanchorWithdrawal = VAnchorWithdrawalEveryDay.load(recordId);
 
-  if (!vanchorWithdraw) {
-    const newVanchorWithdraw = new VAnchorWithdrawalEveryDay(recordId);
-    newVanchorWithdraw.date = BigInt.fromString(date.toString());
-    newVanchorWithdraw.vAnchorAddress = vAnchorAddress;
-    newVanchorWithdraw.withdrawal = amount;
-    newVanchorWithdraw.averageWithdrawal = amount;
-    newVanchorWithdraw.totalCount = BigInt.fromI32(1);
-    newVanchorWithdraw.save();
+  if (!vanchorWithdrawal) {
+    const newVanchorWithdrawal = new VAnchorWithdrawalEveryDay(recordId);
+    newVanchorWithdrawal.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorWithdrawal.endInterval = BigInt.fromString(
+      endInterval.toString()
+    );
+    newVanchorWithdrawal.vAnchorAddress = vAnchorAddress;
+    newVanchorWithdrawal.withdrawal = amount;
+    newVanchorWithdrawal.averageWithdrawal = amount;
+    newVanchorWithdrawal.totalCount = BigInt.fromI32(1);
+    newVanchorWithdrawal.save();
   } else {
-    vanchorWithdraw.withdrawal = vanchorWithdraw.withdrawal.plus(amount);
-    vanchorWithdraw.totalCount = vanchorWithdraw.totalCount.plus(
+    vanchorWithdrawal.withdrawal = vanchorWithdrawal.withdrawal.plus(amount);
+    vanchorWithdrawal.totalCount = vanchorWithdrawal.totalCount.plus(
       BigInt.fromI32(1)
     );
-    vanchorWithdraw.averageWithdrawal = vanchorWithdraw.withdrawal.div(
-      vanchorWithdraw.totalCount
+    vanchorWithdrawal.averageWithdrawal = vanchorWithdrawal.withdrawal.div(
+      vanchorWithdrawal.totalCount
     );
-    vanchorWithdraw.save();
+    vanchorWithdrawal.save();
   }
 }

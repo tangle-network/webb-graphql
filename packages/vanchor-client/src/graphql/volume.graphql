@@ -59,6 +59,66 @@ query GetVAnchorsVolumeEvery15Mins(
   }
 }
 
+query GetVAnchorVolumeByTokenEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddress: Bytes!
+  $tokenSymbol: String!
+) {
+  vanchorVolumeByTokenEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress: $vAnchorAddress
+      tokenSymbol: $tokenSymbol
+    }
+  ) {
+    volume
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorVolumeEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorVolumeEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    startInterval
+    endInterval
+    volume
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorsVolumeEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorVolumeEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    volume
+    endInterval
+    vAnchorAddress
+  }
+}
+
 query GetVAnchorVolumeByTokenEvery15Mins(
   $startInterval: BigInt!
   $endInterval: BigInt!
@@ -80,53 +140,20 @@ query GetVAnchorVolumeByTokenEvery15Mins(
   }
 }
 
-query GetVAnchorVolumeEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
-  vanchorVolumeEveryDays(
-    where: { date: $date, vAnchorAddress: $vAnchorAddress }
-  ) {
-    volume
-    vAnchorAddress
-    date
-  }
-}
-
-query GetVAnchorsVolumeEveryDay($date: BigInt!, $vAnchorAddresses: [Bytes!]!) {
-  vanchorVolumeEveryDays(
-    where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
-  ) {
-    volume
-    vAnchorAddress
-    date
-  }
-}
-
-query GetVanchorVolumeByTokenEveryDays(
-  $tokenSymbol: String!
-  $date: BigInt!
-  $vAnchorAddress: Bytes!
-) {
-  vanchorVolumeByTokenEveryDays(
-    where: {
-      tokenSymbol: $tokenSymbol
-      date: $date
-      vAnchorAddress: $vAnchorAddress
-    }
-  ) {
-    volume
-    vAnchorAddress
-    date
-  }
-}
-
 query GetVanchorsVolumeByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!
 ) {
   vanchorVolumeEveryDays(
-    where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
+    where: {
+      startInterval_in: $dateRange
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+    orderBy: startInterval
   ) {
     volume
     vAnchorAddress
-    date
+    startInterval
+    endInterval
   }
 }

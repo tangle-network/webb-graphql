@@ -25,13 +25,13 @@ const sdk = getBuiltGraphSDK();
 export const GetVAnchorVolumeByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<VolumeByChain15MinsIntervalItem | null> => {
   const result = await sdk.GetVAnchorVolumeEvery15Mins(
     {
-      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
-      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
     {
@@ -57,8 +57,8 @@ export const GetVAnchorVolumeByChain15MinsInterval = async (
 export const GetVAnchorVolumeByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<VolumeByChain15MinsIntervalItem | null>> => {
   const promises: Array<Promise<VolumeByChain15MinsIntervalItem | null>> = [];
 
@@ -67,8 +67,8 @@ export const GetVAnchorVolumeByChains15MinsInterval = async (
       GetVAnchorVolumeByChain15MinsInterval(
         subgraphUrl,
         vAnchorAddress,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -79,13 +79,13 @@ export const GetVAnchorVolumeByChains15MinsInterval = async (
 export const GetVAnchorsVolumeByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<VolumeByVAnchor15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorsVolumeEvery15Mins(
     {
-      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
-      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
     },
     {
@@ -125,8 +125,8 @@ export const GetVAnchorsVolumeByChain15MinsInterval = async (
 export const GetVAnchorsVolumeByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<VolumeByVAnchor15MinsIntervalItem>>> => {
   const promises: Array<Promise<Array<VolumeByVAnchor15MinsIntervalItem>>> = [];
 
@@ -135,8 +135,8 @@ export const GetVAnchorsVolumeByChains15MinsInterval = async (
       GetVAnchorsVolumeByChain15MinsInterval(
         subgraphUrl,
         vanchorAddresses,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -148,13 +148,13 @@ export const GetVAnchorVolumeByChainAndByToken15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<VolumeByChainAndByToken15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorVolumeByTokenEvery15Mins(
     {
-      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
-      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       tokenSymbol,
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
@@ -183,8 +183,8 @@ export const GetVAnchorVolumeByChainsAndByToken15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<VolumeByChainAndByToken15MinsIntervalItem>>> => {
   const promises: Array<
     Promise<Array<VolumeByChainAndByToken15MinsIntervalItem>>
@@ -196,8 +196,8 @@ export const GetVAnchorVolumeByChainsAndByToken15MinsInterval = async (
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }

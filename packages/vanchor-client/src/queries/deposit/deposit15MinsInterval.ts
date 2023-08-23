@@ -25,13 +25,13 @@ const sdk = getBuiltGraphSDK();
 export const GetVAnchorDepositByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<DepositByChain15MinsIntervalItem | null> => {
   const result = await sdk.GetVAnchorDepositEvery15Mins(
     {
-      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
-      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
     {
@@ -57,8 +57,8 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
 export const GetVAnchorDepositByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<DepositByChain15MinsIntervalItem | null>> => {
   const promises: Array<Promise<DepositByChain15MinsIntervalItem | null>> = [];
 
@@ -67,8 +67,8 @@ export const GetVAnchorDepositByChains15MinsInterval = async (
       GetVAnchorDepositByChain15MinsInterval(
         subgraphUrl,
         vAnchorAddress,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -79,13 +79,13 @@ export const GetVAnchorDepositByChains15MinsInterval = async (
 export const GetVAnchorsDepositByChain15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<DepositByVAnchor15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorsDepositEvery15Mins(
     {
-      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
-      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       vAnchorAddresses: vanchorAddresses.map((item) => item.toLowerCase()),
     },
     {
@@ -125,8 +125,8 @@ export const GetVAnchorsDepositByChain15MinsInterval = async (
 export const GetVAnchorsDepositByChains15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<DepositByVAnchor15MinsIntervalItem>>> => {
   const promises: Array<Promise<Array<DepositByVAnchor15MinsIntervalItem>>> =
     [];
@@ -136,8 +136,8 @@ export const GetVAnchorsDepositByChains15MinsInterval = async (
       GetVAnchorsDepositByChain15MinsInterval(
         subgraphUrl,
         vanchorAddresses,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }
@@ -149,13 +149,13 @@ export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<DepositByChainAndByToken15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorDepositByTokenEvery15Mins(
     {
-      endInterval: DateUtil.fromDateToEpoch(endTimestamp),
-      startInterval: DateUtil.fromDateToEpoch(startTimestamp),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       tokenSymbol,
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
@@ -184,8 +184,8 @@ export const GetVAnchorDepositByChainsAndByToken15MinsInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
-  startTimestamp: Date,
-  endTimestamp: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<DepositByChainAndByToken15MinsIntervalItem>>> => {
   const promises: Array<
     Promise<Array<DepositByChainAndByToken15MinsIntervalItem>>
@@ -197,8 +197,8 @@ export const GetVAnchorDepositByChainsAndByToken15MinsInterval = async (
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol,
-        startTimestamp,
-        endTimestamp
+        startInterval,
+        endInterval
       )
     );
   }

@@ -41913,7 +41913,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -42948,7 +42967,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -42963,7 +42982,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -42978,7 +42997,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -42993,7 +43012,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -43008,7 +43027,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -43023,7 +43042,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -43038,7 +43057,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -43059,7 +43078,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -43574,7 +43725,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },
@@ -46540,7 +46699,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -47101,7 +47279,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -47116,7 +47294,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -47131,7 +47309,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -47146,7 +47324,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -47161,7 +47339,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -47176,7 +47354,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -47191,7 +47369,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -47212,7 +47390,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -47711,7 +48021,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },
@@ -56480,7 +56798,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -57477,7 +57814,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -57492,7 +57829,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -57507,7 +57844,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -57522,7 +57859,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -57537,7 +57874,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -57552,7 +57889,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -57567,7 +57904,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -57588,7 +57925,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -57839,7 +58308,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },
@@ -60191,7 +60668,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -60714,7 +61210,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -60729,7 +61225,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -60744,7 +61240,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -60759,7 +61255,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -60774,7 +61270,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -60789,7 +61285,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -60804,7 +61300,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -60825,7 +61321,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -61060,7 +61688,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },
@@ -69374,7 +70010,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -70371,7 +71026,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -70386,7 +71041,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -70401,7 +71056,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -70416,7 +71071,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -70431,7 +71086,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -70446,7 +71101,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -70461,7 +71116,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -70482,7 +71137,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -70733,7 +71520,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },
@@ -73085,7 +73880,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -73608,7 +74422,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -73623,7 +74437,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -73638,7 +74452,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -73653,7 +74467,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -73668,7 +74482,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -73683,7 +74497,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -73698,7 +74512,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -73719,7 +74533,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -73954,7 +74900,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },
@@ -76761,7 +77715,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -77796,7 +78769,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -77811,7 +78784,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -77826,7 +78799,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -77841,7 +78814,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -77856,7 +78829,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -77871,7 +78844,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -77886,7 +78859,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -77907,7 +78880,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -78422,7 +79527,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },
@@ -81388,7 +82501,26 @@ const schemaAST = {
           kind: 'FieldDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          arguments: [],
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'BigInt',
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           arguments: [],
           type: {
@@ -81949,7 +83081,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
           },
           type: {
             kind: 'NamedType',
@@ -81964,7 +83096,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not',
+            value: 'startInterval_not',
           },
           type: {
             kind: 'NamedType',
@@ -81979,7 +83111,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gt',
+            value: 'startInterval_gt',
           },
           type: {
             kind: 'NamedType',
@@ -81994,7 +83126,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lt',
+            value: 'startInterval_lt',
           },
           type: {
             kind: 'NamedType',
@@ -82009,7 +83141,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_gte',
+            value: 'startInterval_gte',
           },
           type: {
             kind: 'NamedType',
@@ -82024,7 +83156,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_lte',
+            value: 'startInterval_lte',
           },
           type: {
             kind: 'NamedType',
@@ -82039,7 +83171,7 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_in',
+            value: 'startInterval_in',
           },
           type: {
             kind: 'ListType',
@@ -82060,7 +83192,139 @@ const schemaAST = {
           kind: 'InputValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date_not_in',
+            value: 'startInterval_not_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lt',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_gte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_lte',
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'BigInt',
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_in',
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'BigInt',
+                },
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval_not_in',
           },
           type: {
             kind: 'ListType',
@@ -82559,7 +83823,15 @@ const schemaAST = {
           kind: 'EnumValueDefinition',
           name: {
             kind: 'Name',
-            value: 'date',
+            value: 'startInterval',
+          },
+          directives: [],
+        },
+        {
+          kind: 'EnumValueDefinition',
+          name: {
+            kind: 'Name',
+            value: 'endInterval',
           },
           directives: [],
         },

@@ -3032,7 +3032,8 @@ type VAnchorDepositByTokenEveryDay {
   vAnchorAddress: Bytes!
   tokenAddress: Bytes!
   tokenSymbol: String!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   deposit: BigInt!
   averageDeposit: BigInt!
   totalCount: BigInt!
@@ -3099,14 +3100,22 @@ input VAnchorDepositByTokenEveryDay_filter {
   tokenSymbol_ends_with_nocase: String
   tokenSymbol_not_ends_with: String
   tokenSymbol_not_ends_with_nocase: String
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   deposit: BigInt
   deposit_not: BigInt
   deposit_gt: BigInt
@@ -3142,7 +3151,8 @@ enum VAnchorDepositByTokenEveryDay_orderBy {
   vAnchorAddress
   tokenAddress
   tokenSymbol
-  date
+  startInterval
+  endInterval
   deposit
   averageDeposit
   totalCount
@@ -3349,7 +3359,8 @@ enum VAnchorDepositEvery15Min_orderBy {
 type VAnchorDepositEveryDay {
   id: String!
   vAnchorAddress: Bytes!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   deposit: BigInt!
   averageDeposit: BigInt!
   totalCount: BigInt!
@@ -3386,14 +3397,22 @@ input VAnchorDepositEveryDay_filter {
   vAnchorAddress_not_in: [Bytes!]
   vAnchorAddress_contains: Bytes
   vAnchorAddress_not_contains: Bytes
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   deposit: BigInt
   deposit_not: BigInt
   deposit_gt: BigInt
@@ -3427,7 +3446,8 @@ input VAnchorDepositEveryDay_filter {
 enum VAnchorDepositEveryDay_orderBy {
   id
   vAnchorAddress
-  date
+  startInterval
+  endInterval
   deposit
   averageDeposit
   totalCount
@@ -4045,7 +4065,8 @@ type VAnchorTotalValueLockedByTokenEveryDay {
   vAnchorAddress: Bytes!
   tokenAddress: Bytes!
   tokenSymbol: String!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   totalValueLocked: BigInt!
 }
 
@@ -4110,14 +4131,22 @@ input VAnchorTotalValueLockedByTokenEveryDay_filter {
   tokenSymbol_ends_with_nocase: String
   tokenSymbol_not_ends_with: String
   tokenSymbol_not_ends_with_nocase: String
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   totalValueLocked: BigInt
   totalValueLocked_not: BigInt
   totalValueLocked_gt: BigInt
@@ -4137,7 +4166,8 @@ enum VAnchorTotalValueLockedByTokenEveryDay_orderBy {
   vAnchorAddress
   tokenAddress
   tokenSymbol
-  date
+  startInterval
+  endInterval
   totalValueLocked
 }
 
@@ -4304,7 +4334,8 @@ enum VAnchorTotalValueLockedEvery15Min_orderBy {
 type VAnchorTotalValueLockedEveryDay {
   id: String!
   vAnchorAddress: Bytes!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   totalValueLocked: BigInt!
 }
 
@@ -4339,14 +4370,22 @@ input VAnchorTotalValueLockedEveryDay_filter {
   vAnchorAddress_not_in: [Bytes!]
   vAnchorAddress_contains: Bytes
   vAnchorAddress_not_contains: Bytes
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   totalValueLocked: BigInt
   totalValueLocked_not: BigInt
   totalValueLocked_gt: BigInt
@@ -4364,7 +4403,8 @@ input VAnchorTotalValueLockedEveryDay_filter {
 enum VAnchorTotalValueLockedEveryDay_orderBy {
   id
   vAnchorAddress
-  date
+  startInterval
+  endInterval
   totalValueLocked
 }
 
@@ -4952,7 +4992,8 @@ type VAnchorVolumeByTokenEveryDay {
   vAnchorAddress: Bytes!
   tokenAddress: Bytes!
   tokenSymbol: String!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   volume: BigInt!
 }
 
@@ -5017,14 +5058,22 @@ input VAnchorVolumeByTokenEveryDay_filter {
   tokenSymbol_ends_with_nocase: String
   tokenSymbol_not_ends_with: String
   tokenSymbol_not_ends_with_nocase: String
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   volume: BigInt
   volume_not: BigInt
   volume_gt: BigInt
@@ -5044,7 +5093,8 @@ enum VAnchorVolumeByTokenEveryDay_orderBy {
   vAnchorAddress
   tokenAddress
   tokenSymbol
-  date
+  startInterval
+  endInterval
   volume
 }
 
@@ -5211,7 +5261,8 @@ enum VAnchorVolumeEvery15Min_orderBy {
 type VAnchorVolumeEveryDay {
   id: String!
   vAnchorAddress: Bytes!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   volume: BigInt!
 }
 
@@ -5246,14 +5297,22 @@ input VAnchorVolumeEveryDay_filter {
   vAnchorAddress_not_in: [Bytes!]
   vAnchorAddress_contains: Bytes
   vAnchorAddress_not_contains: Bytes
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   volume: BigInt
   volume_not: BigInt
   volume_gt: BigInt
@@ -5271,7 +5330,8 @@ input VAnchorVolumeEveryDay_filter {
 enum VAnchorVolumeEveryDay_orderBy {
   id
   vAnchorAddress
-  date
+  startInterval
+  endInterval
   volume
 }
 
@@ -5468,7 +5528,8 @@ type VAnchorWithdrawalByTokenEveryDay {
   vAnchorAddress: Bytes!
   tokenAddress: Bytes!
   tokenSymbol: String!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   withdrawal: BigInt!
   averageWithdrawal: BigInt!
   totalCount: BigInt!
@@ -5535,14 +5596,22 @@ input VAnchorWithdrawalByTokenEveryDay_filter {
   tokenSymbol_ends_with_nocase: String
   tokenSymbol_not_ends_with: String
   tokenSymbol_not_ends_with_nocase: String
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   withdrawal: BigInt
   withdrawal_not: BigInt
   withdrawal_gt: BigInt
@@ -5578,7 +5647,8 @@ enum VAnchorWithdrawalByTokenEveryDay_orderBy {
   vAnchorAddress
   tokenAddress
   tokenSymbol
-  date
+  startInterval
+  endInterval
   withdrawal
   averageWithdrawal
   totalCount
@@ -5785,7 +5855,8 @@ enum VAnchorWithdrawalEvery15Min_orderBy {
 type VAnchorWithdrawalEveryDay {
   id: String!
   vAnchorAddress: Bytes!
-  date: BigInt!
+  startInterval: BigInt!
+  endInterval: BigInt!
   withdrawal: BigInt!
   averageWithdrawal: BigInt!
   totalCount: BigInt!
@@ -5822,14 +5893,22 @@ input VAnchorWithdrawalEveryDay_filter {
   vAnchorAddress_not_in: [Bytes!]
   vAnchorAddress_contains: Bytes
   vAnchorAddress_not_contains: Bytes
-  date: BigInt
-  date_not: BigInt
-  date_gt: BigInt
-  date_lt: BigInt
-  date_gte: BigInt
-  date_lte: BigInt
-  date_in: [BigInt!]
-  date_not_in: [BigInt!]
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
   withdrawal: BigInt
   withdrawal_not: BigInt
   withdrawal_gt: BigInt
@@ -5863,7 +5942,8 @@ input VAnchorWithdrawalEveryDay_filter {
 enum VAnchorWithdrawalEveryDay_orderBy {
   id
   vAnchorAddress
-  date
+  startInterval
+  endInterval
   withdrawal
   averageWithdrawal
   totalCount

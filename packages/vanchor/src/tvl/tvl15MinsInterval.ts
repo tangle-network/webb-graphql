@@ -5,7 +5,7 @@ import {
   VAnchorTotalValueLockedByTokenEvery15Min,
   VAnchorTotalValueLockedEvery15Min,
 } from '../../generated/schema';
-import { getStartInterval, getEndInterval } from '../utils/time';
+import { getStartInterval15Mins, getEndInterval15Mins } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
 export default function recordTVL15MinsInterval(
@@ -14,8 +14,8 @@ export default function recordTVL15MinsInterval(
   amount: BigInt,
   time: BigInt
 ): void {
-  const startInterval: i32 = getStartInterval(time, 15);
-  const endInterval: i32 = getEndInterval(time, 15);
+  const startInterval = getStartInterval15Mins(time);
+  const endInterval = getEndInterval15Mins(time);
 
   const idByTokenBy15Mins =
     startInterval.toString() +

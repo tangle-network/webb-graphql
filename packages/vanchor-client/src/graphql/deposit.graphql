@@ -83,41 +83,63 @@ query GetVAnchorDepositByTokenEvery15Mins(
   }
 }
 
-query GetVAnchorDepositEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
-  vanchorDepositEveryDays(
-    where: { date: $date, vAnchorAddress: $vAnchorAddress }
-  ) {
-    deposit
-    vAnchorAddress
-    date
-  }
-}
-
-query GetVAnchorsDepositEveryDay($date: BigInt!, $vAnchorAddresses: [Bytes!]!) {
-  vanchorDepositEveryDays(
-    where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
-  ) {
-    deposit
-    vAnchorAddress
-    date
-  }
-}
-
-query GetVanchorDepositByTokenEveryDays(
-  $tokenSymbol: String!
-  $date: BigInt!
+query GetVAnchorDepositEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
   $vAnchorAddress: Bytes!
 ) {
-  vanchorDepositByTokenEveryDays(
+  vanchorDepositEveryDays(
     where: {
-      tokenSymbol: $tokenSymbol
-      date: $date
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
     }
   ) {
+    startInterval
+    endInterval
     deposit
     vAnchorAddress
-    date
+  }
+}
+
+query GetVAnchorsDepositEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorDepositEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    deposit
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorDepositByTokenEveryDays(
+  $startInterval: BigInt!
+  $endInterval: BigInt!
+  $vAnchorAddress: Bytes!
+  $tokenSymbol: String!
+) {
+  vanchorDepositByTokenEveryDays(
+    where: {
+      startInterval_gte: $startInterval
+      endInterval_lte: $endInterval
+      vAnchorAddress: $vAnchorAddress
+      tokenSymbol: $tokenSymbol
+    }
+  ) {
+    deposit
+    startInterval
+    endInterval
+    vAnchorAddress
   }
 }
 
@@ -126,10 +148,15 @@ query GetVanchorsDepositByDateRange(
   $vAnchorAddresses: [Bytes!]!
 ) {
   vanchorDepositEveryDays(
-    where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
+    where: {
+      startInterval_in: $dateRange
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+    orderBy: startInterval
   ) {
     deposit
     vAnchorAddress
-    date
+    startInterval
+    endInterval
   }
 }

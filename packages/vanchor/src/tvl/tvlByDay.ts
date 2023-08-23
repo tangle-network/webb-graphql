@@ -5,7 +5,7 @@ import {
   VAnchorTotalValueLockedByTokenEveryDay,
   VAnchorTotalValueLockedEveryDay,
 } from '../../generated/schema';
-import { getDate } from '../utils/time';
+import { getStartIntervalDay, getEndIntervalDay } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
 export default function recordTVLEveryDay(
@@ -14,11 +14,12 @@ export default function recordTVLEveryDay(
   amount: BigInt,
   time: BigInt
 ): void {
-  const date: i32 = getDate(time);
+  const startInterval = getStartIntervalDay(time);
+  const endInterval = getEndIntervalDay(time);
 
   // generate id
   const idByTokenEveryDay =
-    date.toString() +
+    startInterval.toString() +
     '-' +
     vAnchorAddress.toHexString() +
     '-' +
@@ -46,7 +47,12 @@ export default function recordTVLEveryDay(
     newVanchorTotalValueLockedByToken.tokenSymbol =
       getTokenSymbol(tokenAddress);
     newVanchorTotalValueLockedByToken.tokenAddress = tokenAddress;
-    newVanchorTotalValueLockedByToken.date = BigInt.fromString(date.toString());
+    newVanchorTotalValueLockedByToken.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorTotalValueLockedByToken.endInterval = BigInt.fromString(
+      endInterval.toString()
+    );
     newVanchorTotalValueLockedByToken.save();
   } else {
     vanchorTotalValueLockedByTokenEveryDay.totalValueLocked =
@@ -55,7 +61,8 @@ export default function recordTVLEveryDay(
   }
 
   // Update the total value locked for vanchor
-  const idEveryDay = date.toString() + '-' + vAnchorAddress.toHexString();
+  const idEveryDay =
+    startInterval.toString() + '-' + vAnchorAddress.toHexString();
   const vanchorTotalValueLocked =
     VAnchorTotalValueLockedEveryDay.load(idEveryDay);
 
@@ -75,7 +82,12 @@ export default function recordTVLEveryDay(
         : vanchorTotalValueLocked.totalValueLocked;
 
     newVanchorTotalValueLocked.totalValueLocked = currentTVL;
-    newVanchorTotalValueLocked.date = BigInt.fromString(date.toString());
+    newVanchorTotalValueLocked.startInterval = BigInt.fromString(
+      startInterval.toString()
+    );
+    newVanchorTotalValueLocked.endInterval = BigInt.fromString(
+      endInterval.toString()
+    );
     newVanchorTotalValueLocked.vAnchorAddress = vAnchorAddress;
     newVanchorTotalValueLocked.save();
   } else {

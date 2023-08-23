@@ -24,14 +24,14 @@ query GetVAnchorTotalWrappingFeeByTokens(
 }
 
 query GetVAnchorWrappingFeeEvery15Mins(
-  $endTimestamp: BigInt!
-  $startTimestamp: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
   $vAnchorAddress: Bytes!
 ) {
   vanchorTotalWrappingFeeByTokenEvery15Mins(
     where: {
-      endInterval_lte: $endTimestamp
-      startInterval_gte: $startTimestamp
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
   ) {
@@ -43,14 +43,14 @@ query GetVAnchorWrappingFeeEvery15Mins(
 }
 
 query GetVAnchorsWrappingFeeEvery15Mins(
-  $endTimestamp: BigInt!
-  $startTimestamp: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
   $vAnchorAddresses: [Bytes!]!
 ) {
   vanchorTotalWrappingFeeByTokenEvery15Mins(
     where: {
-      endInterval_lte: $endTimestamp
-      startInterval_gte: $startTimestamp
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
   ) {
@@ -63,8 +63,8 @@ query GetVAnchorsWrappingFeeEvery15Mins(
 }
 
 query GetVAnchorWrappingFeeByTokenEvery15Mins(
-  $endTimestamp: BigInt!
-  $startTimestamp: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
   $vAnchorAddress: Bytes!
   $tokenSymbol: String!
 ) {
@@ -72,8 +72,8 @@ query GetVAnchorWrappingFeeByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endTimestamp
-      startInterval_gte: $startTimestamp
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
     }
   ) {
     fees

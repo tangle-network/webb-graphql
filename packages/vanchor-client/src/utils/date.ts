@@ -11,11 +11,8 @@ export class DateUtil {
 }
 
 export const getEpochArray = (
-  startDate: Date,
+  start: number,
   numberOfDays: number
 ): Array<number> => {
-  return Array.from(
-    { length: numberOfDays },
-    (_, idx) => DateUtil.fromDateToEpoch(startDate) + idx * 86400
-  );
+  return Array.from({ length: numberOfDays }, (_, idx) => start + idx * 86400);
 };

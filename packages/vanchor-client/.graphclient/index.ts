@@ -3063,7 +3063,8 @@ export type VAnchorDepositByTokenEveryDay = {
   vAnchorAddress: Scalars['Bytes'];
   tokenAddress: Scalars['Bytes'];
   tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   deposit: Scalars['BigInt'];
   averageDeposit: Scalars['BigInt'];
   totalCount: Scalars['BigInt'];
@@ -3130,14 +3131,22 @@ export type VAnchorDepositByTokenEveryDay_filter = {
   tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   deposit?: InputMaybe<Scalars['BigInt']>;
   deposit_not?: InputMaybe<Scalars['BigInt']>;
   deposit_gt?: InputMaybe<Scalars['BigInt']>;
@@ -3173,7 +3182,8 @@ export type VAnchorDepositByTokenEveryDay_orderBy =
   | 'vAnchorAddress'
   | 'tokenAddress'
   | 'tokenSymbol'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'deposit'
   | 'averageDeposit'
   | 'totalCount';
@@ -3377,7 +3387,8 @@ export type VAnchorDepositEvery15Min_orderBy =
 export type VAnchorDepositEveryDay = {
   id: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   deposit: Scalars['BigInt'];
   averageDeposit: Scalars['BigInt'];
   totalCount: Scalars['BigInt'];
@@ -3414,14 +3425,22 @@ export type VAnchorDepositEveryDay_filter = {
   vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
   vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   deposit?: InputMaybe<Scalars['BigInt']>;
   deposit_not?: InputMaybe<Scalars['BigInt']>;
   deposit_gt?: InputMaybe<Scalars['BigInt']>;
@@ -3455,7 +3474,8 @@ export type VAnchorDepositEveryDay_filter = {
 export type VAnchorDepositEveryDay_orderBy =
   | 'id'
   | 'vAnchorAddress'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'deposit'
   | 'averageDeposit'
   | 'totalCount';
@@ -4071,7 +4091,8 @@ export type VAnchorTotalValueLockedByTokenEveryDay = {
   vAnchorAddress: Scalars['Bytes'];
   tokenAddress: Scalars['Bytes'];
   tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   totalValueLocked: Scalars['BigInt'];
 };
 
@@ -4136,14 +4157,22 @@ export type VAnchorTotalValueLockedByTokenEveryDay_filter = {
   tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   totalValueLocked?: InputMaybe<Scalars['BigInt']>;
   totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
   totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
@@ -4167,7 +4196,8 @@ export type VAnchorTotalValueLockedByTokenEveryDay_orderBy =
   | 'vAnchorAddress'
   | 'tokenAddress'
   | 'tokenSymbol'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'totalValueLocked';
 
 export type VAnchorTotalValueLockedByToken_filter = {
@@ -4331,7 +4361,8 @@ export type VAnchorTotalValueLockedEvery15Min_orderBy =
 export type VAnchorTotalValueLockedEveryDay = {
   id: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   totalValueLocked: Scalars['BigInt'];
 };
 
@@ -4366,14 +4397,22 @@ export type VAnchorTotalValueLockedEveryDay_filter = {
   vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
   vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   totalValueLocked?: InputMaybe<Scalars['BigInt']>;
   totalValueLocked_not?: InputMaybe<Scalars['BigInt']>;
   totalValueLocked_gt?: InputMaybe<Scalars['BigInt']>;
@@ -4391,7 +4430,8 @@ export type VAnchorTotalValueLockedEveryDay_filter = {
 export type VAnchorTotalValueLockedEveryDay_orderBy =
   | 'id'
   | 'vAnchorAddress'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'totalValueLocked';
 
 export type VAnchorTotalValueLocked_filter = {
@@ -4971,7 +5011,8 @@ export type VAnchorVolumeByTokenEveryDay = {
   vAnchorAddress: Scalars['Bytes'];
   tokenAddress: Scalars['Bytes'];
   tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   volume: Scalars['BigInt'];
 };
 
@@ -5036,14 +5077,22 @@ export type VAnchorVolumeByTokenEveryDay_filter = {
   tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   volume?: InputMaybe<Scalars['BigInt']>;
   volume_not?: InputMaybe<Scalars['BigInt']>;
   volume_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5063,7 +5112,8 @@ export type VAnchorVolumeByTokenEveryDay_orderBy =
   | 'vAnchorAddress'
   | 'tokenAddress'
   | 'tokenSymbol'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'volume';
 
 export type VAnchorVolumeByToken_filter = {
@@ -5227,7 +5277,8 @@ export type VAnchorVolumeEvery15Min_orderBy =
 export type VAnchorVolumeEveryDay = {
   id: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   volume: Scalars['BigInt'];
 };
 
@@ -5262,14 +5313,22 @@ export type VAnchorVolumeEveryDay_filter = {
   vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
   vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   volume?: InputMaybe<Scalars['BigInt']>;
   volume_not?: InputMaybe<Scalars['BigInt']>;
   volume_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5287,7 +5346,8 @@ export type VAnchorVolumeEveryDay_filter = {
 export type VAnchorVolumeEveryDay_orderBy =
   | 'id'
   | 'vAnchorAddress'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'volume';
 
 export type VAnchorVolume_filter = {
@@ -5481,7 +5541,8 @@ export type VAnchorWithdrawalByTokenEveryDay = {
   vAnchorAddress: Scalars['Bytes'];
   tokenAddress: Scalars['Bytes'];
   tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   withdrawal: Scalars['BigInt'];
   averageWithdrawal: Scalars['BigInt'];
   totalCount: Scalars['BigInt'];
@@ -5548,14 +5609,22 @@ export type VAnchorWithdrawalByTokenEveryDay_filter = {
   tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
   tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   withdrawal?: InputMaybe<Scalars['BigInt']>;
   withdrawal_not?: InputMaybe<Scalars['BigInt']>;
   withdrawal_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5591,7 +5660,8 @@ export type VAnchorWithdrawalByTokenEveryDay_orderBy =
   | 'vAnchorAddress'
   | 'tokenAddress'
   | 'tokenSymbol'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'withdrawal'
   | 'averageWithdrawal'
   | 'totalCount';
@@ -5795,7 +5865,8 @@ export type VAnchorWithdrawalEvery15Min_orderBy =
 export type VAnchorWithdrawalEveryDay = {
   id: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   withdrawal: Scalars['BigInt'];
   averageWithdrawal: Scalars['BigInt'];
   totalCount: Scalars['BigInt'];
@@ -5832,14 +5903,22 @@ export type VAnchorWithdrawalEveryDay_filter = {
   vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
   vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
-  date?: InputMaybe<Scalars['BigInt']>;
-  date_not?: InputMaybe<Scalars['BigInt']>;
-  date_gt?: InputMaybe<Scalars['BigInt']>;
-  date_lt?: InputMaybe<Scalars['BigInt']>;
-  date_gte?: InputMaybe<Scalars['BigInt']>;
-  date_lte?: InputMaybe<Scalars['BigInt']>;
-  date_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  date_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   withdrawal?: InputMaybe<Scalars['BigInt']>;
   withdrawal_not?: InputMaybe<Scalars['BigInt']>;
   withdrawal_gt?: InputMaybe<Scalars['BigInt']>;
@@ -5873,7 +5952,8 @@ export type VAnchorWithdrawalEveryDay_filter = {
 export type VAnchorWithdrawalEveryDay_orderBy =
   | 'id'
   | 'vAnchorAddress'
-  | 'date'
+  | 'startInterval'
+  | 'endInterval'
   | 'withdrawal'
   | 'averageWithdrawal'
   | 'totalCount';
@@ -8463,7 +8543,8 @@ export type VAnchorDepositByTokenEveryDayResolvers<
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   deposit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   averageDeposit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   totalCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -8490,7 +8571,8 @@ export type VAnchorDepositEveryDayResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   deposit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   averageDeposit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   totalCount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -8612,7 +8694,8 @@ export type VAnchorTotalValueLockedByTokenEveryDayResolvers<
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   totalValueLocked?: Resolver<
     ResolversTypes['BigInt'],
     ParentType,
@@ -8643,7 +8726,8 @@ export type VAnchorTotalValueLockedEveryDayResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   totalValueLocked?: Resolver<
     ResolversTypes['BigInt'],
     ParentType,
@@ -8754,7 +8838,8 @@ export type VAnchorVolumeByTokenEveryDayResolvers<
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -8777,7 +8862,8 @@ export type VAnchorVolumeEveryDayResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   volume?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -8843,7 +8929,8 @@ export type VAnchorWithdrawalByTokenEveryDayResolvers<
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   withdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   averageWithdrawal?: Resolver<
     ResolversTypes['BigInt'],
@@ -8878,7 +8965,8 @@ export type VAnchorWithdrawalEveryDayResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   withdrawal?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   averageWithdrawal?: Resolver<
     ResolversTypes['BigInt'],
@@ -9157,18 +9245,18 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
           location: 'GetVAnchorDepositEveryDaysDocument.graphql',
         },
         {
-          document: GetVAnchorsDepositEveryDayDocument,
+          document: GetVAnchorsDepositEveryDaysDocument,
           get rawSDL() {
-            return printWithCache(GetVAnchorsDepositEveryDayDocument);
+            return printWithCache(GetVAnchorsDepositEveryDaysDocument);
           },
-          location: 'GetVAnchorsDepositEveryDayDocument.graphql',
+          location: 'GetVAnchorsDepositEveryDaysDocument.graphql',
         },
         {
-          document: GetVanchorDepositByTokenEveryDaysDocument,
+          document: GetVAnchorDepositByTokenEveryDaysDocument,
           get rawSDL() {
-            return printWithCache(GetVanchorDepositByTokenEveryDaysDocument);
+            return printWithCache(GetVAnchorDepositByTokenEveryDaysDocument);
           },
-          location: 'GetVanchorDepositByTokenEveryDaysDocument.graphql',
+          location: 'GetVAnchorDepositByTokenEveryDaysDocument.graphql',
         },
         {
           document: GetVanchorsDepositByDateRangeDocument,
@@ -9340,11 +9428,11 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
           location: 'GetVAnchorsVolumeEvery15MinsDocument.graphql',
         },
         {
-          document: GetVAnchorVolumeByTokenEvery15MinsDocument,
+          document: GetVAnchorVolumeByTokenEveryDaysDocument,
           get rawSDL() {
-            return printWithCache(GetVAnchorVolumeByTokenEvery15MinsDocument);
+            return printWithCache(GetVAnchorVolumeByTokenEveryDaysDocument);
           },
-          location: 'GetVAnchorVolumeByTokenEvery15MinsDocument.graphql',
+          location: 'GetVAnchorVolumeByTokenEveryDaysDocument.graphql',
         },
         {
           document: GetVAnchorVolumeEveryDaysDocument,
@@ -9354,18 +9442,18 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
           location: 'GetVAnchorVolumeEveryDaysDocument.graphql',
         },
         {
-          document: GetVAnchorsVolumeEveryDayDocument,
+          document: GetVAnchorsVolumeEveryDaysDocument,
           get rawSDL() {
-            return printWithCache(GetVAnchorsVolumeEveryDayDocument);
+            return printWithCache(GetVAnchorsVolumeEveryDaysDocument);
           },
-          location: 'GetVAnchorsVolumeEveryDayDocument.graphql',
+          location: 'GetVAnchorsVolumeEveryDaysDocument.graphql',
         },
         {
-          document: GetVanchorVolumeByTokenEveryDaysDocument,
+          document: GetVAnchorVolumeByTokenEvery15MinsDocument,
           get rawSDL() {
-            return printWithCache(GetVanchorVolumeByTokenEveryDaysDocument);
+            return printWithCache(GetVAnchorVolumeByTokenEvery15MinsDocument);
           },
-          location: 'GetVanchorVolumeByTokenEveryDaysDocument.graphql',
+          location: 'GetVAnchorVolumeByTokenEvery15MinsDocument.graphql',
         },
         {
           document: GetVanchorsVolumeByDateRangeDocument,
@@ -9426,18 +9514,18 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
           location: 'GetVAnchorWithdrawalEveryDaysDocument.graphql',
         },
         {
-          document: GetVAnchorsWithdrawalEveryDayDocument,
+          document: GetVAnchorsWithdrawalEveryDaysDocument,
           get rawSDL() {
-            return printWithCache(GetVAnchorsWithdrawalEveryDayDocument);
+            return printWithCache(GetVAnchorsWithdrawalEveryDaysDocument);
           },
-          location: 'GetVAnchorsWithdrawalEveryDayDocument.graphql',
+          location: 'GetVAnchorsWithdrawalEveryDaysDocument.graphql',
         },
         {
-          document: GetVanchorWithdrawalByTokenEveryDaysDocument,
+          document: GetVAnchorWithdrawalByTokenEveryDaysDocument,
           get rawSDL() {
-            return printWithCache(GetVanchorWithdrawalByTokenEveryDaysDocument);
+            return printWithCache(GetVAnchorWithdrawalByTokenEveryDaysDocument);
           },
-          location: 'GetVanchorWithdrawalByTokenEveryDaysDocument.graphql',
+          location: 'GetVAnchorWithdrawalByTokenEveryDaysDocument.graphql',
         },
         {
           document: GetVanchorsWithdrawalByDateRangeDocument,
@@ -9610,36 +9698,48 @@ export type GetVAnchorDepositByTokenEvery15MinsQuery = {
 };
 
 export type GetVAnchorDepositEveryDaysQueryVariables = Exact<{
-  date: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
 export type GetVAnchorDepositEveryDaysQuery = {
   vanchorDepositEveryDays: Array<
-    Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorDepositEveryDay,
+      'startInterval' | 'endInterval' | 'deposit' | 'vAnchorAddress'
+    >
   >;
 };
 
-export type GetVAnchorsDepositEveryDayQueryVariables = Exact<{
-  date: Scalars['BigInt'];
+export type GetVAnchorsDepositEveryDaysQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
-export type GetVAnchorsDepositEveryDayQuery = {
+export type GetVAnchorsDepositEveryDaysQuery = {
   vanchorDepositEveryDays: Array<
-    Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorDepositEveryDay,
+      'id' | 'startInterval' | 'deposit' | 'endInterval' | 'vAnchorAddress'
+    >
   >;
 };
 
-export type GetVanchorDepositByTokenEveryDaysQueryVariables = Exact<{
-  tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
+export type GetVAnchorDepositByTokenEveryDaysQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
 }>;
 
-export type GetVanchorDepositByTokenEveryDaysQuery = {
+export type GetVAnchorDepositByTokenEveryDaysQuery = {
   vanchorDepositByTokenEveryDays: Array<
-    Pick<VAnchorDepositByTokenEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorDepositByTokenEveryDay,
+      'deposit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'
+    >
   >;
 };
 
@@ -9650,7 +9750,10 @@ export type GetVanchorsDepositByDateRangeQueryVariables = Exact<{
 
 export type GetVanchorsDepositByDateRangeQuery = {
   vanchorDepositEveryDays: Array<
-    Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorDepositEveryDay,
+      'deposit' | 'vAnchorAddress' | 'startInterval' | 'endInterval'
+    >
   >;
 };
 
@@ -9682,8 +9785,8 @@ export type GetVAnchorTotalRelayerFeeByTokensQuery = {
 };
 
 export type GetVAnchorRelayerFeeEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
@@ -9697,8 +9800,8 @@ export type GetVAnchorRelayerFeeEvery15MinsQuery = {
 };
 
 export type GetVAnchorsRelayerFeeEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
@@ -9714,8 +9817,8 @@ export type GetVAnchorsRelayerFeeEvery15MinsQuery = {
 export type GetVAnchorRelayerFeeByTokenEvery15MinsQueryVariables = Exact<{
   tokenSymbol: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  endTimestamp?: InputMaybe<Scalars['BigInt']>;
-  startTimestamp?: InputMaybe<Scalars['BigInt']>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
 }>;
 
 export type GetVAnchorRelayerFeeByTokenEvery15MinsQuery = {
@@ -9759,8 +9862,8 @@ export type GetVAnchorTotalValueLockedByTokensQuery = {
 };
 
 export type GetVAnchorTotalValueLockedEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
@@ -9774,8 +9877,8 @@ export type GetVAnchorTotalValueLockedEvery15MinsQuery = {
 };
 
 export type GetVAnchorsTotalValueLockedEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
@@ -9795,8 +9898,8 @@ export type GetVAnchorsTotalValueLockedEvery15MinsQuery = {
 export type GetVAnchorTotalValueLockedByTokenEvery15MinsQueryVariables = Exact<{
   tokenSymbol: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
 }>;
 
 export type GetVAnchorTotalValueLockedByTokenEvery15MinsQuery = {
@@ -9809,7 +9912,8 @@ export type GetVAnchorTotalValueLockedByTokenEvery15MinsQuery = {
 };
 
 export type GetVAnchorTotalValueLockedEveryDaysQueryVariables = Exact<{
-  date: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
@@ -9817,13 +9921,14 @@ export type GetVAnchorTotalValueLockedEveryDaysQuery = {
   vanchorTotalValueLockedEveryDays: Array<
     Pick<
       VAnchorTotalValueLockedEveryDay,
-      'totalValueLocked' | 'vAnchorAddress' | 'date'
+      'startInterval' | 'totalValueLocked' | 'vAnchorAddress' | 'endInterval'
     >
   >;
 };
 
 export type GetVAnchorsTotalValueLockedEveryDaysQueryVariables = Exact<{
-  date: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
@@ -9831,7 +9936,11 @@ export type GetVAnchorsTotalValueLockedEveryDaysQuery = {
   vanchorTotalValueLockedEveryDays: Array<
     Pick<
       VAnchorTotalValueLockedEveryDay,
-      'id' | 'totalValueLocked' | 'vAnchorAddress' | 'date'
+      | 'id'
+      | 'startInterval'
+      | 'totalValueLocked'
+      | 'endInterval'
+      | 'vAnchorAddress'
     >
   >;
 };
@@ -9839,14 +9948,15 @@ export type GetVAnchorsTotalValueLockedEveryDaysQuery = {
 export type GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables = Exact<{
   tokenSymbol: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  date: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
 }>;
 
 export type GetVAnchorTotalValueLockedByTokenEveryDaysQuery = {
   vanchorTotalValueLockedByTokenEveryDays: Array<
     Pick<
       VAnchorTotalValueLockedByTokenEveryDay,
-      'totalValueLocked' | 'vAnchorAddress' | 'date'
+      'totalValueLocked' | 'startInterval' | 'endInterval' | 'vAnchorAddress'
     >
   >;
 };
@@ -9861,7 +9971,7 @@ export type GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery = {
   vanchorTotalValueLockedEveryDays: Array<
     Pick<
       VAnchorTotalValueLockedEveryDay,
-      'totalValueLocked' | 'vAnchorAddress' | 'date'
+      'totalValueLocked' | 'vAnchorAddress' | 'startInterval' | 'endInterval'
     >
   >;
 };
@@ -9921,6 +10031,52 @@ export type GetVAnchorsVolumeEvery15MinsQuery = {
   >;
 };
 
+export type GetVAnchorVolumeByTokenEveryDaysQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+}>;
+
+export type GetVAnchorVolumeByTokenEveryDaysQuery = {
+  vanchorVolumeByTokenEveryDays: Array<
+    Pick<
+      VAnchorVolumeByTokenEveryDay,
+      'volume' | 'startInterval' | 'endInterval' | 'vAnchorAddress'
+    >
+  >;
+};
+
+export type GetVAnchorVolumeEveryDaysQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+export type GetVAnchorVolumeEveryDaysQuery = {
+  vanchorVolumeEveryDays: Array<
+    Pick<
+      VAnchorVolumeEveryDay,
+      'startInterval' | 'endInterval' | 'volume' | 'vAnchorAddress'
+    >
+  >;
+};
+
+export type GetVAnchorsVolumeEveryDaysQueryVariables = Exact<{
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+export type GetVAnchorsVolumeEveryDaysQuery = {
+  vanchorVolumeEveryDays: Array<
+    Pick<
+      VAnchorVolumeEveryDay,
+      'id' | 'startInterval' | 'volume' | 'endInterval' | 'vAnchorAddress'
+    >
+  >;
+};
+
 export type GetVAnchorVolumeByTokenEvery15MinsQueryVariables = Exact<{
   startInterval: Scalars['BigInt'];
   endInterval: Scalars['BigInt'];
@@ -9937,40 +10093,6 @@ export type GetVAnchorVolumeByTokenEvery15MinsQuery = {
   >;
 };
 
-export type GetVAnchorVolumeEveryDaysQueryVariables = Exact<{
-  date: Scalars['BigInt'];
-  vAnchorAddress: Scalars['Bytes'];
-}>;
-
-export type GetVAnchorVolumeEveryDaysQuery = {
-  vanchorVolumeEveryDays: Array<
-    Pick<VAnchorVolumeEveryDay, 'volume' | 'vAnchorAddress' | 'date'>
-  >;
-};
-
-export type GetVAnchorsVolumeEveryDayQueryVariables = Exact<{
-  date: Scalars['BigInt'];
-  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
-}>;
-
-export type GetVAnchorsVolumeEveryDayQuery = {
-  vanchorVolumeEveryDays: Array<
-    Pick<VAnchorVolumeEveryDay, 'volume' | 'vAnchorAddress' | 'date'>
-  >;
-};
-
-export type GetVanchorVolumeByTokenEveryDaysQueryVariables = Exact<{
-  tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
-  vAnchorAddress: Scalars['Bytes'];
-}>;
-
-export type GetVanchorVolumeByTokenEveryDaysQuery = {
-  vanchorVolumeByTokenEveryDays: Array<
-    Pick<VAnchorVolumeByTokenEveryDay, 'volume' | 'vAnchorAddress' | 'date'>
-  >;
-};
-
 export type GetVanchorsVolumeByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
@@ -9978,7 +10100,10 @@ export type GetVanchorsVolumeByDateRangeQueryVariables = Exact<{
 
 export type GetVanchorsVolumeByDateRangeQuery = {
   vanchorVolumeEveryDays: Array<
-    Pick<VAnchorVolumeEveryDay, 'volume' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorVolumeEveryDay,
+      'volume' | 'vAnchorAddress' | 'startInterval' | 'endInterval'
+    >
   >;
 };
 
@@ -10010,8 +10135,8 @@ export type GetVAnchorWithdrawalByTokensQuery = {
 };
 
 export type GetVAnchorWithdrawalEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
@@ -10025,8 +10150,8 @@ export type GetVAnchorWithdrawalEvery15MinsQuery = {
 };
 
 export type GetVAnchorsWithdrawalEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
@@ -10042,8 +10167,8 @@ export type GetVAnchorsWithdrawalEvery15MinsQuery = {
 export type GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables = Exact<{
   tokenSymbol: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
 }>;
 
 export type GetVAnchorWithdrawalByTokenEvery15MinsQuery = {
@@ -10056,38 +10181,47 @@ export type GetVAnchorWithdrawalByTokenEvery15MinsQuery = {
 };
 
 export type GetVAnchorWithdrawalEveryDaysQueryVariables = Exact<{
-  date: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
 export type GetVAnchorWithdrawalEveryDaysQuery = {
   vanchorWithdrawalEveryDays: Array<
-    Pick<VAnchorWithdrawalEveryDay, 'withdrawal' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorWithdrawalEveryDay,
+      'startInterval' | 'withdrawal' | 'vAnchorAddress' | 'endInterval'
+    >
   >;
 };
 
-export type GetVAnchorsWithdrawalEveryDayQueryVariables = Exact<{
-  date: Scalars['BigInt'];
+export type GetVAnchorsWithdrawalEveryDaysQueryVariables = Exact<{
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
-export type GetVAnchorsWithdrawalEveryDayQuery = {
+export type GetVAnchorsWithdrawalEveryDaysQuery = {
   vanchorWithdrawalEveryDays: Array<
-    Pick<VAnchorWithdrawalEveryDay, 'withdrawal' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorWithdrawalEveryDay,
+      'id' | 'startInterval' | 'withdrawal' | 'endInterval' | 'vAnchorAddress'
+    >
   >;
 };
 
-export type GetVanchorWithdrawalByTokenEveryDaysQueryVariables = Exact<{
+export type GetVAnchorWithdrawalByTokenEveryDaysQueryVariables = Exact<{
   tokenSymbol: Scalars['String'];
-  date: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
 }>;
 
-export type GetVanchorWithdrawalByTokenEveryDaysQuery = {
+export type GetVAnchorWithdrawalByTokenEveryDaysQuery = {
   vanchorWithdrawalByTokenEveryDays: Array<
     Pick<
       VAnchorWithdrawalByTokenEveryDay,
-      'withdrawal' | 'vAnchorAddress' | 'date'
+      'withdrawal' | 'startInterval' | 'endInterval' | 'vAnchorAddress'
     >
   >;
 };
@@ -10099,7 +10233,10 @@ export type GetVanchorsWithdrawalByDateRangeQueryVariables = Exact<{
 
 export type GetVanchorsWithdrawalByDateRangeQuery = {
   vanchorWithdrawalEveryDays: Array<
-    Pick<VAnchorWithdrawalEveryDay, 'withdrawal' | 'vAnchorAddress' | 'date'>
+    Pick<
+      VAnchorWithdrawalEveryDay,
+      'withdrawal' | 'vAnchorAddress' | 'startInterval' | 'endInterval'
+    >
   >;
 };
 
@@ -10131,8 +10268,8 @@ export type GetVAnchorTotalWrappingFeeByTokensQuery = {
 };
 
 export type GetVAnchorWrappingFeeEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
@@ -10146,8 +10283,8 @@ export type GetVAnchorWrappingFeeEvery15MinsQuery = {
 };
 
 export type GetVAnchorsWrappingFeeEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
@@ -10161,8 +10298,8 @@ export type GetVAnchorsWrappingFeeEvery15MinsQuery = {
 };
 
 export type GetVAnchorWrappingFeeByTokenEvery15MinsQueryVariables = Exact<{
-  endTimestamp: Scalars['BigInt'];
-  startTimestamp: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
   tokenSymbol: Scalars['String'];
 }>;
@@ -10286,57 +10423,76 @@ export const GetVAnchorDepositByTokenEvery15MinsDocument = gql`
   GetVAnchorDepositByTokenEvery15MinsQueryVariables
 >;
 export const GetVAnchorDepositEveryDaysDocument = gql`
-  query GetVAnchorDepositEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
+  query GetVAnchorDepositEveryDays(
+    $startInterval: BigInt!
+    $endInterval: BigInt!
+    $vAnchorAddress: Bytes!
+  ) {
     vanchorDepositEveryDays(
-      where: { date: $date, vAnchorAddress: $vAnchorAddress }
+      where: {
+        startInterval_gte: $startInterval
+        endInterval_lte: $endInterval
+        vAnchorAddress: $vAnchorAddress
+      }
     ) {
+      startInterval
+      endInterval
       deposit
       vAnchorAddress
-      date
     }
   }
 ` as unknown as DocumentNode<
   GetVAnchorDepositEveryDaysQuery,
   GetVAnchorDepositEveryDaysQueryVariables
 >;
-export const GetVAnchorsDepositEveryDayDocument = gql`
-  query GetVAnchorsDepositEveryDay(
-    $date: BigInt!
+export const GetVAnchorsDepositEveryDaysDocument = gql`
+  query GetVAnchorsDepositEveryDays(
+    $startInterval: BigInt!
+    $endInterval: BigInt!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorDepositEveryDays(
-      where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
+      where: {
+        startInterval_gte: $startInterval
+        endInterval_lte: $endInterval
+        vAnchorAddress_in: $vAnchorAddresses
+      }
     ) {
+      id
+      startInterval
       deposit
+      endInterval
       vAnchorAddress
-      date
     }
   }
 ` as unknown as DocumentNode<
-  GetVAnchorsDepositEveryDayQuery,
-  GetVAnchorsDepositEveryDayQueryVariables
+  GetVAnchorsDepositEveryDaysQuery,
+  GetVAnchorsDepositEveryDaysQueryVariables
 >;
-export const GetVanchorDepositByTokenEveryDaysDocument = gql`
-  query GetVanchorDepositByTokenEveryDays(
-    $tokenSymbol: String!
-    $date: BigInt!
+export const GetVAnchorDepositByTokenEveryDaysDocument = gql`
+  query GetVAnchorDepositByTokenEveryDays(
+    $startInterval: BigInt!
+    $endInterval: BigInt!
     $vAnchorAddress: Bytes!
+    $tokenSymbol: String!
   ) {
     vanchorDepositByTokenEveryDays(
       where: {
-        tokenSymbol: $tokenSymbol
-        date: $date
+        startInterval_gte: $startInterval
+        endInterval_lte: $endInterval
         vAnchorAddress: $vAnchorAddress
+        tokenSymbol: $tokenSymbol
       }
     ) {
       deposit
+      startInterval
+      endInterval
       vAnchorAddress
-      date
     }
   }
 ` as unknown as DocumentNode<
-  GetVanchorDepositByTokenEveryDaysQuery,
-  GetVanchorDepositByTokenEveryDaysQueryVariables
+  GetVAnchorDepositByTokenEveryDaysQuery,
+  GetVAnchorDepositByTokenEveryDaysQueryVariables
 >;
 export const GetVanchorsDepositByDateRangeDocument = gql`
   query GetVanchorsDepositByDateRange(
@@ -10344,11 +10500,16 @@ export const GetVanchorsDepositByDateRangeDocument = gql`
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorDepositEveryDays(
-      where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
+      where: {
+        startInterval_in: $dateRange
+        vAnchorAddress_in: $vAnchorAddresses
+      }
+      orderBy: startInterval
     ) {
       deposit
       vAnchorAddress
-      date
+      startInterval
+      endInterval
     }
   }
 ` as unknown as DocumentNode<
@@ -10394,14 +10555,14 @@ export const GetVAnchorTotalRelayerFeeByTokensDocument = gql`
 >;
 export const GetVAnchorRelayerFeeEvery15MinsDocument = gql`
   query GetVAnchorRelayerFeeEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddress: Bytes!
   ) {
     vanchorTotalRelayerFee15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress: $vAnchorAddress
       }
     ) {
@@ -10417,14 +10578,14 @@ export const GetVAnchorRelayerFeeEvery15MinsDocument = gql`
 >;
 export const GetVAnchorsRelayerFeeEvery15MinsDocument = gql`
   query GetVAnchorsRelayerFeeEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorTotalRelayerFeeByTokenEvery15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress_in: $vAnchorAddresses
       }
     ) {
@@ -10443,15 +10604,15 @@ export const GetVAnchorRelayerFeeByTokenEvery15MinsDocument = gql`
   query GetVAnchorRelayerFeeByTokenEvery15Mins(
     $tokenSymbol: String!
     $vAnchorAddress: Bytes!
-    $endTimestamp: BigInt
-    $startTimestamp: BigInt
+    $endInterval: BigInt
+    $startInterval: BigInt
   ) {
     vanchorTotalRelayerFeeByTokenEvery15Mins(
       where: {
         tokenSymbol: $tokenSymbol
         vAnchorAddress: $vAnchorAddress
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
       }
     ) {
       fees
@@ -10503,14 +10664,14 @@ export const GetVAnchorTotalValueLockedByTokensDocument = gql`
 >;
 export const GetVAnchorTotalValueLockedEvery15MinsDocument = gql`
   query GetVAnchorTotalValueLockedEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddress: Bytes!
   ) {
     vanchorTotalValueLockedEvery15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress: $vAnchorAddress
       }
     ) {
@@ -10526,14 +10687,14 @@ export const GetVAnchorTotalValueLockedEvery15MinsDocument = gql`
 >;
 export const GetVAnchorsTotalValueLockedEvery15MinsDocument = gql`
   query GetVAnchorsTotalValueLockedEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorTotalValueLockedEvery15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress_in: $vAnchorAddresses
       }
     ) {
@@ -10552,15 +10713,15 @@ export const GetVAnchorTotalValueLockedByTokenEvery15MinsDocument = gql`
   query GetVAnchorTotalValueLockedByTokenEvery15Mins(
     $tokenSymbol: String!
     $vAnchorAddress: Bytes!
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
   ) {
     vanchorTotalValueLockedByTokenEvery15Mins(
       where: {
         tokenSymbol: $tokenSymbol
         vAnchorAddress: $vAnchorAddress
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
       }
     ) {
       totalValueLocked
@@ -10575,15 +10736,21 @@ export const GetVAnchorTotalValueLockedByTokenEvery15MinsDocument = gql`
 >;
 export const GetVAnchorTotalValueLockedEveryDaysDocument = gql`
   query GetVAnchorTotalValueLockedEveryDays(
-    $date: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddress: Bytes!
   ) {
     vanchorTotalValueLockedEveryDays(
-      where: { date: $date, vAnchorAddress: $vAnchorAddress }
+      where: {
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
+        vAnchorAddress: $vAnchorAddress
+      }
     ) {
+      startInterval
       totalValueLocked
       vAnchorAddress
-      date
+      endInterval
     }
   }
 ` as unknown as DocumentNode<
@@ -10592,16 +10759,22 @@ export const GetVAnchorTotalValueLockedEveryDaysDocument = gql`
 >;
 export const GetVAnchorsTotalValueLockedEveryDaysDocument = gql`
   query GetVAnchorsTotalValueLockedEveryDays(
-    $date: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorTotalValueLockedEveryDays(
-      where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
+      where: {
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
+        vAnchorAddress_in: $vAnchorAddresses
+      }
     ) {
       id
+      startInterval
       totalValueLocked
+      endInterval
       vAnchorAddress
-      date
     }
   }
 ` as unknown as DocumentNode<
@@ -10612,18 +10785,21 @@ export const GetVAnchorTotalValueLockedByTokenEveryDaysDocument = gql`
   query GetVAnchorTotalValueLockedByTokenEveryDays(
     $tokenSymbol: String!
     $vAnchorAddress: Bytes!
-    $date: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
   ) {
     vanchorTotalValueLockedByTokenEveryDays(
       where: {
         tokenSymbol: $tokenSymbol
         vAnchorAddress: $vAnchorAddress
-        date: $date
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
       }
     ) {
       totalValueLocked
+      startInterval
+      endInterval
       vAnchorAddress
-      date
     }
   }
 ` as unknown as DocumentNode<
@@ -10636,12 +10812,16 @@ export const GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument = gql`
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorTotalValueLockedEveryDays(
-      where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
-      orderBy: date
+      where: {
+        startInterval_in: $dateRange
+        vAnchorAddress_in: $vAnchorAddresses
+      }
+      orderBy: startInterval
     ) {
       totalValueLocked
       vAnchorAddress
-      date
+      startInterval
+      endInterval
     }
   }
 ` as unknown as DocumentNode<
@@ -10732,6 +10912,78 @@ export const GetVAnchorsVolumeEvery15MinsDocument = gql`
   GetVAnchorsVolumeEvery15MinsQuery,
   GetVAnchorsVolumeEvery15MinsQueryVariables
 >;
+export const GetVAnchorVolumeByTokenEveryDaysDocument = gql`
+  query GetVAnchorVolumeByTokenEveryDays(
+    $startInterval: BigInt!
+    $endInterval: BigInt!
+    $vAnchorAddress: Bytes!
+    $tokenSymbol: String!
+  ) {
+    vanchorVolumeByTokenEveryDays(
+      where: {
+        startInterval_gte: $startInterval
+        endInterval_lte: $endInterval
+        vAnchorAddress: $vAnchorAddress
+        tokenSymbol: $tokenSymbol
+      }
+    ) {
+      volume
+      startInterval
+      endInterval
+      vAnchorAddress
+    }
+  }
+` as unknown as DocumentNode<
+  GetVAnchorVolumeByTokenEveryDaysQuery,
+  GetVAnchorVolumeByTokenEveryDaysQueryVariables
+>;
+export const GetVAnchorVolumeEveryDaysDocument = gql`
+  query GetVAnchorVolumeEveryDays(
+    $startInterval: BigInt!
+    $endInterval: BigInt!
+    $vAnchorAddress: Bytes!
+  ) {
+    vanchorVolumeEveryDays(
+      where: {
+        startInterval_gte: $startInterval
+        endInterval_lte: $endInterval
+        vAnchorAddress: $vAnchorAddress
+      }
+    ) {
+      startInterval
+      endInterval
+      volume
+      vAnchorAddress
+    }
+  }
+` as unknown as DocumentNode<
+  GetVAnchorVolumeEveryDaysQuery,
+  GetVAnchorVolumeEveryDaysQueryVariables
+>;
+export const GetVAnchorsVolumeEveryDaysDocument = gql`
+  query GetVAnchorsVolumeEveryDays(
+    $startInterval: BigInt!
+    $endInterval: BigInt!
+    $vAnchorAddresses: [Bytes!]!
+  ) {
+    vanchorVolumeEveryDays(
+      where: {
+        startInterval_gte: $startInterval
+        endInterval_lte: $endInterval
+        vAnchorAddress_in: $vAnchorAddresses
+      }
+    ) {
+      id
+      startInterval
+      volume
+      endInterval
+      vAnchorAddress
+    }
+  }
+` as unknown as DocumentNode<
+  GetVAnchorsVolumeEveryDaysQuery,
+  GetVAnchorsVolumeEveryDaysQueryVariables
+>;
 export const GetVAnchorVolumeByTokenEvery15MinsDocument = gql`
   query GetVAnchorVolumeByTokenEvery15Mins(
     $startInterval: BigInt!
@@ -10757,70 +11009,22 @@ export const GetVAnchorVolumeByTokenEvery15MinsDocument = gql`
   GetVAnchorVolumeByTokenEvery15MinsQuery,
   GetVAnchorVolumeByTokenEvery15MinsQueryVariables
 >;
-export const GetVAnchorVolumeEveryDaysDocument = gql`
-  query GetVAnchorVolumeEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
-    vanchorVolumeEveryDays(
-      where: { date: $date, vAnchorAddress: $vAnchorAddress }
-    ) {
-      volume
-      vAnchorAddress
-      date
-    }
-  }
-` as unknown as DocumentNode<
-  GetVAnchorVolumeEveryDaysQuery,
-  GetVAnchorVolumeEveryDaysQueryVariables
->;
-export const GetVAnchorsVolumeEveryDayDocument = gql`
-  query GetVAnchorsVolumeEveryDay(
-    $date: BigInt!
-    $vAnchorAddresses: [Bytes!]!
-  ) {
-    vanchorVolumeEveryDays(
-      where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
-    ) {
-      volume
-      vAnchorAddress
-      date
-    }
-  }
-` as unknown as DocumentNode<
-  GetVAnchorsVolumeEveryDayQuery,
-  GetVAnchorsVolumeEveryDayQueryVariables
->;
-export const GetVanchorVolumeByTokenEveryDaysDocument = gql`
-  query GetVanchorVolumeByTokenEveryDays(
-    $tokenSymbol: String!
-    $date: BigInt!
-    $vAnchorAddress: Bytes!
-  ) {
-    vanchorVolumeByTokenEveryDays(
-      where: {
-        tokenSymbol: $tokenSymbol
-        date: $date
-        vAnchorAddress: $vAnchorAddress
-      }
-    ) {
-      volume
-      vAnchorAddress
-      date
-    }
-  }
-` as unknown as DocumentNode<
-  GetVanchorVolumeByTokenEveryDaysQuery,
-  GetVanchorVolumeByTokenEveryDaysQueryVariables
->;
 export const GetVanchorsVolumeByDateRangeDocument = gql`
   query GetVanchorsVolumeByDateRange(
     $dateRange: [BigInt!]!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorVolumeEveryDays(
-      where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
+      where: {
+        startInterval_in: $dateRange
+        vAnchorAddress_in: $vAnchorAddresses
+      }
+      orderBy: startInterval
     ) {
       volume
       vAnchorAddress
-      date
+      startInterval
+      endInterval
     }
   }
 ` as unknown as DocumentNode<
@@ -10866,14 +11070,14 @@ export const GetVAnchorWithdrawalByTokensDocument = gql`
 >;
 export const GetVAnchorWithdrawalEvery15MinsDocument = gql`
   query GetVAnchorWithdrawalEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddress: Bytes!
   ) {
     vanchorWithdrawalEvery15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress: $vAnchorAddress
       }
     ) {
@@ -10889,14 +11093,14 @@ export const GetVAnchorWithdrawalEvery15MinsDocument = gql`
 >;
 export const GetVAnchorsWithdrawalEvery15MinsDocument = gql`
   query GetVAnchorsWithdrawalEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorWithdrawalEvery15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress_in: $vAnchorAddresses
       }
     ) {
@@ -10915,15 +11119,15 @@ export const GetVAnchorWithdrawalByTokenEvery15MinsDocument = gql`
   query GetVAnchorWithdrawalByTokenEvery15Mins(
     $tokenSymbol: String!
     $vAnchorAddress: Bytes!
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
   ) {
     vanchorWithdrawalByTokenEvery15Mins(
       where: {
         tokenSymbol: $tokenSymbol
         vAnchorAddress: $vAnchorAddress
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
       }
     ) {
       withdrawal
@@ -10937,57 +11141,76 @@ export const GetVAnchorWithdrawalByTokenEvery15MinsDocument = gql`
   GetVAnchorWithdrawalByTokenEvery15MinsQueryVariables
 >;
 export const GetVAnchorWithdrawalEveryDaysDocument = gql`
-  query GetVAnchorWithdrawalEveryDays($date: BigInt!, $vAnchorAddress: Bytes!) {
+  query GetVAnchorWithdrawalEveryDays(
+    $endInterval: BigInt!
+    $startInterval: BigInt!
+    $vAnchorAddress: Bytes!
+  ) {
     vanchorWithdrawalEveryDays(
-      where: { date: $date, vAnchorAddress: $vAnchorAddress }
+      where: {
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
+        vAnchorAddress: $vAnchorAddress
+      }
     ) {
+      startInterval
       withdrawal
       vAnchorAddress
-      date
+      endInterval
     }
   }
 ` as unknown as DocumentNode<
   GetVAnchorWithdrawalEveryDaysQuery,
   GetVAnchorWithdrawalEveryDaysQueryVariables
 >;
-export const GetVAnchorsWithdrawalEveryDayDocument = gql`
-  query GetVAnchorsWithdrawalEveryDay(
-    $date: BigInt!
+export const GetVAnchorsWithdrawalEveryDaysDocument = gql`
+  query GetVAnchorsWithdrawalEveryDays(
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorWithdrawalEveryDays(
-      where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
+      where: {
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
+        vAnchorAddress_in: $vAnchorAddresses
+      }
     ) {
+      id
+      startInterval
       withdrawal
+      endInterval
       vAnchorAddress
-      date
     }
   }
 ` as unknown as DocumentNode<
-  GetVAnchorsWithdrawalEveryDayQuery,
-  GetVAnchorsWithdrawalEveryDayQueryVariables
+  GetVAnchorsWithdrawalEveryDaysQuery,
+  GetVAnchorsWithdrawalEveryDaysQueryVariables
 >;
-export const GetVanchorWithdrawalByTokenEveryDaysDocument = gql`
-  query GetVanchorWithdrawalByTokenEveryDays(
+export const GetVAnchorWithdrawalByTokenEveryDaysDocument = gql`
+  query GetVAnchorWithdrawalByTokenEveryDays(
     $tokenSymbol: String!
-    $date: BigInt!
     $vAnchorAddress: Bytes!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
   ) {
     vanchorWithdrawalByTokenEveryDays(
       where: {
         tokenSymbol: $tokenSymbol
-        date: $date
         vAnchorAddress: $vAnchorAddress
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
       }
     ) {
       withdrawal
+      startInterval
+      endInterval
       vAnchorAddress
-      date
     }
   }
 ` as unknown as DocumentNode<
-  GetVanchorWithdrawalByTokenEveryDaysQuery,
-  GetVanchorWithdrawalByTokenEveryDaysQueryVariables
+  GetVAnchorWithdrawalByTokenEveryDaysQuery,
+  GetVAnchorWithdrawalByTokenEveryDaysQueryVariables
 >;
 export const GetVanchorsWithdrawalByDateRangeDocument = gql`
   query GetVanchorsWithdrawalByDateRange(
@@ -10995,11 +11218,16 @@ export const GetVanchorsWithdrawalByDateRangeDocument = gql`
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorWithdrawalEveryDays(
-      where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
+      where: {
+        startInterval_in: $dateRange
+        vAnchorAddress_in: $vAnchorAddresses
+      }
+      orderBy: startInterval
     ) {
       withdrawal
       vAnchorAddress
-      date
+      startInterval
+      endInterval
     }
   }
 ` as unknown as DocumentNode<
@@ -11045,14 +11273,14 @@ export const GetVAnchorTotalWrappingFeeByTokensDocument = gql`
 >;
 export const GetVAnchorWrappingFeeEvery15MinsDocument = gql`
   query GetVAnchorWrappingFeeEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddress: Bytes!
   ) {
     vanchorTotalWrappingFeeByTokenEvery15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress: $vAnchorAddress
       }
     ) {
@@ -11068,14 +11296,14 @@ export const GetVAnchorWrappingFeeEvery15MinsDocument = gql`
 >;
 export const GetVAnchorsWrappingFeeEvery15MinsDocument = gql`
   query GetVAnchorsWrappingFeeEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddresses: [Bytes!]!
   ) {
     vanchorTotalWrappingFeeByTokenEvery15Mins(
       where: {
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
         vAnchorAddress_in: $vAnchorAddresses
       }
     ) {
@@ -11092,8 +11320,8 @@ export const GetVAnchorsWrappingFeeEvery15MinsDocument = gql`
 >;
 export const GetVAnchorWrappingFeeByTokenEvery15MinsDocument = gql`
   query GetVAnchorWrappingFeeByTokenEvery15Mins(
-    $endTimestamp: BigInt!
-    $startTimestamp: BigInt!
+    $endInterval: BigInt!
+    $startInterval: BigInt!
     $vAnchorAddress: Bytes!
     $tokenSymbol: String!
   ) {
@@ -11101,8 +11329,8 @@ export const GetVAnchorWrappingFeeByTokenEvery15MinsDocument = gql`
       where: {
         tokenSymbol: $tokenSymbol
         vAnchorAddress: $vAnchorAddress
-        endInterval_lte: $endTimestamp
-        startInterval_gte: $startTimestamp
+        endInterval_lte: $endInterval
+        startInterval_gte: $startInterval
       }
     ) {
       fees
@@ -11214,31 +11442,31 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
         options
       ) as Promise<GetVAnchorDepositEveryDaysQuery>;
     },
-    GetVAnchorsDepositEveryDay(
-      variables: GetVAnchorsDepositEveryDayQueryVariables,
+    GetVAnchorsDepositEveryDays(
+      variables: GetVAnchorsDepositEveryDaysQueryVariables,
       options?: C
-    ): Promise<GetVAnchorsDepositEveryDayQuery> {
+    ): Promise<GetVAnchorsDepositEveryDaysQuery> {
       return requester<
-        GetVAnchorsDepositEveryDayQuery,
-        GetVAnchorsDepositEveryDayQueryVariables
+        GetVAnchorsDepositEveryDaysQuery,
+        GetVAnchorsDepositEveryDaysQueryVariables
       >(
-        GetVAnchorsDepositEveryDayDocument,
+        GetVAnchorsDepositEveryDaysDocument,
         variables,
         options
-      ) as Promise<GetVAnchorsDepositEveryDayQuery>;
+      ) as Promise<GetVAnchorsDepositEveryDaysQuery>;
     },
-    GetVanchorDepositByTokenEveryDays(
-      variables: GetVanchorDepositByTokenEveryDaysQueryVariables,
+    GetVAnchorDepositByTokenEveryDays(
+      variables: GetVAnchorDepositByTokenEveryDaysQueryVariables,
       options?: C
-    ): Promise<GetVanchorDepositByTokenEveryDaysQuery> {
+    ): Promise<GetVAnchorDepositByTokenEveryDaysQuery> {
       return requester<
-        GetVanchorDepositByTokenEveryDaysQuery,
-        GetVanchorDepositByTokenEveryDaysQueryVariables
+        GetVAnchorDepositByTokenEveryDaysQuery,
+        GetVAnchorDepositByTokenEveryDaysQueryVariables
       >(
-        GetVanchorDepositByTokenEveryDaysDocument,
+        GetVAnchorDepositByTokenEveryDaysDocument,
         variables,
         options
-      ) as Promise<GetVanchorDepositByTokenEveryDaysQuery>;
+      ) as Promise<GetVAnchorDepositByTokenEveryDaysQuery>;
     },
     GetVanchorsDepositByDateRange(
       variables: GetVanchorsDepositByDateRangeQueryVariables,
@@ -11526,18 +11754,18 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
         options
       ) as Promise<GetVAnchorsVolumeEvery15MinsQuery>;
     },
-    GetVAnchorVolumeByTokenEvery15Mins(
-      variables: GetVAnchorVolumeByTokenEvery15MinsQueryVariables,
+    GetVAnchorVolumeByTokenEveryDays(
+      variables: GetVAnchorVolumeByTokenEveryDaysQueryVariables,
       options?: C
-    ): Promise<GetVAnchorVolumeByTokenEvery15MinsQuery> {
+    ): Promise<GetVAnchorVolumeByTokenEveryDaysQuery> {
       return requester<
-        GetVAnchorVolumeByTokenEvery15MinsQuery,
-        GetVAnchorVolumeByTokenEvery15MinsQueryVariables
+        GetVAnchorVolumeByTokenEveryDaysQuery,
+        GetVAnchorVolumeByTokenEveryDaysQueryVariables
       >(
-        GetVAnchorVolumeByTokenEvery15MinsDocument,
+        GetVAnchorVolumeByTokenEveryDaysDocument,
         variables,
         options
-      ) as Promise<GetVAnchorVolumeByTokenEvery15MinsQuery>;
+      ) as Promise<GetVAnchorVolumeByTokenEveryDaysQuery>;
     },
     GetVAnchorVolumeEveryDays(
       variables: GetVAnchorVolumeEveryDaysQueryVariables,
@@ -11552,31 +11780,31 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
         options
       ) as Promise<GetVAnchorVolumeEveryDaysQuery>;
     },
-    GetVAnchorsVolumeEveryDay(
-      variables: GetVAnchorsVolumeEveryDayQueryVariables,
+    GetVAnchorsVolumeEveryDays(
+      variables: GetVAnchorsVolumeEveryDaysQueryVariables,
       options?: C
-    ): Promise<GetVAnchorsVolumeEveryDayQuery> {
+    ): Promise<GetVAnchorsVolumeEveryDaysQuery> {
       return requester<
-        GetVAnchorsVolumeEveryDayQuery,
-        GetVAnchorsVolumeEveryDayQueryVariables
+        GetVAnchorsVolumeEveryDaysQuery,
+        GetVAnchorsVolumeEveryDaysQueryVariables
       >(
-        GetVAnchorsVolumeEveryDayDocument,
+        GetVAnchorsVolumeEveryDaysDocument,
         variables,
         options
-      ) as Promise<GetVAnchorsVolumeEveryDayQuery>;
+      ) as Promise<GetVAnchorsVolumeEveryDaysQuery>;
     },
-    GetVanchorVolumeByTokenEveryDays(
-      variables: GetVanchorVolumeByTokenEveryDaysQueryVariables,
+    GetVAnchorVolumeByTokenEvery15Mins(
+      variables: GetVAnchorVolumeByTokenEvery15MinsQueryVariables,
       options?: C
-    ): Promise<GetVanchorVolumeByTokenEveryDaysQuery> {
+    ): Promise<GetVAnchorVolumeByTokenEvery15MinsQuery> {
       return requester<
-        GetVanchorVolumeByTokenEveryDaysQuery,
-        GetVanchorVolumeByTokenEveryDaysQueryVariables
+        GetVAnchorVolumeByTokenEvery15MinsQuery,
+        GetVAnchorVolumeByTokenEvery15MinsQueryVariables
       >(
-        GetVanchorVolumeByTokenEveryDaysDocument,
+        GetVAnchorVolumeByTokenEvery15MinsDocument,
         variables,
         options
-      ) as Promise<GetVanchorVolumeByTokenEveryDaysQuery>;
+      ) as Promise<GetVAnchorVolumeByTokenEvery15MinsQuery>;
     },
     GetVanchorsVolumeByDateRange(
       variables: GetVanchorsVolumeByDateRangeQueryVariables,
@@ -11682,31 +11910,31 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
         options
       ) as Promise<GetVAnchorWithdrawalEveryDaysQuery>;
     },
-    GetVAnchorsWithdrawalEveryDay(
-      variables: GetVAnchorsWithdrawalEveryDayQueryVariables,
+    GetVAnchorsWithdrawalEveryDays(
+      variables: GetVAnchorsWithdrawalEveryDaysQueryVariables,
       options?: C
-    ): Promise<GetVAnchorsWithdrawalEveryDayQuery> {
+    ): Promise<GetVAnchorsWithdrawalEveryDaysQuery> {
       return requester<
-        GetVAnchorsWithdrawalEveryDayQuery,
-        GetVAnchorsWithdrawalEveryDayQueryVariables
+        GetVAnchorsWithdrawalEveryDaysQuery,
+        GetVAnchorsWithdrawalEveryDaysQueryVariables
       >(
-        GetVAnchorsWithdrawalEveryDayDocument,
+        GetVAnchorsWithdrawalEveryDaysDocument,
         variables,
         options
-      ) as Promise<GetVAnchorsWithdrawalEveryDayQuery>;
+      ) as Promise<GetVAnchorsWithdrawalEveryDaysQuery>;
     },
-    GetVanchorWithdrawalByTokenEveryDays(
-      variables: GetVanchorWithdrawalByTokenEveryDaysQueryVariables,
+    GetVAnchorWithdrawalByTokenEveryDays(
+      variables: GetVAnchorWithdrawalByTokenEveryDaysQueryVariables,
       options?: C
-    ): Promise<GetVanchorWithdrawalByTokenEveryDaysQuery> {
+    ): Promise<GetVAnchorWithdrawalByTokenEveryDaysQuery> {
       return requester<
-        GetVanchorWithdrawalByTokenEveryDaysQuery,
-        GetVanchorWithdrawalByTokenEveryDaysQueryVariables
+        GetVAnchorWithdrawalByTokenEveryDaysQuery,
+        GetVAnchorWithdrawalByTokenEveryDaysQueryVariables
       >(
-        GetVanchorWithdrawalByTokenEveryDaysDocument,
+        GetVAnchorWithdrawalByTokenEveryDaysDocument,
         variables,
         options
-      ) as Promise<GetVanchorWithdrawalByTokenEveryDaysQuery>;
+      ) as Promise<GetVAnchorWithdrawalByTokenEveryDaysQuery>;
     },
     GetVanchorsWithdrawalByDateRange(
       variables: GetVanchorsWithdrawalByDateRangeQueryVariables,

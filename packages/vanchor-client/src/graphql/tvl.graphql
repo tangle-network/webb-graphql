@@ -24,14 +24,14 @@ query GetVAnchorTotalValueLockedByTokens(
 }
 
 query GetVAnchorTotalValueLockedEvery15Mins(
-  $endTimestamp: BigInt!
-  $startTimestamp: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
   $vAnchorAddress: Bytes!
 ) {
   vanchorTotalValueLockedEvery15Mins(
     where: {
-      endInterval_lte: $endTimestamp
-      startInterval_gte: $startTimestamp
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
   ) {
@@ -43,14 +43,14 @@ query GetVAnchorTotalValueLockedEvery15Mins(
 }
 
 query GetVAnchorsTotalValueLockedEvery15Mins(
-  $endTimestamp: BigInt!
-  $startTimestamp: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
   $vAnchorAddresses: [Bytes!]!
 ) {
   vanchorTotalValueLockedEvery15Mins(
     where: {
-      endInterval_lte: $endTimestamp
-      startInterval_gte: $startTimestamp
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
   ) {
@@ -65,15 +65,15 @@ query GetVAnchorsTotalValueLockedEvery15Mins(
 query GetVAnchorTotalValueLockedByTokenEvery15Mins(
   $tokenSymbol: String!
   $vAnchorAddress: Bytes!
-  $endTimestamp: BigInt!
-  $startTimestamp: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
 ) {
   vanchorTotalValueLockedByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endTimestamp
-      startInterval_gte: $startTimestamp
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
     }
   ) {
     totalValueLocked
@@ -84,47 +84,62 @@ query GetVAnchorTotalValueLockedByTokenEvery15Mins(
 }
 
 query GetVAnchorTotalValueLockedEveryDays(
-  $date: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
   $vAnchorAddress: Bytes!
 ) {
   vanchorTotalValueLockedEveryDays(
-    where: { date: $date, vAnchorAddress: $vAnchorAddress }
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress: $vAnchorAddress
+    }
   ) {
+    startInterval
     totalValueLocked
     vAnchorAddress
-    date
+    endInterval
   }
 }
 
 query GetVAnchorsTotalValueLockedEveryDays(
-  $date: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
   $vAnchorAddresses: [Bytes!]!
 ) {
   vanchorTotalValueLockedEveryDays(
-    where: { date: $date, vAnchorAddress_in: $vAnchorAddresses }
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
   ) {
     id
+    startInterval
     totalValueLocked
+    endInterval
     vAnchorAddress
-    date
   }
 }
 
 query GetVAnchorTotalValueLockedByTokenEveryDays(
   $tokenSymbol: String!
   $vAnchorAddress: Bytes!
-  $date: BigInt!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
 ) {
   vanchorTotalValueLockedByTokenEveryDays(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      date: $date
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
     }
   ) {
     totalValueLocked
+    startInterval
+    endInterval
     vAnchorAddress
-    date
   }
 }
 
@@ -133,11 +148,15 @@ query GetVAnchorsTotalValueLockedByDateRangeEveryDays(
   $vAnchorAddresses: [Bytes!]!
 ) {
   vanchorTotalValueLockedEveryDays(
-    where: { date_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses }
-    orderBy: date
+    where: {
+      startInterval_in: $dateRange
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+    orderBy: startInterval
   ) {
     totalValueLocked
     vAnchorAddress
-    date
+    startInterval
+    endInterval
   }
 }

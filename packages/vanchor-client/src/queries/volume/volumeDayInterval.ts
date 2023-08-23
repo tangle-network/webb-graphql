@@ -5,7 +5,8 @@ import { SubgraphUrl } from '../../config';
 export interface VolumeByChainDayIntervalItem {
   subgraphUrl: SubgraphUrl;
   volume: bigint;
-  date: Date;
+  startInterval: Date;
+  endInterval: Date;
   vAnchorAddress: string;
 }
 
@@ -28,11 +29,13 @@ const sdk = getBuiltGraphSDK();
 export const GetVAnchorVolumeByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
-  date: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<VolumeByChainDayIntervalItem | null> => {
   const result = await sdk.GetVAnchorVolumeEveryDays(
     {
-      date: DateUtil.fromDateToEpoch(date),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
     {
@@ -49,7 +52,8 @@ export const GetVAnchorVolumeByChainDayInterval = async (
   return {
     volume: BigInt(item.volume),
     subgraphUrl: subgraphUrl,
-    date: DateUtil.fromEpochToDate(parseInt(item?.date)),
+    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
     vAnchorAddress: String(item.vAnchorAddress),
   };
 };
@@ -57,13 +61,19 @@ export const GetVAnchorVolumeByChainDayInterval = async (
 export const GetVAnchorVolumeByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
-  date: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<VolumeByChainDayIntervalItem | null>> => {
   const promises: Array<Promise<VolumeByChainDayIntervalItem | null>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorVolumeByChainDayInterval(subgraphUrl, vAnchorAddress, date)
+      GetVAnchorVolumeByChainDayInterval(
+        subgraphUrl,
+        vAnchorAddress,
+        startInterval,
+        endInterval
+      )
     );
   }
 
@@ -73,11 +83,13 @@ export const GetVAnchorVolumeByChainsDayInterval = async (
 export const GetVAnchorsVolumeByChainDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
-  date: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<VolumeByVAnchorDayIntervalItem>> => {
-  const result = await sdk.GetVAnchorsVolumeEveryDay(
+  const result = await sdk.GetVAnchorsVolumeEveryDays(
     {
-      date: DateUtil.fromDateToEpoch(date),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       vAnchorAddresses: vanchorAddresses.map((address) =>
         address.toLowerCase()
       ),
@@ -117,13 +129,19 @@ export const GetVAnchorsVolumeByChainDayInterval = async (
 export const GetVAnchorsVolumeByChainsDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
-  date: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<VolumeByVAnchorDayIntervalItem>>> => {
   const promises: Array<Promise<Array<VolumeByVAnchorDayIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorsVolumeByChainDayInterval(subgraphUrl, vanchorAddresses, date)
+      GetVAnchorsVolumeByChainDayInterval(
+        subgraphUrl,
+        vanchorAddresses,
+        startInterval,
+        endInterval
+      )
     );
   }
 
@@ -134,11 +152,13 @@ export const GetVAnchorVolumeByChainAndByTokenDayInterval = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string,
-  date: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<VolumeByChainAndByTokenDayIntervalItem>> => {
-  const result = await sdk.GetVanchorVolumeByTokenEveryDays(
+  const result = await sdk.GetVAnchorVolumeByTokenEveryDays(
     {
-      date: DateUtil.fromDateToEpoch(date),
+      endInterval: DateUtil.fromDateToEpoch(endInterval),
+      startInterval: DateUtil.fromDateToEpoch(startInterval),
       vAnchorAddress: vAnchorAddress.toLowerCase(),
       tokenSymbol: tokenSymbol,
     },
@@ -156,7 +176,8 @@ export const GetVAnchorVolumeByChainAndByTokenDayInterval = async (
       volume: BigInt(item.volume),
       tokenSymbol,
       subgraphUrl: subgraphUrl,
-      date: DateUtil.fromEpochToDate(parseInt(item?.date)),
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
       vAnchorAddress: item?.vAnchorAddress,
     };
   });
@@ -166,7 +187,8 @@ export const GetVAnchorVolumeByChainsAndByTokenDayInterval = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
-  date: Date
+  startInterval: Date,
+  endInterval: Date
 ): Promise<Array<Array<VolumeByChainAndByTokenDayIntervalItem>>> => {
   const promises: Array<
     Promise<Array<VolumeByChainAndByTokenDayIntervalItem>>
@@ -178,7 +200,8 @@ export const GetVAnchorVolumeByChainsAndByTokenDayInterval = async (
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol,
-        date
+        startInterval,
+        endInterval
       )
     );
   }
@@ -189,10 +212,10 @@ export const GetVAnchorVolumeByChainsAndByTokenDayInterval = async (
 export const GetVAnchorsVolumeByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
-  dateStart: Date,
+  epochStart: number,
   numberOfDays: number
 ): Promise<VolumeVAnchorsDateRangeItem> => {
-  const dates = getEpochArray(dateStart, numberOfDays);
+  const dates = getEpochArray(epochStart, numberOfDays);
   const result = await sdk.GetVanchorsVolumeByDateRange(
     {
       dateRange: dates.map((date) => date.toString()),
@@ -216,7 +239,7 @@ export const GetVAnchorsVolumeByChainByDateRange = async (
   }
 
   result.vanchorVolumeEveryDays.forEach((item) => {
-    volumeMapByDate[+item.date] += BigInt(item.volume);
+    volumeMapByDate[item.startInterval.toString()] += BigInt(item.volume);
   });
 
   return volumeMapByDate;
@@ -225,7 +248,7 @@ export const GetVAnchorsVolumeByChainByDateRange = async (
 export const GetVAnchorsVolumeByChainsByDateRange = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
-  dateStart: Date,
+  epochStart: number,
   numberOfDays: number
 ): Promise<Array<VolumeVAnchorsDateRangeItem>> => {
   const promises: Array<Promise<VolumeVAnchorsDateRangeItem>> = [];
@@ -235,7 +258,7 @@ export const GetVAnchorsVolumeByChainsByDateRange = async (
       GetVAnchorsVolumeByChainByDateRange(
         subgraphUrl,
         vanchorAddresses,
-        dateStart,
+        epochStart,
         numberOfDays
       )
     );
