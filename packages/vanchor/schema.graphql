@@ -158,7 +158,9 @@ type VAnchorTotalValueLockedByTokenEveryDay @entity(immutable: false) {
 
 type VAnchorTotalRelayerFee @entity(immutable: false) {
   id: String! # vAnchor address
-  fees: BigInt! # total value locked in the vAnchor
+  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  txFees: BigInt! # Network Fees
+  profit: BigInt! # Relayer's Profit
 }
 
 type VAnchorTotalRelayerFeeByToken @entity(immutable: false) {
@@ -166,7 +168,9 @@ type VAnchorTotalRelayerFeeByToken @entity(immutable: false) {
   vAnchorAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   tokenAddress: Bytes! # address
-  fees: BigInt! # total value locked in the vAnchor
+  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  txFees: BigInt! # Network Fees
+  profit: BigInt! # Relayer's Profit
 }
 
 type VAnchorTotalRelayerFee15Min @entity(immutable: false) {
@@ -174,7 +178,9 @@ type VAnchorTotalRelayerFee15Min @entity(immutable: false) {
   vAnchorAddress: Bytes! # address
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  fees: BigInt! # total value locked in the vAnchor
+  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  txFees: BigInt! # Network Fees
+  profit: BigInt! # Relayer's Profit
 }
 
 type VAnchorTotalRelayerFeeByTokenEvery15Min @entity(immutable: false) {
@@ -184,7 +190,9 @@ type VAnchorTotalRelayerFeeByTokenEvery15Min @entity(immutable: false) {
   tokenSymbol: String! # token symbol
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  fees: BigInt! # total value locked in the vAnchor
+  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  txFees: BigInt! # Network Fees
+  profit: BigInt! # Relayer's Profit
 }
 
 type VAnchorTotalWrappingFee @entity(immutable: false) {
@@ -395,7 +403,7 @@ type VAnchorVolumeByToken @entity(immutable: false) {
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
-  volume: BigInt! 
+  volume: BigInt!
 }
 
 type VAnchorVolumeEvery15Min @entity(immutable: false) {
@@ -403,7 +411,7 @@ type VAnchorVolumeEvery15Min @entity(immutable: false) {
   vAnchorAddress: Bytes! # address
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  volume: BigInt! 
+  volume: BigInt!
 }
 
 type VAnchorVolumeByTokenEvery15Min @entity(immutable: false) {
@@ -413,7 +421,7 @@ type VAnchorVolumeByTokenEvery15Min @entity(immutable: false) {
   tokenSymbol: String! # token symbol
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  volume: BigInt! 
+  volume: BigInt!
 }
 
 type VAnchorVolumeEveryDay @entity(immutable: false) {

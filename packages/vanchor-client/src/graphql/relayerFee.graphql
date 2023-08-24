@@ -1,6 +1,8 @@
 query GetVAnchorTotalRelayerFee($vAnchorAddress: ID!) {
   vanchorTotalRelayerFee(id: $vAnchorAddress) {
     fees
+    txFees
+    profit
   }
 }
 
@@ -8,6 +10,8 @@ query GetVAnchorsTotalRelayerFees($vAnchorAddresses: [String!]!) {
   vanchorTotalRelayerFees(where: { id_in: $vAnchorAddresses }) {
     id
     fees
+    txFees
+    profit
   }
 }
 
@@ -20,6 +24,8 @@ query GetVAnchorTotalRelayerFeeByTokens(
     where: { tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress }
   ) {
     fees
+    txFees
+    profit
   }
 }
 
@@ -37,6 +43,8 @@ query GetVAnchorRelayerFeeEvery15Mins(
   ) {
     startInterval
     fees
+    txFees
+    profit
     vAnchorAddress
     endInterval
   }
@@ -57,6 +65,8 @@ query GetVAnchorsRelayerFeeEvery15Mins(
     id
     startInterval
     fees
+    txFees
+    profit
     endInterval
     vAnchorAddress
   }
@@ -77,6 +87,8 @@ query GetVAnchorRelayerFeeByTokenEvery15Mins(
     }
   ) {
     fees
+    txFees
+    profit
     startInterval
     endInterval
     vAnchorAddress
