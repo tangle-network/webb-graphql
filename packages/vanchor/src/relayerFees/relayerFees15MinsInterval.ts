@@ -10,6 +10,7 @@ export default function recordRelayerFees15MinsInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   fees: BigInt,
+  txFees: BigInt,
   time: BigInt
 ): void {
   const startInterval = getStartInterval15Mins(time);
@@ -28,6 +29,8 @@ export default function recordRelayerFees15MinsInterval(
       id
     );
     newVanchorFeeByToken.fees = fees;
+    newVanchorFeeByToken.txFees = txFees;
+    newVanchorFeeByToken.profit = fees.minus(txFees);
     newVanchorFeeByToken.vAnchorAddress = vAnchorAddress;
     newVanchorFeeByToken.tokenSymbol = getTokenSymbol(tokenAddress);
     newVanchorFeeByToken.tokenAddress = tokenAddress;
@@ -40,6 +43,10 @@ export default function recordRelayerFees15MinsInterval(
     newVanchorFeeByToken.save();
   } else {
     vanchorFeeByToken.fees = vanchorFeeByToken.fees.plus(fees);
+    vanchorFeeByToken.txFees = vanchorFeeByToken.txFees.plus(txFees);
+    vanchorFeeByToken.profit = vanchorFeeByToken.profit.plus(
+      fees.minus(txFees)
+    );
     vanchorFeeByToken.save();
   }
 
@@ -54,9 +61,13 @@ export default function recordRelayerFees15MinsInterval(
     newVanchorFee.endInterval = BigInt.fromString(endInterval.toString());
     newVanchorFee.vAnchorAddress = vAnchorAddress;
     newVanchorFee.fees = fees;
+    newVanchorFee.txFees = txFees;
+    newVanchorFee.profit = fees.minus(txFees);
     newVanchorFee.save();
   } else {
     vanchorFee.fees = vanchorFee.fees.plus(fees);
+    vanchorFee.txFees = vanchorFee.txFees.plus(txFees);
+    vanchorFee.profit = vanchorFee.profit.plus(fees.minus(txFees));
     vanchorFee.save();
   }
 }

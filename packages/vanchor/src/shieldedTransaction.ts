@@ -71,6 +71,12 @@ export const handleTransaction = (event: Insertion): void => {
       // Relayer address
       externalDataEntity.relayer = externalData[2].toAddress();
       // Fee amount for relayer (NOT WRAPPING FEES)
+      // This fee is not the profit for the relayer, this value is a sum of the
+      // fees that the relayer will pay to the validators (txfee) and the
+      // relayer's profit (relayerfee).
+      // in another words, totalFee = relayerfee + txfee.
+      // to get the relayer's profit, we need to subtract the txfee from the
+      // totalFee.
       externalDataEntity.fee = externalData[3].toBigInt();
       // Refund amount
       externalDataEntity.refund = externalData[4].toBigInt();
@@ -181,15 +187,24 @@ export const handleTransaction = (event: Insertion): void => {
       );
 
       // Record Relayer Fees
+      // by default, this value is gasLimit
+      let gasUsed = event.transaction.gasLimit;
+      if (event.receipt !== null) {
+        gasUsed = event.receipt!.gasUsed;
+      }
+      let gasPrice = event.transaction.gasPrice;
+      const txfee = gasUsed.times(gasPrice);
       recordRelayerFees(
         newShieldedTx.vanchor,
         tokenAddress,
-        externalDataEntity.fee
+        externalDataEntity.fee,
+        txfee
       );
       recordRelayerFees15MinsInterval(
         newShieldedTx.vanchor,
         tokenAddress,
         externalDataEntity.fee,
+        txfee,
         event.block.timestamp
       );
     }
