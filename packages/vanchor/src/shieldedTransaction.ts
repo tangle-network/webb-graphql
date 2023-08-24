@@ -189,7 +189,7 @@ export const handleTransaction = (event: Insertion): void => {
       if (event.receipt !== null) {
         gasUsed = event.receipt!.gasUsed;
       }
-      let gasPrice = event.transaction.gasPrice;
+      const gasPrice = event.transaction.gasPrice;
       const txfee = gasUsed.times(gasPrice);
       recordRelayerFees(
         newShieldedTx.vanchor,
