@@ -71,12 +71,9 @@ export const handleTransaction = (event: Insertion): void => {
       // Relayer address
       externalDataEntity.relayer = externalData[2].toAddress();
       // Fee amount for relayer (NOT WRAPPING FEES)
-      // This fee is not the profit for the relayer, this value is a sum of the
-      // fees that the relayer will pay to the validators (txfee) and the
-      // relayer's profit (relayerfee).
-      // in another words, totalFee = relayerfee + txfee.
-      // to get the relayer's profit, we need to subtract the txfee from the
-      // totalFee.
+      // txFees = gasUsed * gasPrice
+      // profit = txFees * X%
+      // fee = txFees + profit
       externalDataEntity.fee = externalData[3].toBigInt();
       // Refund amount
       externalDataEntity.refund = externalData[4].toBigInt();
