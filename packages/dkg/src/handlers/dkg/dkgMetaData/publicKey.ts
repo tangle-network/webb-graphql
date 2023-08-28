@@ -1,4 +1,4 @@
-import { Extrinsic, PublicKey, SessionKeyStatus } from '../../../types';
+import { Block, Extrinsic, PublicKey, SessionKeyStatus } from '../../../types';
 import { DKGSections } from '../type';
 
 /**
@@ -30,7 +30,8 @@ export async function ensureKey(data: PublicKeyGenerated) {
       ex.arguments.indexOf(data.composedPubKey) > -1
     );
   });
-  const hash = await api.rpc.chain.getBlockHash(data.blockNumber);
+  const block = await Block.get(data.blockNumber);
+  const hash = block.hash;
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
     id: data.composedPubKey,
