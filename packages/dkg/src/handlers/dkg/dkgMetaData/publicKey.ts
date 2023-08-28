@@ -30,10 +30,7 @@ export async function ensureKey(data: PublicKeyGenerated) {
       ex.arguments.indexOf(data.composedPubKey) > -1
     );
   });
-  let txHash = '';
-  if (matcheExtrinsic) {
-    txHash = matcheExtrinsic.hash;
-  }
+  const hash = await api.rpc.chain.getBlockHash(data.blockNumber);
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
     id: data.composedPubKey,
@@ -42,7 +39,7 @@ export async function ensureKey(data: PublicKeyGenerated) {
       {
         stage: SessionKeyStatus.Generated,
         blockNumber: data.blockNumber,
-        txHash,
+        txHash: hash.toString(),
         timestamp: data.timestamp,
       },
     ],
