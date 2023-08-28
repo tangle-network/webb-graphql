@@ -28,5 +28,15 @@
       "address": "0x58BA29259Aab901179A07899235e3CB88afE9079",
       "startBlock": 0
     }
+  },
+  "Tangle": {
+    "vanchor": {
+      "address": "0x7aA556dD0AF8bed063444E14A6A9af46C9266973",
+      "startBlock": 142000
+    },
+    "fungible-token-wrapper": {
+      "address": "0x58BA29259Aab901179A07899235e3CB88afE9079",
+      "startBlock": 142476
+    }
   }
 }

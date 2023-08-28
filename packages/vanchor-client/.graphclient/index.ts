@@ -3819,6 +3819,8 @@ export type VAnchorDeposit_orderBy =
 export type VAnchorTotalRelayerFee = {
   id: Scalars['String'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFee15Min = {
@@ -3827,6 +3829,8 @@ export type VAnchorTotalRelayerFee15Min = {
   startInterval: Scalars['BigInt'];
   endInterval: Scalars['BigInt'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFee15Min_filter = {
@@ -3884,6 +3888,22 @@ export type VAnchorTotalRelayerFee15Min_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFee15Min_filter>>>;
@@ -3895,7 +3915,9 @@ export type VAnchorTotalRelayerFee15Min_orderBy =
   | 'vAnchorAddress'
   | 'startInterval'
   | 'endInterval'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalRelayerFeeByToken = {
   id: Scalars['String'];
@@ -3903,6 +3925,8 @@ export type VAnchorTotalRelayerFeeByToken = {
   tokenSymbol: Scalars['String'];
   tokenAddress: Scalars['Bytes'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFeeByTokenEvery15Min = {
@@ -3913,6 +3937,8 @@ export type VAnchorTotalRelayerFeeByTokenEvery15Min = {
   startInterval: Scalars['BigInt'];
   endInterval: Scalars['BigInt'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFeeByTokenEvery15Min_filter = {
@@ -4000,6 +4026,22 @@ export type VAnchorTotalRelayerFeeByTokenEvery15Min_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFeeByTokenEvery15Min_filter>>>;
@@ -4013,7 +4055,9 @@ export type VAnchorTotalRelayerFeeByTokenEvery15Min_orderBy =
   | 'tokenSymbol'
   | 'startInterval'
   | 'endInterval'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalRelayerFeeByToken_filter = {
   id?: InputMaybe<Scalars['String']>;
@@ -4084,6 +4128,22 @@ export type VAnchorTotalRelayerFeeByToken_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFeeByToken_filter>>>;
@@ -4095,7 +4155,9 @@ export type VAnchorTotalRelayerFeeByToken_orderBy =
   | 'vAnchorAddress'
   | 'tokenSymbol'
   | 'tokenAddress'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalRelayerFee_filter = {
   id?: InputMaybe<Scalars['String']>;
@@ -4126,6 +4188,22 @@ export type VAnchorTotalRelayerFee_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFee_filter>>>;
@@ -4134,7 +4212,9 @@ export type VAnchorTotalRelayerFee_filter = {
 
 export type VAnchorTotalRelayerFee_orderBy =
   | 'id'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalValueLocked = {
   id: Scalars['String'];
@@ -7211,6 +7291,8 @@ export type VAnchorDepositLogResolvers<ContextType = MeshContext & { subgraphUrl
 export type VAnchorTotalRelayerFeeResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalRelayerFee'] = ResolversParentTypes['VAnchorTotalRelayerFee']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   fees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  txFees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  profit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -7220,6 +7302,8 @@ export type VAnchorTotalRelayerFee15MinResolvers<ContextType = MeshContext & { s
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   fees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  txFees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  profit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -7229,6 +7313,8 @@ export type VAnchorTotalRelayerFeeByTokenResolvers<ContextType = MeshContext & {
   tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   fees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  txFees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  profit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -7240,6 +7326,8 @@ export type VAnchorTotalRelayerFeeByTokenEvery15MinResolvers<ContextType = MeshC
   startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   fees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  txFees?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  profit?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -8085,14 +8173,14 @@ export type GetVAnchorTotalRelayerFeeQueryVariables = Exact<{
 }>;
 
 
-export type GetVAnchorTotalRelayerFeeQuery = { vanchorTotalRelayerFee?: Maybe<Pick<VAnchorTotalRelayerFee, 'fees'>> };
+export type GetVAnchorTotalRelayerFeeQuery = { vanchorTotalRelayerFee?: Maybe<Pick<VAnchorTotalRelayerFee, 'fees' | 'txFees' | 'profit'>> };
 
 export type GetVAnchorsTotalRelayerFeesQueryVariables = Exact<{
   vAnchorAddresses: Array<Scalars['String']> | Scalars['String'];
 }>;
 
 
-export type GetVAnchorsTotalRelayerFeesQuery = { vanchorTotalRelayerFees: Array<Pick<VAnchorTotalRelayerFee, 'id' | 'fees'>> };
+export type GetVAnchorsTotalRelayerFeesQuery = { vanchorTotalRelayerFees: Array<Pick<VAnchorTotalRelayerFee, 'id' | 'fees' | 'txFees' | 'profit'>> };
 
 export type GetVAnchorTotalRelayerFeeByTokensQueryVariables = Exact<{
   tokenSymbol: Scalars['String'];
@@ -8100,7 +8188,7 @@ export type GetVAnchorTotalRelayerFeeByTokensQueryVariables = Exact<{
 }>;
 
 
-export type GetVAnchorTotalRelayerFeeByTokensQuery = { vanchorTotalRelayerFeeByTokens: Array<Pick<VAnchorTotalRelayerFeeByToken, 'fees'>> };
+export type GetVAnchorTotalRelayerFeeByTokensQuery = { vanchorTotalRelayerFeeByTokens: Array<Pick<VAnchorTotalRelayerFeeByToken, 'fees' | 'txFees' | 'profit'>> };
 
 export type GetVAnchorRelayerFeeEvery15MinsQueryVariables = Exact<{
   endInterval: Scalars['BigInt'];
@@ -8109,7 +8197,7 @@ export type GetVAnchorRelayerFeeEvery15MinsQueryVariables = Exact<{
 }>;
 
 
-export type GetVAnchorRelayerFeeEvery15MinsQuery = { vanchorTotalRelayerFee15Mins: Array<Pick<VAnchorTotalRelayerFee15Min, 'startInterval' | 'fees' | 'vAnchorAddress' | 'endInterval'>> };
+export type GetVAnchorRelayerFeeEvery15MinsQuery = { vanchorTotalRelayerFee15Mins: Array<Pick<VAnchorTotalRelayerFee15Min, 'startInterval' | 'fees' | 'txFees' | 'profit' | 'vAnchorAddress' | 'endInterval'>> };
 
 export type GetVAnchorsRelayerFeeEvery15MinsQueryVariables = Exact<{
   endInterval: Scalars['BigInt'];
@@ -8118,7 +8206,7 @@ export type GetVAnchorsRelayerFeeEvery15MinsQueryVariables = Exact<{
 }>;
 
 
-export type GetVAnchorsRelayerFeeEvery15MinsQuery = { vanchorTotalRelayerFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalRelayerFeeByTokenEvery15Min, 'id' | 'startInterval' | 'fees' | 'endInterval' | 'vAnchorAddress'>> };
+export type GetVAnchorsRelayerFeeEvery15MinsQuery = { vanchorTotalRelayerFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalRelayerFeeByTokenEvery15Min, 'id' | 'startInterval' | 'fees' | 'txFees' | 'profit' | 'endInterval' | 'vAnchorAddress'>> };
 
 export type GetVAnchorRelayerFeeByTokenEvery15MinsQueryVariables = Exact<{
   tokenSymbol: Scalars['String'];
@@ -8128,7 +8216,7 @@ export type GetVAnchorRelayerFeeByTokenEvery15MinsQueryVariables = Exact<{
 }>;
 
 
-export type GetVAnchorRelayerFeeByTokenEvery15MinsQuery = { vanchorTotalRelayerFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalRelayerFeeByTokenEvery15Min, 'fees' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+export type GetVAnchorRelayerFeeByTokenEvery15MinsQuery = { vanchorTotalRelayerFeeByTokenEvery15Mins: Array<Pick<VAnchorTotalRelayerFeeByTokenEvery15Min, 'fees' | 'txFees' | 'profit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
 export type GetVAnchorTotalValueLockedQueryVariables = Exact<{
   vAnchorAddress: Scalars['ID'];
@@ -8555,6 +8643,8 @@ export const GetVAnchorTotalRelayerFeeDocument = gql`
     query GetVAnchorTotalRelayerFee($vAnchorAddress: ID!) {
   vanchorTotalRelayerFee(id: $vAnchorAddress) {
     fees
+    txFees
+    profit
   }
 }
     ` as unknown as DocumentNode<GetVAnchorTotalRelayerFeeQuery, GetVAnchorTotalRelayerFeeQueryVariables>;
@@ -8563,6 +8653,8 @@ export const GetVAnchorsTotalRelayerFeesDocument = gql`
   vanchorTotalRelayerFees(where: {id_in: $vAnchorAddresses}) {
     id
     fees
+    txFees
+    profit
   }
 }
     ` as unknown as DocumentNode<GetVAnchorsTotalRelayerFeesQuery, GetVAnchorsTotalRelayerFeesQueryVariables>;
@@ -8573,6 +8665,8 @@ export const GetVAnchorTotalRelayerFeeByTokensDocument = gql`
     where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
   ) {
     fees
+    txFees
+    profit
   }
 }
     ` as unknown as DocumentNode<GetVAnchorTotalRelayerFeeByTokensQuery, GetVAnchorTotalRelayerFeeByTokensQueryVariables>;
@@ -8583,6 +8677,8 @@ export const GetVAnchorRelayerFeeEvery15MinsDocument = gql`
   ) {
     startInterval
     fees
+    txFees
+    profit
     vAnchorAddress
     endInterval
   }
@@ -8596,6 +8692,8 @@ export const GetVAnchorsRelayerFeeEvery15MinsDocument = gql`
     id
     startInterval
     fees
+    txFees
+    profit
     endInterval
     vAnchorAddress
   }
@@ -8607,6 +8705,8 @@ export const GetVAnchorRelayerFeeByTokenEvery15MinsDocument = gql`
     where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     fees
+    txFees
+    profit
     startInterval
     endInterval
     vAnchorAddress

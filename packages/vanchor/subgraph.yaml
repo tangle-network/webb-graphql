@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: fungible-token-wrapper
-    network: Demeter
+    network: Tangle
     source:
       abi: FungibleTokenWrapper
       address: "0x58BA29259Aab901179A07899235e3CB88afE9079"
-      startBlock: 0
+      startBlock: 142476
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -35,11 +35,11 @@ dataSources:
       file: ./src/fungibleTokenWrapper.ts
   - kind: ethereum
     name: vanchor
-    network: Demeter
+    network: Tangle
     source:
       abi: VAnchor
       address: "0x7aA556dD0AF8bed063444E14A6A9af46C9266973"
-      startBlock: 0
+      startBlock: 142000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
