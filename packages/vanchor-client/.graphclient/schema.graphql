@@ -3615,6 +3615,8 @@ enum VAnchorDeposit_orderBy {
 type VAnchorTotalRelayerFee {
   id: String!
   fees: BigInt!
+  txFees: BigInt!
+  profit: BigInt!
 }
 
 type VAnchorTotalRelayerFee15Min {
@@ -3623,6 +3625,8 @@ type VAnchorTotalRelayerFee15Min {
   startInterval: BigInt!
   endInterval: BigInt!
   fees: BigInt!
+  txFees: BigInt!
+  profit: BigInt!
 }
 
 input VAnchorTotalRelayerFee15Min_filter {
@@ -3680,6 +3684,22 @@ input VAnchorTotalRelayerFee15Min_filter {
   fees_lte: BigInt
   fees_in: [BigInt!]
   fees_not_in: [BigInt!]
+  txFees: BigInt
+  txFees_not: BigInt
+  txFees_gt: BigInt
+  txFees_lt: BigInt
+  txFees_gte: BigInt
+  txFees_lte: BigInt
+  txFees_in: [BigInt!]
+  txFees_not_in: [BigInt!]
+  profit: BigInt
+  profit_not: BigInt
+  profit_gt: BigInt
+  profit_lt: BigInt
+  profit_gte: BigInt
+  profit_lte: BigInt
+  profit_in: [BigInt!]
+  profit_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
   and: [VAnchorTotalRelayerFee15Min_filter]
@@ -3692,6 +3712,8 @@ enum VAnchorTotalRelayerFee15Min_orderBy {
   startInterval
   endInterval
   fees
+  txFees
+  profit
 }
 
 type VAnchorTotalRelayerFeeByToken {
@@ -3700,6 +3722,8 @@ type VAnchorTotalRelayerFeeByToken {
   tokenSymbol: String!
   tokenAddress: Bytes!
   fees: BigInt!
+  txFees: BigInt!
+  profit: BigInt!
 }
 
 type VAnchorTotalRelayerFeeByTokenEvery15Min {
@@ -3710,6 +3734,8 @@ type VAnchorTotalRelayerFeeByTokenEvery15Min {
   startInterval: BigInt!
   endInterval: BigInt!
   fees: BigInt!
+  txFees: BigInt!
+  profit: BigInt!
 }
 
 input VAnchorTotalRelayerFeeByTokenEvery15Min_filter {
@@ -3797,6 +3823,22 @@ input VAnchorTotalRelayerFeeByTokenEvery15Min_filter {
   fees_lte: BigInt
   fees_in: [BigInt!]
   fees_not_in: [BigInt!]
+  txFees: BigInt
+  txFees_not: BigInt
+  txFees_gt: BigInt
+  txFees_lt: BigInt
+  txFees_gte: BigInt
+  txFees_lte: BigInt
+  txFees_in: [BigInt!]
+  txFees_not_in: [BigInt!]
+  profit: BigInt
+  profit_not: BigInt
+  profit_gt: BigInt
+  profit_lt: BigInt
+  profit_gte: BigInt
+  profit_lte: BigInt
+  profit_in: [BigInt!]
+  profit_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
   and: [VAnchorTotalRelayerFeeByTokenEvery15Min_filter]
@@ -3811,6 +3853,8 @@ enum VAnchorTotalRelayerFeeByTokenEvery15Min_orderBy {
   startInterval
   endInterval
   fees
+  txFees
+  profit
 }
 
 input VAnchorTotalRelayerFeeByToken_filter {
@@ -3882,6 +3926,22 @@ input VAnchorTotalRelayerFeeByToken_filter {
   fees_lte: BigInt
   fees_in: [BigInt!]
   fees_not_in: [BigInt!]
+  txFees: BigInt
+  txFees_not: BigInt
+  txFees_gt: BigInt
+  txFees_lt: BigInt
+  txFees_gte: BigInt
+  txFees_lte: BigInt
+  txFees_in: [BigInt!]
+  txFees_not_in: [BigInt!]
+  profit: BigInt
+  profit_not: BigInt
+  profit_gt: BigInt
+  profit_lt: BigInt
+  profit_gte: BigInt
+  profit_lte: BigInt
+  profit_in: [BigInt!]
+  profit_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
   and: [VAnchorTotalRelayerFeeByToken_filter]
@@ -3894,6 +3954,8 @@ enum VAnchorTotalRelayerFeeByToken_orderBy {
   tokenSymbol
   tokenAddress
   fees
+  txFees
+  profit
 }
 
 input VAnchorTotalRelayerFee_filter {
@@ -3925,6 +3987,22 @@ input VAnchorTotalRelayerFee_filter {
   fees_lte: BigInt
   fees_in: [BigInt!]
   fees_not_in: [BigInt!]
+  txFees: BigInt
+  txFees_not: BigInt
+  txFees_gt: BigInt
+  txFees_lt: BigInt
+  txFees_gte: BigInt
+  txFees_lte: BigInt
+  txFees_in: [BigInt!]
+  txFees_not_in: [BigInt!]
+  profit: BigInt
+  profit_not: BigInt
+  profit_gt: BigInt
+  profit_lt: BigInt
+  profit_gte: BigInt
+  profit_lte: BigInt
+  profit_in: [BigInt!]
+  profit_not_in: [BigInt!]
   """Filter for the block changed event."""
   _change_block: BlockChangedFilter
   and: [VAnchorTotalRelayerFee_filter]
@@ -3934,6 +4012,8 @@ input VAnchorTotalRelayerFee_filter {
 enum VAnchorTotalRelayerFee_orderBy {
   id
   fees
+  txFees
+  profit
 }
 
 type VAnchorTotalValueLocked {
