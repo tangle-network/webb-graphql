@@ -3795,6 +3795,8 @@ export type VAnchorDeposit_orderBy =
 export type VAnchorTotalRelayerFee = {
   id: Scalars['String'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFee15Min = {
@@ -3803,6 +3805,8 @@ export type VAnchorTotalRelayerFee15Min = {
   startInterval: Scalars['BigInt'];
   endInterval: Scalars['BigInt'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFee15Min_filter = {
@@ -3860,6 +3864,22 @@ export type VAnchorTotalRelayerFee15Min_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFee15Min_filter>>>;
@@ -3871,7 +3891,9 @@ export type VAnchorTotalRelayerFee15Min_orderBy =
   | 'vAnchorAddress'
   | 'startInterval'
   | 'endInterval'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalRelayerFeeByToken = {
   id: Scalars['String'];
@@ -3879,6 +3901,8 @@ export type VAnchorTotalRelayerFeeByToken = {
   tokenSymbol: Scalars['String'];
   tokenAddress: Scalars['Bytes'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFeeByTokenEvery15Min = {
@@ -3889,6 +3913,8 @@ export type VAnchorTotalRelayerFeeByTokenEvery15Min = {
   startInterval: Scalars['BigInt'];
   endInterval: Scalars['BigInt'];
   fees: Scalars['BigInt'];
+  txFees: Scalars['BigInt'];
+  profit: Scalars['BigInt'];
 };
 
 export type VAnchorTotalRelayerFeeByTokenEvery15Min_filter = {
@@ -3976,6 +4002,22 @@ export type VAnchorTotalRelayerFeeByTokenEvery15Min_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFeeByTokenEvery15Min_filter>>>;
@@ -3989,7 +4031,9 @@ export type VAnchorTotalRelayerFeeByTokenEvery15Min_orderBy =
   | 'tokenSymbol'
   | 'startInterval'
   | 'endInterval'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalRelayerFeeByToken_filter = {
   id?: InputMaybe<Scalars['String']>;
@@ -4060,6 +4104,22 @@ export type VAnchorTotalRelayerFeeByToken_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFeeByToken_filter>>>;
@@ -4071,7 +4131,9 @@ export type VAnchorTotalRelayerFeeByToken_orderBy =
   | 'vAnchorAddress'
   | 'tokenSymbol'
   | 'tokenAddress'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalRelayerFee_filter = {
   id?: InputMaybe<Scalars['String']>;
@@ -4102,6 +4164,22 @@ export type VAnchorTotalRelayerFee_filter = {
   fees_lte?: InputMaybe<Scalars['BigInt']>;
   fees_in?: InputMaybe<Array<Scalars['BigInt']>>;
   fees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees?: InputMaybe<Scalars['BigInt']>;
+  txFees_not?: InputMaybe<Scalars['BigInt']>;
+  txFees_gt?: InputMaybe<Scalars['BigInt']>;
+  txFees_lt?: InputMaybe<Scalars['BigInt']>;
+  txFees_gte?: InputMaybe<Scalars['BigInt']>;
+  txFees_lte?: InputMaybe<Scalars['BigInt']>;
+  txFees_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  txFees_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit?: InputMaybe<Scalars['BigInt']>;
+  profit_not?: InputMaybe<Scalars['BigInt']>;
+  profit_gt?: InputMaybe<Scalars['BigInt']>;
+  profit_lt?: InputMaybe<Scalars['BigInt']>;
+  profit_gte?: InputMaybe<Scalars['BigInt']>;
+  profit_lte?: InputMaybe<Scalars['BigInt']>;
+  profit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  profit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<VAnchorTotalRelayerFee_filter>>>;
@@ -4110,7 +4188,9 @@ export type VAnchorTotalRelayerFee_filter = {
 
 export type VAnchorTotalRelayerFee_orderBy =
   | 'id'
-  | 'fees';
+  | 'fees'
+  | 'txFees'
+  | 'profit';
 
 export type VAnchorTotalValueLocked = {
   id: Scalars['String'];

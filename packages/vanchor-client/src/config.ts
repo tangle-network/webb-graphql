@@ -5,4 +5,5 @@ export enum SubgraphUrl {
   vAnchorOrbitAthena = 'https://thegraph-backend.webb.tools/subgraphs/name/VAnchorOrbitAthena',
   vAnchorOrbitDemeter = 'https://thegraph-backend.webb.tools/subgraphs/name/VAnchorOrbitDemeter',
   vAnchorOrbitHermes = 'https://thegraph-backend.webb.tools/subgraphs/name/VAnchorOrbitHermes',
+  vAnchorTangleTestnet = 'https://thegraph-backend.webb.tools/subgraphs/name/VAnchorTangle',
 }
