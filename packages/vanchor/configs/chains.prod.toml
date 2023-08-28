@@ -18,6 +18,10 @@ provider = [{ label = "hermes", url = "https://hermes-testnet.webb.tools", featu
 shard = "primary"
 provider = [{ label = "demeter", url = "https://demeter-testnet.webb.tools", features= ["archive", "traces"]}]
 
+[chains.Tangle]
+shard = "primary"
+provider = [{ label = "tangle", url = "https://tangle-standalone-archive.webb.tools", features= ["archive", "traces"]}]
+
 [deployment]
 shard = "primary"
 [[deployment.rule]]

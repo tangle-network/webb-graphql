@@ -40,10 +40,13 @@
     "create-orbit-demeter": "graph create --node http://localhost:8020/ VAnchorOrbitDemeter",
     "remove-orbit-demeter": "graph remove --node http://localhost:8020/ VAnchorOrbitDemeter",
     "deploy-orbit-demeter": "graph deploy --version-label=1 --node http://localhost:8020/ VAnchorOrbitDemeter --ipfs http://localhost:25827 --network Demeter --network-file ./networks/live.json",
-    "remove-all-orbit": "yarn remove-orbit-athena && yarn remove-orbit-hermes && yarn remove-orbit-demeter",
-    "deploy-all-orbit": "yarn deploy-orbit-athena && yarn deploy-orbit-hermes && yarn deploy-orbit-demeter",
-    "create-all-orbit": "yarn create-orbit-athena && yarn create-orbit-hermes && yarn create-orbit-demeter",
-    "redeploy-all-orbit": "yarn codegen && yarn build-live && docker compose -f ./docker-compose.prod.yml down -v && docker compose -f ./docker-compose.prod.yml up -d && echo 'Sleeping for 30 seconds' && sleep 30 && yarn remove-all-orbit && yarn create-all-orbit && yarn deploy-all-orbit"
+    "create-tangle": "graph create --node http://localhost:8020/ VAnchorTangle",
+    "remove-tangle": "graph remove --node http://localhost:8020/ VAnchorTangle",
+    "deploy-tangle": "graph deploy --version-label=1 --node http://localhost:8020/ VAnchorTangle --ipfs http://localhost:25827 --network Tangle --network-file ./networks/live.json",
+    "remove-all-live": "yarn remove-orbit-athena && yarn remove-orbit-hermes && yarn remove-orbit-demeter && yarn remove-tangle",
+    "deploy-all-live": "yarn deploy-orbit-athena && yarn deploy-orbit-hermes && yarn deploy-orbit-demeter && yarn deploy-tangle",
+    "create-all-live": "yarn create-orbit-athena && yarn create-orbit-hermes && yarn create-orbit-demeter && yarn create-tangle",
+    "redeploy-all-live": "yarn codegen && yarn build-live && docker compose -f ./docker-compose.prod.yml down -v && docker compose -f ./docker-compose.prod.yml up -d && echo 'Sleeping for 30 seconds' && sleep 30 && yarn remove-all-live && yarn create-all-live && yarn deploy-all-live"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.51.2",
