@@ -92,7 +92,7 @@ export const updateProposalBatch = async (proposalBatchToUpdate: UpdateProposalB
     proposalBatch = new ProposalBatch(id);
   }
 
-  proposalBatch.blockNumber = blockNumber ? blockNumber : '';
+  proposalBatch.blockNumber = blockNumber ? Number(blockNumber) : 0;
   proposalBatch.timestamp = timestamp ? timestamp : new Date();
   proposalBatch.status = status ? status : ProposalBatchStatus.Unknown;
   proposalBatch.proposals = proposals ? proposals : [];
