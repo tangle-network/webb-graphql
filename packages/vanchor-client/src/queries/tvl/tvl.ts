@@ -109,7 +109,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
   const result = await sdk.GetVAnchorTotalValueLockedByTokens(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
-      tokenSymbol: tokenSymbol.toLowerCase(),
+      tokenSymbol: tokenSymbol,
     },
     {
       subgraphUrl,

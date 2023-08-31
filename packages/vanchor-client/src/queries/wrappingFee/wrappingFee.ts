@@ -105,7 +105,7 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
   const result = await sdk.GetVAnchorTotalWrappingFeeByTokens(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
-      tokenSymbol: tokenSymbol.toLowerCase(),
+      tokenSymbol: tokenSymbol,
     },
     {
       subgraphUrl,

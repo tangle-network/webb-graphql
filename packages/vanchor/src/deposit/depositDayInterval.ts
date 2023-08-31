@@ -3,7 +3,7 @@ import {
   VAnchorDepositByTokenEveryDay,
   VAnchorDepositEveryDay,
 } from '../../generated/schema';
-import { getStartIntervalDay } from '../utils/time';
+import { getStartIntervalDay, getEndIntervalDay } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
 export default function recordDepositDayInterval(
@@ -13,7 +13,7 @@ export default function recordDepositDayInterval(
   time: BigInt
 ): void {
   const startInterval = getStartIntervalDay(time);
-  const endInterval = getStartIntervalDay(time);
+  const endInterval = getEndIntervalDay(time);
 
   const id =
     startInterval.toString() +
