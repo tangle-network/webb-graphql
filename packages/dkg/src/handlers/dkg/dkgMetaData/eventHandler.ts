@@ -95,15 +95,6 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
     case DKGMetaDataSection.NextPublicKeySignatureSubmitted:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.NextPublicKeySignatureSubmitted);
-        const blockId = eventDecoded.blockNumber;
-        const block = await ensureBlock(blockId);
-
-        await updatePublicKeyStatus({
-          status: SessionKeyStatus.Signed,
-          blockNumber: eventDecoded.blockNumber,
-          composedPubKey: eventData.pubKey.toString(),
-          timestamp: block.timestamp ?? new Date(),
-        });
 
         logger.info(
           `NextPublicKeySignatureSubmitted
@@ -115,6 +106,14 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
     case DKGMetaDataSection.PublicKeyChanged:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeyChanged);
+        const block = await ensureBlock(eventDecoded.blockNumber);
+
+        await updatePublicKeyStatus({
+          status: SessionKeyStatus.Rotated,
+          blockNumber: eventDecoded.blockNumber,
+          composedPubKey: eventData.compressedPubKey.toString(),
+          timestamp: block.timestamp ?? new Date(),
+        });
 
         logger.info(
           `PublicKeyChanged
@@ -127,8 +126,6 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySignatureChanged);
 
-        logger.info(`PublicKeySignatureChanged pubKeySig: ${eventData.pubKey.toString()} `);
-
         const blockNumber = eventDecoded.blockNumber;
         const sessionAuthorities = await fetchSessionAuthorizes(blockNumber);
 
@@ -136,14 +133,11 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
           ...sessionAuthorities,
         });
 
-        const block = await ensureBlock(eventDecoded.blockNumber);
-
-        await updatePublicKeyStatus({
-          status: SessionKeyStatus.Rotated,
-          blockNumber: eventDecoded.blockNumber,
-          composedPubKey: eventData.pubKey.toString(),
-          timestamp: block.timestamp ?? new Date(),
-        });
+        logger.info(
+          `PublicKeySignatureChanged
+        	 pubKeySig: ${eventData.signature.toString()}
+        	 compressedPubKey: ${eventData.pubKey.toString()}`
+        );
       }
       break;
     case DKGMetaDataSection.MisbehaviourReportsSubmitted:

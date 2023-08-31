@@ -22,16 +22,7 @@ export async function ensureKey(data: PublicKeyGenerated) {
   if (key) {
     return key;
   }
-  const extrinsics = await Extrinsic.getByBlockId(data.blockNumber);
-  const matcheExtrinsic = extrinsics.find((ex) => {
-    return (
-      ex.module === DKGSections.DKGMetaData &&
-      ex.method === 'submitNextPublicKey' &&
-      ex.arguments.indexOf(data.composedPubKey) > -1
-    );
-  });
   const block = await Block.get(data.blockNumber);
-  const hash = block.hash;
   const newKey = PublicKey.create({
     blockId: data.blockNumber,
     id: data.composedPubKey,
@@ -40,7 +31,7 @@ export async function ensureKey(data: PublicKeyGenerated) {
       {
         stage: SessionKeyStatus.Generated,
         blockNumber: data.blockNumber,
-        txHash: hash.toString(),
+        txHash: block.hash.toString(),
         timestamp: data.timestamp,
       },
     ],
@@ -62,10 +53,11 @@ export type PublicKeyUpdate = {
 
 export async function updatePublicKeyStatus({ status, ...data }: PublicKeyUpdate) {
   const key = await ensureKey(data);
+  const block = await Block.get(data.blockNumber);
   key.history.push({
     stage: status.toString(),
     blockNumber: data.blockNumber,
-    txHash: '',
+    txHash: block.hash.toString(),
     timestamp: data.timestamp,
   });
   await key.save();
