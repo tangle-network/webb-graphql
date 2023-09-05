@@ -1208,6 +1208,162 @@ type Query {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [VAnchorTotalValueLockedByTokenEveryDay!]!
+  vanchorTWL(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWL
+  vanchorTWLs(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWL_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWL_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWL!]!
+  vanchorTWLByToken(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLByToken
+  vanchorTWLByTokens(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLByToken_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLByToken_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLByToken!]!
+  vanchorTWLEvery15Min(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLEvery15Min
+  vanchorTWLEvery15Mins(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLEvery15Min_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLEvery15Min_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLEvery15Min!]!
+  vanchorTWLByTokenEvery15Min(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLByTokenEvery15Min
+  vanchorTWLByTokenEvery15Mins(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLByTokenEvery15Min_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLByTokenEvery15Min_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLByTokenEvery15Min!]!
+  vanchorTWLEveryDay(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLEveryDay
+  vanchorTWLEveryDays(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLEveryDay_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLEveryDay_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLEveryDay!]!
+  vanchorTWLByTokenEveryDay(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLByTokenEveryDay
+  vanchorTWLByTokenEveryDays(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLByTokenEveryDay_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLByTokenEveryDay_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLByTokenEveryDay!]!
   vanchorRelayerFee(
     id: ID!
     """
@@ -2742,6 +2898,162 @@ type Subscription {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [VAnchorTotalValueLockedByTokenEveryDay!]!
+  vanchorTWL(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWL
+  vanchorTWLs(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWL_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWL_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWL!]!
+  vanchorTWLByToken(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLByToken
+  vanchorTWLByTokens(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLByToken_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLByToken_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLByToken!]!
+  vanchorTWLEvery15Min(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLEvery15Min
+  vanchorTWLEvery15Mins(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLEvery15Min_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLEvery15Min_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLEvery15Min!]!
+  vanchorTWLByTokenEvery15Min(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLByTokenEvery15Min
+  vanchorTWLByTokenEvery15Mins(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLByTokenEvery15Min_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLByTokenEvery15Min_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLByTokenEvery15Min!]!
+  vanchorTWLEveryDay(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLEveryDay
+  vanchorTWLEveryDays(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLEveryDay_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLEveryDay_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLEveryDay!]!
+  vanchorTWLByTokenEveryDay(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): VAnchorTWLByTokenEveryDay
+  vanchorTWLByTokenEveryDays(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: VAnchorTWLByTokenEveryDay_orderBy
+    orderDirection: OrderDirection
+    where: VAnchorTWLByTokenEveryDay_filter
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): [VAnchorTWLByTokenEveryDay!]!
   vanchorRelayerFee(
     id: ID!
     """
@@ -5201,6 +5513,518 @@ enum VAnchorRelayerFee_orderBy {
   totalFees
   txFees
   profit
+}
+
+type VAnchorTWL {
+  id: String!
+  total: BigInt!
+}
+
+type VAnchorTWLByToken {
+  id: String!
+  vAnchorAddress: Bytes!
+  tokenAddress: Bytes!
+  tokenSymbol: String!
+  total: BigInt!
+}
+
+type VAnchorTWLByTokenEvery15Min {
+  id: String!
+  vAnchorAddress: Bytes!
+  tokenAddress: Bytes!
+  tokenSymbol: String!
+  startInterval: BigInt!
+  endInterval: BigInt!
+  total: BigInt!
+}
+
+input VAnchorTWLByTokenEvery15Min_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  vAnchorAddress: Bytes
+  vAnchorAddress_not: Bytes
+  vAnchorAddress_gt: Bytes
+  vAnchorAddress_lt: Bytes
+  vAnchorAddress_gte: Bytes
+  vAnchorAddress_lte: Bytes
+  vAnchorAddress_in: [Bytes!]
+  vAnchorAddress_not_in: [Bytes!]
+  vAnchorAddress_contains: Bytes
+  vAnchorAddress_not_contains: Bytes
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_gt: Bytes
+  tokenAddress_lt: Bytes
+  tokenAddress_gte: Bytes
+  tokenAddress_lte: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  tokenSymbol: String
+  tokenSymbol_not: String
+  tokenSymbol_gt: String
+  tokenSymbol_lt: String
+  tokenSymbol_gte: String
+  tokenSymbol_lte: String
+  tokenSymbol_in: [String!]
+  tokenSymbol_not_in: [String!]
+  tokenSymbol_contains: String
+  tokenSymbol_contains_nocase: String
+  tokenSymbol_not_contains: String
+  tokenSymbol_not_contains_nocase: String
+  tokenSymbol_starts_with: String
+  tokenSymbol_starts_with_nocase: String
+  tokenSymbol_not_starts_with: String
+  tokenSymbol_not_starts_with_nocase: String
+  tokenSymbol_ends_with: String
+  tokenSymbol_ends_with_nocase: String
+  tokenSymbol_not_ends_with: String
+  tokenSymbol_not_ends_with_nocase: String
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
+  total: BigInt
+  total_not: BigInt
+  total_gt: BigInt
+  total_lt: BigInt
+  total_gte: BigInt
+  total_lte: BigInt
+  total_in: [BigInt!]
+  total_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTWLByTokenEvery15Min_filter]
+  or: [VAnchorTWLByTokenEvery15Min_filter]
+}
+
+enum VAnchorTWLByTokenEvery15Min_orderBy {
+  id
+  vAnchorAddress
+  tokenAddress
+  tokenSymbol
+  startInterval
+  endInterval
+  total
+}
+
+type VAnchorTWLByTokenEveryDay {
+  id: String!
+  vAnchorAddress: Bytes!
+  tokenAddress: Bytes!
+  tokenSymbol: String!
+  startInterval: BigInt!
+  endInterval: BigInt!
+  total: BigInt!
+}
+
+input VAnchorTWLByTokenEveryDay_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  vAnchorAddress: Bytes
+  vAnchorAddress_not: Bytes
+  vAnchorAddress_gt: Bytes
+  vAnchorAddress_lt: Bytes
+  vAnchorAddress_gte: Bytes
+  vAnchorAddress_lte: Bytes
+  vAnchorAddress_in: [Bytes!]
+  vAnchorAddress_not_in: [Bytes!]
+  vAnchorAddress_contains: Bytes
+  vAnchorAddress_not_contains: Bytes
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_gt: Bytes
+  tokenAddress_lt: Bytes
+  tokenAddress_gte: Bytes
+  tokenAddress_lte: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  tokenSymbol: String
+  tokenSymbol_not: String
+  tokenSymbol_gt: String
+  tokenSymbol_lt: String
+  tokenSymbol_gte: String
+  tokenSymbol_lte: String
+  tokenSymbol_in: [String!]
+  tokenSymbol_not_in: [String!]
+  tokenSymbol_contains: String
+  tokenSymbol_contains_nocase: String
+  tokenSymbol_not_contains: String
+  tokenSymbol_not_contains_nocase: String
+  tokenSymbol_starts_with: String
+  tokenSymbol_starts_with_nocase: String
+  tokenSymbol_not_starts_with: String
+  tokenSymbol_not_starts_with_nocase: String
+  tokenSymbol_ends_with: String
+  tokenSymbol_ends_with_nocase: String
+  tokenSymbol_not_ends_with: String
+  tokenSymbol_not_ends_with_nocase: String
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
+  total: BigInt
+  total_not: BigInt
+  total_gt: BigInt
+  total_lt: BigInt
+  total_gte: BigInt
+  total_lte: BigInt
+  total_in: [BigInt!]
+  total_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTWLByTokenEveryDay_filter]
+  or: [VAnchorTWLByTokenEveryDay_filter]
+}
+
+enum VAnchorTWLByTokenEveryDay_orderBy {
+  id
+  vAnchorAddress
+  tokenAddress
+  tokenSymbol
+  startInterval
+  endInterval
+  total
+}
+
+input VAnchorTWLByToken_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  vAnchorAddress: Bytes
+  vAnchorAddress_not: Bytes
+  vAnchorAddress_gt: Bytes
+  vAnchorAddress_lt: Bytes
+  vAnchorAddress_gte: Bytes
+  vAnchorAddress_lte: Bytes
+  vAnchorAddress_in: [Bytes!]
+  vAnchorAddress_not_in: [Bytes!]
+  vAnchorAddress_contains: Bytes
+  vAnchorAddress_not_contains: Bytes
+  tokenAddress: Bytes
+  tokenAddress_not: Bytes
+  tokenAddress_gt: Bytes
+  tokenAddress_lt: Bytes
+  tokenAddress_gte: Bytes
+  tokenAddress_lte: Bytes
+  tokenAddress_in: [Bytes!]
+  tokenAddress_not_in: [Bytes!]
+  tokenAddress_contains: Bytes
+  tokenAddress_not_contains: Bytes
+  tokenSymbol: String
+  tokenSymbol_not: String
+  tokenSymbol_gt: String
+  tokenSymbol_lt: String
+  tokenSymbol_gte: String
+  tokenSymbol_lte: String
+  tokenSymbol_in: [String!]
+  tokenSymbol_not_in: [String!]
+  tokenSymbol_contains: String
+  tokenSymbol_contains_nocase: String
+  tokenSymbol_not_contains: String
+  tokenSymbol_not_contains_nocase: String
+  tokenSymbol_starts_with: String
+  tokenSymbol_starts_with_nocase: String
+  tokenSymbol_not_starts_with: String
+  tokenSymbol_not_starts_with_nocase: String
+  tokenSymbol_ends_with: String
+  tokenSymbol_ends_with_nocase: String
+  tokenSymbol_not_ends_with: String
+  tokenSymbol_not_ends_with_nocase: String
+  total: BigInt
+  total_not: BigInt
+  total_gt: BigInt
+  total_lt: BigInt
+  total_gte: BigInt
+  total_lte: BigInt
+  total_in: [BigInt!]
+  total_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTWLByToken_filter]
+  or: [VAnchorTWLByToken_filter]
+}
+
+enum VAnchorTWLByToken_orderBy {
+  id
+  vAnchorAddress
+  tokenAddress
+  tokenSymbol
+  total
+}
+
+type VAnchorTWLEvery15Min {
+  id: String!
+  vAnchorAddress: Bytes!
+  startInterval: BigInt!
+  endInterval: BigInt!
+  total: BigInt!
+}
+
+input VAnchorTWLEvery15Min_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  vAnchorAddress: Bytes
+  vAnchorAddress_not: Bytes
+  vAnchorAddress_gt: Bytes
+  vAnchorAddress_lt: Bytes
+  vAnchorAddress_gte: Bytes
+  vAnchorAddress_lte: Bytes
+  vAnchorAddress_in: [Bytes!]
+  vAnchorAddress_not_in: [Bytes!]
+  vAnchorAddress_contains: Bytes
+  vAnchorAddress_not_contains: Bytes
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
+  total: BigInt
+  total_not: BigInt
+  total_gt: BigInt
+  total_lt: BigInt
+  total_gte: BigInt
+  total_lte: BigInt
+  total_in: [BigInt!]
+  total_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTWLEvery15Min_filter]
+  or: [VAnchorTWLEvery15Min_filter]
+}
+
+enum VAnchorTWLEvery15Min_orderBy {
+  id
+  vAnchorAddress
+  startInterval
+  endInterval
+  total
+}
+
+type VAnchorTWLEveryDay {
+  id: String!
+  vAnchorAddress: Bytes!
+  startInterval: BigInt!
+  endInterval: BigInt!
+  total: BigInt!
+}
+
+input VAnchorTWLEveryDay_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  vAnchorAddress: Bytes
+  vAnchorAddress_not: Bytes
+  vAnchorAddress_gt: Bytes
+  vAnchorAddress_lt: Bytes
+  vAnchorAddress_gte: Bytes
+  vAnchorAddress_lte: Bytes
+  vAnchorAddress_in: [Bytes!]
+  vAnchorAddress_not_in: [Bytes!]
+  vAnchorAddress_contains: Bytes
+  vAnchorAddress_not_contains: Bytes
+  startInterval: BigInt
+  startInterval_not: BigInt
+  startInterval_gt: BigInt
+  startInterval_lt: BigInt
+  startInterval_gte: BigInt
+  startInterval_lte: BigInt
+  startInterval_in: [BigInt!]
+  startInterval_not_in: [BigInt!]
+  endInterval: BigInt
+  endInterval_not: BigInt
+  endInterval_gt: BigInt
+  endInterval_lt: BigInt
+  endInterval_gte: BigInt
+  endInterval_lte: BigInt
+  endInterval_in: [BigInt!]
+  endInterval_not_in: [BigInt!]
+  total: BigInt
+  total_not: BigInt
+  total_gt: BigInt
+  total_lt: BigInt
+  total_gte: BigInt
+  total_lte: BigInt
+  total_in: [BigInt!]
+  total_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTWLEveryDay_filter]
+  or: [VAnchorTWLEveryDay_filter]
+}
+
+enum VAnchorTWLEveryDay_orderBy {
+  id
+  vAnchorAddress
+  startInterval
+  endInterval
+  total
+}
+
+input VAnchorTWL_filter {
+  id: String
+  id_not: String
+  id_gt: String
+  id_lt: String
+  id_gte: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_contains_nocase: String
+  id_not_contains: String
+  id_not_contains_nocase: String
+  id_starts_with: String
+  id_starts_with_nocase: String
+  id_not_starts_with: String
+  id_not_starts_with_nocase: String
+  id_ends_with: String
+  id_ends_with_nocase: String
+  id_not_ends_with: String
+  id_not_ends_with_nocase: String
+  total: BigInt
+  total_not: BigInt
+  total_gt: BigInt
+  total_lt: BigInt
+  total_gte: BigInt
+  total_lte: BigInt
+  total_in: [BigInt!]
+  total_not_in: [BigInt!]
+  """Filter for the block changed event."""
+  _change_block: BlockChangedFilter
+  and: [VAnchorTWL_filter]
+  or: [VAnchorTWL_filter]
+}
+
+enum VAnchorTWL_orderBy {
+  id
+  total
 }
 
 type VAnchorTotalValueLocked {

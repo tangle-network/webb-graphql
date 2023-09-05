@@ -156,6 +156,55 @@ type VAnchorTotalValueLockedByTokenEveryDay @entity(immutable: false) {
   totalValueLocked: BigInt! # total value locked in the vAnchor
 }
 
+type VAnchorTWL @entity(immutable: false) {
+  id: String! # vAnchor address
+  total: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTWLByToken @entity(immutable: false) {
+  id: String! # vAnchor address + token address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  total: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTWLEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTWLByTokenEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTWLEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # total value locked in the vAnchor
+}
+
+type VAnchorTWLByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # total value locked in the vAnchor
+}
+
 type VAnchorRelayerFee @entity(immutable: false) {
   id: String! # vAnchor address
   totalFees: BigInt! # Total Fees (txFee + relayerProfit)

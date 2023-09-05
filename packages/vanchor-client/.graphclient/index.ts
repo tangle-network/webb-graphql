@@ -77,6 +77,18 @@ export type Query = {
   vanchorTotalValueLockedEveryDays: Array<VAnchorTotalValueLockedEveryDay>;
   vanchorTotalValueLockedByTokenEveryDay?: Maybe<VAnchorTotalValueLockedByTokenEveryDay>;
   vanchorTotalValueLockedByTokenEveryDays: Array<VAnchorTotalValueLockedByTokenEveryDay>;
+  vanchorTWL?: Maybe<VAnchorTWL>;
+  vanchorTWLs: Array<VAnchorTWL>;
+  vanchorTWLByToken?: Maybe<VAnchorTWLByToken>;
+  vanchorTWLByTokens: Array<VAnchorTWLByToken>;
+  vanchorTWLEvery15Min?: Maybe<VAnchorTWLEvery15Min>;
+  vanchorTWLEvery15Mins: Array<VAnchorTWLEvery15Min>;
+  vanchorTWLByTokenEvery15Min?: Maybe<VAnchorTWLByTokenEvery15Min>;
+  vanchorTWLByTokenEvery15Mins: Array<VAnchorTWLByTokenEvery15Min>;
+  vanchorTWLEveryDay?: Maybe<VAnchorTWLEveryDay>;
+  vanchorTWLEveryDays: Array<VAnchorTWLEveryDay>;
+  vanchorTWLByTokenEveryDay?: Maybe<VAnchorTWLByTokenEveryDay>;
+  vanchorTWLByTokenEveryDays: Array<VAnchorTWLByTokenEveryDay>;
   vanchorRelayerFee?: Maybe<VAnchorRelayerFee>;
   vanchorRelayerFees: Array<VAnchorRelayerFee>;
   vanchorRelayerFeeByToken?: Maybe<VAnchorRelayerFeeByToken>;
@@ -439,6 +451,114 @@ export type QueryvanchorTotalValueLockedByTokenEveryDaysArgs = {
   orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWL_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWL_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLByTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLByTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLByToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLByToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLByTokenEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLByTokenEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLByTokenEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLByTokenEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLByTokenEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTWLByTokenEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLByTokenEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLByTokenEveryDay_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -1111,6 +1231,18 @@ export type Subscription = {
   vanchorTotalValueLockedEveryDays: Array<VAnchorTotalValueLockedEveryDay>;
   vanchorTotalValueLockedByTokenEveryDay?: Maybe<VAnchorTotalValueLockedByTokenEveryDay>;
   vanchorTotalValueLockedByTokenEveryDays: Array<VAnchorTotalValueLockedByTokenEveryDay>;
+  vanchorTWL?: Maybe<VAnchorTWL>;
+  vanchorTWLs: Array<VAnchorTWL>;
+  vanchorTWLByToken?: Maybe<VAnchorTWLByToken>;
+  vanchorTWLByTokens: Array<VAnchorTWLByToken>;
+  vanchorTWLEvery15Min?: Maybe<VAnchorTWLEvery15Min>;
+  vanchorTWLEvery15Mins: Array<VAnchorTWLEvery15Min>;
+  vanchorTWLByTokenEvery15Min?: Maybe<VAnchorTWLByTokenEvery15Min>;
+  vanchorTWLByTokenEvery15Mins: Array<VAnchorTWLByTokenEvery15Min>;
+  vanchorTWLEveryDay?: Maybe<VAnchorTWLEveryDay>;
+  vanchorTWLEveryDays: Array<VAnchorTWLEveryDay>;
+  vanchorTWLByTokenEveryDay?: Maybe<VAnchorTWLByTokenEveryDay>;
+  vanchorTWLByTokenEveryDays: Array<VAnchorTWLByTokenEveryDay>;
   vanchorRelayerFee?: Maybe<VAnchorRelayerFee>;
   vanchorRelayerFees: Array<VAnchorRelayerFee>;
   vanchorRelayerFeeByToken?: Maybe<VAnchorRelayerFeeByToken>;
@@ -1473,6 +1605,114 @@ export type SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs = {
   orderBy?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<VAnchorTotalValueLockedByTokenEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWL_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWL_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLByTokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLByTokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLByToken_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLByToken_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLByTokenEvery15MinArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLByTokenEvery15MinsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLByTokenEvery15Min_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLByTokenEvery15Min_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLEveryDay_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLByTokenEveryDayArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTWLByTokenEveryDaysArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTWLByTokenEveryDay_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTWLByTokenEveryDay_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -4602,6 +4842,512 @@ export type VAnchorRelayerFee_orderBy =
   | 'txFees'
   | 'profit';
 
+export type VAnchorTWL = {
+  id: Scalars['String'];
+  total: Scalars['BigInt'];
+};
+
+export type VAnchorTWLByToken = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  total: Scalars['BigInt'];
+};
+
+export type VAnchorTWLByTokenEvery15Min = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  total: Scalars['BigInt'];
+};
+
+export type VAnchorTWLByTokenEvery15Min_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total?: InputMaybe<Scalars['BigInt']>;
+  total_not?: InputMaybe<Scalars['BigInt']>;
+  total_gt?: InputMaybe<Scalars['BigInt']>;
+  total_lt?: InputMaybe<Scalars['BigInt']>;
+  total_gte?: InputMaybe<Scalars['BigInt']>;
+  total_lte?: InputMaybe<Scalars['BigInt']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTWLByTokenEvery15Min_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTWLByTokenEvery15Min_filter>>>;
+};
+
+export type VAnchorTWLByTokenEvery15Min_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'startInterval'
+  | 'endInterval'
+  | 'total';
+
+export type VAnchorTWLByTokenEveryDay = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  total: Scalars['BigInt'];
+};
+
+export type VAnchorTWLByTokenEveryDay_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total?: InputMaybe<Scalars['BigInt']>;
+  total_not?: InputMaybe<Scalars['BigInt']>;
+  total_gt?: InputMaybe<Scalars['BigInt']>;
+  total_lt?: InputMaybe<Scalars['BigInt']>;
+  total_gte?: InputMaybe<Scalars['BigInt']>;
+  total_lte?: InputMaybe<Scalars['BigInt']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTWLByTokenEveryDay_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTWLByTokenEveryDay_filter>>>;
+};
+
+export type VAnchorTWLByTokenEveryDay_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'startInterval'
+  | 'endInterval'
+  | 'total';
+
+export type VAnchorTWLByToken_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  total?: InputMaybe<Scalars['BigInt']>;
+  total_not?: InputMaybe<Scalars['BigInt']>;
+  total_gt?: InputMaybe<Scalars['BigInt']>;
+  total_lt?: InputMaybe<Scalars['BigInt']>;
+  total_gte?: InputMaybe<Scalars['BigInt']>;
+  total_lte?: InputMaybe<Scalars['BigInt']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTWLByToken_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTWLByToken_filter>>>;
+};
+
+export type VAnchorTWLByToken_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'total';
+
+export type VAnchorTWLEvery15Min = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  total: Scalars['BigInt'];
+};
+
+export type VAnchorTWLEvery15Min_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total?: InputMaybe<Scalars['BigInt']>;
+  total_not?: InputMaybe<Scalars['BigInt']>;
+  total_gt?: InputMaybe<Scalars['BigInt']>;
+  total_lt?: InputMaybe<Scalars['BigInt']>;
+  total_gte?: InputMaybe<Scalars['BigInt']>;
+  total_lte?: InputMaybe<Scalars['BigInt']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTWLEvery15Min_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTWLEvery15Min_filter>>>;
+};
+
+export type VAnchorTWLEvery15Min_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'startInterval'
+  | 'endInterval'
+  | 'total';
+
+export type VAnchorTWLEveryDay = {
+  id: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  startInterval: Scalars['BigInt'];
+  endInterval: Scalars['BigInt'];
+  total: Scalars['BigInt'];
+};
+
+export type VAnchorTWLEveryDay_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  startInterval?: InputMaybe<Scalars['BigInt']>;
+  startInterval_not?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  startInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  startInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  startInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval?: InputMaybe<Scalars['BigInt']>;
+  endInterval_not?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lt?: InputMaybe<Scalars['BigInt']>;
+  endInterval_gte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_lte?: InputMaybe<Scalars['BigInt']>;
+  endInterval_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  endInterval_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total?: InputMaybe<Scalars['BigInt']>;
+  total_not?: InputMaybe<Scalars['BigInt']>;
+  total_gt?: InputMaybe<Scalars['BigInt']>;
+  total_lt?: InputMaybe<Scalars['BigInt']>;
+  total_gte?: InputMaybe<Scalars['BigInt']>;
+  total_lte?: InputMaybe<Scalars['BigInt']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTWLEveryDay_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTWLEveryDay_filter>>>;
+};
+
+export type VAnchorTWLEveryDay_orderBy =
+  | 'id'
+  | 'vAnchorAddress'
+  | 'startInterval'
+  | 'endInterval'
+  | 'total';
+
+export type VAnchorTWL_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  total?: InputMaybe<Scalars['BigInt']>;
+  total_not?: InputMaybe<Scalars['BigInt']>;
+  total_gt?: InputMaybe<Scalars['BigInt']>;
+  total_lt?: InputMaybe<Scalars['BigInt']>;
+  total_gte?: InputMaybe<Scalars['BigInt']>;
+  total_lte?: InputMaybe<Scalars['BigInt']>;
+  total_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  total_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTWL_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTWL_filter>>>;
+};
+
+export type VAnchorTWL_orderBy =
+  | 'id'
+  | 'total';
+
 export type VAnchorTotalValueLocked = {
   id: Scalars['String'];
   totalValueLocked: Scalars['BigInt'];
@@ -7241,6 +7987,24 @@ export type ResolversTypes = ResolversObject<{
   VAnchorRelayerFeeEveryDay_orderBy: VAnchorRelayerFeeEveryDay_orderBy;
   VAnchorRelayerFee_filter: VAnchorRelayerFee_filter;
   VAnchorRelayerFee_orderBy: VAnchorRelayerFee_orderBy;
+  VAnchorTWL: ResolverTypeWrapper<VAnchorTWL>;
+  VAnchorTWLByToken: ResolverTypeWrapper<VAnchorTWLByToken>;
+  VAnchorTWLByTokenEvery15Min: ResolverTypeWrapper<VAnchorTWLByTokenEvery15Min>;
+  VAnchorTWLByTokenEvery15Min_filter: VAnchorTWLByTokenEvery15Min_filter;
+  VAnchorTWLByTokenEvery15Min_orderBy: VAnchorTWLByTokenEvery15Min_orderBy;
+  VAnchorTWLByTokenEveryDay: ResolverTypeWrapper<VAnchorTWLByTokenEveryDay>;
+  VAnchorTWLByTokenEveryDay_filter: VAnchorTWLByTokenEveryDay_filter;
+  VAnchorTWLByTokenEveryDay_orderBy: VAnchorTWLByTokenEveryDay_orderBy;
+  VAnchorTWLByToken_filter: VAnchorTWLByToken_filter;
+  VAnchorTWLByToken_orderBy: VAnchorTWLByToken_orderBy;
+  VAnchorTWLEvery15Min: ResolverTypeWrapper<VAnchorTWLEvery15Min>;
+  VAnchorTWLEvery15Min_filter: VAnchorTWLEvery15Min_filter;
+  VAnchorTWLEvery15Min_orderBy: VAnchorTWLEvery15Min_orderBy;
+  VAnchorTWLEveryDay: ResolverTypeWrapper<VAnchorTWLEveryDay>;
+  VAnchorTWLEveryDay_filter: VAnchorTWLEveryDay_filter;
+  VAnchorTWLEveryDay_orderBy: VAnchorTWLEveryDay_orderBy;
+  VAnchorTWL_filter: VAnchorTWL_filter;
+  VAnchorTWL_orderBy: VAnchorTWL_orderBy;
   VAnchorTotalValueLocked: ResolverTypeWrapper<VAnchorTotalValueLocked>;
   VAnchorTotalValueLockedByToken: ResolverTypeWrapper<VAnchorTotalValueLockedByToken>;
   VAnchorTotalValueLockedByTokenEvery15Min: ResolverTypeWrapper<VAnchorTotalValueLockedByTokenEvery15Min>;
@@ -7391,6 +8155,18 @@ export type ResolversParentTypes = ResolversObject<{
   VAnchorRelayerFeeEveryDay: VAnchorRelayerFeeEveryDay;
   VAnchorRelayerFeeEveryDay_filter: VAnchorRelayerFeeEveryDay_filter;
   VAnchorRelayerFee_filter: VAnchorRelayerFee_filter;
+  VAnchorTWL: VAnchorTWL;
+  VAnchorTWLByToken: VAnchorTWLByToken;
+  VAnchorTWLByTokenEvery15Min: VAnchorTWLByTokenEvery15Min;
+  VAnchorTWLByTokenEvery15Min_filter: VAnchorTWLByTokenEvery15Min_filter;
+  VAnchorTWLByTokenEveryDay: VAnchorTWLByTokenEveryDay;
+  VAnchorTWLByTokenEveryDay_filter: VAnchorTWLByTokenEveryDay_filter;
+  VAnchorTWLByToken_filter: VAnchorTWLByToken_filter;
+  VAnchorTWLEvery15Min: VAnchorTWLEvery15Min;
+  VAnchorTWLEvery15Min_filter: VAnchorTWLEvery15Min_filter;
+  VAnchorTWLEveryDay: VAnchorTWLEveryDay;
+  VAnchorTWLEveryDay_filter: VAnchorTWLEveryDay_filter;
+  VAnchorTWL_filter: VAnchorTWL_filter;
   VAnchorTotalValueLocked: VAnchorTotalValueLocked;
   VAnchorTotalValueLockedByToken: VAnchorTotalValueLockedByToken;
   VAnchorTotalValueLockedByTokenEvery15Min: VAnchorTotalValueLockedByTokenEvery15Min;
@@ -7498,6 +8274,18 @@ export type QueryResolvers<ContextType = MeshContext & { subgraphUrl: string }, 
   vanchorTotalValueLockedEveryDays?: Resolver<Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorTotalValueLockedByTokenEveryDay?: Resolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
   vanchorTotalValueLockedByTokenEveryDays?: Resolver<Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTotalValueLockedByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWL?: Resolver<Maybe<ResolversTypes['VAnchorTWL']>, ParentType, ContextType, RequireFields<QueryvanchorTWLArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLs?: Resolver<Array<ResolversTypes['VAnchorTWL']>, ParentType, ContextType, RequireFields<QueryvanchorTWLsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLByToken?: Resolver<Maybe<ResolversTypes['VAnchorTWLByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTWLByTokenArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLByTokens?: Resolver<Array<ResolversTypes['VAnchorTWLByToken']>, ParentType, ContextType, RequireFields<QueryvanchorTWLByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorTWLEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTWLEvery15MinArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorTWLEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTWLEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLByTokenEvery15Min?: Resolver<Maybe<ResolversTypes['VAnchorTWLByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTWLByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLByTokenEvery15Mins?: Resolver<Array<ResolversTypes['VAnchorTWLByTokenEvery15Min']>, ParentType, ContextType, RequireFields<QueryvanchorTWLByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLEveryDay?: Resolver<Maybe<ResolversTypes['VAnchorTWLEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTWLEveryDayArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLEveryDays?: Resolver<Array<ResolversTypes['VAnchorTWLEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTWLEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLByTokenEveryDay?: Resolver<Maybe<ResolversTypes['VAnchorTWLByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTWLByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLByTokenEveryDays?: Resolver<Array<ResolversTypes['VAnchorTWLByTokenEveryDay']>, ParentType, ContextType, RequireFields<QueryvanchorTWLByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorRelayerFee?: Resolver<Maybe<ResolversTypes['VAnchorRelayerFee']>, ParentType, ContextType, RequireFields<QueryvanchorRelayerFeeArgs, 'id' | 'subgraphError'>>;
   vanchorRelayerFees?: Resolver<Array<ResolversTypes['VAnchorRelayerFee']>, ParentType, ContextType, RequireFields<QueryvanchorRelayerFeesArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorRelayerFeeByToken?: Resolver<Maybe<ResolversTypes['VAnchorRelayerFeeByToken']>, ParentType, ContextType, RequireFields<QueryvanchorRelayerFeeByTokenArgs, 'id' | 'subgraphError'>>;
@@ -7604,6 +8392,18 @@ export type SubscriptionResolvers<ContextType = MeshContext & { subgraphUrl: str
   vanchorTotalValueLockedEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLockedEveryDay']>, "vanchorTotalValueLockedEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorTotalValueLockedByTokenEveryDay?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, "vanchorTotalValueLockedByTokenEveryDay", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
   vanchorTotalValueLockedByTokenEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorTotalValueLockedByTokenEveryDay']>, "vanchorTotalValueLockedByTokenEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorTotalValueLockedByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWL?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTWL']>, "vanchorTWL", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLs?: SubscriptionResolver<Array<ResolversTypes['VAnchorTWL']>, "vanchorTWLs", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTWLByToken']>, "vanchorTWLByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLByTokenArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLByTokens?: SubscriptionResolver<Array<ResolversTypes['VAnchorTWLByToken']>, "vanchorTWLByTokens", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLByTokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTWLEvery15Min']>, "vanchorTWLEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLEvery15MinArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTWLEvery15Min']>, "vanchorTWLEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLByTokenEvery15Min?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTWLByTokenEvery15Min']>, "vanchorTWLByTokenEvery15Min", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLByTokenEvery15MinArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLByTokenEvery15Mins?: SubscriptionResolver<Array<ResolversTypes['VAnchorTWLByTokenEvery15Min']>, "vanchorTWLByTokenEvery15Mins", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLByTokenEvery15MinsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLEveryDay?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTWLEveryDay']>, "vanchorTWLEveryDay", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLEveryDayArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorTWLEveryDay']>, "vanchorTWLEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTWLByTokenEveryDay?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTWLByTokenEveryDay']>, "vanchorTWLByTokenEveryDay", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLByTokenEveryDayArgs, 'id' | 'subgraphError'>>;
+  vanchorTWLByTokenEveryDays?: SubscriptionResolver<Array<ResolversTypes['VAnchorTWLByTokenEveryDay']>, "vanchorTWLByTokenEveryDays", ParentType, ContextType, RequireFields<SubscriptionvanchorTWLByTokenEveryDaysArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorRelayerFee?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorRelayerFee']>, "vanchorRelayerFee", ParentType, ContextType, RequireFields<SubscriptionvanchorRelayerFeeArgs, 'id' | 'subgraphError'>>;
   vanchorRelayerFees?: SubscriptionResolver<Array<ResolversTypes['VAnchorRelayerFee']>, "vanchorRelayerFees", ParentType, ContextType, RequireFields<SubscriptionvanchorRelayerFeesArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorRelayerFeeByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorRelayerFeeByToken']>, "vanchorRelayerFeeByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorRelayerFeeByTokenArgs, 'id' | 'subgraphError'>>;
@@ -7963,6 +8763,61 @@ export type VAnchorRelayerFeeEveryDayResolvers<ContextType = MeshContext & { sub
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type VAnchorTWLResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTWL'] = ResolversParentTypes['VAnchorTWL']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorTWLByTokenResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTWLByToken'] = ResolversParentTypes['VAnchorTWLByToken']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorTWLByTokenEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTWLByTokenEvery15Min'] = ResolversParentTypes['VAnchorTWLByTokenEvery15Min']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorTWLByTokenEveryDayResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTWLByTokenEveryDay'] = ResolversParentTypes['VAnchorTWLByTokenEveryDay']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorTWLEvery15MinResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTWLEvery15Min'] = ResolversParentTypes['VAnchorTWLEvery15Min']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type VAnchorTWLEveryDayResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTWLEveryDay'] = ResolversParentTypes['VAnchorTWLEveryDay']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  startInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  endInterval?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type VAnchorTotalValueLockedResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTotalValueLocked'] = ResolversParentTypes['VAnchorTotalValueLocked']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   totalValueLocked?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -8270,6 +9125,12 @@ export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> = Res
   VAnchorRelayerFeeByTokenEveryDay?: VAnchorRelayerFeeByTokenEveryDayResolvers<ContextType>;
   VAnchorRelayerFeeEvery15Min?: VAnchorRelayerFeeEvery15MinResolvers<ContextType>;
   VAnchorRelayerFeeEveryDay?: VAnchorRelayerFeeEveryDayResolvers<ContextType>;
+  VAnchorTWL?: VAnchorTWLResolvers<ContextType>;
+  VAnchorTWLByToken?: VAnchorTWLByTokenResolvers<ContextType>;
+  VAnchorTWLByTokenEvery15Min?: VAnchorTWLByTokenEvery15MinResolvers<ContextType>;
+  VAnchorTWLByTokenEveryDay?: VAnchorTWLByTokenEveryDayResolvers<ContextType>;
+  VAnchorTWLEvery15Min?: VAnchorTWLEvery15MinResolvers<ContextType>;
+  VAnchorTWLEveryDay?: VAnchorTWLEveryDayResolvers<ContextType>;
   VAnchorTotalValueLocked?: VAnchorTotalValueLockedResolvers<ContextType>;
   VAnchorTotalValueLockedByToken?: VAnchorTotalValueLockedByTokenResolvers<ContextType>;
   VAnchorTotalValueLockedByTokenEvery15Min?: VAnchorTotalValueLockedByTokenEvery15MinResolvers<ContextType>;
@@ -8568,6 +9429,66 @@ const merger = new(BareMerger as any)({
           return printWithCache(GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument);
         },
         location: 'GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorTwlDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTwlDocument);
+        },
+        location: 'GetVAnchorTwlDocument.graphql'
+      },{
+        document: GetVAnchorTwLsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTwLsDocument);
+        },
+        location: 'GetVAnchorTwLsDocument.graphql'
+      },{
+        document: GetVAnchorTwlByTokensDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTwlByTokensDocument);
+        },
+        location: 'GetVAnchorTwlByTokensDocument.graphql'
+      },{
+        document: GetVAnchorTwlEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTwlEvery15MinsDocument);
+        },
+        location: 'GetVAnchorTwlEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorsTwlEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTwlEvery15MinsDocument);
+        },
+        location: 'GetVAnchorsTwlEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorTwlByTokenEvery15MinsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTwlByTokenEvery15MinsDocument);
+        },
+        location: 'GetVAnchorTwlByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVAnchorTwlEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTwlEveryDaysDocument);
+        },
+        location: 'GetVAnchorTwlEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorsTwlEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTwlEveryDaysDocument);
+        },
+        location: 'GetVAnchorsTwlEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorTwlByTokenEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTwlByTokenEveryDaysDocument);
+        },
+        location: 'GetVAnchorTwlByTokenEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorsTwlByDateRangeEveryDaysDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTwlByDateRangeEveryDaysDocument);
+        },
+        location: 'GetVAnchorsTwlByDateRangeEveryDaysDocument.graphql'
       },{
         document: GetVAnchorVolumeByChainDocument,
         get rawSDL() {
@@ -9043,6 +9964,92 @@ export type GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables = Exac
 
 
 export type GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+
+export type GetVAnchorTWLQueryVariables = Exact<{
+  vAnchorAddress: Scalars['ID'];
+}>;
+
+
+export type GetVAnchorTWLQuery = { vanchorTWL?: Maybe<Pick<VAnchorTWL, 'total'>> };
+
+export type GetVAnchorTWLsQueryVariables = Exact<{
+  vAnchorAddresses: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetVAnchorTWLsQuery = { vanchorTWLs: Array<Pick<VAnchorTWL, 'id' | 'total'>> };
+
+export type GetVAnchorTWLByTokensQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTWLByTokensQuery = { vanchorTWLByTokens: Array<Pick<VAnchorTWLByToken, 'total'>> };
+
+export type GetVAnchorTWLEvery15MinsQueryVariables = Exact<{
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTWLEvery15MinsQuery = { vanchorTWLEvery15Mins: Array<Pick<VAnchorTWLEvery15Min, 'startInterval' | 'total' | 'vAnchorAddress' | 'endInterval'>> };
+
+export type GetVAnchorsTWLEvery15MinsQueryVariables = Exact<{
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsTWLEvery15MinsQuery = { vanchorTWLEvery15Mins: Array<Pick<VAnchorTWLEvery15Min, 'id' | 'startInterval' | 'total' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTWLByTokenEvery15MinsQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+}>;
+
+
+export type GetVAnchorTWLByTokenEvery15MinsQuery = { vanchorTWLByTokenEvery15Mins: Array<Pick<VAnchorTWLByTokenEvery15Min, 'total' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTWLEveryDaysQueryVariables = Exact<{
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTWLEveryDaysQuery = { vanchorTWLEveryDays: Array<Pick<VAnchorTWLEveryDay, 'startInterval' | 'total' | 'vAnchorAddress' | 'endInterval'>> };
+
+export type GetVAnchorsTWLEveryDaysQueryVariables = Exact<{
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsTWLEveryDaysQuery = { vanchorTWLEveryDays: Array<Pick<VAnchorTWLEveryDay, 'id' | 'startInterval' | 'total' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTWLByTokenEveryDaysQueryVariables = Exact<{
+  tokenSymbol: Scalars['String'];
+  vAnchorAddress: Scalars['Bytes'];
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+}>;
+
+
+export type GetVAnchorTWLByTokenEveryDaysQuery = { vanchorTWLByTokenEveryDays: Array<Pick<VAnchorTWLByTokenEveryDay, 'total' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorsTWLByDateRangeEveryDaysQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorsTWLByDateRangeEveryDaysQuery = { vanchorTWLEveryDays: Array<Pick<VAnchorTWLEveryDay, 'total' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
 
 export type GetVAnchorVolumeByChainQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -9659,6 +10666,118 @@ export const GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery, GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables>;
+export const GetVAnchorTWLDocument = gql`
+    query GetVAnchorTWL($vAnchorAddress: ID!) {
+  vanchorTWL(id: $vAnchorAddress) {
+    total
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLQuery, GetVAnchorTWLQueryVariables>;
+export const GetVAnchorTWLsDocument = gql`
+    query GetVAnchorTWLs($vAnchorAddresses: [String!]!) {
+  vanchorTWLs(where: {id_in: $vAnchorAddresses}) {
+    id
+    total
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLsQuery, GetVAnchorTWLsQueryVariables>;
+export const GetVAnchorTWLByTokensDocument = gql`
+    query GetVAnchorTWLByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorTWLByTokens(
+    first: 1
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress}
+  ) {
+    total
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLByTokensQuery, GetVAnchorTWLByTokensQueryVariables>;
+export const GetVAnchorTWLEvery15MinsDocument = gql`
+    query GetVAnchorTWLEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTWLEvery15Mins(
+    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    total
+    vAnchorAddress
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLEvery15MinsQuery, GetVAnchorTWLEvery15MinsQueryVariables>;
+export const GetVAnchorsTWLEvery15MinsDocument = gql`
+    query GetVAnchorsTWLEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTWLEvery15Mins(
+    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    total
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTWLEvery15MinsQuery, GetVAnchorsTWLEvery15MinsQueryVariables>;
+export const GetVAnchorTWLByTokenEvery15MinsDocument = gql`
+    query GetVAnchorTWLByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
+  vanchorTWLByTokenEvery15Mins(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+  ) {
+    total
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLByTokenEvery15MinsQuery, GetVAnchorTWLByTokenEvery15MinsQueryVariables>;
+export const GetVAnchorTWLEveryDaysDocument = gql`
+    query GetVAnchorTWLEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTWLEveryDays(
+    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+  ) {
+    startInterval
+    total
+    vAnchorAddress
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLEveryDaysQuery, GetVAnchorTWLEveryDaysQueryVariables>;
+export const GetVAnchorsTWLEveryDaysDocument = gql`
+    query GetVAnchorsTWLEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTWLEveryDays(
+    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+  ) {
+    id
+    startInterval
+    total
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTWLEveryDaysQuery, GetVAnchorsTWLEveryDaysQueryVariables>;
+export const GetVAnchorTWLByTokenEveryDaysDocument = gql`
+    query GetVAnchorTWLByTokenEveryDays($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
+  vanchorTWLByTokenEveryDays(
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+  ) {
+    total
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLByTokenEveryDaysQuery, GetVAnchorTWLByTokenEveryDaysQueryVariables>;
+export const GetVAnchorsTWLByDateRangeEveryDaysDocument = gql`
+    query GetVAnchorsTWLByDateRangeEveryDays($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
+  vanchorTWLEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses}
+    orderBy: startInterval
+  ) {
+    total
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorsTWLByDateRangeEveryDaysQuery, GetVAnchorsTWLByDateRangeEveryDaysQueryVariables>;
 export const GetVAnchorVolumeByChainDocument = gql`
     query GetVAnchorVolumeByChain($id: ID!) {
   vanchorVolume(id: $id) {
@@ -10056,6 +11175,16 @@ export const GetVanchorsWrappingFeeByDateRangeDocument = gql`
 
 
 
+
+
+
+
+
+
+
+
+
+
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
@@ -10148,6 +11277,36 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     GetVAnchorsTotalValueLockedByDateRangeEveryDays(variables: GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery> {
       return requester<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery, GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables>(GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery>;
+    },
+    GetVAnchorTWL(variables: GetVAnchorTWLQueryVariables, options?: C): Promise<GetVAnchorTWLQuery> {
+      return requester<GetVAnchorTWLQuery, GetVAnchorTWLQueryVariables>(GetVAnchorTWLDocument, variables, options) as Promise<GetVAnchorTWLQuery>;
+    },
+    GetVAnchorTWLs(variables: GetVAnchorTWLsQueryVariables, options?: C): Promise<GetVAnchorTWLsQuery> {
+      return requester<GetVAnchorTWLsQuery, GetVAnchorTWLsQueryVariables>(GetVAnchorTWLsDocument, variables, options) as Promise<GetVAnchorTWLsQuery>;
+    },
+    GetVAnchorTWLByTokens(variables: GetVAnchorTWLByTokensQueryVariables, options?: C): Promise<GetVAnchorTWLByTokensQuery> {
+      return requester<GetVAnchorTWLByTokensQuery, GetVAnchorTWLByTokensQueryVariables>(GetVAnchorTWLByTokensDocument, variables, options) as Promise<GetVAnchorTWLByTokensQuery>;
+    },
+    GetVAnchorTWLEvery15Mins(variables: GetVAnchorTWLEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorTWLEvery15MinsQuery> {
+      return requester<GetVAnchorTWLEvery15MinsQuery, GetVAnchorTWLEvery15MinsQueryVariables>(GetVAnchorTWLEvery15MinsDocument, variables, options) as Promise<GetVAnchorTWLEvery15MinsQuery>;
+    },
+    GetVAnchorsTWLEvery15Mins(variables: GetVAnchorsTWLEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorsTWLEvery15MinsQuery> {
+      return requester<GetVAnchorsTWLEvery15MinsQuery, GetVAnchorsTWLEvery15MinsQueryVariables>(GetVAnchorsTWLEvery15MinsDocument, variables, options) as Promise<GetVAnchorsTWLEvery15MinsQuery>;
+    },
+    GetVAnchorTWLByTokenEvery15Mins(variables: GetVAnchorTWLByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorTWLByTokenEvery15MinsQuery> {
+      return requester<GetVAnchorTWLByTokenEvery15MinsQuery, GetVAnchorTWLByTokenEvery15MinsQueryVariables>(GetVAnchorTWLByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorTWLByTokenEvery15MinsQuery>;
+    },
+    GetVAnchorTWLEveryDays(variables: GetVAnchorTWLEveryDaysQueryVariables, options?: C): Promise<GetVAnchorTWLEveryDaysQuery> {
+      return requester<GetVAnchorTWLEveryDaysQuery, GetVAnchorTWLEveryDaysQueryVariables>(GetVAnchorTWLEveryDaysDocument, variables, options) as Promise<GetVAnchorTWLEveryDaysQuery>;
+    },
+    GetVAnchorsTWLEveryDays(variables: GetVAnchorsTWLEveryDaysQueryVariables, options?: C): Promise<GetVAnchorsTWLEveryDaysQuery> {
+      return requester<GetVAnchorsTWLEveryDaysQuery, GetVAnchorsTWLEveryDaysQueryVariables>(GetVAnchorsTWLEveryDaysDocument, variables, options) as Promise<GetVAnchorsTWLEveryDaysQuery>;
+    },
+    GetVAnchorTWLByTokenEveryDays(variables: GetVAnchorTWLByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorTWLByTokenEveryDaysQuery> {
+      return requester<GetVAnchorTWLByTokenEveryDaysQuery, GetVAnchorTWLByTokenEveryDaysQueryVariables>(GetVAnchorTWLByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorTWLByTokenEveryDaysQuery>;
+    },
+    GetVAnchorsTWLByDateRangeEveryDays(variables: GetVAnchorsTWLByDateRangeEveryDaysQueryVariables, options?: C): Promise<GetVAnchorsTWLByDateRangeEveryDaysQuery> {
+      return requester<GetVAnchorsTWLByDateRangeEveryDaysQuery, GetVAnchorsTWLByDateRangeEveryDaysQueryVariables>(GetVAnchorsTWLByDateRangeEveryDaysDocument, variables, options) as Promise<GetVAnchorsTWLByDateRangeEveryDaysQuery>;
     },
     GetVAnchorVolumeByChain(variables: GetVAnchorVolumeByChainQueryVariables, options?: C): Promise<GetVAnchorVolumeByChainQuery> {
       return requester<GetVAnchorVolumeByChainQuery, GetVAnchorVolumeByChainQueryVariables>(GetVAnchorVolumeByChainDocument, variables, options) as Promise<GetVAnchorVolumeByChainQuery>;

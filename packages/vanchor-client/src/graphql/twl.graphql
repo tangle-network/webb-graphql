@@ -1,0 +1,159 @@
+query GetVAnchorTWL($vAnchorAddress: ID!) {
+  vanchorTWL(id: $vAnchorAddress) {
+    total
+  }
+}
+
+query GetVAnchorTWLs($vAnchorAddresses: [String!]!) {
+  vanchorTWLs(where: { id_in: $vAnchorAddresses }) {
+    id
+    total
+  }
+}
+
+query GetVAnchorTWLByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorTWLByTokens(
+    first: 1
+    where: { tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress }
+  ) {
+    total
+  }
+}
+
+query GetVAnchorTWLEvery15Mins(
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTWLEvery15Mins(
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    startInterval
+    total
+    vAnchorAddress
+    endInterval
+  }
+}
+
+query GetVAnchorsTWLEvery15Mins(
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorTWLEvery15Mins(
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    total
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorTWLByTokenEvery15Mins(
+  $tokenSymbol: String!
+  $vAnchorAddress: Bytes!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+) {
+  vanchorTWLByTokenEvery15Mins(
+    where: {
+      tokenSymbol: $tokenSymbol
+      vAnchorAddress: $vAnchorAddress
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+    }
+  ) {
+    total
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorTWLEveryDays(
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTWLEveryDays(
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    startInterval
+    total
+    vAnchorAddress
+    endInterval
+  }
+}
+
+query GetVAnchorsTWLEveryDays(
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorTWLEveryDays(
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    total
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorTWLByTokenEveryDays(
+  $tokenSymbol: String!
+  $vAnchorAddress: Bytes!
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+) {
+  vanchorTWLByTokenEveryDays(
+    where: {
+      tokenSymbol: $tokenSymbol
+      vAnchorAddress: $vAnchorAddress
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+    }
+  ) {
+    total
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorsTWLByDateRangeEveryDays(
+  $dateRange: [BigInt!]!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorTWLEveryDays(
+    where: {
+      startInterval_in: $dateRange
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+    orderBy: startInterval
+  ) {
+    total
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}

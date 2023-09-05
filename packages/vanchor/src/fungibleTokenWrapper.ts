@@ -7,6 +7,11 @@ import {
   recordWrappingFee15MinsInterval,
   recordWrappingFeeDayInterval,
 } from './wrappingFee';
+import {
+  recordTWL,
+  recordTWL15MinsInterval,
+  recordTWLDayInterval,
+} from './twl';
 import { UnwrappingEventLog, WrappingEventLog } from '../generated/schema';
 
 export function handleWrapping(event: WrappingEvent): void {
@@ -48,6 +53,21 @@ export function handleWrapping(event: WrappingEvent): void {
       feeAmount,
       event.block.timestamp
     );
+
+    // Record TWL - increase by afterFeeAmount
+    recordTWL(vAnchorAddress, tokenAddress, afterFeeAmount);
+    recordTWL15MinsInterval(
+      vAnchorAddress,
+      tokenAddress,
+      afterFeeAmount,
+      event.block.timestamp
+    );
+    recordTWLDayInterval(
+      vAnchorAddress,
+      tokenAddress,
+      afterFeeAmount,
+      event.block.timestamp
+    );
   }
 }
 
@@ -71,4 +91,19 @@ export function handleUnwrapping(event: UnwrappingEvent): void {
   newLog.amount = amount;
   newLog.timestamp = event.block.timestamp;
   newLog.save();
+
+  // Record TWL - minus unwrapped amount
+  recordTWL(vAnchorAddress, tokenAddress, amount.neg());
+  recordTWL15MinsInterval(
+    vAnchorAddress,
+    tokenAddress,
+    amount.neg(),
+    event.block.timestamp
+  );
+  recordTWLDayInterval(
+    vAnchorAddress,
+    tokenAddress,
+    amount.neg(),
+    event.block.timestamp
+  );
 }
