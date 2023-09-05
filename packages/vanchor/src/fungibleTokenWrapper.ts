@@ -5,6 +5,7 @@ import {
 import {
   recordWrappingFees,
   recordWrappingFees15MinsInterval,
+  recordWrappingFeesDayInterval,
 } from './wrappingFees';
 import { UnwrappingEventLog, WrappingEventLog } from '../generated/schema';
 
@@ -36,6 +37,12 @@ export function handleWrapping(event: WrappingEvent): void {
     // Record Wrapping Fees
     recordWrappingFees(vAnchorAddress, tokenAddress, feeAmount);
     recordWrappingFees15MinsInterval(
+      vAnchorAddress,
+      tokenAddress,
+      feeAmount,
+      event.block.timestamp
+    );
+    recordWrappingFeesDayInterval(
       vAnchorAddress,
       tokenAddress,
       feeAmount,

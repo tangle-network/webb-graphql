@@ -1,7 +1,7 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
-  VAnchorTotalWrappingFee,
-  VAnchorTotalWrappingFeeByToken,
+  VAnchorWrappingFee,
+  VAnchorWrappingFeeByToken,
 } from '../../generated/schema';
 import { getTokenSymbol } from '../token';
 
@@ -11,12 +11,10 @@ export default function recordWrappingFees(
   fee: BigInt
 ): void {
   const id = vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
-  const vanchorTotalValueLockedByToken =
-    VAnchorTotalWrappingFeeByToken.load(id);
+  const vanchorTotalValueLockedByToken = VAnchorWrappingFeeByToken.load(id);
 
   if (!vanchorTotalValueLockedByToken) {
-    const newVanchorTotalValueLockedByToken =
-      new VAnchorTotalWrappingFeeByToken(id);
+    const newVanchorTotalValueLockedByToken = new VAnchorWrappingFeeByToken(id);
     newVanchorTotalValueLockedByToken.fees = fee;
     newVanchorTotalValueLockedByToken.vAnchorAddress = vAnchorAddress;
     newVanchorTotalValueLockedByToken.tokenSymbol =
@@ -30,12 +28,12 @@ export default function recordWrappingFees(
   }
 
   // Update the total fees for vanchor
-  const vanchorTotalValueLocked = VAnchorTotalWrappingFee.load(
+  const vanchorTotalValueLocked = VAnchorWrappingFee.load(
     vAnchorAddress.toHexString()
   );
 
   if (!vanchorTotalValueLocked) {
-    const newVanchorTotalValueLocked = new VAnchorTotalWrappingFee(
+    const newVanchorTotalValueLocked = new VAnchorWrappingFee(
       vAnchorAddress.toHexString()
     );
     newVanchorTotalValueLocked.fees = fee;

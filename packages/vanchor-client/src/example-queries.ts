@@ -9,7 +9,7 @@ import {
   GetVAnchorsVolumeByChains15MinsInterval,
 } from './queries/volume';
 import { GetVAnchorsTotalRelayerFeeByChains } from './queries/relayerFee';
-import { GetVAnchorsTotalWrappingFeeByChains } from './queries/wrappingFee';
+import { GetVAnchorsWrappingFeeByChains } from './queries/wrappingFee';
 import { DateUtil } from './utils/date';
 
 const vAnchorAddress = '0x91eb86019fd8d7c5a9e31143d422850a13f670a3';
@@ -57,7 +57,7 @@ async function main() {
     await GetVAnchorsTotalRelayerFeeByChains([subgraphUrl], [vAnchorAddress])
   );
   console.log(
-    await GetVAnchorsTotalWrappingFeeByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsWrappingFeeByChains([subgraphUrl], [vAnchorAddress])
   );
 }
 

@@ -1,28 +1,27 @@
 import { getBuiltGraphSDK } from '../../../.graphclient';
 import { SubgraphUrl } from '../../config';
 
-export interface TotalWrappingFeeByChain {
+export interface WrappingFeeByChain {
   subgraphUrl: SubgraphUrl;
-  totalWrappingFee: bigint | null;
+  wrappingFee: bigint | null;
 }
 
-export interface TotalWrappingFeeByChainAndByToken
-  extends TotalWrappingFeeByChain {
+export interface WrappingFeeByChainAndByToken extends WrappingFeeByChain {
   tokenSymbol: string;
 }
 
-export interface TotalWrappingFeeByVAnchor {
+export interface WrappingFeeByVAnchor {
   vAnchorAddress: string;
-  totalWrappingFee: bigint | null;
+  wrappingFee: bigint | null;
 }
 
 const sdk = getBuiltGraphSDK();
 
-export const GetVAnchorTotalWrappingFeeByChain = async (
+export const GetVAnchorWrappingFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string
-): Promise<TotalWrappingFeeByChain> => {
-  const result = await sdk.GetVAnchorTotalWrappingFee(
+): Promise<WrappingFeeByChain> => {
+  const result = await sdk.GetVAnchorWrappingFee(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
     },
@@ -32,34 +31,32 @@ export const GetVAnchorTotalWrappingFeeByChain = async (
   );
 
   return {
-    totalWrappingFee:
-      result.vanchorTotalWrappingFee?.fees !== undefined
-        ? BigInt(result.vanchorTotalWrappingFee.fees)
+    wrappingFee:
+      result.vanchorWrappingFee?.fees !== undefined
+        ? BigInt(result.vanchorWrappingFee.fees)
         : null,
     subgraphUrl: subgraphUrl,
   };
 };
 
-export const GetVAnchorTotalWrappingFeeByChains = async (
+export const GetVAnchorWrappingFeeByChains = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
-): Promise<Array<TotalWrappingFeeByChain>> => {
-  const promises: Array<Promise<TotalWrappingFeeByChain>> = [];
+): Promise<Array<WrappingFeeByChain>> => {
+  const promises: Array<Promise<WrappingFeeByChain>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
-    promises.push(
-      GetVAnchorTotalWrappingFeeByChain(subgraphUrl, vAnchorAddress)
-    );
+    promises.push(GetVAnchorWrappingFeeByChain(subgraphUrl, vAnchorAddress));
   }
 
   return await Promise.all(promises);
 };
 
-export const GetVAnchorsTotalWrappingFeeByChain = async (
+export const GetVAnchorsWrappingFeeByChain = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>
-): Promise<Array<TotalWrappingFeeByVAnchor>> => {
-  const result = await sdk.GetVAnchorsTotalWrappingFees(
+): Promise<Array<WrappingFeeByVAnchor>> => {
+  const result = await sdk.GetVAnchorsWrappingFees(
     {
       vAnchorAddresses: vanchorAddresses.map((vanchorAddress) =>
         vanchorAddress.toLowerCase()
@@ -70,39 +67,37 @@ export const GetVAnchorsTotalWrappingFeeByChain = async (
     }
   );
 
-  if (!result.vanchorTotalWrappingFees?.length) {
-    return [] as Array<TotalWrappingFeeByVAnchor>;
+  if (!result.vanchorWrappingFees?.length) {
+    return [] as Array<WrappingFeeByVAnchor>;
   }
 
-  return result.vanchorTotalWrappingFees.map((item) => {
+  return result.vanchorWrappingFees.map((item) => {
     return {
-      totalWrappingFee: BigInt(item.fees),
+      wrappingFee: BigInt(item.fees),
       vAnchorAddress: item?.id,
     };
   });
 };
 
-export const GetVAnchorsTotalWrappingFeeByChains = async (
+export const GetVAnchorsWrappingFeeByChains = async (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
-): Promise<Array<Array<TotalWrappingFeeByVAnchor>>> => {
-  const promises: Array<Promise<Array<TotalWrappingFeeByVAnchor>>> = [];
+): Promise<Array<Array<WrappingFeeByVAnchor>>> => {
+  const promises: Array<Promise<Array<WrappingFeeByVAnchor>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
-    promises.push(
-      GetVAnchorsTotalWrappingFeeByChain(subgraphUrl, vanchorAddresses)
-    );
+    promises.push(GetVAnchorsWrappingFeeByChain(subgraphUrl, vanchorAddresses));
   }
 
   return await Promise.all(promises);
 };
 
-export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
+export const GetVAnchorWrappingFeeByChainAndByToken = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
   tokenSymbol: string
-): Promise<TotalWrappingFeeByChainAndByToken> => {
-  const result = await sdk.GetVAnchorTotalWrappingFeeByTokens(
+): Promise<WrappingFeeByChainAndByToken> => {
+  const result = await sdk.GetVAnchorWrappingFeeByTokens(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
       tokenSymbol: tokenSymbol,
@@ -113,25 +108,25 @@ export const GetVAnchorTotalWrappingFeeByChainAndByToken = async (
   );
 
   return {
-    totalWrappingFee:
-      result.vanchorTotalWrappingFeeByTokens?.[0]?.fees !== undefined
-        ? BigInt(result.vanchorTotalWrappingFeeByTokens[0].fees)
+    wrappingFee:
+      result.vanchorWrappingFeeByTokens?.[0]?.fees !== undefined
+        ? BigInt(result.vanchorWrappingFeeByTokens[0].fees)
         : null,
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };
 };
 
-export const GetVAnchorTotalWrappingFeeByChainsAndByToken = async (
+export const GetVAnchorWrappingFeeByChainsAndByToken = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
-): Promise<Array<TotalWrappingFeeByChainAndByToken>> => {
-  const promises: Array<Promise<TotalWrappingFeeByChainAndByToken>> = [];
+): Promise<Array<WrappingFeeByChainAndByToken>> => {
+  const promises: Array<Promise<WrappingFeeByChainAndByToken>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
-      GetVAnchorTotalWrappingFeeByChainAndByToken(
+      GetVAnchorWrappingFeeByChainAndByToken(
         subgraphUrl,
         vAnchorAddress,
         tokenSymbol

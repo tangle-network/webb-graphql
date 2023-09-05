@@ -38,11 +38,11 @@ export const GetVAnchorWrappingFeeByChain15MinsInterval = async (
     }
   );
 
-  if (!result.vanchorTotalWrappingFeeByTokenEvery15Mins?.length) {
+  if (!result.vanchorWrappingFeeEvery15Mins?.length) {
     return [] as Array<WrappingFeeByChain15MinsIntervalItem>;
   }
 
-  return result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
+  return result.vanchorWrappingFeeEvery15Mins.map((item) => {
     return {
       wrappingFee: BigInt(item.fees),
       subgraphUrl: subgraphUrl,
@@ -92,13 +92,13 @@ export const GetVAnchorsWrappingFeeByChain15MinsInterval = async (
     }
   );
 
-  if (!result.vanchorTotalWrappingFeeByTokenEvery15Mins?.length) {
+  if (!result.vanchorWrappingFeeEvery15Mins?.length) {
     return [] as Array<WrappingFeeByVAnchor15MinsIntervalItem>;
   }
 
   const wrappingFeeMap: { [vanchorAddress: string]: bigint } = {};
 
-  result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
+  result.vanchorWrappingFeeEvery15Mins.map((item) => {
     if (!wrappingFeeMap[item.vAnchorAddress]) {
       wrappingFeeMap[item.vAnchorAddress] = BigInt(0);
     }
@@ -162,7 +162,7 @@ export const GetVAnchorWrappingFeeByChainAndByToken15MinsInterval = async (
     }
   );
 
-  return result.vanchorTotalWrappingFeeByTokenEvery15Mins.map((item) => {
+  return result.vanchorWrappingFeeByTokenEvery15Mins.map((item) => {
     return {
       wrappingFee: BigInt(item.fees),
       subgraphUrl: subgraphUrl,
