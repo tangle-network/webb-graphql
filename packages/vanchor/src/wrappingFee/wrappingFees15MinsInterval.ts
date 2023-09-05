@@ -1,19 +1,19 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
-  VAnchorWrappingFeeByTokenEveryDay,
-  VAnchorWrappingFeeEveryDay,
+  VAnchorWrappingFeeByTokenEvery15Min,
+  VAnchorWrappingFeeEvery15Min,
 } from '../../generated/schema';
-import { getStartIntervalDay, getEndIntervalDay } from '../utils/time';
+import { getStartInterval15Mins, getEndInterval15Mins } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export default function recordWrappingFeesDayInterval(
+export default function recordWrappingFee15MinsInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   fees: BigInt,
   time: BigInt
 ): void {
-  const startInterval = getStartIntervalDay(time);
-  const endInterval = getEndIntervalDay(time);
+  const startInterval = getStartInterval15Mins(time);
+  const endInterval = getEndInterval15Mins(time);
 
   const id =
     startInterval.toString() +
@@ -21,10 +21,10 @@ export default function recordWrappingFeesDayInterval(
     vAnchorAddress.toHexString() +
     '-' +
     tokenAddress.toHexString();
-  const vanchorFeeByToken = VAnchorWrappingFeeByTokenEveryDay.load(id);
+  const vanchorFeeByToken = VAnchorWrappingFeeByTokenEvery15Min.load(id);
 
   if (!vanchorFeeByToken) {
-    const newVanchorFeeByToken = new VAnchorWrappingFeeByTokenEveryDay(id);
+    const newVanchorFeeByToken = new VAnchorWrappingFeeByTokenEvery15Min(id);
     newVanchorFeeByToken.fees = fees;
     newVanchorFeeByToken.vAnchorAddress = vAnchorAddress;
     newVanchorFeeByToken.tokenSymbol = getTokenSymbol(tokenAddress);
@@ -44,10 +44,10 @@ export default function recordWrappingFeesDayInterval(
   // Update the total value locked for vanchor
   const recordId =
     startInterval.toString() + '-' + vAnchorAddress.toHexString();
-  const vanchorFee = VAnchorWrappingFeeEveryDay.load(recordId);
+  const vanchorFee = VAnchorWrappingFeeEvery15Min.load(recordId);
 
   if (!vanchorFee) {
-    const newVanchorFee = new VAnchorWrappingFeeEveryDay(recordId);
+    const newVanchorFee = new VAnchorWrappingFeeEvery15Min(recordId);
     newVanchorFee.startInterval = BigInt.fromString(startInterval.toString());
     newVanchorFee.endInterval = BigInt.fromString(endInterval.toString());
     newVanchorFee.vAnchorAddress = vAnchorAddress;

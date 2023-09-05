@@ -5,7 +5,7 @@ import {
 } from '../../generated/schema';
 import { getTokenSymbol } from '../token';
 
-export default function recordWrappingFees(
+export default function recordWrappingFee(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   fee: BigInt

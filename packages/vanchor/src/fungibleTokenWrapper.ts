@@ -3,10 +3,10 @@ import {
   Unwrapping as UnwrappingEvent,
 } from '../generated/vanchor/FungibleTokenWrapper';
 import {
-  recordWrappingFees,
-  recordWrappingFees15MinsInterval,
-  recordWrappingFeesDayInterval,
-} from './wrappingFees';
+  recordWrappingFee,
+  recordWrappingFee15MinsInterval,
+  recordWrappingFeeDayInterval,
+} from './wrappingFee';
 import { UnwrappingEventLog, WrappingEventLog } from '../generated/schema';
 
 export function handleWrapping(event: WrappingEvent): void {
@@ -35,14 +35,14 @@ export function handleWrapping(event: WrappingEvent): void {
 
     // TODO - MAke sure this is a vAnchor address, otherwise skip.
     // Record Wrapping Fees
-    recordWrappingFees(vAnchorAddress, tokenAddress, feeAmount);
-    recordWrappingFees15MinsInterval(
+    recordWrappingFee(vAnchorAddress, tokenAddress, feeAmount);
+    recordWrappingFee15MinsInterval(
       vAnchorAddress,
       tokenAddress,
       feeAmount,
       event.block.timestamp
     );
-    recordWrappingFeesDayInterval(
+    recordWrappingFeeDayInterval(
       vAnchorAddress,
       tokenAddress,
       feeAmount,
