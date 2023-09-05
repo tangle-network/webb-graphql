@@ -3,30 +3,38 @@ import {
   GetVAnchorsTVLByChainsByDateRange,
   GetVAnchorsTotalValueLockedByChains,
 } from './queries/tvl';
-import { GetVAnchorsDepositByChainsByDateRange } from './queries/deposit';
 import {
-  GetVAnchorsVolumeByChains,
-  GetVAnchorsVolumeByChains15MinsInterval,
-} from './queries/volume';
-import { GetVAnchorsTotalRelayerFeeByChains } from './queries/relayerFee';
+  GetVAnchorsDepositByChains,
+  GetVAnchorsDepositByChains15MinsInterval,
+  GetVAnchorsDepositByChainsByDateRange,
+} from './queries/deposit';
+import { GetVAnchorsWithdrawalByChainsByDateRange } from './queries/withdrawal';
+import { GetVAnchorsRelayerFeeByChains } from './queries/relayerFee';
 import { GetVAnchorsWrappingFeeByChains } from './queries/wrappingFee';
 import { DateUtil } from './utils/date';
 
-const vAnchorAddress = '0x91eb86019fd8d7c5a9e31143d422850a13f670a3';
-const subgraphUrl = SubgraphUrl.vAnchorAthenaLocal;
+const epochStart = 1692057600;
+const vAnchorAddress = '0x9b5404eBc174a7eE36b0d248b2735382B320EC76';
+const subgraphUrl = SubgraphUrl.vAnchorTangleTestnet;
 
 async function main() {
-  const epochStart = 1692057600;
+  await getOverviewChipsData();
+  await getOverviewChartsData();
+  await getKeyMetricData();
+}
 
-  // query for Overview Chips
+async function getOverviewChipsData() {
   console.log(
     await GetVAnchorsTotalValueLockedByChains([subgraphUrl], [vAnchorAddress])
   );
-  console.log(await GetVAnchorsVolumeByChains([subgraphUrl], [vAnchorAddress]));
-
-  // query for Overview Charts
   console.log(
-    await GetVAnchorsVolumeByChains15MinsInterval(
+    await GetVAnchorsDepositByChains([subgraphUrl], [vAnchorAddress])
+  );
+}
+
+async function getOverviewChartsData() {
+  console.log(
+    await GetVAnchorsDepositByChains15MinsInterval(
       [subgraphUrl],
       [vAnchorAddress],
       DateUtil.fromEpochToDate(
@@ -51,10 +59,19 @@ async function main() {
       3
     )
   );
-
-  // query for Key Metric Table
   console.log(
-    await GetVAnchorsTotalRelayerFeeByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsWithdrawalByChainsByDateRange(
+      [subgraphUrl],
+      [vAnchorAddress],
+      epochStart,
+      3
+    )
+  );
+}
+
+async function getKeyMetricData() {
+  console.log(
+    await GetVAnchorsRelayerFeeByChains([subgraphUrl], [vAnchorAddress])
   );
   console.log(
     await GetVAnchorsWrappingFeeByChains([subgraphUrl], [vAnchorAddress])
