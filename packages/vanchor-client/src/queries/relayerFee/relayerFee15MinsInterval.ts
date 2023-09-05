@@ -1,13 +1,12 @@
-import { execute, getBuiltGraphSDK } from '../../../.graphclient';
+import { getBuiltGraphSDK } from '../../../.graphclient';
 import { DateUtil } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
 
 export interface RelayerFeeByChain15MinsIntervalItem {
-  subgraphUrl: SubgraphUrl;
   relayerFee: bigint;
+  subgraphUrl: SubgraphUrl;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface RelayerFeeByChainAndByToken15MinsIntervalItem
@@ -27,7 +26,7 @@ export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<RelayerFeeByChain15MinsIntervalItem | null> => {
+): Promise<Array<RelayerFeeByChain15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorRelayerFeeEvery15Mins(
     {
       endInterval: DateUtil.fromDateToEpoch(endInterval),
@@ -39,19 +38,18 @@ export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
     }
   );
 
-  if (result.vanchorTotalRelayerFee15Mins?.[0]?.fees === undefined) {
-    return null;
+  if (!result.vanchorTotalRelayerFee15Mins?.length) {
+    return [] as Array<RelayerFeeByChain15MinsIntervalItem>;
   }
 
-  const item = result.vanchorTotalRelayerFee15Mins[0];
-
-  return {
-    relayerFee: BigInt(item.fees),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorTotalRelayerFee15Mins.map((item) => {
+    return {
+      relayerFee: BigInt(item.fees),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
@@ -59,8 +57,8 @@ export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<RelayerFeeByChain15MinsIntervalItem | null>> => {
-  const promises: Array<Promise<RelayerFeeByChain15MinsIntervalItem | null>> =
+): Promise<Array<Array<RelayerFeeByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<RelayerFeeByChain15MinsIntervalItem>>> =
     [];
 
   for (const subgraphUrl of subgraphUrls) {

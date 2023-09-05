@@ -7,7 +7,6 @@ export interface TotalValueLockedByChain15MinsIntervalItem {
   totalValueLocked: bigint | null;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface TotalValueLockedByChainAndByToken15MinsIntervalItem
@@ -27,7 +26,7 @@ export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<TotalValueLockedByChain15MinsIntervalItem | null> => {
+): Promise<Array<TotalValueLockedByChain15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorTotalValueLockedEvery15Mins(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
@@ -39,22 +38,18 @@ export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
     }
   );
 
-  if (
-    result.vanchorTotalValueLockedEvery15Mins?.[0]?.totalValueLocked ===
-    undefined
-  ) {
-    return null;
+  if (!result.vanchorTotalValueLockedEvery15Mins?.length) {
+    return [] as Array<TotalValueLockedByChain15MinsIntervalItem>;
   }
 
-  const item = result.vanchorTotalValueLockedEvery15Mins[0];
-
-  return {
-    totalValueLocked: BigInt(item.totalValueLocked),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorTotalValueLockedEvery15Mins.map((item) => {
+    return {
+      totalValueLocked: BigInt(item.totalValueLocked),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
@@ -62,9 +57,9 @@ export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<TotalValueLockedByChain15MinsIntervalItem | null>> => {
+): Promise<Array<Array<TotalValueLockedByChain15MinsIntervalItem>>> => {
   const promises: Array<
-    Promise<TotalValueLockedByChain15MinsIntervalItem | null>
+    Promise<Array<TotalValueLockedByChain15MinsIntervalItem>>
   > = [];
 
   for (const subgraphUrl of subgraphUrls) {

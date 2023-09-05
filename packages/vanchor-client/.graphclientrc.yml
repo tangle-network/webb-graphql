@@ -3,7 +3,7 @@ sources:
     handler:
       graphql:
         # endpoint: '{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorOrbitAthena}' # for local development
-        endpoint: '{context.subgraphUrl:https://thegraph-backend.webb.tools/subgraphs/name/VAnchorOrbitAthena}'
+        endpoint: '{context.subgraphUrl:https://thegraph-backend.webb.tools/subgraphs/name/VAnchorTangle}'
 
 additionalTypeDefs: |
   extend type ShieldedTransaction {
