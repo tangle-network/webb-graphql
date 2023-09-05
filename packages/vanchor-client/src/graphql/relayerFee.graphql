@@ -161,6 +161,23 @@ query GetVAnchorRelayerFeeByTokenEveryDays(
   }
 }
 
+query GetVAnchorRelayerFeeByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorRelayerFeeEveryDays(
+    where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
+    orderBy: startInterval
+  ) {
+    totalFees
+    txFees
+    profit
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
 query GetVanchorsRelayerFeeByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!

@@ -143,6 +143,21 @@ query GetVAnchorWrappingFeeByTokenEveryDays(
   }
 }
 
+query GetVanchorWrappingFeeByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorWrappingFeeEveryDays(
+    where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
+    orderBy: startInterval
+  ) {
+    fees
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
 query GetVanchorsWrappingFeeByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!

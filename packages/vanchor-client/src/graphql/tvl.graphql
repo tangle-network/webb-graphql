@@ -143,7 +143,22 @@ query GetVAnchorTotalValueLockedByTokenEveryDays(
   }
 }
 
-query GetVAnchorsTotalValueLockedByDateRangeEveryDays(
+query GetVAnchorTotalValueLockedByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTotalValueLockedEveryDays(
+    where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
+    orderBy: startInterval
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+
+query GetVAnchorsTotalValueLockedByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!
 ) {

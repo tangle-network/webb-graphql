@@ -143,6 +143,21 @@ query GetVAnchorWithdrawalByTokenEveryDays(
   }
 }
 
+query GetVanchorWithdrawalByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorWithdrawalEveryDays(
+    where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
+    orderBy: startInterval
+  ) {
+    withdrawal
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+
 query GetVanchorsWithdrawalByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!

@@ -140,7 +140,23 @@ query GetVAnchorTWLByTokenEveryDays(
   }
 }
 
-query GetVAnchorsTWLByDateRangeEveryDays(
+query GetVAnchorTWLByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTWLEveryDays(
+    where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
+    orderBy: startInterval
+  ) {
+    total
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+
+
+query GetVAnchorsTWLByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!
 ) {

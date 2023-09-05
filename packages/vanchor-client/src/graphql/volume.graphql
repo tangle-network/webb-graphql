@@ -140,6 +140,21 @@ query GetVAnchorVolumeByTokenEvery15Mins(
   }
 }
 
+query GetVanchorVolumeByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorVolumeEveryDays(
+    where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
+    orderBy: startInterval
+  ) {
+    volume
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+
 query GetVanchorsVolumeByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!

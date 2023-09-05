@@ -202,6 +202,62 @@ export const GetVAnchorWrappingFeeByChainsAndByTokenDayInterval = async (
   return await Promise.all(promises);
 };
 
+export const GetVAnchorWrappingFeeByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<WrappingFeeVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVanchorWrappingFeeByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddress: vAnchorAddress,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorWrappingFeeEveryDays?.length) {
+    return {} as WrappingFeeVAnchorsDateRangeItem;
+  }
+
+  const wrappingFeeMapByDate: WrappingFeeVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    wrappingFeeMapByDate[date.toString()] = BigInt(0);
+  }
+
+  result.vanchorWrappingFeeEveryDays.forEach((item) => {
+    wrappingFeeMapByDate[item.startInterval.toString()] += BigInt(item.fees);
+  });
+
+  return wrappingFeeMapByDate;
+};
+
+export const GetVAnchorWrappingFeeByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<WrappingFeeVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<WrappingFeeVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorWrappingFeeByChainByDateRange(
+        subgraphUrl,
+        vanchorAddress,
+        epochStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
 export const GetVAnchorsWrappingFeeByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,

@@ -226,6 +226,74 @@ export const GetVAnchorRelayerFeeByChainsAndByTokenDayInterval = async (
   return await Promise.all(promises);
 };
 
+export const GetVAnchorRelayerFeeByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<RelayerFeeVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVAnchorRelayerFeeByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddress: vanchorAddress,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorRelayerFeeEveryDays?.length) {
+    return {} as RelayerFeeVAnchorsDateRangeItem;
+  }
+
+  const relayerFeeMapByDate: RelayerFeeVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    relayerFeeMapByDate[date.toString()] = {
+      totalFees: BigInt(0),
+      profit: BigInt(0),
+      txFees: BigInt(0),
+    };
+  }
+
+  result.vanchorRelayerFeeEveryDays.forEach((item) => {
+    relayerFeeMapByDate[item.startInterval.toString()].totalFees += BigInt(
+      item.totalFees
+    );
+    relayerFeeMapByDate[item.startInterval.toString()].profit += BigInt(
+      item.profit
+    );
+    relayerFeeMapByDate[item.startInterval.toString()].txFees += BigInt(
+      item.txFees
+    );
+  });
+
+  return relayerFeeMapByDate;
+};
+
+export const GetVAnchorRelayerFeeByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<RelayerFeeVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<RelayerFeeVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorRelayerFeeByChainByDateRange(
+        subgraphUrl,
+        vanchorAddress,
+        epochStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
 export const GetVAnchorsRelayerFeeByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,

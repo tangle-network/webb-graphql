@@ -205,6 +205,69 @@ export const GetVAnchorTWLByChainsAndByTokenDayInterval = async (
   return await Promise.all(promises);
 };
 
+export const GetVAnchorTWLByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<TWLVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVAnchorTWLByDateRange(
+    {
+      vAnchorAddress: vAnchorAddress,
+      dateRange: dates.map((date) => date.toString()),
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorTWLEveryDays?.length) {
+    return {} as TWLVAnchorsDateRangeItem;
+  }
+
+  const twlMapByDate: TWLVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    twlMapByDate[date.toString()] = BigInt(0);
+  }
+
+  result.vanchorTWLEveryDays.forEach((item) => {
+    twlMapByDate[item.startInterval.toString()] += BigInt(item.total);
+  });
+
+  // if no twl update in a day, it will be equal to the previous day
+  for (let i = 1; i < dates.length; i++) {
+    if (twlMapByDate[dates[i]] === BigInt(0)) {
+      twlMapByDate[dates[i]] = twlMapByDate[dates[i - 1]];
+    }
+  }
+
+  return twlMapByDate;
+};
+
+export const GetVAnchorTWLByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<TWLVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<TWLVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorTWLByChainByDateRange(
+        subgraphUrl,
+        vanchorAddress,
+        epochStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
 export const GetVAnchorsTWLByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
@@ -212,7 +275,7 @@ export const GetVAnchorsTWLByChainByDateRange = async (
   numberOfDays: number
 ): Promise<TWLVAnchorsDateRangeItem> => {
   const dates = getEpochArray(epochStart, numberOfDays);
-  const result = await sdk.GetVAnchorsTWLByDateRangeEveryDays(
+  const result = await sdk.GetVAnchorsTWLByDateRange(
     {
       vAnchorAddresses: vanchorAddresses.map((address) =>
         address.toLowerCase()

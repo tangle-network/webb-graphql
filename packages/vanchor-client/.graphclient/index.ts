@@ -9304,6 +9304,12 @@ const merger = new(BareMerger as any)({
         },
         location: 'GetVAnchorDepositByTokenEveryDaysDocument.graphql'
       },{
+        document: GetVAnchorDepositByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorDepositByDateRangeDocument);
+        },
+        location: 'GetVAnchorDepositByDateRangeDocument.graphql'
+      },{
         document: GetVanchorsDepositByDateRangeDocument,
         get rawSDL() {
           return printWithCache(GetVanchorsDepositByDateRangeDocument);
@@ -9363,6 +9369,12 @@ const merger = new(BareMerger as any)({
           return printWithCache(GetVAnchorRelayerFeeByTokenEveryDaysDocument);
         },
         location: 'GetVAnchorRelayerFeeByTokenEveryDaysDocument.graphql'
+      },{
+        document: GetVAnchorRelayerFeeByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorRelayerFeeByDateRangeDocument);
+        },
+        location: 'GetVAnchorRelayerFeeByDateRangeDocument.graphql'
       },{
         document: GetVanchorsRelayerFeeByDateRangeDocument,
         get rawSDL() {
@@ -9424,11 +9436,17 @@ const merger = new(BareMerger as any)({
         },
         location: 'GetVAnchorTotalValueLockedByTokenEveryDaysDocument.graphql'
       },{
-        document: GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument,
+        document: GetVAnchorTotalValueLockedByDateRangeDocument,
         get rawSDL() {
-          return printWithCache(GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument);
+          return printWithCache(GetVAnchorTotalValueLockedByDateRangeDocument);
         },
-        location: 'GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument.graphql'
+        location: 'GetVAnchorTotalValueLockedByDateRangeDocument.graphql'
+      },{
+        document: GetVAnchorsTotalValueLockedByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTotalValueLockedByDateRangeDocument);
+        },
+        location: 'GetVAnchorsTotalValueLockedByDateRangeDocument.graphql'
       },{
         document: GetVAnchorTwlDocument,
         get rawSDL() {
@@ -9484,11 +9502,17 @@ const merger = new(BareMerger as any)({
         },
         location: 'GetVAnchorTwlByTokenEveryDaysDocument.graphql'
       },{
-        document: GetVAnchorsTwlByDateRangeEveryDaysDocument,
+        document: GetVAnchorTwlByDateRangeDocument,
         get rawSDL() {
-          return printWithCache(GetVAnchorsTwlByDateRangeEveryDaysDocument);
+          return printWithCache(GetVAnchorTwlByDateRangeDocument);
         },
-        location: 'GetVAnchorsTwlByDateRangeEveryDaysDocument.graphql'
+        location: 'GetVAnchorTwlByDateRangeDocument.graphql'
+      },{
+        document: GetVAnchorsTwlByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorsTwlByDateRangeDocument);
+        },
+        location: 'GetVAnchorsTwlByDateRangeDocument.graphql'
       },{
         document: GetVAnchorVolumeByChainDocument,
         get rawSDL() {
@@ -9543,6 +9567,12 @@ const merger = new(BareMerger as any)({
           return printWithCache(GetVAnchorVolumeByTokenEvery15MinsDocument);
         },
         location: 'GetVAnchorVolumeByTokenEvery15MinsDocument.graphql'
+      },{
+        document: GetVanchorVolumeByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVanchorVolumeByDateRangeDocument);
+        },
+        location: 'GetVanchorVolumeByDateRangeDocument.graphql'
       },{
         document: GetVanchorsVolumeByDateRangeDocument,
         get rawSDL() {
@@ -9604,6 +9634,12 @@ const merger = new(BareMerger as any)({
         },
         location: 'GetVAnchorWithdrawalByTokenEveryDaysDocument.graphql'
       },{
+        document: GetVanchorWithdrawalByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVanchorWithdrawalByDateRangeDocument);
+        },
+        location: 'GetVanchorWithdrawalByDateRangeDocument.graphql'
+      },{
         document: GetVanchorsWithdrawalByDateRangeDocument,
         get rawSDL() {
           return printWithCache(GetVanchorsWithdrawalByDateRangeDocument);
@@ -9663,6 +9699,12 @@ const merger = new(BareMerger as any)({
           return printWithCache(GetVAnchorWrappingFeeByTokenEveryDaysDocument);
         },
         location: 'GetVAnchorWrappingFeeByTokenEveryDaysDocument.graphql'
+      },{
+        document: GetVanchorWrappingFeeByDateRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVanchorWrappingFeeByDateRangeDocument);
+        },
+        location: 'GetVanchorWrappingFeeByDateRangeDocument.graphql'
       },{
         document: GetVanchorsWrappingFeeByDateRangeDocument,
         get rawSDL() {
@@ -9785,6 +9827,14 @@ export type GetVAnchorDepositByTokenEveryDaysQueryVariables = Exact<{
 
 export type GetVAnchorDepositByTokenEveryDaysQuery = { vanchorDepositByTokenEveryDays: Array<Pick<VAnchorDepositByTokenEveryDay, 'deposit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
+export type GetVAnchorDepositByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorDepositByDateRangeQuery = { vanchorDepositEveryDays: Array<Pick<VAnchorDepositEveryDay, 'deposit' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+
 export type GetVanchorsDepositByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
@@ -9870,6 +9920,14 @@ export type GetVAnchorRelayerFeeByTokenEveryDaysQueryVariables = Exact<{
 
 
 export type GetVAnchorRelayerFeeByTokenEveryDaysQuery = { vanchorRelayerFeeByTokenEveryDays: Array<Pick<VAnchorRelayerFeeByTokenEveryDay, 'totalFees' | 'txFees' | 'profit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorRelayerFeeByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorRelayerFeeByDateRangeQuery = { vanchorRelayerFeeEveryDays: Array<Pick<VAnchorRelayerFeeEveryDay, 'totalFees' | 'txFees' | 'profit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
 export type GetVanchorsRelayerFeeByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
@@ -9957,13 +10015,21 @@ export type GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables = Exact<{
 
 export type GetVAnchorTotalValueLockedByTokenEveryDaysQuery = { vanchorTotalValueLockedByTokenEveryDays: Array<Pick<VAnchorTotalValueLockedByTokenEveryDay, 'totalValueLocked' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
-export type GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables = Exact<{
+export type GetVAnchorTotalValueLockedByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTotalValueLockedByDateRangeQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+
+export type GetVAnchorsTotalValueLockedByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
 
-export type GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+export type GetVAnchorsTotalValueLockedByDateRangeQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
 
 export type GetVAnchorTWLQueryVariables = Exact<{
   vAnchorAddress: Scalars['ID'];
@@ -10043,13 +10109,21 @@ export type GetVAnchorTWLByTokenEveryDaysQueryVariables = Exact<{
 
 export type GetVAnchorTWLByTokenEveryDaysQuery = { vanchorTWLByTokenEveryDays: Array<Pick<VAnchorTWLByTokenEveryDay, 'total' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
-export type GetVAnchorsTWLByDateRangeEveryDaysQueryVariables = Exact<{
+export type GetVAnchorTWLByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorTWLByDateRangeQuery = { vanchorTWLEveryDays: Array<Pick<VAnchorTWLEveryDay, 'total' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+
+export type GetVAnchorsTWLByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
 }>;
 
 
-export type GetVAnchorsTWLByDateRangeEveryDaysQuery = { vanchorTWLEveryDays: Array<Pick<VAnchorTWLEveryDay, 'total' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+export type GetVAnchorsTWLByDateRangeQuery = { vanchorTWLEveryDays: Array<Pick<VAnchorTWLEveryDay, 'total' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
 
 export type GetVAnchorVolumeByChainQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -10128,6 +10202,14 @@ export type GetVAnchorVolumeByTokenEvery15MinsQueryVariables = Exact<{
 
 
 export type GetVAnchorVolumeByTokenEvery15MinsQuery = { vanchorVolumeByTokenEvery15Mins: Array<Pick<VAnchorVolumeByTokenEvery15Min, 'volume' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVanchorVolumeByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVanchorVolumeByDateRangeQuery = { vanchorVolumeEveryDays: Array<Pick<VAnchorVolumeEveryDay, 'volume' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
 
 export type GetVanchorsVolumeByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
@@ -10215,6 +10297,14 @@ export type GetVAnchorWithdrawalByTokenEveryDaysQueryVariables = Exact<{
 
 export type GetVAnchorWithdrawalByTokenEveryDaysQuery = { vanchorWithdrawalByTokenEveryDays: Array<Pick<VAnchorWithdrawalByTokenEveryDay, 'withdrawal' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
+export type GetVanchorWithdrawalByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVanchorWithdrawalByDateRangeQuery = { vanchorWithdrawalEveryDays: Array<Pick<VAnchorWithdrawalEveryDay, 'withdrawal' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+
 export type GetVanchorsWithdrawalByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
   vAnchorAddresses: Array<Scalars['Bytes']> | Scalars['Bytes'];
@@ -10300,6 +10390,14 @@ export type GetVAnchorWrappingFeeByTokenEveryDaysQueryVariables = Exact<{
 
 
 export type GetVAnchorWrappingFeeByTokenEveryDaysQuery = { vanchorWrappingFeeByTokenEveryDays: Array<Pick<VAnchorWrappingFeeByTokenEveryDay, 'fees' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVanchorWrappingFeeByDateRangeQueryVariables = Exact<{
+  dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVanchorWrappingFeeByDateRangeQuery = { vanchorWrappingFeeEveryDays: Array<Pick<VAnchorWrappingFeeEveryDay, 'fees' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
 
 export type GetVanchorsWrappingFeeByDateRangeQueryVariables = Exact<{
   dateRange: Array<Scalars['BigInt']> | Scalars['BigInt'];
@@ -10409,6 +10507,19 @@ export const GetVAnchorDepositByTokenEveryDaysDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorDepositByTokenEveryDaysQuery, GetVAnchorDepositByTokenEveryDaysQueryVariables>;
+export const GetVAnchorDepositByDateRangeDocument = gql`
+    query GetVAnchorDepositByDateRange($dateRange: [BigInt!]!, $vAnchorAddress: Bytes!) {
+  vanchorDepositEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress}
+    orderBy: startInterval
+  ) {
+    deposit
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorDepositByDateRangeQuery, GetVAnchorDepositByDateRangeQueryVariables>;
 export const GetVanchorsDepositByDateRangeDocument = gql`
     query GetVanchorsDepositByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
   vanchorDepositEveryDays(
@@ -10539,6 +10650,21 @@ export const GetVAnchorRelayerFeeByTokenEveryDaysDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorRelayerFeeByTokenEveryDaysQuery, GetVAnchorRelayerFeeByTokenEveryDaysQueryVariables>;
+export const GetVAnchorRelayerFeeByDateRangeDocument = gql`
+    query GetVAnchorRelayerFeeByDateRange($dateRange: [BigInt!]!, $vAnchorAddress: Bytes!) {
+  vanchorRelayerFeeEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress}
+    orderBy: startInterval
+  ) {
+    totalFees
+    txFees
+    profit
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorRelayerFeeByDateRangeQuery, GetVAnchorRelayerFeeByDateRangeQueryVariables>;
 export const GetVanchorsRelayerFeeByDateRangeDocument = gql`
     query GetVanchorsRelayerFeeByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
   vanchorRelayerFeeEveryDays(
@@ -10653,8 +10779,21 @@ export const GetVAnchorTotalValueLockedByTokenEveryDaysDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorTotalValueLockedByTokenEveryDaysQuery, GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables>;
-export const GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument = gql`
-    query GetVAnchorsTotalValueLockedByDateRangeEveryDays($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
+export const GetVAnchorTotalValueLockedByDateRangeDocument = gql`
+    query GetVAnchorTotalValueLockedByDateRange($dateRange: [BigInt!]!, $vAnchorAddress: Bytes!) {
+  vanchorTotalValueLockedEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress}
+    orderBy: startInterval
+  ) {
+    totalValueLocked
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTotalValueLockedByDateRangeQuery, GetVAnchorTotalValueLockedByDateRangeQueryVariables>;
+export const GetVAnchorsTotalValueLockedByDateRangeDocument = gql`
+    query GetVAnchorsTotalValueLockedByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
   vanchorTotalValueLockedEveryDays(
     where: {startInterval_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses}
     orderBy: startInterval
@@ -10665,7 +10804,7 @@ export const GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument = gql`
     endInterval
   }
 }
-    ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery, GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables>;
+    ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedByDateRangeQuery, GetVAnchorsTotalValueLockedByDateRangeQueryVariables>;
 export const GetVAnchorTWLDocument = gql`
     query GetVAnchorTWL($vAnchorAddress: ID!) {
   vanchorTWL(id: $vAnchorAddress) {
@@ -10765,8 +10904,21 @@ export const GetVAnchorTWLByTokenEveryDaysDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorTWLByTokenEveryDaysQuery, GetVAnchorTWLByTokenEveryDaysQueryVariables>;
-export const GetVAnchorsTWLByDateRangeEveryDaysDocument = gql`
-    query GetVAnchorsTWLByDateRangeEveryDays($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
+export const GetVAnchorTWLByDateRangeDocument = gql`
+    query GetVAnchorTWLByDateRange($dateRange: [BigInt!]!, $vAnchorAddress: Bytes!) {
+  vanchorTWLEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress}
+    orderBy: startInterval
+  ) {
+    total
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTWLByDateRangeQuery, GetVAnchorTWLByDateRangeQueryVariables>;
+export const GetVAnchorsTWLByDateRangeDocument = gql`
+    query GetVAnchorsTWLByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
   vanchorTWLEveryDays(
     where: {startInterval_in: $dateRange, vAnchorAddress_in: $vAnchorAddresses}
     orderBy: startInterval
@@ -10777,7 +10929,7 @@ export const GetVAnchorsTWLByDateRangeEveryDaysDocument = gql`
     endInterval
   }
 }
-    ` as unknown as DocumentNode<GetVAnchorsTWLByDateRangeEveryDaysQuery, GetVAnchorsTWLByDateRangeEveryDaysQueryVariables>;
+    ` as unknown as DocumentNode<GetVAnchorsTWLByDateRangeQuery, GetVAnchorsTWLByDateRangeQueryVariables>;
 export const GetVAnchorVolumeByChainDocument = gql`
     query GetVAnchorVolumeByChain($id: ID!) {
   vanchorVolume(id: $id) {
@@ -10877,6 +11029,19 @@ export const GetVAnchorVolumeByTokenEvery15MinsDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorVolumeByTokenEvery15MinsQuery, GetVAnchorVolumeByTokenEvery15MinsQueryVariables>;
+export const GetVanchorVolumeByDateRangeDocument = gql`
+    query GetVanchorVolumeByDateRange($dateRange: [BigInt!]!, $vAnchorAddress: Bytes!) {
+  vanchorVolumeEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress}
+    orderBy: startInterval
+  ) {
+    volume
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVanchorVolumeByDateRangeQuery, GetVanchorVolumeByDateRangeQueryVariables>;
 export const GetVanchorsVolumeByDateRangeDocument = gql`
     query GetVanchorsVolumeByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
   vanchorVolumeEveryDays(
@@ -10989,6 +11154,19 @@ export const GetVAnchorWithdrawalByTokenEveryDaysDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorWithdrawalByTokenEveryDaysQuery, GetVAnchorWithdrawalByTokenEveryDaysQueryVariables>;
+export const GetVanchorWithdrawalByDateRangeDocument = gql`
+    query GetVanchorWithdrawalByDateRange($dateRange: [BigInt!]!, $vAnchorAddress: Bytes!) {
+  vanchorWithdrawalEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress}
+    orderBy: startInterval
+  ) {
+    withdrawal
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+    ` as unknown as DocumentNode<GetVanchorWithdrawalByDateRangeQuery, GetVanchorWithdrawalByDateRangeQueryVariables>;
 export const GetVanchorsWithdrawalByDateRangeDocument = gql`
     query GetVanchorsWithdrawalByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
   vanchorWithdrawalEveryDays(
@@ -11101,6 +11279,19 @@ export const GetVAnchorWrappingFeeByTokenEveryDaysDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorWrappingFeeByTokenEveryDaysQuery, GetVAnchorWrappingFeeByTokenEveryDaysQueryVariables>;
+export const GetVanchorWrappingFeeByDateRangeDocument = gql`
+    query GetVanchorWrappingFeeByDateRange($dateRange: [BigInt!]!, $vAnchorAddress: Bytes!) {
+  vanchorWrappingFeeEveryDays(
+    where: {startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress}
+    orderBy: startInterval
+  ) {
+    fees
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVanchorWrappingFeeByDateRangeQuery, GetVanchorWrappingFeeByDateRangeQueryVariables>;
 export const GetVanchorsWrappingFeeByDateRangeDocument = gql`
     query GetVanchorsWrappingFeeByDateRange($dateRange: [BigInt!]!, $vAnchorAddresses: [Bytes!]!) {
   vanchorWrappingFeeEveryDays(
@@ -11114,6 +11305,13 @@ export const GetVanchorsWrappingFeeByDateRangeDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVanchorsWrappingFeeByDateRangeQuery, GetVanchorsWrappingFeeByDateRangeQueryVariables>;
+
+
+
+
+
+
+
 
 
 
@@ -11215,6 +11413,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     GetVAnchorDepositByTokenEveryDays(variables: GetVAnchorDepositByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorDepositByTokenEveryDaysQuery> {
       return requester<GetVAnchorDepositByTokenEveryDaysQuery, GetVAnchorDepositByTokenEveryDaysQueryVariables>(GetVAnchorDepositByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorDepositByTokenEveryDaysQuery>;
     },
+    GetVAnchorDepositByDateRange(variables: GetVAnchorDepositByDateRangeQueryVariables, options?: C): Promise<GetVAnchorDepositByDateRangeQuery> {
+      return requester<GetVAnchorDepositByDateRangeQuery, GetVAnchorDepositByDateRangeQueryVariables>(GetVAnchorDepositByDateRangeDocument, variables, options) as Promise<GetVAnchorDepositByDateRangeQuery>;
+    },
     GetVanchorsDepositByDateRange(variables: GetVanchorsDepositByDateRangeQueryVariables, options?: C): Promise<GetVanchorsDepositByDateRangeQuery> {
       return requester<GetVanchorsDepositByDateRangeQuery, GetVanchorsDepositByDateRangeQueryVariables>(GetVanchorsDepositByDateRangeDocument, variables, options) as Promise<GetVanchorsDepositByDateRangeQuery>;
     },
@@ -11244,6 +11445,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     GetVAnchorRelayerFeeByTokenEveryDays(variables: GetVAnchorRelayerFeeByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorRelayerFeeByTokenEveryDaysQuery> {
       return requester<GetVAnchorRelayerFeeByTokenEveryDaysQuery, GetVAnchorRelayerFeeByTokenEveryDaysQueryVariables>(GetVAnchorRelayerFeeByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorRelayerFeeByTokenEveryDaysQuery>;
+    },
+    GetVAnchorRelayerFeeByDateRange(variables: GetVAnchorRelayerFeeByDateRangeQueryVariables, options?: C): Promise<GetVAnchorRelayerFeeByDateRangeQuery> {
+      return requester<GetVAnchorRelayerFeeByDateRangeQuery, GetVAnchorRelayerFeeByDateRangeQueryVariables>(GetVAnchorRelayerFeeByDateRangeDocument, variables, options) as Promise<GetVAnchorRelayerFeeByDateRangeQuery>;
     },
     GetVanchorsRelayerFeeByDateRange(variables: GetVanchorsRelayerFeeByDateRangeQueryVariables, options?: C): Promise<GetVanchorsRelayerFeeByDateRangeQuery> {
       return requester<GetVanchorsRelayerFeeByDateRangeQuery, GetVanchorsRelayerFeeByDateRangeQueryVariables>(GetVanchorsRelayerFeeByDateRangeDocument, variables, options) as Promise<GetVanchorsRelayerFeeByDateRangeQuery>;
@@ -11275,8 +11479,11 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     GetVAnchorTotalValueLockedByTokenEveryDays(variables: GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedByTokenEveryDaysQuery> {
       return requester<GetVAnchorTotalValueLockedByTokenEveryDaysQuery, GetVAnchorTotalValueLockedByTokenEveryDaysQueryVariables>(GetVAnchorTotalValueLockedByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorTotalValueLockedByTokenEveryDaysQuery>;
     },
-    GetVAnchorsTotalValueLockedByDateRangeEveryDays(variables: GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery> {
-      return requester<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery, GetVAnchorsTotalValueLockedByDateRangeEveryDaysQueryVariables>(GetVAnchorsTotalValueLockedByDateRangeEveryDaysDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedByDateRangeEveryDaysQuery>;
+    GetVAnchorTotalValueLockedByDateRange(variables: GetVAnchorTotalValueLockedByDateRangeQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedByDateRangeQuery> {
+      return requester<GetVAnchorTotalValueLockedByDateRangeQuery, GetVAnchorTotalValueLockedByDateRangeQueryVariables>(GetVAnchorTotalValueLockedByDateRangeDocument, variables, options) as Promise<GetVAnchorTotalValueLockedByDateRangeQuery>;
+    },
+    GetVAnchorsTotalValueLockedByDateRange(variables: GetVAnchorsTotalValueLockedByDateRangeQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedByDateRangeQuery> {
+      return requester<GetVAnchorsTotalValueLockedByDateRangeQuery, GetVAnchorsTotalValueLockedByDateRangeQueryVariables>(GetVAnchorsTotalValueLockedByDateRangeDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedByDateRangeQuery>;
     },
     GetVAnchorTWL(variables: GetVAnchorTWLQueryVariables, options?: C): Promise<GetVAnchorTWLQuery> {
       return requester<GetVAnchorTWLQuery, GetVAnchorTWLQueryVariables>(GetVAnchorTWLDocument, variables, options) as Promise<GetVAnchorTWLQuery>;
@@ -11305,8 +11512,11 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     GetVAnchorTWLByTokenEveryDays(variables: GetVAnchorTWLByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorTWLByTokenEveryDaysQuery> {
       return requester<GetVAnchorTWLByTokenEveryDaysQuery, GetVAnchorTWLByTokenEveryDaysQueryVariables>(GetVAnchorTWLByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorTWLByTokenEveryDaysQuery>;
     },
-    GetVAnchorsTWLByDateRangeEveryDays(variables: GetVAnchorsTWLByDateRangeEveryDaysQueryVariables, options?: C): Promise<GetVAnchorsTWLByDateRangeEveryDaysQuery> {
-      return requester<GetVAnchorsTWLByDateRangeEveryDaysQuery, GetVAnchorsTWLByDateRangeEveryDaysQueryVariables>(GetVAnchorsTWLByDateRangeEveryDaysDocument, variables, options) as Promise<GetVAnchorsTWLByDateRangeEveryDaysQuery>;
+    GetVAnchorTWLByDateRange(variables: GetVAnchorTWLByDateRangeQueryVariables, options?: C): Promise<GetVAnchorTWLByDateRangeQuery> {
+      return requester<GetVAnchorTWLByDateRangeQuery, GetVAnchorTWLByDateRangeQueryVariables>(GetVAnchorTWLByDateRangeDocument, variables, options) as Promise<GetVAnchorTWLByDateRangeQuery>;
+    },
+    GetVAnchorsTWLByDateRange(variables: GetVAnchorsTWLByDateRangeQueryVariables, options?: C): Promise<GetVAnchorsTWLByDateRangeQuery> {
+      return requester<GetVAnchorsTWLByDateRangeQuery, GetVAnchorsTWLByDateRangeQueryVariables>(GetVAnchorsTWLByDateRangeDocument, variables, options) as Promise<GetVAnchorsTWLByDateRangeQuery>;
     },
     GetVAnchorVolumeByChain(variables: GetVAnchorVolumeByChainQueryVariables, options?: C): Promise<GetVAnchorVolumeByChainQuery> {
       return requester<GetVAnchorVolumeByChainQuery, GetVAnchorVolumeByChainQueryVariables>(GetVAnchorVolumeByChainDocument, variables, options) as Promise<GetVAnchorVolumeByChainQuery>;
@@ -11334,6 +11544,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     GetVAnchorVolumeByTokenEvery15Mins(variables: GetVAnchorVolumeByTokenEvery15MinsQueryVariables, options?: C): Promise<GetVAnchorVolumeByTokenEvery15MinsQuery> {
       return requester<GetVAnchorVolumeByTokenEvery15MinsQuery, GetVAnchorVolumeByTokenEvery15MinsQueryVariables>(GetVAnchorVolumeByTokenEvery15MinsDocument, variables, options) as Promise<GetVAnchorVolumeByTokenEvery15MinsQuery>;
+    },
+    GetVanchorVolumeByDateRange(variables: GetVanchorVolumeByDateRangeQueryVariables, options?: C): Promise<GetVanchorVolumeByDateRangeQuery> {
+      return requester<GetVanchorVolumeByDateRangeQuery, GetVanchorVolumeByDateRangeQueryVariables>(GetVanchorVolumeByDateRangeDocument, variables, options) as Promise<GetVanchorVolumeByDateRangeQuery>;
     },
     GetVanchorsVolumeByDateRange(variables: GetVanchorsVolumeByDateRangeQueryVariables, options?: C): Promise<GetVanchorsVolumeByDateRangeQuery> {
       return requester<GetVanchorsVolumeByDateRangeQuery, GetVanchorsVolumeByDateRangeQueryVariables>(GetVanchorsVolumeByDateRangeDocument, variables, options) as Promise<GetVanchorsVolumeByDateRangeQuery>;
@@ -11365,6 +11578,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     GetVAnchorWithdrawalByTokenEveryDays(variables: GetVAnchorWithdrawalByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorWithdrawalByTokenEveryDaysQuery> {
       return requester<GetVAnchorWithdrawalByTokenEveryDaysQuery, GetVAnchorWithdrawalByTokenEveryDaysQueryVariables>(GetVAnchorWithdrawalByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorWithdrawalByTokenEveryDaysQuery>;
     },
+    GetVanchorWithdrawalByDateRange(variables: GetVanchorWithdrawalByDateRangeQueryVariables, options?: C): Promise<GetVanchorWithdrawalByDateRangeQuery> {
+      return requester<GetVanchorWithdrawalByDateRangeQuery, GetVanchorWithdrawalByDateRangeQueryVariables>(GetVanchorWithdrawalByDateRangeDocument, variables, options) as Promise<GetVanchorWithdrawalByDateRangeQuery>;
+    },
     GetVanchorsWithdrawalByDateRange(variables: GetVanchorsWithdrawalByDateRangeQueryVariables, options?: C): Promise<GetVanchorsWithdrawalByDateRangeQuery> {
       return requester<GetVanchorsWithdrawalByDateRangeQuery, GetVanchorsWithdrawalByDateRangeQueryVariables>(GetVanchorsWithdrawalByDateRangeDocument, variables, options) as Promise<GetVanchorsWithdrawalByDateRangeQuery>;
     },
@@ -11394,6 +11610,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     GetVAnchorWrappingFeeByTokenEveryDays(variables: GetVAnchorWrappingFeeByTokenEveryDaysQueryVariables, options?: C): Promise<GetVAnchorWrappingFeeByTokenEveryDaysQuery> {
       return requester<GetVAnchorWrappingFeeByTokenEveryDaysQuery, GetVAnchorWrappingFeeByTokenEveryDaysQueryVariables>(GetVAnchorWrappingFeeByTokenEveryDaysDocument, variables, options) as Promise<GetVAnchorWrappingFeeByTokenEveryDaysQuery>;
+    },
+    GetVanchorWrappingFeeByDateRange(variables: GetVanchorWrappingFeeByDateRangeQueryVariables, options?: C): Promise<GetVanchorWrappingFeeByDateRangeQuery> {
+      return requester<GetVanchorWrappingFeeByDateRangeQuery, GetVanchorWrappingFeeByDateRangeQueryVariables>(GetVanchorWrappingFeeByDateRangeDocument, variables, options) as Promise<GetVanchorWrappingFeeByDateRangeQuery>;
     },
     GetVanchorsWrappingFeeByDateRange(variables: GetVanchorsWrappingFeeByDateRangeQueryVariables, options?: C): Promise<GetVanchorsWrappingFeeByDateRangeQuery> {
       return requester<GetVanchorsWrappingFeeByDateRangeQuery, GetVanchorsWrappingFeeByDateRangeQueryVariables>(GetVanchorsWrappingFeeByDateRangeDocument, variables, options) as Promise<GetVanchorsWrappingFeeByDateRangeQuery>;

@@ -211,6 +211,71 @@ export const GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval = async (
   return await Promise.all(promises);
 };
 
+export const GetVAnchorTVLByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<TVLVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVAnchorTotalValueLockedByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddress: vAnchorAddress,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorTotalValueLockedEveryDays?.length) {
+    return {} as TVLVAnchorsDateRangeItem;
+  }
+
+  const tvlMapByDate: TVLVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    tvlMapByDate[date.toString()] = BigInt(0);
+  }
+
+  result.vanchorTotalValueLockedEveryDays.forEach((item) => {
+    tvlMapByDate[item.startInterval.toString()] += BigInt(
+      item.totalValueLocked
+    );
+  });
+
+  // if no tvl update in a day, it will be equal to the previous day
+  for (let i = 1; i < dates.length; i++) {
+    if (tvlMapByDate[dates[i]] === BigInt(0)) {
+      tvlMapByDate[dates[i]] = tvlMapByDate[dates[i - 1]];
+    }
+  }
+
+  return tvlMapByDate;
+};
+
+export const GetVAnchorTVLByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<TVLVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<TVLVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorTVLByChainByDateRange(
+        subgraphUrl,
+        vAnchorAddress,
+        epochStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
 export const GetVAnchorsTVLByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
@@ -218,7 +283,7 @@ export const GetVAnchorsTVLByChainByDateRange = async (
   numberOfDays: number
 ): Promise<TVLVAnchorsDateRangeItem> => {
   const dates = getEpochArray(epochStart, numberOfDays);
-  const result = await sdk.GetVAnchorsTotalValueLockedByDateRangeEveryDays(
+  const result = await sdk.GetVAnchorsTotalValueLockedByDateRange(
     {
       vAnchorAddresses: vanchorAddresses.map((address) =>
         address.toLowerCase()

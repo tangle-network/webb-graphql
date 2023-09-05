@@ -143,6 +143,21 @@ query GetVAnchorDepositByTokenEveryDays(
   }
 }
 
+query GetVAnchorDepositByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorDepositEveryDays(
+    where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
+    orderBy: startInterval
+  ) {
+    deposit
+    vAnchorAddress
+    startInterval
+    endInterval
+  }
+}
+
 query GetVanchorsDepositByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!

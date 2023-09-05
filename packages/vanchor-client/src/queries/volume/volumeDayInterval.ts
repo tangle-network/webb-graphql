@@ -207,6 +207,62 @@ export const GetVAnchorVolumeByChainsAndByTokenDayInterval = async (
   return await Promise.all(promises);
 };
 
+export const GetVAnchorVolumeByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<VolumeVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVanchorVolumeByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddress: vAnchorAddress,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorVolumeEveryDays?.length) {
+    return {} as VolumeVAnchorsDateRangeItem;
+  }
+
+  const volumeMapByDate: VolumeVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    volumeMapByDate[date.toString()] = BigInt(0);
+  }
+
+  result.vanchorVolumeEveryDays.forEach((item) => {
+    volumeMapByDate[item.startInterval.toString()] += BigInt(item.volume);
+  });
+
+  return volumeMapByDate;
+};
+
+export const GetVAnchorVolumeByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<VolumeVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<VolumeVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorVolumeByChainByDateRange(
+        subgraphUrl,
+        vanchorAddress,
+        epochStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
 export const GetVAnchorsVolumeByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
