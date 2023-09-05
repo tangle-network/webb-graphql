@@ -1,29 +1,29 @@
-query GetVAnchorTotalRelayerFee($vAnchorAddress: ID!) {
-  vanchorTotalRelayerFee(id: $vAnchorAddress) {
-    fees
+query GetVAnchorRelayerFee($vAnchorAddress: ID!) {
+  vanchorRelayerFee(id: $vAnchorAddress) {
+    totalFees
     txFees
     profit
   }
 }
 
-query GetVAnchorsTotalRelayerFees($vAnchorAddresses: [String!]!) {
-  vanchorTotalRelayerFees(where: { id_in: $vAnchorAddresses }) {
+query GetVAnchorsRelayerFees($vAnchorAddresses: [String!]!) {
+  vanchorRelayerFees(where: { id_in: $vAnchorAddresses }) {
     id
-    fees
+    totalFees
     txFees
     profit
   }
 }
 
-query GetVAnchorTotalRelayerFeeByTokens(
+query GetVAnchorRelayerFeeByTokens(
   $tokenSymbol: String!
   $vAnchorAddress: Bytes!
 ) {
-  vanchorTotalRelayerFeeByTokens(
+  vanchorRelayerFeeByTokens(
     first: 1
     where: { tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress }
   ) {
-    fees
+    totalFees
     txFees
     profit
   }
@@ -34,7 +34,7 @@ query GetVAnchorRelayerFeeEvery15Mins(
   $startInterval: BigInt!
   $vAnchorAddress: Bytes!
 ) {
-  vanchorTotalRelayerFee15Mins(
+  vanchorRelayerFeeEvery15Mins(
     where: {
       endInterval_lte: $endInterval
       startInterval_gte: $startInterval
@@ -42,7 +42,7 @@ query GetVAnchorRelayerFeeEvery15Mins(
     }
   ) {
     startInterval
-    fees
+    totalFees
     txFees
     profit
     vAnchorAddress
@@ -55,7 +55,7 @@ query GetVAnchorsRelayerFeeEvery15Mins(
   $startInterval: BigInt!
   $vAnchorAddresses: [Bytes!]!
 ) {
-  vanchorTotalRelayerFeeByTokenEvery15Mins(
+  vanchorRelayerFeeByTokenEvery15Mins(
     where: {
       endInterval_lte: $endInterval
       startInterval_gte: $startInterval
@@ -64,7 +64,7 @@ query GetVAnchorsRelayerFeeEvery15Mins(
   ) {
     id
     startInterval
-    fees
+    totalFees
     txFees
     profit
     endInterval
@@ -78,7 +78,7 @@ query GetVAnchorRelayerFeeByTokenEvery15Mins(
   $endInterval: BigInt
   $startInterval: BigInt
 ) {
-  vanchorTotalRelayerFeeByTokenEvery15Mins(
+  vanchorRelayerFeeByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
@@ -86,7 +86,93 @@ query GetVAnchorRelayerFeeByTokenEvery15Mins(
       startInterval_gte: $startInterval
     }
   ) {
-    fees
+    totalFees
+    txFees
+    profit
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorRelayerFeeEveryDays(
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorRelayerFeeEveryDays(
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    startInterval
+    totalFees
+    txFees
+    profit
+    vAnchorAddress
+    endInterval
+  }
+}
+
+query GetVAnchorsRelayerFeeEveryDays(
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorRelayerFeeByTokenEveryDays(
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+  ) {
+    id
+    startInterval
+    totalFees
+    txFees
+    profit
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVAnchorRelayerFeeByTokenEveryDays(
+  $tokenSymbol: String!
+  $vAnchorAddress: Bytes!
+  $endInterval: BigInt
+  $startInterval: BigInt
+) {
+  vanchorRelayerFeeByTokenEveryDays(
+    where: {
+      tokenSymbol: $tokenSymbol
+      vAnchorAddress: $vAnchorAddress
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+    }
+  ) {
+    totalFees
+    txFees
+    profit
+    startInterval
+    endInterval
+    vAnchorAddress
+  }
+}
+
+query GetVanchorsRelayerFeeByDateRange(
+  $dateRange: [BigInt!]!
+  $vAnchorAddresses: [Bytes!]!
+) {
+  vanchorRelayerFeeEveryDays(
+    where: {
+      startInterval_in: $dateRange
+      vAnchorAddress_in: $vAnchorAddresses
+    }
+    orderBy: startInterval
+  ) {
+    totalFees
     txFees
     profit
     startInterval

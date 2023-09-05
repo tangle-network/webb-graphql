@@ -9,9 +9,10 @@ import {
 import { ensureToken } from './token';
 import { recordTVL, recordTVL15MinsInterval, recordTVLByDay } from './tvl';
 import {
-  recordRelayerFees,
-  recordRelayerFees15MinsInterval,
-} from './relayerFees';
+  recordRelayerFee,
+  recordRelayerFee15MinsInterval,
+  recordRelayerFeeDayInterval,
+} from './relayerFee';
 import {
   recordDeposit,
   recordDepositLog,
@@ -191,13 +192,20 @@ export const handleTransaction = (event: Insertion): void => {
       }
       const gasPrice = event.transaction.gasPrice;
       const txfee = gasUsed.times(gasPrice);
-      recordRelayerFees(
+      recordRelayerFee(
         newShieldedTx.vanchor,
         tokenAddress,
         externalDataEntity.fee,
         txfee
       );
-      recordRelayerFees15MinsInterval(
+      recordRelayerFee15MinsInterval(
+        newShieldedTx.vanchor,
+        tokenAddress,
+        externalDataEntity.fee,
+        txfee,
+        event.block.timestamp
+      );
+      recordRelayerFeeDayInterval(
         newShieldedTx.vanchor,
         tokenAddress,
         externalDataEntity.fee,

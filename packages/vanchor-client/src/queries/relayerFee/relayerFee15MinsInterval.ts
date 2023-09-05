@@ -3,7 +3,9 @@ import { DateUtil } from '../../utils/date';
 import { SubgraphUrl } from '../../config';
 
 export interface RelayerFeeByChain15MinsIntervalItem {
-  relayerFee: bigint;
+  totalFees: bigint;
+  profit: bigint;
+  txFees: bigint;
   subgraphUrl: SubgraphUrl;
   startInterval: Date;
   endInterval: Date;
@@ -16,7 +18,9 @@ export interface RelayerFeeByChainAndByToken15MinsIntervalItem
 
 export interface RelayerFeeByVAnchor15MinsIntervalItem {
   vAnchorAddress: string;
-  relayerFee: bigint;
+  totalFees: bigint;
+  profit: bigint;
+  txFees: bigint;
 }
 
 const sdk = getBuiltGraphSDK();
@@ -38,13 +42,15 @@ export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
     }
   );
 
-  if (!result.vanchorTotalRelayerFee15Mins?.length) {
+  if (!result.vanchorRelayerFeeEvery15Mins?.length) {
     return [] as Array<RelayerFeeByChain15MinsIntervalItem>;
   }
 
-  return result.vanchorTotalRelayerFee15Mins.map((item) => {
+  return result.vanchorRelayerFeeEvery15Mins.map((item) => {
     return {
-      relayerFee: BigInt(item.fees),
+      totalFees: BigInt(item.totalFees),
+      profit: BigInt(item.profit),
+      txFees: BigInt(item.txFees),
       subgraphUrl: subgraphUrl,
       endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
       startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
@@ -92,31 +98,39 @@ export const GetVAnchorsRelayerFeeByChain15MinsInterval = async (
     }
   );
 
-  if (!result.vanchorTotalRelayerFeeByTokenEvery15Mins?.length) {
+  if (!result.vanchorRelayerFeeByTokenEvery15Mins?.length) {
     return [] as Array<RelayerFeeByVAnchor15MinsIntervalItem>;
   }
 
-  const relayerFeeMap: { [vanchorAddress: string]: bigint } = {};
+  const totalFeesMap: { [vanchorAddress: string]: bigint } = {};
+  const profitMap: { [vanchorAddress: string]: bigint } = {};
+  const txFeesMap: { [vanchorAddress: string]: bigint } = {};
 
-  result.vanchorTotalRelayerFeeByTokenEvery15Mins.map((item) => {
-    if (!relayerFeeMap[item.vAnchorAddress]) {
-      relayerFeeMap[item?.vAnchorAddress] = BigInt(0);
+  result.vanchorRelayerFeeByTokenEvery15Mins.map((item) => {
+    if (!totalFeesMap[item.vAnchorAddress]) {
+      totalFeesMap[item?.vAnchorAddress] = BigInt(0);
+      profitMap[item?.vAnchorAddress] = BigInt(0);
+      txFeesMap[item?.vAnchorAddress] = BigInt(0);
     }
 
-    relayerFeeMap[item.vAnchorAddress] += BigInt(item.fees);
+    totalFeesMap[item.vAnchorAddress] += BigInt(item.totalFees);
+    profitMap[item.vAnchorAddress] += BigInt(item.profit);
+    txFeesMap[item.vAnchorAddress] += BigInt(item.txFees);
   });
 
-  const relayerFeeByVAnchorHistoryItems: Array<RelayerFeeByVAnchor15MinsIntervalItem> =
+  const totalFeesByVAnchorHistoryItems: Array<RelayerFeeByVAnchor15MinsIntervalItem> =
     [];
 
-  for (const key in relayerFeeMap) {
-    relayerFeeByVAnchorHistoryItems.push({
+  for (const key in totalFeesMap) {
+    totalFeesByVAnchorHistoryItems.push({
       vAnchorAddress: key,
-      relayerFee: relayerFeeMap[key],
+      totalFees: totalFeesMap[key],
+      profit: profitMap[key],
+      txFees: txFeesMap[key],
     });
   }
 
-  return relayerFeeByVAnchorHistoryItems;
+  return totalFeesByVAnchorHistoryItems;
 };
 
 export const GetVAnchorsRelayerFeeByChains15MinsInterval = async (
@@ -161,13 +175,15 @@ export const GetVAnchorRelayerFeeByChainAndByToken15MinsInterval = async (
     }
   );
 
-  if (!result.vanchorTotalRelayerFeeByTokenEvery15Mins?.length) {
+  if (!result.vanchorRelayerFeeByTokenEvery15Mins?.length) {
     return [] as Array<RelayerFeeByChainAndByToken15MinsIntervalItem>;
   }
 
-  return result.vanchorTotalRelayerFeeByTokenEvery15Mins.map((item) => {
+  return result.vanchorRelayerFeeByTokenEvery15Mins.map((item) => {
     return {
-      relayerFee: BigInt(item.fees),
+      totalFees: BigInt(item.totalFees),
+      profit: BigInt(item.profit),
+      txFees: BigInt(item.txFees),
       tokenSymbol,
       subgraphUrl: subgraphUrl,
       startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
