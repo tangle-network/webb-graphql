@@ -22,6 +22,9 @@ export default function recordRelayerFee15MinsInterval(
     vAnchorAddress.toHexString() +
     '-' +
     tokenAddress.toHexString();
+
+  const profit = totalFees.gt(txFees) ? totalFees.minus(txFees) : new BigInt(0);
+
   const vanchorRelayerFeeByToken = VAnchorRelayerFeeByTokenEvery15Min.load(id);
 
   if (!vanchorRelayerFeeByToken) {
@@ -30,7 +33,7 @@ export default function recordRelayerFee15MinsInterval(
     );
     newVanchorRelayerFeeByToken.totalFees = totalFees;
     newVanchorRelayerFeeByToken.txFees = txFees;
-    newVanchorRelayerFeeByToken.profit = totalFees.minus(txFees);
+    newVanchorRelayerFeeByToken.profit = profit;
     newVanchorRelayerFeeByToken.vAnchorAddress = vAnchorAddress;
     newVanchorRelayerFeeByToken.tokenSymbol = getTokenSymbol(tokenAddress);
     newVanchorRelayerFeeByToken.tokenAddress = tokenAddress;
@@ -46,9 +49,8 @@ export default function recordRelayerFee15MinsInterval(
       vanchorRelayerFeeByToken.totalFees.plus(totalFees);
     vanchorRelayerFeeByToken.txFees =
       vanchorRelayerFeeByToken.txFees.plus(txFees);
-    vanchorRelayerFeeByToken.profit = vanchorRelayerFeeByToken.profit.plus(
-      totalFees.minus(txFees)
-    );
+    vanchorRelayerFeeByToken.profit =
+      vanchorRelayerFeeByToken.profit.plus(profit);
     vanchorRelayerFeeByToken.save();
   }
 
@@ -68,14 +70,12 @@ export default function recordRelayerFee15MinsInterval(
     newVanchorRelayerFee.vAnchorAddress = vAnchorAddress;
     newVanchorRelayerFee.totalFees = totalFees;
     newVanchorRelayerFee.txFees = txFees;
-    newVanchorRelayerFee.profit = totalFees.minus(txFees);
+    newVanchorRelayerFee.profit = profit;
     newVanchorRelayerFee.save();
   } else {
     vanchorRelayerFee.totalFees = vanchorRelayerFee.totalFees.plus(totalFees);
     vanchorRelayerFee.txFees = vanchorRelayerFee.txFees.plus(txFees);
-    vanchorRelayerFee.profit = vanchorRelayerFee.profit.plus(
-      totalFees.minus(txFees)
-    );
+    vanchorRelayerFee.profit = vanchorRelayerFee.profit.plus(profit);
     vanchorRelayerFee.save();
   }
 }

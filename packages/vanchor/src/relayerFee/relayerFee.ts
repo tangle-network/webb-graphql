@@ -14,11 +14,13 @@ export default function recordRelayerFee(
   const id = vAnchorAddress.toHexString() + '-' + tokenAddress.toHexString();
   const vanchorRelayerFeeByToken = VAnchorRelayerFeeByToken.load(id);
 
+  const profit = totalFees.gt(txFees) ? totalFees.minus(txFees) : new BigInt(0);
+
   if (!vanchorRelayerFeeByToken) {
     const newVanchorRelayerFeeByToken = new VAnchorRelayerFeeByToken(id);
     newVanchorRelayerFeeByToken.totalFees = totalFees;
     newVanchorRelayerFeeByToken.txFees = txFees;
-    newVanchorRelayerFeeByToken.profit = totalFees.minus(txFees);
+    newVanchorRelayerFeeByToken.profit = profit;
     newVanchorRelayerFeeByToken.vAnchorAddress = vAnchorAddress;
     newVanchorRelayerFeeByToken.tokenSymbol = getTokenSymbol(tokenAddress);
     newVanchorRelayerFeeByToken.tokenAddress = tokenAddress;
@@ -28,9 +30,8 @@ export default function recordRelayerFee(
       vanchorRelayerFeeByToken.totalFees.plus(totalFees);
     vanchorRelayerFeeByToken.txFees =
       vanchorRelayerFeeByToken.txFees.plus(txFees);
-    vanchorRelayerFeeByToken.profit = vanchorRelayerFeeByToken.profit.plus(
-      totalFees.minus(txFees)
-    );
+    vanchorRelayerFeeByToken.profit =
+      vanchorRelayerFeeByToken.profit.plus(profit);
     vanchorRelayerFeeByToken.save();
   }
 
@@ -45,14 +46,12 @@ export default function recordRelayerFee(
     );
     newVanchorRelayerFee.totalFees = totalFees;
     newVanchorRelayerFee.txFees = txFees;
-    newVanchorRelayerFee.profit = totalFees.minus(txFees);
+    newVanchorRelayerFee.profit = profit;
     newVanchorRelayerFee.save();
   } else {
     vanchorRelayerFee.totalFees = vanchorRelayerFee.totalFees.plus(totalFees);
     vanchorRelayerFee.txFees = vanchorRelayerFee.txFees.plus(txFees);
-    vanchorRelayerFee.profit = vanchorRelayerFee.profit.plus(
-      totalFees.minus(txFees)
-    );
+    vanchorRelayerFee.profit = profit;
     vanchorRelayerFee.save();
   }
 }

@@ -9212,7 +9212,7 @@ const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
 const vanchorTransforms = [];
 const vanchorHandler = new GraphqlHandler({
               name: "vanchor",
-              config: {"endpoint":"{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorOrbitAthena}"},
+              config: {"endpoint":"{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}"},
               baseDir,
               cache,
               pubsub,

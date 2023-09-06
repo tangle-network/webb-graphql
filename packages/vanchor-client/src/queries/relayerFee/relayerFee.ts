@@ -121,14 +121,14 @@ export const GetVAnchorRelayerFeeByChainAndByToken = async (
 
   return {
     totalFees: !result.vanchorRelayerFeeByTokens?.length
-      ? BigInt(result.vanchorRelayerFeeByTokens[0].totalFees)
-      : null,
+      ? null
+      : BigInt(result.vanchorRelayerFeeByTokens[0].totalFees),
     profit: !result.vanchorRelayerFeeByTokens?.length
-      ? BigInt(result.vanchorRelayerFeeByTokens[0].profit)
-      : null,
+      ? null
+      : BigInt(result.vanchorRelayerFeeByTokens[0].profit),
     txFees: !result.vanchorRelayerFeeByTokens?.length
-      ? BigInt(result.vanchorRelayerFeeByTokens[0].txFees)
-      : null,
+      ? null
+      : BigInt(result.vanchorRelayerFeeByTokens[0].txFees),
     subgraphUrl: subgraphUrl,
     tokenSymbol: tokenSymbol,
   };
