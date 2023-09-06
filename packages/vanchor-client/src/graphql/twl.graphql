@@ -1,34 +1,31 @@
-query GetVAnchorWithdrawal($vAnchorAddress: ID!) {
-  vanchorWithdrawal(id: $vAnchorAddress) {
-    withdrawal
+query GetVAnchorTWL($vAnchorAddress: ID!) {
+  vanchorTWL(id: $vAnchorAddress) {
+    total
   }
 }
 
-query GetVAnchorsWithdrawals($vAnchorAddresses: [String!]!) {
-  vanchorWithdrawals(where: { id_in: $vAnchorAddresses }) {
+query GetVAnchorTWLs($vAnchorAddresses: [String!]!) {
+  vanchorTWLs(where: { id_in: $vAnchorAddresses }) {
     id
-    withdrawal
+    total
   }
 }
 
-query GetVAnchorWithdrawalByTokens(
-  $tokenSymbol: String!
-  $vAnchorAddress: Bytes!
-) {
-  vanchorWithdrawalByTokens(
+query GetVAnchorTWLByTokens($tokenSymbol: String!, $vAnchorAddress: Bytes!) {
+  vanchorTWLByTokens(
     first: 1
     where: { tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress }
   ) {
-    withdrawal
+    total
   }
 }
 
-query GetVAnchorWithdrawalEvery15Mins(
+query GetVAnchorTWLEvery15Mins(
   $endInterval: BigInt!
   $startInterval: BigInt!
   $vAnchorAddress: Bytes!
 ) {
-  vanchorWithdrawalEvery15Mins(
+  vanchorTWLEvery15Mins(
     where: {
       endInterval_lte: $endInterval
       startInterval_gte: $startInterval
@@ -36,18 +33,18 @@ query GetVAnchorWithdrawalEvery15Mins(
     }
   ) {
     startInterval
-    withdrawal
+    total
     vAnchorAddress
     endInterval
   }
 }
 
-query GetVAnchorsWithdrawalEvery15Mins(
+query GetVAnchorsTWLEvery15Mins(
   $endInterval: BigInt!
   $startInterval: BigInt!
   $vAnchorAddresses: [Bytes!]!
 ) {
-  vanchorWithdrawalEvery15Mins(
+  vanchorTWLEvery15Mins(
     where: {
       endInterval_lte: $endInterval
       startInterval_gte: $startInterval
@@ -56,19 +53,19 @@ query GetVAnchorsWithdrawalEvery15Mins(
   ) {
     id
     startInterval
-    withdrawal
+    total
     endInterval
     vAnchorAddress
   }
 }
 
-query GetVAnchorWithdrawalByTokenEvery15Mins(
+query GetVAnchorTWLByTokenEvery15Mins(
   $tokenSymbol: String!
   $vAnchorAddress: Bytes!
   $endInterval: BigInt!
   $startInterval: BigInt!
 ) {
-  vanchorWithdrawalByTokenEvery15Mins(
+  vanchorTWLByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
@@ -76,19 +73,19 @@ query GetVAnchorWithdrawalByTokenEvery15Mins(
       startInterval_gte: $startInterval
     }
   ) {
-    withdrawal
+    total
     startInterval
     endInterval
     vAnchorAddress
   }
 }
 
-query GetVAnchorWithdrawalEveryDays(
+query GetVAnchorTWLEveryDays(
   $endInterval: BigInt!
   $startInterval: BigInt!
   $vAnchorAddress: Bytes!
 ) {
-  vanchorWithdrawalEveryDays(
+  vanchorTWLEveryDays(
     where: {
       endInterval_lte: $endInterval
       startInterval_gte: $startInterval
@@ -96,18 +93,18 @@ query GetVAnchorWithdrawalEveryDays(
     }
   ) {
     startInterval
-    withdrawal
+    total
     vAnchorAddress
     endInterval
   }
 }
 
-query GetVAnchorsWithdrawalEveryDays(
+query GetVAnchorsTWLEveryDays(
   $endInterval: BigInt!
   $startInterval: BigInt!
   $vAnchorAddresses: [Bytes!]!
 ) {
-  vanchorWithdrawalEveryDays(
+  vanchorTWLEveryDays(
     where: {
       endInterval_lte: $endInterval
       startInterval_gte: $startInterval
@@ -116,19 +113,19 @@ query GetVAnchorsWithdrawalEveryDays(
   ) {
     id
     startInterval
-    withdrawal
+    total
     endInterval
     vAnchorAddress
   }
 }
 
-query GetVAnchorWithdrawalByTokenEveryDays(
+query GetVAnchorTWLByTokenEveryDays(
   $tokenSymbol: String!
   $vAnchorAddress: Bytes!
   $endInterval: BigInt!
   $startInterval: BigInt!
 ) {
-  vanchorWithdrawalByTokenEveryDays(
+  vanchorTWLByTokenEveryDays(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
@@ -136,40 +133,41 @@ query GetVAnchorWithdrawalByTokenEveryDays(
       startInterval_gte: $startInterval
     }
   ) {
-    withdrawal
+    total
     startInterval
     endInterval
     vAnchorAddress
   }
 }
 
-query GetVanchorWithdrawalByDateRange(
+query GetVAnchorTWLByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddress: Bytes!
 ) {
-  vanchorWithdrawalEveryDays(
+  vanchorTWLEveryDays(
     where: { startInterval_in: $dateRange, vAnchorAddress: $vAnchorAddress }
     orderBy: startInterval
   ) {
-    withdrawal
+    total
     vAnchorAddress
     startInterval
     endInterval
   }
 }
 
-query GetVanchorsWithdrawalByDateRange(
+
+query GetVAnchorsTWLByDateRange(
   $dateRange: [BigInt!]!
   $vAnchorAddresses: [Bytes!]!
 ) {
-  vanchorWithdrawalEveryDays(
+  vanchorTWLEveryDays(
     where: {
       startInterval_in: $dateRange
       vAnchorAddress_in: $vAnchorAddresses
     }
     orderBy: startInterval
   ) {
-    withdrawal
+    total
     vAnchorAddress
     startInterval
     endInterval

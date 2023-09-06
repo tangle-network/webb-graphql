@@ -7,7 +7,6 @@ export interface WithdrawalByChainDayIntervalItem {
   withdrawal: bigint;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface WithdrawalByChainAndByTokenDayIntervalItem
@@ -31,7 +30,7 @@ export const GetVAnchorWithdrawalByChainDayInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<WithdrawalByChainDayIntervalItem | null> => {
+): Promise<Array<WithdrawalByChainDayIntervalItem>> => {
   const result = await sdk.GetVAnchorWithdrawalEveryDays(
     {
       startInterval: DateUtil.fromDateToEpoch(startInterval),
@@ -43,19 +42,18 @@ export const GetVAnchorWithdrawalByChainDayInterval = async (
     }
   );
 
-  if (result.vanchorWithdrawalEveryDays?.[0]?.withdrawal === undefined) {
-    return null;
+  if (!result.vanchorWithdrawalEveryDays?.length) {
+    return [] as Array<WithdrawalByChainDayIntervalItem>;
   }
 
-  const item = result.vanchorWithdrawalEveryDays[0];
-
-  return {
-    withdrawal: BigInt(item.withdrawal),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorWithdrawalEveryDays.map((item) => {
+    return {
+      withdrawal: BigInt(item.withdrawal),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorWithdrawalByChainsDayInterval = async (
@@ -63,8 +61,8 @@ export const GetVAnchorWithdrawalByChainsDayInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<WithdrawalByChainDayIntervalItem | null>> => {
-  const promises: Array<Promise<WithdrawalByChainDayIntervalItem | null>> = [];
+): Promise<Array<Array<WithdrawalByChainDayIntervalItem>>> => {
+  const promises: Array<Promise<Array<WithdrawalByChainDayIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -203,6 +201,64 @@ export const GetVAnchorWithdrawalByChainsAndByTokenDayInterval = async (
         tokenSymbol,
         startInterval,
         endInterval
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
+export const GetVAnchorWithdrawalByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<WithdrawalVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVanchorWithdrawalByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddress: vAnchorAddress,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorWithdrawalEveryDays?.length) {
+    return {} as WithdrawalVAnchorsDateRangeItem;
+  }
+
+  const withdrawalMapByDate: WithdrawalVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    withdrawalMapByDate[date.toString()] = BigInt(0);
+  }
+
+  result.vanchorWithdrawalEveryDays.forEach((item) => {
+    withdrawalMapByDate[item.startInterval.toString()] += BigInt(
+      item.withdrawal
+    );
+  });
+
+  return withdrawalMapByDate;
+};
+
+export const GetVAnchorWithdrawalByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<WithdrawalVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<WithdrawalVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorWithdrawalByChainByDateRange(
+        subgraphUrl,
+        vanchorAddress,
+        epochStart,
+        numberOfDays
       )
     );
   }

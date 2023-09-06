@@ -156,74 +156,163 @@ type VAnchorTotalValueLockedByTokenEveryDay @entity(immutable: false) {
   totalValueLocked: BigInt! # total value locked in the vAnchor
 }
 
-type VAnchorTotalRelayerFee @entity(immutable: false) {
+type VAnchorTWL @entity(immutable: false) {
   id: String! # vAnchor address
-  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  total: BigInt! # twl in the vAnchor
+}
+
+type VAnchorTWLByToken @entity(immutable: false) {
+  id: String! # vAnchor address + token address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  total: BigInt! # twl in the vAnchor
+}
+
+type VAnchorTWLEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # twl in the vAnchor
+}
+
+type VAnchorTWLByTokenEvery15Min @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # twl in the vAnchor
+}
+
+type VAnchorTWLEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # twl in the vAnchor
+}
+
+type VAnchorTWLByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  total: BigInt! # twl in the vAnchor
+}
+
+type VAnchorRelayerFee @entity(immutable: false) {
+  id: String! # vAnchor address
+  totalFees: BigInt! # Total Fees (txFee + relayerProfit)
   txFees: BigInt! # Network Fees
   profit: BigInt! # Relayer's Profit
 }
 
-type VAnchorTotalRelayerFeeByToken @entity(immutable: false) {
+type VAnchorRelayerFeeByToken @entity(immutable: false) {
   id: String! # vAnchor address + token address
   vAnchorAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   tokenAddress: Bytes! # address
-  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  totalFees: BigInt! # Total Fees (txFee + relayerProfit)
   txFees: BigInt! # Network Fees
   profit: BigInt! # Relayer's Profit
 }
 
-type VAnchorTotalRelayerFee15Min @entity(immutable: false) {
+type VAnchorRelayerFeeEvery15Min @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  totalFees: BigInt! # Total Fees (txFee + relayerProfit)
   txFees: BigInt! # Network Fees
   profit: BigInt! # Relayer's Profit
 }
 
-type VAnchorTotalRelayerFeeByTokenEvery15Min @entity(immutable: false) {
+type VAnchorRelayerFeeByTokenEvery15Min @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  fees: BigInt! # Total Fees (txFee + relayerProfit)
+  totalFees: BigInt! # Total Fees (txFee + relayerProfit)
   txFees: BigInt! # Network Fees
   profit: BigInt! # Relayer's Profit
 }
 
-type VAnchorTotalWrappingFee @entity(immutable: false) {
-  id: String! # vAnchor address
-  fees: BigInt! # total value locked in the vAnchor
+type VAnchorRelayerFeeEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  totalFees: BigInt! # Total Fees (txFee + relayerProfit)
+  txFees: BigInt! # Network Fees
+  profit: BigInt! # Relayer's Profit
 }
 
-type VAnchorTotalWrappingFeeByToken @entity(immutable: false) {
+type VAnchorRelayerFeeByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  totalFees: BigInt! # Total Fees (txFee + relayerProfit)
+  txFees: BigInt! # Network Fees
+  profit: BigInt! # Relayer's Profit
+}
+
+type VAnchorWrappingFee @entity(immutable: false) {
+  id: String! # vAnchor address
+  fees: BigInt! # total wrapping fee in the vAnchor
+}
+
+type VAnchorWrappingFeeByToken @entity(immutable: false) {
   id: String! # vAnchor address + token address
   vAnchorAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   tokenAddress: Bytes! # address
-  fees: BigInt! # total value locked in the vAnchor
+  fees: BigInt! # total wrapping fee in the vAnchor
 }
 
-type VAnchorTotalWrappingFee15Min @entity(immutable: false) {
+type VAnchorWrappingFeeEvery15Min @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  fees: BigInt! # total value locked in the vAnchor
+  fees: BigInt! # total wrapping fee in the vAnchor
 }
 
-type VAnchorTotalWrappingFeeByTokenEvery15Min @entity(immutable: false) {
+type VAnchorWrappingFeeByTokenEvery15Min @entity(immutable: false) {
   id: String! # time index-vanchor address
   vAnchorAddress: Bytes! # address
   tokenAddress: Bytes! # address
   tokenSymbol: String! # token symbol
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
-  fees: BigInt! # total value locked in the vAnchor
+  fees: BigInt! # total wrapping fee in the vAnchor
+}
+
+type VAnchorWrappingFeeEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  fees: BigInt! # total wrapping fee in the vAnchor
+}
+
+type VAnchorWrappingFeeByTokenEveryDay @entity(immutable: false) {
+  id: String! # time index-vanchor address
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  startInterval: BigInt! # start time of the interval
+  endInterval: BigInt! # end time of the interval
+  fees: BigInt! # total wrapping fee in the vAnchor
 }
 
 type WrappingEventLog @entity(immutable: true) {
@@ -299,8 +388,8 @@ type VAnchorWithdrawalEveryDay @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   withdrawal: BigInt! # withdrawal in the vAnchor
-  averageWithdrawal: BigInt! # average deposit in the vAnchor
-  totalCount: BigInt! # total count of deposit
+  averageWithdrawal: BigInt! # average withdrawal in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorWithdrawalByTokenEveryDay @entity(immutable: false) {
@@ -311,8 +400,8 @@ type VAnchorWithdrawalByTokenEveryDay @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   withdrawal: BigInt! # withdrawal in the vAnchor
-  averageWithdrawal: BigInt! # average deposit in the vAnchor
-  totalCount: BigInt! # total count of deposit
+  averageWithdrawal: BigInt! # average withdrawal in the vAnchor
+  totalCount: BigInt! # total count of withdrawal
 }
 
 type VAnchorDeposit @entity(immutable: false) {

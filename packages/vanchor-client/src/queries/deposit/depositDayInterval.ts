@@ -7,7 +7,6 @@ export interface DepositByChainDayIntervalItem {
   deposit: bigint;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface DepositByChainAndByTokenDayIntervalItem
@@ -31,7 +30,7 @@ export const GetVAnchorDepositByChainDayInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<DepositByChainDayIntervalItem | null> => {
+): Promise<Array<DepositByChainDayIntervalItem>> => {
   const result = await sdk.GetVAnchorDepositEveryDays(
     {
       startInterval: DateUtil.fromDateToEpoch(startInterval),
@@ -43,19 +42,18 @@ export const GetVAnchorDepositByChainDayInterval = async (
     }
   );
 
-  if (result.vanchorDepositEveryDays?.[0]?.deposit === undefined) {
-    return null;
+  if (!result.vanchorDepositEveryDays?.length) {
+    return [] as Array<DepositByChainDayIntervalItem>;
   }
 
-  const item = result.vanchorDepositEveryDays[0];
-
-  return {
-    deposit: BigInt(item.deposit),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorDepositEveryDays.map((item) => {
+    return {
+      deposit: BigInt(item.deposit),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorDepositByChainsDayInterval = async (
@@ -63,8 +61,8 @@ export const GetVAnchorDepositByChainsDayInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<DepositByChainDayIntervalItem | null>> => {
-  const promises: Array<Promise<DepositByChainDayIntervalItem | null>> = [];
+): Promise<Array<Array<DepositByChainDayIntervalItem>>> => {
+  const promises: Array<Promise<Array<DepositByChainDayIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
@@ -202,6 +200,62 @@ export const GetVAnchorDepositByChainsAndByTokenDayInterval = async (
         tokenSymbol,
         startInterval,
         endInterval
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
+export const GetVAnchorDepositByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<DepositVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVAnchorDepositByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddress: vanchorAddress,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorDepositEveryDays?.length) {
+    return {} as DepositVAnchorsDateRangeItem;
+  }
+
+  const depositMapByDate: DepositVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    depositMapByDate[date.toString()] = BigInt(0);
+  }
+
+  result.vanchorDepositEveryDays.forEach((item) => {
+    depositMapByDate[item.startInterval.toString()] += BigInt(item.deposit);
+  });
+
+  return depositMapByDate;
+};
+
+export const GetVAnchorDepositByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vanchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<DepositVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<DepositVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorDepositByChainByDateRange(
+        subgraphUrl,
+        vanchorAddress,
+        epochStart,
+        numberOfDays
       )
     );
   }

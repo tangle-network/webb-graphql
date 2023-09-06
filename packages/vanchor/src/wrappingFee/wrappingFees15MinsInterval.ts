@@ -1,12 +1,12 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
-  VAnchorTotalWrappingFeeByTokenEvery15Min,
-  VAnchorTotalWrappingFee15Min,
+  VAnchorWrappingFeeByTokenEvery15Min,
+  VAnchorWrappingFeeEvery15Min,
 } from '../../generated/schema';
 import { getStartInterval15Mins, getEndInterval15Mins } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
-export default function recordWrappingFees15MinsInterval(
+export default function recordWrappingFee15MinsInterval(
   vAnchorAddress: Bytes,
   tokenAddress: Bytes,
   fees: BigInt,
@@ -21,12 +21,10 @@ export default function recordWrappingFees15MinsInterval(
     vAnchorAddress.toHexString() +
     '-' +
     tokenAddress.toHexString();
-  const vanchorFeeByToken = VAnchorTotalWrappingFeeByTokenEvery15Min.load(id);
+  const vanchorFeeByToken = VAnchorWrappingFeeByTokenEvery15Min.load(id);
 
   if (!vanchorFeeByToken) {
-    const newVanchorFeeByToken = new VAnchorTotalWrappingFeeByTokenEvery15Min(
-      id
-    );
+    const newVanchorFeeByToken = new VAnchorWrappingFeeByTokenEvery15Min(id);
     newVanchorFeeByToken.fees = fees;
     newVanchorFeeByToken.vAnchorAddress = vAnchorAddress;
     newVanchorFeeByToken.tokenSymbol = getTokenSymbol(tokenAddress);
@@ -46,10 +44,10 @@ export default function recordWrappingFees15MinsInterval(
   // Update the total value locked for vanchor
   const recordId =
     startInterval.toString() + '-' + vAnchorAddress.toHexString();
-  const vanchorFee = VAnchorTotalWrappingFee15Min.load(recordId);
+  const vanchorFee = VAnchorWrappingFeeEvery15Min.load(recordId);
 
   if (!vanchorFee) {
-    const newVanchorFee = new VAnchorTotalWrappingFee15Min(recordId);
+    const newVanchorFee = new VAnchorWrappingFeeEvery15Min(recordId);
     newVanchorFee.startInterval = BigInt.fromString(startInterval.toString());
     newVanchorFee.endInterval = BigInt.fromString(endInterval.toString());
     newVanchorFee.vAnchorAddress = vAnchorAddress;

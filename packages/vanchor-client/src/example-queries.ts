@@ -3,30 +3,50 @@ import {
   GetVAnchorsTVLByChainsByDateRange,
   GetVAnchorsTotalValueLockedByChains,
 } from './queries/tvl';
-import { GetVAnchorsDepositByChainsByDateRange } from './queries/deposit';
+import { GetVAnchorTWLByChainAndByToken } from './queries/twl';
 import {
-  GetVAnchorsVolumeByChains,
-  GetVAnchorsVolumeByChains15MinsInterval,
-} from './queries/volume';
-import { GetVAnchorsTotalRelayerFeeByChains } from './queries/relayerFee';
-import { GetVAnchorsTotalWrappingFeeByChains } from './queries/wrappingFee';
+  GetVAnchorsDepositByChains,
+  GetVAnchorsDepositByChains15MinsInterval,
+  GetVAnchorsDepositByChainsByDateRange,
+  GetVAnchorDepositByChainAndByToken15MinsInterval,
+} from './queries/deposit';
+import {
+  GetVAnchorsWithdrawalByChainsByDateRange,
+  GetVAnchorWithdrawalByChainAndByToken15MinsInterval,
+} from './queries/withdrawal';
+import {
+  GetVAnchorsRelayerFeeByChains,
+  GetVAnchorRelayerFeeByChainAndByToken,
+} from './queries/relayerFee';
+import {
+  GetVAnchorWrappingFeeByChainAndByToken,
+  GetVAnchorsWrappingFeeByChains,
+} from './queries/wrappingFee';
 import { DateUtil } from './utils/date';
 
-const vAnchorAddress = '0x91eb86019fd8d7c5a9e31143d422850a13f670a3';
+const epochStart = 1692057600;
+const vAnchorAddress = '0x91eB86019FD8D7c5a9E31143D422850A13F670A3';
 const subgraphUrl = SubgraphUrl.vAnchorAthenaLocal;
+const subgraphUrl1 = SubgraphUrl.vAnchorDemeterLocal;
+const tokenSymbol = 'ETH';
 
 async function main() {
-  const epochStart = 1692057600;
+  await getPoolOverviewTableData();
+  await getPoolWrappingTableData();
+}
 
-  // query for Overview Chips
+async function getOverviewChipsData() {
   console.log(
     await GetVAnchorsTotalValueLockedByChains([subgraphUrl], [vAnchorAddress])
   );
-  console.log(await GetVAnchorsVolumeByChains([subgraphUrl], [vAnchorAddress]));
-
-  // query for Overview Charts
   console.log(
-    await GetVAnchorsVolumeByChains15MinsInterval(
+    await GetVAnchorsDepositByChains([subgraphUrl], [vAnchorAddress])
+  );
+}
+
+async function getOverviewChartsData() {
+  console.log(
+    await GetVAnchorsDepositByChains15MinsInterval(
       [subgraphUrl],
       [vAnchorAddress],
       DateUtil.fromEpochToDate(
@@ -51,13 +71,74 @@ async function main() {
       3
     )
   );
-
-  // query for Key Metric Table
   console.log(
-    await GetVAnchorsTotalRelayerFeeByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsWithdrawalByChainsByDateRange(
+      [subgraphUrl],
+      [vAnchorAddress],
+      epochStart,
+      3
+    )
+  );
+}
+
+async function getKeyMetricData() {
+  console.log(
+    await GetVAnchorsRelayerFeeByChains([subgraphUrl], [vAnchorAddress])
   );
   console.log(
-    await GetVAnchorsTotalWrappingFeeByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsWrappingFeeByChains([subgraphUrl], [vAnchorAddress])
+  );
+}
+
+async function getPoolOverviewTableData() {
+  console.log(
+    await GetVAnchorDepositByChainAndByToken15MinsInterval(
+      subgraphUrl,
+      vAnchorAddress,
+      tokenSymbol,
+      DateUtil.fromEpochToDate(
+        DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
+      ),
+      DateUtil.fromEpochToDate(DateUtil.fromDateToEpoch(new Date()))
+    )
+  );
+
+  console.log(
+    await GetVAnchorWithdrawalByChainAndByToken15MinsInterval(
+      subgraphUrl1,
+      vAnchorAddress,
+      tokenSymbol,
+      DateUtil.fromEpochToDate(
+        DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
+      ),
+      DateUtil.fromEpochToDate(DateUtil.fromDateToEpoch(new Date()))
+    )
+  );
+
+  console.log(
+    await GetVAnchorRelayerFeeByChainAndByToken(
+      subgraphUrl,
+      vAnchorAddress,
+      tokenSymbol
+    )
+  );
+}
+
+async function getPoolWrappingTableData() {
+  console.log(
+    await GetVAnchorTWLByChainAndByToken(
+      subgraphUrl,
+      vAnchorAddress,
+      tokenSymbol
+    )
+  );
+
+  console.log(
+    await GetVAnchorWrappingFeeByChainAndByToken(
+      subgraphUrl,
+      vAnchorAddress,
+      tokenSymbol
+    )
   );
 }
 

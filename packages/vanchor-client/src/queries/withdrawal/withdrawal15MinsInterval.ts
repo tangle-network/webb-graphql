@@ -7,7 +7,6 @@ export interface WithdrawalByChain15MinsIntervalItem {
   withdrawal: bigint | null;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface WithdrawalByChainAndByToken15MinsIntervalItem
@@ -27,7 +26,7 @@ export const GetVAnchorWithdrawalByChain15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<WithdrawalByChain15MinsIntervalItem | null> => {
+): Promise<Array<WithdrawalByChain15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorWithdrawalEvery15Mins(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
@@ -39,19 +38,18 @@ export const GetVAnchorWithdrawalByChain15MinsInterval = async (
     }
   );
 
-  if (result.vanchorWithdrawalEvery15Mins?.[0]?.withdrawal === undefined) {
-    return null;
+  if (!result.vanchorWithdrawalEvery15Mins?.length) {
+    return [] as Array<WithdrawalByChain15MinsIntervalItem>;
   }
 
-  const item = result.vanchorWithdrawalEvery15Mins[0];
-
-  return {
-    withdrawal: BigInt(item.withdrawal),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorWithdrawalEvery15Mins.map((item) => {
+    return {
+      withdrawal: BigInt(item.withdrawal),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorWithdrawalByChains15MinsInterval = async (
@@ -59,8 +57,8 @@ export const GetVAnchorWithdrawalByChains15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<WithdrawalByChain15MinsIntervalItem | null>> => {
-  const promises: Array<Promise<WithdrawalByChain15MinsIntervalItem | null>> =
+): Promise<Array<Array<WithdrawalByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<WithdrawalByChain15MinsIntervalItem>>> =
     [];
 
   for (const subgraphUrl of subgraphUrls) {

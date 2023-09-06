@@ -7,7 +7,6 @@ export interface TotalValueLockedByChainDayIntervalItem {
   totalValueLocked: bigint;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface TotalValueLockedByChainAndByTokenDayIntervalItem
@@ -31,7 +30,7 @@ export const GetVAnchorTotalValueLockedByChainDayInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<TotalValueLockedByChainDayIntervalItem | null> => {
+): Promise<Array<TotalValueLockedByChainDayIntervalItem>> => {
   const result = await sdk.GetVAnchorTotalValueLockedEveryDays(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
@@ -43,21 +42,18 @@ export const GetVAnchorTotalValueLockedByChainDayInterval = async (
     }
   );
 
-  if (
-    result.vanchorTotalValueLockedEveryDays?.[0]?.totalValueLocked === undefined
-  ) {
-    return null;
+  if (!result.vanchorTotalValueLockedEveryDays?.length) {
+    return [] as Array<TotalValueLockedByChainDayIntervalItem>;
   }
 
-  const item = result.vanchorTotalValueLockedEveryDays[0];
-
-  return {
-    totalValueLocked: BigInt(item.totalValueLocked),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorTotalValueLockedEveryDays.map((item) => {
+    return {
+      totalValueLocked: BigInt(item.totalValueLocked),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorTotalValueLockedByChainsDayInterval = async (
@@ -65,9 +61,9 @@ export const GetVAnchorTotalValueLockedByChainsDayInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<TotalValueLockedByChainDayIntervalItem | null>> => {
+): Promise<Array<Array<TotalValueLockedByChainDayIntervalItem>>> => {
   const promises: Array<
-    Promise<TotalValueLockedByChainDayIntervalItem | null>
+    Promise<Array<TotalValueLockedByChainDayIntervalItem>>
   > = [];
 
   for (const subgraphUrl of subgraphUrls) {
@@ -215,6 +211,71 @@ export const GetVAnchorTotalValueLockedByChainsAndByTokenDayInterval = async (
   return await Promise.all(promises);
 };
 
+export const GetVAnchorTVLByChainByDateRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<TVLVAnchorsDateRangeItem> => {
+  const dates = getEpochArray(epochStart, numberOfDays);
+  const result = await sdk.GetVAnchorTotalValueLockedByDateRange(
+    {
+      dateRange: dates.map((date) => date.toString()),
+      vAnchorAddress: vAnchorAddress,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorTotalValueLockedEveryDays?.length) {
+    return {} as TVLVAnchorsDateRangeItem;
+  }
+
+  const tvlMapByDate: TVLVAnchorsDateRangeItem = {};
+
+  for (const date of dates) {
+    tvlMapByDate[date.toString()] = BigInt(0);
+  }
+
+  result.vanchorTotalValueLockedEveryDays.forEach((item) => {
+    tvlMapByDate[item.startInterval.toString()] += BigInt(
+      item.totalValueLocked
+    );
+  });
+
+  // if no tvl update in a day, it will be equal to the previous day
+  for (let i = 1; i < dates.length; i++) {
+    if (tvlMapByDate[dates[i]] === BigInt(0)) {
+      tvlMapByDate[dates[i]] = tvlMapByDate[dates[i - 1]];
+    }
+  }
+
+  return tvlMapByDate;
+};
+
+export const GetVAnchorTVLByChainsByDateRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vAnchorAddress: string,
+  epochStart: number,
+  numberOfDays: number
+): Promise<Array<TVLVAnchorsDateRangeItem>> => {
+  const promises: Array<Promise<TVLVAnchorsDateRangeItem>> = [];
+
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorTVLByChainByDateRange(
+        subgraphUrl,
+        vAnchorAddress,
+        epochStart,
+        numberOfDays
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
 export const GetVAnchorsTVLByChainByDateRange = async (
   subgraphUrl: SubgraphUrl,
   vanchorAddresses: Array<string>,
@@ -222,7 +283,7 @@ export const GetVAnchorsTVLByChainByDateRange = async (
   numberOfDays: number
 ): Promise<TVLVAnchorsDateRangeItem> => {
   const dates = getEpochArray(epochStart, numberOfDays);
-  const result = await sdk.GetVAnchorsTotalValueLockedByDateRangeEveryDays(
+  const result = await sdk.GetVAnchorsTotalValueLockedByDateRange(
     {
       vAnchorAddresses: vanchorAddresses.map((address) =>
         address.toLowerCase()

@@ -7,7 +7,6 @@ export interface VolumeByChain15MinsIntervalItem {
   volume: bigint;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface VolumeByChainAndByToken15MinsIntervalItem
@@ -27,7 +26,7 @@ export const GetVAnchorVolumeByChain15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<VolumeByChain15MinsIntervalItem | null> => {
+): Promise<Array<VolumeByChain15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorVolumeEvery15Mins(
     {
       startInterval: DateUtil.fromDateToEpoch(startInterval),
@@ -39,19 +38,18 @@ export const GetVAnchorVolumeByChain15MinsInterval = async (
     }
   );
 
-  if (result.vanchorVolumeEvery15Mins?.[0]?.volume === undefined) {
-    return null;
+  if (!result.vanchorVolumeEvery15Mins?.length) {
+    return [] as Array<VolumeByChain15MinsIntervalItem>;
   }
 
-  const item = result.vanchorVolumeEvery15Mins[0];
-
-  return {
-    volume: BigInt(item.volume),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorVolumeEvery15Mins.map((item) => {
+    return {
+      volume: BigInt(item.volume),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorVolumeByChains15MinsInterval = async (
@@ -59,8 +57,8 @@ export const GetVAnchorVolumeByChains15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<VolumeByChain15MinsIntervalItem | null>> => {
-  const promises: Array<Promise<VolumeByChain15MinsIntervalItem | null>> = [];
+): Promise<Array<Array<VolumeByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<VolumeByChain15MinsIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(

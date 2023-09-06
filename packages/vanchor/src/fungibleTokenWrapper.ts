@@ -3,9 +3,15 @@ import {
   Unwrapping as UnwrappingEvent,
 } from '../generated/vanchor/FungibleTokenWrapper';
 import {
-  recordWrappingFees,
-  recordWrappingFees15MinsInterval,
-} from './wrappingFees';
+  recordWrappingFee,
+  recordWrappingFee15MinsInterval,
+  recordWrappingFeeDayInterval,
+} from './wrappingFee';
+import {
+  recordTWL,
+  recordTWL15MinsInterval,
+  recordTWLDayInterval,
+} from './twl';
 import { UnwrappingEventLog, WrappingEventLog } from '../generated/schema';
 
 export function handleWrapping(event: WrappingEvent): void {
@@ -34,11 +40,32 @@ export function handleWrapping(event: WrappingEvent): void {
 
     // TODO - MAke sure this is a vAnchor address, otherwise skip.
     // Record Wrapping Fees
-    recordWrappingFees(vAnchorAddress, tokenAddress, feeAmount);
-    recordWrappingFees15MinsInterval(
+    recordWrappingFee(vAnchorAddress, tokenAddress, feeAmount);
+    recordWrappingFee15MinsInterval(
       vAnchorAddress,
       tokenAddress,
       feeAmount,
+      event.block.timestamp
+    );
+    recordWrappingFeeDayInterval(
+      vAnchorAddress,
+      tokenAddress,
+      feeAmount,
+      event.block.timestamp
+    );
+
+    // Record TWL - increase by afterFeeAmount
+    recordTWL(vAnchorAddress, tokenAddress, afterFeeAmount);
+    recordTWL15MinsInterval(
+      vAnchorAddress,
+      tokenAddress,
+      afterFeeAmount,
+      event.block.timestamp
+    );
+    recordTWLDayInterval(
+      vAnchorAddress,
+      tokenAddress,
+      afterFeeAmount,
       event.block.timestamp
     );
   }
@@ -64,4 +91,19 @@ export function handleUnwrapping(event: UnwrappingEvent): void {
   newLog.amount = amount;
   newLog.timestamp = event.block.timestamp;
   newLog.save();
+
+  // Record TWL - minus unwrapped amount
+  recordTWL(vAnchorAddress, tokenAddress, amount.neg());
+  recordTWL15MinsInterval(
+    vAnchorAddress,
+    tokenAddress,
+    amount.neg(),
+    event.block.timestamp
+  );
+  recordTWLDayInterval(
+    vAnchorAddress,
+    tokenAddress,
+    amount.neg(),
+    event.block.timestamp
+  );
 }

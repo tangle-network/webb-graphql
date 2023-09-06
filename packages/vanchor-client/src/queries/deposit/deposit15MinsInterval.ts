@@ -7,7 +7,6 @@ export interface DepositByChain15MinsIntervalItem {
   deposit: bigint;
   startInterval: Date;
   endInterval: Date;
-  vAnchorAddress: string;
 }
 
 export interface DepositByChainAndByToken15MinsIntervalItem
@@ -27,7 +26,7 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<DepositByChain15MinsIntervalItem | null> => {
+): Promise<Array<DepositByChain15MinsIntervalItem>> => {
   const result = await sdk.GetVAnchorDepositEvery15Mins(
     {
       startInterval: DateUtil.fromDateToEpoch(startInterval),
@@ -39,19 +38,18 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
     }
   );
 
-  if (result.vanchorDepositEvery15Mins?.[0]?.deposit === undefined) {
-    return null;
+  if (!result.vanchorDepositEvery15Mins?.length) {
+    return [] as Array<DepositByChain15MinsIntervalItem>;
   }
 
-  const item = result.vanchorDepositEvery15Mins[0];
-
-  return {
-    deposit: BigInt(item.deposit),
-    subgraphUrl: subgraphUrl,
-    startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
-    endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
-    vAnchorAddress: String(item.vAnchorAddress),
-  };
+  return result.vanchorDepositEvery15Mins.map((item) => {
+    return {
+      deposit: BigInt(item.deposit),
+      subgraphUrl: subgraphUrl,
+      endInterval: DateUtil.fromEpochToDate(parseInt(item.endInterval)),
+      startInterval: DateUtil.fromEpochToDate(parseInt(item.startInterval)),
+    };
+  });
 };
 
 export const GetVAnchorDepositByChains15MinsInterval = async (
@@ -59,8 +57,8 @@ export const GetVAnchorDepositByChains15MinsInterval = async (
   vAnchorAddress: string,
   startInterval: Date,
   endInterval: Date
-): Promise<Array<DepositByChain15MinsIntervalItem | null>> => {
-  const promises: Array<Promise<DepositByChain15MinsIntervalItem | null>> = [];
+): Promise<Array<Array<DepositByChain15MinsIntervalItem>>> => {
+  const promises: Array<Promise<Array<DepositByChain15MinsIntervalItem>>> = [];
 
   for (const subgraphUrl of subgraphUrls) {
     promises.push(
