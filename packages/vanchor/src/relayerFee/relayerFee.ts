@@ -51,7 +51,7 @@ export default function recordRelayerFee(
   } else {
     vanchorRelayerFee.totalFees = vanchorRelayerFee.totalFees.plus(totalFees);
     vanchorRelayerFee.txFees = vanchorRelayerFee.txFees.plus(txFees);
-    vanchorRelayerFee.profit = profit;
+    vanchorRelayerFee.profit = vanchorRelayerFee.profit.plus(profit);
     vanchorRelayerFee.save();
   }
 }

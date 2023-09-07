@@ -32,6 +32,7 @@ import {
   record15MinsIntervalVolume,
   recordDayIntervalVolume,
 } from './volume';
+import { recordTransactionLog } from './transaction';
 
 export const handleTransaction = (event: Insertion): void => {
   // Check if the transaction is already handled
@@ -92,6 +93,15 @@ export const handleTransaction = (event: Insertion): void => {
       const value = isNativeToken(tokenAddress.toHexString())
         ? newShieldedTx.value
         : externalDataEntity.extAmount;
+
+      // Record Transaction
+      recordTransactionLog(
+        event.transaction.hash,
+        newShieldedTx.vanchor,
+        tokenAddress,
+        value,
+        event.block.timestamp
+      );
 
       // Record Deposit
       if (value.gt(BigInt.fromI32(0))) {

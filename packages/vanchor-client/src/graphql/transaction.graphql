@@ -1,0 +1,14 @@
+query GetVAnchorTransactions($vAnchorAddress: Bytes!, $limit: Int!) {
+  vanchorTransactionLogs(
+    first: $limit
+    orderBy: timestamp
+    orderDirection: desc
+    where: { vAnchorAddress: $vAnchorAddress }
+  ) {
+    id
+    amount
+    timestamp
+    tokenSymbol
+    tokenAddress
+  }
+}

@@ -147,6 +147,8 @@ export type Query = {
   vanchorDepositLogs: Array<VAnchorDepositLog>;
   vanchorTransferLog?: Maybe<VAnchorTransferLog>;
   vanchorTransferLogs: Array<VAnchorTransferLog>;
+  vanchorTransactionLog?: Maybe<VAnchorTransactionLog>;
+  vanchorTransactionLogs: Array<VAnchorTransactionLog>;
   vanchorVolume?: Maybe<VAnchorVolume>;
   vanchorVolumes: Array<VAnchorVolume>;
   vanchorVolumeByToken?: Maybe<VAnchorVolumeByToken>;
@@ -1086,6 +1088,24 @@ export type QueryvanchorTransferLogsArgs = {
 };
 
 
+export type QueryvanchorTransactionLogArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryvanchorTransactionLogsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTransactionLog_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTransactionLog_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
 export type QueryvanchorVolumeArgs = {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
@@ -1301,6 +1321,8 @@ export type Subscription = {
   vanchorDepositLogs: Array<VAnchorDepositLog>;
   vanchorTransferLog?: Maybe<VAnchorTransferLog>;
   vanchorTransferLogs: Array<VAnchorTransferLog>;
+  vanchorTransactionLog?: Maybe<VAnchorTransactionLog>;
+  vanchorTransactionLogs: Array<VAnchorTransactionLog>;
   vanchorVolume?: Maybe<VAnchorVolume>;
   vanchorVolumes: Array<VAnchorVolume>;
   vanchorVolumeByToken?: Maybe<VAnchorVolumeByToken>;
@@ -2235,6 +2257,24 @@ export type SubscriptionvanchorTransferLogsArgs = {
   orderBy?: InputMaybe<VAnchorTransferLog_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<VAnchorTransferLog_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTransactionLogArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionvanchorTransactionLogsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<VAnchorTransactionLog_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<VAnchorTransactionLog_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
 };
@@ -5854,6 +5894,106 @@ export type VAnchorTotalValueLocked_orderBy =
   | 'id'
   | 'totalValueLocked';
 
+export type VAnchorTransactionLog = {
+  id: Scalars['String'];
+  amount: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+  tokenAddress: Scalars['Bytes'];
+  tokenSymbol: Scalars['String'];
+  timestamp: Scalars['BigInt'];
+};
+
+export type VAnchorTransactionLog_filter = {
+  id?: InputMaybe<Scalars['String']>;
+  id_not?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  id_starts_with?: InputMaybe<Scalars['String']>;
+  id_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_starts_with?: InputMaybe<Scalars['String']>;
+  id_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  id_ends_with?: InputMaybe<Scalars['String']>;
+  id_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  id_not_ends_with?: InputMaybe<Scalars['String']>;
+  id_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['BigInt']>;
+  amount_not?: InputMaybe<Scalars['BigInt']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']>;
+  amount_lt?: InputMaybe<Scalars['BigInt']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  vAnchorAddress?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  vAnchorAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  vAnchorAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lt?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_gte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_lte?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['Bytes']>;
+  tokenSymbol?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lt?: InputMaybe<Scalars['String']>;
+  tokenSymbol_gte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_lte?: InputMaybe<Scalars['String']>;
+  tokenSymbol_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenSymbol_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with?: InputMaybe<Scalars['String']>;
+  tokenSymbol_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  timestamp?: InputMaybe<Scalars['BigInt']>;
+  timestamp_not?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  timestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VAnchorTransactionLog_filter>>>;
+  or?: InputMaybe<Array<InputMaybe<VAnchorTransactionLog_filter>>>;
+};
+
+export type VAnchorTransactionLog_orderBy =
+  | 'id'
+  | 'amount'
+  | 'vAnchorAddress'
+  | 'tokenAddress'
+  | 'tokenSymbol'
+  | 'timestamp';
+
 export type VAnchorTransferLog = {
   id: Scalars['String'];
   vAnchorAddress: Scalars['Bytes'];
@@ -8023,6 +8163,9 @@ export type ResolversTypes = ResolversObject<{
   VAnchorTotalValueLockedEveryDay_orderBy: VAnchorTotalValueLockedEveryDay_orderBy;
   VAnchorTotalValueLocked_filter: VAnchorTotalValueLocked_filter;
   VAnchorTotalValueLocked_orderBy: VAnchorTotalValueLocked_orderBy;
+  VAnchorTransactionLog: ResolverTypeWrapper<VAnchorTransactionLog>;
+  VAnchorTransactionLog_filter: VAnchorTransactionLog_filter;
+  VAnchorTransactionLog_orderBy: VAnchorTransactionLog_orderBy;
   VAnchorTransferLog: ResolverTypeWrapper<VAnchorTransferLog>;
   VAnchorTransferLog_filter: VAnchorTransferLog_filter;
   VAnchorTransferLog_orderBy: VAnchorTransferLog_orderBy;
@@ -8179,6 +8322,8 @@ export type ResolversParentTypes = ResolversObject<{
   VAnchorTotalValueLockedEveryDay: VAnchorTotalValueLockedEveryDay;
   VAnchorTotalValueLockedEveryDay_filter: VAnchorTotalValueLockedEveryDay_filter;
   VAnchorTotalValueLocked_filter: VAnchorTotalValueLocked_filter;
+  VAnchorTransactionLog: VAnchorTransactionLog;
+  VAnchorTransactionLog_filter: VAnchorTransactionLog_filter;
   VAnchorTransferLog: VAnchorTransferLog;
   VAnchorTransferLog_filter: VAnchorTransferLog_filter;
   VAnchorVolume: VAnchorVolume;
@@ -8344,6 +8489,8 @@ export type QueryResolvers<ContextType = MeshContext & { subgraphUrl: string }, 
   vanchorDepositLogs?: Resolver<Array<ResolversTypes['VAnchorDepositLog']>, ParentType, ContextType, RequireFields<QueryvanchorDepositLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorTransferLog?: Resolver<Maybe<ResolversTypes['VAnchorTransferLog']>, ParentType, ContextType, RequireFields<QueryvanchorTransferLogArgs, 'id' | 'subgraphError'>>;
   vanchorTransferLogs?: Resolver<Array<ResolversTypes['VAnchorTransferLog']>, ParentType, ContextType, RequireFields<QueryvanchorTransferLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTransactionLog?: Resolver<Maybe<ResolversTypes['VAnchorTransactionLog']>, ParentType, ContextType, RequireFields<QueryvanchorTransactionLogArgs, 'id' | 'subgraphError'>>;
+  vanchorTransactionLogs?: Resolver<Array<ResolversTypes['VAnchorTransactionLog']>, ParentType, ContextType, RequireFields<QueryvanchorTransactionLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorVolume?: Resolver<Maybe<ResolversTypes['VAnchorVolume']>, ParentType, ContextType, RequireFields<QueryvanchorVolumeArgs, 'id' | 'subgraphError'>>;
   vanchorVolumes?: Resolver<Array<ResolversTypes['VAnchorVolume']>, ParentType, ContextType, RequireFields<QueryvanchorVolumesArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorVolumeByToken?: Resolver<Maybe<ResolversTypes['VAnchorVolumeByToken']>, ParentType, ContextType, RequireFields<QueryvanchorVolumeByTokenArgs, 'id' | 'subgraphError'>>;
@@ -8462,6 +8609,8 @@ export type SubscriptionResolvers<ContextType = MeshContext & { subgraphUrl: str
   vanchorDepositLogs?: SubscriptionResolver<Array<ResolversTypes['VAnchorDepositLog']>, "vanchorDepositLogs", ParentType, ContextType, RequireFields<SubscriptionvanchorDepositLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorTransferLog?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTransferLog']>, "vanchorTransferLog", ParentType, ContextType, RequireFields<SubscriptionvanchorTransferLogArgs, 'id' | 'subgraphError'>>;
   vanchorTransferLogs?: SubscriptionResolver<Array<ResolversTypes['VAnchorTransferLog']>, "vanchorTransferLogs", ParentType, ContextType, RequireFields<SubscriptionvanchorTransferLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  vanchorTransactionLog?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorTransactionLog']>, "vanchorTransactionLog", ParentType, ContextType, RequireFields<SubscriptionvanchorTransactionLogArgs, 'id' | 'subgraphError'>>;
+  vanchorTransactionLogs?: SubscriptionResolver<Array<ResolversTypes['VAnchorTransactionLog']>, "vanchorTransactionLogs", ParentType, ContextType, RequireFields<SubscriptionvanchorTransactionLogsArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorVolume?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorVolume']>, "vanchorVolume", ParentType, ContextType, RequireFields<SubscriptionvanchorVolumeArgs, 'id' | 'subgraphError'>>;
   vanchorVolumes?: SubscriptionResolver<Array<ResolversTypes['VAnchorVolume']>, "vanchorVolumes", ParentType, ContextType, RequireFields<SubscriptionvanchorVolumesArgs, 'skip' | 'first' | 'subgraphError'>>;
   vanchorVolumeByToken?: SubscriptionResolver<Maybe<ResolversTypes['VAnchorVolumeByToken']>, "vanchorVolumeByToken", ParentType, ContextType, RequireFields<SubscriptionvanchorVolumeByTokenArgs, 'id' | 'subgraphError'>>;
@@ -8873,6 +9022,16 @@ export type VAnchorTotalValueLockedEveryDayResolvers<ContextType = MeshContext &
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type VAnchorTransactionLogResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTransactionLog'] = ResolversParentTypes['VAnchorTransactionLog']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  tokenSymbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type VAnchorTransferLogResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['VAnchorTransferLog'] = ResolversParentTypes['VAnchorTransferLog']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   vAnchorAddress?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -9137,6 +9296,7 @@ export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> = Res
   VAnchorTotalValueLockedByTokenEveryDay?: VAnchorTotalValueLockedByTokenEveryDayResolvers<ContextType>;
   VAnchorTotalValueLockedEvery15Min?: VAnchorTotalValueLockedEvery15MinResolvers<ContextType>;
   VAnchorTotalValueLockedEveryDay?: VAnchorTotalValueLockedEveryDayResolvers<ContextType>;
+  VAnchorTransactionLog?: VAnchorTransactionLogResolvers<ContextType>;
   VAnchorTransferLog?: VAnchorTransferLogResolvers<ContextType>;
   VAnchorVolume?: VAnchorVolumeResolvers<ContextType>;
   VAnchorVolumeByToken?: VAnchorVolumeByTokenResolvers<ContextType>;
@@ -9381,6 +9541,12 @@ const merger = new(BareMerger as any)({
           return printWithCache(GetVanchorsRelayerFeeByDateRangeDocument);
         },
         location: 'GetVanchorsRelayerFeeByDateRangeDocument.graphql'
+      },{
+        document: GetVAnchorTransactionsDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorTransactionsDocument);
+        },
+        location: 'GetVAnchorTransactionsDocument.graphql'
       },{
         document: GetVAnchorTotalValueLockedDocument,
         get rawSDL() {
@@ -9936,6 +10102,14 @@ export type GetVanchorsRelayerFeeByDateRangeQueryVariables = Exact<{
 
 
 export type GetVanchorsRelayerFeeByDateRangeQuery = { vanchorRelayerFeeEveryDays: Array<Pick<VAnchorRelayerFeeEveryDay, 'totalFees' | 'txFees' | 'profit' | 'startInterval' | 'endInterval' | 'vAnchorAddress'>> };
+
+export type GetVAnchorTransactionsQueryVariables = Exact<{
+  vAnchorAddress: Scalars['Bytes'];
+  limit: Scalars['Int'];
+}>;
+
+
+export type GetVAnchorTransactionsQuery = { vanchorTransactionLogs: Array<Pick<VAnchorTransactionLog, 'id' | 'amount' | 'timestamp' | 'tokenSymbol' | 'tokenAddress'>> };
 
 export type GetVAnchorTotalValueLockedQueryVariables = Exact<{
   vAnchorAddress: Scalars['ID'];
@@ -10680,6 +10854,22 @@ export const GetVanchorsRelayerFeeByDateRangeDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVanchorsRelayerFeeByDateRangeQuery, GetVanchorsRelayerFeeByDateRangeQueryVariables>;
+export const GetVAnchorTransactionsDocument = gql`
+    query GetVAnchorTransactions($vAnchorAddress: Bytes!, $limit: Int!) {
+  vanchorTransactionLogs(
+    first: $limit
+    orderBy: timestamp
+    orderDirection: desc
+    where: {vAnchorAddress: $vAnchorAddress}
+  ) {
+    id
+    amount
+    timestamp
+    tokenSymbol
+    tokenAddress
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorTransactionsQuery, GetVAnchorTransactionsQueryVariables>;
 export const GetVAnchorTotalValueLockedDocument = gql`
     query GetVAnchorTotalValueLocked($vAnchorAddress: ID!) {
   vanchorTotalValueLocked(id: $vAnchorAddress) {
@@ -11383,6 +11573,7 @@ export const GetVanchorsWrappingFeeByDateRangeDocument = gql`
 
 
 
+
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
@@ -11451,6 +11642,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     GetVanchorsRelayerFeeByDateRange(variables: GetVanchorsRelayerFeeByDateRangeQueryVariables, options?: C): Promise<GetVanchorsRelayerFeeByDateRangeQuery> {
       return requester<GetVanchorsRelayerFeeByDateRangeQuery, GetVanchorsRelayerFeeByDateRangeQueryVariables>(GetVanchorsRelayerFeeByDateRangeDocument, variables, options) as Promise<GetVanchorsRelayerFeeByDateRangeQuery>;
+    },
+    GetVAnchorTransactions(variables: GetVAnchorTransactionsQueryVariables, options?: C): Promise<GetVAnchorTransactionsQuery> {
+      return requester<GetVAnchorTransactionsQuery, GetVAnchorTransactionsQueryVariables>(GetVAnchorTransactionsDocument, variables, options) as Promise<GetVAnchorTransactionsQuery>;
     },
     GetVAnchorTotalValueLocked(variables: GetVAnchorTotalValueLockedQueryVariables, options?: C): Promise<GetVAnchorTotalValueLockedQuery> {
       return requester<GetVAnchorTotalValueLockedQuery, GetVAnchorTotalValueLockedQueryVariables>(GetVAnchorTotalValueLockedDocument, variables, options) as Promise<GetVAnchorTotalValueLockedQuery>;

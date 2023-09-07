@@ -166,6 +166,11 @@ import {
   GetVAnchorsWrappingFeeByChainByDateRange,
   GetVAnchorsWrappingFeeByChainsByDateRange,
 } from './queries/wrappingFee';
+import {
+  GetVAnchorTransactionsByChain,
+  GetVAnchorTransactionsByChains,
+} from './queries/transaction';
+
 import { SubgraphUrl } from './config';
 
 const vAnchorClient = {
@@ -337,6 +342,10 @@ const vAnchorClient = {
     GetVAnchorWrappingFeeByChainsByDateRange,
     GetVAnchorsWrappingFeeByChainByDateRange,
     GetVAnchorsWrappingFeeByChainsByDateRange,
+  },
+  Transaction: {
+    GetVAnchorTransactionsByChain,
+    GetVAnchorTransactionsByChains,
   },
 };
 
