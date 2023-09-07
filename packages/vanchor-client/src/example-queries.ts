@@ -22,6 +22,7 @@ import {
   GetVAnchorWrappingFeeByChainAndByToken,
   GetVAnchorsWrappingFeeByChains,
 } from './queries/wrappingFee';
+import { GetVAnchorTransactionsByChains } from './queries/transaction';
 import { DateUtil } from './utils/date';
 
 const epochStart = 1692057600;
@@ -31,8 +32,9 @@ const subgraphUrl1 = SubgraphUrl.vAnchorDemeterLocal;
 const tokenSymbol = 'ETH';
 
 async function main() {
-  await getPoolOverviewTableData();
-  await getPoolWrappingTableData();
+  // await getPoolOverviewTableData();
+  // await getPoolWrappingTableData();
+  await getTransactions();
 }
 
 async function getOverviewChipsData() {
@@ -139,6 +141,12 @@ async function getPoolWrappingTableData() {
       vAnchorAddress,
       tokenSymbol
     )
+  );
+}
+
+async function getTransactions() {
+  console.log(
+    await GetVAnchorTransactionsByChains([subgraphUrl], vAnchorAddress, 100)
   );
 }
 
