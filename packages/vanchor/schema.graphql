@@ -482,6 +482,15 @@ type VAnchorTransferLog @entity(immutable: true) {
   timestamp: BigInt! # block timestamp
 }
 
+type VAnchorTransactionLog @entity(immutable: true) {
+  id: String! # tx hash
+  amount: BigInt!
+  vAnchorAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  tokenSymbol: String! # token symbol
+  timestamp: BigInt! # block timestamp
+}
+
 type VAnchorVolume @entity(immutable: false) {
   id: String! # vAnchor address
   volume: BigInt! # total value locked in the vAnchor
