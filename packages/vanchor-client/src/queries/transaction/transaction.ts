@@ -5,6 +5,7 @@ const sdk = getBuiltGraphSDK();
 
 export interface Transaction {
   subgraphUrl: SubgraphUrl;
+  txHash: string;
   tokenSymbol: string;
   tokenAddress: string;
   amount: bigint;
@@ -14,7 +15,7 @@ export interface Transaction {
 export const GetVAnchorTransactionsByChain = async (
   subgraphUrl: SubgraphUrl,
   vAnchorAddress: string,
-  limit?: number
+  limit: number
 ): Promise<Array<Transaction>> => {
   const result = await sdk.GetVAnchorTransactions(
     { vAnchorAddress: vAnchorAddress.toLowerCase(), limit },
@@ -28,6 +29,7 @@ export const GetVAnchorTransactionsByChain = async (
   return result.vanchorTransactionLogs.map((transaction) => {
     return {
       subgraphUrl,
+      txHash: transaction.id,
       tokenSymbol: transaction.tokenSymbol,
       tokenAddress: transaction.tokenAddress,
       amount: BigInt(transaction.amount),
@@ -39,7 +41,7 @@ export const GetVAnchorTransactionsByChain = async (
 export const GetVAnchorTransactionsByChains = async (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
-  limit?: number
+  limit: number
 ): Promise<Array<Transaction>> => {
   const promises: Array<Promise<Array<Transaction>>> = [];
   for (const subgraphUrl of subgraphUrls) {

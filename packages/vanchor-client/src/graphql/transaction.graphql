@@ -5,6 +5,7 @@ query GetVAnchorTransactions($vAnchorAddress: Bytes!, $limit: Int!) {
     orderDirection: desc
     where: { vAnchorAddress: $vAnchorAddress }
   ) {
+    id
     amount
     timestamp
     tokenSymbol

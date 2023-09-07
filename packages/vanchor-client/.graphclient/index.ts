@@ -10105,11 +10105,11 @@ export type GetVanchorsRelayerFeeByDateRangeQuery = { vanchorRelayerFeeEveryDays
 
 export type GetVAnchorTransactionsQueryVariables = Exact<{
   vAnchorAddress: Scalars['Bytes'];
-  limit?: InputMaybe<Scalars['Int']>;
+  limit: Scalars['Int'];
 }>;
 
 
-export type GetVAnchorTransactionsQuery = { vanchorTransactionLogs: Array<Pick<VAnchorTransactionLog, 'amount' | 'timestamp' | 'tokenSymbol' | 'tokenAddress'>> };
+export type GetVAnchorTransactionsQuery = { vanchorTransactionLogs: Array<Pick<VAnchorTransactionLog, 'id' | 'amount' | 'timestamp' | 'tokenSymbol' | 'tokenAddress'>> };
 
 export type GetVAnchorTotalValueLockedQueryVariables = Exact<{
   vAnchorAddress: Scalars['ID'];
@@ -10855,13 +10855,14 @@ export const GetVanchorsRelayerFeeByDateRangeDocument = gql`
 }
     ` as unknown as DocumentNode<GetVanchorsRelayerFeeByDateRangeQuery, GetVanchorsRelayerFeeByDateRangeQueryVariables>;
 export const GetVAnchorTransactionsDocument = gql`
-    query GetVAnchorTransactions($vAnchorAddress: Bytes!, $limit: Int) {
+    query GetVAnchorTransactions($vAnchorAddress: Bytes!, $limit: Int!) {
   vanchorTransactionLogs(
     first: $limit
     orderBy: timestamp
     orderDirection: desc
     where: {vAnchorAddress: $vAnchorAddress}
   ) {
+    id
     amount
     timestamp
     tokenSymbol
