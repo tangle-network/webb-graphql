@@ -5,6 +5,7 @@ import {
   createExtrinsic,
   createSudoCall,
   ensureAccount,
+  RecordAuthorityUptime,
   RecordHeartbeat,
   UpdateOrSetIdentity,
 } from '../handlers';
@@ -69,6 +70,7 @@ export async function handleSudoCall(extrinsic: SubstrateExtrinsic): Promise<voi
   );
   await createSudoCall(extrinsic);
 }
+
 export async function handleAllDKG(event: SubstrateEvent) {
   const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`;
   logger.info(
@@ -81,6 +83,7 @@ export async function handleAllDKG(event: SubstrateEvent) {
   );
   return handleDkgEvents(event);
 }
+
 export function handlePublicKeyChanged(event: SubstrateEvent) {
   const block = `${event.block.block.header.number} => ${event.block.block.header.hash}`;
   logger.info(
@@ -98,9 +101,11 @@ export async function handleIdentity(event: SubstrateEvent) {
   const acc = await ensureAccount(account);
   return UpdateOrSetIdentity(acc);
 }
+
 export async function handleHeartbeats(event: SubstrateEvent) {
   const authorityId = event.event.data[0].toString();
   const blockNumber = event.block.block.header.number.toString();
-  logger.info(`HeartBeast authorityId: ${authorityId}`);
+  logger.info(`HeartBeat authorityId: ${authorityId}`);
+  await RecordAuthorityUptime(authorityId, blockNumber);
   return RecordHeartbeat(authorityId, blockNumber);
 }
