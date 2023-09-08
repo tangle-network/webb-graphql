@@ -1,13 +1,12 @@
 import { SubstrateEvent } from '@subql/types';
 import { DKGMetaDataSection, DKGSections } from '../type';
 import { EventDecoder } from '../../../utils';
-import { DKGMetaDataEvent } from './types';
 import { keyGenerated, updatePublicKeyStatus } from './publicKey';
 import {
   createOrUpdateSession,
   currentSessionId,
   ensureSession,
-  fetchSessionAuthorizes,
+  fetchSessionAuthorities,
   nextSessionId,
   setSessionKey,
 } from '../../session';
@@ -27,7 +26,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
 
   const method = event.event.method as DKGMetaDataSection;
 
-  const eventDecoded = new EventDecoder<DKGMetaDataEvent>(event);
+  const eventDecoded = new EventDecoder(event);
 
   switch (method) {
     case DKGMetaDataSection.PublicKeySubmitted:
@@ -46,7 +45,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
 
         await setSessionKey(sessionId, sessionBlock, key.id);
 
-        const authorites = await fetchSessionAuthorizes(eventDecoded.blockNumber);
+        const authorites = await fetchSessionAuthorities(eventDecoded.blockNumber);
 
         logger.info(
           `Update authorites for ${sessionId} ${JSON.stringify(
@@ -95,11 +94,21 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
     case DKGMetaDataSection.NextPublicKeySignatureSubmitted:
       {
         const eventData = eventDecoded.as(DKGMetaDataSection.NextPublicKeySignatureSubmitted);
+        const block = await ensureBlock(eventDecoded.blockNumber);
+
+        if (eventData.compressedPubKey) {
+          await updatePublicKeyStatus({
+            status: SessionKeyStatus.Signed,
+            blockNumber: eventDecoded.blockNumber,
+            composedPubKey: eventData.compressedPubKey.toString(),
+            timestamp: block.timestamp ?? new Date(),
+          });
+        }
 
         logger.info(
           `NextPublicKeySignatureSubmitted
         	 pubKeySig: ${eventData.pubKey.toString()}
-        	 compressedPubKey: ${eventData.pubKey.toString()}`
+        	 `
         );
       }
       break;
@@ -127,7 +136,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
         const eventData = eventDecoded.as(DKGMetaDataSection.PublicKeySignatureChanged);
 
         const blockNumber = eventDecoded.blockNumber;
-        const sessionAuthorities = await fetchSessionAuthorizes(blockNumber);
+        const sessionAuthorities = await fetchSessionAuthorities(blockNumber);
 
         await createOrUpdateSession({
           ...sessionAuthorities,
@@ -144,7 +153,7 @@ export const dkgMetaDataEventHandler = async (event: SubstrateEvent) => {
       {
         const blockNumber = eventDecoded.blockNumber;
 
-        const sessionAuthorities = await fetchSessionAuthorizes(blockNumber);
+        const sessionAuthorities = await fetchSessionAuthorities(blockNumber);
 
         await createOrUpdateSession({
           ...sessionAuthorities,

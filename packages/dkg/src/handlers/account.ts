@@ -1,4 +1,4 @@
-import { Account, CountryCode, HeartBeat } from '../types';
+import { Account, CountryCode, HeartBeat, AuthorityUpTime } from '../types';
 import { Option } from '@polkadot/types';
 import { PalletIdentityRegistration } from '@polkadot/types/lookup';
 import { currentSessionId, ensureSession, setSessionValidatorUptime } from './session';
@@ -113,4 +113,58 @@ export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
 export async function getAccount(account: string) {
   const data = await Account.get(account);
   return data;
+}
+
+export async function RecordAuthorityUptime(authorityId: string, blockNumber: string) {
+  try {
+    const { sessionNumber } = await currentSessionId(blockNumber);
+    const keys = await getCachedKeys();
+    const accountIdSendingHeartbeat = Object.keys(keys).find((key) => keys[key].imOnline === authorityId);
+    const accountIds = Object.keys(keys).filter((key) => keys[key].imOnline);
+
+    for (const accountId of accountIds) {
+      if (accountId === accountIdSendingHeartbeat) {
+        let authorityUptime = await AuthorityUpTime.get(accountId);
+
+        const maxPossibleHeartbeats = Number(sessionNumber);
+        let actualHeartbeats;
+
+        if (authorityUptime) {
+          authorityUptime.totalHeartbeats = (authorityUptime.totalHeartbeats || 0) + 1;
+          actualHeartbeats = authorityUptime.totalHeartbeats;
+          authorityUptime.blockNumber = Number(blockNumber);
+          authorityUptime.sessionNumber = Number(sessionNumber);
+        } else {
+          actualHeartbeats = 1;
+          authorityUptime = AuthorityUpTime.create({
+            id: accountId,
+            totalHeartbeats: actualHeartbeats,
+            blockNumber: Number(blockNumber),
+            sessionNumber: Number(sessionNumber),
+            uptime: 100,
+            authorityId: accountId,
+          });
+        }
+
+        const rawUptime = (actualHeartbeats / maxPossibleHeartbeats) * 100;
+        authorityUptime.uptime = Math.round(Math.min(100, rawUptime));
+
+        await authorityUptime.save();
+      } else {
+        const authorityUptime = await AuthorityUpTime.get(accountId);
+
+        if (authorityUptime) {
+          const maxPossibleHeartbeats = Number(sessionNumber);
+          const actualHeartbeats = authorityUptime.totalHeartbeats;
+          const rawUptime = (actualHeartbeats / maxPossibleHeartbeats) * 100;
+          authorityUptime.uptime = Math.round(Math.min(100, rawUptime));
+
+          await authorityUptime.save();
+        }
+      }
+    }
+    logger.info(`Recorded uptimes for all authorities at session ${sessionNumber}`);
+  } catch (error) {
+    logger.error(`Error recording uptime for authorityId ${authorityId}: ${error.message}`);
+  }
 }

@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { ensureBlock } from './block';
 import { Proposer, Session, SessionProposer, SessionValidator, Threshold, ThresholdVariant, Validator } from '../types';
-import { u16, u32, Vec } from '@polkadot/types-codec';
-const { DkgRuntimePrimitivesCryptoPublic } = require('@webb-tools/tangle-substrate-types/interfaces/types-lookup');
+import { u32, Vec } from '@polkadot/types-codec';
 import type { AccountId32 } from '@polkadot/types/interfaces/runtime';
-import { ITuple } from '@polkadot/types-codec/types';
 import { AbstractInt } from '@polkadot/types-codec';
 import { ensureAccount, getCachedKeys } from './account';
 import { getUptimeMap, increaseSourceSession } from './source';
@@ -65,7 +62,7 @@ function isSet<T>(val: T | undefined): val is T {
  * The block number is used as an identifier for the session
  * SubQuery provides an APIAt that will fetch the data at the current(SubQuery indexer) block number
  * */
-export const fetchSessionAuthorizes = async (blockNumber: string) => {
+export const fetchSessionAuthorities = async (blockNumber: string) => {
   logger.info(`Fetching authorities for ${blockNumber}`);
   const accountsTuple: [Vec<AccountId32>, Vec<AccountId32>, Vec<AccountId32>] = (await Promise.all([
     api.query.dkg.currentAuthoritiesAccounts(),
@@ -84,12 +81,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
   }, []);
 
   // Fetch authorities for a block number
-  const [authorities, nextAuthorities, bestAuthorities, nextBestAuthorities]: [
-    Vec<typeof DkgRuntimePrimitivesCryptoPublic>,
-    Vec<typeof DkgRuntimePrimitivesCryptoPublic>,
-    Vec<ITuple<[u16, typeof DkgRuntimePrimitivesCryptoPublic]>>,
-    Vec<ITuple<[u16, typeof DkgRuntimePrimitivesCryptoPublic]>>
-  ] = (await Promise.all([
+  const [authorities, nextAuthorities, bestAuthorities, nextBestAuthorities] = (await Promise.all([
     api.query.dkg.authorities(),
     api.query.dkg.nextAuthorities(),
     api.query.dkg.bestAuthorities(),
@@ -117,7 +109,7 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     authorityReputationMap[authId] = val.toString();
   });
 
-  const dkgAuthorityMapper = (authIdRaw: typeof DkgRuntimePrimitivesCryptoPublic): DKGAuthority => {
+  const dkgAuthorityMapper = (authIdRaw): DKGAuthority => {
     const authorityId = authIdRaw.toString().replace('0x', '');
     const accountId = authorityIdMap[authorityId];
     return {
@@ -203,7 +195,6 @@ export const fetchSessionAuthorizes = async (blockNumber: string) => {
     proposerThreshold,
   };
 };
-const SESSION_HEIGHT = 10;
 
 /**
  * Round the block number to a session id
@@ -218,17 +209,7 @@ export async function nextSessionId(blockId: string): Promise<{ sessionNumber: s
     sessionBlock: blockId,
   };
 }
-let sessionLength = null;
 
-async function getSessionLength(): Promise<number> {
-  if (sessionLength) {
-    return sessionLength as number;
-  }
-  const period = (await api.consts.dkgProposals.period) as unknown as u32;
-  sessionLength = parseInt(period.toHex());
-  logger.info(`Session length is ${sessionLength}`);
-  return sessionLength;
-}
 export async function currentSessionId(blockId: string): Promise<{ sessionNumber: string; sessionBlock: string }> {
   const currentSessionIndex = (await api.query.session.currentIndex()) as unknown as u32;
 
@@ -277,7 +258,6 @@ async function ensureValidator(id: string, authorityId: string) {
 
 async function createOrUpdateSessionValidator(sessionId: string, input: SessionDKGAuthority, blockNumber: number) {
   const id = `${sessionId}-${input.accountId}`;
-  logger.info(`Creating or updating session validator ${id} - ${input.accountId}`);
   const sessionValidator = new SessionValidator(id);
   await ensureValidator(input.accountId, input.authorityId);
   sessionValidator.sessionId = sessionId;
@@ -287,7 +267,8 @@ async function createOrUpdateSessionValidator(sessionId: string, input: SessionD
   sessionValidator.isNext = input.isNext;
   sessionValidator.isNextBest = input.isNextBest;
   sessionValidator.nextBestOrder = 0;
-  sessionValidator.reputation = (input.reputation ? Number(input.reputation) : sessionValidator.reputation) || 0;
+  sessionValidator.reputation =
+    (input.reputation ? Number(input.reputation) : sessionValidator.reputation) || 1000000000;
   sessionValidator.uptime = sessionValidator.uptime || input.uptime || 0;
   sessionValidator.blockNumber = BigInt(blockNumber);
   await sessionValidator.save();
@@ -295,7 +276,7 @@ async function createOrUpdateSessionValidator(sessionId: string, input: SessionD
 }
 export async function setSessionValidatorUptime(sessionId: string, accountId: string, uptimeValue: number) {
   const id = `${sessionId}-${accountId}`;
-  logger.info(`Updating th uptime`);
+  logger.info(`Updating uptime`);
   const sessionValidator = await SessionValidator.get(id);
   if (sessionValidator) {
     sessionValidator.uptime = uptimeValue;
@@ -354,8 +335,8 @@ export const createOrUpdateSession = async ({ blockId, sessionId, ...input }: Se
     // Filter only for values exists
     if (isSet(val)) {
       if (key === 'sessionAuthorities') {
-        const sessionAuthorizes = val as SessionDKGAuthority[];
-        for (const sessionAuth of sessionAuthorizes) {
+        const sessionAuthorities = val as SessionDKGAuthority[];
+        for (const sessionAuth of sessionAuthorities) {
           await createOrUpdateSessionValidator(session.id, sessionAuth, Number(blockId));
         }
         continue;

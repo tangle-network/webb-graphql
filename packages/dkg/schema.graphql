@@ -17,11 +17,13 @@ type HeartBeatCounter @jsonField {
   authorityId: String!
   numberOfHeartBeats: Int!
 }
+
 type SourceState @entity {
   id: ID!
   heartBeatCounters: [HeartBeatCounter!]!
   numberOfSessions: Int!
 }
+
 type HeartBeat @entity {
   id: ID!
 
@@ -29,6 +31,7 @@ type HeartBeat @entity {
   session: Session!
   account: Account!
 }
+
 type Extrinsic @entity {
   id: ID!
 
@@ -64,11 +67,13 @@ type Event @entity {
   data: String
   extrinsic: Extrinsic
 }
+
 type CountryCode @entity {
   id: ID!
 
   code: String! @index(unique: false)
 }
+
 type Account @entity {
   id: ID!
 
@@ -117,11 +122,13 @@ type Authorities @entity {
 
   block: Block!
 }
+
 enum ThresholdVariant {
   SIGNATURE
   PROPOSER
   KEY_GEN
 }
+
 type Threshold @entity {
   id: ID!
   next: Int!
@@ -137,6 +144,7 @@ type Validator @entity {
   account: Account!
   authorityId: String! @index(unique: true)
 }
+
 type Proposer @entity {
   id: ID!
 
@@ -148,6 +156,7 @@ enum SessionKeyStatus {
   Signed
   Rotated
 }
+
 type SessionKeyHistory @jsonField {
   # SessionKeyStatus
   stage: String!
@@ -155,6 +164,7 @@ type SessionKeyHistory @jsonField {
   blockNumber: String!
   timestamp: Date!
 }
+
 type SessionPublicKey @jsonField {
   compressedKey: String!
   history: [SessionKeyHistory]!
@@ -173,6 +183,7 @@ type SessionValidator @entity {
   uptime: Int!
   blockNumber: BigInt!
 }
+
 type SessionProposer @entity {
   id: ID!
   session: Session!
@@ -293,4 +304,13 @@ type ProposalBatch @entity {
   proposals: [ProposalInABatch]!
   chain: Chain!
   timeline: [ProposalTimeline]
+}
+
+type AuthorityUpTime @entity {
+  id: ID!
+  authorityId: String!
+  uptime: Int!
+  blockNumber: Int!
+  sessionNumber: Int!
+  totalHeartbeats: Int!
 }
