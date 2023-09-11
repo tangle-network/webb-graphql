@@ -19,6 +19,12 @@ export interface TotalValueLockedByVAnchor15MinsIntervalItem {
   totalValueLocked: bigint;
 }
 
+export interface LatestTVLUpdate {
+  vAnchorAddress: string;
+  totalValueLocked: bigint | null;
+  subgraphUrl: SubgraphUrl;
+}
+
 const sdk = getBuiltGraphSDK();
 
 export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
@@ -206,3 +212,87 @@ export const GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval =
 
     return await Promise.all(promises);
   };
+
+export const GetVAnchorByChainLatestTVLInTimeRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddress: string,
+  startInterval: number,
+  endInterval: number
+): Promise<LatestTVLUpdate> => {
+  const result = await sdk.GetVAnchorLatestTVLInTimeRange(
+    {
+      vAnchorAddress: vAnchorAddress.toLowerCase(),
+      startInterval,
+      endInterval,
+    },
+    {
+      subgraphUrl,
+    }
+  );
+
+  if (!result.vanchorTotalValueLockedEvery15Mins?.length) {
+    return {
+      vAnchorAddress,
+      totalValueLocked: null,
+      subgraphUrl,
+    };
+  }
+
+  return {
+    vAnchorAddress,
+    totalValueLocked: BigInt(
+      result.vanchorTotalValueLockedEvery15Mins[0].totalValueLocked
+    ),
+    subgraphUrl,
+  };
+};
+
+export const GetVAnchorsByChainLatestTVLInTimeRange = async (
+  subgraphUrl: SubgraphUrl,
+  vAnchorAddresses: Array<string>,
+  startInterval: number,
+  endInterval: number
+): Promise<Array<LatestTVLUpdate>> => {
+  const promises: Array<Promise<LatestTVLUpdate>> = [];
+
+  for (const vAnchorAddress of vAnchorAddresses) {
+    promises.push(
+      GetVAnchorByChainLatestTVLInTimeRange(
+        subgraphUrl,
+        vAnchorAddress,
+        startInterval,
+        endInterval
+      )
+    );
+  }
+
+  return await Promise.all(promises);
+};
+
+export const GetVAnchorsByChainsLatestTVLInTimeRange = async (
+  subgraphUrls: Array<SubgraphUrl>,
+  vAnchorAddresses: Array<string>,
+  startInterval: number,
+  endInterval: number
+): Promise<Record<SubgraphUrl, Array<LatestTVLUpdate>>> => {
+  const record: Record<
+    SubgraphUrl,
+    Array<LatestTVLUpdate>
+  > = subgraphUrls.reduce((map, subgraphUrl) => {
+    return {
+      ...map,
+      [subgraphUrl]: [],
+    };
+  }, {} as Record<SubgraphUrl, Array<LatestTVLUpdate>>);
+
+  for (const subgraphUrl of subgraphUrls) {
+    record[subgraphUrl] = await GetVAnchorsByChainLatestTVLInTimeRange(
+      subgraphUrl,
+      vAnchorAddresses,
+      startInterval,
+      endInterval
+    );
+  }
+
+  return record;
+};

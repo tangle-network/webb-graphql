@@ -42,6 +42,7 @@ export type Scalars = {
   BigDecimal: any;
   BigInt: any;
   Bytes: any;
+  Int8: any;
 };
 
 export type Query = {
@@ -8065,6 +8066,7 @@ export type ResolversTypes = ResolversObject<{
   Insertion_filter: Insertion_filter;
   Insertion_orderBy: Insertion_orderBy;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Int8: ResolverTypeWrapper<Scalars['Int8']>;
   NewCommitment: ResolverTypeWrapper<NewCommitment>;
   NewCommitment_filter: NewCommitment_filter;
   NewCommitment_orderBy: NewCommitment_orderBy;
@@ -8257,6 +8259,7 @@ export type ResolversParentTypes = ResolversObject<{
   Insertion: Insertion;
   Insertion_filter: Insertion_filter;
   Int: Scalars['Int'];
+  Int8: Scalars['Int8'];
   NewCommitment: NewCommitment;
   NewCommitment_filter: NewCommitment_filter;
   NewNullifier: NewNullifier;
@@ -8689,6 +8692,10 @@ export type InsertionResolvers<ContextType = MeshContext & { subgraphUrl: string
   transactionHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
+
+export interface Int8ScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Int8'], any> {
+  name: 'Int8';
+}
 
 export type NewCommitmentResolvers<ContextType = MeshContext & { subgraphUrl: string }, ParentType extends ResolversParentTypes['NewCommitment'] = ResolversParentTypes['NewCommitment']> = ResolversObject<{
   id?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -9264,6 +9271,7 @@ export type Resolvers<ContextType = MeshContext & { subgraphUrl: string }> = Res
   Encryptions?: EncryptionsResolvers<ContextType>;
   ExternalData?: ExternalDataResolvers<ContextType>;
   Insertion?: InsertionResolvers<ContextType>;
+  Int8?: GraphQLScalarType;
   NewCommitment?: NewCommitmentResolvers<ContextType>;
   NewNullifier?: NewNullifierResolvers<ContextType>;
   PublicInputs?: PublicInputsResolvers<ContextType>;
@@ -9372,7 +9380,7 @@ const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
 const vanchorTransforms = [];
 const vanchorHandler = new GraphqlHandler({
               name: "vanchor",
-              config: {"endpoint":"{context.subgraphUrl:http://localhost:8000/subgraphs/name/VAnchorAthenaLocal}"},
+              config: {"endpoint":"{context.subgraphUrl:https://thegraph-backend.webb.tools/subgraphs/name/VAnchorTangle}"},
               baseDir,
               cache,
               pubsub,
@@ -9613,6 +9621,12 @@ const merger = new(BareMerger as any)({
           return printWithCache(GetVAnchorsTotalValueLockedByDateRangeDocument);
         },
         location: 'GetVAnchorsTotalValueLockedByDateRangeDocument.graphql'
+      },{
+        document: GetVAnchorLatestTvlInTimeRangeDocument,
+        get rawSDL() {
+          return printWithCache(GetVAnchorLatestTvlInTimeRangeDocument);
+        },
+        location: 'GetVAnchorLatestTvlInTimeRangeDocument.graphql'
       },{
         document: GetVAnchorTwlDocument,
         get rawSDL() {
@@ -10204,6 +10218,15 @@ export type GetVAnchorsTotalValueLockedByDateRangeQueryVariables = Exact<{
 
 
 export type GetVAnchorsTotalValueLockedByDateRangeQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
+
+export type GetVAnchorLatestTVLInTimeRangeQueryVariables = Exact<{
+  endInterval: Scalars['BigInt'];
+  startInterval: Scalars['BigInt'];
+  vAnchorAddress: Scalars['Bytes'];
+}>;
+
+
+export type GetVAnchorLatestTVLInTimeRangeQuery = { vanchorTotalValueLockedEvery15Mins: Array<Pick<VAnchorTotalValueLockedEvery15Min, 'totalValueLocked'>> };
 
 export type GetVAnchorTWLQueryVariables = Exact<{
   vAnchorAddress: Scalars['ID'];
@@ -10995,6 +11018,18 @@ export const GetVAnchorsTotalValueLockedByDateRangeDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedByDateRangeQuery, GetVAnchorsTotalValueLockedByDateRangeQueryVariables>;
+export const GetVAnchorLatestTVLInTimeRangeDocument = gql`
+    query GetVAnchorLatestTVLInTimeRange($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
+  vanchorTotalValueLockedEvery15Mins(
+    orderBy: endInterval
+    orderDirection: desc
+    first: 1
+    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+  ) {
+    totalValueLocked
+  }
+}
+    ` as unknown as DocumentNode<GetVAnchorLatestTVLInTimeRangeQuery, GetVAnchorLatestTVLInTimeRangeQueryVariables>;
 export const GetVAnchorTWLDocument = gql`
     query GetVAnchorTWL($vAnchorAddress: ID!) {
   vanchorTWL(id: $vAnchorAddress) {
@@ -11574,6 +11609,7 @@ export const GetVanchorsWrappingFeeByDateRangeDocument = gql`
 
 
 
+
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
@@ -11678,6 +11714,9 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     },
     GetVAnchorsTotalValueLockedByDateRange(variables: GetVAnchorsTotalValueLockedByDateRangeQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedByDateRangeQuery> {
       return requester<GetVAnchorsTotalValueLockedByDateRangeQuery, GetVAnchorsTotalValueLockedByDateRangeQueryVariables>(GetVAnchorsTotalValueLockedByDateRangeDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedByDateRangeQuery>;
+    },
+    GetVAnchorLatestTVLInTimeRange(variables: GetVAnchorLatestTVLInTimeRangeQueryVariables, options?: C): Promise<GetVAnchorLatestTVLInTimeRangeQuery> {
+      return requester<GetVAnchorLatestTVLInTimeRangeQuery, GetVAnchorLatestTVLInTimeRangeQueryVariables>(GetVAnchorLatestTVLInTimeRangeDocument, variables, options) as Promise<GetVAnchorLatestTVLInTimeRangeQuery>;
     },
     GetVAnchorTWL(variables: GetVAnchorTWLQueryVariables, options?: C): Promise<GetVAnchorTWLQuery> {
       return requester<GetVAnchorTWLQuery, GetVAnchorTWLQueryVariables>(GetVAnchorTWLDocument, variables, options) as Promise<GetVAnchorTWLQuery>;

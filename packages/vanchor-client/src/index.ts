@@ -69,6 +69,9 @@ import {
   GetVAnchorTVLByChainsByDateRange,
   GetVAnchorsTVLByChainByDateRange,
   GetVAnchorsTVLByChainsByDateRange,
+  GetVAnchorByChainLatestTVLInTimeRange,
+  GetVAnchorsByChainLatestTVLInTimeRange,
+  GetVAnchorsByChainsLatestTVLInTimeRange,
 } from './queries/tvl';
 import {
   GetVAnchorTWLByChain,
@@ -246,6 +249,9 @@ const vAnchorClient = {
     GetVAnchorTVLByChainsByDateRange,
     GetVAnchorsTVLByChainByDateRange,
     GetVAnchorsTVLByChainsByDateRange,
+    GetVAnchorByChainLatestTVLInTimeRange,
+    GetVAnchorsByChainLatestTVLInTimeRange,
+    GetVAnchorsByChainsLatestTVLInTimeRange,
   },
   TWL: {
     GetVAnchorTWLByChain,
