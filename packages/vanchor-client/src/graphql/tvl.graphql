@@ -175,3 +175,22 @@ query GetVAnchorsTotalValueLockedByDateRange(
     endInterval
   }
 }
+
+query GetVAnchorLatestTVLItemInTimeRange(
+  $endInterval: BigInt!
+  $startInterval: BigInt!
+  $vAnchorAddress: Bytes!
+) {
+  vanchorTotalValueLockedEvery15Mins(
+    orderBy: endInterval
+    orderDirection: desc
+    first: 1
+    where: {
+      endInterval_lte: $endInterval
+      startInterval_gte: $startInterval
+      vAnchorAddress: $vAnchorAddress
+    }
+  ) {
+    totalValueLocked
+  }
+}

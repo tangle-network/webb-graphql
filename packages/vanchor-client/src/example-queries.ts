@@ -2,6 +2,7 @@ import { SubgraphUrl } from './config';
 import {
   GetVAnchorsTVLByChainsByDateRange,
   GetVAnchorsTotalValueLockedByChains,
+  GetVAnchorsByChainsLatestTVLInTimeRange,
 } from './queries/tvl';
 import { GetVAnchorTWLByChainAndByToken } from './queries/twl';
 import {
@@ -26,31 +27,46 @@ import { GetVAnchorTransactionsByChains } from './queries/transaction';
 import { DateUtil } from './utils/date';
 
 const epochStart = 1692057600;
-const vAnchorAddress = '0x91eB86019FD8D7c5a9E31143D422850A13F670A3';
-const subgraphUrl = SubgraphUrl.vAnchorAthenaLocal;
-const subgraphUrl1 = SubgraphUrl.vAnchorDemeterLocal;
+const localVAnchorAddress = '0x91eB86019FD8D7c5a9E31143D422850A13F670A3';
+const liveVAnchorAddress = '0x9b5404eBc174a7eE36b0d248b2735382B320EC76';
+
+const tangleTestnetSubgraph = SubgraphUrl.vAnchorTangleTestnet;
+const liveSubgraphUrls = [
+  SubgraphUrl.vAnchorTangleTestnet,
+  SubgraphUrl.vAnchorOrbitAthena,
+  SubgraphUrl.vAnchorOrbitDemeter,
+  SubgraphUrl.vAnchorOrbitHermes,
+];
+
 const tokenSymbol = 'ETH';
 
 async function main() {
   // await getPoolOverviewTableData();
   // await getPoolWrappingTableData();
-  await getTransactions();
+  // await getTransactions();
+  await getLatestTVLByTimeRange();
 }
 
 async function getOverviewChipsData() {
   console.log(
-    await GetVAnchorsTotalValueLockedByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsTotalValueLockedByChains(
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress]
+    )
   );
   console.log(
-    await GetVAnchorsDepositByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsDepositByChains(
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress]
+    )
   );
 }
 
 async function getOverviewChartsData() {
   console.log(
     await GetVAnchorsDepositByChains15MinsInterval(
-      [subgraphUrl],
-      [vAnchorAddress],
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress],
       DateUtil.fromEpochToDate(
         DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
       ),
@@ -59,24 +75,24 @@ async function getOverviewChartsData() {
   );
   console.log(
     await GetVAnchorsTVLByChainsByDateRange(
-      [subgraphUrl],
-      [vAnchorAddress],
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress],
       epochStart,
       3
     )
   );
   console.log(
     await GetVAnchorsDepositByChainsByDateRange(
-      [subgraphUrl],
-      [vAnchorAddress],
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress],
       epochStart,
       3
     )
   );
   console.log(
     await GetVAnchorsWithdrawalByChainsByDateRange(
-      [subgraphUrl],
-      [vAnchorAddress],
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress],
       epochStart,
       3
     )
@@ -85,18 +101,24 @@ async function getOverviewChartsData() {
 
 async function getKeyMetricData() {
   console.log(
-    await GetVAnchorsRelayerFeeByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsRelayerFeeByChains(
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress]
+    )
   );
   console.log(
-    await GetVAnchorsWrappingFeeByChains([subgraphUrl], [vAnchorAddress])
+    await GetVAnchorsWrappingFeeByChains(
+      [tangleTestnetSubgraph],
+      [localVAnchorAddress]
+    )
   );
 }
 
 async function getPoolOverviewTableData() {
   console.log(
     await GetVAnchorDepositByChainAndByToken15MinsInterval(
-      subgraphUrl,
-      vAnchorAddress,
+      tangleTestnetSubgraph,
+      localVAnchorAddress,
       tokenSymbol,
       DateUtil.fromEpochToDate(
         DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
@@ -107,8 +129,8 @@ async function getPoolOverviewTableData() {
 
   console.log(
     await GetVAnchorWithdrawalByChainAndByToken15MinsInterval(
-      subgraphUrl1,
-      vAnchorAddress,
+      tangleTestnetSubgraph,
+      localVAnchorAddress,
       tokenSymbol,
       DateUtil.fromEpochToDate(
         DateUtil.fromDateToEpoch(new Date()) - 24 * 60 * 60
@@ -119,8 +141,8 @@ async function getPoolOverviewTableData() {
 
   console.log(
     await GetVAnchorRelayerFeeByChainAndByToken(
-      subgraphUrl,
-      vAnchorAddress,
+      tangleTestnetSubgraph,
+      localVAnchorAddress,
       tokenSymbol
     )
   );
@@ -129,16 +151,16 @@ async function getPoolOverviewTableData() {
 async function getPoolWrappingTableData() {
   console.log(
     await GetVAnchorTWLByChainAndByToken(
-      subgraphUrl,
-      vAnchorAddress,
+      tangleTestnetSubgraph,
+      localVAnchorAddress,
       tokenSymbol
     )
   );
 
   console.log(
     await GetVAnchorWrappingFeeByChainAndByToken(
-      subgraphUrl,
-      vAnchorAddress,
+      tangleTestnetSubgraph,
+      localVAnchorAddress,
       tokenSymbol
     )
   );
@@ -146,7 +168,22 @@ async function getPoolWrappingTableData() {
 
 async function getTransactions() {
   console.log(
-    await GetVAnchorTransactionsByChains([subgraphUrl], vAnchorAddress, 100)
+    await GetVAnchorTransactionsByChains(
+      [tangleTestnetSubgraph],
+      localVAnchorAddress,
+      100
+    )
+  );
+}
+
+async function getLatestTVLByTimeRange() {
+  console.log(
+    await GetVAnchorsByChainsLatestTVLInTimeRange(
+      liveSubgraphUrls,
+      [liveVAnchorAddress],
+      1692144000,
+      1694439930
+    )
   );
 }
 
