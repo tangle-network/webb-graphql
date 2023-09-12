@@ -219,7 +219,7 @@ export const GetVAnchorByChainLatestTVLInTimeRange = async (
   startInterval: number,
   endInterval: number
 ): Promise<LatestTVLUpdate> => {
-  const result = await sdk.GetVAnchorLatestTVLInTimeRange(
+  const tvlLatestItem = await sdk.GetVAnchorLatestTVLItemInTimeRange(
     {
       vAnchorAddress: vAnchorAddress.toLowerCase(),
       startInterval,
@@ -230,7 +230,7 @@ export const GetVAnchorByChainLatestTVLInTimeRange = async (
     }
   );
 
-  if (!result.vanchorTotalValueLockedEvery15Mins?.length) {
+  if (!tvlLatestItem.vanchorTotalValueLockedEvery15Mins?.length) {
     return {
       vAnchorAddress,
       totalValueLocked: null,
@@ -241,7 +241,8 @@ export const GetVAnchorByChainLatestTVLInTimeRange = async (
   return {
     vAnchorAddress,
     totalValueLocked: BigInt(
-      result.vanchorTotalValueLockedEvery15Mins[0].totalValueLocked
+      // there's only one item returned from the query
+      tvlLatestItem.vanchorTotalValueLockedEvery15Mins[0].totalValueLocked
     ),
     subgraphUrl,
   };

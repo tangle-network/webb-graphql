@@ -9622,11 +9622,11 @@ const merger = new(BareMerger as any)({
         },
         location: 'GetVAnchorsTotalValueLockedByDateRangeDocument.graphql'
       },{
-        document: GetVAnchorLatestTvlInTimeRangeDocument,
+        document: GetVAnchorLatestTvlItemInTimeRangeDocument,
         get rawSDL() {
-          return printWithCache(GetVAnchorLatestTvlInTimeRangeDocument);
+          return printWithCache(GetVAnchorLatestTvlItemInTimeRangeDocument);
         },
-        location: 'GetVAnchorLatestTvlInTimeRangeDocument.graphql'
+        location: 'GetVAnchorLatestTvlItemInTimeRangeDocument.graphql'
       },{
         document: GetVAnchorTwlDocument,
         get rawSDL() {
@@ -10219,14 +10219,14 @@ export type GetVAnchorsTotalValueLockedByDateRangeQueryVariables = Exact<{
 
 export type GetVAnchorsTotalValueLockedByDateRangeQuery = { vanchorTotalValueLockedEveryDays: Array<Pick<VAnchorTotalValueLockedEveryDay, 'totalValueLocked' | 'vAnchorAddress' | 'startInterval' | 'endInterval'>> };
 
-export type GetVAnchorLatestTVLInTimeRangeQueryVariables = Exact<{
+export type GetVAnchorLatestTVLItemInTimeRangeQueryVariables = Exact<{
   endInterval: Scalars['BigInt'];
   startInterval: Scalars['BigInt'];
   vAnchorAddress: Scalars['Bytes'];
 }>;
 
 
-export type GetVAnchorLatestTVLInTimeRangeQuery = { vanchorTotalValueLockedEvery15Mins: Array<Pick<VAnchorTotalValueLockedEvery15Min, 'totalValueLocked'>> };
+export type GetVAnchorLatestTVLItemInTimeRangeQuery = { vanchorTotalValueLockedEvery15Mins: Array<Pick<VAnchorTotalValueLockedEvery15Min, 'totalValueLocked'>> };
 
 export type GetVAnchorTWLQueryVariables = Exact<{
   vAnchorAddress: Scalars['ID'];
@@ -11018,8 +11018,8 @@ export const GetVAnchorsTotalValueLockedByDateRangeDocument = gql`
   }
 }
     ` as unknown as DocumentNode<GetVAnchorsTotalValueLockedByDateRangeQuery, GetVAnchorsTotalValueLockedByDateRangeQueryVariables>;
-export const GetVAnchorLatestTVLInTimeRangeDocument = gql`
-    query GetVAnchorLatestTVLInTimeRange($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
+export const GetVAnchorLatestTVLItemInTimeRangeDocument = gql`
+    query GetVAnchorLatestTVLItemInTimeRange($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorTotalValueLockedEvery15Mins(
     orderBy: endInterval
     orderDirection: desc
@@ -11029,7 +11029,7 @@ export const GetVAnchorLatestTVLInTimeRangeDocument = gql`
     totalValueLocked
   }
 }
-    ` as unknown as DocumentNode<GetVAnchorLatestTVLInTimeRangeQuery, GetVAnchorLatestTVLInTimeRangeQueryVariables>;
+    ` as unknown as DocumentNode<GetVAnchorLatestTVLItemInTimeRangeQuery, GetVAnchorLatestTVLItemInTimeRangeQueryVariables>;
 export const GetVAnchorTWLDocument = gql`
     query GetVAnchorTWL($vAnchorAddress: ID!) {
   vanchorTWL(id: $vAnchorAddress) {
@@ -11715,8 +11715,8 @@ export function getSdk<C, E>(requester: Requester<C, E>) {
     GetVAnchorsTotalValueLockedByDateRange(variables: GetVAnchorsTotalValueLockedByDateRangeQueryVariables, options?: C): Promise<GetVAnchorsTotalValueLockedByDateRangeQuery> {
       return requester<GetVAnchorsTotalValueLockedByDateRangeQuery, GetVAnchorsTotalValueLockedByDateRangeQueryVariables>(GetVAnchorsTotalValueLockedByDateRangeDocument, variables, options) as Promise<GetVAnchorsTotalValueLockedByDateRangeQuery>;
     },
-    GetVAnchorLatestTVLInTimeRange(variables: GetVAnchorLatestTVLInTimeRangeQueryVariables, options?: C): Promise<GetVAnchorLatestTVLInTimeRangeQuery> {
-      return requester<GetVAnchorLatestTVLInTimeRangeQuery, GetVAnchorLatestTVLInTimeRangeQueryVariables>(GetVAnchorLatestTVLInTimeRangeDocument, variables, options) as Promise<GetVAnchorLatestTVLInTimeRangeQuery>;
+    GetVAnchorLatestTVLItemInTimeRange(variables: GetVAnchorLatestTVLItemInTimeRangeQueryVariables, options?: C): Promise<GetVAnchorLatestTVLItemInTimeRangeQuery> {
+      return requester<GetVAnchorLatestTVLItemInTimeRangeQuery, GetVAnchorLatestTVLItemInTimeRangeQueryVariables>(GetVAnchorLatestTVLItemInTimeRangeDocument, variables, options) as Promise<GetVAnchorLatestTVLItemInTimeRangeQuery>;
     },
     GetVAnchorTWL(variables: GetVAnchorTWLQueryVariables, options?: C): Promise<GetVAnchorTWLQuery> {
       return requester<GetVAnchorTWLQuery, GetVAnchorTWLQueryVariables>(GetVAnchorTWLDocument, variables, options) as Promise<GetVAnchorTWLQuery>;

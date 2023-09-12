@@ -176,7 +176,7 @@ query GetVAnchorsTotalValueLockedByDateRange(
   }
 }
 
-query GetVAnchorLatestTVLInTimeRange(
+query GetVAnchorLatestTVLItemInTimeRange(
   $endInterval: BigInt!
   $startInterval: BigInt!
   $vAnchorAddress: Bytes!
