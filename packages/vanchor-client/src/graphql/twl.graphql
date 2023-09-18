@@ -27,7 +27,7 @@ query GetVAnchorTWLEvery15Mins(
 ) {
   vanchorTWLEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -46,7 +46,7 @@ query GetVAnchorsTWLEvery15Mins(
 ) {
   vanchorTWLEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -69,7 +69,7 @@ query GetVAnchorTWLByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {
@@ -87,7 +87,7 @@ query GetVAnchorTWLEveryDays(
 ) {
   vanchorTWLEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -106,7 +106,7 @@ query GetVAnchorsTWLEveryDays(
 ) {
   vanchorTWLEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -129,7 +129,7 @@ query GetVAnchorTWLByTokenEveryDays(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {

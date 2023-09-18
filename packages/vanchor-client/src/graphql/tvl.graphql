@@ -30,7 +30,7 @@ query GetVAnchorTotalValueLockedEvery15Mins(
 ) {
   vanchorTotalValueLockedEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -49,7 +49,7 @@ query GetVAnchorsTotalValueLockedEvery15Mins(
 ) {
   vanchorTotalValueLockedEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -72,7 +72,7 @@ query GetVAnchorTotalValueLockedByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {
@@ -90,7 +90,7 @@ query GetVAnchorTotalValueLockedEveryDays(
 ) {
   vanchorTotalValueLockedEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -109,7 +109,7 @@ query GetVAnchorsTotalValueLockedEveryDays(
 ) {
   vanchorTotalValueLockedEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -132,7 +132,7 @@ query GetVAnchorTotalValueLockedByTokenEveryDays(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {
@@ -186,7 +186,7 @@ query GetVAnchorLatestTVLItemInTimeRange(
     orderDirection: desc
     first: 1
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }

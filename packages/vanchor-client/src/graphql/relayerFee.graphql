@@ -36,7 +36,7 @@ query GetVAnchorRelayerFeeEvery15Mins(
 ) {
   vanchorRelayerFeeEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -57,7 +57,7 @@ query GetVAnchorsRelayerFeeEvery15Mins(
 ) {
   vanchorRelayerFeeByTokenEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -82,7 +82,7 @@ query GetVAnchorRelayerFeeByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {
@@ -102,7 +102,7 @@ query GetVAnchorRelayerFeeEveryDays(
 ) {
   vanchorRelayerFeeEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -123,7 +123,7 @@ query GetVAnchorsRelayerFeeEveryDays(
 ) {
   vanchorRelayerFeeByTokenEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -148,7 +148,7 @@ query GetVAnchorRelayerFeeByTokenEveryDays(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {
