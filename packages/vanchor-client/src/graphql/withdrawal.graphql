@@ -30,7 +30,7 @@ query GetVAnchorWithdrawalEvery15Mins(
 ) {
   vanchorWithdrawalEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -49,7 +49,7 @@ query GetVAnchorsWithdrawalEvery15Mins(
 ) {
   vanchorWithdrawalEvery15Mins(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -72,7 +72,7 @@ query GetVAnchorWithdrawalByTokenEvery15Mins(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {
@@ -90,7 +90,7 @@ query GetVAnchorWithdrawalEveryDays(
 ) {
   vanchorWithdrawalEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress: $vAnchorAddress
     }
@@ -109,7 +109,7 @@ query GetVAnchorsWithdrawalEveryDays(
 ) {
   vanchorWithdrawalEveryDays(
     where: {
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
@@ -132,7 +132,7 @@ query GetVAnchorWithdrawalByTokenEveryDays(
     where: {
       tokenSymbol: $tokenSymbol
       vAnchorAddress: $vAnchorAddress
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       startInterval_gte: $startInterval
     }
   ) {

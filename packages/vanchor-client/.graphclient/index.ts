@@ -10633,7 +10633,7 @@ export const GetVAnchorDepositByTokensDocument = gql`
 export const GetVAnchorDepositEvery15MinsDocument = gql`
     query GetVAnchorDepositEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorDepositEvery15Mins(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     endInterval
@@ -10645,7 +10645,7 @@ export const GetVAnchorDepositEvery15MinsDocument = gql`
 export const GetVAnchorsDepositEvery15MinsDocument = gql`
     query GetVAnchorsDepositEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorDepositEvery15Mins(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -10658,7 +10658,7 @@ export const GetVAnchorsDepositEvery15MinsDocument = gql`
 export const GetVAnchorDepositByTokenEvery15MinsDocument = gql`
     query GetVAnchorDepositByTokenEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
   vanchorDepositByTokenEvery15Mins(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
   ) {
     deposit
     startInterval
@@ -10670,7 +10670,7 @@ export const GetVAnchorDepositByTokenEvery15MinsDocument = gql`
 export const GetVAnchorDepositEveryDaysDocument = gql`
     query GetVAnchorDepositEveryDays($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorDepositEveryDays(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     endInterval
@@ -10682,7 +10682,7 @@ export const GetVAnchorDepositEveryDaysDocument = gql`
 export const GetVAnchorsDepositEveryDaysDocument = gql`
     query GetVAnchorsDepositEveryDays($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorDepositEveryDays(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -10695,7 +10695,7 @@ export const GetVAnchorsDepositEveryDaysDocument = gql`
 export const GetVAnchorDepositByTokenEveryDaysDocument = gql`
     query GetVAnchorDepositByTokenEveryDays($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
   vanchorDepositByTokenEveryDays(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
   ) {
     deposit
     startInterval
@@ -10764,7 +10764,7 @@ export const GetVAnchorRelayerFeeByTokensDocument = gql`
 export const GetVAnchorRelayerFeeEvery15MinsDocument = gql`
     query GetVAnchorRelayerFeeEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorRelayerFeeEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     totalFees
@@ -10778,7 +10778,7 @@ export const GetVAnchorRelayerFeeEvery15MinsDocument = gql`
 export const GetVAnchorsRelayerFeeEvery15MinsDocument = gql`
     query GetVAnchorsRelayerFeeEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorRelayerFeeByTokenEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -10793,7 +10793,7 @@ export const GetVAnchorsRelayerFeeEvery15MinsDocument = gql`
 export const GetVAnchorRelayerFeeByTokenEvery15MinsDocument = gql`
     query GetVAnchorRelayerFeeByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt, $startInterval: BigInt) {
   vanchorRelayerFeeByTokenEvery15Mins(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     totalFees
     txFees
@@ -10807,7 +10807,7 @@ export const GetVAnchorRelayerFeeByTokenEvery15MinsDocument = gql`
 export const GetVAnchorRelayerFeeEveryDaysDocument = gql`
     query GetVAnchorRelayerFeeEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorRelayerFeeEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     totalFees
@@ -10821,7 +10821,7 @@ export const GetVAnchorRelayerFeeEveryDaysDocument = gql`
 export const GetVAnchorsRelayerFeeEveryDaysDocument = gql`
     query GetVAnchorsRelayerFeeEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorRelayerFeeByTokenEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -10836,7 +10836,7 @@ export const GetVAnchorsRelayerFeeEveryDaysDocument = gql`
 export const GetVAnchorRelayerFeeByTokenEveryDaysDocument = gql`
     query GetVAnchorRelayerFeeByTokenEveryDays($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt, $startInterval: BigInt) {
   vanchorRelayerFeeByTokenEveryDays(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     totalFees
     txFees
@@ -10921,7 +10921,7 @@ export const GetVAnchorTotalValueLockedByTokensDocument = gql`
 export const GetVAnchorTotalValueLockedEvery15MinsDocument = gql`
     query GetVAnchorTotalValueLockedEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorTotalValueLockedEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     totalValueLocked
@@ -10933,7 +10933,7 @@ export const GetVAnchorTotalValueLockedEvery15MinsDocument = gql`
 export const GetVAnchorsTotalValueLockedEvery15MinsDocument = gql`
     query GetVAnchorsTotalValueLockedEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorTotalValueLockedEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -10946,7 +10946,7 @@ export const GetVAnchorsTotalValueLockedEvery15MinsDocument = gql`
 export const GetVAnchorTotalValueLockedByTokenEvery15MinsDocument = gql`
     query GetVAnchorTotalValueLockedByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
   vanchorTotalValueLockedByTokenEvery15Mins(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     totalValueLocked
     startInterval
@@ -10958,7 +10958,7 @@ export const GetVAnchorTotalValueLockedByTokenEvery15MinsDocument = gql`
 export const GetVAnchorTotalValueLockedEveryDaysDocument = gql`
     query GetVAnchorTotalValueLockedEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorTotalValueLockedEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     totalValueLocked
@@ -10970,7 +10970,7 @@ export const GetVAnchorTotalValueLockedEveryDaysDocument = gql`
 export const GetVAnchorsTotalValueLockedEveryDaysDocument = gql`
     query GetVAnchorsTotalValueLockedEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorTotalValueLockedEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -10983,7 +10983,7 @@ export const GetVAnchorsTotalValueLockedEveryDaysDocument = gql`
 export const GetVAnchorTotalValueLockedByTokenEveryDaysDocument = gql`
     query GetVAnchorTotalValueLockedByTokenEveryDays($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
   vanchorTotalValueLockedByTokenEveryDays(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     totalValueLocked
     startInterval
@@ -11024,7 +11024,7 @@ export const GetVAnchorLatestTVLItemInTimeRangeDocument = gql`
     orderBy: endInterval
     orderDirection: desc
     first: 1
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     totalValueLocked
   }
@@ -11058,7 +11058,7 @@ export const GetVAnchorTWLByTokensDocument = gql`
 export const GetVAnchorTWLEvery15MinsDocument = gql`
     query GetVAnchorTWLEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorTWLEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     total
@@ -11070,7 +11070,7 @@ export const GetVAnchorTWLEvery15MinsDocument = gql`
 export const GetVAnchorsTWLEvery15MinsDocument = gql`
     query GetVAnchorsTWLEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorTWLEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11083,7 +11083,7 @@ export const GetVAnchorsTWLEvery15MinsDocument = gql`
 export const GetVAnchorTWLByTokenEvery15MinsDocument = gql`
     query GetVAnchorTWLByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
   vanchorTWLByTokenEvery15Mins(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     total
     startInterval
@@ -11095,7 +11095,7 @@ export const GetVAnchorTWLByTokenEvery15MinsDocument = gql`
 export const GetVAnchorTWLEveryDaysDocument = gql`
     query GetVAnchorTWLEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorTWLEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     total
@@ -11107,7 +11107,7 @@ export const GetVAnchorTWLEveryDaysDocument = gql`
 export const GetVAnchorsTWLEveryDaysDocument = gql`
     query GetVAnchorsTWLEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorTWLEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11120,7 +11120,7 @@ export const GetVAnchorsTWLEveryDaysDocument = gql`
 export const GetVAnchorTWLByTokenEveryDaysDocument = gql`
     query GetVAnchorTWLByTokenEveryDays($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
   vanchorTWLByTokenEveryDays(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     total
     startInterval
@@ -11183,7 +11183,7 @@ export const GetVAnchorVolumeByTokensDocument = gql`
 export const GetVAnchorVolumeEvery15MinsDocument = gql`
     query GetVAnchorVolumeEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorVolumeEvery15Mins(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     endInterval
@@ -11195,7 +11195,7 @@ export const GetVAnchorVolumeEvery15MinsDocument = gql`
 export const GetVAnchorsVolumeEvery15MinsDocument = gql`
     query GetVAnchorsVolumeEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorVolumeEvery15Mins(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11208,7 +11208,7 @@ export const GetVAnchorsVolumeEvery15MinsDocument = gql`
 export const GetVAnchorVolumeByTokenEveryDaysDocument = gql`
     query GetVAnchorVolumeByTokenEveryDays($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
   vanchorVolumeByTokenEveryDays(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
   ) {
     volume
     startInterval
@@ -11220,7 +11220,7 @@ export const GetVAnchorVolumeByTokenEveryDaysDocument = gql`
 export const GetVAnchorVolumeEveryDaysDocument = gql`
     query GetVAnchorVolumeEveryDays($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorVolumeEveryDays(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     endInterval
@@ -11232,7 +11232,7 @@ export const GetVAnchorVolumeEveryDaysDocument = gql`
 export const GetVAnchorsVolumeEveryDaysDocument = gql`
     query GetVAnchorsVolumeEveryDays($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorVolumeEveryDays(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11245,7 +11245,7 @@ export const GetVAnchorsVolumeEveryDaysDocument = gql`
 export const GetVAnchorVolumeByTokenEvery15MinsDocument = gql`
     query GetVAnchorVolumeByTokenEvery15Mins($startInterval: BigInt!, $endInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
   vanchorVolumeByTokenEvery15Mins(
-    where: {startInterval_gte: $startInterval, endInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
+    where: {startInterval_gte: $startInterval, startInterval_lte: $endInterval, vAnchorAddress: $vAnchorAddress, tokenSymbol: $tokenSymbol}
   ) {
     volume
     startInterval
@@ -11308,7 +11308,7 @@ export const GetVAnchorWithdrawalByTokensDocument = gql`
 export const GetVAnchorWithdrawalEvery15MinsDocument = gql`
     query GetVAnchorWithdrawalEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorWithdrawalEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     withdrawal
@@ -11320,7 +11320,7 @@ export const GetVAnchorWithdrawalEvery15MinsDocument = gql`
 export const GetVAnchorsWithdrawalEvery15MinsDocument = gql`
     query GetVAnchorsWithdrawalEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorWithdrawalEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11333,7 +11333,7 @@ export const GetVAnchorsWithdrawalEvery15MinsDocument = gql`
 export const GetVAnchorWithdrawalByTokenEvery15MinsDocument = gql`
     query GetVAnchorWithdrawalByTokenEvery15Mins($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
   vanchorWithdrawalByTokenEvery15Mins(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     withdrawal
     startInterval
@@ -11345,7 +11345,7 @@ export const GetVAnchorWithdrawalByTokenEvery15MinsDocument = gql`
 export const GetVAnchorWithdrawalEveryDaysDocument = gql`
     query GetVAnchorWithdrawalEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorWithdrawalEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     withdrawal
@@ -11357,7 +11357,7 @@ export const GetVAnchorWithdrawalEveryDaysDocument = gql`
 export const GetVAnchorsWithdrawalEveryDaysDocument = gql`
     query GetVAnchorsWithdrawalEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorWithdrawalEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11370,7 +11370,7 @@ export const GetVAnchorsWithdrawalEveryDaysDocument = gql`
 export const GetVAnchorWithdrawalByTokenEveryDaysDocument = gql`
     query GetVAnchorWithdrawalByTokenEveryDays($tokenSymbol: String!, $vAnchorAddress: Bytes!, $endInterval: BigInt!, $startInterval: BigInt!) {
   vanchorWithdrawalByTokenEveryDays(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     withdrawal
     startInterval
@@ -11433,7 +11433,7 @@ export const GetVAnchorWrappingFeeByTokensDocument = gql`
 export const GetVAnchorWrappingFeeEvery15MinsDocument = gql`
     query GetVAnchorWrappingFeeEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorWrappingFeeEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     fees
@@ -11445,7 +11445,7 @@ export const GetVAnchorWrappingFeeEvery15MinsDocument = gql`
 export const GetVAnchorsWrappingFeeEvery15MinsDocument = gql`
     query GetVAnchorsWrappingFeeEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorWrappingFeeEvery15Mins(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11458,7 +11458,7 @@ export const GetVAnchorsWrappingFeeEvery15MinsDocument = gql`
 export const GetVAnchorWrappingFeeByTokenEvery15MinsDocument = gql`
     query GetVAnchorWrappingFeeByTokenEvery15Mins($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
   vanchorWrappingFeeByTokenEvery15Mins(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     fees
     startInterval
@@ -11470,7 +11470,7 @@ export const GetVAnchorWrappingFeeByTokenEvery15MinsDocument = gql`
 export const GetVAnchorWrappingFeeEveryDaysDocument = gql`
     query GetVAnchorWrappingFeeEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!) {
   vanchorWrappingFeeEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress: $vAnchorAddress}
   ) {
     startInterval
     fees
@@ -11482,7 +11482,7 @@ export const GetVAnchorWrappingFeeEveryDaysDocument = gql`
 export const GetVAnchorsWrappingFeeEveryDaysDocument = gql`
     query GetVAnchorsWrappingFeeEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddresses: [Bytes!]!) {
   vanchorWrappingFeeEveryDays(
-    where: {endInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
+    where: {startInterval_lte: $endInterval, startInterval_gte: $startInterval, vAnchorAddress_in: $vAnchorAddresses}
   ) {
     id
     startInterval
@@ -11495,7 +11495,7 @@ export const GetVAnchorsWrappingFeeEveryDaysDocument = gql`
 export const GetVAnchorWrappingFeeByTokenEveryDaysDocument = gql`
     query GetVAnchorWrappingFeeByTokenEveryDays($endInterval: BigInt!, $startInterval: BigInt!, $vAnchorAddress: Bytes!, $tokenSymbol: String!) {
   vanchorWrappingFeeByTokenEveryDays(
-    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, endInterval_lte: $endInterval, startInterval_gte: $startInterval}
+    where: {tokenSymbol: $tokenSymbol, vAnchorAddress: $vAnchorAddress, startInterval_lte: $endInterval, startInterval_gte: $startInterval}
   ) {
     fees
     startInterval

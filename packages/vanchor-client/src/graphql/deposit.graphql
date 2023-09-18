@@ -31,7 +31,7 @@ query GetVAnchorDepositEvery15Mins(
   vanchorDepositEvery15Mins(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
     }
   ) {
@@ -50,7 +50,7 @@ query GetVAnchorsDepositEvery15Mins(
   vanchorDepositEvery15Mins(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
   ) {
@@ -71,7 +71,7 @@ query GetVAnchorDepositByTokenEvery15Mins(
   vanchorDepositByTokenEvery15Mins(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
       tokenSymbol: $tokenSymbol
     }
@@ -91,7 +91,7 @@ query GetVAnchorDepositEveryDays(
   vanchorDepositEveryDays(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
     }
   ) {
@@ -110,7 +110,7 @@ query GetVAnchorsDepositEveryDays(
   vanchorDepositEveryDays(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
   ) {
@@ -131,7 +131,7 @@ query GetVAnchorDepositByTokenEveryDays(
   vanchorDepositByTokenEveryDays(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
       tokenSymbol: $tokenSymbol
     }

@@ -28,7 +28,7 @@ query GetVAnchorVolumeEvery15Mins(
   vanchorVolumeEvery15Mins(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
     }
   ) {
@@ -47,7 +47,7 @@ query GetVAnchorsVolumeEvery15Mins(
   vanchorVolumeEvery15Mins(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
   ) {
@@ -68,7 +68,7 @@ query GetVAnchorVolumeByTokenEveryDays(
   vanchorVolumeByTokenEveryDays(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
       tokenSymbol: $tokenSymbol
     }
@@ -88,7 +88,7 @@ query GetVAnchorVolumeEveryDays(
   vanchorVolumeEveryDays(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
     }
   ) {
@@ -107,7 +107,7 @@ query GetVAnchorsVolumeEveryDays(
   vanchorVolumeEveryDays(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress_in: $vAnchorAddresses
     }
   ) {
@@ -128,7 +128,7 @@ query GetVAnchorVolumeByTokenEvery15Mins(
   vanchorVolumeByTokenEvery15Mins(
     where: {
       startInterval_gte: $startInterval
-      endInterval_lte: $endInterval
+      startInterval_lte: $endInterval
       vAnchorAddress: $vAnchorAddress
       tokenSymbol: $tokenSymbol
     }
