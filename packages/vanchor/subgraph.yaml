@@ -7,8 +7,8 @@ dataSources:
     network: Tangle
     source:
       abi: FungibleTokenWrapper
-      address: "0x981d8781bfCCBdB7C9EF2ABbe6DFa791a85f6Ea5"
-      startBlock: 142476
+      address: "0xEcb698796cf96be16D7f5Bc8997fd13677409d2b"
+      startBlock: 665183
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -38,8 +38,8 @@ dataSources:
     network: Tangle
     source:
       abi: VAnchor
-      address: "0x9b5404eBc174a7eE36b0d248b2735382B320EC76"
-      startBlock: 142000
+      address: "0xFb7dAF524a1cD3a9b6e08412eC99C1F135e578cb"
+      startBlock: 665187
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
