@@ -20,7 +20,7 @@ provider = [{ label = "demeter", url = "https://demeter-testnet.webb.tools", fea
 
 [chains.Tangle]
 shard = "primary"
-provider = [{ label = "tangle", url = "https://tangle-standalone-archive.webb.tools", features= ["archive", "traces"]}]
+provider = [{ label = "tangle", url = "https://rpc-archive.tangle.tools", features= ["archive", "traces"]}]
 
 [deployment]
 shard = "primary"
