@@ -58,7 +58,7 @@ export const GetVAnchorRelayerFeeByChain15MinsInterval = async (
   });
 };
 
-export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
+export const GetVAnchorRelayerFeeByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -78,7 +78,7 @@ export const GetVAnchorRelayerFeeByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsRelayerFeeByChain15MinsInterval = async (
@@ -133,7 +133,7 @@ export const GetVAnchorsRelayerFeeByChain15MinsInterval = async (
   return totalFeesByVAnchorHistoryItems;
 };
 
-export const GetVAnchorsRelayerFeeByChains15MinsInterval = async (
+export const GetVAnchorsRelayerFeeByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -153,7 +153,7 @@ export const GetVAnchorsRelayerFeeByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorRelayerFeeByChainAndByToken15MinsInterval = async (
@@ -193,7 +193,7 @@ export const GetVAnchorRelayerFeeByChainAndByToken15MinsInterval = async (
   });
 };
 
-export const GetVAnchorRelayerFeeByChainsAndByToken15MinsInterval = async (
+export const GetVAnchorRelayerFeeByChainsAndByToken15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -216,5 +216,5 @@ export const GetVAnchorRelayerFeeByChainsAndByToken15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

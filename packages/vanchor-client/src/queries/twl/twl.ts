@@ -45,7 +45,7 @@ export const GetVAnchorTWLByChain = async (
   };
 };
 
-export const GetVAnchorTWLByChains = async (
+export const GetVAnchorTWLByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
 ): Promise<Array<TWLByChain>> => {
@@ -55,7 +55,7 @@ export const GetVAnchorTWLByChains = async (
     promises.push(GetVAnchorTWLByChain(subgraphUrl, vAnchorAddress));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsTWLByChain = async (
@@ -83,7 +83,7 @@ export const GetVAnchorsTWLByChain = async (
   });
 };
 
-export const GetVAnchorsTWLByChains = async (
+export const GetVAnchorsTWLByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
 ): Promise<Array<Array<TWLByVAnchor>>> => {
@@ -93,7 +93,7 @@ export const GetVAnchorsTWLByChains = async (
     promises.push(GetVAnchorsTWLByChain(subgraphUrl, vanchorAddresses));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorTWLByChainAndByToken = async (
@@ -121,7 +121,7 @@ export const GetVAnchorTWLByChainAndByToken = async (
   };
 };
 
-export const GetVAnchorTWLByChainsAndByToken = async (
+export const GetVAnchorTWLByChainsAndByToken = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
@@ -134,5 +134,5 @@ export const GetVAnchorTWLByChainsAndByToken = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

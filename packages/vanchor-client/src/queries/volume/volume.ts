@@ -19,7 +19,7 @@ export const GetVAnchorVolumeByChain = async (
   return BigInt(result.vanchorVolume.volume);
 };
 
-export const GetVAnchorVolumeByChains = async (
+export const GetVAnchorVolumeByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
 ): Promise<Array<bigint | null>> => {
@@ -29,7 +29,7 @@ export const GetVAnchorVolumeByChains = async (
     promises.push(GetVAnchorVolumeByChain(subgraphUrl, vAnchorAddress));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsVolumeByChain = async (
@@ -50,7 +50,7 @@ export const GetVAnchorsVolumeByChain = async (
   );
 };
 
-export const GetVAnchorsVolumeByChains = async (
+export const GetVAnchorsVolumeByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
 ): Promise<Array<Array<bigint | null>>> => {
@@ -60,7 +60,7 @@ export const GetVAnchorsVolumeByChains = async (
     promises.push(GetVAnchorsVolumeByChain(subgraphUrl, vanchorAddresses));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorVolumeByChainAndByToken = async (
@@ -88,7 +88,7 @@ export const GetVAnchorVolumeByChainAndByToken = async (
   return BigInt(result.vanchorVolumeByTokens[0].volume);
 };
 
-export const GetVAnchorVolumeByChainsAndByToken = async (
+export const GetVAnchorVolumeByChainsAndByToken = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
@@ -105,5 +105,5 @@ export const GetVAnchorVolumeByChainsAndByToken = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

@@ -39,7 +39,7 @@ export const GetVAnchorWrappingFeeByChain = async (
   };
 };
 
-export const GetVAnchorWrappingFeeByChains = async (
+export const GetVAnchorWrappingFeeByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
 ): Promise<Array<WrappingFeeByChain>> => {
@@ -49,7 +49,7 @@ export const GetVAnchorWrappingFeeByChains = async (
     promises.push(GetVAnchorWrappingFeeByChain(subgraphUrl, vAnchorAddress));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsWrappingFeeByChain = async (
@@ -79,7 +79,7 @@ export const GetVAnchorsWrappingFeeByChain = async (
   });
 };
 
-export const GetVAnchorsWrappingFeeByChains = async (
+export const GetVAnchorsWrappingFeeByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
 ): Promise<Array<Array<WrappingFeeByVAnchor>>> => {
@@ -89,7 +89,7 @@ export const GetVAnchorsWrappingFeeByChains = async (
     promises.push(GetVAnchorsWrappingFeeByChain(subgraphUrl, vanchorAddresses));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorWrappingFeeByChainAndByToken = async (
@@ -117,7 +117,7 @@ export const GetVAnchorWrappingFeeByChainAndByToken = async (
   };
 };
 
-export const GetVAnchorWrappingFeeByChainsAndByToken = async (
+export const GetVAnchorWrappingFeeByChainsAndByToken = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
@@ -134,5 +134,5 @@ export const GetVAnchorWrappingFeeByChainsAndByToken = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

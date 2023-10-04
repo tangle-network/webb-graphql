@@ -66,7 +66,7 @@ export const GetVAnchorRelayerFeeByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorRelayerFeeByChainsDayInterval = async (
+export const GetVAnchorRelayerFeeByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -85,7 +85,7 @@ export const GetVAnchorRelayerFeeByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsRelayerFeeByChainDayInterval = async (
@@ -140,7 +140,7 @@ export const GetVAnchorsRelayerFeeByChainDayInterval = async (
   return totalFeesByVAnchorHistoryItems;
 };
 
-export const GetVAnchorsRelayerFeeByChainsDayInterval = async (
+export const GetVAnchorsRelayerFeeByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -160,7 +160,7 @@ export const GetVAnchorsRelayerFeeByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorRelayerFeeByChainAndByTokenDayInterval = async (
@@ -200,7 +200,7 @@ export const GetVAnchorRelayerFeeByChainAndByTokenDayInterval = async (
   });
 };
 
-export const GetVAnchorRelayerFeeByChainsAndByTokenDayInterval = async (
+export const GetVAnchorRelayerFeeByChainsAndByTokenDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -223,7 +223,7 @@ export const GetVAnchorRelayerFeeByChainsAndByTokenDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorRelayerFeeByChainByDateRange = async (
@@ -272,7 +272,7 @@ export const GetVAnchorRelayerFeeByChainByDateRange = async (
   return relayerFeeMapByDate;
 };
 
-export const GetVAnchorRelayerFeeByChainsByDateRange = async (
+export const GetVAnchorRelayerFeeByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddress: string,
   epochStart: number,
@@ -291,7 +291,7 @@ export const GetVAnchorRelayerFeeByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsRelayerFeeByChainByDateRange = async (
@@ -342,7 +342,7 @@ export const GetVAnchorsRelayerFeeByChainByDateRange = async (
   return relayerFeeMapByDate;
 };
 
-export const GetVAnchorsRelayerFeeByChainsByDateRange = async (
+export const GetVAnchorsRelayerFeeByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   epochStart: number,
@@ -361,5 +361,5 @@ export const GetVAnchorsRelayerFeeByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

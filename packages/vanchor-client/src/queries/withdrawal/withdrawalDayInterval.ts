@@ -56,7 +56,7 @@ export const GetVAnchorWithdrawalByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorWithdrawalByChainsDayInterval = async (
+export const GetVAnchorWithdrawalByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -75,7 +75,7 @@ export const GetVAnchorWithdrawalByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsWithdrawalByChainDayInterval = async (
@@ -124,7 +124,7 @@ export const GetVAnchorsWithdrawalByChainDayInterval = async (
   return withdrawalByVAnchorDayIntervalItems;
 };
 
-export const GetVAnchorsWithdrawalByChainsDayInterval = async (
+export const GetVAnchorsWithdrawalByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -144,7 +144,7 @@ export const GetVAnchorsWithdrawalByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorWithdrawalByChainAndByTokenDayInterval = async (
@@ -182,7 +182,7 @@ export const GetVAnchorWithdrawalByChainAndByTokenDayInterval = async (
   });
 };
 
-export const GetVAnchorWithdrawalByChainsAndByTokenDayInterval = async (
+export const GetVAnchorWithdrawalByChainsAndByTokenDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -205,7 +205,7 @@ export const GetVAnchorWithdrawalByChainsAndByTokenDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorWithdrawalByChainByDateRange = async (
@@ -244,7 +244,7 @@ export const GetVAnchorWithdrawalByChainByDateRange = async (
   return withdrawalMapByDate;
 };
 
-export const GetVAnchorWithdrawalByChainsByDateRange = async (
+export const GetVAnchorWithdrawalByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddress: string,
   epochStart: number,
@@ -263,7 +263,7 @@ export const GetVAnchorWithdrawalByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsWithdrawalByChainByDateRange = async (
@@ -304,7 +304,7 @@ export const GetVAnchorsWithdrawalByChainByDateRange = async (
   return withdrawalMapByDate;
 };
 
-export const GetVAnchorsWithdrawalByChainsByDateRange = async (
+export const GetVAnchorsWithdrawalByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   epochStart: number,
@@ -323,5 +323,5 @@ export const GetVAnchorsWithdrawalByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

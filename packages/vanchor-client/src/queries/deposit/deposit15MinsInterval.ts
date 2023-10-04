@@ -52,7 +52,7 @@ export const GetVAnchorDepositByChain15MinsInterval = async (
   });
 };
 
-export const GetVAnchorDepositByChains15MinsInterval = async (
+export const GetVAnchorDepositByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -71,7 +71,7 @@ export const GetVAnchorDepositByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsDepositByChain15MinsInterval = async (
@@ -120,7 +120,7 @@ export const GetVAnchorsDepositByChain15MinsInterval = async (
   return depositByVAnchor15MinsIntervalItems;
 };
 
-export const GetVAnchorsDepositByChains15MinsInterval = async (
+export const GetVAnchorsDepositByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -140,7 +140,7 @@ export const GetVAnchorsDepositByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
@@ -178,7 +178,7 @@ export const GetVAnchorDepositByChainAndByToken15MinsInterval = async (
   });
 };
 
-export const GetVAnchorDepositByChainsAndByToken15MinsInterval = async (
+export const GetVAnchorDepositByChainsAndByToken15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -201,5 +201,5 @@ export const GetVAnchorDepositByChainsAndByToken15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

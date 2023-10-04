@@ -39,7 +39,7 @@ export const GetVAnchorWithdrawalByChain = async (
   };
 };
 
-export const GetVAnchorWithdrawalByChains = async (
+export const GetVAnchorWithdrawalByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
 ): Promise<Array<WithdrawalByChain>> => {
@@ -49,7 +49,7 @@ export const GetVAnchorWithdrawalByChains = async (
     promises.push(GetVAnchorWithdrawalByChain(subgraphUrl, vAnchorAddress));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsWithdrawalByChain = async (
@@ -76,7 +76,7 @@ export const GetVAnchorsWithdrawalByChain = async (
   });
 };
 
-export const GetVAnchorsWithdrawalByChains = async (
+export const GetVAnchorsWithdrawalByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
 ): Promise<Array<Array<WithdrawalByVAnchor>>> => {
@@ -86,7 +86,7 @@ export const GetVAnchorsWithdrawalByChains = async (
     promises.push(GetVAnchorsWithdrawalByChain(subgraphUrl, vanchorAddresses));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorWithdrawalByChainAndByToken = async (
@@ -114,7 +114,7 @@ export const GetVAnchorWithdrawalByChainAndByToken = async (
   };
 };
 
-export const GetVAnchorWithdrawalByChainsAndByToken = async (
+export const GetVAnchorWithdrawalByChainsAndByToken = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
@@ -131,5 +131,5 @@ export const GetVAnchorWithdrawalByChainsAndByToken = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

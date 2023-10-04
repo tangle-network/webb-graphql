@@ -56,7 +56,7 @@ export const GetVAnchorVolumeByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorVolumeByChainsDayInterval = async (
+export const GetVAnchorVolumeByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -75,7 +75,7 @@ export const GetVAnchorVolumeByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsVolumeByChainDayInterval = async (
@@ -124,7 +124,7 @@ export const GetVAnchorsVolumeByChainDayInterval = async (
   return volumeByVAnchorDayIntervalItems;
 };
 
-export const GetVAnchorsVolumeByChainsDayInterval = async (
+export const GetVAnchorsVolumeByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -143,7 +143,7 @@ export const GetVAnchorsVolumeByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorVolumeByChainAndByTokenDayInterval = async (
@@ -181,7 +181,7 @@ export const GetVAnchorVolumeByChainAndByTokenDayInterval = async (
   });
 };
 
-export const GetVAnchorVolumeByChainsAndByTokenDayInterval = async (
+export const GetVAnchorVolumeByChainsAndByTokenDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -204,7 +204,7 @@ export const GetVAnchorVolumeByChainsAndByTokenDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorVolumeByChainByDateRange = async (
@@ -241,7 +241,7 @@ export const GetVAnchorVolumeByChainByDateRange = async (
   return volumeMapByDate;
 };
 
-export const GetVAnchorVolumeByChainsByDateRange = async (
+export const GetVAnchorVolumeByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddress: string,
   epochStart: number,
@@ -260,7 +260,7 @@ export const GetVAnchorVolumeByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsVolumeByChainByDateRange = async (
@@ -299,7 +299,7 @@ export const GetVAnchorsVolumeByChainByDateRange = async (
   return volumeMapByDate;
 };
 
-export const GetVAnchorsVolumeByChainsByDateRange = async (
+export const GetVAnchorsVolumeByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   epochStart: number,
@@ -318,5 +318,5 @@ export const GetVAnchorsVolumeByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
