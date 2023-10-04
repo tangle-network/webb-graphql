@@ -58,7 +58,7 @@ export const GetVAnchorTotalValueLockedByChain15MinsInterval = async (
   });
 };
 
-export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
+export const GetVAnchorTotalValueLockedByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -79,7 +79,7 @@ export const GetVAnchorTotalValueLockedByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsTotalValueLockedByChain15MinsInterval = async (
@@ -125,7 +125,7 @@ export const GetVAnchorsTotalValueLockedByChain15MinsInterval = async (
   return TotalValueLockedByVAnchor15MinsIntervalItems;
 };
 
-export const GetVAnchorsTotalValueLockedByChains15MinsInterval = async (
+export const GetVAnchorsTotalValueLockedByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -146,7 +146,7 @@ export const GetVAnchorsTotalValueLockedByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval = async (
@@ -184,34 +184,33 @@ export const GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval = async (
   });
 };
 
-export const GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval =
-  async (
-    subgraphUrls: Array<SubgraphUrl>,
-    vAnchorAddress: string,
-    tokenSymbol: string,
-    startInterval: Date,
-    endInterval: Date
-  ): Promise<
-    Array<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>>
-  > => {
-    const promises: Array<
-      Promise<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>>
-    > = [];
+export const GetVAnchorTotalValueLockedByChainsAndByToken15MinsInterval = (
+  subgraphUrls: Array<SubgraphUrl>,
+  vAnchorAddress: string,
+  tokenSymbol: string,
+  startInterval: Date,
+  endInterval: Date
+): Promise<
+  Array<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>>
+> => {
+  const promises: Array<
+    Promise<Array<TotalValueLockedByChainAndByToken15MinsIntervalItem>>
+  > = [];
 
-    for (const subgraphUrl of subgraphUrls) {
-      promises.push(
-        GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval(
-          subgraphUrl,
-          vAnchorAddress,
-          tokenSymbol,
-          startInterval,
-          endInterval
-        )
-      );
-    }
+  for (const subgraphUrl of subgraphUrls) {
+    promises.push(
+      GetVAnchorTotalValueLockedByChainAndByToken15MinsInterval(
+        subgraphUrl,
+        vAnchorAddress,
+        tokenSymbol,
+        startInterval,
+        endInterval
+      )
+    );
+  }
 
-    return await Promise.all(promises);
-  };
+  return Promise.all(promises);
+};
 
 export const GetVAnchorByChainLatestTVLInTimeRange = async (
   subgraphUrl: SubgraphUrl,
@@ -248,7 +247,7 @@ export const GetVAnchorByChainLatestTVLInTimeRange = async (
   };
 };
 
-export const GetVAnchorsByChainLatestTVLInTimeRange = async (
+export const GetVAnchorsByChainLatestTVLInTimeRange = (
   subgraphUrl: SubgraphUrl,
   vAnchorAddresses: Array<string>,
   startInterval: number,
@@ -267,7 +266,7 @@ export const GetVAnchorsByChainLatestTVLInTimeRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsByChainsLatestTVLInTimeRange = async (
@@ -286,14 +285,18 @@ export const GetVAnchorsByChainsLatestTVLInTimeRange = async (
     };
   }, {} as Record<SubgraphUrl, Array<LatestTVLUpdate>>);
 
-  for (const subgraphUrl of subgraphUrls) {
-    record[subgraphUrl] = await GetVAnchorsByChainLatestTVLInTimeRange(
+  const dataPromises = subgraphUrls.map(async (subgraphUrl) => {
+    const data = await GetVAnchorsByChainLatestTVLInTimeRange(
       subgraphUrl,
       vAnchorAddresses,
       startInterval,
       endInterval
     );
-  }
+    record[subgraphUrl] = data;
+  });
+
+  // Wait for all requests to finish
+  await Promise.all(dataPromises);
 
   return record;
 };
