@@ -51,7 +51,7 @@ export const GetVAnchorRelayerFeeByChain = async (
   };
 };
 
-export const GetVAnchorRelayerFeeByChains = async (
+export const GetVAnchorRelayerFeeByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
 ): Promise<Array<RelayerFeeByChain>> => {
@@ -61,7 +61,7 @@ export const GetVAnchorRelayerFeeByChains = async (
     promises.push(GetVAnchorRelayerFeeByChain(subgraphUrl, vAnchorAddress));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsRelayerFeeByChain = async (
@@ -91,7 +91,7 @@ export const GetVAnchorsRelayerFeeByChain = async (
   });
 };
 
-export const GetVAnchorsRelayerFeeByChains = async (
+export const GetVAnchorsRelayerFeeByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
 ): Promise<Array<Array<RelayerFeeByVAnchor>>> => {
@@ -101,7 +101,7 @@ export const GetVAnchorsRelayerFeeByChains = async (
     promises.push(GetVAnchorsRelayerFeeByChain(subgraphUrl, vanchorAddresses));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorRelayerFeeByChainAndByToken = async (
@@ -134,7 +134,7 @@ export const GetVAnchorRelayerFeeByChainAndByToken = async (
   };
 };
 
-export const GetVAnchorRelayerFeeByChainsAndByToken = async (
+export const GetVAnchorRelayerFeeByChainsAndByToken = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
@@ -151,5 +151,5 @@ export const GetVAnchorRelayerFeeByChainsAndByToken = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

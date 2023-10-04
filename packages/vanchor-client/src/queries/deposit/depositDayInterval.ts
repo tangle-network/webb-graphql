@@ -56,7 +56,7 @@ export const GetVAnchorDepositByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorDepositByChainsDayInterval = async (
+export const GetVAnchorDepositByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -75,7 +75,7 @@ export const GetVAnchorDepositByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsDepositByChainDayInterval = async (
@@ -124,7 +124,7 @@ export const GetVAnchorsDepositByChainDayInterval = async (
   return depositByVAnchorDayIntervalItems;
 };
 
-export const GetVAnchorsDepositByChainsDayInterval = async (
+export const GetVAnchorsDepositByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -143,7 +143,7 @@ export const GetVAnchorsDepositByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorDepositByChainAndByTokenDayInterval = async (
@@ -181,7 +181,7 @@ export const GetVAnchorDepositByChainAndByTokenDayInterval = async (
   });
 };
 
-export const GetVAnchorDepositByChainsAndByTokenDayInterval = async (
+export const GetVAnchorDepositByChainsAndByTokenDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -204,7 +204,7 @@ export const GetVAnchorDepositByChainsAndByTokenDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorDepositByChainByDateRange = async (
@@ -241,7 +241,7 @@ export const GetVAnchorDepositByChainByDateRange = async (
   return depositMapByDate;
 };
 
-export const GetVAnchorDepositByChainsByDateRange = async (
+export const GetVAnchorDepositByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddress: string,
   epochStart: number,
@@ -260,7 +260,7 @@ export const GetVAnchorDepositByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsDepositByChainByDateRange = async (
@@ -299,7 +299,7 @@ export const GetVAnchorsDepositByChainByDateRange = async (
   return depositMapByDate;
 };
 
-export const GetVAnchorsDepositByChainsByDateRange = async (
+export const GetVAnchorsDepositByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   epochStart: number,
@@ -318,5 +318,5 @@ export const GetVAnchorsDepositByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

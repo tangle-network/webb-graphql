@@ -52,7 +52,7 @@ export const GetVAnchorVolumeByChain15MinsInterval = async (
   });
 };
 
-export const GetVAnchorVolumeByChains15MinsInterval = async (
+export const GetVAnchorVolumeByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -71,7 +71,7 @@ export const GetVAnchorVolumeByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsVolumeByChain15MinsInterval = async (
@@ -120,7 +120,7 @@ export const GetVAnchorsVolumeByChain15MinsInterval = async (
   return volumeByVAnchor15MinsIntervalItems;
 };
 
-export const GetVAnchorsVolumeByChains15MinsInterval = async (
+export const GetVAnchorsVolumeByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -139,7 +139,7 @@ export const GetVAnchorsVolumeByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorVolumeByChainAndByToken15MinsInterval = async (
@@ -177,7 +177,7 @@ export const GetVAnchorVolumeByChainAndByToken15MinsInterval = async (
   });
 };
 
-export const GetVAnchorVolumeByChainsAndByToken15MinsInterval = async (
+export const GetVAnchorVolumeByChainsAndByToken15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -200,5 +200,5 @@ export const GetVAnchorVolumeByChainsAndByToken15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

@@ -56,7 +56,7 @@ export const GetVAnchorTWLByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorTWLByChainsDayInterval = async (
+export const GetVAnchorTWLByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -75,7 +75,7 @@ export const GetVAnchorTWLByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsTWLByChainDayInterval = async (
@@ -123,7 +123,7 @@ export const GetVAnchorsTWLByChainDayInterval = async (
   return TWLByVAnchorDayIntervalItems;
 };
 
-export const GetVAnchorsTWLByChainsDayInterval = async (
+export const GetVAnchorsTWLByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -142,7 +142,7 @@ export const GetVAnchorsTWLByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorTWLByChainAndByTokenDayInterval = async (
@@ -180,7 +180,7 @@ export const GetVAnchorTWLByChainAndByTokenDayInterval = async (
   });
 };
 
-export const GetVAnchorTWLByChainsAndByTokenDayInterval = async (
+export const GetVAnchorTWLByChainsAndByTokenDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -202,7 +202,7 @@ export const GetVAnchorTWLByChainsAndByTokenDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorTWLByChainByDateRange = async (
@@ -246,7 +246,7 @@ export const GetVAnchorTWLByChainByDateRange = async (
   return twlMapByDate;
 };
 
-export const GetVAnchorTWLByChainsByDateRange = async (
+export const GetVAnchorTWLByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddress: string,
   epochStart: number,
@@ -265,7 +265,7 @@ export const GetVAnchorTWLByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsTWLByChainByDateRange = async (
@@ -311,7 +311,7 @@ export const GetVAnchorsTWLByChainByDateRange = async (
   return twlMapByDate;
 };
 
-export const GetVAnchorsTWLByChainsByDateRange = async (
+export const GetVAnchorsTWLByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   epochStart: number,
@@ -330,5 +330,5 @@ export const GetVAnchorsTWLByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

@@ -19,7 +19,7 @@ export const GetVAnchorDepositByChain = async (
   return BigInt(result.vanchorDeposit.deposit);
 };
 
-export const GetVAnchorDepositByChains = async (
+export const GetVAnchorDepositByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
 ): Promise<Array<bigint | null>> => {
@@ -29,7 +29,7 @@ export const GetVAnchorDepositByChains = async (
     promises.push(GetVAnchorDepositByChain(subgraphUrl, vAnchorAddress));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsDepositByChain = async (
@@ -50,7 +50,7 @@ export const GetVAnchorsDepositByChain = async (
   );
 };
 
-export const GetVAnchorsDepositByChains = async (
+export const GetVAnchorsDepositByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
 ): Promise<Array<Array<bigint | null>>> => {
@@ -60,7 +60,7 @@ export const GetVAnchorsDepositByChains = async (
     promises.push(GetVAnchorsDepositByChain(subgraphUrl, vanchorAddresses));
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorDepositByChainAndByToken = async (
@@ -88,7 +88,7 @@ export const GetVAnchorDepositByChainAndByToken = async (
   return BigInt(result.vanchorDepositByTokens[0].deposit);
 };
 
-export const GetVAnchorDepositByChainsAndByToken = async (
+export const GetVAnchorDepositByChainsAndByToken = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
@@ -105,5 +105,5 @@ export const GetVAnchorDepositByChainsAndByToken = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

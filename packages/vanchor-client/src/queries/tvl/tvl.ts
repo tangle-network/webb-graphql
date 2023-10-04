@@ -46,7 +46,7 @@ export const GetVAnchorTotalValueLockedByChain = async (
   };
 };
 
-export const GetVAnchorTotalValueLockedByChains = async (
+export const GetVAnchorTotalValueLockedByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string
 ): Promise<Array<TotalValueLockedByChain>> => {
@@ -58,7 +58,7 @@ export const GetVAnchorTotalValueLockedByChains = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsTotalValueLockedByChain = async (
@@ -86,7 +86,7 @@ export const GetVAnchorsTotalValueLockedByChain = async (
   });
 };
 
-export const GetVAnchorsTotalValueLockedByChains = async (
+export const GetVAnchorsTotalValueLockedByChains = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>
 ): Promise<Array<Array<TotalValueLockedByVAnchor>>> => {
@@ -98,7 +98,7 @@ export const GetVAnchorsTotalValueLockedByChains = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorTotalValueLockedByChainAndByToken = async (
@@ -127,7 +127,7 @@ export const GetVAnchorTotalValueLockedByChainAndByToken = async (
   };
 };
 
-export const GetVAnchorTotalValueLockedByChainsAndByToken = async (
+export const GetVAnchorTotalValueLockedByChainsAndByToken = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string
@@ -144,5 +144,5 @@ export const GetVAnchorTotalValueLockedByChainsAndByToken = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

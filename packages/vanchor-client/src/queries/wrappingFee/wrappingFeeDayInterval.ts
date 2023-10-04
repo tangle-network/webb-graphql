@@ -56,7 +56,7 @@ export const GetVAnchorWrappingFeeByChainDayInterval = async (
   });
 };
 
-export const GetVAnchorWrappingFeeByChainsDayInterval = async (
+export const GetVAnchorWrappingFeeByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -75,7 +75,7 @@ export const GetVAnchorWrappingFeeByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsWrappingFeeByChainDayInterval = async (
@@ -122,7 +122,7 @@ export const GetVAnchorsWrappingFeeByChainDayInterval = async (
   return wrappingFeeByVAnchorDayIntervalItems;
 };
 
-export const GetVAnchorsWrappingFeeByChainsDayInterval = async (
+export const GetVAnchorsWrappingFeeByChainsDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -142,7 +142,7 @@ export const GetVAnchorsWrappingFeeByChainsDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorWrappingFeeByChainAndByTokenDayInterval = async (
@@ -176,7 +176,7 @@ export const GetVAnchorWrappingFeeByChainAndByTokenDayInterval = async (
   });
 };
 
-export const GetVAnchorWrappingFeeByChainsAndByTokenDayInterval = async (
+export const GetVAnchorWrappingFeeByChainsAndByTokenDayInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -199,7 +199,7 @@ export const GetVAnchorWrappingFeeByChainsAndByTokenDayInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorWrappingFeeByChainByDateRange = async (
@@ -236,7 +236,7 @@ export const GetVAnchorWrappingFeeByChainByDateRange = async (
   return wrappingFeeMapByDate;
 };
 
-export const GetVAnchorWrappingFeeByChainsByDateRange = async (
+export const GetVAnchorWrappingFeeByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddress: string,
   epochStart: number,
@@ -255,7 +255,7 @@ export const GetVAnchorWrappingFeeByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsWrappingFeeByChainByDateRange = async (
@@ -294,7 +294,7 @@ export const GetVAnchorsWrappingFeeByChainByDateRange = async (
   return wrappingFeeMapByDate;
 };
 
-export const GetVAnchorsWrappingFeeByChainsByDateRange = async (
+export const GetVAnchorsWrappingFeeByChainsByDateRange = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   epochStart: number,
@@ -313,5 +313,5 @@ export const GetVAnchorsWrappingFeeByChainsByDateRange = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };

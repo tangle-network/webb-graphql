@@ -52,7 +52,7 @@ export const GetVAnchorWithdrawalByChain15MinsInterval = async (
   });
 };
 
-export const GetVAnchorWithdrawalByChains15MinsInterval = async (
+export const GetVAnchorWithdrawalByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   startInterval: Date,
@@ -72,7 +72,7 @@ export const GetVAnchorWithdrawalByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorsWithdrawalByChain15MinsInterval = async (
@@ -119,7 +119,7 @@ export const GetVAnchorsWithdrawalByChain15MinsInterval = async (
   return withdrawalByVAnchor15MinsIntervalItems;
 };
 
-export const GetVAnchorsWithdrawalByChains15MinsInterval = async (
+export const GetVAnchorsWithdrawalByChains15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vanchorAddresses: Array<string>,
   startInterval: Date,
@@ -139,7 +139,7 @@ export const GetVAnchorsWithdrawalByChains15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
 
 export const GetVAnchorWithdrawalByChainAndByToken15MinsInterval = async (
@@ -177,7 +177,7 @@ export const GetVAnchorWithdrawalByChainAndByToken15MinsInterval = async (
   });
 };
 
-export const GetVAnchorWithdrawalByChainsAndByToken15MinsInterval = async (
+export const GetVAnchorWithdrawalByChainsAndByToken15MinsInterval = (
   subgraphUrls: Array<SubgraphUrl>,
   vAnchorAddress: string,
   tokenSymbol: string,
@@ -200,5 +200,5 @@ export const GetVAnchorWithdrawalByChainsAndByToken15MinsInterval = async (
     );
   }
 
-  return await Promise.all(promises);
+  return Promise.all(promises);
 };
