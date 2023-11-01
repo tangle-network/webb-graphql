@@ -33,7 +33,6 @@ services:
     command:
       - -f=/app
       - --db-schema=app
-      - --force-clean # clean the existing database (use for developement)
       - --disable-historical=true
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://subquery-node:3000/ready']
@@ -60,4 +59,3 @@ services:
       - --playground
       - --indexer=http://subquery-node:3000
       - --log-level=debug
-      - --force-clean

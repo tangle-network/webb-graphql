@@ -89,24 +89,28 @@ export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
   const accountId = Object.keys(keys).find((key) => {
     return keys[key].imOnline === imOnlineId;
   });
-  const heartbeatId = `${sessionNumber}-${accountId}`;
-  const heartbeat = await HeartBeat.get(heartbeatId);
-  logger.info(`Recording heartbeats for ${accountId}`);
-  if (heartbeat) {
-    logger.info(`Heartbeat already recoded for ${accountId} of session ${sessionNumber}`);
+  if (accountId) {
+    const heartbeatId = `${sessionNumber}-${accountId}`;
+    const heartbeat = await HeartBeat.get(heartbeatId);
+    logger.info(`Recording heartbeats for ${accountId}`);
+    if (heartbeat) {
+      logger.info(`Heartbeat already recoded for ${accountId} of session ${sessionNumber}`);
+    } else {
+      const session = await ensureSession(sessionNumber, sessionBlock);
+      const account = await ensureAccount(accountId);
+      const hb = HeartBeat.create({
+        id: heartbeatId,
+        blockNumber: BigInt(blockNumber),
+        accountId: account.id,
+        sessionId: session.id,
+      });
+      await hb.save();
+      const [data, numberOfHeartbeats] = await addHb(accountId, '0');
+      const uptime = getIntPercentage(numberOfHeartbeats, data.numberOfSessions);
+      await setSessionValidatorUptime(session.id, accountId, uptime);
+    }
   } else {
-    const session = await ensureSession(sessionNumber, sessionBlock);
-    const account = await ensureAccount(accountId);
-    const hb = HeartBeat.create({
-      id: heartbeatId,
-      blockNumber: BigInt(blockNumber),
-      accountId: account.id,
-      sessionId: session.id,
-    });
-    await hb.save();
-    const [data, numberOfHeartbeats] = await addHb(accountId, '0');
-    const uptime = getIntPercentage(numberOfHeartbeats, data.numberOfSessions);
-    await setSessionValidatorUptime(session.id, accountId, uptime);
+    logger.info(`No account found for imOnlineId ${imOnlineId}`);
   }
 }
 
