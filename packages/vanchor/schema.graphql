@@ -1,3 +1,6 @@
+# Read more about how to define entities in The Graph docs
+# https://thegraph.com/docs/en/developing/creating-a-subgraph/#the-graphql-schema
+
 type EdgeAddition @entity(immutable: true) {
   id: Bytes!
   chainID: BigInt! # uint256
@@ -105,6 +108,7 @@ type ShieldedTransaction @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  addresses: [VAnchorAddress!]!
 }
 
 type VAnchorTotalValueLocked @entity(immutable: false) {
@@ -538,4 +542,23 @@ type VAnchorVolumeByTokenEveryDay @entity(immutable: false) {
   startInterval: BigInt! # start time of the interval
   endInterval: BigInt! # end time of the interval
   volume: BigInt!
+}
+
+enum VAnchorAddressType {
+  "User is the one who make the desposit transactions, check by msg.sender on deposit transaction"
+  User
+
+  "Relayer is the one who relay the withdraw and transfer transactions to the network, check by msg.sender === extData.relayer on withdraw and transfer transactions"
+  Relayer
+}
+
+type VAnchorAddress @entity(immutable: false) {
+  "The actual address in lowercase"
+  id: Bytes!
+
+  "The address type, can be User or Relayer"
+  type: [VAnchorAddressType!]!
+
+  "The shielded transactions that this address is involved in"
+  transactions: [ShieldedTransaction!]! @derivedFrom(field: "addresses")
 }
