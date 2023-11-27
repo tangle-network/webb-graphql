@@ -1,5 +1,5 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
-import { VAnchorVolume, VAnchorVolumeByToken } from '../../generated/schema';
+import { VAnchorVolume, VAnchorVolumeByToken } from '../../generateddd/schema';
 import { getTokenSymbol } from '../token';
 
 export default function recordVolume(

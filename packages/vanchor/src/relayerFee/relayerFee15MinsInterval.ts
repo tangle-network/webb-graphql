@@ -2,7 +2,7 @@ import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   VAnchorRelayerFeeByTokenEvery15Min,
   VAnchorRelayerFeeEvery15Min,
-} from '../../generated/schema';
+} from '../../generateddd/schema';
 import { getStartInterval15Mins, getEndInterval15Mins } from '../utils/time';
 import { getTokenSymbol } from '../token';
 

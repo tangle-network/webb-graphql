@@ -4,7 +4,7 @@ import {
   VAnchorTotalValueLockedByToken,
   VAnchorTotalValueLockedByTokenEvery15Min,
   VAnchorTotalValueLockedEvery15Min,
-} from '../../generated/schema';
+} from '../../generateddd/schema';
 import { getStartInterval15Mins, getEndInterval15Mins } from '../utils/time';
 import { getTokenSymbol } from '../token';
 

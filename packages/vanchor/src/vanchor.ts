@@ -5,7 +5,7 @@ import {
   NewCommitment as NewCommitmentEvent,
   NewNullifier as NewNullifierEvent,
   PublicKey as PublicKeyEvent,
-} from '../generated/VAnchor/VAnchor';
+} from '../generated/vanchor/VAnchor';
 import {
   EdgeAddition,
   EdgeUpdate,
@@ -13,7 +13,7 @@ import {
   NewCommitment,
   NewNullifier,
   PublicKey,
-} from '../generated/schema';
+} from '../generateddd/schema';
 
 import { handleTransaction } from './shieldedTransaction';
 

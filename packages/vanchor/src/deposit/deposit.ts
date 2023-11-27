@@ -3,7 +3,7 @@ import {
   VAnchorDeposit,
   VAnchorDepositByToken,
   VAnchorDepositLog,
-} from '../../generated/schema';
+} from '../../generateddd/schema';
 import { getTokenSymbol } from '../token';
 
 export function recordDeposit(

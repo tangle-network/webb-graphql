@@ -2,7 +2,7 @@ import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   VAnchorWrappingFee,
   VAnchorWrappingFeeByToken,
-} from '../../generated/schema';
+} from '../../generateddd/schema';
 import { getTokenSymbol } from '../token';
 
 export default function recordWrappingFee(

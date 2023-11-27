@@ -1,7 +1,7 @@
 import {
   Wrapping as WrappingEvent,
   Unwrapping as UnwrappingEvent,
-} from '../generated/VAnchor/FungibleTokenWrapper';
+} from '../generated/vanchor/FungibleTokenWrapper';
 import {
   recordWrappingFee,
   recordWrappingFee15MinsInterval,
@@ -12,7 +12,7 @@ import {
   recordTWL15MinsInterval,
   recordTWLDayInterval,
 } from './twl';
-import { UnwrappingEventLog, WrappingEventLog } from '../generated/schema';
+import { UnwrappingEventLog, WrappingEventLog } from '../generateddd/schema';
 
 export function handleWrapping(event: WrappingEvent): void {
   if (event.params !== null) {

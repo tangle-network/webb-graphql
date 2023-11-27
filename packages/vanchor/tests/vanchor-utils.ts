@@ -7,7 +7,7 @@ import {
   NewCommitment,
   NewNullifier,
   PublicKey,
-} from '../generated/VAnchor/VAnchor';
+} from '../generated/vanchor/VAnchor';
 
 export function createEdgeAdditionEvent(
   chainID: BigInt,

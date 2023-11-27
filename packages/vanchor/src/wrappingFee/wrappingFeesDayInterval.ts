@@ -2,7 +2,7 @@ import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   VAnchorWrappingFeeByTokenEveryDay,
   VAnchorWrappingFeeEveryDay,
-} from '../../generated/schema';
+} from '../../generateddd/schema';
 import { getStartIntervalDay, getEndIntervalDay } from '../utils/time';
 import { getTokenSymbol } from '../token';
 

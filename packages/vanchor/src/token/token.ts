@@ -1,6 +1,6 @@
 import { Address, Bytes } from '@graphprotocol/graph-ts';
-import { ERC20 } from '../../generated/VAnchor/ERC20';
-import { Token } from '../../generated/schema';
+import { ERC20 } from '../../generated/vanchor/ERC20';
+import { Token } from '../../generateddd/schema';
 
 export function getTokenSymbol(tokenAddress: Bytes): string {
   const tokenContract = ERC20.bind(Address.fromBytes(tokenAddress));

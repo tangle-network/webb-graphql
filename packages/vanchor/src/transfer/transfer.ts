@@ -1,6 +1,6 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { getTokenSymbol } from '../token';
-import { VAnchorTransferLog } from '../../generated/schema';
+import { VAnchorTransferLog } from '../../generateddd/schema';
 
 export default function recordTransferLog(
   eventHash: Bytes,

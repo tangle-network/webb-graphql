@@ -1,5 +1,5 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts';
-import { VAnchorTWL, VAnchorTWLByToken } from '../../generated/schema';
+import { VAnchorTWL, VAnchorTWLByToken } from '../../generateddd/schema';
 import { getTokenSymbol } from '../token';
 
 export default function recordTWL(

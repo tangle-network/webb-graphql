@@ -2,7 +2,7 @@ import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   VAnchorDepositByTokenEvery15Min,
   VAnchorDepositEvery15Min,
-} from '../../generated/schema';
+} from '../../generateddd/schema';
 import { getStartInterval15Mins, getEndInterval15Mins } from '../utils/time';
 import { getTokenSymbol } from '../token';
 
