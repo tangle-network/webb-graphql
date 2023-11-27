@@ -7,16 +7,16 @@ import {
   NewCommitment,
   NewNullifier,
   PublicKey,
-} from '../generated/vanchor/vanchor';
+} from '../generated/VAnchor/VAnchor';
 
 export function createEdgeAdditionEvent(
   chainID: BigInt,
   latestLeafIndex: BigInt,
   merkleRoot: BigInt
 ): EdgeAddition {
-  let edgeAdditionEvent = changetype<EdgeAddition>(newMockEvent());
+  const edgeAdditionEvent = changetype<EdgeAddition>(newMockEvent());
 
-  edgeAdditionEvent.parameters = new Array();
+  edgeAdditionEvent.parameters = [];
 
   edgeAdditionEvent.parameters.push(
     new ethereum.EventParam(
@@ -45,9 +45,9 @@ export function createEdgeUpdateEvent(
   latestLeafIndex: BigInt,
   merkleRoot: BigInt
 ): EdgeUpdate {
-  let edgeUpdateEvent = changetype<EdgeUpdate>(newMockEvent());
+  const edgeUpdateEvent = changetype<EdgeUpdate>(newMockEvent());
 
-  edgeUpdateEvent.parameters = new Array();
+  edgeUpdateEvent.parameters = [];
 
   edgeUpdateEvent.parameters.push(
     new ethereum.EventParam(
@@ -77,9 +77,9 @@ export function createInsertionEvent(
   timestamp: BigInt,
   newMerkleRoot: BigInt
 ): Insertion {
-  let insertionEvent = changetype<Insertion>(newMockEvent());
+  const insertionEvent = changetype<Insertion>(newMockEvent());
 
-  insertionEvent.parameters = new Array();
+  insertionEvent.parameters = [];
 
   insertionEvent.parameters.push(
     new ethereum.EventParam(
@@ -115,9 +115,9 @@ export function createNewCommitmentEvent(
   leafIndex: BigInt,
   encryptedOutput: Bytes
 ): NewCommitment {
-  let newCommitmentEvent = changetype<NewCommitment>(newMockEvent());
+  const newCommitmentEvent = changetype<NewCommitment>(newMockEvent());
 
-  newCommitmentEvent.parameters = new Array();
+  newCommitmentEvent.parameters = [];
 
   newCommitmentEvent.parameters.push(
     new ethereum.EventParam(
@@ -148,9 +148,9 @@ export function createNewCommitmentEvent(
 }
 
 export function createNewNullifierEvent(nullifier: BigInt): NewNullifier {
-  let newNullifierEvent = changetype<NewNullifier>(newMockEvent());
+  const newNullifierEvent = changetype<NewNullifier>(newMockEvent());
 
-  newNullifierEvent.parameters = new Array();
+  newNullifierEvent.parameters = [];
 
   newNullifierEvent.parameters.push(
     new ethereum.EventParam(
@@ -163,9 +163,9 @@ export function createNewNullifierEvent(nullifier: BigInt): NewNullifier {
 }
 
 export function createPublicKeyEvent(owner: Address, key: Bytes): PublicKey {
-  let publicKeyEvent = changetype<PublicKey>(newMockEvent());
+  const publicKeyEvent = changetype<PublicKey>(newMockEvent());
 
-  publicKeyEvent.parameters = new Array();
+  publicKeyEvent.parameters = [];
 
   publicKeyEvent.parameters.push(
     new ethereum.EventParam('owner', ethereum.Value.fromAddress(owner))

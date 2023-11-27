@@ -1,7 +1,7 @@
 import {
   Wrapping as WrappingEvent,
   Unwrapping as UnwrappingEvent,
-} from '../generated/vanchor/FungibleTokenWrapper';
+} from '../generated/VAnchor/FungibleTokenWrapper';
 import {
   recordWrappingFee,
   recordWrappingFee15MinsInterval,

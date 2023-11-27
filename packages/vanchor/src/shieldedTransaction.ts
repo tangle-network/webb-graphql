@@ -5,7 +5,7 @@ import {
   PublicInputs,
   ShieldedTransaction,
 } from '../generated/schema';
-import { Insertion } from '../generated/vanchor/VAnchor';
+import { Insertion } from '../generated/VAnchor/VAnchor';
 import {
   recordDeposit,
   recordDeposit15MinsInterval,
