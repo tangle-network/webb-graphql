@@ -4,7 +4,7 @@ import {
   ExternalData,
   PublicInputs,
   ShieldedTransaction,
-} from '../generateddd/schema';
+} from '../generated/schema';
 import { Insertion } from '../generated/vanchor/VAnchor';
 import {
   recordDeposit,

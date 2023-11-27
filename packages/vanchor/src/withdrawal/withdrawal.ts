@@ -3,7 +3,7 @@ import {
   VAnchorWithdrawal,
   VAnchorWithdrawalByToken,
   VAnchorWithdrawalLog,
-} from '../../generateddd/schema';
+} from '../../generated/schema';
 import { getTokenSymbol } from '../token';
 
 export function recordWithdrawal(

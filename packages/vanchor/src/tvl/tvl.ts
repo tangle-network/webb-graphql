@@ -2,7 +2,7 @@ import { BigInt, Bytes } from '@graphprotocol/graph-ts';
 import {
   VAnchorTotalValueLocked,
   VAnchorTotalValueLockedByToken,
-} from '../../generateddd/schema';
+} from '../../generated/schema';
 import { getTokenSymbol } from '../token';
 
 export default function recordTVL(

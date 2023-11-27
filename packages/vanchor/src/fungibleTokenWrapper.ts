@@ -12,7 +12,7 @@ import {
   recordTWL15MinsInterval,
   recordTWLDayInterval,
 } from './twl';
-import { UnwrappingEventLog, WrappingEventLog } from '../generateddd/schema';
+import { UnwrappingEventLog, WrappingEventLog } from '../generated/schema';
 
 export function handleWrapping(event: WrappingEvent): void {
   if (event.params !== null) {

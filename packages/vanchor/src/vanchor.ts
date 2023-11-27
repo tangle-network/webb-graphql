@@ -13,7 +13,7 @@ import {
   NewCommitment,
   NewNullifier,
   PublicKey,
-} from '../generateddd/schema';
+} from '../generated/schema';
 
 import { handleTransaction } from './shieldedTransaction';
 

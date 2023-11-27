@@ -1,5 +1,5 @@
 import { Address, BigInt, Bytes, Value } from '@graphprotocol/graph-ts';
-import { ExternalData, VAnchorAddress } from '../generateddd/schema';
+import { ExternalData, VAnchorAddress } from '../generated/schema';
 
 /**
  * The Address Type enum to store the address type
