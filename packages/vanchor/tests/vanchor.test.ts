@@ -6,9 +6,7 @@ import {
   beforeAll,
   afterAll,
 } from 'matchstick-as/assembly/index';
-import { BigInt, Bytes, Address } from '@graphprotocol/graph-ts';
-import { EdgeAddition } from '../generated/schema';
-import { EdgeAddition as EdgeAdditionEvent } from '../generated/vanchor/vanchor';
+import { BigInt } from '@graphprotocol/graph-ts';
 import { handleEdgeAddition } from '../src/vanchor';
 import { createEdgeAdditionEvent } from './vanchor-utils';
 
@@ -17,10 +15,10 @@ import { createEdgeAdditionEvent } from './vanchor-utils';
 
 describe('Describe entity assertions', () => {
   beforeAll(() => {
-    let chainID = BigInt.fromI32(234);
-    let latestLeafIndex = BigInt.fromI32(234);
-    let merkleRoot = BigInt.fromI32(234);
-    let newEdgeAdditionEvent = createEdgeAdditionEvent(
+    const chainID = BigInt.fromI32(234);
+    const latestLeafIndex = BigInt.fromI32(234);
+    const merkleRoot = BigInt.fromI32(234);
+    const newEdgeAdditionEvent = createEdgeAdditionEvent(
       chainID,
       latestLeafIndex,
       merkleRoot

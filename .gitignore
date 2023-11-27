@@ -122,3 +122,4 @@ packages/dkg/src/types
 
 # Nix flakes and direnv
 .direnv
+.vscode
