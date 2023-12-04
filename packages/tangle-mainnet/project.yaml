@@ -1,0 +1,139 @@
+specVersion: 1.0.0
+name: webb-subql
+version: 1.0.0
+description: >-
+  This project can be used as a starting point for developing your SubQuery
+  project
+repository: 'https://github.com/subquery/subql-starter'
+runner:
+  node:
+    name: '@subql/node'
+    version: '=v1.21.1'
+  query:
+    name: '@subql/query'
+    version: '*'
+
+schema:
+  file: ./schema.graphql
+
+network:
+  # Use Tangle network endpoint for Arana Alpha testnet see: https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstats-dev.api.webb.tools%2Fpublic-ws#/settings/metadata
+  chainId: '0xea63e6ac7da8699520af7fb540470d63e48eccb33f7273d2e21a935685bf1320'
+  # using testnet archive node endpoint
+  endpoint: 'wss://rpc-archive.tangle.tools'
+  # if you are using docker, uncomment the below line
+  # endpoint: 'ws://host.docker.internal:9944'
+  # if you are not using Docker and want to run locally, uncomment the below line
+  # endpoint: 'ws://127.0.0.1:9944'
+
+dataSources:
+  - kind: 'substrate/Runtime'
+    startBlock: 1
+    mapping:
+      file: './dist/index.js'
+      handlers:
+        - handler: 'handleBlock'
+          kind: 'substrate/BlockHandler'
+
+        - handler: 'handleEvent'
+          kind: 'substrate/EventHandler'
+
+        - handler: 'handleCall'
+          kind: 'substrate/CallHandler'
+
+        - handler: 'handleSudoCall'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'sudo'
+            method: 'sudo'
+            success: true
+
+        - handler: 'handleNewSession'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'session'
+            method: 'NewSession'
+
+        - handler: 'handleJobSubmitted'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'jobs'
+            method: 'JobSubmitted'
+
+        - handler: 'handleJobResultSubmitted'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'jobs'
+            method: 'JobResultSubmitted'
+
+        - handler: 'handleValidatorRewardedForJobs'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'jobs'
+            method: 'ValidatorRewarded'
+
+        - handler: 'handleIdentitySet'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'identity'
+            method: 'IdentitySet'
+
+        - handler: 'handleIdentityCleared'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'identity'
+            method: 'IdentityCleared'
+
+        - handler: 'handleIdentityKilled'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'identity'
+            method: 'IdentityKilled'
+
+        - handler: 'handleJudgementRequested'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'identity'
+            method: 'JudgementRequested'
+
+        - handler: 'handleJudgementUnrequested'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'identity'
+            method: 'JudgementUnrequested'
+
+        - handler: 'handleJudgementGiven'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'identity'
+            method: 'JudgementGiven'
+
+        - handler: 'handleRoleAssigned'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'roles'
+            method: 'RoleAssigned'
+
+        - handler: 'handleRoleRemoved'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'roles'
+            method: 'RoleRemoved'
+
+        - handler: 'handleSlashed'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'roles'
+            method: 'Slashed'
+
+        - handler: 'handlePendingJobs'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'roles'
+            method: 'PendingJobs'
+
+        - handler: 'handleHeartbeats'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'imOnline'
+            method: 'HeartbeatReceived'

@@ -1,0 +1,130 @@
+type Block @entity {
+  id: ID!
+
+  number: BigInt! @index(unique: true)
+  hash: String
+  timestamp: Date
+  parentHash: String
+  specVersion: String
+  stateRoot: String
+  extrinsicsRoot: String
+
+  extrinsics: [Extrinsic] @derivedFrom(field: "block")
+  events: [Event] @derivedFrom(field: "block")
+}
+
+type HeartBeatCounter @jsonField {
+  authorityId: String!
+  numberOfHeartBeats: Int!
+}
+
+type SourceState @entity {
+  id: ID!
+  heartBeatCounters: [HeartBeatCounter!]!
+  numberOfSessions: Int!
+}
+
+type HeartBeat @entity {
+  id: ID!
+
+  blockNumber: BigInt!
+  session: Session!
+  account: Account!
+}
+
+type Extrinsic @entity {
+  id: ID!
+
+  hash: String!
+  block: Block!
+
+  blockNumber: BigInt! @index(unique: false)
+  isSigned: Boolean
+  signer: Account
+  arguments: String
+
+  module: String
+  method: String
+
+  index: Int!
+  isSuccess: Boolean
+}
+
+type Event @entity {
+  id: ID!
+
+  index: Int!
+  block: Block!
+
+  blockNumber: BigInt! @index(unique: false)
+  timestamp: Date
+
+  module: String
+  method: String
+
+  docs: String
+  arguments: String
+  data: String
+  extrinsic: Extrinsic
+}
+
+type CountryCode @entity {
+  id: ID!
+
+  code: String! @index(unique: false)
+}
+
+type Account @entity {
+  id: ID!
+  publicKey: String! @index(unique: true)
+  creator: Account
+  createdAt: String
+  createAtBlock: Block
+  display: String
+  legal: String
+  web: String
+  riot: String
+  email: String
+  pgpFingerprint: String
+  image: String
+  twitter: String
+  countryCode: CountryCode
+  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
+}
+
+type Validator @entity {
+  id: ID!
+  account: Account!
+  authorityId: String! @index(unique: true)
+  uptime: Int!
+}
+
+type SessionValidator @entity {
+  id: ID!
+  session: Session!
+  validator: Validator!
+  isBest: Boolean!
+  isNext: Boolean!
+  isNextBest: Boolean!
+  bestOrder: Int!
+  nextBestOrder: Int!
+  reputation: Int!
+  uptime: Int!
+  blockNumber: BigInt!
+}
+
+type Session @entity {
+  id: ID!
+  validators: [SessionValidator!]! @derivedFrom(field: "session")
+  blockNumber: Int!
+  block: Block!
+}
+
+type AuthorityUpTime @entity {
+  id: ID!
+  authorityId: String!
+  uptime: Int!
+  blockNumber: Int!
+  sessionNumber: Int!
+  totalHeartbeats: Int!
+}

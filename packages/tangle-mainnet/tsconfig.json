@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "target": "ES6",
+    "module": "esnext",
+    "lib": ["dom.iterable", "dom", "esnext"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*",
+    "../../node_modules/@subql/types/dist/global.d.ts",
+    "../../node_modules/@webb-tools/tangle-substrate-types"
+  ],
+  "extends": "../../tsconfig.json"
+}
