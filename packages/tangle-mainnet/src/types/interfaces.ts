@@ -3,11 +3,7 @@
 // Auto-generated , DO NOT EDIT
 
 export interface HeartBeatCounter {
+  authorityId: string;
 
-    authorityId: string;
-
-    numberOfHeartBeats: number;
-
+  numberOfHeartBeats: number;
 }
-
-

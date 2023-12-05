@@ -3,123 +3,101 @@
 // Auto-generated , DO NOT EDIT
 
 export enum ThresholdVariant {
+  SIGNATURE = 'SIGNATURE',
 
-    SIGNATURE = "SIGNATURE",
+  PROPOSER = 'PROPOSER',
 
-    PROPOSER = "PROPOSER",
-
-    KEY_GEN = "KEY_GEN",
-
+  KEY_GEN = 'KEY_GEN',
 }
-
 
 export enum SessionKeyStatus {
+  Generated = 'Generated',
 
-    Generated = "Generated",
+  Signed = 'Signed',
 
-    Signed = "Signed",
-
-    Rotated = "Rotated",
-
+  Rotated = 'Rotated',
 }
-
 
 export enum ProposalType {
+  Refresh = 'Refresh',
 
-    Refresh = "Refresh",
+  Evm = 'Evm',
 
-    Evm = "Evm",
+  AnchorCreate = 'AnchorCreate',
 
-    AnchorCreate = "AnchorCreate",
+  AnchorUpdate = 'AnchorUpdate',
 
-    AnchorUpdate = "AnchorUpdate",
+  TokenAdd = 'TokenAdd',
 
-    TokenAdd = "TokenAdd",
+  TokenRemove = 'TokenRemove',
 
-    TokenRemove = "TokenRemove",
+  WrappingFeeUpdate = 'WrappingFeeUpdate',
 
-    WrappingFeeUpdate = "WrappingFeeUpdate",
+  ResourceIdUpdate = 'ResourceIdUpdate',
 
-    ResourceIdUpdate = "ResourceIdUpdate",
+  RescueTokens = 'RescueTokens',
 
-    RescueTokens = "RescueTokens",
+  MaxDepositLimitUpdate = 'MaxDepositLimitUpdate',
 
-    MaxDepositLimitUpdate = "MaxDepositLimitUpdate",
+  MinWithdrawalLimitUpdate = 'MinWithdrawalLimitUpdate',
 
-    MinWithdrawalLimitUpdate = "MinWithdrawalLimitUpdate",
+  SetVerifier = 'SetVerifier',
 
-    SetVerifier = "SetVerifier",
+  SetTreasuryHandler = 'SetTreasuryHandler',
 
-    SetTreasuryHandler = "SetTreasuryHandler",
-
-    FeeRecipientUpdate = "FeeRecipientUpdate",
-
+  FeeRecipientUpdate = 'FeeRecipientUpdate',
 }
-
 
 export enum ProposalBatchStatus {
+  Unknown = 'Unknown',
 
-    Unknown = "Unknown",
+  Expired = 'Expired',
 
-    Expired = "Expired",
+  Signed = 'Signed',
 
-    Signed = "Signed",
-
-    Removed = "Removed",
-
+  Removed = 'Removed',
 }
-
 
 export enum ProposalVoteType {
+  For = 'For',
 
-    For = "For",
+  Against = 'Against',
 
-    Against = "Against",
-
-    Abstain = "Abstain",
-
+  Abstain = 'Abstain',
 }
-
 
 export enum ProposalTimelineStatus {
+  Added = 'Added',
 
-    Added = "Added",
+  Approved = 'Approved',
 
-    Approved = "Approved",
+  Rejected = 'Rejected',
 
-    Rejected = "Rejected",
+  Succeeded = 'Succeeded',
 
-    Succeeded = "Succeeded",
+  Signed = 'Signed',
 
-    Signed = "Signed",
-
-    Failed = "Failed",
-
+  Failed = 'Failed',
 }
-
 
 export enum Chain {
+  Unknown = 'Unknown',
 
-    Unknown = "Unknown",
+  None = 'None',
 
-    None = "None",
+  Evm = 'Evm',
 
-    Evm = "Evm",
+  Substrate = 'Substrate',
 
-    Substrate = "Substrate",
+  PolkadotParachain = 'PolkadotParachain',
 
-    PolkadotParachain = "PolkadotParachain",
+  KusamaParachain = 'KusamaParachain',
 
-    KusamaParachain = "KusamaParachain",
+  RococoParachain = 'RococoParachain',
 
-    RococoParachain = "RococoParachain",
+  Cosmos = 'Cosmos',
 
-    Cosmos = "Cosmos",
+  Solana = 'Solana',
 
-    Solana = "Solana",
-
-    Ink = "Ink",
-
+  Ink = 'Ink',
 }
-
-
