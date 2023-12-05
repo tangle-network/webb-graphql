@@ -120,6 +120,12 @@ packages/dkg/.data
 packages/dkg/dist
 packages/dkg/src/types
 
+# Tangle Mainnet
+packages/tangle-mainnet/node_modules
+packages/tangle-mainnet/.data
+packages/tangle-mainnet/dist
+packages/tangle-mainnet/src/types
+
 # Nix flakes and direnv
 .direnv
 .vscode

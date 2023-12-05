@@ -9,3 +9,7 @@
 /**/.next
 /**/generated
 .graphclient
+
+# Ignore types generated files
+/packages/dkg/src/types
+/packages/tangle-mainnet/src/types
