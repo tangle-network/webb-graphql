@@ -5,41 +5,41 @@ import { ensureBlock } from './block';
 
 export async function ensureExtrinsic(extrinsic: SubstrateExtrinsic): Promise<Extrinsic> {
   const block = await ensureBlock(extrinsic.block.block.header.number.toString());
+
   const index = extrinsic.idx;
   const recordId = `${block.id}-${index}`;
-  const hash = extrinsic.extrinsic.hash.toString();
-
   let data = await Extrinsic.get(recordId);
+
   if (!data) {
     data = new Extrinsic(recordId);
+    data.hash = extrinsic.extrinsic.hash.toString();
     data.blockId = block.id;
-    data.blockNumber = BigInt(block.id);
+    data.blockNumber = block.number;
     data.index = index;
-    data.hash = hash;
     await data.save();
   }
+
   return data;
 }
 
 export async function createExtrinsic(extrinsic: SubstrateExtrinsic) {
-  const data = await ensureExtrinsic(extrinsic);
+  const extrincsic = await ensureExtrinsic(extrinsic);
 
   const isSigned = extrinsic.extrinsic.isSigned;
+  extrincsic.isSigned = isSigned;
+
   if (isSigned) {
     const signerAccount = extrinsic.extrinsic.signer.toString();
     const signer = await ensureAccount(signerAccount);
-    data.signerId = signer.id;
+    extrincsic.signerId = signer.id;
   }
 
-  data.isSigned = isSigned;
-  data.method = extrinsic.extrinsic.method.method;
-  data.module = extrinsic.extrinsic.method.section;
+  extrincsic.arguments = extrinsic.extrinsic.args.toString();
+  extrincsic.module = extrinsic.extrinsic.method.section;
+  extrincsic.method = extrinsic.extrinsic.method.method;
+  extrincsic.isSuccess = extrinsic.success;
 
-  data.isSuccess = extrinsic.success;
-  // lazy method
-  data.arguments = extrinsic.extrinsic.args.toString();
+  await extrincsic.save();
 
-  await data.save();
-
-  return data;
+  return extrincsic;
 }

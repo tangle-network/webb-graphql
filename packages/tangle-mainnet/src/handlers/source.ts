@@ -2,15 +2,14 @@ import { SourceState } from '../types';
 
 export async function ensureSource(id: string) {
   const source = await SourceState.get(id);
-  if (source) {
-    return source;
-  }
+  if (source) return source;
 
   const initSource = SourceState.create({
     id,
     numberOfSessions: 0,
     heartBeatCounters: [],
   });
+
   await initSource.save();
   return initSource;
 }
@@ -27,9 +26,8 @@ export async function addHb(accountId: string, sourceId: string): Promise<[Sourc
       numberOfHeartBeats: 1,
     });
   } else {
-    // update if  exist
+    // update if exist
     numberOfHeartbeats = hb.numberOfHeartBeats + 1;
-
     hb.numberOfHeartBeats = hb.numberOfHeartBeats + 1;
   }
 
@@ -38,12 +36,16 @@ export async function addHb(accountId: string, sourceId: string): Promise<[Sourc
 }
 
 export async function increaseSourceSession(sourceId: string) {
-  const hb = await ensureSource(sourceId);
-  hb.numberOfSessions = hb.numberOfSessions + 1;
-  return hb.save();
+  const source = await ensureSource(sourceId);
+  source.numberOfSessions = source.numberOfSessions + 1;
+  return source.save();
 }
+
 export async function getUptimeMap(sourceId: string): Promise<[Record<string, number>, number]> {
-  const hb = await ensureSource(sourceId);
-  const hbMap = hb.heartBeatCounters.reduce((acc, hbc) => ({ ...acc, [hbc.authorityId]: hbc.numberOfHeartBeats }), {});
-  return [hbMap, hb.numberOfSessions];
+  const source = await ensureSource(sourceId);
+  const hbMap = source.heartBeatCounters.reduce(
+    (acc, hbc) => ({ ...acc, [hbc.authorityId]: hbc.numberOfHeartBeats }),
+    {}
+  );
+  return [hbMap, source.numberOfSessions];
 }

@@ -42,7 +42,7 @@ dataSources:
           kind: 'substrate/CallHandler'
 
         - handler: 'handleSudoCall'
-          kind: 'substrate/EventHandler'
+          kind: 'substrate/CallHandler'
           filter:
             module: 'sudo'
             method: 'sudo'
@@ -89,24 +89,6 @@ dataSources:
           filter:
             module: 'identity'
             method: 'IdentityKilled'
-
-        - handler: 'handleJudgementRequested'
-          kind: 'substrate/EventHandler'
-          filter:
-            module: 'identity'
-            method: 'JudgementRequested'
-
-        - handler: 'handleJudgementUnrequested'
-          kind: 'substrate/EventHandler'
-          filter:
-            module: 'identity'
-            method: 'JudgementUnrequested'
-
-        - handler: 'handleJudgementGiven'
-          kind: 'substrate/EventHandler'
-          filter:
-            module: 'identity'
-            method: 'JudgementGiven'
 
         - handler: 'handleRoleAssigned'
           kind: 'substrate/EventHandler'

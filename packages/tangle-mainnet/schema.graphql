@@ -37,23 +37,21 @@ type Extrinsic @entity {
 
   hash: String!
   block: Block!
-
   blockNumber: BigInt! @index(unique: false)
+  index: Int!
+
   isSigned: Boolean
   signer: Account
-  arguments: String
 
+  arguments: String
   module: String
   method: String
-
-  index: Int!
   isSuccess: Boolean
 }
 
 type Event @entity {
   id: ID!
 
-  index: Int!
   block: Block!
 
   blockNumber: BigInt! @index(unique: false)
@@ -116,7 +114,7 @@ type SessionValidator @entity {
 type Session @entity {
   id: ID!
   validators: [SessionValidator!]! @derivedFrom(field: "session")
-  blockNumber: Int!
+  blockNumber: BigInt!
   block: Block!
 }
 
@@ -124,7 +122,22 @@ type AuthorityUpTime @entity {
   id: ID!
   authorityId: String!
   uptime: Int!
-  blockNumber: Int!
+  blockNumber: BigInt!
   sessionNumber: Int!
   totalHeartbeats: Int!
 }
+
+# type JobSubmission @entity {
+#   id: ID!
+#   blockNumber: BigInt!
+#   jobKey: String!
+#   expiry: BigInt!
+#   jobType: String!
+# }
+
+# type DKGTSSPhaseOneJob @entity {
+#   id: ID!
+#   participants: [Account]!
+#   threshold: Int!
+#   permittedCaller: Account
+# }

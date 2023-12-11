@@ -1,26 +1,27 @@
 import { Account, CountryCode, HeartBeat, AuthorityUpTime } from '../types';
 import { Option } from '@polkadot/types';
 import { PalletIdentityRegistration } from '@polkadot/types/lookup';
-import { currentSessionId, ensureSession, setSessionValidatorUptime } from './session';
+import { getCurrentSessionId, ensureSession, updateSessionValidatorUptime } from './session';
 import { addHb } from './source';
 import { getIntPercentage } from '../utils/int-percentage';
+
 async function ensureCountryCode(code: string) {
-  const c = await CountryCode.get(code);
-  if (c) {
-    return c;
-  }
-  const newCountry = CountryCode.create({
+  const countryCode = await CountryCode.get(code);
+  if (countryCode) return countryCode;
+
+  const newCountryCode = CountryCode.create({
     code,
     id: code,
   });
-  await newCountry.save();
-  return newCountry;
+
+  await newCountryCode.save();
+  return newCountryCode;
 }
 
-export async function UpdateOrSetIdentity(account: Account) {
-  const id = account.id;
+export async function updateOrSetAccount(account: Account) {
+  const accId = account.id;
   if ('identity' in api.query) {
-    const identity: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(id)) as any;
+    const identity: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(accId)) as any;
     if (identity.isSome) {
       const id = identity.unwrap();
 
@@ -31,10 +32,12 @@ export async function UpdateOrSetIdentity(account: Account) {
           const value = String(item[1].value.toHuman());
           return { ...acc, [key]: value };
         }, {});
+
       if (extraInfo['countryCode']) {
         const country = await ensureCountryCode(extraInfo['countryCode']);
         account.countryCodeId = country.id;
       }
+
       account.display = id.info.display.isNone ? null : String(id.info.display.value.toHuman());
       account.legal = id.info.legal.isNone ? null : String(id.info.legal.value.toHuman());
       account.web = id.info.web.toHuman() ? null : String(id.info.web.value.toHuman());
@@ -53,7 +56,7 @@ export async function ensureAccount(account: string) {
   let data = await Account.get(account);
   if (!data) {
     data = new Account(account);
-    await UpdateOrSetIdentity(data);
+    await updateOrSetAccount(data);
   }
   return data;
 }
@@ -64,6 +67,7 @@ type Keys = {
   aura: string;
   grandpa: string;
 };
+
 let queuedKeys: Record<string, Keys> | null = null;
 
 export function getCachedKeys(): Promise<Record<string, Keys>> {
@@ -87,20 +91,23 @@ export function getCachedKeys(): Promise<Record<string, Keys>> {
   });
 }
 
-export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
-  const { sessionNumber, sessionBlock } = await currentSessionId(blockNumber);
+export async function recordHeartbeat(imOnlineId: string, blockNumber: string) {
+  const sessionNumber = await getCurrentSessionId();
   const keys = await getCachedKeys();
+
   const accountId = Object.keys(keys).find((key) => {
     return keys[key].imOnline === imOnlineId;
   });
+
   if (accountId) {
     const heartbeatId = `${sessionNumber}-${accountId}`;
     const heartbeat = await HeartBeat.get(heartbeatId);
     logger.info(`Recording heartbeats for ${accountId}`);
+
     if (heartbeat) {
       logger.info(`Heartbeat already recoded for ${accountId} of session ${sessionNumber}`);
     } else {
-      const session = await ensureSession(sessionNumber, sessionBlock);
+      const session = await ensureSession(sessionNumber, blockNumber);
       const account = await ensureAccount(accountId);
       const hb = HeartBeat.create({
         id: heartbeatId,
@@ -111,21 +118,16 @@ export async function RecordHeartbeat(imOnlineId: string, blockNumber: string) {
       await hb.save();
       const [data, numberOfHeartbeats] = await addHb(accountId, '0');
       const uptime = getIntPercentage(numberOfHeartbeats, data.numberOfSessions);
-      await setSessionValidatorUptime(session.id, accountId, uptime);
+      await updateSessionValidatorUptime(session.id, accountId, uptime);
     }
   } else {
     logger.info(`No account found for imOnlineId ${imOnlineId}`);
   }
 }
 
-export async function getAccount(account: string) {
-  const data = await Account.get(account);
-  return data;
-}
-
-export async function RecordAuthorityUptime(authorityId: string, blockNumber: string) {
+export async function recordAuthorityUptime(authorityId: string, blockNumber: string) {
   try {
-    const { sessionNumber } = await currentSessionId(blockNumber);
+    const sessionNumber = await getCurrentSessionId();
     const keys = await getCachedKeys();
     const accountIdSendingHeartbeat = Object.keys(keys).find((key) => keys[key].imOnline === authorityId);
     const accountIds = Object.keys(keys).filter((key) => keys[key].imOnline);
@@ -140,14 +142,14 @@ export async function RecordAuthorityUptime(authorityId: string, blockNumber: st
         if (authorityUptime) {
           authorityUptime.totalHeartbeats = (authorityUptime.totalHeartbeats || 0) + 1;
           actualHeartbeats = authorityUptime.totalHeartbeats;
-          authorityUptime.blockNumber = Number(blockNumber);
+          authorityUptime.blockNumber = BigInt(blockNumber);
           authorityUptime.sessionNumber = Number(sessionNumber);
         } else {
           actualHeartbeats = 1;
           authorityUptime = AuthorityUpTime.create({
             id: accountId,
             totalHeartbeats: actualHeartbeats,
-            blockNumber: Number(blockNumber),
+            blockNumber: BigInt(blockNumber),
             sessionNumber: Number(sessionNumber),
             uptime: 100,
             authorityId: accountId,
