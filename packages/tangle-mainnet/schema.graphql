@@ -127,17 +127,87 @@ type AuthorityUpTime @entity {
   totalHeartbeats: Int!
 }
 
-# type JobSubmission @entity {
-#   id: ID!
-#   blockNumber: BigInt!
-#   jobKey: String!
-#   expiry: BigInt!
-#   jobType: String!
-# }
+enum JobType {
+  DKGTSSPhaseOne
+  DKGTSSPhaseTwo
+  ZkSaaSPhaseOne
+  ZkSaaSPhaseTwo
+}
 
-# type DKGTSSPhaseOneJob @entity {
-#   id: ID!
-#   participants: [Account]!
-#   threshold: Int!
-#   permittedCaller: Account
-# }
+type JobSubmission @entity {
+  id: ID!
+  jobKey: String!
+  expiryBlockNumber: BigInt!
+  jobType: JobType!
+  blockNumber: BigInt!
+}
+
+type DKGTSSPhaseOneJob @entity {
+  id: ID!
+  participants: [Account]!
+  threshold: Int!
+  permittedCaller: Account
+}
+
+type DKGTSSPhaseTwoJob @entity {
+  id: ID!
+  phaseOneId: Int!
+  submission: [BigInt]!
+}
+
+enum ZkSaaSSystemType {
+  Groth16
+}
+
+enum ZkSaaSPhaseTwoRequestType {
+  Groth16
+}
+
+type ZkSaaSPhaseOneJob @entity {
+  id: ID!
+  participants: [Account!]!
+  permittedCaller: Account
+  system: ZkSaaSSystemType!
+}
+
+type ZkSaaSPhaseTwoJob @entity {
+  id: ID!
+  phaseOneId: Int!
+  request: ZkSaaSPhaseTwoRequestType!
+}
+
+type JobSubmitted @entity {
+  id: ID!
+  jobKey: JobType!
+  blockNumber: BigInt!
+}
+
+type ValidatorReward @entity {
+  id: ID!
+  account: Account!
+  reward: BigInt!
+}
+
+enum RoleType {
+  Tss
+  ZkSaaS
+}
+
+type AccountRole @entity {
+  id: ID!
+  account: Account!
+  role: RoleType!
+  depositEvent: DepositEvent!
+}
+
+type DepositEvent @entity {
+  id: ID!
+  roles: [AccountRole!]! @derivedFrom(field: "depositEvent")
+  pendingJobs: [JobSubmission!]!
+}
+
+type Slash {
+  id: ID!
+  account: Account!
+  amount: BigInt!
+}
