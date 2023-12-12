@@ -230,11 +230,13 @@ type PendingJobsLog @entity {
 type IdentityClearedLog @entity {
   id: ID!
   account: Account!
+  deposit: BigInt!
   blockNumber: BigInt!
 }
 
 type IdentityKilledLog @entity {
   id: ID!
   account: Account!
+  deposit: BigInt!
   blockNumber: BigInt!
 }

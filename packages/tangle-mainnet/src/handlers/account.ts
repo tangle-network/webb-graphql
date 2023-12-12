@@ -61,6 +61,12 @@ export async function ensureAccount(account: string) {
   return data;
 }
 
+export async function removeAccount(accountId: string) {
+  const data = await Account.get(accountId);
+  if (!data) return;
+  await Account.remove(accountId);
+}
+
 type Keys = {
   imOnline: string;
   aura: string;

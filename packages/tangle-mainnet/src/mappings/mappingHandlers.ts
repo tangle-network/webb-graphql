@@ -5,9 +5,12 @@ import {
   createExtrinsic,
   createSudoCall,
   ensureAccount,
+  removeAccount,
   recordAuthorityUptime,
   recordHeartbeat,
   updateOrSetAccount,
+  createIdentityClearedLog,
+  createIdentityKilledLog,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
 
@@ -57,11 +60,7 @@ export async function handleNewSession(event: SubstrateEvent): Promise<void> {
 }
 
 export async function handleJobSubmitted(event: SubstrateEvent): Promise<void> {
-  const block = event.block.block;
-  const data = event.event.data;
-  const jobId = data[0].toString();
-  const jobKey = data[1].toString();
-  const jobDetails = data[2].toString();
+  // Your implementation here
 }
 
 export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<void> {
@@ -74,17 +73,21 @@ export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Pro
 
 export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
   const account = event.event.data[0].toString();
-  logger.info(`IdentityHandler: ${account}`);
+  logger.info(`IdentitySetHandler: ${account}`);
   const acc = await ensureAccount(account);
-  return updateOrSetAccount(acc);
+  await updateOrSetAccount(acc);
 }
 
 export async function handleIdentityCleared(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  const account = event.event.data[0].toString();
+  logger.info(`IdentityClearedHandler: ${account}`);
+  await Promise.all([removeAccount(account), createIdentityClearedLog(event)]);
 }
 
 export async function handleIdentityKilled(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  const account = event.event.data[0].toString();
+  logger.info(`IdentityKilledHandler: ${account}`);
+  await Promise.all([removeAccount(account), createIdentityKilledLog(event)]);
 }
 
 export async function handleRoleAssigned(event: SubstrateEvent): Promise<void> {
