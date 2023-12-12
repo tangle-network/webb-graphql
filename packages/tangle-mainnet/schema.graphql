@@ -186,6 +186,7 @@ type ValidatorReward @entity {
   id: ID!
   account: Account!
   reward: BigInt!
+  blockNumber: BigInt!
 }
 
 enum RoleType {
@@ -193,21 +194,47 @@ enum RoleType {
   ZkSaaS
 }
 
-type AccountRole @entity {
+type Role @entity {
   id: ID!
   account: Account!
   role: RoleType!
-  depositEvent: DepositEvent!
 }
 
-type DepositEvent @entity {
+type RoleAssignedLog @entity {
   id: ID!
-  roles: [AccountRole!]! @derivedFrom(field: "depositEvent")
-  pendingJobs: [JobSubmission!]!
+  account: Account!
+  role: RoleType!
+  blockNumber: BigInt!
 }
 
-type Slash {
+type RoleRemovedLog @entity {
+  id: ID!
+  account: Account!
+  role: RoleType!
+  blockNumber: BigInt!
+}
+
+type SlashedLog @entity {
   id: ID!
   account: Account!
   amount: BigInt!
+  blockNumber: BigInt!
+}
+
+type PendingJobsLog @entity {
+  id: ID!
+  pendingJobs: [JobSubmission!]!
+  blockNumber: BigInt!
+}
+
+type IdentityClearedLog @entity {
+  id: ID!
+  account: Account!
+  blockNumber: BigInt!
+}
+
+type IdentityKilledLog @entity {
+  id: ID!
+  account: Account!
+  blockNumber: BigInt!
 }
