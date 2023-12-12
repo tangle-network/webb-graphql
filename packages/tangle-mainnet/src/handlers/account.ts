@@ -62,7 +62,6 @@ export async function ensureAccount(account: string) {
 }
 
 type Keys = {
-  dkg: string;
   imOnline: string;
   aura: string;
   grandpa: string;
@@ -80,7 +79,6 @@ export function getCachedKeys(): Promise<Record<string, Keys>> {
     api.query.session.queuedKeys((data) => {
       data.forEach(([key, val]) => {
         queuedKeys[key.toString()] = {
-          dkg: val.dkg.toString(),
           imOnline: val.imOnline.toString(),
           aura: val.aura.toString(),
           grandpa: val.grandpa.toString(),
