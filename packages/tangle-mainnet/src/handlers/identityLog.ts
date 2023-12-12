@@ -15,6 +15,7 @@ export async function createIdentityClearedLog(event: SubstrateEvent) {
   const deposit = BigInt(event.event.data[1].toString());
   identityClearedLog.accountId = account;
   identityClearedLog.deposit = deposit;
+  identityClearedLog.blockNumber = block.number;
   await identityClearedLog.save();
 }
 
@@ -30,5 +31,6 @@ export async function createIdentityKilledLog(event: SubstrateEvent) {
   const deposit = BigInt(event.event.data[1].toString());
   identityKilledLog.accountId = account;
   identityKilledLog.deposit = deposit;
+  identityKilledLog.blockNumber = block.number;
   await identityKilledLog.save();
 }

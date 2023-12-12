@@ -11,6 +11,8 @@ import {
   updateOrSetAccount,
   createIdentityClearedLog,
   createIdentityKilledLog,
+  createValidatorRewardLog,
+  createSlashedLog,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
 
@@ -68,7 +70,7 @@ export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<v
 }
 
 export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  await createValidatorRewardLog(event);
 }
 
 export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
@@ -99,7 +101,7 @@ export async function handleRoleRemoved(event: SubstrateEvent): Promise<void> {
 }
 
 export async function handleSlashed(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  await createSlashedLog(event);
 }
 
 export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {

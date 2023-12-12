@@ -6,6 +6,8 @@ export * from './block';
 export * from './event';
 export * from './extrinsic';
 export * from './identityLog';
+export * from './jobs';
+export * from './roles';
 export * from './sudo';
 
 export type ModuleHandlerArgs = {

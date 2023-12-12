@@ -53,7 +53,6 @@ type Event @entity {
   id: ID!
 
   block: Block!
-
   blockNumber: BigInt! @index(unique: false)
   timestamp: Date
 
@@ -182,7 +181,7 @@ type JobSubmitted @entity {
   blockNumber: BigInt!
 }
 
-type ValidatorReward @entity {
+type ValidatorRewardLog @entity {
   id: ID!
   account: Account!
   reward: BigInt!
