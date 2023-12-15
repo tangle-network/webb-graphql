@@ -12,7 +12,6 @@ import {
   createIdentityClearedLog,
   createIdentityKilledLog,
   createValidatorRewardLog,
-  createSlashedLog,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
 
@@ -92,16 +91,16 @@ export async function handleIdentityKilled(event: SubstrateEvent): Promise<void>
   await Promise.all([removeAccount(account), createIdentityKilledLog(event)]);
 }
 
-export async function handleRoleAssigned(event: SubstrateEvent): Promise<void> {
+export async function handleProfileCreated(event: SubstrateEvent): Promise<void> {
   // Your implementation here
 }
 
-export async function handleRoleRemoved(event: SubstrateEvent): Promise<void> {
+export async function handleProfileUpdated(event: SubstrateEvent): Promise<void> {
   // Your implementation here
 }
 
-export async function handleSlashed(event: SubstrateEvent): Promise<void> {
-  await createSlashedLog(event);
+export async function handleProfileDeleted(event: SubstrateEvent): Promise<void> {
+  // Your implementation here
 }
 
 export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {

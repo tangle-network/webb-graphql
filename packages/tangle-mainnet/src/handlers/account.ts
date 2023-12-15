@@ -18,8 +18,18 @@ async function ensureCountryCode(code: string) {
   return newCountryCode;
 }
 
+export async function ensureAccount(accountId: string) {
+  let account = await Account.get(accountId);
+  if (!account) {
+    account = new Account(accountId);
+    await updateOrSetAccount(account);
+  }
+  return account;
+}
+
 export async function updateOrSetAccount(account: Account) {
   const accId = account.id;
+  account.publicKey = account.id;
   if ('identity' in api.query) {
     const identity: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(accId)) as any;
     if (identity.isSome) {
@@ -52,15 +62,6 @@ export async function updateOrSetAccount(account: Account) {
   return account.save();
 }
 
-export async function ensureAccount(account: string) {
-  let data = await Account.get(account);
-  if (!data) {
-    data = new Account(account);
-    await updateOrSetAccount(data);
-  }
-  return data;
-}
-
 export async function removeAccount(accountId: string) {
   const data = await Account.get(accountId);
   if (!data) return;
@@ -75,7 +76,7 @@ type Keys = {
 
 let queuedKeys: Record<string, Keys> | null = null;
 
-export function getCachedKeys(): Promise<Record<string, Keys>> {
+function getCachedKeys(): Promise<Record<string, Keys>> {
   const fired = queuedKeys !== null;
   if (fired) {
     return Promise.resolve(queuedKeys);

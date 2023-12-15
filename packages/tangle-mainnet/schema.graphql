@@ -89,6 +89,38 @@ type Account @entity {
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
+type Session @entity {
+  id: ID!
+  validators: [SessionValidator!]! @derivedFrom(field: "session")
+  blockNumber: BigInt!
+  block: Block!
+}
+
+type AuthorityUpTime @entity {
+  id: ID!
+  authorityId: String!
+  uptime: Int!
+  blockNumber: BigInt!
+  sessionNumber: Int!
+  totalHeartbeats: Int!
+}
+
+# type IdentitySetLog @entity {}
+
+type IdentityClearedLog @entity {
+  id: ID!
+  account: Account!
+  deposit: BigInt!
+  blockNumber: BigInt!
+}
+
+type IdentityKilledLog @entity {
+  id: ID!
+  account: Account!
+  deposit: BigInt!
+  blockNumber: BigInt!
+}
+
 type Validator @entity {
   id: ID!
   account: Account!
@@ -110,22 +142,6 @@ type SessionValidator @entity {
   blockNumber: BigInt!
 }
 
-type Session @entity {
-  id: ID!
-  validators: [SessionValidator!]! @derivedFrom(field: "session")
-  blockNumber: BigInt!
-  block: Block!
-}
-
-type AuthorityUpTime @entity {
-  id: ID!
-  authorityId: String!
-  uptime: Int!
-  blockNumber: BigInt!
-  sessionNumber: Int!
-  totalHeartbeats: Int!
-}
-
 enum JobType {
   DKGTSSPhaseOne
   DKGTSSPhaseTwo
@@ -143,7 +159,7 @@ type JobSubmission @entity {
 
 type DKGTSSPhaseOneJob @entity {
   id: ID!
-  participants: [Account]!
+  participants: [String!]!
   threshold: Int!
   permittedCaller: Account
 }
@@ -164,7 +180,7 @@ enum ZkSaaSPhaseTwoRequestType {
 
 type ZkSaaSPhaseOneJob @entity {
   id: ID!
-  participants: [Account!]!
+  participants: [String!]!
   permittedCaller: Account
   system: ZkSaaSSystemType!
 }
@@ -193,49 +209,20 @@ enum RoleType {
   ZkSaaS
 }
 
-type Role @entity {
+type Profile @entity {
   id: ID!
   account: Account!
-  role: RoleType!
+  totalProfileResets: BigInt!
+  roles: [RoleType!]!
 }
 
-type RoleAssignedLog @entity {
-  id: ID!
-  account: Account!
-  role: RoleType!
-  blockNumber: BigInt!
-}
-
-type RoleRemovedLog @entity {
-  id: ID!
-  account: Account!
-  role: RoleType!
-  blockNumber: BigInt!
-}
-
-type SlashedLog @entity {
-  id: ID!
-  account: Account!
-  amount: BigInt!
-  blockNumber: BigInt!
+type PendingJob @jsonField {
+  jobId: String!
+  jobKey: String!
 }
 
 type PendingJobsLog @entity {
   id: ID!
-  pendingJobs: [JobSubmission!]!
-  blockNumber: BigInt!
-}
-
-type IdentityClearedLog @entity {
-  id: ID!
-  account: Account!
-  deposit: BigInt!
-  blockNumber: BigInt!
-}
-
-type IdentityKilledLog @entity {
-  id: ID!
-  account: Account!
-  deposit: BigInt!
+  pendingJobs: [PendingJob!]!
   blockNumber: BigInt!
 }

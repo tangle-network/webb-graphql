@@ -20,7 +20,7 @@ network:
   # Use Tangle network endpoint for Arana Alpha testnet see: https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstats-dev.api.webb.tools%2Fpublic-ws#/settings/metadata
   # chainId: '0xea63e6ac7da8699520af7fb540470d63e48eccb33f7273d2e21a935685bf1320'
   # TODO: update back to network endpoint
-  chainId: '0x8f1008f3cead5e2bb4ac139cce3bc6481c423ad260198679042e33bd82b755db'
+  chainId: '0xfa1aa874c2ec59b71c81670d87f0fc3b1b7f0fc09f2b6594c31e26aaab01ba36'
   # using testnet archive node endpoint
   # endpoint: 'wss://rpc-archive.tangle.tools'
   # if you are using docker, uncomment the below line
@@ -92,23 +92,23 @@ dataSources:
             module: 'identity'
             method: 'IdentityKilled'
 
-        - handler: 'handleRoleAssigned'
+        - handler: 'handleProfileCreated'
           kind: 'substrate/EventHandler'
           filter:
             module: 'roles'
-            method: 'RoleAssigned'
+            method: 'ProfileCreated'
 
-        - handler: 'handleRoleRemoved'
+        - handler: 'handleProfileUpdated'
           kind: 'substrate/EventHandler'
           filter:
             module: 'roles'
-            method: 'RoleRemoved'
+            method: 'ProfileUpdated'
 
-        - handler: 'handleSlashed'
+        - handler: 'handleProfileDeleted'
           kind: 'substrate/EventHandler'
           filter:
             module: 'roles'
-            method: 'Slashed'
+            method: 'ProfileDeleted'
 
         - handler: 'handlePendingJobs'
           kind: 'substrate/EventHandler'
