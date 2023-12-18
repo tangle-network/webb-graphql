@@ -12,6 +12,9 @@ import {
   createIdentityClearedLog,
   createIdentityKilledLog,
   createValidatorRewardLog,
+  createProfile,
+  updateProfile,
+  deleteProfile,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
 
@@ -92,15 +95,18 @@ export async function handleIdentityKilled(event: SubstrateEvent): Promise<void>
 }
 
 export async function handleProfileCreated(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  logger.info(`ProfileCreatedHandler: ${JSON.stringify(event)}`);
+  await createProfile(event);
 }
 
 export async function handleProfileUpdated(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  logger.info(`ProfileUpdatedHandler: ${JSON.stringify(event)}`);
+  await updateProfile(event);
 }
 
 export async function handleProfileDeleted(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  logger.info(`ProfileDeletedHandler: ${JSON.stringify(event)}`);
+  await deleteProfile(event);
 }
 
 export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {
@@ -112,5 +118,5 @@ export async function handleHeartbeats(event: SubstrateEvent) {
   const blockNumber = event.block.block.header.number.toString();
   logger.info(`HeartBeat authorityId: ${authorityId}`);
   await recordAuthorityUptime(authorityId, blockNumber);
-  return recordHeartbeat(authorityId, blockNumber);
+  await recordHeartbeat(authorityId, blockNumber);
 }
