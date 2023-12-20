@@ -45,7 +45,6 @@ async function ensureValidator(id: string, authorityId: string) {
   return newValidator;
 }
 
-// TODO: might need to add type for the input param after checking the other fields
 async function ensureSessionValidator(sessionId: string, input: any, blockNumber: number) {
   const id = `${sessionId}-${input.accountId}`;
   const sessionValidator = new SessionValidator(id);

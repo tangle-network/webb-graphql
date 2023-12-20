@@ -1,3 +1,4 @@
+import { SubstrateEvent } from '@subql/types';
 import { Account, CountryCode, HeartBeat, AuthorityUpTime } from '../types';
 import { Option } from '@polkadot/types';
 import { PalletIdentityRegistration } from '@polkadot/types/lookup';
@@ -18,8 +19,18 @@ async function ensureCountryCode(code: string) {
   return newCountryCode;
 }
 
+export async function ensureAccount(accountId: string) {
+  let account = await Account.get(accountId);
+  if (!account) {
+    account = new Account(accountId);
+    await updateOrSetAccount(account);
+  }
+  return account;
+}
+
 export async function updateOrSetAccount(account: Account) {
   const accId = account.id;
+  account.publicKey = account.id;
   if ('identity' in api.query) {
     const identity: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(accId)) as any;
     if (identity.isSome) {
@@ -52,17 +63,14 @@ export async function updateOrSetAccount(account: Account) {
   return account.save();
 }
 
-export async function ensureAccount(account: string) {
-  let data = await Account.get(account);
-  if (!data) {
-    data = new Account(account);
-    await updateOrSetAccount(data);
-  }
-  return data;
+export async function removeAccount(event: SubstrateEvent) {
+  const accountId = event.event.data[0].toString();
+  const data = await Account.get(accountId);
+  if (!data) return;
+  await Account.remove(accountId);
 }
 
 type Keys = {
-  dkg: string;
   imOnline: string;
   aura: string;
   grandpa: string;
@@ -70,7 +78,7 @@ type Keys = {
 
 let queuedKeys: Record<string, Keys> | null = null;
 
-export function getCachedKeys(): Promise<Record<string, Keys>> {
+function getCachedKeys(): Promise<Record<string, Keys>> {
   const fired = queuedKeys !== null;
   if (fired) {
     return Promise.resolve(queuedKeys);
@@ -80,7 +88,6 @@ export function getCachedKeys(): Promise<Record<string, Keys>> {
     api.query.session.queuedKeys((data) => {
       data.forEach(([key, val]) => {
         queuedKeys[key.toString()] = {
-          dkg: val.dkg.toString(),
           imOnline: val.imOnline.toString(),
           aura: val.aura.toString(),
           grandpa: val.grandpa.toString(),
