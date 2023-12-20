@@ -1,6 +1,6 @@
 import { SubstrateEvent } from '@subql/types';
 
-import { Profile, RoleType } from '../types';
+import { Profile, RoleType, PendingJobsLog } from '../types';
 import { ensureBlock } from './block';
 
 export async function createProfile(event: SubstrateEvent) {
@@ -45,4 +45,19 @@ export async function deleteProfile(event: SubstrateEvent) {
   if (!profile) return;
 
   await Profile.remove(accountId);
+}
+
+export async function ensurePendingJobsLog(event: SubstrateEvent) {
+  const block = await ensureBlock(event.block.block.header.number.toString());
+  const index = event.idx;
+  const recordId = `${block.id}-${index}`;
+
+  let pendingJobsLog = await PendingJobsLog.get(recordId);
+
+  if (pendingJobsLog) return;
+  pendingJobsLog = new PendingJobsLog(recordId);
+  pendingJobsLog.blockNumber = block.number;
+  // TODO: update pending jobs
+
+  await pendingJobsLog.save();
 }

@@ -9,12 +9,17 @@ import {
   recordAuthorityUptime,
   recordHeartbeat,
   updateOrSetAccount,
+  // TODO: update function name to ensure
+  createIdentitySetLog,
   createIdentityClearedLog,
   createIdentityKilledLog,
+  ensureJob,
+  ensureJobResultSubmittedLog,
   createValidatorRewardLog,
   createProfile,
   updateProfile,
   deleteProfile,
+  ensurePendingJobsLog,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
 
@@ -42,7 +47,7 @@ export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
     path: ${path}
     data: ${JSON.stringify(extrinsic.extrinsic.args)}
     block: ${block}
-`);
+  `);
   await createExtrinsic(extrinsic);
 }
 
@@ -63,35 +68,47 @@ export async function handleNewSession(event: SubstrateEvent): Promise<void> {
   await ensureSession(session, event.block.block.header.number.toString());
 }
 
+export async function handleHeartbeats(event: SubstrateEvent) {
+  const authorityId = event.event.data[0].toString();
+  const blockNumber = event.block.block.header.number.toString();
+  logger.info(`HeartBeat authorityId: ${authorityId}`);
+  await recordAuthorityUptime(authorityId, blockNumber);
+  await recordHeartbeat(authorityId, blockNumber);
+}
+
 export async function handleJobSubmitted(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  logger.info(`JobSubmittedHandler: ${JSON.stringify(event)}`);
+  await ensureJob(event);
 }
 
 export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  logger.info(`JobResultSubmittedHandler: ${JSON.stringify(event)}`);
+  await ensureJobResultSubmittedLog(event);
 }
 
 export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Promise<void> {
+  logger.info(`ValidatorRewardedForJobsHandler: ${JSON.stringify(event)}`);
   await createValidatorRewardLog(event);
 }
 
 export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
+  logger.info(`IdentitySetHandler: ${JSON.stringify(event)}`);
   const account = event.event.data[0].toString();
-  logger.info(`IdentitySetHandler: ${account}`);
   const acc = await ensureAccount(account);
+  await createIdentitySetLog(event);
   await updateOrSetAccount(acc);
 }
 
 export async function handleIdentityCleared(event: SubstrateEvent): Promise<void> {
-  const account = event.event.data[0].toString();
-  logger.info(`IdentityClearedHandler: ${account}`);
-  await Promise.all([removeAccount(account), createIdentityClearedLog(event)]);
+  logger.info(`IdentityClearedHandler: ${JSON.stringify(event)}`);
+  await createIdentityClearedLog(event);
+  await removeAccount(event);
 }
 
 export async function handleIdentityKilled(event: SubstrateEvent): Promise<void> {
-  const account = event.event.data[0].toString();
-  logger.info(`IdentityKilledHandler: ${account}`);
-  await Promise.all([removeAccount(account), createIdentityKilledLog(event)]);
+  logger.info(`IdentityKilledHandler: ${JSON.stringify(event)}`);
+  await createIdentityKilledLog(event);
+  await removeAccount(event);
 }
 
 export async function handleProfileCreated(event: SubstrateEvent): Promise<void> {
@@ -110,13 +127,6 @@ export async function handleProfileDeleted(event: SubstrateEvent): Promise<void>
 }
 
 export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleHeartbeats(event: SubstrateEvent) {
-  const authorityId = event.event.data[0].toString();
-  const blockNumber = event.block.block.header.number.toString();
-  logger.info(`HeartBeat authorityId: ${authorityId}`);
-  await recordAuthorityUptime(authorityId, blockNumber);
-  await recordHeartbeat(authorityId, blockNumber);
+  logger.info(`PendingJobsHandler: ${JSON.stringify(event)}`);
+  await ensurePendingJobsLog(event);
 }

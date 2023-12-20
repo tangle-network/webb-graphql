@@ -1,3 +1,4 @@
+import { SubstrateEvent } from '@subql/types';
 import { Account, CountryCode, HeartBeat, AuthorityUpTime } from '../types';
 import { Option } from '@polkadot/types';
 import { PalletIdentityRegistration } from '@polkadot/types/lookup';
@@ -62,7 +63,8 @@ export async function updateOrSetAccount(account: Account) {
   return account.save();
 }
 
-export async function removeAccount(accountId: string) {
+export async function removeAccount(event: SubstrateEvent) {
+  const accountId = event.event.data[0].toString();
   const data = await Account.get(accountId);
   if (!data) return;
   await Account.remove(accountId);

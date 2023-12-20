@@ -52,12 +52,12 @@ async function ensureSessionValidator(sessionId: string, input: any, blockNumber
   await ensureValidator(input.accountId, input.authorityId);
   sessionValidator.sessionId = sessionId;
   sessionValidator.validatorId = input.accountId;
-  // isBest
-  // isNext
-  // isNextBest
-  // bestOrder
-  // nextBestOrder
-  // reputation
+  // TODO: isBest
+  // TODO: isNext
+  // TODO: isNextBest
+  // TODO: bestOrder
+  // TODO: nextBestOrder
+  // TODO: reputation
   sessionValidator.uptime = sessionValidator.uptime || input.uptime || DEFAULT_UPTIME;
   sessionValidator.blockNumber = BigInt(blockNumber);
   await sessionValidator.save();
