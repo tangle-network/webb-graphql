@@ -45,19 +45,18 @@ async function ensureValidator(id: string, authorityId: string) {
   return newValidator;
 }
 
-// TODO: might need to add type for the input param after checking the other fields
 async function ensureSessionValidator(sessionId: string, input: any, blockNumber: number) {
   const id = `${sessionId}-${input.accountId}`;
   const sessionValidator = new SessionValidator(id);
   await ensureValidator(input.accountId, input.authorityId);
   sessionValidator.sessionId = sessionId;
   sessionValidator.validatorId = input.accountId;
-  // TODO: isBest
-  // TODO: isNext
-  // TODO: isNextBest
-  // TODO: bestOrder
-  // TODO: nextBestOrder
-  // TODO: reputation
+  // isBest
+  // isNext
+  // isNextBest
+  // bestOrder
+  // nextBestOrder
+  // reputation
   sessionValidator.uptime = sessionValidator.uptime || input.uptime || DEFAULT_UPTIME;
   sessionValidator.blockNumber = BigInt(blockNumber);
   await sessionValidator.save();

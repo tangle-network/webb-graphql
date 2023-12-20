@@ -67,7 +67,7 @@ export async function ensureJobResultSubmittedLog(event: SubstrateEvent) {
   await Promise.all([job.save(), log.save()]);
 }
 
-export async function createValidatorRewardLog(event: SubstrateEvent) {
+export async function ensureValidatorRewardLog(event: SubstrateEvent) {
   const block = await ensureBlock(event.block.block.header.number.toString());
   const index = event.idx;
   const recordId = `${block.id}-${index}`;
@@ -75,7 +75,6 @@ export async function createValidatorRewardLog(event: SubstrateEvent) {
 
   if (validatorReward) return;
 
-  // TODO: check back all the new Class line across the project
   validatorReward = new ValidatorRewardLog(recordId);
   validatorReward.accountId = event.event.data[0].toString();
   validatorReward.reward = BigInt(event.event.data[1].toString());

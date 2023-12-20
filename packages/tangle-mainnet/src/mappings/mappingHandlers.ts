@@ -9,13 +9,12 @@ import {
   recordAuthorityUptime,
   recordHeartbeat,
   updateOrSetAccount,
-  // TODO: update function name to ensure
   createIdentitySetLog,
   createIdentityClearedLog,
   createIdentityKilledLog,
   ensureJob,
   ensureJobResultSubmittedLog,
-  createValidatorRewardLog,
+  ensureValidatorRewardLog,
   createProfile,
   updateProfile,
   deleteProfile,
@@ -88,7 +87,7 @@ export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<v
 
 export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Promise<void> {
   logger.info(`ValidatorRewardedForJobsHandler: ${JSON.stringify(event)}`);
-  await createValidatorRewardLog(event);
+  await ensureValidatorRewardLog(event);
 }
 
 export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
