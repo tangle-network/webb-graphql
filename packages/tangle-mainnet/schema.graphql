@@ -273,3 +273,16 @@ type PendingJobsLog @entity {
   pendingJobs: [PendingJob!]!
   blockNumber: BigInt!
 }
+
+type ClaimSource @jsonField {
+  evm: String
+  native: String
+}
+
+type Claim @entity {
+  id: ID!
+  recipient: String!
+  source: ClaimSource!
+  amount: BigInt!
+  blockNumber: BigInt!
+}
