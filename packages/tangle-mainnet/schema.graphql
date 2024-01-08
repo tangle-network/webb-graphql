@@ -26,7 +26,6 @@ type SourceState @entity {
 
 type HeartBeat @entity {
   id: ID!
-
   blockNumber: BigInt!
   session: Session!
   accountId: String!
@@ -136,12 +135,6 @@ type SessionValidator @entity {
   id: ID!
   session: Session!
   validator: Validator!
-  isBest: Boolean!
-  isNext: Boolean!
-  isNextBest: Boolean!
-  bestOrder: Int!
-  nextBestOrder: Int!
-  reputation: Int!
   uptime: Int!
   blockNumber: BigInt!
 }

@@ -20,7 +20,7 @@ network:
   # Use Tangle network endpoint for Arana Alpha testnet see: https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstats-dev.api.webb.tools%2Fpublic-ws#/settings/metadata
   # chainId: '0xea63e6ac7da8699520af7fb540470d63e48eccb33f7273d2e21a935685bf1320'
   # Use local Tangle network
-  chainId: '0x9c09f410611b9493e59313f6475f41f1e2909166d914870625852eeeccba25de'
+  chainId: '0xa7ca7160f8da16c89185933f2d3d32ff874513aa503ab73aded3af384bac60ff'
   # using testnet archive node endpoint
   # endpoint: 'wss://rpc-archive.tangle.tools'
   # if you are using docker, uncomment the below line
