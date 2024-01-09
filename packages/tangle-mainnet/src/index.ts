@@ -6,4 +6,3 @@ ensureSource('0').then(() => {
 });
 //Exports all handler functions
 export * from './mappings/mappingHandlers';
-

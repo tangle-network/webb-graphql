@@ -4,8 +4,6 @@ import { u32 } from '@polkadot/types-codec';
 import { ensureAccount } from './account';
 import { increaseSourceSession } from './source';
 
-// What is UPTIME_DIVIDER for?
-const UPTIME_DIVIDER = 10_000;
 const DEFAULT_UPTIME = 1_000_000;
 
 /**
@@ -28,21 +26,15 @@ export const ensureSession = async (sessionNumber: string, blockNumber: string) 
 };
 
 async function ensureValidator(id: string, authorityId: string) {
-  const validator = await Validator.get(id);
-  if (validator) {
-    return validator;
+  let validator = await Validator.get(id);
+  if (!validator) {
+    await ensureAccount(id);
+    validator = new Validator(id);
+    validator.authorityId = authorityId;
+    validator.accountId = id;
+    validator.uptime = DEFAULT_UPTIME;
+    await validator.save();
   }
-  await ensureAccount(id);
-  const newValidator = Validator.create({
-    id,
-    authorityId,
-    accountId: id,
-    // ?? Divide by 10_000 to get the percentage
-    uptime: DEFAULT_UPTIME,
-  });
-
-  await newValidator.save();
-  return newValidator;
 }
 
 async function ensureSessionValidator(sessionId: string, input: any, blockNumber: number) {
@@ -51,19 +43,18 @@ async function ensureSessionValidator(sessionId: string, input: any, blockNumber
   await ensureValidator(input.accountId, input.authorityId);
   sessionValidator.sessionId = sessionId;
   sessionValidator.validatorId = input.accountId;
-  // isBest
-  // isNext
-  // isNextBest
-  // bestOrder
-  // nextBestOrder
-  // reputation
   sessionValidator.uptime = sessionValidator.uptime || input.uptime || DEFAULT_UPTIME;
   sessionValidator.blockNumber = BigInt(blockNumber);
   await sessionValidator.save();
   return sessionValidator;
 }
 
-export async function updateSessionValidatorUptime(sessionId: string, accountId: string, uptimeValue: number) {
+export async function updateSessionValidatorUptime(
+  sessionId: string,
+  accountId: string,
+  authorityId: string,
+  uptimeValue: number
+) {
   const id = `${sessionId}-${accountId}`;
   const sessionValidator = await SessionValidator.get(id);
 
@@ -72,16 +63,16 @@ export async function updateSessionValidatorUptime(sessionId: string, accountId:
       sessionId,
       {
         accountId,
-        authorityId: '',
+        authorityId,
         uptime: uptimeValue,
       },
       0
     );
+  } else {
+    logger.info(`Updating uptime`);
+    sessionValidator.uptime = uptimeValue;
+    await sessionValidator.save();
   }
-
-  logger.info(`Updating uptime`);
-  sessionValidator.uptime = uptimeValue;
-  await sessionValidator.save();
 }
 
 export async function getCurrentSessionId(): Promise<string> {

@@ -72,7 +72,7 @@ export async function removeAccount(event: SubstrateEvent) {
 
 type Keys = {
   imOnline: string;
-  aura: string;
+  babe: string;
   grandpa: string;
 };
 
@@ -89,7 +89,7 @@ function getCachedKeys(): Promise<Record<string, Keys>> {
       data.forEach(([key, val]) => {
         queuedKeys[key.toString()] = {
           imOnline: val.imOnline.toString(),
-          aura: val.aura.toString(),
+          babe: val.babe.toString(),
           grandpa: val.grandpa.toString(),
         };
       });
@@ -125,7 +125,7 @@ export async function recordHeartbeat(imOnlineId: string, blockNumber: string) {
       await hb.save();
       const [data, numberOfHeartbeats] = await addHb(accountId, '0');
       const uptime = getIntPercentage(numberOfHeartbeats, data.numberOfSessions);
-      await updateSessionValidatorUptime(session.id, accountId, uptime);
+      await updateSessionValidatorUptime(session.id, accountId, imOnlineId, uptime);
     }
   } else {
     logger.info(`No account found for imOnlineId ${imOnlineId}`);

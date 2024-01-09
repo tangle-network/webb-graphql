@@ -26,7 +26,6 @@ type SourceState @entity {
 
 type HeartBeat @entity {
   id: ID!
-
   blockNumber: BigInt!
   session: Session!
   accountId: String!
@@ -136,12 +135,6 @@ type SessionValidator @entity {
   id: ID!
   session: Session!
   validator: Validator!
-  isBest: Boolean!
-  isNext: Boolean!
-  isNextBest: Boolean!
-  bestOrder: Int!
-  nextBestOrder: Int!
-  reputation: Int!
   uptime: Int!
   blockNumber: BigInt!
 }
@@ -271,5 +264,18 @@ type PendingJob @jsonField {
 type PendingJobsLog @entity {
   id: ID!
   pendingJobs: [PendingJob!]!
+  blockNumber: BigInt!
+}
+
+type ClaimSource @jsonField {
+  evm: String
+  native: String
+}
+
+type Claim @entity {
+  id: ID!
+  recipient: String!
+  source: ClaimSource!
+  amount: BigInt!
   blockNumber: BigInt!
 }

@@ -19,6 +19,7 @@ import {
   updateProfile,
   deleteProfile,
   ensurePendingJobsLog,
+  ensureClaim,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
 
@@ -128,4 +129,9 @@ export async function handleProfileDeleted(event: SubstrateEvent): Promise<void>
 export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {
   logger.info(`PendingJobsHandler: ${JSON.stringify(event)}`);
   await ensurePendingJobsLog(event);
+}
+
+export async function handleClaim(event: SubstrateEvent): Promise<void> {
+  logger.info(`ClaimHandler: ${JSON.stringify(event)}`);
+  await ensureClaim(event);
 }

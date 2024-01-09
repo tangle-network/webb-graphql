@@ -18,11 +18,11 @@ schema:
 
 network:
   # Use Tangle network endpoint for Arana Alpha testnet see: https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fstats-dev.api.webb.tools%2Fpublic-ws#/settings/metadata
-  chainId: '0xea63e6ac7da8699520af7fb540470d63e48eccb33f7273d2e21a935685bf1320'
+  chainId: '0x3d22af97d919611e03bbcbda96f65988758865423e89b2d99547a6bb61452db3'
   # Use local Tangle network
-  # chainId: '0xf61f3dc69c5dda90cf6d37029ede5ed1df85d327005a3ebdaf869aef54a7159a'
+  # chainId: '0x40b76cc8b3d0b5fbb6e6db2c42df9a399c637453861c39deaceed089a525993d'
   # using testnet archive node endpoint
-  endpoint: 'wss://rpc-archive.tangle.tools'
+  endpoint: 'wss://testnet-rpc-archive.tangle.tools'
   # if you are using docker, uncomment the below line
   # endpoint: 'ws://host.docker.internal:9944'
   # if you are not using Docker and want to run locally, uncomment the below line
@@ -115,6 +115,12 @@ dataSources:
           filter:
             module: 'roles'
             method: 'PendingJobs'
+
+        - handler: 'handleClaim'
+          kind: 'substrate/EventHandler'
+          filter:
+            module: 'claims'
+            method: 'Claimed'
 
         - handler: 'handleHeartbeats'
           kind: 'substrate/EventHandler'
