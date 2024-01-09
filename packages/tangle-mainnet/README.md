@@ -85,7 +85,7 @@ You should see you the following services starting up in the Docker container:
 
 Once initialized the container will begin syncing and ingesting the data of the archive node.
 
-You can now visit `localhost:3000` to view the graphQL playground and make queries to fetch data. For example,
+You can now visit `localhost:4000` to view the graphQL playground and make queries to fetch data. For example,
 
 ```graphql
 query {
@@ -192,7 +192,7 @@ Great! You have officially setup, and started your local SubQuery environment wi
 
 If you do not wish to utilize Docker, you may proceed to follow these steps [here](https://academy.subquery.network/run_publish/run.html#running-an-indexer-subql-node).
 
-If you do not use `Docker`, and want to start the graphQL playground you have to run the [Query Service](https://academy.subquery.network/run_publish/run.html#running-a-query-service-subql-query) via `subql-query` to have the playground running. Then you can open the playground at `localhost:3000` and use the below `graphql` query to test.
+If you do not use `Docker`, and want to start the graphQL playground you have to run the [Query Service](https://academy.subquery.network/run_publish/run.html#running-a-query-service-subql-query) via `subql-query` to have the playground running. Then you can open the playground at `localhost:4000` and use the below `graphql` query to test.
 
 ```graphql
 query {
