@@ -11,7 +11,7 @@ on:
 
 jobs:
   dkg:
-    name: run
+    name: dkg
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,7 +28,7 @@ jobs:
           cd packages/dkg && yarn install && yarn codegen && yarn ts-check
 
   tangle-mainnet:
-    name: run
+    name: tangle-mainnet
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -47,7 +47,7 @@ jobs:
   # add vanchor (running ts-check in vanchor package is not ready yet)
 
   vanchor-client:
-    name: run
+    name: vanchor-client
     runs-on: ubuntu-latest
     strategy:
       matrix:
