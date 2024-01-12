@@ -17,7 +17,8 @@
     "lint:fix": "eslint ./src --ext .ts --fix",
     "format": "prettier --write .",
     "run-example": "ts-node --transpileOnly ./src/example-queries.ts",
-    "check": "tsc --pretty --noEmit"
+    "check": "tsc --pretty --noEmit",
+    "ts-check": "tsc --noEmit -p ./tsconfig.json"
   },
   "dependencies": {
     "@graphprotocol/client-cli": "3.0.0",
