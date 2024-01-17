@@ -1,14 +1,16 @@
 import '@webb-tools/tangle-substrate-types';
 import { SubstrateExtrinsic } from '@subql/types';
-import { CallInfo } from '../utils';
 
 export * from './account';
 export * from './block';
+export * from './claim';
 export * from './event';
 export * from './extrinsic';
+export * from './identity';
+export * from './profile';
+export * from './jobs';
 export * from './sudo';
 
 export type ModuleHandlerArgs = {
-  call: CallInfo;
   extrinsic: SubstrateExtrinsic;
 };

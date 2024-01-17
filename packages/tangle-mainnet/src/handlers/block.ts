@@ -1,11 +1,11 @@
 import { SubstrateBlock } from '@subql/types';
 import { Block } from '../types';
 
-export async function ensureBlock(recordId: string) {
-  let data = await Block.get(recordId);
+export async function ensureBlock(blockNumber: string) {
+  let data = await Block.get(blockNumber);
   if (!data) {
-    data = new Block(recordId);
-    data.number = BigInt(recordId);
+    data = new Block(blockNumber);
+    data.number = BigInt(blockNumber);
     await data.save();
   }
   return data;
@@ -16,7 +16,7 @@ export async function createBlock(block: SubstrateBlock) {
   const data = await ensureBlock(block.block.header.number.toString());
 
   data.hash = block.block.hash?.toString();
-  data.timestamp = block.timestamp; //.toDate?
+  data.timestamp = block.timestamp;
   data.parentHash = block.block.header.parentHash?.toString();
   data.specVersion = block.specVersion?.toString();
   data.stateRoot = block.block.header.stateRoot?.toString();

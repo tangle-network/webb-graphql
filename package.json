@@ -13,7 +13,8 @@
     "format": "prettier --check \"**/*.{ts,js}\" ",
     "format:fix": "prettier --write \"**/*.{ts,js}\" ",
     "compile": "cd packages/vanchor-client && yarn install",
-    "publish:ci": "npm run compile && lerna run compile && lerna publish patch --yes --message 'chore: release new versions' "
+    "publish:ci": "npm run compile && lerna run compile && lerna publish patch --yes --message 'chore: release new versions' ",
+    "ts-check": "tsc --noEmit -p ./tsconfig.json"
   },
   "devDependencies": {
     "@nx/eslint-plugin": "^16.4.1",

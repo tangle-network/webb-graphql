@@ -5,14 +5,26 @@ import {
   createExtrinsic,
   createSudoCall,
   ensureAccount,
-  RecordAuthorityUptime,
-  RecordHeartbeat,
-  UpdateOrSetIdentity,
+  removeAccount,
+  recordAuthorityUptime,
+  recordHeartbeat,
+  updateOrSetAccount,
+  createIdentitySetLog,
+  createIdentityClearedLog,
+  createIdentityKilledLog,
+  ensureJob,
+  ensureJobResultSubmittedLog,
+  ensureValidatorRewardLog,
+  createProfile,
+  updateProfile,
+  deleteProfile,
+  ensurePendingJobsLog,
+  ensureClaim,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
-  const blockRecord = await createBlock(block);
+  await createBlock(block);
 }
 
 export async function handleEvent(event: SubstrateEvent): Promise<void> {
@@ -31,97 +43,95 @@ export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
   const path = `${extrinsic.extrinsic.method.section}:${extrinsic.extrinsic.method.method}`;
   const block = `${extrinsic.block.block.header.number} => ${extrinsic.block.block.hash}`;
 
-  logger.info(
-    `ExtrinsicHandler:
-     	     	path: ${path}
-     	     	data: ${JSON.stringify(extrinsic.extrinsic.args)}}
-     	     	block:${block}
-
-     	     	`
-  );
+  logger.info(`ExtrinsicHandler:
+    path: ${path}
+    data: ${JSON.stringify(extrinsic.extrinsic.args)}
+    block: ${block}
+  `);
   await createExtrinsic(extrinsic);
 }
 
 export async function handleSudoCall(extrinsic: SubstrateExtrinsic): Promise<void> {
   const path = `${extrinsic.extrinsic.method.section}:${extrinsic.extrinsic.method.method}`;
   const block = `${extrinsic.block.block.header.number} => ${extrinsic.block.block.hash}`;
-  logger.info(
-    `SudoCallHandler:
-     	     	path: ${path}
-     	     	data: ${JSON.stringify(extrinsic.extrinsic.args)}
-     	     	block:${block}
-
-     	`
-  );
+  logger.info(`SudoCallHandler:
+    path: ${path}
+    data: ${JSON.stringify(extrinsic.extrinsic.args)}
+    block: ${block}
+  `);
   await createSudoCall(extrinsic);
 }
 
 export async function handleNewSession(event: SubstrateEvent): Promise<void> {
   const session = event.event.data[0].toString();
   logger.info(`NewSessionHandler: ${session}`);
-  const newSession = await ensureSession(session, event.block.block.header.number.toString());
-  return UpdateOrSetSession(newSession);
-}
-
-export async function handleJobSubmitted(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
-  const account = event.event.data[0].toString();
-  logger.info(`IdentityHandler: ${account}`);
-  const acc = await ensureAccount(account);
-  return UpdateOrSetIdentity(acc);
-}
-
-export async function handleIdentityCleared(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleIdentityKilled(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleJudgementRequested(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleJudgementUnrequested(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleJudgementGiven(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleRoleAssigned(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleRoleRemoved(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handleSlashed(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
-}
-
-export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {
-  // Your implementation here
+  await ensureSession(session, event.block.block.header.number.toString());
 }
 
 export async function handleHeartbeats(event: SubstrateEvent) {
   const authorityId = event.event.data[0].toString();
   const blockNumber = event.block.block.header.number.toString();
   logger.info(`HeartBeat authorityId: ${authorityId}`);
-  await RecordAuthorityUptime(authorityId, blockNumber);
-  return RecordHeartbeat(authorityId, blockNumber);
+  await recordAuthorityUptime(authorityId, blockNumber);
+  await recordHeartbeat(authorityId, blockNumber);
+}
+
+export async function handleJobSubmitted(event: SubstrateEvent): Promise<void> {
+  logger.info(`JobSubmittedHandler: ${JSON.stringify(event)}`);
+  await ensureJob(event);
+}
+
+export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<void> {
+  logger.info(`JobResultSubmittedHandler: ${JSON.stringify(event)}`);
+  await ensureJobResultSubmittedLog(event);
+}
+
+export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Promise<void> {
+  logger.info(`ValidatorRewardedForJobsHandler: ${JSON.stringify(event)}`);
+  await ensureValidatorRewardLog(event);
+}
+
+export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
+  logger.info(`IdentitySetHandler: ${JSON.stringify(event)}`);
+  const account = event.event.data[0].toString();
+  const acc = await ensureAccount(account);
+  await createIdentitySetLog(event);
+  await updateOrSetAccount(acc);
+}
+
+export async function handleIdentityCleared(event: SubstrateEvent): Promise<void> {
+  logger.info(`IdentityClearedHandler: ${JSON.stringify(event)}`);
+  await createIdentityClearedLog(event);
+  await removeAccount(event);
+}
+
+export async function handleIdentityKilled(event: SubstrateEvent): Promise<void> {
+  logger.info(`IdentityKilledHandler: ${JSON.stringify(event)}`);
+  await createIdentityKilledLog(event);
+  await removeAccount(event);
+}
+
+export async function handleProfileCreated(event: SubstrateEvent): Promise<void> {
+  logger.info(`ProfileCreatedHandler: ${JSON.stringify(event)}`);
+  await createProfile(event);
+}
+
+export async function handleProfileUpdated(event: SubstrateEvent): Promise<void> {
+  logger.info(`ProfileUpdatedHandler: ${JSON.stringify(event)}`);
+  await updateProfile(event);
+}
+
+export async function handleProfileDeleted(event: SubstrateEvent): Promise<void> {
+  logger.info(`ProfileDeletedHandler: ${JSON.stringify(event)}`);
+  await deleteProfile(event);
+}
+
+export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {
+  logger.info(`PendingJobsHandler: ${JSON.stringify(event)}`);
+  await ensurePendingJobsLog(event);
+}
+
+export async function handleClaim(event: SubstrateEvent): Promise<void> {
+  logger.info(`ClaimHandler: ${JSON.stringify(event)}`);
+  await ensureClaim(event);
 }
