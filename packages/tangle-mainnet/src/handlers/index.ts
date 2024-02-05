@@ -6,7 +6,6 @@ export * from './block';
 export * from './claim';
 export * from './event';
 export * from './extrinsic';
-export * from './identity';
 export * from './profile';
 export * from './jobs';
 export * from './sudo';

@@ -64,6 +64,39 @@ type Event @entity {
   extrinsic: Extrinsic
 }
 
+type Session @entity {
+  id: ID!
+  validators: [SessionValidator!]! @derivedFrom(field: "session")
+  blockNumber: BigInt!
+  block: Block!
+}
+
+type AuthorityUpTime @entity {
+  id: ID!
+  authorityId: String!
+  uptime: Int!
+  blockNumber: BigInt!
+  sessionNumber: Int!
+  totalHeartbeats: Int!
+}
+
+type SessionValidator @entity {
+  id: ID!
+  session: Session!
+  validator: Validator!
+  uptime: Int!
+  blockNumber: BigInt!
+}
+
+# --------------------------- Validator ------------------------------
+type Validator @entity {
+  id: ID!
+  accountId: String!
+  authorityId: String! @index(unique: true)
+  uptime: Int!
+}
+
+# --------------------------- Identity ------------------------------
 type CountryCode @entity {
   id: ID!
 
@@ -88,56 +121,7 @@ type Account @entity {
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
-type Session @entity {
-  id: ID!
-  validators: [SessionValidator!]! @derivedFrom(field: "session")
-  blockNumber: BigInt!
-  block: Block!
-}
-
-type AuthorityUpTime @entity {
-  id: ID!
-  authorityId: String!
-  uptime: Int!
-  blockNumber: BigInt!
-  sessionNumber: Int!
-  totalHeartbeats: Int!
-}
-
-type IdentitySetLog @entity {
-  id: ID!
-  accountId: String!
-  blockNumber: BigInt!
-}
-
-type IdentityClearedLog @entity {
-  id: ID!
-  accountId: String!
-  deposit: BigInt!
-  blockNumber: BigInt!
-}
-
-type IdentityKilledLog @entity {
-  id: ID!
-  accountId: String!
-  deposit: BigInt!
-  blockNumber: BigInt!
-}
-
-type Validator @entity {
-  id: ID!
-  accountId: String!
-  authorityId: String! @index(unique: true)
-  uptime: Int!
-}
-
-type SessionValidator @entity {
-  id: ID!
-  session: Session!
-  validator: Validator!
-  uptime: Int!
-  blockNumber: BigInt!
-}
+# --------------------------- JOBS ------------------------------
 
 enum JobType {
   DKGTSSPhaseOne
@@ -156,11 +140,24 @@ enum JobKey {
 type Job @entity {
   id: ID!
   jobKey: JobKey!
+  # The maximum allowed submission time for a job result.
   expiryBlockNumber: BigInt!
+  # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
+  # ttlBlockNumber: BigInt!
   createAtBlock: BigInt!
+  # timestamp: Date!
   jobType: JobType
   isResultSubmitted: Boolean!
 }
+
+# type Phase1Job @entity {
+#   id: ID!
+#   creationBlockNumber: BigInt!
+#   # The maximum allowed submission time for a job result.
+#   expiryBlockNumber: BigInt!
+#   # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
+#   ttlBlockNumber: BigInt!
+# }
 
 type JobResultSubmittedLog @entity {
   id: ID!
@@ -254,17 +251,6 @@ type Profile @entity {
   accountId: String!
   totalProfileResets: BigInt!
   roles: [RoleType!]!
-}
-
-type PendingJob @jsonField {
-  jobId: String!
-  jobKey: String!
-}
-
-type PendingJobsLog @entity {
-  id: ID!
-  pendingJobs: [PendingJob!]!
-  blockNumber: BigInt!
 }
 
 type ClaimSource @jsonField {
