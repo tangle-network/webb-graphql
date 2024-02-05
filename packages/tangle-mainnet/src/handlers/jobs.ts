@@ -76,7 +76,7 @@ export async function ensureValidatorRewardLog(event: SubstrateEvent) {
   if (validatorReward) return;
 
   validatorReward = new ValidatorRewardLog(recordId);
-  validatorReward.accountId = event.event.data[0].toString();
+  validatorReward.identityId = event.event.data[0].toString();
   validatorReward.reward = BigInt(event.event.data[1].toString());
   validatorReward.blockNumber = block.number;
   await validatorReward.save();

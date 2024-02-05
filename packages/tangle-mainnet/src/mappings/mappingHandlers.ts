@@ -4,11 +4,11 @@ import {
   createEvent,
   createExtrinsic,
   createSudoCall,
-  ensureAccount,
-  removeAccount,
+  ensureIdentity,
+  removeIdentity,
   recordAuthorityUptime,
   recordHeartbeat,
-  updateOrSetAccount,
+  updateOrSetIdentity,
   ensureJob,
   ensureJobResultSubmittedLog,
   ensureValidatorRewardLog,
@@ -89,19 +89,19 @@ export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Pro
 
 export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
   logger.info(`IdentitySetHandler: ${JSON.stringify(event)}`);
-  const account = event.event.data[0].toString();
-  const acc = await ensureAccount(account);
-  await updateOrSetAccount(acc);
+  const identity = event.event.data[0].toString();
+  const acc = await ensureIdentity(identity);
+  await updateOrSetIdentity(acc);
 }
 
 export async function handleIdentityCleared(event: SubstrateEvent): Promise<void> {
   logger.info(`IdentityClearedHandler: ${JSON.stringify(event)}`);
-  await removeAccount(event);
+  await removeIdentity(event);
 }
 
 export async function handleIdentityKilled(event: SubstrateEvent): Promise<void> {
   logger.info(`IdentityKilledHandler: ${JSON.stringify(event)}`);
-  await removeAccount(event);
+  await removeIdentity(event);
 }
 
 export async function handleProfileCreated(event: SubstrateEvent): Promise<void> {

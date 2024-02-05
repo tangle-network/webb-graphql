@@ -28,7 +28,7 @@ type HeartBeat @entity {
   id: ID!
   blockNumber: BigInt!
   session: Session!
-  accountId: String!
+  identityId: String!
 }
 
 type Extrinsic @entity {
@@ -91,7 +91,7 @@ type SessionValidator @entity {
 # --------------------------- Validator ------------------------------
 type Validator @entity {
   id: ID!
-  accountId: String!
+  identityId: String!
   authorityId: String! @index(unique: true)
   uptime: Int!
 }
@@ -103,7 +103,7 @@ type CountryCode @entity {
   code: String! @index(unique: false)
 }
 
-type Account @entity {
+type Identity @entity {
   id: ID!
   publicKey: String! @index(unique: true)
   creatorId: String
@@ -236,7 +236,7 @@ type ZkSaaSPhaseTwoJob @entity {
 
 type ValidatorRewardLog @entity {
   id: ID!
-  accountId: String!
+  identityId: String!
   reward: BigInt!
   blockNumber: BigInt!
 }
@@ -248,7 +248,7 @@ enum RoleType {
 
 type Profile @entity {
   id: ID!
-  accountId: String!
+  identityId: String!
   totalProfileResets: BigInt!
   roles: [RoleType!]!
 }

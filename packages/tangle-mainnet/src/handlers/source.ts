@@ -14,15 +14,15 @@ export async function ensureSource(id: string) {
   return initSource;
 }
 
-export async function addHb(accountId: string, sourceId: string): Promise<[SourceState, number]> {
+export async function addHb(identityId: string, sourceId: string): Promise<[SourceState, number]> {
   const source = await ensureSource(sourceId);
   let numberOfHeartbeats;
-  const hb = source.heartBeatCounters.find((hb) => hb.authorityId === accountId);
+  const hb = source.heartBeatCounters.find((hb) => hb.authorityId === identityId);
   // set if not exist
   if (!hb) {
     numberOfHeartbeats = 1;
     source.heartBeatCounters.push({
-      authorityId: accountId,
+      authorityId: identityId,
       numberOfHeartBeats: 1,
     });
   } else {

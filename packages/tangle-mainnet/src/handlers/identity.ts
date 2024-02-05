@@ -1,5 +1,5 @@
 import { SubstrateEvent } from '@subql/types';
-import { Account, CountryCode, HeartBeat, AuthorityUpTime } from '../types';
+import { Identity, CountryCode, HeartBeat, AuthorityUpTime } from '../types';
 import { Option } from '@polkadot/types';
 import { PalletIdentityRegistration } from '@polkadot/types/lookup';
 import { getCurrentSessionId, ensureSession, updateSessionValidatorUptime } from './session';
@@ -19,22 +19,22 @@ async function ensureCountryCode(code: string) {
   return newCountryCode;
 }
 
-export async function ensureAccount(accountId: string) {
-  let account = await Account.get(accountId);
-  if (!account) {
-    account = new Account(accountId);
-    await updateOrSetAccount(account);
+export async function ensureIdentity(identityId: string) {
+  let identity = await Identity.get(identityId);
+  if (!identity) {
+    identity = new Identity(identityId);
+    await updateOrSetIdentity(identity);
   }
-  return account;
+  return identity;
 }
 
-export async function updateOrSetAccount(account: Account) {
-  const accId = account.id;
-  account.publicKey = account.id;
+export async function updateOrSetIdentity(identity: Identity) {
+  const accId = identity.id;
+  identity.publicKey = identity.id;
   if ('identity' in api.query) {
-    const identity: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(accId)) as any;
-    if (identity.isSome) {
-      const id = identity.unwrap();
+    const identityInfo: Option<PalletIdentityRegistration> = (await api.query.identity.identityOf(accId)) as any;
+    if (identityInfo.isSome) {
+      const id = identityInfo.unwrap();
 
       const extraInfo = id.info.additional
         .filter(([key]) => key.isRaw)
@@ -46,28 +46,28 @@ export async function updateOrSetAccount(account: Account) {
 
       if (extraInfo['countryCode']) {
         const country = await ensureCountryCode(extraInfo['countryCode']);
-        account.countryCodeId = country.id;
+        identity.countryCodeId = country.id;
       }
 
-      account.display = id.info.display.isNone ? null : String(id.info.display.value.toHuman());
-      account.legal = id.info.legal.isNone ? null : String(id.info.legal.value.toHuman());
-      account.web = id.info.web.toHuman() ? null : String(id.info.web.value.toHuman());
-      account.riot = id.info.riot.isNone ? null : String(id.info.riot.value.toHuman());
-      account.email = id.info.email.isNone ? null : String(id.info.email.value.toHuman());
-      account.pgpFingerprint = id.info.pgpFingerprint.isNone ? null : String(id.info.pgpFingerprint.value.toHuman());
-      account.image = id.info.image.isNone ? null : String(id.info.image.value.toHuman());
-      account.twitter = id.info.twitter.isNone ? null : String(id.info.twitter.value.toHuman());
+      identity.display = id.info.display.isNone ? null : String(id.info.display.value.toHuman());
+      identity.legal = id.info.legal.isNone ? null : String(id.info.legal.value.toHuman());
+      identity.web = id.info.web.toHuman() ? null : String(id.info.web.value.toHuman());
+      identity.riot = id.info.riot.isNone ? null : String(id.info.riot.value.toHuman());
+      identity.email = id.info.email.isNone ? null : String(id.info.email.value.toHuman());
+      identity.pgpFingerprint = id.info.pgpFingerprint.isNone ? null : String(id.info.pgpFingerprint.value.toHuman());
+      identity.image = id.info.image.isNone ? null : String(id.info.image.value.toHuman());
+      identity.twitter = id.info.twitter.isNone ? null : String(id.info.twitter.value.toHuman());
     }
   }
 
-  return account.save();
+  return identity.save();
 }
 
-export async function removeAccount(event: SubstrateEvent) {
-  const accountId = event.event.data[0].toString();
-  const data = await Account.get(accountId);
+export async function removeIdentity(event: SubstrateEvent) {
+  const identityId = event.event.data[0].toString();
+  const data = await Identity.get(identityId);
   if (!data) return;
-  await Account.remove(accountId);
+  await Identity.remove(identityId);
 }
 
 type Keys = {
@@ -102,33 +102,33 @@ export async function recordHeartbeat(imOnlineId: string, blockNumber: string) {
   const sessionNumber = await getCurrentSessionId();
   const keys = await getCachedKeys();
 
-  const accountId = Object.keys(keys).find((key) => {
+  const identityId = Object.keys(keys).find((key) => {
     return keys[key].imOnline === imOnlineId;
   });
 
-  if (accountId) {
-    const heartbeatId = `${sessionNumber}-${accountId}`;
+  if (identityId) {
+    const heartbeatId = `${sessionNumber}-${identityId}`;
     const heartbeat = await HeartBeat.get(heartbeatId);
-    logger.info(`Recording heartbeats for ${accountId}`);
+    logger.info(`Recording heartbeats for ${identityId}`);
 
     if (heartbeat) {
-      logger.info(`Heartbeat already recoded for ${accountId} of session ${sessionNumber}`);
+      logger.info(`Heartbeat already recoded for ${identityId} of session ${sessionNumber}`);
     } else {
       const session = await ensureSession(sessionNumber, blockNumber);
-      const account = await ensureAccount(accountId);
+      const identity = await ensureIdentity(identityId);
       const hb = HeartBeat.create({
         id: heartbeatId,
         blockNumber: BigInt(blockNumber),
-        accountId: account.id,
+        identityId: identity.id,
         sessionId: session.id,
       });
       await hb.save();
-      const [data, numberOfHeartbeats] = await addHb(accountId, '0');
+      const [data, numberOfHeartbeats] = await addHb(identityId, '0');
       const uptime = getIntPercentage(numberOfHeartbeats, data.numberOfSessions);
-      await updateSessionValidatorUptime(session.id, accountId, imOnlineId, uptime);
+      await updateSessionValidatorUptime(session.id, identityId, imOnlineId, uptime);
     }
   } else {
-    logger.info(`No account found for imOnlineId ${imOnlineId}`);
+    logger.info(`No identity found for imOnlineId ${imOnlineId}`);
   }
 }
 
@@ -136,12 +136,12 @@ export async function recordAuthorityUptime(authorityId: string, blockNumber: st
   try {
     const sessionNumber = await getCurrentSessionId();
     const keys = await getCachedKeys();
-    const accountIdSendingHeartbeat = Object.keys(keys).find((key) => keys[key].imOnline === authorityId);
-    const accountIds = Object.keys(keys).filter((key) => keys[key].imOnline);
+    const identityIdSendingHeartbeat = Object.keys(keys).find((key) => keys[key].imOnline === authorityId);
+    const identityIds = Object.keys(keys).filter((key) => keys[key].imOnline);
 
-    for (const accountId of accountIds) {
-      if (accountId === accountIdSendingHeartbeat) {
-        let authorityUptime = await AuthorityUpTime.get(accountId);
+    for (const identityId of identityIds) {
+      if (identityId === identityIdSendingHeartbeat) {
+        let authorityUptime = await AuthorityUpTime.get(identityId);
 
         const maxPossibleHeartbeats = Number(sessionNumber);
         let actualHeartbeats;
@@ -154,12 +154,12 @@ export async function recordAuthorityUptime(authorityId: string, blockNumber: st
         } else {
           actualHeartbeats = 1;
           authorityUptime = AuthorityUpTime.create({
-            id: accountId,
+            id: identityId,
             totalHeartbeats: actualHeartbeats,
             blockNumber: BigInt(blockNumber),
             sessionNumber: Number(sessionNumber),
             uptime: 100,
-            authorityId: accountId,
+            authorityId: identityId,
           });
         }
 
@@ -168,7 +168,7 @@ export async function recordAuthorityUptime(authorityId: string, blockNumber: st
 
         await authorityUptime.save();
       } else {
-        const authorityUptime = await AuthorityUpTime.get(accountId);
+        const authorityUptime = await AuthorityUpTime.get(identityId);
 
         if (authorityUptime) {
           const maxPossibleHeartbeats = Number(sessionNumber);
