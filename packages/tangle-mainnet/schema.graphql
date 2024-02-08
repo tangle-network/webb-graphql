@@ -88,18 +88,15 @@ type SessionValidator @entity {
   blockNumber: BigInt!
 }
 
-# --------------------------- Validator ------------------------------
 type Validator @entity {
   id: ID!
-  identityId: String!
+  identity: String!
   authorityId: String! @index(unique: true)
   uptime: Int!
 }
 
-# --------------------------- Identity ------------------------------
 type CountryCode @entity {
   id: ID!
-
   code: String! @index(unique: false)
 }
 
@@ -121,136 +118,45 @@ type Identity @entity {
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
-# --------------------------- JOBS ------------------------------
-
-enum JobType {
-  DKGTSSPhaseOne
-  DKGTSSPhaseTwo
-  ZkSaaSPhaseOne
-  ZkSaaSPhaseTwo
+enum RoleType {
+  Tss
+  ZkSaaS
+  LightClientRelaying
 }
 
-enum JobKey {
-  DKG
-  DKGSignature
-  ZkSaaSCircuit
-  ZkSaaSProve
-}
-
-type Job @entity {
+type Phase1Job @entity {
   id: ID!
-  jobKey: JobKey!
+  roleType: RoleType!
+  # the specific type based on roleType
+  roleSpecificType: String
+  participants: [String!]
+  threshold: Int
+  permittedCaller: String
+  numOfJobs: Int
+  earnings: Int # for each participant
+  creationBlockNumber: BigInt!
   # The maximum allowed submission time for a job result.
   expiryBlockNumber: BigInt!
   # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
-  # ttlBlockNumber: BigInt!
-  createAtBlock: BigInt!
-  # timestamp: Date!
-  jobType: JobType
+  ttlBlockNumber: BigInt!
+  createdAt: Date!
+  endAt: Date!
   isResultSubmitted: Boolean!
 }
 
-# type Phase1Job @entity {
-#   id: ID!
-#   creationBlockNumber: BigInt!
-#   # The maximum allowed submission time for a job result.
-#   expiryBlockNumber: BigInt!
-#   # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
-#   ttlBlockNumber: BigInt!
-# }
-
-type JobResultSubmittedLog @entity {
+type SubPhase1Job @entity {
   id: ID!
-  jobId: String! @index(unique: true)
-  jobKey: JobKey!
+  phase1JobId: String!
+  txHash: String!
+  timestamp: Date!
   blockNumber: BigInt!
 }
 
-enum DkgKeyType {
-  Ecdsa
-  Schnorr
-}
-
-type DKGTSSPhaseOneJob @entity {
-  id: ID!
-  participants: [String!]!
-  threshold: Int!
-  permittedCallerId: String
-  keyType: DkgKeyType!
-}
-
-type DKGTSSPhaseTwoJob @entity {
-  id: ID!
-  phaseOneId: Int!
-  submission: [Int]!
-}
-
-type HyperData @jsonField {
-  raw: String
-  ipfs: String
-  http: String
-}
-
-type Groth16System @jsonField {
-  circuit: HyperData!
-  numInputs: Int!
-  numConstraints: Int!
-  provingKey: HyperData!
-  verifyingKey: String!
-  wasm: HyperData!
-}
-
-type ZkSaaSPhaseOneJobSystem @jsonField {
-  groth16: Groth16System
-}
-
-type ZkSaaSPhaseOneJob @entity {
-  id: ID!
-  participants: [String!]!
-  permittedCallerId: String
-  system: ZkSaaSPhaseOneJobSystem!
-}
-
-type QAPShare @jsonField {
-  a: HyperData!
-  b: HyperData!
-  c: HyperData!
-}
-
-type Groth16ProveRequest @jsonField {
-  publicInput: String!
-  aShares: [HyperData!]!
-  axShares: [HyperData!]!
-  qapShares: QAPShare
-}
-
-type ZkSaaSPhaseTwoJobRequest @jsonField {
-  groth16: Groth16ProveRequest
-}
-
-type ZkSaaSPhaseTwoJob @entity {
-  id: ID!
-  phaseOneId: Int!
-  request: ZkSaaSPhaseTwoJobRequest!
-}
-
-type ValidatorRewardLog @entity {
+type ValidatorReward @entity {
   id: ID!
   identityId: String!
   reward: BigInt!
   blockNumber: BigInt!
-}
-
-enum RoleType {
-  Tss
-  ZkSaaS
-}
-
-type Profile @entity {
-  id: ID!
-  identityId: String!
-  totalProfileResets: BigInt!
-  roles: [RoleType!]!
 }
 
 type ClaimSource @jsonField {

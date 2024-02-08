@@ -10,11 +10,8 @@ import {
   recordHeartbeat,
   updateOrSetIdentity,
   ensureJob,
-  ensureJobResultSubmittedLog,
+  updateJobResultSubmitted,
   ensureValidatorRewardLog,
-  createProfile,
-  updateProfile,
-  deleteProfile,
   ensureClaim,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
@@ -79,7 +76,7 @@ export async function handleJobSubmitted(event: SubstrateEvent): Promise<void> {
 
 export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<void> {
   logger.info(`JobResultSubmittedHandler: ${JSON.stringify(event)}`);
-  await ensureJobResultSubmittedLog(event);
+  await updateJobResultSubmitted(event);
 }
 
 export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Promise<void> {
@@ -102,21 +99,6 @@ export async function handleIdentityCleared(event: SubstrateEvent): Promise<void
 export async function handleIdentityKilled(event: SubstrateEvent): Promise<void> {
   logger.info(`IdentityKilledHandler: ${JSON.stringify(event)}`);
   await removeIdentity(event);
-}
-
-export async function handleProfileCreated(event: SubstrateEvent): Promise<void> {
-  logger.info(`ProfileCreatedHandler: ${JSON.stringify(event)}`);
-  await createProfile(event);
-}
-
-export async function handleProfileUpdated(event: SubstrateEvent): Promise<void> {
-  logger.info(`ProfileUpdatedHandler: ${JSON.stringify(event)}`);
-  await updateProfile(event);
-}
-
-export async function handleProfileDeleted(event: SubstrateEvent): Promise<void> {
-  logger.info(`ProfileDeletedHandler: ${JSON.stringify(event)}`);
-  await deleteProfile(event);
 }
 
 export async function handleClaim(event: SubstrateEvent): Promise<void> {

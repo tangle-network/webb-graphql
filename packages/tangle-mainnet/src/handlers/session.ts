@@ -31,7 +31,7 @@ async function ensureValidator(id: string, authorityId: string) {
     await ensureIdentity(id);
     validator = new Validator(id);
     validator.authorityId = authorityId;
-    validator.identityId = id;
+    validator.identity = id;
     validator.uptime = DEFAULT_UPTIME;
     await validator.save();
   }
