@@ -1,6 +1,5 @@
 type Block @entity {
   id: ID!
-
   number: BigInt! @index(unique: true)
   hash: String
   timestamp: Date
@@ -8,7 +7,6 @@ type Block @entity {
   specVersion: String
   stateRoot: String
   extrinsicsRoot: String
-
   extrinsics: [Extrinsic] @derivedFrom(field: "block")
   events: [Event] @derivedFrom(field: "block")
 }
@@ -33,15 +31,12 @@ type HeartBeat @entity {
 
 type Extrinsic @entity {
   id: ID!
-
   hash: String!
   block: Block!
   blockNumber: BigInt! @index(unique: false)
   index: Int!
-
   isSigned: Boolean
   signerId: String
-
   arguments: String
   module: String
   method: String
@@ -50,14 +45,11 @@ type Extrinsic @entity {
 
 type Event @entity {
   id: ID!
-
   block: Block!
   blockNumber: BigInt! @index(unique: false)
   timestamp: Date
-
   module: String
   method: String
-
   docs: String
   arguments: String
   data: String
@@ -127,29 +119,30 @@ enum RoleType {
 type Phase1Job @entity {
   id: ID!
   roleType: RoleType!
-  # the specific type based on roleType
-  roleSpecificType: String
+  roleSpecificType: String # the specific type based on roleType
   participants: [String!]
   threshold: Int
   permittedCaller: String
-  numOfJobs: Int
   earnings: Int # for each participant
   creationBlockNumber: BigInt!
-  # The maximum allowed submission time for a job result.
-  expiryBlockNumber: BigInt!
-  # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
-  ttlBlockNumber: BigInt!
+  expiryBlockNumber: BigInt! # The maximum allowed submission time for a job result.
+  ttlBlockNumber: BigInt! # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
   createdAt: Date!
   endAt: Date!
   isResultSubmitted: Boolean!
+  followingJobs: [FollowingJob] @derivedFrom(field: "phase1Job")
 }
 
-type SubPhase1Job @entity {
+type FollowingJob @entity {
   id: ID!
-  phase1JobId: String!
+  phase1Job: Phase1Job!
   txHash: String!
-  timestamp: Date!
-  blockNumber: BigInt!
+  creationBlockNumber: BigInt!
+  expiryBlockNumber: BigInt! # The maximum allowed submission time for a job result.
+  ttlBlockNumber: BigInt! # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
+  createdAt: Date!
+  endAt: Date!
+  isResultSubmitted: Boolean!
 }
 
 type ValidatorReward @entity {
