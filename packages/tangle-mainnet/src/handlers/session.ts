@@ -1,7 +1,7 @@
 import { ensureBlock } from './block';
 import { Session, SessionValidator, Validator } from '../types';
 import { u32 } from '@polkadot/types-codec';
-import { ensureAccount } from './account';
+import { ensureIdentity } from './identity';
 import { increaseSourceSession } from './source';
 
 const DEFAULT_UPTIME = 1_000_000;
@@ -28,21 +28,21 @@ export const ensureSession = async (sessionNumber: string, blockNumber: string) 
 async function ensureValidator(id: string, authorityId: string) {
   let validator = await Validator.get(id);
   if (!validator) {
-    await ensureAccount(id);
+    await ensureIdentity(id);
     validator = new Validator(id);
     validator.authorityId = authorityId;
-    validator.accountId = id;
+    validator.identity = id;
     validator.uptime = DEFAULT_UPTIME;
     await validator.save();
   }
 }
 
 async function ensureSessionValidator(sessionId: string, input: any, blockNumber: number) {
-  const id = `${sessionId}-${input.accountId}`;
+  const id = `${sessionId}-${input.identityId}`;
   const sessionValidator = new SessionValidator(id);
-  await ensureValidator(input.accountId, input.authorityId);
+  await ensureValidator(input.identityId, input.authorityId);
   sessionValidator.sessionId = sessionId;
-  sessionValidator.validatorId = input.accountId;
+  sessionValidator.validatorId = input.identityId;
   sessionValidator.uptime = sessionValidator.uptime || input.uptime || DEFAULT_UPTIME;
   sessionValidator.blockNumber = BigInt(blockNumber);
   await sessionValidator.save();
@@ -51,18 +51,18 @@ async function ensureSessionValidator(sessionId: string, input: any, blockNumber
 
 export async function updateSessionValidatorUptime(
   sessionId: string,
-  accountId: string,
+  identityId: string,
   authorityId: string,
   uptimeValue: number
 ) {
-  const id = `${sessionId}-${accountId}`;
+  const id = `${sessionId}-${identityId}`;
   const sessionValidator = await SessionValidator.get(id);
 
   if (!sessionValidator) {
     await ensureSessionValidator(
       sessionId,
       {
-        accountId,
+        identityId,
         authorityId,
         uptime: uptimeValue,
       },

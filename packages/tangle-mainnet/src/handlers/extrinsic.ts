@@ -1,6 +1,6 @@
 import { SubstrateExtrinsic } from '@subql/types';
 import { Extrinsic } from '../types';
-import { ensureAccount } from './account';
+import { ensureIdentity } from './identity';
 import { ensureBlock } from './block';
 
 export async function ensureExtrinsic(extrinsic: SubstrateExtrinsic): Promise<Extrinsic> {
@@ -29,8 +29,8 @@ export async function createExtrinsic(extrinsic: SubstrateExtrinsic) {
   extrincsic.isSigned = isSigned;
 
   if (isSigned) {
-    const signerAccount = extrinsic.extrinsic.signer.toString();
-    const signer = await ensureAccount(signerAccount);
+    const signerIdentity = extrinsic.extrinsic.signer.toString();
+    const signer = await ensureIdentity(signerIdentity);
     extrincsic.signerId = signer.id;
   }
 

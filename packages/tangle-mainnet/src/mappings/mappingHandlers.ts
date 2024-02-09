@@ -4,21 +4,14 @@ import {
   createEvent,
   createExtrinsic,
   createSudoCall,
-  ensureAccount,
-  removeAccount,
+  ensureIdentity,
+  removeIdentity,
   recordAuthorityUptime,
   recordHeartbeat,
-  updateOrSetAccount,
-  createIdentitySetLog,
-  createIdentityClearedLog,
-  createIdentityKilledLog,
+  updateOrSetIdentity,
   ensureJob,
-  ensureJobResultSubmittedLog,
+  updateJobResultSubmitted,
   ensureValidatorRewardLog,
-  createProfile,
-  updateProfile,
-  deleteProfile,
-  ensurePendingJobsLog,
   ensureClaim,
 } from '../handlers';
 import { ensureSession } from '../handlers/session';
@@ -83,7 +76,7 @@ export async function handleJobSubmitted(event: SubstrateEvent): Promise<void> {
 
 export async function handleJobResultSubmitted(event: SubstrateEvent): Promise<void> {
   logger.info(`JobResultSubmittedHandler: ${JSON.stringify(event)}`);
-  await ensureJobResultSubmittedLog(event);
+  await updateJobResultSubmitted(event);
 }
 
 export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Promise<void> {
@@ -93,42 +86,19 @@ export async function handleValidatorRewardedForJobs(event: SubstrateEvent): Pro
 
 export async function handleIdentitySet(event: SubstrateEvent): Promise<void> {
   logger.info(`IdentitySetHandler: ${JSON.stringify(event)}`);
-  const account = event.event.data[0].toString();
-  const acc = await ensureAccount(account);
-  await createIdentitySetLog(event);
-  await updateOrSetAccount(acc);
+  const identity = event.event.data[0].toString();
+  const acc = await ensureIdentity(identity);
+  await updateOrSetIdentity(acc);
 }
 
 export async function handleIdentityCleared(event: SubstrateEvent): Promise<void> {
   logger.info(`IdentityClearedHandler: ${JSON.stringify(event)}`);
-  await createIdentityClearedLog(event);
-  await removeAccount(event);
+  await removeIdentity(event);
 }
 
 export async function handleIdentityKilled(event: SubstrateEvent): Promise<void> {
   logger.info(`IdentityKilledHandler: ${JSON.stringify(event)}`);
-  await createIdentityKilledLog(event);
-  await removeAccount(event);
-}
-
-export async function handleProfileCreated(event: SubstrateEvent): Promise<void> {
-  logger.info(`ProfileCreatedHandler: ${JSON.stringify(event)}`);
-  await createProfile(event);
-}
-
-export async function handleProfileUpdated(event: SubstrateEvent): Promise<void> {
-  logger.info(`ProfileUpdatedHandler: ${JSON.stringify(event)}`);
-  await updateProfile(event);
-}
-
-export async function handleProfileDeleted(event: SubstrateEvent): Promise<void> {
-  logger.info(`ProfileDeletedHandler: ${JSON.stringify(event)}`);
-  await deleteProfile(event);
-}
-
-export async function handlePendingJobs(event: SubstrateEvent): Promise<void> {
-  logger.info(`PendingJobsHandler: ${JSON.stringify(event)}`);
-  await ensurePendingJobsLog(event);
+  await removeIdentity(event);
 }
 
 export async function handleClaim(event: SubstrateEvent): Promise<void> {

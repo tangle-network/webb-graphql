@@ -1,6 +1,5 @@
 type Block @entity {
   id: ID!
-
   number: BigInt! @index(unique: true)
   hash: String
   timestamp: Date
@@ -8,7 +7,6 @@ type Block @entity {
   specVersion: String
   stateRoot: String
   extrinsicsRoot: String
-
   extrinsics: [Extrinsic] @derivedFrom(field: "block")
   events: [Event] @derivedFrom(field: "block")
 }
@@ -28,20 +26,17 @@ type HeartBeat @entity {
   id: ID!
   blockNumber: BigInt!
   session: Session!
-  accountId: String!
+  identityId: String!
 }
 
 type Extrinsic @entity {
   id: ID!
-
   hash: String!
   block: Block!
   blockNumber: BigInt! @index(unique: false)
   index: Int!
-
   isSigned: Boolean
   signerId: String
-
   arguments: String
   module: String
   method: String
@@ -50,42 +45,15 @@ type Extrinsic @entity {
 
 type Event @entity {
   id: ID!
-
   block: Block!
   blockNumber: BigInt! @index(unique: false)
   timestamp: Date
-
   module: String
   method: String
-
   docs: String
   arguments: String
   data: String
   extrinsic: Extrinsic
-}
-
-type CountryCode @entity {
-  id: ID!
-
-  code: String! @index(unique: false)
-}
-
-type Account @entity {
-  id: ID!
-  publicKey: String! @index(unique: true)
-  creatorId: String
-  createdAt: Date
-  createAtBlock: Block
-  display: String
-  legal: String
-  web: String
-  riot: String
-  email: String
-  pgpFingerprint: String
-  image: String
-  twitter: String
-  countryCode: CountryCode
-  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
 type Session @entity {
@@ -104,33 +72,6 @@ type AuthorityUpTime @entity {
   totalHeartbeats: Int!
 }
 
-type IdentitySetLog @entity {
-  id: ID!
-  accountId: String!
-  blockNumber: BigInt!
-}
-
-type IdentityClearedLog @entity {
-  id: ID!
-  accountId: String!
-  deposit: BigInt!
-  blockNumber: BigInt!
-}
-
-type IdentityKilledLog @entity {
-  id: ID!
-  accountId: String!
-  deposit: BigInt!
-  blockNumber: BigInt!
-}
-
-type Validator @entity {
-  id: ID!
-  accountId: String!
-  authorityId: String! @index(unique: true)
-  uptime: Int!
-}
-
 type SessionValidator @entity {
   id: ID!
   session: Session!
@@ -139,131 +80,75 @@ type SessionValidator @entity {
   blockNumber: BigInt!
 }
 
-enum JobType {
-  DKGTSSPhaseOne
-  DKGTSSPhaseTwo
-  ZkSaaSPhaseOne
-  ZkSaaSPhaseTwo
-}
-
-enum JobKey {
-  DKG
-  DKGSignature
-  ZkSaaSCircuit
-  ZkSaaSProve
-}
-
-type Job @entity {
+type Validator @entity {
   id: ID!
-  jobKey: JobKey!
-  expiryBlockNumber: BigInt!
-  createAtBlock: BigInt!
-  jobType: JobType
-  isResultSubmitted: Boolean!
+  identity: String!
+  authorityId: String! @index(unique: true)
+  uptime: Int!
 }
 
-type JobResultSubmittedLog @entity {
+type CountryCode @entity {
   id: ID!
-  jobId: String! @index(unique: true)
-  jobKey: JobKey!
-  blockNumber: BigInt!
+  code: String! @index(unique: false)
 }
 
-enum DkgKeyType {
-  Ecdsa
-  Schnorr
-}
-
-type DKGTSSPhaseOneJob @entity {
+type Identity @entity {
   id: ID!
-  participants: [String!]!
-  threshold: Int!
-  permittedCallerId: String
-  keyType: DkgKeyType!
-}
-
-type DKGTSSPhaseTwoJob @entity {
-  id: ID!
-  phaseOneId: Int!
-  submission: [Int]!
-}
-
-type HyperData @jsonField {
-  raw: String
-  ipfs: String
-  http: String
-}
-
-type Groth16System @jsonField {
-  circuit: HyperData!
-  numInputs: Int!
-  numConstraints: Int!
-  provingKey: HyperData!
-  verifyingKey: String!
-  wasm: HyperData!
-}
-
-type ZkSaaSPhaseOneJobSystem @jsonField {
-  groth16: Groth16System
-}
-
-type ZkSaaSPhaseOneJob @entity {
-  id: ID!
-  participants: [String!]!
-  permittedCallerId: String
-  system: ZkSaaSPhaseOneJobSystem!
-}
-
-type QAPShare @jsonField {
-  a: HyperData!
-  b: HyperData!
-  c: HyperData!
-}
-
-type Groth16ProveRequest @jsonField {
-  publicInput: String!
-  aShares: [HyperData!]!
-  axShares: [HyperData!]!
-  qapShares: QAPShare
-}
-
-type ZkSaaSPhaseTwoJobRequest @jsonField {
-  groth16: Groth16ProveRequest
-}
-
-type ZkSaaSPhaseTwoJob @entity {
-  id: ID!
-  phaseOneId: Int!
-  request: ZkSaaSPhaseTwoJobRequest!
-}
-
-type ValidatorRewardLog @entity {
-  id: ID!
-  accountId: String!
-  reward: BigInt!
-  blockNumber: BigInt!
+  publicKey: String! @index(unique: true)
+  creatorId: String
+  createdAt: Date
+  createAtBlock: Block
+  display: String
+  legal: String
+  web: String
+  riot: String
+  email: String
+  pgpFingerprint: String
+  image: String
+  twitter: String
+  countryCode: CountryCode
+  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
 }
 
 enum RoleType {
   Tss
   ZkSaaS
+  LightClientRelaying
 }
 
-type Profile @entity {
+type Phase1Job @entity {
   id: ID!
-  accountId: String!
-  totalProfileResets: BigInt!
-  roles: [RoleType!]!
+  roleType: RoleType!
+  roleSpecificType: String # the specific type based on roleType
+  participants: [String!]
+  threshold: Int
+  permittedCaller: String
+  earnings: Int # for each participant
+  creationBlockNumber: BigInt!
+  expiryBlockNumber: BigInt! # The maximum allowed submission time for a job result.
+  ttlBlockNumber: BigInt! # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
+  createdAt: Date!
+  endAt: Date!
+  isResultSubmitted: Boolean!
+  followingJobs: [FollowingJob] @derivedFrom(field: "phase1Job")
 }
 
-type PendingJob @jsonField {
-  jobId: String!
-  jobKey: String!
-}
-
-type PendingJobsLog @entity {
+type FollowingJob @entity {
   id: ID!
-  pendingJobs: [PendingJob!]!
+  phase1Job: Phase1Job!
+  txHash: String!
+  creationBlockNumber: BigInt!
+  expiryBlockNumber: BigInt! # The maximum allowed submission time for a job result.
+  ttlBlockNumber: BigInt! # The time-to-live (TTL) for the job, which determines the maximum allowed time for this job to be available.
+  createdAt: Date!
+  endAt: Date!
+  isResultSubmitted: Boolean!
+}
+
+type ValidatorReward @entity {
+  id: ID!
+  identityId: String!
+  reward: BigInt!
   blockNumber: BigInt!
 }
 

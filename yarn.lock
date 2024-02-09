@@ -6354,10 +6354,10 @@
     minimatch "^7.4.2"
     mkdirp "^2.1.5"
 
-"@webb-tools/tangle-substrate-types@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@webb-tools/tangle-substrate-types/-/tangle-substrate-types-0.5.0.tgz#846273a6b25bb973aef3771c08854adc8a0d3069"
-  integrity sha512-dvuWh6P6pZ0evQi9PDMRGWnaKyHsXr/RUoxpKo3mFzOP7A5ATryDLS6G6TV/DBsrpq2QMon7EkX8G05sduER9Q==
+"@webb-tools/tangle-substrate-types@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@webb-tools/tangle-substrate-types/-/tangle-substrate-types-0.5.2.tgz#1d1e4b1c4bcb686f320606b8da3c2494451051f6"
+  integrity sha512-FaRS3y4pZuu8I5kIw2zGMJrXqDg1wRw7we4rbKoLg+9GU1yYGzO6+eeyQm9LfqekPn+4+NdYchLy1MwPPXS4GA==
   dependencies:
     "@babel/cli" "^7.20.7"
     "@babel/core" "^7.20.12"
