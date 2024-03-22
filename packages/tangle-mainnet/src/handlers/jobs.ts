@@ -42,11 +42,15 @@ export async function ensureJob(event: SubstrateEvent) {
     if (isZkSaasPhase1) phase1Job.permittedCaller = details.jobType.zksaasPhaseOne.permittedCaller;
 
     // Earnings
-    let fee: number | undefined;
-    if (isTssPhase1) fee = ((await api.query.jobs.submittedJobs('Tss', jobId)) as any).unwrap().fee;
-    if (isZkSaasPhase1) fee = ((await api.query.jobs.submittedJobs('ZkSaaS', jobId)) as any).unwrap().fee;
-    if (isTxRelay) fee = ((await api.query.jobs.submittedJobs('LightClientRelaying', jobId)) as any).unwrap().fee;
-    phase1Job.earnings = participants && participants.length > 0 ? fee / participants.length : null;
+    let fee: number | null = null;
+    if (isTssPhase1) fee = JSON.parse((await api.query.jobs.submittedJobs('tss', +jobId)) as any).fee;
+    // TODO: test with zksaas phase 1
+    if (isZkSaasPhase1) fee = JSON.parse((await api.query.jobs.submittedJobs('ZkSaaS', +jobId)) as any).fee;
+    // TODO: test with lightClientRelaying
+    if (isTxRelay) fee = JSON.parse((await api.query.jobs.submittedJobs('LightClientRelaying', +jobId)) as any).fee;
+    logger.info(`alo fee: ${fee}`);
+    phase1Job.earnings =
+      typeof fee === 'number' && participants && participants.length > 0 ? fee / participants.length : null;
 
     // Other Details
     phase1Job.creationBlockNumber = block.number;
