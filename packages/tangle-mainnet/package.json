@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "A subgraph for Tangle networks",
   "main": "dist/index.js",
+  "type": "module",
+  "esModuleInterop": true,
   "scripts": {
     "build": "subql build",
     "prepack": "rm -rf dist && npm run build",
@@ -26,10 +28,13 @@
     "@subql/types": "latest",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "@webb-tools/tangle-substrate-types": "^0.5.2",
+    "@webb-tools/tangle-substrate-types": "^0.5.3",
     "ecpair": "2.1.0",
     "tiny-secp256k1": "2.2.1"
   },
   "author": "@webb-developers",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
 }
