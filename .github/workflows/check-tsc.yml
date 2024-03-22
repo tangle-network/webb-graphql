@@ -58,7 +58,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: dkg
+      - name: vanchor-client
         run: |
           yarn install
           cd packages/vanchor-client && yarn install && yarn build && yarn ts-check
