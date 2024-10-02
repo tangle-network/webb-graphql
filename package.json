@@ -3,31 +3,6 @@
   "version": "1.0.0",
   "description": "A collection of Subgraphs for Webb's protocols",
   "private": true,
-  "workspaces": [
-    "packages/**"
-  ],
-  "scripts": {
-    "dkg:deploy-dev": "cd packages/dkg && yarn deploy:dev",
-    "lint": "nx run-many --all --target=lint",
-    "lint:fix": "nx run-many --all --target=lint:fix",
-    "format": "prettier --check \"**/*.{ts,js}\" ",
-    "format:fix": "prettier --write \"**/*.{ts,js}\" ",
-    "compile": "cd packages/vanchor-client && yarn install",
-    "publish:ci": "npm run compile && lerna run compile && lerna publish patch --yes --message 'chore: release new versions' ",
-    "ts-check": "tsc --noEmit -p ./tsconfig.json"
-  },
-  "devDependencies": {
-    "@nx/eslint-plugin": "^16.4.1",
-    "eslint": "^8.28.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-storybook": "^0.6.12",
-    "nx": "^16.4.1",
-    "prettier": "^2.8.8",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.9.3"
-  },
-  "resolutions": {
-    "ipfs-unixfs": "6.0.6"
-  }
+  "scripts": {},
+  "devDependencies": {}
 }

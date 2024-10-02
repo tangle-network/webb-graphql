@@ -1,7 +1,0 @@
-{
-  "packages": [
-    "packages/vanchor-client"
-  ],
-  "version": "independent",
-  "npmClient": "yarn"
-}
