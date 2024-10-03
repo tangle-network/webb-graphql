@@ -35,5 +35,7 @@ jobs:
       - name: lint
         run: |
           yarn install
-          yarn run format-check
+          yarn prettier -v
+          node -v
+          yarn run format-check --config ./.prettierrc
           yarn run lint
