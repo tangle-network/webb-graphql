@@ -8,8 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "format": "prettier --write packages/**/*.{ts,js}",
-    "format-check": "prettier --check packages/**/*.{ts,js}",
+    "format": "prettier --write .",
+    "format-check": "prettier --check .",
     "lint": "nx run-many --all --target=lint",
     "build": "nx run-many --all --target=build",
     "lint:tangle-subql": "nx lint tangle-subql",

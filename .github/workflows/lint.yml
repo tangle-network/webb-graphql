@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['18']
+        node-version: ['>=18']
 
     steps:
       - name: Cancel Previous Runs
@@ -35,7 +35,5 @@ jobs:
       - name: lint
         run: |
           yarn install
-          yarn prettier -v
-          node -v
-          yarn run format-check --config ./.prettierrc
+          yarn run format-check
           yarn run lint
