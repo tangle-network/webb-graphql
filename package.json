@@ -1,8 +1,13 @@
 {
   "name": "webb-graphql",
   "version": "1.0.0",
-  "description": "A collection of Subgraphs for Webb's protocols",
+  "description": "A collection of GraphQL projects for Webb's protocols",
   "private": true,
-  "scripts": {},
-  "devDependencies": {}
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "resolutions": {
+    "ipfs-unixfs": "6.0.6"
+  }
 }
