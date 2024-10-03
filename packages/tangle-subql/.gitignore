@@ -55,3 +55,4 @@ Thumbs.db
 
 # ENV local files
 .env*
+!.env.example

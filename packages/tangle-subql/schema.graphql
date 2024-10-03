@@ -35,7 +35,7 @@ type Account @entity {
   """
   id: ID!
   """
-  The public key of this account (same across all Polkadot parachains)
+  The public key of this account
   """
   publicKey: String!
   """

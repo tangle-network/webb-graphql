@@ -20,9 +20,9 @@ dotenv.config({ path: dotenvPath });
 const project: SubstrateProject = {
   specVersion: '1.0.0',
   version: '0.0.1',
-  name: 'polkadot-starter',
+  name: 'tangle-subql',
   description:
-    'This project can be used as a starting point for developing your SubQuery project',
+    'A GraphQL server for indexing and querying blockchain data from the Tangle Network.',
   runner: {
     node: {
       name: '@subql/node',
@@ -56,20 +56,20 @@ const project: SubstrateProject = {
       mapping: {
         file: './dist/index.js',
         handlers: [
-          /*{
+          {
             kind: SubstrateHandlerKind.Block,
-            handler: "handleBlock",
+            handler: 'handleBlock',
             filter: {
               modulo: 100,
             },
-          },*/
-          /*{
+          },
+          {
             kind: SubstrateHandlerKind.Call,
-            handler: "handleCall",
+            handler: 'handleCall',
             filter: {
-              module: "balances",
+              module: 'balances',
             },
-          },*/
+          },
           {
             kind: SubstrateHandlerKind.Event,
             handler: 'handleEvent',
