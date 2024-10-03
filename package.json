@@ -13,7 +13,8 @@
     "lint": "nx run-many --all --target=lint",
     "build": "nx run-many --all --target=build",
     "lint:tangle-subql": "nx lint tangle-subql",
-    "build:tangle-subql": "nx build tangle-subql"
+    "build:tangle-subql": "nx build tangle-subql",
+    "dev:tangle-subql": "nx dev tangle-subql"
   },
   "resolutions": {
     "ipfs-unixfs": "6.0.6"

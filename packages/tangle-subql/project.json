@@ -1,0 +1,18 @@
+{
+  "targets": {
+    "start:docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/tangle-subql",
+        "command": "docker-compose pull && docker-compose up --remove-orphans"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/tangle-subql",
+        "command": "subql codegen && subql build && docker-compose pull && docker-compose up --remove-orphans"
+      }
+    }
+  }
+}
