@@ -18,13 +18,13 @@ export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
   logger.info(
     `New extrinsic index ${
       extrinsic.idx
-    } at block hash: ${extrinsic.block.block.hash.toString()}`
+    } at block hash: ${extrinsic.block.block.hash.toString()}`,
   );
 }
 
 export async function handleEvent(event: SubstrateEvent): Promise<void> {
   logger.info(
-    `New transfer event found at block ${event.block.block.header.number.toString()}`
+    `New transfer event found at block ${event.block.block.header.number.toString()}`,
   );
 
   // Get data from the event
@@ -62,7 +62,7 @@ export async function handleEvent(event: SubstrateEvent): Promise<void> {
 
 async function checkAndGetAccount(
   id: string,
-  blockNumber: number
+  blockNumber: number,
 ): Promise<Account> {
   let account = await Account.get(id.toLowerCase());
   if (!account) {
