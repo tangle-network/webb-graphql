@@ -1,0 +1,49 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/packages/tangle-subql/dist",
+        "{projectRoot}/packages/tangle-subql/src/types"
+      ],
+      "cache": true
+    },
+    "codegen": {
+      "dependsOn": [
+        "^codegen"
+      ],
+      "outputs": [
+        "{projectRoot}/packages/tangle-subql/src/types"
+      ],
+      "cache": true
+    },
+    "test": {
+      "dependsOn": [
+        "^test"
+      ],
+      "cache": true
+    },
+    "build:develop": {
+      "dependsOn": [
+        "^build:develop"
+      ],
+      "outputs": [
+        "{projectRoot}/packages/tangle-subql/dist",
+        "{projectRoot}/packages/tangle-subql/src/types"
+      ],
+      "cache": true
+    }
+  },
+  "defaultBase": "main",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ]
+}

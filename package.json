@@ -7,7 +7,28 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "format": "prettier --write packages/**/*.{ts,js}",
+    "format-check": "prettier --check packages/**/*.{ts,js}",
+    "lint": "nx run-many --all --target=lint",
+    "build": "nx run-many --all --target=build",
+    "lint:tangle-subql": "nx lint tangle-subql",
+    "build:tangle-subql": "nx build tangle-subql"
+  },
   "resolutions": {
     "ipfs-unixfs": "6.0.6"
-  }
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^2.1.1",
+    "@nx/eslint": "19.8.3",
+    "@nx/eslint-plugin": "19.8.3",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.0.0",
+    "nx": "19.8.3",
+    "prettier": "^3.3.3",
+    "typescript-eslint": "^8.0.0"
+  },
+  "dependencies": {}
 }

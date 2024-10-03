@@ -1,0 +1,39 @@
+name: lint 🧹
+
+on:
+  push:
+    branches:
+      - 'main'
+
+  pull_request:
+    branches: ['main', 'feat/**', 'feature/**']
+
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['>=18']
+
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.12.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4.0.4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+
+      - name: lint
+        run: |
+          yarn install
+          yarn run format-check
+          yarn run lint
